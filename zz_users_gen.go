@@ -12,176 +12,6 @@ import (
 )
 
 /*
-UsersListPublicEmailsReq builds requests for "users/list-public-emails"
-
-List public email addresses for a user.
-
-  GET /user/public_emails
-
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
-*/
-type UsersListPublicEmailsReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListPublicEmailsReq) urlPath() string {
-	return fmt.Sprintf("/user/public_emails")
-}
-
-func (r UsersListPublicEmailsReq) method() string {
-	return "GET"
-}
-
-func (r UsersListPublicEmailsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListPublicEmailsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListPublicEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListPublicEmailsResponseBody200 is a response body for users/list-public-emails
-
-API documentation: https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
-*/
-type UsersListPublicEmailsResponseBody200 []struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
-}
-
-/*
-UsersDeleteEmailsReq builds requests for "users/delete-emails"
-
-Delete email address(es).
-
-  DELETE /user/emails
-
-https://developer.github.com/v3/users/emails/#delete-email-addresses
-*/
-type UsersDeleteEmailsReq struct {
-	RequestBody UsersDeleteEmailsReqBody
-}
-
-func (r UsersDeleteEmailsReq) urlPath() string {
-	return fmt.Sprintf("/user/emails")
-}
-
-func (r UsersDeleteEmailsReq) method() string {
-	return "DELETE"
-}
-
-func (r UsersDeleteEmailsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersDeleteEmailsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersDeleteEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-UsersDeleteEmailsReqBody is a request body for users/delete-emails
-
-API documentation: https://developer.github.com/v3/users/emails/#delete-email-addresses
-*/
-type UsersDeleteEmailsReqBody struct {
-
-	/*
-	   Deletes one or more email addresses from your GitHub account. Must contain at
-	   least one email address. **Note:** Alternatively, you can pass a single email
-	   address or an `array` of emails addresses directly, but we recommend that you
-	   pass an object using the `emails` key.
-	*/
-	Emails []string `json:"emails"`
-}
-
-/*
-UsersListEmailsReq builds requests for "users/list-emails"
-
-List email addresses for a user.
-
-  GET /user/emails
-
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
-*/
-type UsersListEmailsReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListEmailsReq) urlPath() string {
-	return fmt.Sprintf("/user/emails")
-}
-
-func (r UsersListEmailsReq) method() string {
-	return "GET"
-}
-
-func (r UsersListEmailsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListEmailsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListEmailsResponseBody200 is a response body for users/list-emails
-
-API documentation: https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
-*/
-type UsersListEmailsResponseBody200 []struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
-}
-
-/*
 UsersAddEmailsReq builds requests for "users/add-emails"
 
 Add email address(es).
@@ -246,6 +76,358 @@ type UsersAddEmailsResponseBody201 []struct {
 }
 
 /*
+UsersBlockReq builds requests for "users/block"
+
+Block a user.
+
+  PUT /user/blocks/{username}
+
+https://developer.github.com/v3/users/blocking/#block-a-user
+*/
+type UsersBlockReq struct {
+	Username string
+}
+
+func (r UsersBlockReq) urlPath() string {
+	return fmt.Sprintf("/user/blocks/%v", r.Username)
+}
+
+func (r UsersBlockReq) method() string {
+	return "PUT"
+}
+
+func (r UsersBlockReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersBlockReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersBlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersCheckBlockedReq builds requests for "users/check-blocked"
+
+Check whether you've blocked a user.
+
+  GET /user/blocks/{username}
+
+https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
+*/
+type UsersCheckBlockedReq struct {
+	Username string
+}
+
+func (r UsersCheckBlockedReq) urlPath() string {
+	return fmt.Sprintf("/user/blocks/%v", r.Username)
+}
+
+func (r UsersCheckBlockedReq) method() string {
+	return "GET"
+}
+
+func (r UsersCheckBlockedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersCheckBlockedReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersCheckBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersCheckFollowingReq builds requests for "users/check-following"
+
+Check if you are following a user.
+
+  GET /user/following/{username}
+
+https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
+*/
+type UsersCheckFollowingReq struct {
+	Username string
+}
+
+func (r UsersCheckFollowingReq) urlPath() string {
+	return fmt.Sprintf("/user/following/%v", r.Username)
+}
+
+func (r UsersCheckFollowingReq) method() string {
+	return "GET"
+}
+
+func (r UsersCheckFollowingReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersCheckFollowingReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersCheckFollowingReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersCheckFollowingForUserReq builds requests for "users/check-following-for-user"
+
+Check if one user follows another.
+
+  GET /users/{username}/following/{target_user}
+
+https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
+*/
+type UsersCheckFollowingForUserReq struct {
+	Username   string
+	TargetUser string
+}
+
+func (r UsersCheckFollowingForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/following/%v", r.Username, r.TargetUser)
+}
+
+func (r UsersCheckFollowingForUserReq) method() string {
+	return "GET"
+}
+
+func (r UsersCheckFollowingForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersCheckFollowingForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersCheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersCreateGpgKeyReq builds requests for "users/create-gpg-key"
+
+Create a GPG key.
+
+  POST /user/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+*/
+type UsersCreateGpgKeyReq struct {
+	RequestBody UsersCreateGpgKeyReqBody
+}
+
+func (r UsersCreateGpgKeyReq) urlPath() string {
+	return fmt.Sprintf("/user/gpg_keys")
+}
+
+func (r UsersCreateGpgKeyReq) method() string {
+	return "POST"
+}
+
+func (r UsersCreateGpgKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersCreateGpgKeyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersCreateGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+UsersCreateGpgKeyReqBody is a request body for users/create-gpg-key
+
+API documentation: https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+*/
+type UsersCreateGpgKeyReqBody struct {
+
+	/*
+	   Your GPG key, generated in ASCII-armored format. See "[Generating a new GPG
+	   key](https://help.github.com/articles/generating-a-new-gpg-key/)" for help
+	   creating a GPG key.
+	*/
+	ArmoredPublicKey *string `json:"armored_public_key,omitempty"`
+}
+
+/*
+UsersCreateGpgKeyResponseBody201 is a response body for users/create-gpg-key
+
+API documentation: https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+*/
+type UsersCreateGpgKeyResponseBody201 struct {
+	CanCertify        bool   `json:"can_certify,omitempty"`
+	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
+	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
+	CanSign           bool   `json:"can_sign,omitempty"`
+	CreatedAt         string `json:"created_at,omitempty"`
+	Emails            []struct {
+		Email    string `json:"email,omitempty"`
+		Verified bool   `json:"verified,omitempty"`
+	} `json:"emails,omitempty"`
+	ExpiresAt    string `json:"expires_at,omitempty"`
+	Id           int64  `json:"id,omitempty"`
+	KeyId        string `json:"key_id,omitempty"`
+	PrimaryKeyId string `json:"primary_key_id,omitempty"`
+	PublicKey    string `json:"public_key,omitempty"`
+	Subkeys      []struct {
+		CanCertify        bool          `json:"can_certify,omitempty"`
+		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
+		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
+		CanSign           bool          `json:"can_sign,omitempty"`
+		CreatedAt         string        `json:"created_at,omitempty"`
+		Emails            []interface{} `json:"emails,omitempty"`
+		ExpiresAt         string        `json:"expires_at,omitempty"`
+		Id                int64         `json:"id,omitempty"`
+		KeyId             string        `json:"key_id,omitempty"`
+		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
+		PublicKey         string        `json:"public_key,omitempty"`
+		Subkeys           []interface{} `json:"subkeys,omitempty"`
+	} `json:"subkeys,omitempty"`
+}
+
+/*
+UsersCreatePublicKeyReq builds requests for "users/create-public-key"
+
+Create a public key.
+
+  POST /user/keys
+
+https://developer.github.com/v3/users/keys/#create-a-public-key
+*/
+type UsersCreatePublicKeyReq struct {
+	RequestBody UsersCreatePublicKeyReqBody
+}
+
+func (r UsersCreatePublicKeyReq) urlPath() string {
+	return fmt.Sprintf("/user/keys")
+}
+
+func (r UsersCreatePublicKeyReq) method() string {
+	return "POST"
+}
+
+func (r UsersCreatePublicKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersCreatePublicKeyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersCreatePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+UsersCreatePublicKeyReqBody is a request body for users/create-public-key
+
+API documentation: https://developer.github.com/v3/users/keys/#create-a-public-key
+*/
+type UsersCreatePublicKeyReqBody struct {
+
+	/*
+	   The public SSH key to add to your GitHub account. See "[Generating a new SSH
+	   key](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)"
+	   for guidance on how to create a public SSH key.
+	*/
+	Key *string `json:"key,omitempty"`
+
+	/*
+	   A descriptive name for the new key. Use a name that will help you recognize this
+	   key in your GitHub account. For example, if you're using a personal Mac, you
+	   might call this key "Personal MacBook Air".
+	*/
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+UsersCreatePublicKeyResponseBody201 is a response body for users/create-public-key
+
+API documentation: https://developer.github.com/v3/users/keys/#create-a-public-key
+*/
+type UsersCreatePublicKeyResponseBody201 struct {
+	Key   string `json:"key,omitempty"`
+	KeyId string `json:"key_id,omitempty"`
+}
+
+/*
+UsersDeleteEmailsReq builds requests for "users/delete-emails"
+
+Delete email address(es).
+
+  DELETE /user/emails
+
+https://developer.github.com/v3/users/emails/#delete-email-addresses
+*/
+type UsersDeleteEmailsReq struct {
+	RequestBody UsersDeleteEmailsReqBody
+}
+
+func (r UsersDeleteEmailsReq) urlPath() string {
+	return fmt.Sprintf("/user/emails")
+}
+
+func (r UsersDeleteEmailsReq) method() string {
+	return "DELETE"
+}
+
+func (r UsersDeleteEmailsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersDeleteEmailsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersDeleteEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+UsersDeleteEmailsReqBody is a request body for users/delete-emails
+
+API documentation: https://developer.github.com/v3/users/emails/#delete-email-addresses
+*/
+type UsersDeleteEmailsReqBody struct {
+
+	/*
+	   Deletes one or more email addresses from your GitHub account. Must contain at
+	   least one email address. **Note:** Alternatively, you can pass a single email
+	   address or an `array` of emails addresses directly, but we recommend that you
+	   pass an object using the `emails` key.
+	*/
+	Emails []string `json:"emails"`
+}
+
+/*
 UsersDeleteGpgKeyReq builds requests for "users/delete-gpg-key"
 
 Delete a GPG key.
@@ -279,6 +461,305 @@ func (r UsersDeleteGpgKeyReq) header() http.Header {
 
 func (r UsersDeleteGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersDeletePublicKeyReq builds requests for "users/delete-public-key"
+
+Delete a public key.
+
+  DELETE /user/keys/{key_id}
+
+https://developer.github.com/v3/users/keys/#delete-a-public-key
+*/
+type UsersDeletePublicKeyReq struct {
+	KeyId int64
+}
+
+func (r UsersDeletePublicKeyReq) urlPath() string {
+	return fmt.Sprintf("/user/keys/%v", r.KeyId)
+}
+
+func (r UsersDeletePublicKeyReq) method() string {
+	return "DELETE"
+}
+
+func (r UsersDeletePublicKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersDeletePublicKeyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersDeletePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersFollowReq builds requests for "users/follow"
+
+Follow a user.
+
+  PUT /user/following/{username}
+
+https://developer.github.com/v3/users/followers/#follow-a-user
+*/
+type UsersFollowReq struct {
+	Username string
+}
+
+func (r UsersFollowReq) urlPath() string {
+	return fmt.Sprintf("/user/following/%v", r.Username)
+}
+
+func (r UsersFollowReq) method() string {
+	return "PUT"
+}
+
+func (r UsersFollowReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersFollowReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersFollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersGetAuthenticatedReq builds requests for "users/get-authenticated"
+
+Get the authenticated user.
+
+  GET /user
+
+https://developer.github.com/v3/users/#get-the-authenticated-user
+*/
+type UsersGetAuthenticatedReq struct{}
+
+func (r UsersGetAuthenticatedReq) urlPath() string {
+	return fmt.Sprintf("/user")
+}
+
+func (r UsersGetAuthenticatedReq) method() string {
+	return "GET"
+}
+
+func (r UsersGetAuthenticatedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersGetAuthenticatedReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersGetAuthenticatedResponseBody200 is a response body for users/get-authenticated
+
+API documentation: https://developer.github.com/v3/users/#get-the-authenticated-user
+*/
+type UsersGetAuthenticatedResponseBody200 struct {
+	AvatarUrl         string      `json:"avatar_url,omitempty"`
+	Bio               string      `json:"bio,omitempty"`
+	Blog              string      `json:"blog,omitempty"`
+	Collaborators     int64       `json:"collaborators,omitempty"`
+	Company           string      `json:"company,omitempty"`
+	CreatedAt         string      `json:"created_at,omitempty"`
+	DiskUsage         json.Number `json:"disk_usage,omitempty"`
+	Email             string      `json:"email,omitempty"`
+	EventsUrl         string      `json:"events_url,omitempty"`
+	Followers         int64       `json:"followers,omitempty"`
+	FollowersUrl      string      `json:"followers_url,omitempty"`
+	Following         int64       `json:"following,omitempty"`
+	FollowingUrl      string      `json:"following_url,omitempty"`
+	GistsUrl          string      `json:"gists_url,omitempty"`
+	GravatarId        string      `json:"gravatar_id,omitempty"`
+	Hireable          bool        `json:"hireable,omitempty"`
+	HtmlUrl           string      `json:"html_url,omitempty"`
+	Id                int64       `json:"id,omitempty"`
+	Location          string      `json:"location,omitempty"`
+	Login             string      `json:"login,omitempty"`
+	Name              string      `json:"name,omitempty"`
+	NodeId            string      `json:"node_id,omitempty"`
+	OrganizationsUrl  string      `json:"organizations_url,omitempty"`
+	OwnedPrivateRepos int64       `json:"owned_private_repos,omitempty"`
+	Plan              struct {
+		Collaborators int64       `json:"collaborators,omitempty"`
+		Name          string      `json:"name,omitempty"`
+		PrivateRepos  int64       `json:"private_repos,omitempty"`
+		Space         json.Number `json:"space,omitempty"`
+	} `json:"plan,omitempty"`
+	PrivateGists            int64  `json:"private_gists,omitempty"`
+	PublicGists             int64  `json:"public_gists,omitempty"`
+	PublicRepos             int64  `json:"public_repos,omitempty"`
+	ReceivedEventsUrl       string `json:"received_events_url,omitempty"`
+	ReposUrl                string `json:"repos_url,omitempty"`
+	SiteAdmin               bool   `json:"site_admin,omitempty"`
+	StarredUrl              string `json:"starred_url,omitempty"`
+	SubscriptionsUrl        string `json:"subscriptions_url,omitempty"`
+	TotalPrivateRepos       int64  `json:"total_private_repos,omitempty"`
+	TwoFactorAuthentication bool   `json:"two_factor_authentication,omitempty"`
+	Type                    string `json:"type,omitempty"`
+	UpdatedAt               string `json:"updated_at,omitempty"`
+	Url                     string `json:"url,omitempty"`
+}
+
+/*
+UsersGetByUsernameReq builds requests for "users/get-by-username"
+
+Get a single user.
+
+  GET /users/{username}
+
+https://developer.github.com/v3/users/#get-a-single-user
+*/
+type UsersGetByUsernameReq struct {
+	Username string
+}
+
+func (r UsersGetByUsernameReq) urlPath() string {
+	return fmt.Sprintf("/users/%v", r.Username)
+}
+
+func (r UsersGetByUsernameReq) method() string {
+	return "GET"
+}
+
+func (r UsersGetByUsernameReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersGetByUsernameReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersGetByUsernameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersGetByUsernameResponseBody200 is a response body for users/get-by-username
+
+API documentation: https://developer.github.com/v3/users/#get-a-single-user
+*/
+type UsersGetByUsernameResponseBody200 struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	Bio               string `json:"bio,omitempty"`
+	Blog              string `json:"blog,omitempty"`
+	Company           string `json:"company,omitempty"`
+	CreatedAt         string `json:"created_at,omitempty"`
+	Email             string `json:"email,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	Followers         int64  `json:"followers,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	Following         int64  `json:"following,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	Hireable          bool   `json:"hireable,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Location          string `json:"location,omitempty"`
+	Login             string `json:"login,omitempty"`
+	Name              string `json:"name,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	PublicGists       int64  `json:"public_gists,omitempty"`
+	PublicRepos       int64  `json:"public_repos,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	UpdatedAt         string `json:"updated_at,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersGetContextForUserReq builds requests for "users/get-context-for-user"
+
+Get contextual information about a user.
+
+  GET /users/{username}/hovercard
+
+https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+*/
+type UsersGetContextForUserReq struct {
+	Username string
+
+	/*
+	Identifies which additional information you'd like to receive about the person's
+	hovercard. Can be `organization`, `repository`, `issue`, `pull_request`.
+	**Required** when using `subject_id`.
+	*/
+	SubjectType *string
+
+	/*
+	Uses the ID for the `subject_type` you specified. **Required** when using
+	`subject_type`.
+	*/
+	SubjectId *string
+}
+
+func (r UsersGetContextForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/hovercard", r.Username)
+}
+
+func (r UsersGetContextForUserReq) method() string {
+	return "GET"
+}
+
+func (r UsersGetContextForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.SubjectType != nil {
+		query.Set("subject_type", *r.SubjectType)
+	}
+	if r.SubjectId != nil {
+		query.Set("subject_id", *r.SubjectId)
+	}
+	return query
+}
+
+func (r UsersGetContextForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersGetContextForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersGetContextForUserResponseBody200 is a response body for users/get-context-for-user
+
+API documentation: https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+*/
+type UsersGetContextForUserResponseBody200 struct {
+	Contexts []struct {
+		Message string `json:"message,omitempty"`
+		Octicon string `json:"octicon,omitempty"`
+	} `json:"contexts,omitempty"`
 }
 
 /*
@@ -354,111 +835,49 @@ type UsersGetGpgKeyResponseBody200 struct {
 }
 
 /*
-UsersUnblockReq builds requests for "users/unblock"
+UsersGetPublicKeyReq builds requests for "users/get-public-key"
 
-Unblock a user.
+Get a single public key.
 
-  DELETE /user/blocks/{username}
+  GET /user/keys/{key_id}
 
-https://developer.github.com/v3/users/blocking/#unblock-a-user
+https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
-type UsersUnblockReq struct {
-	Username string
+type UsersGetPublicKeyReq struct {
+	KeyId int64
 }
 
-func (r UsersUnblockReq) urlPath() string {
-	return fmt.Sprintf("/user/blocks/%v", r.Username)
+func (r UsersGetPublicKeyReq) urlPath() string {
+	return fmt.Sprintf("/user/keys/%v", r.KeyId)
 }
 
-func (r UsersUnblockReq) method() string {
-	return "DELETE"
-}
-
-func (r UsersUnblockReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersUnblockReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersUnblockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersCheckBlockedReq builds requests for "users/check-blocked"
-
-Check whether you've blocked a user.
-
-  GET /user/blocks/{username}
-
-https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
-*/
-type UsersCheckBlockedReq struct {
-	Username string
-}
-
-func (r UsersCheckBlockedReq) urlPath() string {
-	return fmt.Sprintf("/user/blocks/%v", r.Username)
-}
-
-func (r UsersCheckBlockedReq) method() string {
+func (r UsersGetPublicKeyReq) method() string {
 	return "GET"
 }
 
-func (r UsersCheckBlockedReq) urlQuery() url.Values {
+func (r UsersGetPublicKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersCheckBlockedReq) header() http.Header {
+func (r UsersGetPublicKeyReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r UsersCheckBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r UsersGetPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-UsersBlockReq builds requests for "users/block"
+UsersGetPublicKeyResponseBody200 is a response body for users/get-public-key
 
-Block a user.
-
-  PUT /user/blocks/{username}
-
-https://developer.github.com/v3/users/blocking/#block-a-user
+API documentation: https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
-type UsersBlockReq struct {
-	Username string
-}
-
-func (r UsersBlockReq) urlPath() string {
-	return fmt.Sprintf("/user/blocks/%v", r.Username)
-}
-
-func (r UsersBlockReq) method() string {
-	return "PUT"
-}
-
-func (r UsersBlockReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersBlockReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersBlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+type UsersGetPublicKeyResponseBody200 struct {
+	Key   string `json:"key,omitempty"`
+	KeyId string `json:"key_id,omitempty"`
 }
 
 /*
@@ -526,6 +945,502 @@ type UsersListResponseBody200 []struct {
 	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 	Type              string `json:"type,omitempty"`
 	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersListBlockedReq builds requests for "users/list-blocked"
+
+List blocked users.
+
+  GET /user/blocks
+
+https://developer.github.com/v3/users/blocking/#list-blocked-users
+*/
+type UsersListBlockedReq struct{}
+
+func (r UsersListBlockedReq) urlPath() string {
+	return fmt.Sprintf("/user/blocks")
+}
+
+func (r UsersListBlockedReq) method() string {
+	return "GET"
+}
+
+func (r UsersListBlockedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r UsersListBlockedReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListBlockedResponseBody200 is a response body for users/list-blocked
+
+API documentation: https://developer.github.com/v3/users/blocking/#list-blocked-users
+*/
+type UsersListBlockedResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersListEmailsReq builds requests for "users/list-emails"
+
+List email addresses for a user.
+
+  GET /user/emails
+
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+*/
+type UsersListEmailsReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListEmailsReq) urlPath() string {
+	return fmt.Sprintf("/user/emails")
+}
+
+func (r UsersListEmailsReq) method() string {
+	return "GET"
+}
+
+func (r UsersListEmailsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListEmailsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListEmailsResponseBody200 is a response body for users/list-emails
+
+API documentation: https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+*/
+type UsersListEmailsResponseBody200 []struct {
+	Email      string `json:"email,omitempty"`
+	Primary    bool   `json:"primary,omitempty"`
+	Verified   bool   `json:"verified,omitempty"`
+	Visibility string `json:"visibility,omitempty"`
+}
+
+/*
+UsersListFollowedByAuthenticatedReq builds requests for "users/list-followed-by-authenticated"
+
+List users followed by the authenticated user.
+
+  GET /user/following
+
+https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+*/
+type UsersListFollowedByAuthenticatedReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListFollowedByAuthenticatedReq) urlPath() string {
+	return fmt.Sprintf("/user/following")
+}
+
+func (r UsersListFollowedByAuthenticatedReq) method() string {
+	return "GET"
+}
+
+func (r UsersListFollowedByAuthenticatedReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListFollowedByAuthenticatedReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListFollowedByAuthenticatedResponseBody200 is a response body for users/list-followed-by-authenticated
+
+API documentation: https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+*/
+type UsersListFollowedByAuthenticatedResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersListFollowersForAuthenticatedUserReq builds requests for "users/list-followers-for-authenticated-user"
+
+List followers of the authenticated user.
+
+  GET /user/followers
+
+https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+*/
+type UsersListFollowersForAuthenticatedUserReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListFollowersForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/followers")
+}
+
+func (r UsersListFollowersForAuthenticatedUserReq) method() string {
+	return "GET"
+}
+
+func (r UsersListFollowersForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListFollowersForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListFollowersForAuthenticatedUserResponseBody200 is a response body for users/list-followers-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+*/
+type UsersListFollowersForAuthenticatedUserResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersListFollowersForUserReq builds requests for "users/list-followers-for-user"
+
+List followers of a user.
+
+  GET /users/{username}/followers
+
+https://developer.github.com/v3/users/followers/#list-followers-of-a-user
+*/
+type UsersListFollowersForUserReq struct {
+	Username string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListFollowersForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/followers", r.Username)
+}
+
+func (r UsersListFollowersForUserReq) method() string {
+	return "GET"
+}
+
+func (r UsersListFollowersForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListFollowersForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListFollowersForUserResponseBody200 is a response body for users/list-followers-for-user
+
+API documentation: https://developer.github.com/v3/users/followers/#list-followers-of-a-user
+*/
+type UsersListFollowersForUserResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersListFollowingForUserReq builds requests for "users/list-following-for-user"
+
+List users followed by another user.
+
+  GET /users/{username}/following
+
+https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+*/
+type UsersListFollowingForUserReq struct {
+	Username string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListFollowingForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/following", r.Username)
+}
+
+func (r UsersListFollowingForUserReq) method() string {
+	return "GET"
+}
+
+func (r UsersListFollowingForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListFollowingForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListFollowingForUserResponseBody200 is a response body for users/list-following-for-user
+
+API documentation: https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+*/
+type UsersListFollowingForUserResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+UsersListGpgKeysReq builds requests for "users/list-gpg-keys"
+
+List your GPG keys.
+
+  GET /user/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+*/
+type UsersListGpgKeysReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListGpgKeysReq) urlPath() string {
+	return fmt.Sprintf("/user/gpg_keys")
+}
+
+func (r UsersListGpgKeysReq) method() string {
+	return "GET"
+}
+
+func (r UsersListGpgKeysReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListGpgKeysReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListGpgKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListGpgKeysResponseBody200 is a response body for users/list-gpg-keys
+
+API documentation: https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+*/
+type UsersListGpgKeysResponseBody200 []struct {
+	CanCertify        bool   `json:"can_certify,omitempty"`
+	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
+	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
+	CanSign           bool   `json:"can_sign,omitempty"`
+	CreatedAt         string `json:"created_at,omitempty"`
+	Emails            []struct {
+		Email    string `json:"email,omitempty"`
+		Verified bool   `json:"verified,omitempty"`
+	} `json:"emails,omitempty"`
+	ExpiresAt    string `json:"expires_at,omitempty"`
+	Id           int64  `json:"id,omitempty"`
+	KeyId        string `json:"key_id,omitempty"`
+	PrimaryKeyId string `json:"primary_key_id,omitempty"`
+	PublicKey    string `json:"public_key,omitempty"`
+	Subkeys      []struct {
+		CanCertify        bool          `json:"can_certify,omitempty"`
+		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
+		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
+		CanSign           bool          `json:"can_sign,omitempty"`
+		CreatedAt         string        `json:"created_at,omitempty"`
+		Emails            []interface{} `json:"emails,omitempty"`
+		ExpiresAt         string        `json:"expires_at,omitempty"`
+		Id                int64         `json:"id,omitempty"`
+		KeyId             string        `json:"key_id,omitempty"`
+		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
+		PublicKey         string        `json:"public_key,omitempty"`
+		Subkeys           []interface{} `json:"subkeys,omitempty"`
+	} `json:"subkeys,omitempty"`
 }
 
 /*
@@ -613,191 +1528,15 @@ type UsersListGpgKeysForUserResponseBody200 []struct {
 }
 
 /*
-UsersUnfollowReq builds requests for "users/unfollow"
+UsersListPublicEmailsReq builds requests for "users/list-public-emails"
 
-Unfollow a user.
+List public email addresses for a user.
 
-  DELETE /user/following/{username}
+  GET /user/public_emails
 
-https://developer.github.com/v3/users/followers/#unfollow-a-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
-type UsersUnfollowReq struct {
-	Username string
-}
-
-func (r UsersUnfollowReq) urlPath() string {
-	return fmt.Sprintf("/user/following/%v", r.Username)
-}
-
-func (r UsersUnfollowReq) method() string {
-	return "DELETE"
-}
-
-func (r UsersUnfollowReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersUnfollowReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersUnfollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersCheckFollowingReq builds requests for "users/check-following"
-
-Check if you are following a user.
-
-  GET /user/following/{username}
-
-https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
-*/
-type UsersCheckFollowingReq struct {
-	Username string
-}
-
-func (r UsersCheckFollowingReq) urlPath() string {
-	return fmt.Sprintf("/user/following/%v", r.Username)
-}
-
-func (r UsersCheckFollowingReq) method() string {
-	return "GET"
-}
-
-func (r UsersCheckFollowingReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersCheckFollowingReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersCheckFollowingReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersFollowReq builds requests for "users/follow"
-
-Follow a user.
-
-  PUT /user/following/{username}
-
-https://developer.github.com/v3/users/followers/#follow-a-user
-*/
-type UsersFollowReq struct {
-	Username string
-}
-
-func (r UsersFollowReq) urlPath() string {
-	return fmt.Sprintf("/user/following/%v", r.Username)
-}
-
-func (r UsersFollowReq) method() string {
-	return "PUT"
-}
-
-func (r UsersFollowReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersFollowReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersFollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersGetContextForUserReq builds requests for "users/get-context-for-user"
-
-Get contextual information about a user.
-
-  GET /users/{username}/hovercard
-
-https://developer.github.com/v3/users/#get-contextual-information-about-a-user
-*/
-type UsersGetContextForUserReq struct {
-	Username string
-
-	/*
-	Identifies which additional information you'd like to receive about the person's
-	hovercard. Can be `organization`, `repository`, `issue`, `pull_request`.
-	**Required** when using `subject_id`.
-	*/
-	SubjectType *string
-
-	/*
-	Uses the ID for the `subject_type` you specified. **Required** when using
-	`subject_type`.
-	*/
-	SubjectId *string
-}
-
-func (r UsersGetContextForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/hovercard", r.Username)
-}
-
-func (r UsersGetContextForUserReq) method() string {
-	return "GET"
-}
-
-func (r UsersGetContextForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.SubjectType != nil {
-		query.Set("subject_type", *r.SubjectType)
-	}
-	if r.SubjectId != nil {
-		query.Set("subject_id", *r.SubjectId)
-	}
-	return query
-}
-
-func (r UsersGetContextForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersGetContextForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersGetContextForUserResponseBody200 is a response body for users/get-context-for-user
-
-API documentation: https://developer.github.com/v3/users/#get-contextual-information-about-a-user
-*/
-type UsersGetContextForUserResponseBody200 struct {
-	Contexts []struct {
-		Message string `json:"message,omitempty"`
-		Octicon string `json:"octicon,omitempty"`
-	} `json:"contexts,omitempty"`
-}
-
-/*
-UsersListFollowersForUserReq builds requests for "users/list-followers-for-user"
-
-List followers of a user.
-
-  GET /users/{username}/followers
-
-https://developer.github.com/v3/users/followers/#list-followers-of-a-user
-*/
-type UsersListFollowersForUserReq struct {
-	Username string
+type UsersListPublicEmailsReq struct {
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -806,15 +1545,15 @@ type UsersListFollowersForUserReq struct {
 	Page *int64
 }
 
-func (r UsersListFollowersForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/followers", r.Username)
+func (r UsersListPublicEmailsReq) urlPath() string {
+	return fmt.Sprintf("/user/public_emails")
 }
 
-func (r UsersListFollowersForUserReq) method() string {
+func (r UsersListPublicEmailsReq) method() string {
 	return "GET"
 }
 
-func (r UsersListFollowersForUserReq) urlQuery() url.Values {
+func (r UsersListPublicEmailsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -825,40 +1564,141 @@ func (r UsersListFollowersForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListFollowersForUserReq) header() http.Header {
+func (r UsersListPublicEmailsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r UsersListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r UsersListPublicEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-UsersListFollowersForUserResponseBody200 is a response body for users/list-followers-for-user
+UsersListPublicEmailsResponseBody200 is a response body for users/list-public-emails
 
-API documentation: https://developer.github.com/v3/users/followers/#list-followers-of-a-user
+API documentation: https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
-type UsersListFollowersForUserResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+type UsersListPublicEmailsResponseBody200 []struct {
+	Email      string `json:"email,omitempty"`
+	Primary    bool   `json:"primary,omitempty"`
+	Verified   bool   `json:"verified,omitempty"`
+	Visibility string `json:"visibility,omitempty"`
+}
+
+/*
+UsersListPublicKeysReq builds requests for "users/list-public-keys"
+
+List your public keys.
+
+  GET /user/keys
+
+https://developer.github.com/v3/users/keys/#list-your-public-keys
+*/
+type UsersListPublicKeysReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListPublicKeysReq) urlPath() string {
+	return fmt.Sprintf("/user/keys")
+}
+
+func (r UsersListPublicKeysReq) method() string {
+	return "GET"
+}
+
+func (r UsersListPublicKeysReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListPublicKeysReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListPublicKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListPublicKeysResponseBody200 is a response body for users/list-public-keys
+
+API documentation: https://developer.github.com/v3/users/keys/#list-your-public-keys
+*/
+type UsersListPublicKeysResponseBody200 []struct {
+	Key   string `json:"key,omitempty"`
+	KeyId string `json:"key_id,omitempty"`
+}
+
+/*
+UsersListPublicKeysForUserReq builds requests for "users/list-public-keys-for-user"
+
+List public keys for a user.
+
+  GET /users/{username}/keys
+
+https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+*/
+type UsersListPublicKeysForUserReq struct {
+	Username string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r UsersListPublicKeysForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/keys", r.Username)
+}
+
+func (r UsersListPublicKeysForUserReq) method() string {
+	return "GET"
+}
+
+func (r UsersListPublicKeysForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r UsersListPublicKeysForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r UsersListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+UsersListPublicKeysForUserResponseBody200 is a response body for users/list-public-keys-for-user
+
+API documentation: https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+*/
+type UsersListPublicKeysForUserResponseBody200 []struct {
+	Id  int64  `json:"id,omitempty"`
+	Key string `json:"key,omitempty"`
 }
 
 /*
@@ -927,612 +1767,75 @@ type UsersTogglePrimaryEmailVisibilityResponseBody200 []struct {
 }
 
 /*
-UsersListFollowedByAuthenticatedReq builds requests for "users/list-followed-by-authenticated"
+UsersUnblockReq builds requests for "users/unblock"
 
-List users followed by the authenticated user.
+Unblock a user.
 
-  GET /user/following
+  DELETE /user/blocks/{username}
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
-type UsersListFollowedByAuthenticatedReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListFollowedByAuthenticatedReq) urlPath() string {
-	return fmt.Sprintf("/user/following")
-}
-
-func (r UsersListFollowedByAuthenticatedReq) method() string {
-	return "GET"
-}
-
-func (r UsersListFollowedByAuthenticatedReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListFollowedByAuthenticatedReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListFollowedByAuthenticatedResponseBody200 is a response body for users/list-followed-by-authenticated
-
-API documentation: https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
-*/
-type UsersListFollowedByAuthenticatedResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-UsersListPublicKeysReq builds requests for "users/list-public-keys"
-
-List your public keys.
-
-  GET /user/keys
-
-https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-type UsersListPublicKeysReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListPublicKeysReq) urlPath() string {
-	return fmt.Sprintf("/user/keys")
-}
-
-func (r UsersListPublicKeysReq) method() string {
-	return "GET"
-}
-
-func (r UsersListPublicKeysReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListPublicKeysReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListPublicKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListPublicKeysResponseBody200 is a response body for users/list-public-keys
-
-API documentation: https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-type UsersListPublicKeysResponseBody200 []struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
-}
-
-/*
-UsersCreatePublicKeyReq builds requests for "users/create-public-key"
-
-Create a public key.
-
-  POST /user/keys
-
-https://developer.github.com/v3/users/keys/#create-a-public-key
-*/
-type UsersCreatePublicKeyReq struct {
-	RequestBody UsersCreatePublicKeyReqBody
-}
-
-func (r UsersCreatePublicKeyReq) urlPath() string {
-	return fmt.Sprintf("/user/keys")
-}
-
-func (r UsersCreatePublicKeyReq) method() string {
-	return "POST"
-}
-
-func (r UsersCreatePublicKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersCreatePublicKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersCreatePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-UsersCreatePublicKeyReqBody is a request body for users/create-public-key
-
-API documentation: https://developer.github.com/v3/users/keys/#create-a-public-key
-*/
-type UsersCreatePublicKeyReqBody struct {
-
-	/*
-	   The public SSH key to add to your GitHub account. See "[Generating a new SSH
-	   key](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)"
-	   for guidance on how to create a public SSH key.
-	*/
-	Key *string `json:"key,omitempty"`
-
-	/*
-	   A descriptive name for the new key. Use a name that will help you recognize this
-	   key in your GitHub account. For example, if you're using a personal Mac, you
-	   might call this key "Personal MacBook Air".
-	*/
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-UsersCreatePublicKeyResponseBody201 is a response body for users/create-public-key
-
-API documentation: https://developer.github.com/v3/users/keys/#create-a-public-key
-*/
-type UsersCreatePublicKeyResponseBody201 struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
-}
-
-/*
-UsersCheckFollowingForUserReq builds requests for "users/check-following-for-user"
-
-Check if one user follows another.
-
-  GET /users/{username}/following/{target_user}
-
-https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
-*/
-type UsersCheckFollowingForUserReq struct {
-	Username   string
-	TargetUser string
-}
-
-func (r UsersCheckFollowingForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/following/%v", r.Username, r.TargetUser)
-}
-
-func (r UsersCheckFollowingForUserReq) method() string {
-	return "GET"
-}
-
-func (r UsersCheckFollowingForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersCheckFollowingForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersCheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersGetByUsernameReq builds requests for "users/get-by-username"
-
-Get a single user.
-
-  GET /users/{username}
-
-https://developer.github.com/v3/users/#get-a-single-user
-*/
-type UsersGetByUsernameReq struct {
+type UsersUnblockReq struct {
 	Username string
 }
 
-func (r UsersGetByUsernameReq) urlPath() string {
-	return fmt.Sprintf("/users/%v", r.Username)
+func (r UsersUnblockReq) urlPath() string {
+	return fmt.Sprintf("/user/blocks/%v", r.Username)
 }
 
-func (r UsersGetByUsernameReq) method() string {
-	return "GET"
-}
-
-func (r UsersGetByUsernameReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersGetByUsernameReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersGetByUsernameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersGetByUsernameResponseBody200 is a response body for users/get-by-username
-
-API documentation: https://developer.github.com/v3/users/#get-a-single-user
-*/
-type UsersGetByUsernameResponseBody200 struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	Bio               string `json:"bio,omitempty"`
-	Blog              string `json:"blog,omitempty"`
-	Company           string `json:"company,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	Followers         int64  `json:"followers,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	Following         int64  `json:"following,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	Hireable          bool   `json:"hireable,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Location          string `json:"location,omitempty"`
-	Login             string `json:"login,omitempty"`
-	Name              string `json:"name,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	PublicGists       int64  `json:"public_gists,omitempty"`
-	PublicRepos       int64  `json:"public_repos,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	UpdatedAt         string `json:"updated_at,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-UsersListPublicKeysForUserReq builds requests for "users/list-public-keys-for-user"
-
-List public keys for a user.
-
-  GET /users/{username}/keys
-
-https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
-*/
-type UsersListPublicKeysForUserReq struct {
-	Username string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListPublicKeysForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/keys", r.Username)
-}
-
-func (r UsersListPublicKeysForUserReq) method() string {
-	return "GET"
-}
-
-func (r UsersListPublicKeysForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListPublicKeysForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListPublicKeysForUserResponseBody200 is a response body for users/list-public-keys-for-user
-
-API documentation: https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
-*/
-type UsersListPublicKeysForUserResponseBody200 []struct {
-	Id  int64  `json:"id,omitempty"`
-	Key string `json:"key,omitempty"`
-}
-
-/*
-UsersDeletePublicKeyReq builds requests for "users/delete-public-key"
-
-Delete a public key.
-
-  DELETE /user/keys/{key_id}
-
-https://developer.github.com/v3/users/keys/#delete-a-public-key
-*/
-type UsersDeletePublicKeyReq struct {
-	KeyId int64
-}
-
-func (r UsersDeletePublicKeyReq) urlPath() string {
-	return fmt.Sprintf("/user/keys/%v", r.KeyId)
-}
-
-func (r UsersDeletePublicKeyReq) method() string {
+func (r UsersUnblockReq) method() string {
 	return "DELETE"
 }
 
-func (r UsersDeletePublicKeyReq) urlQuery() url.Values {
+func (r UsersUnblockReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersDeletePublicKeyReq) header() http.Header {
+func (r UsersUnblockReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r UsersDeletePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r UsersUnblockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-UsersGetPublicKeyReq builds requests for "users/get-public-key"
+UsersUnfollowReq builds requests for "users/unfollow"
 
-Get a single public key.
+Unfollow a user.
 
-  GET /user/keys/{key_id}
+  DELETE /user/following/{username}
 
-https://developer.github.com/v3/users/keys/#get-a-single-public-key
+https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
-type UsersGetPublicKeyReq struct {
-	KeyId int64
-}
-
-func (r UsersGetPublicKeyReq) urlPath() string {
-	return fmt.Sprintf("/user/keys/%v", r.KeyId)
-}
-
-func (r UsersGetPublicKeyReq) method() string {
-	return "GET"
-}
-
-func (r UsersGetPublicKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersGetPublicKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersGetPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersGetPublicKeyResponseBody200 is a response body for users/get-public-key
-
-API documentation: https://developer.github.com/v3/users/keys/#get-a-single-public-key
-*/
-type UsersGetPublicKeyResponseBody200 struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
-}
-
-/*
-UsersListFollowingForUserReq builds requests for "users/list-following-for-user"
-
-List users followed by another user.
-
-  GET /users/{username}/following
-
-https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
-*/
-type UsersListFollowingForUserReq struct {
+type UsersUnfollowReq struct {
 	Username string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
 }
 
-func (r UsersListFollowingForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/following", r.Username)
+func (r UsersUnfollowReq) urlPath() string {
+	return fmt.Sprintf("/user/following/%v", r.Username)
 }
 
-func (r UsersListFollowingForUserReq) method() string {
-	return "GET"
+func (r UsersUnfollowReq) method() string {
+	return "DELETE"
 }
 
-func (r UsersListFollowingForUserReq) urlQuery() url.Values {
+func (r UsersUnfollowReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r UsersListFollowingForUserReq) header() http.Header {
+func (r UsersUnfollowReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r UsersListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r UsersUnfollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListFollowingForUserResponseBody200 is a response body for users/list-following-for-user
-
-API documentation: https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
-*/
-type UsersListFollowingForUserResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-UsersGetAuthenticatedReq builds requests for "users/get-authenticated"
-
-Get the authenticated user.
-
-  GET /user
-
-https://developer.github.com/v3/users/#get-the-authenticated-user
-*/
-type UsersGetAuthenticatedReq struct{}
-
-func (r UsersGetAuthenticatedReq) urlPath() string {
-	return fmt.Sprintf("/user")
-}
-
-func (r UsersGetAuthenticatedReq) method() string {
-	return "GET"
-}
-
-func (r UsersGetAuthenticatedReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersGetAuthenticatedReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersGetAuthenticatedResponseBody200 is a response body for users/get-authenticated
-
-API documentation: https://developer.github.com/v3/users/#get-the-authenticated-user
-*/
-type UsersGetAuthenticatedResponseBody200 struct {
-	AvatarUrl         string      `json:"avatar_url,omitempty"`
-	Bio               string      `json:"bio,omitempty"`
-	Blog              string      `json:"blog,omitempty"`
-	Collaborators     int64       `json:"collaborators,omitempty"`
-	Company           string      `json:"company,omitempty"`
-	CreatedAt         string      `json:"created_at,omitempty"`
-	DiskUsage         json.Number `json:"disk_usage,omitempty"`
-	Email             string      `json:"email,omitempty"`
-	EventsUrl         string      `json:"events_url,omitempty"`
-	Followers         int64       `json:"followers,omitempty"`
-	FollowersUrl      string      `json:"followers_url,omitempty"`
-	Following         int64       `json:"following,omitempty"`
-	FollowingUrl      string      `json:"following_url,omitempty"`
-	GistsUrl          string      `json:"gists_url,omitempty"`
-	GravatarId        string      `json:"gravatar_id,omitempty"`
-	Hireable          bool        `json:"hireable,omitempty"`
-	HtmlUrl           string      `json:"html_url,omitempty"`
-	Id                int64       `json:"id,omitempty"`
-	Location          string      `json:"location,omitempty"`
-	Login             string      `json:"login,omitempty"`
-	Name              string      `json:"name,omitempty"`
-	NodeId            string      `json:"node_id,omitempty"`
-	OrganizationsUrl  string      `json:"organizations_url,omitempty"`
-	OwnedPrivateRepos int64       `json:"owned_private_repos,omitempty"`
-	Plan              struct {
-		Collaborators int64       `json:"collaborators,omitempty"`
-		Name          string      `json:"name,omitempty"`
-		PrivateRepos  int64       `json:"private_repos,omitempty"`
-		Space         json.Number `json:"space,omitempty"`
-	} `json:"plan,omitempty"`
-	PrivateGists            int64  `json:"private_gists,omitempty"`
-	PublicGists             int64  `json:"public_gists,omitempty"`
-	PublicRepos             int64  `json:"public_repos,omitempty"`
-	ReceivedEventsUrl       string `json:"received_events_url,omitempty"`
-	ReposUrl                string `json:"repos_url,omitempty"`
-	SiteAdmin               bool   `json:"site_admin,omitempty"`
-	StarredUrl              string `json:"starred_url,omitempty"`
-	SubscriptionsUrl        string `json:"subscriptions_url,omitempty"`
-	TotalPrivateRepos       int64  `json:"total_private_repos,omitempty"`
-	TwoFactorAuthentication bool   `json:"two_factor_authentication,omitempty"`
-	Type                    string `json:"type,omitempty"`
-	UpdatedAt               string `json:"updated_at,omitempty"`
-	Url                     string `json:"url,omitempty"`
 }
 
 /*
@@ -1649,307 +1952,4 @@ type UsersUpdateAuthenticatedResponseBody200 struct {
 	Type                    string `json:"type,omitempty"`
 	UpdatedAt               string `json:"updated_at,omitempty"`
 	Url                     string `json:"url,omitempty"`
-}
-
-/*
-UsersListFollowersForAuthenticatedUserReq builds requests for "users/list-followers-for-authenticated-user"
-
-List followers of the authenticated user.
-
-  GET /user/followers
-
-https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
-*/
-type UsersListFollowersForAuthenticatedUserReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListFollowersForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/followers")
-}
-
-func (r UsersListFollowersForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r UsersListFollowersForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListFollowersForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListFollowersForAuthenticatedUserResponseBody200 is a response body for users/list-followers-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
-*/
-type UsersListFollowersForAuthenticatedUserResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-UsersListBlockedReq builds requests for "users/list-blocked"
-
-List blocked users.
-
-  GET /user/blocks
-
-https://developer.github.com/v3/users/blocking/#list-blocked-users
-*/
-type UsersListBlockedReq struct{}
-
-func (r UsersListBlockedReq) urlPath() string {
-	return fmt.Sprintf("/user/blocks")
-}
-
-func (r UsersListBlockedReq) method() string {
-	return "GET"
-}
-
-func (r UsersListBlockedReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersListBlockedReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListBlockedResponseBody200 is a response body for users/list-blocked
-
-API documentation: https://developer.github.com/v3/users/blocking/#list-blocked-users
-*/
-type UsersListBlockedResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-UsersListGpgKeysReq builds requests for "users/list-gpg-keys"
-
-List your GPG keys.
-
-  GET /user/gpg_keys
-
-https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
-*/
-type UsersListGpgKeysReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r UsersListGpgKeysReq) urlPath() string {
-	return fmt.Sprintf("/user/gpg_keys")
-}
-
-func (r UsersListGpgKeysReq) method() string {
-	return "GET"
-}
-
-func (r UsersListGpgKeysReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r UsersListGpgKeysReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersListGpgKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-UsersListGpgKeysResponseBody200 is a response body for users/list-gpg-keys
-
-API documentation: https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
-*/
-type UsersListGpgKeysResponseBody200 []struct {
-	CanCertify        bool   `json:"can_certify,omitempty"`
-	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
-	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
-	CanSign           bool   `json:"can_sign,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Emails            []struct {
-		Email    string `json:"email,omitempty"`
-		Verified bool   `json:"verified,omitempty"`
-	} `json:"emails,omitempty"`
-	ExpiresAt    string `json:"expires_at,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	KeyId        string `json:"key_id,omitempty"`
-	PrimaryKeyId string `json:"primary_key_id,omitempty"`
-	PublicKey    string `json:"public_key,omitempty"`
-	Subkeys      []struct {
-		CanCertify        bool          `json:"can_certify,omitempty"`
-		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
-		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
-		CanSign           bool          `json:"can_sign,omitempty"`
-		CreatedAt         string        `json:"created_at,omitempty"`
-		Emails            []interface{} `json:"emails,omitempty"`
-		ExpiresAt         string        `json:"expires_at,omitempty"`
-		Id                int64         `json:"id,omitempty"`
-		KeyId             string        `json:"key_id,omitempty"`
-		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
-		PublicKey         string        `json:"public_key,omitempty"`
-		Subkeys           []interface{} `json:"subkeys,omitempty"`
-	} `json:"subkeys,omitempty"`
-}
-
-/*
-UsersCreateGpgKeyReq builds requests for "users/create-gpg-key"
-
-Create a GPG key.
-
-  POST /user/gpg_keys
-
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
-*/
-type UsersCreateGpgKeyReq struct {
-	RequestBody UsersCreateGpgKeyReqBody
-}
-
-func (r UsersCreateGpgKeyReq) urlPath() string {
-	return fmt.Sprintf("/user/gpg_keys")
-}
-
-func (r UsersCreateGpgKeyReq) method() string {
-	return "POST"
-}
-
-func (r UsersCreateGpgKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r UsersCreateGpgKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r UsersCreateGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-UsersCreateGpgKeyReqBody is a request body for users/create-gpg-key
-
-API documentation: https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
-*/
-type UsersCreateGpgKeyReqBody struct {
-
-	/*
-	   Your GPG key, generated in ASCII-armored format. See "[Generating a new GPG
-	   key](https://help.github.com/articles/generating-a-new-gpg-key/)" for help
-	   creating a GPG key.
-	*/
-	ArmoredPublicKey *string `json:"armored_public_key,omitempty"`
-}
-
-/*
-UsersCreateGpgKeyResponseBody201 is a response body for users/create-gpg-key
-
-API documentation: https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
-*/
-type UsersCreateGpgKeyResponseBody201 struct {
-	CanCertify        bool   `json:"can_certify,omitempty"`
-	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
-	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
-	CanSign           bool   `json:"can_sign,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Emails            []struct {
-		Email    string `json:"email,omitempty"`
-		Verified bool   `json:"verified,omitempty"`
-	} `json:"emails,omitempty"`
-	ExpiresAt    string `json:"expires_at,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	KeyId        string `json:"key_id,omitempty"`
-	PrimaryKeyId string `json:"primary_key_id,omitempty"`
-	PublicKey    string `json:"public_key,omitempty"`
-	Subkeys      []struct {
-		CanCertify        bool          `json:"can_certify,omitempty"`
-		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
-		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
-		CanSign           bool          `json:"can_sign,omitempty"`
-		CreatedAt         string        `json:"created_at,omitempty"`
-		Emails            []interface{} `json:"emails,omitempty"`
-		ExpiresAt         string        `json:"expires_at,omitempty"`
-		Id                int64         `json:"id,omitempty"`
-		KeyId             string        `json:"key_id,omitempty"`
-		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
-		PublicKey         string        `json:"public_key,omitempty"`
-		Subkeys           []interface{} `json:"subkeys,omitempty"`
-	} `json:"subkeys,omitempty"`
 }

@@ -63,6 +63,61 @@ type CodesOfConductGetAllCodesOfConductResponseBody200 []struct {
 }
 
 /*
+CodesOfConductGetConductCodeReq builds requests for "codes-of-conduct/get-conduct-code"
+
+Get an individual code of conduct.
+
+  GET /codes_of_conduct/{key}
+
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+*/
+type CodesOfConductGetConductCodeReq struct {
+	Key string
+
+	/*
+	The Codes of Conduct API is currently available for developers to preview.
+
+	To access the API during the preview period, you must set this to true.
+	*/
+	ScarletWitchPreview bool
+}
+
+func (r CodesOfConductGetConductCodeReq) urlPath() string {
+	return fmt.Sprintf("/codes_of_conduct/%v", r.Key)
+}
+
+func (r CodesOfConductGetConductCodeReq) method() string {
+	return "GET"
+}
+
+func (r CodesOfConductGetConductCodeReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r CodesOfConductGetConductCodeReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+CodesOfConductGetConductCodeResponseBody200 is a response body for codes-of-conduct/get-conduct-code
+
+API documentation: https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+*/
+type CodesOfConductGetConductCodeResponseBody200 struct {
+	Body string `json:"body,omitempty"`
+	Key  string `json:"key,omitempty"`
+	Name string `json:"name,omitempty"`
+	Url  string `json:"url,omitempty"`
+}
+
+/*
 CodesOfConductGetForRepoReq builds requests for "codes-of-conduct/get-for-repo"
 
 Get the contents of a repository's code of conduct.
@@ -112,61 +167,6 @@ CodesOfConductGetForRepoResponseBody200 is a response body for codes-of-conduct/
 API documentation: https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
 type CodesOfConductGetForRepoResponseBody200 struct {
-	Body string `json:"body,omitempty"`
-	Key  string `json:"key,omitempty"`
-	Name string `json:"name,omitempty"`
-	Url  string `json:"url,omitempty"`
-}
-
-/*
-CodesOfConductGetConductCodeReq builds requests for "codes-of-conduct/get-conduct-code"
-
-Get an individual code of conduct.
-
-  GET /codes_of_conduct/{key}
-
-https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
-*/
-type CodesOfConductGetConductCodeReq struct {
-	Key string
-
-	/*
-	The Codes of Conduct API is currently available for developers to preview.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	ScarletWitchPreview bool
-}
-
-func (r CodesOfConductGetConductCodeReq) urlPath() string {
-	return fmt.Sprintf("/codes_of_conduct/%v", r.Key)
-}
-
-func (r CodesOfConductGetConductCodeReq) method() string {
-	return "GET"
-}
-
-func (r CodesOfConductGetConductCodeReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r CodesOfConductGetConductCodeReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-CodesOfConductGetConductCodeResponseBody200 is a response body for codes-of-conduct/get-conduct-code
-
-API documentation: https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
-*/
-type CodesOfConductGetConductCodeResponseBody200 struct {
 	Body string `json:"body,omitempty"`
 	Key  string `json:"key,omitempty"`
 	Name string `json:"name,omitempty"`

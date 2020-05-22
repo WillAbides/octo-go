@@ -11,6 +11,63 @@ import (
 )
 
 /*
+LicensesGetReq builds requests for "licenses/get"
+
+Get an individual license.
+
+  GET /licenses/{license}
+
+https://developer.github.com/v3/licenses/#get-an-individual-license
+*/
+type LicensesGetReq struct {
+	License string
+}
+
+func (r LicensesGetReq) urlPath() string {
+	return fmt.Sprintf("/licenses/%v", r.License)
+}
+
+func (r LicensesGetReq) method() string {
+	return "GET"
+}
+
+func (r LicensesGetReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r LicensesGetReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+LicensesGetResponseBody200 is a response body for licenses/get
+
+API documentation: https://developer.github.com/v3/licenses/#get-an-individual-license
+*/
+type LicensesGetResponseBody200 struct {
+	Body           string   `json:"body,omitempty"`
+	Conditions     []string `json:"conditions,omitempty"`
+	Description    string   `json:"description,omitempty"`
+	Featured       bool     `json:"featured,omitempty"`
+	HtmlUrl        string   `json:"html_url,omitempty"`
+	Implementation string   `json:"implementation,omitempty"`
+	Key            string   `json:"key,omitempty"`
+	Limitations    []string `json:"limitations,omitempty"`
+	Name           string   `json:"name,omitempty"`
+	NodeId         string   `json:"node_id,omitempty"`
+	Permissions    []string `json:"permissions,omitempty"`
+	SpdxId         string   `json:"spdx_id,omitempty"`
+	Url            string   `json:"url,omitempty"`
+}
+
+/*
 LicensesGetForRepoReq builds requests for "licenses/get-for-repo"
 
 Get the contents of a repository's license.
@@ -76,63 +133,6 @@ type LicensesGetForRepoResponseBody200 struct {
 	Size json.Number `json:"size,omitempty"`
 	Type string      `json:"type,omitempty"`
 	Url  string      `json:"url,omitempty"`
-}
-
-/*
-LicensesGetReq builds requests for "licenses/get"
-
-Get an individual license.
-
-  GET /licenses/{license}
-
-https://developer.github.com/v3/licenses/#get-an-individual-license
-*/
-type LicensesGetReq struct {
-	License string
-}
-
-func (r LicensesGetReq) urlPath() string {
-	return fmt.Sprintf("/licenses/%v", r.License)
-}
-
-func (r LicensesGetReq) method() string {
-	return "GET"
-}
-
-func (r LicensesGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r LicensesGetReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-LicensesGetResponseBody200 is a response body for licenses/get
-
-API documentation: https://developer.github.com/v3/licenses/#get-an-individual-license
-*/
-type LicensesGetResponseBody200 struct {
-	Body           string   `json:"body,omitempty"`
-	Conditions     []string `json:"conditions,omitempty"`
-	Description    string   `json:"description,omitempty"`
-	Featured       bool     `json:"featured,omitempty"`
-	HtmlUrl        string   `json:"html_url,omitempty"`
-	Implementation string   `json:"implementation,omitempty"`
-	Key            string   `json:"key,omitempty"`
-	Limitations    []string `json:"limitations,omitempty"`
-	Name           string   `json:"name,omitempty"`
-	NodeId         string   `json:"node_id,omitempty"`
-	Permissions    []string `json:"permissions,omitempty"`
-	SpdxId         string   `json:"spdx_id,omitempty"`
-	Url            string   `json:"url,omitempty"`
 }
 
 /*

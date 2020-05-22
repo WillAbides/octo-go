@@ -12,189 +12,369 @@ import (
 )
 
 /*
-AppsRevokeInstallationTokenReq builds requests for "apps/revoke-installation-token"
+AppsAddRepoToInstallationReq builds requests for "apps/add-repo-to-installation"
 
-Revoke an installation token.
+Add repository to installation.
 
-  DELETE /installation/token
+  PUT /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
-type AppsRevokeInstallationTokenReq struct{}
+type AppsAddRepoToInstallationReq struct {
+	InstallationId int64
+	RepositoryId   int64
 
-func (r AppsRevokeInstallationTokenReq) urlPath() string {
-	return fmt.Sprintf("/installation/token")
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
 }
 
-func (r AppsRevokeInstallationTokenReq) method() string {
-	return "DELETE"
+func (r AppsAddRepoToInstallationReq) urlPath() string {
+	return fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId)
 }
 
-func (r AppsRevokeInstallationTokenReq) urlQuery() url.Values {
+func (r AppsAddRepoToInstallationReq) method() string {
+	return "PUT"
+}
+
+func (r AppsAddRepoToInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsRevokeInstallationTokenReq) header() http.Header {
+func (r AppsAddRepoToInstallationReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsListPlansReq builds requests for "apps/list-plans"
+AppsCheckAuthorizationReq builds requests for "apps/check-authorization"
 
-List plans.
+Check an authorization.
 
-  GET /marketplace_listing/plans
+  GET /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/marketplace/#list-plans
+https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-type AppsListPlansReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+type AppsCheckAuthorizationReq struct {
+	ClientId    string
+	AccessToken string
 }
 
-func (r AppsListPlansReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/plans")
+func (r AppsCheckAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsListPlansReq) method() string {
+func (r AppsCheckAuthorizationReq) method() string {
 	return "GET"
 }
 
-func (r AppsListPlansReq) urlQuery() url.Values {
+func (r AppsCheckAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r AppsListPlansReq) header() http.Header {
+func (r AppsCheckAuthorizationReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsListPlansResponseBody200 is a response body for apps/list-plans
+AppsCheckAuthorizationResponseBody200 is a response body for apps/check-authorization
 
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-plans
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-type AppsListPlansResponseBody200 []struct {
-	AccountsUrl         string   `json:"accounts_url,omitempty"`
-	Bullets             []string `json:"bullets,omitempty"`
-	Description         string   `json:"description,omitempty"`
-	HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-	Id                  int64    `json:"id,omitempty"`
-	MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-	Name                string   `json:"name,omitempty"`
-	Number              int64    `json:"number,omitempty"`
-	PriceModel          string   `json:"price_model,omitempty"`
-	State               string   `json:"state,omitempty"`
-	UnitName            string   `json:"unit_name,omitempty"`
-	Url                 string   `json:"url,omitempty"`
-	YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+type AppsCheckAuthorizationResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserReq builds requests for "apps/list-subscriptions-for-authenticated-user"
+AppsCheckTokenReq builds requests for "apps/check-token"
 
-List subscriptions for the authenticated user.
+Check a token.
 
-  GET /user/marketplace_purchases
+  POST /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-type AppsListSubscriptionsForAuthenticatedUserReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+type AppsCheckTokenReq struct {
+	ClientId    string
+	RequestBody AppsCheckTokenReqBody
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/marketplace_purchases")
+func (r AppsCheckTokenReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/token", r.ClientId)
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) method() string {
-	return "GET"
+func (r AppsCheckTokenReq) method() string {
+	return "POST"
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r AppsCheckTokenReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) header() http.Header {
+func (r AppsCheckTokenReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+AppsCheckTokenReqBody is a request body for apps/check-token
+
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+*/
+type AppsCheckTokenReqBody struct {
+
+	// The OAuth access token used to authenticate to the GitHub API.
+	AccessToken *string `json:"access_token,omitempty"`
+}
+
+/*
+AppsCheckTokenResponseBody200 is a response body for apps/check-token
+
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+*/
+type AppsCheckTokenResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+AppsCreateContentAttachmentReq builds requests for "apps/create-content-attachment"
+
+Create a content attachment.
+
+  POST /content_references/{content_reference_id}/attachments
+
+https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+*/
+type AppsCreateContentAttachmentReq struct {
+	ContentReferenceId int64
+	RequestBody        AppsCreateContentAttachmentReqBody
+
+	/*
+	To access the Content Attachments API during the preview period, you must set
+	this to true.
+	*/
+	CorsairPreview bool
+}
+
+func (r AppsCreateContentAttachmentReq) urlPath() string {
+	return fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId)
+}
+
+func (r AppsCreateContentAttachmentReq) method() string {
+	return "POST"
+}
+
+func (r AppsCreateContentAttachmentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsCreateContentAttachmentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"corsair": r.CorsairPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+AppsCreateContentAttachmentReqBody is a request body for apps/create-content-attachment
+
+API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+*/
+type AppsCreateContentAttachmentReqBody struct {
+
+	/*
+	   The body text of the content attachment displayed in the body or comment of an
+	   issue or pull request. This parameter supports markdown.
+	*/
+	Body *string `json:"body"`
+
+	/*
+	   The title of the content attachment displayed in the body or comment of an issue
+	   or pull request.
+	*/
+	Title *string `json:"title"`
+}
+
+/*
+AppsCreateContentAttachmentResponseBody200 is a response body for apps/create-content-attachment
+
+API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+*/
+type AppsCreateContentAttachmentResponseBody200 struct {
+	Body  string `json:"body,omitempty"`
+	Id    int64  `json:"id,omitempty"`
+	Title string `json:"title,omitempty"`
+}
+
+/*
+AppsCreateFromManifestReq builds requests for "apps/create-from-manifest"
+
+Create a GitHub App from a manifest.
+
+  POST /app-manifests/{code}/conversions
+
+https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
+*/
+type AppsCreateFromManifestReq struct {
+	Code string
+}
+
+func (r AppsCreateFromManifestReq) urlPath() string {
+	return fmt.Sprintf("/app-manifests/%v/conversions", r.Code)
+}
+
+func (r AppsCreateFromManifestReq) method() string {
+	return "POST"
+}
+
+func (r AppsCreateFromManifestReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsCreateFromManifestReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserResponseBody200 is a response body for apps/list-subscriptions-for-authenticated-user
+AppsCreateFromManifestResponseBody200 is a response body for apps/create-from-manifest
 
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+API documentation: https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-type AppsListSubscriptionsForAuthenticatedUserResponseBody200 []struct {
-	Account struct {
-		Email                    string `json:"email,omitempty"`
-		Id                       int64  `json:"id,omitempty"`
-		Login                    string `json:"login,omitempty"`
-		OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-		Type                     string `json:"type,omitempty"`
-		Url                      string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	BillingCycle    string `json:"billing_cycle,omitempty"`
-	FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-	NextBillingDate string `json:"next_billing_date,omitempty"`
-	OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-	Plan            struct {
-		AccountsUrl         string   `json:"accounts_url,omitempty"`
-		Bullets             []string `json:"bullets,omitempty"`
-		Description         string   `json:"description,omitempty"`
-		HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-		Id                  int64    `json:"id,omitempty"`
-		MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-		Name                string   `json:"name,omitempty"`
-		Number              int64    `json:"number,omitempty"`
-		PriceModel          string   `json:"price_model,omitempty"`
-		State               string   `json:"state,omitempty"`
-		UnitName            string   `json:"unit_name,omitempty"`
-		Url                 string   `json:"url,omitempty"`
-		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-	} `json:"plan,omitempty"`
-	UnitCount string `json:"unit_count,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+type AppsCreateFromManifestResponseBody200 struct {
+	ClientId     string `json:"client_id,omitempty"`
+	ClientSecret string `json:"client_secret,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Description  string `json:"description,omitempty"`
+	ExternalUrl  string `json:"external_url,omitempty"`
+	HtmlUrl      string `json:"html_url,omitempty"`
+	Id           int64  `json:"id,omitempty"`
+	Name         string `json:"name,omitempty"`
+	NodeId       string `json:"node_id,omitempty"`
+	Owner        struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Pem           string `json:"pem,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	WebhookSecret string `json:"webhook_secret,omitempty"`
 }
 
 /*
@@ -387,6 +567,144 @@ type AppsCreateInstallationTokenResponseBody201 struct {
 }
 
 /*
+AppsDeleteAuthorizationReq builds requests for "apps/delete-authorization"
+
+Delete an app authorization.
+
+  DELETE /applications/{client_id}/grant
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+*/
+type AppsDeleteAuthorizationReq struct {
+	ClientId    string
+	RequestBody AppsDeleteAuthorizationReqBody
+}
+
+func (r AppsDeleteAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/grant", r.ClientId)
+}
+
+func (r AppsDeleteAuthorizationReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsDeleteAuthorizationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsDeleteAuthorizationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+AppsDeleteAuthorizationReqBody is a request body for apps/delete-authorization
+
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+*/
+type AppsDeleteAuthorizationReqBody struct {
+
+	// The OAuth access token used to authenticate to the GitHub API.
+	AccessToken *string `json:"access_token,omitempty"`
+}
+
+/*
+AppsDeleteInstallationReq builds requests for "apps/delete-installation"
+
+Delete an installation.
+
+  DELETE /app/installations/{installation_id}
+
+https://developer.github.com/v3/apps/#delete-an-installation
+*/
+type AppsDeleteInstallationReq struct {
+	InstallationId int64
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
+}
+
+func (r AppsDeleteInstallationReq) urlPath() string {
+	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
+}
+
+func (r AppsDeleteInstallationReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsDeleteInstallationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsDeleteInstallationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsDeleteTokenReq builds requests for "apps/delete-token"
+
+Delete an app token.
+
+  DELETE /applications/{client_id}/token
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+*/
+type AppsDeleteTokenReq struct {
+	ClientId    string
+	RequestBody AppsDeleteTokenReqBody
+}
+
+func (r AppsDeleteTokenReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/token", r.ClientId)
+}
+
+func (r AppsDeleteTokenReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsDeleteTokenReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsDeleteTokenReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+AppsDeleteTokenReqBody is a request body for apps/delete-token
+
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+*/
+type AppsDeleteTokenReqBody struct {
+
+	// The OAuth access token used to authenticate to the GitHub API.
+	AccessToken *string `json:"access_token,omitempty"`
+}
+
+/*
 AppsGetAuthenticatedReq builds requests for "apps/get-authenticated"
 
 Get the authenticated GitHub App.
@@ -464,6 +782,432 @@ type AppsGetAuthenticatedResponseBody200 struct {
 	} `json:"permissions,omitempty"`
 	Slug      string `json:"slug,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+AppsGetBySlugReq builds requests for "apps/get-by-slug"
+
+Get a single GitHub App.
+
+  GET /apps/{app_slug}
+
+https://developer.github.com/v3/apps/#get-a-single-github-app
+*/
+type AppsGetBySlugReq struct {
+	AppSlug string
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
+}
+
+func (r AppsGetBySlugReq) urlPath() string {
+	return fmt.Sprintf("/apps/%v", r.AppSlug)
+}
+
+func (r AppsGetBySlugReq) method() string {
+	return "GET"
+}
+
+func (r AppsGetBySlugReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsGetBySlugReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsGetBySlugResponseBody200 is a response body for apps/get-by-slug
+
+API documentation: https://developer.github.com/v3/apps/#get-a-single-github-app
+*/
+type AppsGetBySlugResponseBody200 struct {
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Description string   `json:"description,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	ExternalUrl string   `json:"external_url,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	NodeId      string   `json:"node_id,omitempty"`
+	Owner       struct {
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Contents   string `json:"contents,omitempty"`
+		Issues     string `json:"issues,omitempty"`
+		Metadata   string `json:"metadata,omitempty"`
+		SingleFile string `json:"single_file,omitempty"`
+	} `json:"permissions,omitempty"`
+	Slug      string `json:"slug,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+AppsGetInstallationReq builds requests for "apps/get-installation"
+
+Get an installation.
+
+  GET /app/installations/{installation_id}
+
+https://developer.github.com/v3/apps/#get-an-installation
+*/
+type AppsGetInstallationReq struct {
+	InstallationId int64
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
+}
+
+func (r AppsGetInstallationReq) urlPath() string {
+	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
+}
+
+func (r AppsGetInstallationReq) method() string {
+	return "GET"
+}
+
+func (r AppsGetInstallationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsGetInstallationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsGetInstallationResponseBody200 is a response body for apps/get-installation
+
+API documentation: https://developer.github.com/v3/apps/#get-an-installation
+*/
+type AppsGetInstallationResponseBody200 struct {
+	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
+	Account         struct {
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
+	} `json:"account,omitempty"`
+	AppId       int64    `json:"app_id,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Permissions struct {
+		Contents   string `json:"contents,omitempty"`
+		Issues     string `json:"issues,omitempty"`
+		Metadata   string `json:"metadata,omitempty"`
+		SingleFile string `json:"single_file,omitempty"`
+	} `json:"permissions,omitempty"`
+	RepositoriesUrl     string `json:"repositories_url,omitempty"`
+	RepositorySelection string `json:"repository_selection,omitempty"`
+	SingleFileName      string `json:"single_file_name,omitempty"`
+	TargetId            int64  `json:"target_id,omitempty"`
+	TargetType          string `json:"target_type,omitempty"`
+}
+
+/*
+AppsGetOrgInstallationReq builds requests for "apps/get-org-installation"
+
+Get an organization installation.
+
+  GET /orgs/{org}/installation
+
+https://developer.github.com/v3/apps/#get-an-organization-installation
+*/
+type AppsGetOrgInstallationReq struct {
+	Org string
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
+}
+
+func (r AppsGetOrgInstallationReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/installation", r.Org)
+}
+
+func (r AppsGetOrgInstallationReq) method() string {
+	return "GET"
+}
+
+func (r AppsGetOrgInstallationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsGetOrgInstallationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsGetOrgInstallationResponseBody200 is a response body for apps/get-org-installation
+
+API documentation: https://developer.github.com/v3/apps/#get-an-organization-installation
+*/
+type AppsGetOrgInstallationResponseBody200 struct {
+	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
+	Account         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"account,omitempty"`
+	AppId       int64    `json:"app_id,omitempty"`
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Permissions struct {
+		Checks   string `json:"checks,omitempty"`
+		Contents string `json:"contents,omitempty"`
+		Metadata string `json:"metadata,omitempty"`
+	} `json:"permissions,omitempty"`
+	RepositoriesUrl     string `json:"repositories_url,omitempty"`
+	RepositorySelection string `json:"repository_selection,omitempty"`
+	SingleFileName      string `json:"single_file_name,omitempty"`
+	TargetId            int64  `json:"target_id,omitempty"`
+	TargetType          string `json:"target_type,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+}
+
+/*
+AppsGetRepoInstallationReq builds requests for "apps/get-repo-installation"
+
+Get a repository installation.
+
+  GET /repos/{owner}/{repo}/installation
+
+https://developer.github.com/v3/apps/#get-a-repository-installation
+*/
+type AppsGetRepoInstallationReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
+}
+
+func (r AppsGetRepoInstallationReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo)
+}
+
+func (r AppsGetRepoInstallationReq) method() string {
+	return "GET"
+}
+
+func (r AppsGetRepoInstallationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsGetRepoInstallationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsGetRepoInstallationResponseBody200 is a response body for apps/get-repo-installation
+
+API documentation: https://developer.github.com/v3/apps/#get-a-repository-installation
+*/
+type AppsGetRepoInstallationResponseBody200 struct {
+	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
+	Account         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"account,omitempty"`
+	AppId       int64    `json:"app_id,omitempty"`
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Permissions struct {
+		Checks   string `json:"checks,omitempty"`
+		Contents string `json:"contents,omitempty"`
+		Metadata string `json:"metadata,omitempty"`
+	} `json:"permissions,omitempty"`
+	RepositoriesUrl     string `json:"repositories_url,omitempty"`
+	RepositorySelection string `json:"repository_selection,omitempty"`
+	SingleFileName      string `json:"single_file_name,omitempty"`
+	TargetId            int64  `json:"target_id,omitempty"`
+	TargetType          string `json:"target_type,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+}
+
+/*
+AppsGetSubscriptionPlanForAccountReq builds requests for "apps/get-subscription-plan-for-account"
+
+Get a subscription plan for an account.
+
+  GET /marketplace_listing/accounts/{account_id}
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+*/
+type AppsGetSubscriptionPlanForAccountReq struct {
+	AccountId int64
+}
+
+func (r AppsGetSubscriptionPlanForAccountReq) urlPath() string {
+	return fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId)
+}
+
+func (r AppsGetSubscriptionPlanForAccountReq) method() string {
+	return "GET"
+}
+
+func (r AppsGetSubscriptionPlanForAccountReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsGetSubscriptionPlanForAccountReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsGetSubscriptionPlanForAccountResponseBody200 is a response body for apps/get-subscription-plan-for-account
+
+API documentation: https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+*/
+type AppsGetSubscriptionPlanForAccountResponseBody200 struct {
+	Email                    string `json:"email,omitempty"`
+	Id                       int64  `json:"id,omitempty"`
+	Login                    string `json:"login,omitempty"`
+	MarketplacePendingChange struct {
+		EffectiveDate string `json:"effective_date,omitempty"`
+		Id            int64  `json:"id,omitempty"`
+		Plan          struct {
+			AccountsUrl         string   `json:"accounts_url,omitempty"`
+			Bullets             []string `json:"bullets,omitempty"`
+			Description         string   `json:"description,omitempty"`
+			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+			Id                  int64    `json:"id,omitempty"`
+			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+			Name                string   `json:"name,omitempty"`
+			Number              int64    `json:"number,omitempty"`
+			PriceModel          string   `json:"price_model,omitempty"`
+			State               string   `json:"state,omitempty"`
+			UnitName            string   `json:"unit_name,omitempty"`
+			Url                 string   `json:"url,omitempty"`
+			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+		} `json:"plan,omitempty"`
+		UnitCount string `json:"unit_count,omitempty"`
+	} `json:"marketplace_pending_change,omitempty"`
+	MarketplacePurchase struct {
+		BillingCycle    string `json:"billing_cycle,omitempty"`
+		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
+		NextBillingDate string `json:"next_billing_date,omitempty"`
+		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
+		Plan            struct {
+			AccountsUrl         string   `json:"accounts_url,omitempty"`
+			Bullets             []string `json:"bullets,omitempty"`
+			Description         string   `json:"description,omitempty"`
+			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+			Id                  int64    `json:"id,omitempty"`
+			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+			Name                string   `json:"name,omitempty"`
+			Number              int64    `json:"number,omitempty"`
+			PriceModel          string   `json:"price_model,omitempty"`
+			State               string   `json:"state,omitempty"`
+			UnitName            string   `json:"unit_name,omitempty"`
+			Url                 string   `json:"url,omitempty"`
+			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+		} `json:"plan,omitempty"`
+		UnitCount string `json:"unit_count,omitempty"`
+		UpdatedAt string `json:"updated_at,omitempty"`
+	} `json:"marketplace_purchase,omitempty"`
+	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
+	Type                     string `json:"type,omitempty"`
+	Url                      string `json:"url,omitempty"`
 }
 
 /*
@@ -647,404 +1391,200 @@ type AppsGetUserInstallationResponseBody200 struct {
 }
 
 /*
-AppsUnsuspendInstallationReq builds requests for "apps/unsuspend-installation"
+AppsListAccountsForPlanReq builds requests for "apps/list-accounts-for-plan"
 
-Unsuspend an installation.
+List accounts for a plan.
 
-  DELETE /app/installations/{installation_id}/suspended
+  GET /marketplace_listing/plans/{plan_id}/accounts
 
-https://developer.github.com/v3/apps/#unsuspend-an-installation
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-type AppsUnsuspendInstallationReq struct {
-	InstallationId int64
-}
-
-func (r AppsUnsuspendInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
-}
-
-func (r AppsUnsuspendInstallationReq) method() string {
-	return "DELETE"
-}
-
-func (r AppsUnsuspendInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsUnsuspendInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsSuspendInstallationReq builds requests for "apps/suspend-installation"
-
-Suspend an installation.
-
-  PUT /app/installations/{installation_id}/suspended
-
-https://developer.github.com/v3/apps/#suspend-an-installation
-*/
-type AppsSuspendInstallationReq struct {
-	InstallationId int64
-}
-
-func (r AppsSuspendInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
-}
-
-func (r AppsSuspendInstallationReq) method() string {
-	return "PUT"
-}
-
-func (r AppsSuspendInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsSuspendInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsGetOrgInstallationReq builds requests for "apps/get-org-installation"
-
-Get an organization installation.
-
-  GET /orgs/{org}/installation
-
-https://developer.github.com/v3/apps/#get-an-organization-installation
-*/
-type AppsGetOrgInstallationReq struct {
-	Org string
+type AppsListAccountsForPlanReq struct {
+	PlanId int64
 
 	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
+	Sorts the GitHub accounts by the date they were created or last updated. Can be
+	one of `created` or `updated`.
 	*/
-	MachineManPreview bool
+	Sort *string
+
+	/*
+	To return the oldest accounts first, set to `asc`. Can be one of `asc` or
+	`desc`. Ignored without the `sort` parameter.
+	*/
+	Direction *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r AppsGetOrgInstallationReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/installation", r.Org)
+func (r AppsListAccountsForPlanReq) urlPath() string {
+	return fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId)
 }
 
-func (r AppsGetOrgInstallationReq) method() string {
+func (r AppsListAccountsForPlanReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetOrgInstallationReq) urlQuery() url.Values {
+func (r AppsListAccountsForPlanReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r AppsGetOrgInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsGetOrgInstallationResponseBody200 is a response body for apps/get-org-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-an-organization-installation
-*/
-type AppsGetOrgInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-}
-
-/*
-AppsRevokeAuthorizationForApplicationReq builds requests for "apps/revoke-authorization-for-application"
-
-Revoke an authorization for an application.
-
-  DELETE /applications/{client_id}/tokens/{access_token}
-
-https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
-*/
-type AppsRevokeAuthorizationForApplicationReq struct {
-	ClientId    string
-	AccessToken string
-}
-
-func (r AppsRevokeAuthorizationForApplicationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
-}
-
-func (r AppsRevokeAuthorizationForApplicationReq) method() string {
-	return "DELETE"
-}
-
-func (r AppsRevokeAuthorizationForApplicationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsRevokeAuthorizationForApplicationReq) header() http.Header {
+func (r AppsListAccountsForPlanReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsCheckAuthorizationReq builds requests for "apps/check-authorization"
+AppsListAccountsForPlanResponseBody200 is a response body for apps/list-accounts-for-plan
 
-Check an authorization.
-
-  GET /applications/{client_id}/tokens/{access_token}
-
-https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-type AppsCheckAuthorizationReq struct {
-	ClientId    string
-	AccessToken string
+type AppsListAccountsForPlanResponseBody200 []struct {
+	Email                    string `json:"email,omitempty"`
+	Id                       int64  `json:"id,omitempty"`
+	Login                    string `json:"login,omitempty"`
+	MarketplacePendingChange struct {
+		EffectiveDate string `json:"effective_date,omitempty"`
+		Id            int64  `json:"id,omitempty"`
+		Plan          struct {
+			AccountsUrl         string   `json:"accounts_url,omitempty"`
+			Bullets             []string `json:"bullets,omitempty"`
+			Description         string   `json:"description,omitempty"`
+			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+			Id                  int64    `json:"id,omitempty"`
+			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+			Name                string   `json:"name,omitempty"`
+			Number              int64    `json:"number,omitempty"`
+			PriceModel          string   `json:"price_model,omitempty"`
+			State               string   `json:"state,omitempty"`
+			UnitName            string   `json:"unit_name,omitempty"`
+			Url                 string   `json:"url,omitempty"`
+			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+		} `json:"plan,omitempty"`
+		UnitCount string `json:"unit_count,omitempty"`
+	} `json:"marketplace_pending_change,omitempty"`
+	MarketplacePurchase struct {
+		BillingCycle    string `json:"billing_cycle,omitempty"`
+		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
+		NextBillingDate string `json:"next_billing_date,omitempty"`
+		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
+		Plan            struct {
+			AccountsUrl         string   `json:"accounts_url,omitempty"`
+			Bullets             []string `json:"bullets,omitempty"`
+			Description         string   `json:"description,omitempty"`
+			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+			Id                  int64    `json:"id,omitempty"`
+			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+			Name                string   `json:"name,omitempty"`
+			Number              int64    `json:"number,omitempty"`
+			PriceModel          string   `json:"price_model,omitempty"`
+			State               string   `json:"state,omitempty"`
+			UnitName            string   `json:"unit_name,omitempty"`
+			Url                 string   `json:"url,omitempty"`
+			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+		} `json:"plan,omitempty"`
+		UnitCount string `json:"unit_count,omitempty"`
+		UpdatedAt string `json:"updated_at,omitempty"`
+	} `json:"marketplace_purchase,omitempty"`
+	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
+	Type                     string `json:"type,omitempty"`
+	Url                      string `json:"url,omitempty"`
 }
 
-func (r AppsCheckAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
+/*
+AppsListAccountsForPlanStubbedReq builds requests for "apps/list-accounts-for-plan-stubbed"
+
+List accounts for a plan (stubbed).
+
+  GET /marketplace_listing/stubbed/plans/{plan_id}/accounts
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+*/
+type AppsListAccountsForPlanStubbedReq struct {
+	PlanId int64
+
+	/*
+	Sorts the GitHub accounts by the date they were created or last updated. Can be
+	one of `created` or `updated`.
+	*/
+	Sort *string
+
+	/*
+	To return the oldest accounts first, set to `asc`. Can be one of `asc` or
+	`desc`. Ignored without the `sort` parameter.
+	*/
+	Direction *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r AppsCheckAuthorizationReq) method() string {
+func (r AppsListAccountsForPlanStubbedReq) urlPath() string {
+	return fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId)
+}
+
+func (r AppsListAccountsForPlanStubbedReq) method() string {
 	return "GET"
 }
 
-func (r AppsCheckAuthorizationReq) urlQuery() url.Values {
+func (r AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r AppsCheckAuthorizationReq) header() http.Header {
+func (r AppsListAccountsForPlanStubbedReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsCheckAuthorizationResponseBody200 is a response body for apps/check-authorization
+AppsListAccountsForPlanStubbedResponseBody200 is a response body for apps/list-accounts-for-plan-stubbed
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-type AppsCheckAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-AppsResetAuthorizationReq builds requests for "apps/reset-authorization"
-
-Reset an authorization.
-
-  POST /applications/{client_id}/tokens/{access_token}
-
-https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
-*/
-type AppsResetAuthorizationReq struct {
-	ClientId    string
-	AccessToken string
-}
-
-func (r AppsResetAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
-}
-
-func (r AppsResetAuthorizationReq) method() string {
-	return "POST"
-}
-
-func (r AppsResetAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsResetAuthorizationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsResetAuthorizationResponseBody200 is a response body for apps/reset-authorization
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
-*/
-type AppsResetAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-AppsGetSubscriptionPlanForAccountReq builds requests for "apps/get-subscription-plan-for-account"
-
-Get a subscription plan for an account.
-
-  GET /marketplace_listing/accounts/{account_id}
-
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
-*/
-type AppsGetSubscriptionPlanForAccountReq struct {
-	AccountId int64
-}
-
-func (r AppsGetSubscriptionPlanForAccountReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId)
-}
-
-func (r AppsGetSubscriptionPlanForAccountReq) method() string {
-	return "GET"
-}
-
-func (r AppsGetSubscriptionPlanForAccountReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsGetSubscriptionPlanForAccountReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsGetSubscriptionPlanForAccountResponseBody200 is a response body for apps/get-subscription-plan-for-account
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
-*/
-type AppsGetSubscriptionPlanForAccountResponseBody200 struct {
+type AppsListAccountsForPlanStubbedResponseBody200 []struct {
 	Email                    string `json:"email,omitempty"`
 	Id                       int64  `json:"id,omitempty"`
 	Login                    string `json:"login,omitempty"`
@@ -1275,43 +1815,6 @@ type AppsListInstallationReposForAuthenticatedUserResponseBody200 struct {
 }
 
 /*
-AppsRevokeGrantForApplicationReq builds requests for "apps/revoke-grant-for-application"
-
-Revoke a grant for an application.
-
-  DELETE /applications/{client_id}/grants/{access_token}
-
-https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
-*/
-type AppsRevokeGrantForApplicationReq struct {
-	ClientId    string
-	AccessToken string
-}
-
-func (r AppsRevokeGrantForApplicationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken)
-}
-
-func (r AppsRevokeGrantForApplicationReq) method() string {
-	return "DELETE"
-}
-
-func (r AppsRevokeGrantForApplicationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsRevokeGrantForApplicationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
 AppsListInstallationsReq builds requests for "apps/list-installations"
 
 List installations.
@@ -1403,235 +1906,175 @@ type AppsListInstallationsResponseBody200 []struct {
 }
 
 /*
-AppsResetTokenReq builds requests for "apps/reset-token"
+AppsListInstallationsForAuthenticatedUserReq builds requests for "apps/list-installations-for-authenticated-user"
 
-Reset a token.
+List installations for a user.
 
-  PATCH /applications/{client_id}/token
+  GET /user/installations
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
 */
-type AppsResetTokenReq struct {
-	ClientId    string
-	RequestBody AppsResetTokenReqBody
+type AppsListInstallationsForAuthenticatedUserReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
 }
 
-func (r AppsResetTokenReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/token", r.ClientId)
+func (r AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/installations")
 }
 
-func (r AppsResetTokenReq) method() string {
-	return "PATCH"
+func (r AppsListInstallationsForAuthenticatedUserReq) method() string {
+	return "GET"
 }
 
-func (r AppsResetTokenReq) urlQuery() url.Values {
+func (r AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r AppsResetTokenReq) header() http.Header {
+func (r AppsListInstallationsForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsListInstallationsForAuthenticatedUserResponseBody200 is a response body for apps/list-installations-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+*/
+type AppsListInstallationsForAuthenticatedUserResponseBody200 struct {
+	Installations []struct {
+		AccessTokensUrl string `json:"access_tokens_url"`
+		Account         struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			Description       string `json:"description,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HooksUrl          string `json:"hooks_url,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			IssuesUrl         string `json:"issues_url,omitempty"`
+			Login             string `json:"login,omitempty"`
+			MembersUrl        string `json:"members_url,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			PublicMembersUrl  string `json:"public_members_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"account"`
+		AppId       int64    `json:"app_id"`
+		Events      []string `json:"events"`
+		HtmlUrl     string   `json:"html_url"`
+		Id          int64    `json:"id"`
+		Permissions struct {
+			Contents   string `json:"contents,omitempty"`
+			Issues     string `json:"issues,omitempty"`
+			Metadata   string `json:"metadata,omitempty"`
+			SingleFile string `json:"single_file,omitempty"`
+		} `json:"permissions"`
+		RepositoriesUrl string `json:"repositories_url"`
+		SingleFileName  string `json:"single_file_name"`
+		TargetId        int64  `json:"target_id"`
+		TargetType      string `json:"target_type"`
+	} `json:"installations,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+AppsListPlansReq builds requests for "apps/list-plans"
+
+List plans.
+
+  GET /marketplace_listing/plans
+
+https://developer.github.com/v3/apps/marketplace/#list-plans
+*/
+type AppsListPlansReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r AppsListPlansReq) urlPath() string {
+	return fmt.Sprintf("/marketplace_listing/plans")
+}
+
+func (r AppsListPlansReq) method() string {
+	return "GET"
+}
+
+func (r AppsListPlansReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r AppsListPlansReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsResetTokenReqBody is a request body for apps/reset-token
+AppsListPlansResponseBody200 is a response body for apps/list-plans
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+API documentation: https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-type AppsResetTokenReqBody struct {
-
-	// The OAuth access token used to authenticate to the GitHub API.
-	AccessToken *string `json:"access_token,omitempty"`
-}
-
-/*
-AppsResetTokenResponseBody200 is a response body for apps/reset-token
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
-*/
-type AppsResetTokenResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-AppsCheckTokenReq builds requests for "apps/check-token"
-
-Check a token.
-
-  POST /applications/{client_id}/token
-
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
-*/
-type AppsCheckTokenReq struct {
-	ClientId    string
-	RequestBody AppsCheckTokenReqBody
-}
-
-func (r AppsCheckTokenReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/token", r.ClientId)
-}
-
-func (r AppsCheckTokenReq) method() string {
-	return "POST"
-}
-
-func (r AppsCheckTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsCheckTokenReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-AppsCheckTokenReqBody is a request body for apps/check-token
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
-*/
-type AppsCheckTokenReqBody struct {
-
-	// The OAuth access token used to authenticate to the GitHub API.
-	AccessToken *string `json:"access_token,omitempty"`
-}
-
-/*
-AppsCheckTokenResponseBody200 is a response body for apps/check-token
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
-*/
-type AppsCheckTokenResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-AppsDeleteTokenReq builds requests for "apps/delete-token"
-
-Delete an app token.
-
-  DELETE /applications/{client_id}/token
-
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
-*/
-type AppsDeleteTokenReq struct {
-	ClientId    string
-	RequestBody AppsDeleteTokenReqBody
-}
-
-func (r AppsDeleteTokenReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/token", r.ClientId)
-}
-
-func (r AppsDeleteTokenReq) method() string {
-	return "DELETE"
-}
-
-func (r AppsDeleteTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsDeleteTokenReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-AppsDeleteTokenReqBody is a request body for apps/delete-token
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
-*/
-type AppsDeleteTokenReqBody struct {
-
-	// The OAuth access token used to authenticate to the GitHub API.
-	AccessToken *string `json:"access_token,omitempty"`
+type AppsListPlansResponseBody200 []struct {
+	AccountsUrl         string   `json:"accounts_url,omitempty"`
+	Bullets             []string `json:"bullets,omitempty"`
+	Description         string   `json:"description,omitempty"`
+	HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+	Id                  int64    `json:"id,omitempty"`
+	MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+	Name                string   `json:"name,omitempty"`
+	Number              int64    `json:"number,omitempty"`
+	PriceModel          string   `json:"price_model,omitempty"`
+	State               string   `json:"state,omitempty"`
+	UnitName            string   `json:"unit_name,omitempty"`
+	Url                 string   `json:"url,omitempty"`
+	YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
 }
 
 /*
@@ -1700,573 +2143,6 @@ type AppsListPlansStubbedResponseBody200 []struct {
 	UnitName            string   `json:"unit_name,omitempty"`
 	Url                 string   `json:"url,omitempty"`
 	YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-}
-
-/*
-AppsListAccountsForPlanStubbedReq builds requests for "apps/list-accounts-for-plan-stubbed"
-
-List accounts for a plan (stubbed).
-
-  GET /marketplace_listing/stubbed/plans/{plan_id}/accounts
-
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
-*/
-type AppsListAccountsForPlanStubbedReq struct {
-	PlanId int64
-
-	/*
-	Sorts the GitHub accounts by the date they were created or last updated. Can be
-	one of `created` or `updated`.
-	*/
-	Sort *string
-
-	/*
-	To return the oldest accounts first, set to `asc`. Can be one of `asc` or
-	`desc`. Ignored without the `sort` parameter.
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r AppsListAccountsForPlanStubbedReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId)
-}
-
-func (r AppsListAccountsForPlanStubbedReq) method() string {
-	return "GET"
-}
-
-func (r AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r AppsListAccountsForPlanStubbedReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsListAccountsForPlanStubbedResponseBody200 is a response body for apps/list-accounts-for-plan-stubbed
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
-*/
-type AppsListAccountsForPlanStubbedResponseBody200 []struct {
-	Email                    string `json:"email,omitempty"`
-	Id                       int64  `json:"id,omitempty"`
-	Login                    string `json:"login,omitempty"`
-	MarketplacePendingChange struct {
-		EffectiveDate string `json:"effective_date,omitempty"`
-		Id            int64  `json:"id,omitempty"`
-		Plan          struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-	} `json:"marketplace_pending_change,omitempty"`
-	MarketplacePurchase struct {
-		BillingCycle    string `json:"billing_cycle,omitempty"`
-		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-		NextBillingDate string `json:"next_billing_date,omitempty"`
-		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-		Plan            struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"marketplace_purchase,omitempty"`
-	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-	Type                     string `json:"type,omitempty"`
-	Url                      string `json:"url,omitempty"`
-}
-
-/*
-AppsListSubscriptionsForAuthenticatedUserStubbedReq builds requests for "apps/list-subscriptions-for-authenticated-user-stubbed"
-
-List subscriptions for the authenticated user (stubbed).
-
-  GET /user/marketplace_purchases/stubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
-*/
-type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
-	return fmt.Sprintf("/user/marketplace_purchases/stubbed")
-}
-
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) method() string {
-	return "GET"
-}
-
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 is a response body for apps/list-subscriptions-for-authenticated-user-stubbed
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
-*/
-type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 []struct {
-	Account struct {
-		Email                    string `json:"email,omitempty"`
-		Id                       int64  `json:"id,omitempty"`
-		Login                    string `json:"login,omitempty"`
-		OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-		Type                     string `json:"type,omitempty"`
-		Url                      string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	BillingCycle    string `json:"billing_cycle,omitempty"`
-	FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-	NextBillingDate string `json:"next_billing_date,omitempty"`
-	OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-	Plan            struct {
-		AccountsUrl         string   `json:"accounts_url,omitempty"`
-		Bullets             []string `json:"bullets,omitempty"`
-		Description         string   `json:"description,omitempty"`
-		HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-		Id                  int64    `json:"id,omitempty"`
-		MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-		Name                string   `json:"name,omitempty"`
-		Number              int64    `json:"number,omitempty"`
-		PriceModel          string   `json:"price_model,omitempty"`
-		State               string   `json:"state,omitempty"`
-		UnitName            string   `json:"unit_name,omitempty"`
-		Url                 string   `json:"url,omitempty"`
-		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-	} `json:"plan,omitempty"`
-	UnitCount string `json:"unit_count,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-}
-
-/*
-AppsGetRepoInstallationReq builds requests for "apps/get-repo-installation"
-
-Get a repository installation.
-
-  GET /repos/{owner}/{repo}/installation
-
-https://developer.github.com/v3/apps/#get-a-repository-installation
-*/
-type AppsGetRepoInstallationReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
-}
-
-func (r AppsGetRepoInstallationReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo)
-}
-
-func (r AppsGetRepoInstallationReq) method() string {
-	return "GET"
-}
-
-func (r AppsGetRepoInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsGetRepoInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsGetRepoInstallationResponseBody200 is a response body for apps/get-repo-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-a-repository-installation
-*/
-type AppsGetRepoInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-}
-
-/*
-AppsCreateContentAttachmentReq builds requests for "apps/create-content-attachment"
-
-Create a content attachment.
-
-  POST /content_references/{content_reference_id}/attachments
-
-https://developer.github.com/v3/apps/installations/#create-a-content-attachment
-*/
-type AppsCreateContentAttachmentReq struct {
-	ContentReferenceId int64
-	RequestBody        AppsCreateContentAttachmentReqBody
-
-	/*
-	To access the Content Attachments API during the preview period, you must set
-	this to true.
-	*/
-	CorsairPreview bool
-}
-
-func (r AppsCreateContentAttachmentReq) urlPath() string {
-	return fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId)
-}
-
-func (r AppsCreateContentAttachmentReq) method() string {
-	return "POST"
-}
-
-func (r AppsCreateContentAttachmentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsCreateContentAttachmentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"corsair": r.CorsairPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-AppsCreateContentAttachmentReqBody is a request body for apps/create-content-attachment
-
-API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
-*/
-type AppsCreateContentAttachmentReqBody struct {
-
-	/*
-	   The body text of the content attachment displayed in the body or comment of an
-	   issue or pull request. This parameter supports markdown.
-	*/
-	Body *string `json:"body"`
-
-	/*
-	   The title of the content attachment displayed in the body or comment of an issue
-	   or pull request.
-	*/
-	Title *string `json:"title"`
-}
-
-/*
-AppsCreateContentAttachmentResponseBody200 is a response body for apps/create-content-attachment
-
-API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
-*/
-type AppsCreateContentAttachmentResponseBody200 struct {
-	Body  string `json:"body,omitempty"`
-	Id    int64  `json:"id,omitempty"`
-	Title string `json:"title,omitempty"`
-}
-
-/*
-AppsCreateFromManifestReq builds requests for "apps/create-from-manifest"
-
-Create a GitHub App from a manifest.
-
-  POST /app-manifests/{code}/conversions
-
-https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
-*/
-type AppsCreateFromManifestReq struct {
-	Code string
-}
-
-func (r AppsCreateFromManifestReq) urlPath() string {
-	return fmt.Sprintf("/app-manifests/%v/conversions", r.Code)
-}
-
-func (r AppsCreateFromManifestReq) method() string {
-	return "POST"
-}
-
-func (r AppsCreateFromManifestReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsCreateFromManifestReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsCreateFromManifestResponseBody200 is a response body for apps/create-from-manifest
-
-API documentation: https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
-*/
-type AppsCreateFromManifestResponseBody200 struct {
-	ClientId     string `json:"client_id,omitempty"`
-	ClientSecret string `json:"client_secret,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	ExternalUrl  string `json:"external_url,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Owner        struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Pem           string `json:"pem,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	WebhookSecret string `json:"webhook_secret,omitempty"`
-}
-
-/*
-AppsListAccountsForPlanReq builds requests for "apps/list-accounts-for-plan"
-
-List accounts for a plan.
-
-  GET /marketplace_listing/plans/{plan_id}/accounts
-
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
-*/
-type AppsListAccountsForPlanReq struct {
-	PlanId int64
-
-	/*
-	Sorts the GitHub accounts by the date they were created or last updated. Can be
-	one of `created` or `updated`.
-	*/
-	Sort *string
-
-	/*
-	To return the oldest accounts first, set to `asc`. Can be one of `asc` or
-	`desc`. Ignored without the `sort` parameter.
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r AppsListAccountsForPlanReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId)
-}
-
-func (r AppsListAccountsForPlanReq) method() string {
-	return "GET"
-}
-
-func (r AppsListAccountsForPlanReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r AppsListAccountsForPlanReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsListAccountsForPlanResponseBody200 is a response body for apps/list-accounts-for-plan
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
-*/
-type AppsListAccountsForPlanResponseBody200 []struct {
-	Email                    string `json:"email,omitempty"`
-	Id                       int64  `json:"id,omitempty"`
-	Login                    string `json:"login,omitempty"`
-	MarketplacePendingChange struct {
-		EffectiveDate string `json:"effective_date,omitempty"`
-		Id            int64  `json:"id,omitempty"`
-		Plan          struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-	} `json:"marketplace_pending_change,omitempty"`
-	MarketplacePurchase struct {
-		BillingCycle    string `json:"billing_cycle,omitempty"`
-		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-		NextBillingDate string `json:"next_billing_date,omitempty"`
-		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-		Plan            struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"marketplace_purchase,omitempty"`
-	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-	Type                     string `json:"type,omitempty"`
-	Url                      string `json:"url,omitempty"`
 }
 
 /*
@@ -2442,6 +2318,174 @@ type AppsListReposResponseBody200 struct {
 }
 
 /*
+AppsListSubscriptionsForAuthenticatedUserReq builds requests for "apps/list-subscriptions-for-authenticated-user"
+
+List subscriptions for the authenticated user.
+
+  GET /user/marketplace_purchases
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+*/
+type AppsListSubscriptionsForAuthenticatedUserReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/marketplace_purchases")
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserReq) method() string {
+	return "GET"
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserResponseBody200 is a response body for apps/list-subscriptions-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+*/
+type AppsListSubscriptionsForAuthenticatedUserResponseBody200 []struct {
+	Account struct {
+		Email                    string `json:"email,omitempty"`
+		Id                       int64  `json:"id,omitempty"`
+		Login                    string `json:"login,omitempty"`
+		OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
+		Type                     string `json:"type,omitempty"`
+		Url                      string `json:"url,omitempty"`
+	} `json:"account,omitempty"`
+	BillingCycle    string `json:"billing_cycle,omitempty"`
+	FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
+	NextBillingDate string `json:"next_billing_date,omitempty"`
+	OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
+	Plan            struct {
+		AccountsUrl         string   `json:"accounts_url,omitempty"`
+		Bullets             []string `json:"bullets,omitempty"`
+		Description         string   `json:"description,omitempty"`
+		HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+		Id                  int64    `json:"id,omitempty"`
+		MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+		Name                string   `json:"name,omitempty"`
+		Number              int64    `json:"number,omitempty"`
+		PriceModel          string   `json:"price_model,omitempty"`
+		State               string   `json:"state,omitempty"`
+		UnitName            string   `json:"unit_name,omitempty"`
+		Url                 string   `json:"url,omitempty"`
+		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+	} `json:"plan,omitempty"`
+	UnitCount string `json:"unit_count,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserStubbedReq builds requests for "apps/list-subscriptions-for-authenticated-user-stubbed"
+
+List subscriptions for the authenticated user (stubbed).
+
+  GET /user/marketplace_purchases/stubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+*/
+type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
+	return fmt.Sprintf("/user/marketplace_purchases/stubbed")
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) method() string {
+	return "GET"
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 is a response body for apps/list-subscriptions-for-authenticated-user-stubbed
+
+API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+*/
+type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 []struct {
+	Account struct {
+		Email                    string `json:"email,omitempty"`
+		Id                       int64  `json:"id,omitempty"`
+		Login                    string `json:"login,omitempty"`
+		OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
+		Type                     string `json:"type,omitempty"`
+		Url                      string `json:"url,omitempty"`
+	} `json:"account,omitempty"`
+	BillingCycle    string `json:"billing_cycle,omitempty"`
+	FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
+	NextBillingDate string `json:"next_billing_date,omitempty"`
+	OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
+	Plan            struct {
+		AccountsUrl         string   `json:"accounts_url,omitempty"`
+		Bullets             []string `json:"bullets,omitempty"`
+		Description         string   `json:"description,omitempty"`
+		HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
+		Id                  int64    `json:"id,omitempty"`
+		MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
+		Name                string   `json:"name,omitempty"`
+		Number              int64    `json:"number,omitempty"`
+		PriceModel          string   `json:"price_model,omitempty"`
+		State               string   `json:"state,omitempty"`
+		UnitName            string   `json:"unit_name,omitempty"`
+		Url                 string   `json:"url,omitempty"`
+		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+	} `json:"plan,omitempty"`
+	UnitCount string `json:"unit_count,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
 AppsRemoveRepoFromInstallationReq builds requests for "apps/remove-repo-from-installation"
 
 Remove repository from installation.
@@ -2485,398 +2529,354 @@ func (r AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt 
 }
 
 /*
-AppsAddRepoToInstallationReq builds requests for "apps/add-repo-to-installation"
+AppsResetAuthorizationReq builds requests for "apps/reset-authorization"
 
-Add repository to installation.
+Reset an authorization.
 
-  PUT /user/installations/{installation_id}/repositories/{repository_id}
+  POST /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-type AppsAddRepoToInstallationReq struct {
-	InstallationId int64
-	RepositoryId   int64
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
-}
-
-func (r AppsAddRepoToInstallationReq) urlPath() string {
-	return fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId)
-}
-
-func (r AppsAddRepoToInstallationReq) method() string {
-	return "PUT"
-}
-
-func (r AppsAddRepoToInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsAddRepoToInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsListInstallationsForAuthenticatedUserReq builds requests for "apps/list-installations-for-authenticated-user"
-
-List installations for a user.
-
-  GET /user/installations
-
-https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
-*/
-type AppsListInstallationsForAuthenticatedUserReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
-}
-
-func (r AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/installations")
-}
-
-func (r AppsListInstallationsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r AppsListInstallationsForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsListInstallationsForAuthenticatedUserResponseBody200 is a response body for apps/list-installations-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
-*/
-type AppsListInstallationsForAuthenticatedUserResponseBody200 struct {
-	Installations []struct {
-		AccessTokensUrl string `json:"access_tokens_url"`
-		Account         struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			Description       string `json:"description,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HooksUrl          string `json:"hooks_url,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			IssuesUrl         string `json:"issues_url,omitempty"`
-			Login             string `json:"login,omitempty"`
-			MembersUrl        string `json:"members_url,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			PublicMembersUrl  string `json:"public_members_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"account"`
-		AppId       int64    `json:"app_id"`
-		Events      []string `json:"events"`
-		HtmlUrl     string   `json:"html_url"`
-		Id          int64    `json:"id"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions"`
-		RepositoriesUrl string `json:"repositories_url"`
-		SingleFileName  string `json:"single_file_name"`
-		TargetId        int64  `json:"target_id"`
-		TargetType      string `json:"target_type"`
-	} `json:"installations,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-AppsDeleteInstallationReq builds requests for "apps/delete-installation"
-
-Delete an installation.
-
-  DELETE /app/installations/{installation_id}
-
-https://developer.github.com/v3/apps/#delete-an-installation
-*/
-type AppsDeleteInstallationReq struct {
-	InstallationId int64
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
-}
-
-func (r AppsDeleteInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
-}
-
-func (r AppsDeleteInstallationReq) method() string {
-	return "DELETE"
-}
-
-func (r AppsDeleteInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsDeleteInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsGetInstallationReq builds requests for "apps/get-installation"
-
-Get an installation.
-
-  GET /app/installations/{installation_id}
-
-https://developer.github.com/v3/apps/#get-an-installation
-*/
-type AppsGetInstallationReq struct {
-	InstallationId int64
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
-}
-
-func (r AppsGetInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
-}
-
-func (r AppsGetInstallationReq) method() string {
-	return "GET"
-}
-
-func (r AppsGetInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r AppsGetInstallationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-AppsGetInstallationResponseBody200 is a response body for apps/get-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-an-installation
-*/
-type AppsGetInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-}
-
-/*
-AppsDeleteAuthorizationReq builds requests for "apps/delete-authorization"
-
-Delete an app authorization.
-
-  DELETE /applications/{client_id}/grant
-
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
-*/
-type AppsDeleteAuthorizationReq struct {
+type AppsResetAuthorizationReq struct {
 	ClientId    string
-	RequestBody AppsDeleteAuthorizationReqBody
+	AccessToken string
 }
 
-func (r AppsDeleteAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/grant", r.ClientId)
+func (r AppsResetAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsDeleteAuthorizationReq) method() string {
-	return "DELETE"
+func (r AppsResetAuthorizationReq) method() string {
+	return "POST"
 }
 
-func (r AppsDeleteAuthorizationReq) urlQuery() url.Values {
+func (r AppsResetAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsDeleteAuthorizationReq) header() http.Header {
+func (r AppsResetAuthorizationReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsResetAuthorizationResponseBody200 is a response body for apps/reset-authorization
+
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+*/
+type AppsResetAuthorizationResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+AppsResetTokenReq builds requests for "apps/reset-token"
+
+Reset a token.
+
+  PATCH /applications/{client_id}/token
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+*/
+type AppsResetTokenReq struct {
+	ClientId    string
+	RequestBody AppsResetTokenReqBody
+}
+
+func (r AppsResetTokenReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/token", r.ClientId)
+}
+
+func (r AppsResetTokenReq) method() string {
+	return "PATCH"
+}
+
+func (r AppsResetTokenReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsResetTokenReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-AppsDeleteAuthorizationReqBody is a request body for apps/delete-authorization
+AppsResetTokenReqBody is a request body for apps/reset-token
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-type AppsDeleteAuthorizationReqBody struct {
+type AppsResetTokenReqBody struct {
 
 	// The OAuth access token used to authenticate to the GitHub API.
 	AccessToken *string `json:"access_token,omitempty"`
 }
 
 /*
-AppsGetBySlugReq builds requests for "apps/get-by-slug"
+AppsResetTokenResponseBody200 is a response body for apps/reset-token
 
-Get a single GitHub App.
-
-  GET /apps/{app_slug}
-
-https://developer.github.com/v3/apps/#get-a-single-github-app
+API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-type AppsGetBySlugReq struct {
-	AppSlug string
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
+type AppsResetTokenResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
 }
 
-func (r AppsGetBySlugReq) urlPath() string {
-	return fmt.Sprintf("/apps/%v", r.AppSlug)
+/*
+AppsRevokeAuthorizationForApplicationReq builds requests for "apps/revoke-authorization-for-application"
+
+Revoke an authorization for an application.
+
+  DELETE /applications/{client_id}/tokens/{access_token}
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+*/
+type AppsRevokeAuthorizationForApplicationReq struct {
+	ClientId    string
+	AccessToken string
 }
 
-func (r AppsGetBySlugReq) method() string {
-	return "GET"
+func (r AppsRevokeAuthorizationForApplicationReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsGetBySlugReq) urlQuery() url.Values {
+func (r AppsRevokeAuthorizationForApplicationReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsRevokeAuthorizationForApplicationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetBySlugReq) header() http.Header {
+func (r AppsRevokeAuthorizationForApplicationReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-AppsGetBySlugResponseBody200 is a response body for apps/get-by-slug
+AppsRevokeGrantForApplicationReq builds requests for "apps/revoke-grant-for-application"
 
-API documentation: https://developer.github.com/v3/apps/#get-a-single-github-app
+Revoke a grant for an application.
+
+  DELETE /applications/{client_id}/grants/{access_token}
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-type AppsGetBySlugResponseBody200 struct {
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	ExternalUrl string   `json:"external_url,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	NodeId      string   `json:"node_id,omitempty"`
-	Owner       struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+type AppsRevokeGrantForApplicationReq struct {
+	ClientId    string
+	AccessToken string
+}
+
+func (r AppsRevokeGrantForApplicationReq) urlPath() string {
+	return fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken)
+}
+
+func (r AppsRevokeGrantForApplicationReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsRevokeGrantForApplicationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsRevokeGrantForApplicationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsRevokeInstallationTokenReq builds requests for "apps/revoke-installation-token"
+
+Revoke an installation token.
+
+  DELETE /installation/token
+
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+*/
+type AppsRevokeInstallationTokenReq struct{}
+
+func (r AppsRevokeInstallationTokenReq) urlPath() string {
+	return fmt.Sprintf("/installation/token")
+}
+
+func (r AppsRevokeInstallationTokenReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsRevokeInstallationTokenReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsRevokeInstallationTokenReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsSuspendInstallationReq builds requests for "apps/suspend-installation"
+
+Suspend an installation.
+
+  PUT /app/installations/{installation_id}/suspended
+
+https://developer.github.com/v3/apps/#suspend-an-installation
+*/
+type AppsSuspendInstallationReq struct {
+	InstallationId int64
+}
+
+func (r AppsSuspendInstallationReq) urlPath() string {
+	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
+}
+
+func (r AppsSuspendInstallationReq) method() string {
+	return "PUT"
+}
+
+func (r AppsSuspendInstallationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsSuspendInstallationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+AppsUnsuspendInstallationReq builds requests for "apps/unsuspend-installation"
+
+Unsuspend an installation.
+
+  DELETE /app/installations/{installation_id}/suspended
+
+https://developer.github.com/v3/apps/#unsuspend-an-installation
+*/
+type AppsUnsuspendInstallationReq struct {
+	InstallationId int64
+}
+
+func (r AppsUnsuspendInstallationReq) urlPath() string {
+	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
+}
+
+func (r AppsUnsuspendInstallationReq) method() string {
+	return "DELETE"
+}
+
+func (r AppsUnsuspendInstallationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r AppsUnsuspendInstallationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }

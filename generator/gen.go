@@ -35,6 +35,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	sort.Slice(endpoints, func(i, j int) bool {
+		return endpoints[i].ID < endpoints[j].ID
+	})
+
 	concernFiles := map[string]*jen.File{}
 
 	for _, endpoint := range endpoints {
