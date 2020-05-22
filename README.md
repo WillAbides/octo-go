@@ -58,6 +58,6 @@ func main() {
 		log.Fatal("unexpected status code")
 	}
 
-	fmt.Printf("golang/go's first issue is titled %q and has %d comments\n", issue.Title, issue.Comments)
+    fmt.Println(issue.Title)
 }
 ```
