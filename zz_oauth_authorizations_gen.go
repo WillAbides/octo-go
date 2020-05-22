@@ -11,96 +11,6 @@ import (
 )
 
 /*
-OauthAuthorizationsDeleteGrantReq builds requests for "oauth-authorizations/delete-grant"
-
-Delete a grant.
-
-  DELETE /applications/grants/{grant_id}
-
-https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
-*/
-type OauthAuthorizationsDeleteGrantReq struct {
-	GrantId int64
-}
-
-func (r OauthAuthorizationsDeleteGrantReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
-}
-
-func (r OauthAuthorizationsDeleteGrantReq) method() string {
-	return "DELETE"
-}
-
-func (r OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsDeleteGrantReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsGetGrantReq builds requests for "oauth-authorizations/get-grant"
-
-Get a single grant.
-
-  GET /applications/grants/{grant_id}
-
-https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
-*/
-type OauthAuthorizationsGetGrantReq struct {
-	GrantId int64
-}
-
-func (r OauthAuthorizationsGetGrantReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
-}
-
-func (r OauthAuthorizationsGetGrantReq) method() string {
-	return "GET"
-}
-
-func (r OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsGetGrantReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsGetGrantResponseBody200 is a response body for oauth-authorizations/get-grant
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
-*/
-type OauthAuthorizationsGetGrantResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Scopes    []string `json:"scopes,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
-}
-
-/*
 OauthAuthorizationsCreateAuthorizationReq builds requests for "oauth-authorizations/create-authorization"
 
 Create a new authorization.
@@ -175,6 +85,417 @@ OauthAuthorizationsCreateAuthorizationResponseBody201 is a response body for oau
 API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationResponseBody201 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsDeleteAuthorizationReq builds requests for "oauth-authorizations/delete-authorization"
+
+Delete an authorization.
+
+  DELETE /authorizations/{authorization_id}
+
+https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+*/
+type OauthAuthorizationsDeleteAuthorizationReq struct {
+	AuthorizationId int64
+}
+
+func (r OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
+}
+
+func (r OauthAuthorizationsDeleteAuthorizationReq) method() string {
+	return "DELETE"
+}
+
+func (r OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsDeleteAuthorizationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsDeleteGrantReq builds requests for "oauth-authorizations/delete-grant"
+
+Delete a grant.
+
+  DELETE /applications/grants/{grant_id}
+
+https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+*/
+type OauthAuthorizationsDeleteGrantReq struct {
+	GrantId int64
+}
+
+func (r OauthAuthorizationsDeleteGrantReq) urlPath() string {
+	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
+}
+
+func (r OauthAuthorizationsDeleteGrantReq) method() string {
+	return "DELETE"
+}
+
+func (r OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsDeleteGrantReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsGetAuthorizationReq builds requests for "oauth-authorizations/get-authorization"
+
+Get a single authorization.
+
+  GET /authorizations/{authorization_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+*/
+type OauthAuthorizationsGetAuthorizationReq struct {
+	AuthorizationId int64
+}
+
+func (r OauthAuthorizationsGetAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
+}
+
+func (r OauthAuthorizationsGetAuthorizationReq) method() string {
+	return "GET"
+}
+
+func (r OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsGetAuthorizationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsGetAuthorizationResponseBody200 is a response body for oauth-authorizations/get-authorization
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+*/
+type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetGrantReq builds requests for "oauth-authorizations/get-grant"
+
+Get a single grant.
+
+  GET /applications/grants/{grant_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+type OauthAuthorizationsGetGrantReq struct {
+	GrantId int64
+}
+
+func (r OauthAuthorizationsGetGrantReq) urlPath() string {
+	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
+}
+
+func (r OauthAuthorizationsGetGrantReq) method() string {
+	return "GET"
+}
+
+func (r OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsGetGrantReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsGetGrantResponseBody200 is a response body for oauth-authorizations/get-grant
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+type OauthAuthorizationsGetGrantResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt string   `json:"created_at,omitempty"`
+	Id        int64    `json:"id,omitempty"`
+	Scopes    []string `json:"scopes,omitempty"`
+	UpdatedAt string   `json:"updated_at,omitempty"`
+	Url       string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppReq builds requests for "oauth-authorizations/get-or-create-authorization-for-app"
+
+Get-or-create an authorization for a specific app.
+
+  PUT /authorizations/clients/{client_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
+	ClientId    string
+	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/clients/%v", r.ClientId)
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) method() string {
+	return "PUT"
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody is a request body for oauth-authorizations/get-or-create-authorization-for-app
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody struct {
+
+	/*
+	   The 40 character OAuth app client secret associated with the client ID specified
+	   in the URL.
+	*/
+	ClientSecret *string `json:"client_secret"`
+
+	/*
+	   A unique string to distinguish an authorization from others created for the same
+	   client and user. If provided, this API is functionally equivalent to
+	   [Get-or-create an authorization for a specific app and
+	   fingerprint](https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint).
+	*/
+	Fingerprint *string `json:"fingerprint,omitempty"`
+
+	// A note to remind you what the OAuth token is for.
+	Note *string `json:"note,omitempty"`
+
+	// A URL to remind you what app the OAuth token is for.
+	NoteUrl *string `json:"note_url,omitempty"`
+
+	// A list of scopes that this authorization is in.
+	Scopes []string `json:"scopes,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 is a response body for oauth-authorizations/get-or-create-authorization-for-app
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 is a response body for oauth-authorizations/get-or-create-authorization-for-app
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq builds requests for "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint"
+
+Get-or-create an authorization for a specific app and fingerprint.
+
+  PUT /authorizations/clients/{client_id}/{fingerprint}
+
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
+	ClientId    string
+	Fingerprint string
+	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint)
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) method() string {
+	return "PUT"
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody is a request body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody struct {
+
+	/*
+	   The 40 character OAuth app client secret associated with the client ID specified
+	   in the URL.
+	*/
+	ClientSecret *string `json:"client_secret"`
+
+	// A note to remind you what the OAuth token is for.
+	Note *string `json:"note,omitempty"`
+
+	// A URL to remind you what app the OAuth token is for.
+	NoteUrl *string `json:"note_url,omitempty"`
+
+	// A list of scopes that this authorization is in.
+	Scopes []string `json:"scopes,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 is a response body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt      string   `json:"created_at,omitempty"`
+	Fingerprint    string   `json:"fingerprint,omitempty"`
+	HashedToken    string   `json:"hashed_token,omitempty"`
+	Id             int64    `json:"id,omitempty"`
+	Note           string   `json:"note,omitempty"`
+	NoteUrl        string   `json:"note_url,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 is a response body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+*/
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 struct {
 	App struct {
 		ClientId string `json:"client_id,omitempty"`
 		Name     string `json:"name,omitempty"`
@@ -330,218 +651,6 @@ type OauthAuthorizationsListGrantsResponseBody200 []struct {
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppReq builds requests for "oauth-authorizations/get-or-create-authorization-for-app"
-
-Get-or-create an authorization for a specific app.
-
-  PUT /authorizations/clients/{client_id}
-
-https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
-	ClientId    string
-	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/clients/%v", r.ClientId)
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) method() string {
-	return "PUT"
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody is a request body for oauth-authorizations/get-or-create-authorization-for-app
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody struct {
-
-	/*
-	   The 40 character OAuth app client secret associated with the client ID specified
-	   in the URL.
-	*/
-	ClientSecret *string `json:"client_secret"`
-
-	/*
-	   A unique string to distinguish an authorization from others created for the same
-	   client and user. If provided, this API is functionally equivalent to
-	   [Get-or-create an authorization for a specific app and
-	   fingerprint](https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint).
-	*/
-	Fingerprint *string `json:"fingerprint,omitempty"`
-
-	// A note to remind you what the OAuth token is for.
-	Note *string `json:"note,omitempty"`
-
-	// A URL to remind you what app the OAuth token is for.
-	NoteUrl *string `json:"note_url,omitempty"`
-
-	// A list of scopes that this authorization is in.
-	Scopes []string `json:"scopes,omitempty"`
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 is a response body for oauth-authorizations/get-or-create-authorization-for-app
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 is a response body for oauth-authorizations/get-or-create-authorization-for-app
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-}
-
-/*
-OauthAuthorizationsDeleteAuthorizationReq builds requests for "oauth-authorizations/delete-authorization"
-
-Delete an authorization.
-
-  DELETE /authorizations/{authorization_id}
-
-https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
-*/
-type OauthAuthorizationsDeleteAuthorizationReq struct {
-	AuthorizationId int64
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) method() string {
-	return "DELETE"
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsGetAuthorizationReq builds requests for "oauth-authorizations/get-authorization"
-
-Get a single authorization.
-
-  GET /authorizations/{authorization_id}
-
-https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
-*/
-type OauthAuthorizationsGetAuthorizationReq struct {
-	AuthorizationId int64
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) method() string {
-	return "GET"
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsGetAuthorizationResponseBody200 is a response body for oauth-authorizations/get-authorization
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
-*/
-type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-}
-
-/*
 OauthAuthorizationsUpdateAuthorizationReq builds requests for "oauth-authorizations/update-authorization"
 
 Update an existing authorization.
@@ -617,115 +726,6 @@ OauthAuthorizationsUpdateAuthorizationResponseBody200 is a response body for oau
 API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq builds requests for "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint"
-
-Get-or-create an authorization for a specific app and fingerprint.
-
-  PUT /authorizations/clients/{client_id}/{fingerprint}
-
-https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
-	ClientId    string
-	Fingerprint string
-	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint)
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) method() string {
-	return "PUT"
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody is a request body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody struct {
-
-	/*
-	   The 40 character OAuth app client secret associated with the client ID specified
-	   in the URL.
-	*/
-	ClientSecret *string `json:"client_secret"`
-
-	// A note to remind you what the OAuth token is for.
-	Note *string `json:"note,omitempty"`
-
-	// A URL to remind you what app the OAuth token is for.
-	NoteUrl *string `json:"note_url,omitempty"`
-
-	// A list of scopes that this authorization is in.
-	Scopes []string `json:"scopes,omitempty"`
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 is a response body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-}
-
-/*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 is a response body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 struct {
 	App struct {
 		ClientId string `json:"client_id,omitempty"`
 		Name     string `json:"name,omitempty"`

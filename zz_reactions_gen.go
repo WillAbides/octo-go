@@ -11,32 +11,19 @@ import (
 )
 
 /*
-ReactionsListForTeamDiscussionCommentInOrgReq builds requests for "reactions/list-for-team-discussion-comment-in-org"
+ReactionsCreateForCommitCommentReq builds requests for "reactions/create-for-commit-comment"
 
-List reactions for a team discussion comment.
+Create reaction for a commit comment.
 
-  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions
+  POST /repos/{owner}/{repo}/comments/{comment_id}/reactions
 
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-type ReactionsListForTeamDiscussionCommentInOrgReq struct {
-	Org              string
-	TeamSlug         string
-	DiscussionNumber int64
-	CommentNumber    int64
-
-	/*
-	Returns a single [reaction
-	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to a team discussion comment.
-	*/
-	Content *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+type ReactionsCreateForCommitCommentReq struct {
+	Owner       string
+	Repo        string
+	CommentId   int64
+	RequestBody ReactionsCreateForCommitCommentReqBody
 
 	/*
 	APIs for managing reactions are currently available for developers to preview.
@@ -48,44 +35,331 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
+func (r ReactionsCreateForCommitCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) method() string {
-	return "GET"
+func (r ReactionsCreateForCommitCommentReq) method() string {
+	return "POST"
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r ReactionsCreateForCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.Content != nil {
-		query.Set("content", *r.Content)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) header() http.Header {
+func (r ReactionsCreateForCommitCommentReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ReactionsListForTeamDiscussionCommentInOrgResponseBody200 is a response body for reactions/list-for-team-discussion-comment-in-org
+ReactionsCreateForCommitCommentReqBody is a request body for reactions/create-for-commit-comment
 
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-type ReactionsListForTeamDiscussionCommentInOrgResponseBody200 []struct {
+type ReactionsCreateForCommitCommentReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the commit comment.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForCommitCommentResponseBody201 is a response body for reactions/create-for-commit-comment
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
+*/
+type ReactionsCreateForCommitCommentResponseBody201 struct {
+	Content   string `json:"content,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReactionsCreateForIssueReq builds requests for "reactions/create-for-issue"
+
+Create reaction for an issue.
+
+  POST /repos/{owner}/{repo}/issues/{issue_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+*/
+type ReactionsCreateForIssueReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+	RequestBody ReactionsCreateForIssueReqBody
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsCreateForIssueReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r ReactionsCreateForIssueReq) method() string {
+	return "POST"
+}
+
+func (r ReactionsCreateForIssueReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsCreateForIssueReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReactionsCreateForIssueReqBody is a request body for reactions/create-for-issue
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+*/
+type ReactionsCreateForIssueReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the issue.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForIssueResponseBody201 is a response body for reactions/create-for-issue
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+*/
+type ReactionsCreateForIssueResponseBody201 struct {
+	Content   string `json:"content,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReactionsCreateForIssueCommentReq builds requests for "reactions/create-for-issue-comment"
+
+Create reaction for an issue comment.
+
+  POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+*/
+type ReactionsCreateForIssueCommentReq struct {
+	Owner       string
+	Repo        string
+	CommentId   int64
+	RequestBody ReactionsCreateForIssueCommentReqBody
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsCreateForIssueCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r ReactionsCreateForIssueCommentReq) method() string {
+	return "POST"
+}
+
+func (r ReactionsCreateForIssueCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsCreateForIssueCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReactionsCreateForIssueCommentReqBody is a request body for reactions/create-for-issue-comment
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+*/
+type ReactionsCreateForIssueCommentReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the issue comment.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForIssueCommentResponseBody201 is a response body for reactions/create-for-issue-comment
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+*/
+type ReactionsCreateForIssueCommentResponseBody201 struct {
+	Content   string `json:"content,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReactionsCreateForPullRequestReviewCommentReq builds requests for "reactions/create-for-pull-request-review-comment"
+
+Create reaction for a pull request review comment.
+
+  POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+*/
+type ReactionsCreateForPullRequestReviewCommentReq struct {
+	Owner       string
+	Repo        string
+	CommentId   int64
+	RequestBody ReactionsCreateForPullRequestReviewCommentReqBody
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r ReactionsCreateForPullRequestReviewCommentReq) method() string {
+	return "POST"
+}
+
+func (r ReactionsCreateForPullRequestReviewCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsCreateForPullRequestReviewCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReactionsCreateForPullRequestReviewCommentReqBody is a request body for reactions/create-for-pull-request-review-comment
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+*/
+type ReactionsCreateForPullRequestReviewCommentReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the pull request review comment.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForPullRequestReviewCommentResponseBody201 is a response body for reactions/create-for-pull-request-review-comment
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+*/
+type ReactionsCreateForPullRequestReviewCommentResponseBody201 struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -208,19 +482,19 @@ type ReactionsCreateForTeamDiscussionCommentInOrgResponseBody201 struct {
 }
 
 /*
-ReactionsDeleteForTeamDiscussionReq builds requests for "reactions/delete-for-team-discussion"
+ReactionsCreateForTeamDiscussionCommentLegacyReq builds requests for "reactions/create-for-team-discussion-comment-legacy"
 
-Delete team discussion reaction.
+Create reaction for a team discussion comment (Legacy).
 
-  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}
+  POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
 
-https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-type ReactionsDeleteForTeamDiscussionReq struct {
-	Org              string
-	TeamSlug         string
+type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
+	TeamId           int64
 	DiscussionNumber int64
-	ReactionId       int64
+	CommentNumber    int64
+	RequestBody      ReactionsCreateForTeamDiscussionCommentLegacyReqBody
 
 	/*
 	APIs for managing reactions are currently available for developers to preview.
@@ -232,198 +506,49 @@ type ReactionsDeleteForTeamDiscussionReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForTeamDiscussionReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId)
+func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r ReactionsDeleteForTeamDiscussionReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteForTeamDiscussionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteForTeamDiscussionReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReactionsListForPullRequestReviewCommentReq builds requests for "reactions/list-for-pull-request-review-comment"
-
-List reactions for a pull request review comment.
-
-  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
-*/
-type ReactionsListForPullRequestReviewCommentReq struct {
-	Owner     string
-	Repo      string
-	CommentId int64
-
-	/*
-	Returns a single [reaction
-	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to a pull request review comment.
-	*/
-	Content *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsListForPullRequestReviewCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r ReactionsListForPullRequestReviewCommentReq) method() string {
-	return "GET"
-}
-
-func (r ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Content != nil {
-		query.Set("content", *r.Content)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReactionsListForPullRequestReviewCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReactionsListForPullRequestReviewCommentResponseBody200 is a response body for reactions/list-for-pull-request-review-comment
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
-*/
-type ReactionsListForPullRequestReviewCommentResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsCreateForPullRequestReviewCommentReq builds requests for "reactions/create-for-pull-request-review-comment"
-
-Create reaction for a pull request review comment.
-
-  POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions
-
-https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
-*/
-type ReactionsCreateForPullRequestReviewCommentReq struct {
-	Owner       string
-	Repo        string
-	CommentId   int64
-	RequestBody ReactionsCreateForPullRequestReviewCommentReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r ReactionsCreateForPullRequestReviewCommentReq) method() string {
+func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) urlQuery() url.Values {
+func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) header() http.Header {
+func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ReactionsCreateForPullRequestReviewCommentReqBody is a request body for reactions/create-for-pull-request-review-comment
+ReactionsCreateForTeamDiscussionCommentLegacyReqBody is a request body for reactions/create-for-team-discussion-comment-legacy
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-type ReactionsCreateForPullRequestReviewCommentReqBody struct {
+type ReactionsCreateForTeamDiscussionCommentLegacyReqBody struct {
 
 	/*
 	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the pull request review comment.
+	   to add to the team discussion comment.
 	*/
 	Content *string `json:"content"`
 }
 
 /*
-ReactionsCreateForPullRequestReviewCommentResponseBody201 is a response body for reactions/create-for-pull-request-review-comment
+ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 is a response body for reactions/create-for-team-discussion-comment-legacy
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-type ReactionsCreateForPullRequestReviewCommentResponseBody201 struct {
+type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -451,30 +576,19 @@ type ReactionsCreateForPullRequestReviewCommentResponseBody201 struct {
 }
 
 /*
-ReactionsListForTeamDiscussionLegacyReq builds requests for "reactions/list-for-team-discussion-legacy"
+ReactionsCreateForTeamDiscussionInOrgReq builds requests for "reactions/create-for-team-discussion-in-org"
 
-List reactions for a team discussion (Legacy).
+Create reaction for a team discussion.
 
-  GET /teams/{team_id}/discussions/{discussion_number}/reactions
+  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions
 
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-type ReactionsListForTeamDiscussionLegacyReq struct {
-	TeamId           int64
+type ReactionsCreateForTeamDiscussionInOrgReq struct {
+	Org              string
+	TeamSlug         string
 	DiscussionNumber int64
-
-	/*
-	Returns a single [reaction
-	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to a team discussion.
-	*/
-	Content *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+	RequestBody      ReactionsCreateForTeamDiscussionInOrgReqBody
 
 	/*
 	APIs for managing reactions are currently available for developers to preview.
@@ -486,44 +600,49 @@ type ReactionsListForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
+func (r ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) method() string {
-	return "GET"
+func (r ReactionsCreateForTeamDiscussionInOrgReq) method() string {
+	return "POST"
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
+func (r ReactionsCreateForTeamDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.Content != nil {
-		query.Set("content", *r.Content)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) header() http.Header {
+func (r ReactionsCreateForTeamDiscussionInOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ReactionsListForTeamDiscussionLegacyResponseBody200 is a response body for reactions/list-for-team-discussion-legacy
+ReactionsCreateForTeamDiscussionInOrgReqBody is a request body for reactions/create-for-team-discussion-in-org
 
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-type ReactionsListForTeamDiscussionLegacyResponseBody200 []struct {
+type ReactionsCreateForTeamDiscussionInOrgReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the team discussion.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForTeamDiscussionInOrgResponseBody201 is a response body for reactions/create-for-team-discussion-in-org
+
+API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
+*/
+type ReactionsCreateForTeamDiscussionInOrgResponseBody201 struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -617,6 +736,542 @@ ReactionsCreateForTeamDiscussionLegacyResponseBody201 is a response body for rea
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type ReactionsCreateForTeamDiscussionLegacyResponseBody201 struct {
+	Content   string `json:"content,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReactionsDeleteForCommitCommentReq builds requests for "reactions/delete-for-commit-comment"
+
+Delete a commit comment reaction.
+
+  DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
+*/
+type ReactionsDeleteForCommitCommentReq struct {
+	Owner      string
+	Repo       string
+	CommentId  int64
+	ReactionId int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteForCommitCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
+}
+
+func (r ReactionsDeleteForCommitCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteForCommitCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteForCommitCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsDeleteForIssueReq builds requests for "reactions/delete-for-issue"
+
+Delete an issue reaction.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-an-issue-reaction
+*/
+type ReactionsDeleteForIssueReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+	ReactionId  int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteForIssueReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId)
+}
+
+func (r ReactionsDeleteForIssueReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteForIssueReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteForIssueReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsDeleteForIssueCommentReq builds requests for "reactions/delete-for-issue-comment"
+
+Delete an issue comment reaction.
+
+  DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
+*/
+type ReactionsDeleteForIssueCommentReq struct {
+	Owner      string
+	Repo       string
+	CommentId  int64
+	ReactionId int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteForIssueCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
+}
+
+func (r ReactionsDeleteForIssueCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteForIssueCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteForIssueCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsDeleteForPullRequestCommentReq builds requests for "reactions/delete-for-pull-request-comment"
+
+Delete a pull request comment reaction.
+
+  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
+*/
+type ReactionsDeleteForPullRequestCommentReq struct {
+	Owner      string
+	Repo       string
+	CommentId  int64
+	ReactionId int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteForPullRequestCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
+}
+
+func (r ReactionsDeleteForPullRequestCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteForPullRequestCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteForPullRequestCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsDeleteForTeamDiscussionReq builds requests for "reactions/delete-for-team-discussion"
+
+Delete team discussion reaction.
+
+  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
+*/
+type ReactionsDeleteForTeamDiscussionReq struct {
+	Org              string
+	TeamSlug         string
+	DiscussionNumber int64
+	ReactionId       int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteForTeamDiscussionReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId)
+}
+
+func (r ReactionsDeleteForTeamDiscussionReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteForTeamDiscussionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteForTeamDiscussionReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsDeleteForTeamDiscussionCommentReq builds requests for "reactions/delete-for-team-discussion-comment"
+
+Delete team discussion comment reaction.
+
+  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
+*/
+type ReactionsDeleteForTeamDiscussionCommentReq struct {
+	Org              string
+	TeamSlug         string
+	DiscussionNumber int64
+	CommentNumber    int64
+	ReactionId       int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId)
+}
+
+func (r ReactionsDeleteForTeamDiscussionCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteForTeamDiscussionCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteForTeamDiscussionCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsDeleteLegacyReq builds requests for "reactions/delete-legacy"
+
+Delete a reaction (Legacy).
+
+  DELETE /reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+*/
+type ReactionsDeleteLegacyReq struct {
+	ReactionId int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsDeleteLegacyReq) urlPath() string {
+	return fmt.Sprintf("/reactions/%v", r.ReactionId)
+}
+
+func (r ReactionsDeleteLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r ReactionsDeleteLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReactionsDeleteLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsListForCommitCommentReq builds requests for "reactions/list-for-commit-comment"
+
+List reactions for a commit comment.
+
+  GET /repos/{owner}/{repo}/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+*/
+type ReactionsListForCommitCommentReq struct {
+	Owner     string
+	Repo      string
+	CommentId int64
+
+	/*
+	Returns a single [reaction
+	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
+	parameter to list all reactions to a commit comment.
+	*/
+	Content *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsListForCommitCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r ReactionsListForCommitCommentReq) method() string {
+	return "GET"
+}
+
+func (r ReactionsListForCommitCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Content != nil {
+		query.Set("content", *r.Content)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReactionsListForCommitCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsListForCommitCommentResponseBody200 is a response body for reactions/list-for-commit-comment
+
+API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+*/
+type ReactionsListForCommitCommentResponseBody200 []struct {
+	Content   string `json:"content,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReactionsListForIssueReq builds requests for "reactions/list-for-issue"
+
+List reactions for an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+*/
+type ReactionsListForIssueReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+
+	/*
+	Returns a single [reaction
+	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
+	parameter to list all reactions to an issue.
+	*/
+	Content *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	APIs for managing reactions are currently available for developers to preview.
+	See the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To access the API during the preview period, you must set this to
+	true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReactionsListForIssueReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r ReactionsListForIssueReq) method() string {
+	return "GET"
+}
+
+func (r ReactionsListForIssueReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Content != nil {
+		query.Set("content", *r.Content)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReactionsListForIssueReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReactionsListForIssueResponseBody200 is a response body for reactions/list-for-issue
+
+API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+*/
+type ReactionsListForIssueResponseBody200 []struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -745,258 +1400,23 @@ type ReactionsListForIssueCommentResponseBody200 []struct {
 }
 
 /*
-ReactionsCreateForIssueCommentReq builds requests for "reactions/create-for-issue-comment"
+ReactionsListForPullRequestReviewCommentReq builds requests for "reactions/list-for-pull-request-review-comment"
 
-Create reaction for an issue comment.
+List reactions for a pull request review comment.
 
-  POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions
+  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions
 
-https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-type ReactionsCreateForIssueCommentReq struct {
-	Owner       string
-	Repo        string
-	CommentId   int64
-	RequestBody ReactionsCreateForIssueCommentReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsCreateForIssueCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r ReactionsCreateForIssueCommentReq) method() string {
-	return "POST"
-}
-
-func (r ReactionsCreateForIssueCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsCreateForIssueCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReactionsCreateForIssueCommentReqBody is a request body for reactions/create-for-issue-comment
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
-*/
-type ReactionsCreateForIssueCommentReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the issue comment.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForIssueCommentResponseBody201 is a response body for reactions/create-for-issue-comment
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
-*/
-type ReactionsCreateForIssueCommentResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsDeleteForCommitCommentReq builds requests for "reactions/delete-for-commit-comment"
-
-Delete a commit comment reaction.
-
-  DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
-*/
-type ReactionsDeleteForCommitCommentReq struct {
-	Owner      string
-	Repo       string
-	CommentId  int64
-	ReactionId int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsDeleteForCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
-}
-
-func (r ReactionsDeleteForCommitCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteForCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteForCommitCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReactionsDeleteLegacyReq builds requests for "reactions/delete-legacy"
-
-Delete a reaction (Legacy).
-
-  DELETE /reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
-*/
-type ReactionsDeleteLegacyReq struct {
-	ReactionId int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsDeleteLegacyReq) urlPath() string {
-	return fmt.Sprintf("/reactions/%v", r.ReactionId)
-}
-
-func (r ReactionsDeleteLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReactionsDeleteForIssueReq builds requests for "reactions/delete-for-issue"
-
-Delete an issue reaction.
-
-  DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-an-issue-reaction
-*/
-type ReactionsDeleteForIssueReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	ReactionId  int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsDeleteForIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId)
-}
-
-func (r ReactionsDeleteForIssueReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteForIssueReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteForIssueReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReactionsListForIssueReq builds requests for "reactions/list-for-issue"
-
-List reactions for an issue.
-
-  GET /repos/{owner}/{repo}/issues/{issue_number}/reactions
-
-https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
-*/
-type ReactionsListForIssueReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
+type ReactionsListForPullRequestReviewCommentReq struct {
+	Owner     string
+	Repo      string
+	CommentId int64
 
 	/*
 	Returns a single [reaction
 	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to an issue.
+	parameter to list all reactions to a pull request review comment.
 	*/
 	Content *string
 
@@ -1016,15 +1436,15 @@ type ReactionsListForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
+func (r ReactionsListForPullRequestReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsListForIssueReq) method() string {
+func (r ReactionsListForPullRequestReviewCommentReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForIssueReq) urlQuery() url.Values {
+func (r ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1038,22 +1458,22 @@ func (r ReactionsListForIssueReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForIssueReq) header() http.Header {
+func (r ReactionsListForPullRequestReviewCommentReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReactionsListForIssueResponseBody200 is a response body for reactions/list-for-issue
+ReactionsListForPullRequestReviewCommentResponseBody200 is a response body for reactions/list-for-pull-request-review-comment
 
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-type ReactionsListForIssueResponseBody200 []struct {
+type ReactionsListForPullRequestReviewCommentResponseBody200 []struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -1081,19 +1501,32 @@ type ReactionsListForIssueResponseBody200 []struct {
 }
 
 /*
-ReactionsCreateForIssueReq builds requests for "reactions/create-for-issue"
+ReactionsListForTeamDiscussionCommentInOrgReq builds requests for "reactions/list-for-team-discussion-comment-in-org"
 
-Create reaction for an issue.
+List reactions for a team discussion comment.
 
-  POST /repos/{owner}/{repo}/issues/{issue_number}/reactions
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions
 
-https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-type ReactionsCreateForIssueReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	RequestBody ReactionsCreateForIssueReqBody
+type ReactionsListForTeamDiscussionCommentInOrgReq struct {
+	Org              string
+	TeamSlug         string
+	DiscussionNumber int64
+	CommentNumber    int64
+
+	/*
+	Returns a single [reaction
+	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
+	parameter to list all reactions to a team discussion comment.
+	*/
+	Content *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 
 	/*
 	APIs for managing reactions are currently available for developers to preview.
@@ -1105,49 +1538,44 @@ type ReactionsCreateForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
+func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r ReactionsCreateForIssueReq) method() string {
-	return "POST"
+func (r ReactionsListForTeamDiscussionCommentInOrgReq) method() string {
+	return "GET"
 }
 
-func (r ReactionsCreateForIssueReq) urlQuery() url.Values {
+func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Content != nil {
+		query.Set("content", *r.Content)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r ReactionsCreateForIssueReq) header() http.Header {
+func (r ReactionsListForTeamDiscussionCommentInOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReactionsCreateForIssueReqBody is a request body for reactions/create-for-issue
+ReactionsListForTeamDiscussionCommentInOrgResponseBody200 is a response body for reactions/list-for-team-discussion-comment-in-org
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-type ReactionsCreateForIssueReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the issue.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForIssueResponseBody201 is a response body for reactions/create-for-issue
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
-*/
-type ReactionsCreateForIssueResponseBody201 struct {
+type ReactionsListForTeamDiscussionCommentInOrgResponseBody200 []struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -1172,54 +1600,6 @@ type ReactionsCreateForIssueResponseBody201 struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsDeleteForPullRequestCommentReq builds requests for "reactions/delete-for-pull-request-comment"
-
-Delete a pull request comment reaction.
-
-  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
-*/
-type ReactionsDeleteForPullRequestCommentReq struct {
-	Owner      string
-	Repo       string
-	CommentId  int64
-	ReactionId int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsDeleteForPullRequestCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
-}
-
-func (r ReactionsDeleteForPullRequestCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteForPullRequestCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteForPullRequestCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
@@ -1297,100 +1677,6 @@ ReactionsListForTeamDiscussionCommentLegacyResponseBody200 is a response body fo
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ReactionsListForTeamDiscussionCommentLegacyResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsCreateForTeamDiscussionCommentLegacyReq builds requests for "reactions/create-for-team-discussion-comment-legacy"
-
-Create reaction for a team discussion comment (Legacy).
-
-  POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
-
-https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
-*/
-type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      ReactionsCreateForTeamDiscussionCommentLegacyReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
-	return "POST"
-}
-
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReactionsCreateForTeamDiscussionCommentLegacyReqBody is a request body for reactions/create-for-team-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
-*/
-type ReactionsCreateForTeamDiscussionCommentLegacyReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion comment.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 is a response body for reactions/create-for-team-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
-*/
-type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -1519,166 +1805,22 @@ type ReactionsListForTeamDiscussionInOrgResponseBody200 []struct {
 }
 
 /*
-ReactionsCreateForTeamDiscussionInOrgReq builds requests for "reactions/create-for-team-discussion-in-org"
+ReactionsListForTeamDiscussionLegacyReq builds requests for "reactions/list-for-team-discussion-legacy"
 
-Create reaction for a team discussion.
+List reactions for a team discussion (Legacy).
 
-  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions
+  GET /teams/{team_id}/discussions/{discussion_number}/reactions
 
-https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-type ReactionsCreateForTeamDiscussionInOrgReq struct {
-	Org              string
-	TeamSlug         string
+type ReactionsListForTeamDiscussionLegacyReq struct {
+	TeamId           int64
 	DiscussionNumber int64
-	RequestBody      ReactionsCreateForTeamDiscussionInOrgReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber)
-}
-
-func (r ReactionsCreateForTeamDiscussionInOrgReq) method() string {
-	return "POST"
-}
-
-func (r ReactionsCreateForTeamDiscussionInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsCreateForTeamDiscussionInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReactionsCreateForTeamDiscussionInOrgReqBody is a request body for reactions/create-for-team-discussion-in-org
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
-*/
-type ReactionsCreateForTeamDiscussionInOrgReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForTeamDiscussionInOrgResponseBody201 is a response body for reactions/create-for-team-discussion-in-org
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
-*/
-type ReactionsCreateForTeamDiscussionInOrgResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsDeleteForTeamDiscussionCommentReq builds requests for "reactions/delete-for-team-discussion-comment"
-
-Delete team discussion comment reaction.
-
-  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
-*/
-type ReactionsDeleteForTeamDiscussionCommentReq struct {
-	Org              string
-	TeamSlug         string
-	DiscussionNumber int64
-	CommentNumber    int64
-	ReactionId       int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId)
-}
-
-func (r ReactionsDeleteForTeamDiscussionCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteForTeamDiscussionCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteForTeamDiscussionCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReactionsListForCommitCommentReq builds requests for "reactions/list-for-commit-comment"
-
-List reactions for a commit comment.
-
-  GET /repos/{owner}/{repo}/comments/{comment_id}/reactions
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
-*/
-type ReactionsListForCommitCommentReq struct {
-	Owner     string
-	Repo      string
-	CommentId int64
 
 	/*
 	Returns a single [reaction
 	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to a commit comment.
+	parameter to list all reactions to a team discussion.
 	*/
 	Content *string
 
@@ -1698,15 +1840,15 @@ type ReactionsListForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
+func (r ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
 }
 
-func (r ReactionsListForCommitCommentReq) method() string {
+func (r ReactionsListForTeamDiscussionLegacyReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForCommitCommentReq) urlQuery() url.Values {
+func (r ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1720,22 +1862,22 @@ func (r ReactionsListForCommitCommentReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForCommitCommentReq) header() http.Header {
+func (r ReactionsListForTeamDiscussionLegacyReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReactionsListForCommitCommentResponseBody200 is a response body for reactions/list-for-commit-comment
+ReactionsListForTeamDiscussionLegacyResponseBody200 is a response body for reactions/list-for-team-discussion-legacy
 
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-type ReactionsListForCommitCommentResponseBody200 []struct {
+type ReactionsListForTeamDiscussionLegacyResponseBody200 []struct {
 	Content   string `json:"content,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
 	Id        int64  `json:"id,omitempty"`
@@ -1760,146 +1902,4 @@ type ReactionsListForCommitCommentResponseBody200 []struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsCreateForCommitCommentReq builds requests for "reactions/create-for-commit-comment"
-
-Create reaction for a commit comment.
-
-  POST /repos/{owner}/{repo}/comments/{comment_id}/reactions
-
-https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
-*/
-type ReactionsCreateForCommitCommentReq struct {
-	Owner       string
-	Repo        string
-	CommentId   int64
-	RequestBody ReactionsCreateForCommitCommentReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsCreateForCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r ReactionsCreateForCommitCommentReq) method() string {
-	return "POST"
-}
-
-func (r ReactionsCreateForCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsCreateForCommitCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReactionsCreateForCommitCommentReqBody is a request body for reactions/create-for-commit-comment
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
-*/
-type ReactionsCreateForCommitCommentReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the commit comment.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForCommitCommentResponseBody201 is a response body for reactions/create-for-commit-comment
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
-*/
-type ReactionsCreateForCommitCommentResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReactionsDeleteForIssueCommentReq builds requests for "reactions/delete-for-issue-comment"
-
-Delete an issue comment reaction.
-
-  DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
-*/
-type ReactionsDeleteForIssueCommentReq struct {
-	Owner      string
-	Repo       string
-	CommentId  int64
-	ReactionId int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReactionsDeleteForIssueCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
-}
-
-func (r ReactionsDeleteForIssueCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r ReactionsDeleteForIssueCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReactionsDeleteForIssueCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }

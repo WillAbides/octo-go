@@ -11,6 +11,545 @@ import (
 )
 
 /*
+ProjectsAddCollaboratorReq builds requests for "projects/add-collaborator"
+
+Add user as a collaborator.
+
+  PUT /projects/{project_id}/collaborators/{username}
+
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+*/
+type ProjectsAddCollaboratorReq struct {
+	ProjectId   int64
+	Username    string
+	RequestBody ProjectsAddCollaboratorReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsAddCollaboratorReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
+}
+
+func (r ProjectsAddCollaboratorReq) method() string {
+	return "PUT"
+}
+
+func (r ProjectsAddCollaboratorReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsAddCollaboratorReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsAddCollaboratorReqBody is a request body for projects/add-collaborator
+
+API documentation: https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+*/
+type ProjectsAddCollaboratorReqBody struct {
+
+	/*
+	   The permission to grant the collaborator. Note that, if you choose not to pass
+	   any parameters, you'll need to set `Content-Length` to zero when calling out to
+	   this endpoint. For more information, see "[HTTP
+	   verbs](https://developer.github.com/v3/#http-verbs)." Can be one of:
+	   \* `read` - can read, but not write to or administer this project.
+	   \* `write` - can read and write, but not administer this project.
+	   \* `admin` - can read, write and administer this project.
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+ProjectsCreateCardReq builds requests for "projects/create-card"
+
+Create a project card.
+
+  POST /projects/columns/{column_id}/cards
+
+https://developer.github.com/v3/projects/cards/#create-a-project-card
+*/
+type ProjectsCreateCardReq struct {
+	ColumnId    int64
+	RequestBody ProjectsCreateCardReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsCreateCardReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
+}
+
+func (r ProjectsCreateCardReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsCreateCardReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsCreateCardReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsCreateCardReqBody is a request body for projects/create-card
+
+API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
+*/
+type ProjectsCreateCardReqBody struct {
+
+	/*
+	   The issue or pull request id you want to associate with this card. You can use
+	   the [List repository
+	   issues](https://developer.github.com/v3/issues/#list-repository-issues) and
+	   [List pull requests](https://developer.github.com/v3/pulls/#list-pull-requests)
+	   endpoints to find this id.
+	   **Note:** Depending on whether you use the issue id or pull request id, you will
+	   need to specify `Issue` or `PullRequest` as the `content_type`.
+	*/
+	ContentId *int64 `json:"content_id,omitempty"`
+
+	/*
+	   **Required if you provide `content_id`**. The type of content you want to
+	   associate with this card. Use `Issue` when `content_id` is an issue id and use
+	   `PullRequest` when `content_id` is a pull request id.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   The card's note content. Only valid for cards without another type of content,
+	   so you must omit when specifying `content_id` and `content_type`.
+	*/
+	Note *string `json:"note,omitempty"`
+}
+
+/*
+ProjectsCreateCardResponseBody201 is a response body for projects/create-card
+
+API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
+*/
+type ProjectsCreateCardResponseBody201 struct {
+	Archived   bool   `json:"archived,omitempty"`
+	ColumnUrl  string `json:"column_url,omitempty"`
+	ContentUrl string `json:"content_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Id         int64  `json:"id,omitempty"`
+	NodeId     string `json:"node_id,omitempty"`
+	Note       string `json:"note,omitempty"`
+	ProjectUrl string `json:"project_url,omitempty"`
+	UpdatedAt  string `json:"updated_at,omitempty"`
+	Url        string `json:"url,omitempty"`
+}
+
+/*
+ProjectsCreateColumnReq builds requests for "projects/create-column"
+
+Create a project column.
+
+  POST /projects/{project_id}/columns
+
+https://developer.github.com/v3/projects/columns/#create-a-project-column
+*/
+type ProjectsCreateColumnReq struct {
+	ProjectId   int64
+	RequestBody ProjectsCreateColumnReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsCreateColumnReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
+}
+
+func (r ProjectsCreateColumnReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsCreateColumnReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsCreateColumnReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsCreateColumnReqBody is a request body for projects/create-column
+
+API documentation: https://developer.github.com/v3/projects/columns/#create-a-project-column
+*/
+type ProjectsCreateColumnReqBody struct {
+
+	// The name of the column.
+	Name *string `json:"name"`
+}
+
+/*
+ProjectsCreateForAuthenticatedUserReq builds requests for "projects/create-for-authenticated-user"
+
+Create a user project.
+
+  POST /user/projects
+
+https://developer.github.com/v3/projects/#create-a-user-project
+*/
+type ProjectsCreateForAuthenticatedUserReq struct {
+	RequestBody ProjectsCreateForAuthenticatedUserReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsCreateForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/projects")
+}
+
+func (r ProjectsCreateForAuthenticatedUserReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsCreateForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsCreateForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsCreateForAuthenticatedUserReqBody is a request body for projects/create-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/projects/#create-a-user-project
+*/
+type ProjectsCreateForAuthenticatedUserReqBody struct {
+
+	// The description of the project.
+	Body *string `json:"body,omitempty"`
+
+	// The name of the project.
+	Name *string `json:"name"`
+}
+
+/*
+ProjectsCreateForAuthenticatedUserResponseBody201 is a response body for projects/create-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/projects/#create-a-user-project
+*/
+type ProjectsCreateForAuthenticatedUserResponseBody201 struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Number    int64  `json:"number,omitempty"`
+	OwnerUrl  string `json:"owner_url,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ProjectsCreateForOrgReq builds requests for "projects/create-for-org"
+
+Create an organization project.
+
+  POST /orgs/{org}/projects
+
+https://developer.github.com/v3/projects/#create-an-organization-project
+*/
+type ProjectsCreateForOrgReq struct {
+	Org         string
+	RequestBody ProjectsCreateForOrgReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsCreateForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/projects", r.Org)
+}
+
+func (r ProjectsCreateForOrgReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsCreateForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsCreateForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsCreateForOrgReqBody is a request body for projects/create-for-org
+
+API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
+*/
+type ProjectsCreateForOrgReqBody struct {
+
+	// The description of the project.
+	Body *string `json:"body,omitempty"`
+
+	// The name of the project.
+	Name *string `json:"name"`
+}
+
+/*
+ProjectsCreateForOrgResponseBody201 is a response body for projects/create-for-org
+
+API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
+*/
+type ProjectsCreateForOrgResponseBody201 struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Number    int64  `json:"number,omitempty"`
+	OwnerUrl  string `json:"owner_url,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ProjectsCreateForRepoReq builds requests for "projects/create-for-repo"
+
+Create a repository project.
+
+  POST /repos/{owner}/{repo}/projects
+
+https://developer.github.com/v3/projects/#create-a-repository-project
+*/
+type ProjectsCreateForRepoReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ProjectsCreateForRepoReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsCreateForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
+}
+
+func (r ProjectsCreateForRepoReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsCreateForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsCreateForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsCreateForRepoReqBody is a request body for projects/create-for-repo
+
+API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
+*/
+type ProjectsCreateForRepoReqBody struct {
+
+	// The description of the project.
+	Body *string `json:"body,omitempty"`
+
+	// The name of the project.
+	Name *string `json:"name"`
+}
+
+/*
+ProjectsCreateForRepoResponseBody201 is a response body for projects/create-for-repo
+
+API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
+*/
+type ProjectsCreateForRepoResponseBody201 struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Number    int64  `json:"number,omitempty"`
+	OwnerUrl  string `json:"owner_url,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
 ProjectsDeleteReq builds requests for "projects/delete"
 
 Delete a project.
@@ -52,6 +591,96 @@ func (r ProjectsDeleteReq) header() http.Header {
 }
 
 func (r ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsDeleteCardReq builds requests for "projects/delete-card"
+
+Delete a project card.
+
+  DELETE /projects/columns/cards/{card_id}
+
+https://developer.github.com/v3/projects/cards/#delete-a-project-card
+*/
+type ProjectsDeleteCardReq struct {
+	CardId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsDeleteCardReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
+}
+
+func (r ProjectsDeleteCardReq) method() string {
+	return "DELETE"
+}
+
+func (r ProjectsDeleteCardReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsDeleteCardReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsDeleteColumnReq builds requests for "projects/delete-column"
+
+Delete a project column.
+
+  DELETE /projects/columns/{column_id}
+
+https://developer.github.com/v3/projects/columns/#delete-a-project-column
+*/
+type ProjectsDeleteColumnReq struct {
+	ColumnId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsDeleteColumnReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
+}
+
+func (r ProjectsDeleteColumnReq) method() string {
+	return "DELETE"
+}
+
+func (r ProjectsDeleteColumnReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsDeleteColumnReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
@@ -138,6 +767,933 @@ type ProjectsGetResponseBody200 struct {
 	State     string `json:"state,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
 	Url       string `json:"url,omitempty"`
+}
+
+/*
+ProjectsGetCardReq builds requests for "projects/get-card"
+
+Get a project card.
+
+  GET /projects/columns/cards/{card_id}
+
+https://developer.github.com/v3/projects/cards/#get-a-project-card
+*/
+type ProjectsGetCardReq struct {
+	CardId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsGetCardReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
+}
+
+func (r ProjectsGetCardReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsGetCardReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsGetCardReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsGetColumnReq builds requests for "projects/get-column"
+
+Get a project column.
+
+  GET /projects/columns/{column_id}
+
+https://developer.github.com/v3/projects/columns/#get-a-project-column
+*/
+type ProjectsGetColumnReq struct {
+	ColumnId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsGetColumnReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
+}
+
+func (r ProjectsGetColumnReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsGetColumnReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsGetColumnReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListCardsReq builds requests for "projects/list-cards"
+
+List project cards.
+
+  GET /projects/columns/{column_id}/cards
+
+https://developer.github.com/v3/projects/cards/#list-project-cards
+*/
+type ProjectsListCardsReq struct {
+	ColumnId int64
+
+	/*
+	Filters the project cards that are returned by the card's state. Can be one of
+	`all`,`archived`, or `not_archived`.
+	*/
+	ArchivedState *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsListCardsReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
+}
+
+func (r ProjectsListCardsReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsListCardsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.ArchivedState != nil {
+		query.Set("archived_state", *r.ArchivedState)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ProjectsListCardsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListCardsResponseBody200 is a response body for projects/list-cards
+
+API documentation: https://developer.github.com/v3/projects/cards/#list-project-cards
+*/
+type ProjectsListCardsResponseBody200 []struct {
+	Archived   bool   `json:"archived,omitempty"`
+	ColumnUrl  string `json:"column_url,omitempty"`
+	ContentUrl string `json:"content_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Id         int64  `json:"id,omitempty"`
+	NodeId     string `json:"node_id,omitempty"`
+	Note       string `json:"note,omitempty"`
+	ProjectUrl string `json:"project_url,omitempty"`
+	UpdatedAt  string `json:"updated_at,omitempty"`
+	Url        string `json:"url,omitempty"`
+}
+
+/*
+ProjectsListCollaboratorsReq builds requests for "projects/list-collaborators"
+
+List collaborators.
+
+  GET /projects/{project_id}/collaborators
+
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
+*/
+type ProjectsListCollaboratorsReq struct {
+	ProjectId int64
+
+	/*
+	Filters the collaborators by their affiliation. Can be one of:
+	\* `outside`: Outside collaborators of a project that are not a member of the
+	project's organization.
+	\* `direct`: Collaborators with permissions to a project, regardless of
+	organization membership status.
+	\* `all`: All collaborators the authenticated user can see.
+	*/
+	Affiliation *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsListCollaboratorsReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/collaborators", r.ProjectId)
+}
+
+func (r ProjectsListCollaboratorsReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsListCollaboratorsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Affiliation != nil {
+		query.Set("affiliation", *r.Affiliation)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ProjectsListCollaboratorsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListCollaboratorsResponseBody200 is a response body for projects/list-collaborators
+
+API documentation: https://developer.github.com/v3/projects/collaborators/#list-collaborators
+*/
+type ProjectsListCollaboratorsResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+ProjectsListColumnsReq builds requests for "projects/list-columns"
+
+List project columns.
+
+  GET /projects/{project_id}/columns
+
+https://developer.github.com/v3/projects/columns/#list-project-columns
+*/
+type ProjectsListColumnsReq struct {
+	ProjectId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsListColumnsReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
+}
+
+func (r ProjectsListColumnsReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsListColumnsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ProjectsListColumnsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListColumnsResponseBody200 is a response body for projects/list-columns
+
+API documentation: https://developer.github.com/v3/projects/columns/#list-project-columns
+*/
+type ProjectsListColumnsResponseBody200 []struct {
+	CardsUrl   string `json:"cards_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Id         int64  `json:"id,omitempty"`
+	Name       string `json:"name,omitempty"`
+	NodeId     string `json:"node_id,omitempty"`
+	ProjectUrl string `json:"project_url,omitempty"`
+	UpdatedAt  string `json:"updated_at,omitempty"`
+	Url        string `json:"url,omitempty"`
+}
+
+/*
+ProjectsListForOrgReq builds requests for "projects/list-for-org"
+
+List organization projects.
+
+  GET /orgs/{org}/projects
+
+https://developer.github.com/v3/projects/#list-organization-projects
+*/
+type ProjectsListForOrgReq struct {
+	Org string
+
+	/*
+	Indicates the state of the projects to return. Can be either `open`, `closed`,
+	or `all`.
+	*/
+	State *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsListForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/projects", r.Org)
+}
+
+func (r ProjectsListForOrgReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsListForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.State != nil {
+		query.Set("state", *r.State)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ProjectsListForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListForOrgResponseBody200 is a response body for projects/list-for-org
+
+API documentation: https://developer.github.com/v3/projects/#list-organization-projects
+*/
+type ProjectsListForOrgResponseBody200 []struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Number    int64  `json:"number,omitempty"`
+	OwnerUrl  string `json:"owner_url,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ProjectsListForRepoReq builds requests for "projects/list-for-repo"
+
+List repository projects.
+
+  GET /repos/{owner}/{repo}/projects
+
+https://developer.github.com/v3/projects/#list-repository-projects
+*/
+type ProjectsListForRepoReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Indicates the state of the projects to return. Can be either `open`, `closed`,
+	or `all`.
+	*/
+	State *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsListForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
+}
+
+func (r ProjectsListForRepoReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsListForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.State != nil {
+		query.Set("state", *r.State)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ProjectsListForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListForRepoResponseBody200 is a response body for projects/list-for-repo
+
+API documentation: https://developer.github.com/v3/projects/#list-repository-projects
+*/
+type ProjectsListForRepoResponseBody200 []struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Number    int64  `json:"number,omitempty"`
+	OwnerUrl  string `json:"owner_url,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ProjectsListForUserReq builds requests for "projects/list-for-user"
+
+List user projects.
+
+  GET /users/{username}/projects
+
+https://developer.github.com/v3/projects/#list-user-projects
+*/
+type ProjectsListForUserReq struct {
+	Username string
+
+	/*
+	Indicates the state of the projects to return. Can be either `open`, `closed`,
+	or `all`.
+	*/
+	State *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsListForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/projects", r.Username)
+}
+
+func (r ProjectsListForUserReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsListForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.State != nil {
+		query.Set("state", *r.State)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ProjectsListForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsListForUserResponseBody200 is a response body for projects/list-for-user
+
+API documentation: https://developer.github.com/v3/projects/#list-user-projects
+*/
+type ProjectsListForUserResponseBody200 []struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Number    int64  `json:"number,omitempty"`
+	OwnerUrl  string `json:"owner_url,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ProjectsMoveCardReq builds requests for "projects/move-card"
+
+Move a project card.
+
+  POST /projects/columns/cards/{card_id}/moves
+
+https://developer.github.com/v3/projects/cards/#move-a-project-card
+*/
+type ProjectsMoveCardReq struct {
+	CardId      int64
+	RequestBody ProjectsMoveCardReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsMoveCardReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId)
+}
+
+func (r ProjectsMoveCardReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsMoveCardReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsMoveCardReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsMoveCardReqBody is a request body for projects/move-card
+
+API documentation: https://developer.github.com/v3/projects/cards/#move-a-project-card
+*/
+type ProjectsMoveCardReqBody struct {
+
+	// The `id` value of a column in the same project.
+	ColumnId *int64 `json:"column_id,omitempty"`
+
+	/*
+	   Can be one of `top`, `bottom`, or `after:<card_id>`, where `<card_id>` is the
+	   `id` value of a card in the same column, or in the new column specified by
+	   `column_id`.
+	*/
+	Position *string `json:"position"`
+}
+
+/*
+ProjectsMoveColumnReq builds requests for "projects/move-column"
+
+Move a project column.
+
+  POST /projects/columns/{column_id}/moves
+
+https://developer.github.com/v3/projects/columns/#move-a-project-column
+*/
+type ProjectsMoveColumnReq struct {
+	ColumnId    int64
+	RequestBody ProjectsMoveColumnReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsMoveColumnReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId)
+}
+
+func (r ProjectsMoveColumnReq) method() string {
+	return "POST"
+}
+
+func (r ProjectsMoveColumnReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsMoveColumnReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ProjectsMoveColumnReqBody is a request body for projects/move-column
+
+API documentation: https://developer.github.com/v3/projects/columns/#move-a-project-column
+*/
+type ProjectsMoveColumnReqBody struct {
+
+	/*
+	   Can be one of `first`, `last`, or `after:<column_id>`, where `<column_id>` is
+	   the `id` value of a column in the same project.
+	*/
+	Position *string `json:"position"`
+}
+
+/*
+ProjectsRemoveCollaboratorReq builds requests for "projects/remove-collaborator"
+
+Remove user as a collaborator.
+
+  DELETE /projects/{project_id}/collaborators/{username}
+
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+*/
+type ProjectsRemoveCollaboratorReq struct {
+	ProjectId int64
+	Username  string
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsRemoveCollaboratorReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
+}
+
+func (r ProjectsRemoveCollaboratorReq) method() string {
+	return "DELETE"
+}
+
+func (r ProjectsRemoveCollaboratorReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsRemoveCollaboratorReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsReviewUserPermissionLevelReq builds requests for "projects/review-user-permission-level"
+
+Review a user's permission level.
+
+  GET /projects/{project_id}/collaborators/{username}/permission
+
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+*/
+type ProjectsReviewUserPermissionLevelReq struct {
+	ProjectId int64
+	Username  string
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r ProjectsReviewUserPermissionLevelReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username)
+}
+
+func (r ProjectsReviewUserPermissionLevelReq) method() string {
+	return "GET"
+}
+
+func (r ProjectsReviewUserPermissionLevelReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ProjectsReviewUserPermissionLevelReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ProjectsReviewUserPermissionLevelResponseBody200 is a response body for projects/review-user-permission-level
+
+API documentation: https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+*/
+type ProjectsReviewUserPermissionLevelResponseBody200 struct {
+	Permission string `json:"permission,omitempty"`
+	User       struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
 }
 
 /*
@@ -282,404 +1838,6 @@ type ProjectsUpdateResponseBody200 struct {
 }
 
 /*
-ProjectsListForOrgReq builds requests for "projects/list-for-org"
-
-List organization projects.
-
-  GET /orgs/{org}/projects
-
-https://developer.github.com/v3/projects/#list-organization-projects
-*/
-type ProjectsListForOrgReq struct {
-	Org string
-
-	/*
-	Indicates the state of the projects to return. Can be either `open`, `closed`,
-	or `all`.
-	*/
-	State *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsListForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/projects", r.Org)
-}
-
-func (r ProjectsListForOrgReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsListForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.State != nil {
-		query.Set("state", *r.State)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ProjectsListForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsListForOrgResponseBody200 is a response body for projects/list-for-org
-
-API documentation: https://developer.github.com/v3/projects/#list-organization-projects
-*/
-type ProjectsListForOrgResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ProjectsCreateForOrgReq builds requests for "projects/create-for-org"
-
-Create an organization project.
-
-  POST /orgs/{org}/projects
-
-https://developer.github.com/v3/projects/#create-an-organization-project
-*/
-type ProjectsCreateForOrgReq struct {
-	Org         string
-	RequestBody ProjectsCreateForOrgReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsCreateForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/projects", r.Org)
-}
-
-func (r ProjectsCreateForOrgReq) method() string {
-	return "POST"
-}
-
-func (r ProjectsCreateForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsCreateForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsCreateForOrgReqBody is a request body for projects/create-for-org
-
-API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
-*/
-type ProjectsCreateForOrgReqBody struct {
-
-	// The description of the project.
-	Body *string `json:"body,omitempty"`
-
-	// The name of the project.
-	Name *string `json:"name"`
-}
-
-/*
-ProjectsCreateForOrgResponseBody201 is a response body for projects/create-for-org
-
-API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
-*/
-type ProjectsCreateForOrgResponseBody201 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ProjectsGetColumnReq builds requests for "projects/get-column"
-
-Get a project column.
-
-  GET /projects/columns/{column_id}
-
-https://developer.github.com/v3/projects/columns/#get-a-project-column
-*/
-type ProjectsGetColumnReq struct {
-	ColumnId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsGetColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
-}
-
-func (r ProjectsGetColumnReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsGetColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsGetColumnReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsUpdateColumnReq builds requests for "projects/update-column"
-
-Update a project column.
-
-  PATCH /projects/columns/{column_id}
-
-https://developer.github.com/v3/projects/columns/#update-a-project-column
-*/
-type ProjectsUpdateColumnReq struct {
-	ColumnId    int64
-	RequestBody ProjectsUpdateColumnReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsUpdateColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
-}
-
-func (r ProjectsUpdateColumnReq) method() string {
-	return "PATCH"
-}
-
-func (r ProjectsUpdateColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsUpdateColumnReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsUpdateColumnReqBody is a request body for projects/update-column
-
-API documentation: https://developer.github.com/v3/projects/columns/#update-a-project-column
-*/
-type ProjectsUpdateColumnReqBody struct {
-
-	// The new name of the column.
-	Name *string `json:"name"`
-}
-
-/*
-ProjectsDeleteColumnReq builds requests for "projects/delete-column"
-
-Delete a project column.
-
-  DELETE /projects/columns/{column_id}
-
-https://developer.github.com/v3/projects/columns/#delete-a-project-column
-*/
-type ProjectsDeleteColumnReq struct {
-	ColumnId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsDeleteColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
-}
-
-func (r ProjectsDeleteColumnReq) method() string {
-	return "DELETE"
-}
-
-func (r ProjectsDeleteColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsDeleteColumnReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsGetCardReq builds requests for "projects/get-card"
-
-Get a project card.
-
-  GET /projects/columns/cards/{card_id}
-
-https://developer.github.com/v3/projects/cards/#get-a-project-card
-*/
-type ProjectsGetCardReq struct {
-	CardId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsGetCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
-}
-
-func (r ProjectsGetCardReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsGetCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsGetCardReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
 ProjectsUpdateCardReq builds requests for "projects/update-card"
 
 Update a project card.
@@ -747,635 +1905,17 @@ type ProjectsUpdateCardReqBody struct {
 }
 
 /*
-ProjectsDeleteCardReq builds requests for "projects/delete-card"
+ProjectsUpdateColumnReq builds requests for "projects/update-column"
 
-Delete a project card.
+Update a project column.
 
-  DELETE /projects/columns/cards/{card_id}
+  PATCH /projects/columns/{column_id}
 
-https://developer.github.com/v3/projects/cards/#delete-a-project-card
+https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-type ProjectsDeleteCardReq struct {
-	CardId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsDeleteCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
-}
-
-func (r ProjectsDeleteCardReq) method() string {
-	return "DELETE"
-}
-
-func (r ProjectsDeleteCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsDeleteCardReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsReviewUserPermissionLevelReq builds requests for "projects/review-user-permission-level"
-
-Review a user's permission level.
-
-  GET /projects/{project_id}/collaborators/{username}/permission
-
-https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-type ProjectsReviewUserPermissionLevelReq struct {
-	ProjectId int64
-	Username  string
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsReviewUserPermissionLevelReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username)
-}
-
-func (r ProjectsReviewUserPermissionLevelReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsReviewUserPermissionLevelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsReviewUserPermissionLevelReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsReviewUserPermissionLevelResponseBody200 is a response body for projects/review-user-permission-level
-
-API documentation: https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-type ProjectsReviewUserPermissionLevelResponseBody200 struct {
-	Permission string `json:"permission,omitempty"`
-	User       struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ProjectsListColumnsReq builds requests for "projects/list-columns"
-
-List project columns.
-
-  GET /projects/{project_id}/columns
-
-https://developer.github.com/v3/projects/columns/#list-project-columns
-*/
-type ProjectsListColumnsReq struct {
-	ProjectId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsListColumnsReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
-}
-
-func (r ProjectsListColumnsReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsListColumnsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ProjectsListColumnsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsListColumnsResponseBody200 is a response body for projects/list-columns
-
-API documentation: https://developer.github.com/v3/projects/columns/#list-project-columns
-*/
-type ProjectsListColumnsResponseBody200 []struct {
-	CardsUrl   string `json:"cards_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	Name       string `json:"name,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	ProjectUrl string `json:"project_url,omitempty"`
-	UpdatedAt  string `json:"updated_at,omitempty"`
-	Url        string `json:"url,omitempty"`
-}
-
-/*
-ProjectsCreateColumnReq builds requests for "projects/create-column"
-
-Create a project column.
-
-  POST /projects/{project_id}/columns
-
-https://developer.github.com/v3/projects/columns/#create-a-project-column
-*/
-type ProjectsCreateColumnReq struct {
-	ProjectId   int64
-	RequestBody ProjectsCreateColumnReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsCreateColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
-}
-
-func (r ProjectsCreateColumnReq) method() string {
-	return "POST"
-}
-
-func (r ProjectsCreateColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsCreateColumnReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsCreateColumnReqBody is a request body for projects/create-column
-
-API documentation: https://developer.github.com/v3/projects/columns/#create-a-project-column
-*/
-type ProjectsCreateColumnReqBody struct {
-
-	// The name of the column.
-	Name *string `json:"name"`
-}
-
-/*
-ProjectsMoveCardReq builds requests for "projects/move-card"
-
-Move a project card.
-
-  POST /projects/columns/cards/{card_id}/moves
-
-https://developer.github.com/v3/projects/cards/#move-a-project-card
-*/
-type ProjectsMoveCardReq struct {
-	CardId      int64
-	RequestBody ProjectsMoveCardReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsMoveCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId)
-}
-
-func (r ProjectsMoveCardReq) method() string {
-	return "POST"
-}
-
-func (r ProjectsMoveCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsMoveCardReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsMoveCardReqBody is a request body for projects/move-card
-
-API documentation: https://developer.github.com/v3/projects/cards/#move-a-project-card
-*/
-type ProjectsMoveCardReqBody struct {
-
-	// The `id` value of a column in the same project.
-	ColumnId *int64 `json:"column_id,omitempty"`
-
-	/*
-	   Can be one of `top`, `bottom`, or `after:<card_id>`, where `<card_id>` is the
-	   `id` value of a card in the same column, or in the new column specified by
-	   `column_id`.
-	*/
-	Position *string `json:"position"`
-}
-
-/*
-ProjectsListCollaboratorsReq builds requests for "projects/list-collaborators"
-
-List collaborators.
-
-  GET /projects/{project_id}/collaborators
-
-https://developer.github.com/v3/projects/collaborators/#list-collaborators
-*/
-type ProjectsListCollaboratorsReq struct {
-	ProjectId int64
-
-	/*
-	Filters the collaborators by their affiliation. Can be one of:
-	\* `outside`: Outside collaborators of a project that are not a member of the
-	project's organization.
-	\* `direct`: Collaborators with permissions to a project, regardless of
-	organization membership status.
-	\* `all`: All collaborators the authenticated user can see.
-	*/
-	Affiliation *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsListCollaboratorsReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators", r.ProjectId)
-}
-
-func (r ProjectsListCollaboratorsReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsListCollaboratorsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Affiliation != nil {
-		query.Set("affiliation", *r.Affiliation)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ProjectsListCollaboratorsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsListCollaboratorsResponseBody200 is a response body for projects/list-collaborators
-
-API documentation: https://developer.github.com/v3/projects/collaborators/#list-collaborators
-*/
-type ProjectsListCollaboratorsResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-ProjectsListForRepoReq builds requests for "projects/list-for-repo"
-
-List repository projects.
-
-  GET /repos/{owner}/{repo}/projects
-
-https://developer.github.com/v3/projects/#list-repository-projects
-*/
-type ProjectsListForRepoReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Indicates the state of the projects to return. Can be either `open`, `closed`,
-	or `all`.
-	*/
-	State *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsListForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
-}
-
-func (r ProjectsListForRepoReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsListForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.State != nil {
-		query.Set("state", *r.State)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ProjectsListForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsListForRepoResponseBody200 is a response body for projects/list-for-repo
-
-API documentation: https://developer.github.com/v3/projects/#list-repository-projects
-*/
-type ProjectsListForRepoResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ProjectsCreateForRepoReq builds requests for "projects/create-for-repo"
-
-Create a repository project.
-
-  POST /repos/{owner}/{repo}/projects
-
-https://developer.github.com/v3/projects/#create-a-repository-project
-*/
-type ProjectsCreateForRepoReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ProjectsCreateForRepoReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsCreateForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
-}
-
-func (r ProjectsCreateForRepoReq) method() string {
-	return "POST"
-}
-
-func (r ProjectsCreateForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsCreateForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsCreateForRepoReqBody is a request body for projects/create-for-repo
-
-API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
-*/
-type ProjectsCreateForRepoReqBody struct {
-
-	// The description of the project.
-	Body *string `json:"body,omitempty"`
-
-	// The name of the project.
-	Name *string `json:"name"`
-}
-
-/*
-ProjectsCreateForRepoResponseBody201 is a response body for projects/create-for-repo
-
-API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
-*/
-type ProjectsCreateForRepoResponseBody201 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ProjectsCreateCardReq builds requests for "projects/create-card"
-
-Create a project card.
-
-  POST /projects/columns/{column_id}/cards
-
-https://developer.github.com/v3/projects/cards/#create-a-project-card
-*/
-type ProjectsCreateCardReq struct {
+type ProjectsUpdateColumnReq struct {
 	ColumnId    int64
-	RequestBody ProjectsCreateCardReqBody
+	RequestBody ProjectsUpdateColumnReqBody
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -1387,576 +1927,36 @@ type ProjectsCreateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsCreateCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
+func (r ProjectsUpdateColumnReq) urlPath() string {
+	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
 }
 
-func (r ProjectsCreateCardReq) method() string {
-	return "POST"
+func (r ProjectsUpdateColumnReq) method() string {
+	return "PATCH"
 }
 
-func (r ProjectsCreateCardReq) urlQuery() url.Values {
+func (r ProjectsUpdateColumnReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsCreateCardReq) header() http.Header {
+func (r ProjectsUpdateColumnReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ProjectsCreateCardReqBody is a request body for projects/create-card
+ProjectsUpdateColumnReqBody is a request body for projects/update-column
 
-API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
+API documentation: https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-type ProjectsCreateCardReqBody struct {
+type ProjectsUpdateColumnReqBody struct {
 
-	/*
-	   The issue or pull request id you want to associate with this card. You can use
-	   the [List repository
-	   issues](https://developer.github.com/v3/issues/#list-repository-issues) and
-	   [List pull requests](https://developer.github.com/v3/pulls/#list-pull-requests)
-	   endpoints to find this id.
-	   **Note:** Depending on whether you use the issue id or pull request id, you will
-	   need to specify `Issue` or `PullRequest` as the `content_type`.
-	*/
-	ContentId *int64 `json:"content_id,omitempty"`
-
-	/*
-	   **Required if you provide `content_id`**. The type of content you want to
-	   associate with this card. Use `Issue` when `content_id` is an issue id and use
-	   `PullRequest` when `content_id` is a pull request id.
-	*/
-	ContentType *string `json:"content_type,omitempty"`
-
-	/*
-	   The card's note content. Only valid for cards without another type of content,
-	   so you must omit when specifying `content_id` and `content_type`.
-	*/
-	Note *string `json:"note,omitempty"`
-}
-
-/*
-ProjectsCreateCardResponseBody201 is a response body for projects/create-card
-
-API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
-*/
-type ProjectsCreateCardResponseBody201 struct {
-	Archived   bool   `json:"archived,omitempty"`
-	ColumnUrl  string `json:"column_url,omitempty"`
-	ContentUrl string `json:"content_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Note       string `json:"note,omitempty"`
-	ProjectUrl string `json:"project_url,omitempty"`
-	UpdatedAt  string `json:"updated_at,omitempty"`
-	Url        string `json:"url,omitempty"`
-}
-
-/*
-ProjectsListCardsReq builds requests for "projects/list-cards"
-
-List project cards.
-
-  GET /projects/columns/{column_id}/cards
-
-https://developer.github.com/v3/projects/cards/#list-project-cards
-*/
-type ProjectsListCardsReq struct {
-	ColumnId int64
-
-	/*
-	Filters the project cards that are returned by the card's state. Can be one of
-	`all`,`archived`, or `not_archived`.
-	*/
-	ArchivedState *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsListCardsReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
-}
-
-func (r ProjectsListCardsReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsListCardsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.ArchivedState != nil {
-		query.Set("archived_state", *r.ArchivedState)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ProjectsListCardsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsListCardsResponseBody200 is a response body for projects/list-cards
-
-API documentation: https://developer.github.com/v3/projects/cards/#list-project-cards
-*/
-type ProjectsListCardsResponseBody200 []struct {
-	Archived   bool   `json:"archived,omitempty"`
-	ColumnUrl  string `json:"column_url,omitempty"`
-	ContentUrl string `json:"content_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Note       string `json:"note,omitempty"`
-	ProjectUrl string `json:"project_url,omitempty"`
-	UpdatedAt  string `json:"updated_at,omitempty"`
-	Url        string `json:"url,omitempty"`
-}
-
-/*
-ProjectsCreateForAuthenticatedUserReq builds requests for "projects/create-for-authenticated-user"
-
-Create a user project.
-
-  POST /user/projects
-
-https://developer.github.com/v3/projects/#create-a-user-project
-*/
-type ProjectsCreateForAuthenticatedUserReq struct {
-	RequestBody ProjectsCreateForAuthenticatedUserReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsCreateForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/projects")
-}
-
-func (r ProjectsCreateForAuthenticatedUserReq) method() string {
-	return "POST"
-}
-
-func (r ProjectsCreateForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsCreateForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsCreateForAuthenticatedUserReqBody is a request body for projects/create-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/projects/#create-a-user-project
-*/
-type ProjectsCreateForAuthenticatedUserReqBody struct {
-
-	// The description of the project.
-	Body *string `json:"body,omitempty"`
-
-	// The name of the project.
+	// The new name of the column.
 	Name *string `json:"name"`
-}
-
-/*
-ProjectsCreateForAuthenticatedUserResponseBody201 is a response body for projects/create-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/projects/#create-a-user-project
-*/
-type ProjectsCreateForAuthenticatedUserResponseBody201 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ProjectsRemoveCollaboratorReq builds requests for "projects/remove-collaborator"
-
-Remove user as a collaborator.
-
-  DELETE /projects/{project_id}/collaborators/{username}
-
-https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
-*/
-type ProjectsRemoveCollaboratorReq struct {
-	ProjectId int64
-	Username  string
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsRemoveCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
-}
-
-func (r ProjectsRemoveCollaboratorReq) method() string {
-	return "DELETE"
-}
-
-func (r ProjectsRemoveCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsRemoveCollaboratorReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsAddCollaboratorReq builds requests for "projects/add-collaborator"
-
-Add user as a collaborator.
-
-  PUT /projects/{project_id}/collaborators/{username}
-
-https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
-*/
-type ProjectsAddCollaboratorReq struct {
-	ProjectId   int64
-	Username    string
-	RequestBody ProjectsAddCollaboratorReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsAddCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
-}
-
-func (r ProjectsAddCollaboratorReq) method() string {
-	return "PUT"
-}
-
-func (r ProjectsAddCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsAddCollaboratorReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsAddCollaboratorReqBody is a request body for projects/add-collaborator
-
-API documentation: https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
-*/
-type ProjectsAddCollaboratorReqBody struct {
-
-	/*
-	   The permission to grant the collaborator. Note that, if you choose not to pass
-	   any parameters, you'll need to set `Content-Length` to zero when calling out to
-	   this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)." Can be one of:
-	   \* `read` - can read, but not write to or administer this project.
-	   \* `write` - can read and write, but not administer this project.
-	   \* `admin` - can read, write and administer this project.
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-ProjectsListForUserReq builds requests for "projects/list-for-user"
-
-List user projects.
-
-  GET /users/{username}/projects
-
-https://developer.github.com/v3/projects/#list-user-projects
-*/
-type ProjectsListForUserReq struct {
-	Username string
-
-	/*
-	Indicates the state of the projects to return. Can be either `open`, `closed`,
-	or `all`.
-	*/
-	State *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsListForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/projects", r.Username)
-}
-
-func (r ProjectsListForUserReq) method() string {
-	return "GET"
-}
-
-func (r ProjectsListForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.State != nil {
-		query.Set("state", *r.State)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ProjectsListForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ProjectsListForUserResponseBody200 is a response body for projects/list-for-user
-
-API documentation: https://developer.github.com/v3/projects/#list-user-projects
-*/
-type ProjectsListForUserResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ProjectsMoveColumnReq builds requests for "projects/move-column"
-
-Move a project column.
-
-  POST /projects/columns/{column_id}/moves
-
-https://developer.github.com/v3/projects/columns/#move-a-project-column
-*/
-type ProjectsMoveColumnReq struct {
-	ColumnId    int64
-	RequestBody ProjectsMoveColumnReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r ProjectsMoveColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId)
-}
-
-func (r ProjectsMoveColumnReq) method() string {
-	return "POST"
-}
-
-func (r ProjectsMoveColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ProjectsMoveColumnReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ProjectsMoveColumnReqBody is a request body for projects/move-column
-
-API documentation: https://developer.github.com/v3/projects/columns/#move-a-project-column
-*/
-type ProjectsMoveColumnReqBody struct {
-
-	/*
-	   Can be one of `first`, `last`, or `after:<column_id>`, where `<column_id>` is
-	   the `id` value of a column in the same project.
-	*/
-	Position *string `json:"position"`
 }
