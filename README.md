@@ -3,7 +3,7 @@
 [![godoc](https://godoc.org/github.com/WillAbides/octo-go?status.svg)](https://godoc.org/github.com/WillAbides/octo-go)
 [![ci](https://github.com/WillAbides/octo-go/workflows/ci/badge.svg?branch=master&event=push)](https://github.com/WillAbides/octo-go/actions?query=workflow%3Aci+branch%3Amaster+event%3Apush)
 
-octo-go is an experimental client for GitHub's v3 API. It is generated from the opanapi schema that GitHub covertly
+octo-go is an experimental client for GitHub's v3 API. It is generated from the openapi schema that GitHub covertly
  publishes at https://unpkg.com/browse/@github/openapi@latest/. 
  
 This is WIP. Don't depend on it.
