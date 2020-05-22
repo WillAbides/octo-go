@@ -12,6 +12,996 @@ import (
 )
 
 /*
+ReposGetBranchReq builds requests for "repos/get-branch"
+
+Get branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}
+
+https://developer.github.com/v3/repos/branches/#get-branch
+*/
+type ReposGetBranchReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposGetBranchReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetBranchReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetBranchReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetBranchReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetBranchResponseBody200 is a response body for repos/get-branch
+
+API documentation: https://developer.github.com/v3/repos/branches/#get-branch
+*/
+type ReposGetBranchResponseBody200 struct {
+	Links struct {
+		Html string `json:"html,omitempty"`
+		Self string `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	Commit struct {
+		Author struct {
+			AvatarUrl  string `json:"avatar_url,omitempty"`
+			GravatarId string `json:"gravatar_id,omitempty"`
+			Id         int64  `json:"id,omitempty"`
+			Login      string `json:"login,omitempty"`
+			Url        string `json:"url,omitempty"`
+		} `json:"author,omitempty"`
+		Commit struct {
+			Author struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"author,omitempty"`
+			Committer struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"committer,omitempty"`
+			Message string `json:"message,omitempty"`
+			Tree    struct {
+				Sha string `json:"sha,omitempty"`
+				Url string `json:"url,omitempty"`
+			} `json:"tree,omitempty"`
+			Url          string `json:"url,omitempty"`
+			Verification struct {
+				Payload   string `json:"payload,omitempty"`
+				Reason    string `json:"reason,omitempty"`
+				Signature string `json:"signature,omitempty"`
+				Verified  bool   `json:"verified,omitempty"`
+			} `json:"verification,omitempty"`
+		} `json:"commit,omitempty"`
+		Committer struct {
+			AvatarUrl  string `json:"avatar_url,omitempty"`
+			GravatarId string `json:"gravatar_id,omitempty"`
+			Id         int64  `json:"id,omitempty"`
+			Login      string `json:"login,omitempty"`
+			Url        string `json:"url,omitempty"`
+		} `json:"committer,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			Sha string `json:"sha"`
+			Url string `json:"url"`
+		} `json:"parents,omitempty"`
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"commit,omitempty"`
+	Name       string `json:"name,omitempty"`
+	Protected  bool   `json:"protected,omitempty"`
+	Protection struct {
+		Enabled              bool `json:"enabled,omitempty"`
+		RequiredStatusChecks struct {
+			Contexts         []string `json:"contexts,omitempty"`
+			EnforcementLevel string   `json:"enforcement_level,omitempty"`
+		} `json:"required_status_checks,omitempty"`
+	} `json:"protection,omitempty"`
+	ProtectionUrl string `json:"protection_url,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchRestrictionsReq builds requests for "repos/remove-protected-branch-restrictions"
+
+Remove restrictions of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+
+https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchRestrictionsReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposRemoveProtectedBranchRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchRestrictionsReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchRestrictionsReq builds requests for "repos/get-protected-branch-restrictions"
+
+Get restrictions of protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+
+https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
+*/
+type ReposGetProtectedBranchRestrictionsReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposGetProtectedBranchRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetProtectedBranchRestrictionsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetProtectedBranchRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetProtectedBranchRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchRestrictionsResponseBody200 is a response body for repos/get-protected-branch-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
+*/
+type ReposGetProtectedBranchRestrictionsResponseBody200 struct {
+	Apps []struct {
+		CreatedAt   string   `json:"created_at,omitempty"`
+		Description string   `json:"description,omitempty"`
+		Events      []string `json:"events,omitempty"`
+		ExternalUrl string   `json:"external_url,omitempty"`
+		HtmlUrl     string   `json:"html_url,omitempty"`
+		Id          int64    `json:"id,omitempty"`
+		Name        string   `json:"name,omitempty"`
+		NodeId      string   `json:"node_id,omitempty"`
+		Owner       struct {
+			AvatarUrl        string `json:"avatar_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			HooksUrl         string `json:"hooks_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			Login            string `json:"login,omitempty"`
+			MembersUrl       string `json:"members_url,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			PublicMembersUrl string `json:"public_members_url,omitempty"`
+			ReposUrl         string `json:"repos_url,omitempty"`
+			Url              string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Permissions struct {
+			Contents   string `json:"contents,omitempty"`
+			Issues     string `json:"issues,omitempty"`
+			Metadata   string `json:"metadata,omitempty"`
+			SingleFile string `json:"single_file,omitempty"`
+		} `json:"permissions,omitempty"`
+		Slug      string `json:"slug,omitempty"`
+		UpdatedAt string `json:"updated_at,omitempty"`
+	} `json:"apps,omitempty"`
+	AppsUrl string `json:"apps_url,omitempty"`
+	Teams   []struct {
+		Description     string `json:"description,omitempty"`
+		HtmlUrl         string `json:"html_url,omitempty"`
+		Id              int64  `json:"id,omitempty"`
+		MembersUrl      string `json:"members_url,omitempty"`
+		Name            string `json:"name,omitempty"`
+		NodeId          string `json:"node_id,omitempty"`
+		Parent          string `json:"parent,omitempty"`
+		Permission      string `json:"permission,omitempty"`
+		Privacy         string `json:"privacy,omitempty"`
+		RepositoriesUrl string `json:"repositories_url,omitempty"`
+		Slug            string `json:"slug,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"teams,omitempty"`
+	TeamsUrl string `json:"teams_url,omitempty"`
+	Url      string `json:"url,omitempty"`
+	Users    []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"users,omitempty"`
+	UsersUrl string `json:"users_url,omitempty"`
+}
+
+/*
+ReposPingHookReq builds requests for "repos/ping-hook"
+
+Ping a hook.
+
+  POST /repos/{owner}/{repo}/hooks/{hook_id}/pings
+
+https://developer.github.com/v3/repos/hooks/#ping-a-hook
+*/
+type ReposPingHookReq struct {
+	Owner  string
+	Repo   string
+	HookId int64
+}
+
+func (r ReposPingHookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v/pings", r.Owner, r.Repo, r.HookId)
+}
+
+func (r ReposPingHookReq) method() string {
+	return "POST"
+}
+
+func (r ReposPingHookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposPingHookReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetViewsReq builds requests for "repos/get-views"
+
+Views.
+
+  GET /repos/{owner}/{repo}/traffic/views
+
+https://developer.github.com/v3/repos/traffic/#views
+*/
+type ReposGetViewsReq struct {
+	Owner string
+	Repo  string
+
+	// Must be one of: `day`, `week`.
+	Per *string
+}
+
+func (r ReposGetViewsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/traffic/views", r.Owner, r.Repo)
+}
+
+func (r ReposGetViewsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetViewsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Per != nil {
+		query.Set("per", *r.Per)
+	}
+	return query
+}
+
+func (r ReposGetViewsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetViewsResponseBody200 is a response body for repos/get-views
+
+API documentation: https://developer.github.com/v3/repos/traffic/#views
+*/
+type ReposGetViewsResponseBody200 struct {
+	Count   int64 `json:"count,omitempty"`
+	Uniques int64 `json:"uniques,omitempty"`
+	Views   []struct {
+		Count     int64  `json:"count"`
+		Timestamp string `json:"timestamp"`
+		Uniques   int64  `json:"uniques"`
+	} `json:"views,omitempty"`
+}
+
+/*
+ReposListPublicReq builds requests for "repos/list-public"
+
+List public repositories.
+
+  GET /repositories
+
+https://developer.github.com/v3/repos/#list-public-repositories
+*/
+type ReposListPublicReq struct {
+
+	// The integer ID of the last repository that you've seen.
+	Since *int64
+}
+
+func (r ReposListPublicReq) urlPath() string {
+	return fmt.Sprintf("/repositories")
+}
+
+func (r ReposListPublicReq) method() string {
+	return "GET"
+}
+
+func (r ReposListPublicReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Since != nil {
+		query.Set("since", strconv.FormatInt(*r.Since, 10))
+	}
+	return query
+}
+
+func (r ReposListPublicReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListPublicResponseBody200 is a response body for repos/list-public
+
+API documentation: https://developer.github.com/v3/repos/#list-public-repositories
+*/
+type ReposListPublicResponseBody200 []struct {
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	Owner            struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Private         bool   `json:"private,omitempty"`
+	PullsUrl        string `json:"pulls_url,omitempty"`
+	ReleasesUrl     string `json:"releases_url,omitempty"`
+	SshUrl          string `json:"ssh_url,omitempty"`
+	StargazersUrl   string `json:"stargazers_url,omitempty"`
+	StatusesUrl     string `json:"statuses_url,omitempty"`
+	SubscribersUrl  string `json:"subscribers_url,omitempty"`
+	SubscriptionUrl string `json:"subscription_url,omitempty"`
+	TagsUrl         string `json:"tags_url,omitempty"`
+	TeamsUrl        string `json:"teams_url,omitempty"`
+	TreesUrl        string `json:"trees_url,omitempty"`
+	Url             string `json:"url,omitempty"`
+}
+
+/*
+ReposListPullRequestsAssociatedWithCommitReq builds requests for "repos/list-pull-requests-associated-with-commit"
+
+List pull requests associated with commit.
+
+  GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls
+
+https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+*/
+type ReposListPullRequestsAssociatedWithCommitReq struct {
+	Owner     string
+	Repo      string
+	CommitSha string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	Listing branches or pull requests for a commit in the Commits API is currently
+	available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2019-04-11-pulls-branches-for-commit/)
+	for more details. To access the new endpoints during the preview period, you
+	must set this to true.
+	*/
+	GrootPreview bool
+}
+
+func (r ReposListPullRequestsAssociatedWithCommitReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v/pulls", r.Owner, r.Repo, r.CommitSha)
+}
+
+func (r ReposListPullRequestsAssociatedWithCommitReq) method() string {
+	return "GET"
+}
+
+func (r ReposListPullRequestsAssociatedWithCommitReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListPullRequestsAssociatedWithCommitReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"groot": r.GrootPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListPullRequestsAssociatedWithCommitResponseBody200 is a response body for repos/list-pull-requests-associated-with-commit
+
+API documentation: https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+*/
+type ReposListPullRequestsAssociatedWithCommitResponseBody200 []struct {
+	Links struct {
+		Comments struct {
+			Href string `json:"href,omitempty"`
+		} `json:"comments,omitempty"`
+		Commits struct {
+			Href string `json:"href,omitempty"`
+		} `json:"commits,omitempty"`
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		Issue struct {
+			Href string `json:"href,omitempty"`
+		} `json:"issue,omitempty"`
+		ReviewComment struct {
+			Href string `json:"href,omitempty"`
+		} `json:"review_comment,omitempty"`
+		ReviewComments struct {
+			Href string `json:"href,omitempty"`
+		} `json:"review_comments,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+		Statuses struct {
+			Href string `json:"href,omitempty"`
+		} `json:"statuses,omitempty"`
+	} `json:"_links,omitempty"`
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url"`
+		EventsUrl         string `json:"events_url"`
+		FollowersUrl      string `json:"followers_url"`
+		FollowingUrl      string `json:"following_url"`
+		GistsUrl          string `json:"gists_url"`
+		GravatarId        string `json:"gravatar_id"`
+		HtmlUrl           string `json:"html_url"`
+		Id                int64  `json:"id"`
+		Login             string `json:"login"`
+		NodeId            string `json:"node_id"`
+		OrganizationsUrl  string `json:"organizations_url"`
+		ReceivedEventsUrl string `json:"received_events_url"`
+		ReposUrl          string `json:"repos_url"`
+		SiteAdmin         bool   `json:"site_admin"`
+		StarredUrl        string `json:"starred_url"`
+		SubscriptionsUrl  string `json:"subscriptions_url"`
+		Type              string `json:"type"`
+		Url               string `json:"url"`
+	} `json:"assignees,omitempty"`
+	AuthorAssociation string `json:"author_association,omitempty"`
+	Base              struct {
+		Label string `json:"label,omitempty"`
+		Ref   string `json:"ref,omitempty"`
+		Repo  struct {
+			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+			ArchiveUrl       string `json:"archive_url,omitempty"`
+			Archived         bool   `json:"archived,omitempty"`
+			AssigneesUrl     string `json:"assignees_url,omitempty"`
+			BlobsUrl         string `json:"blobs_url,omitempty"`
+			BranchesUrl      string `json:"branches_url,omitempty"`
+			CloneUrl         string `json:"clone_url,omitempty"`
+			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+			CommentsUrl      string `json:"comments_url,omitempty"`
+			CommitsUrl       string `json:"commits_url,omitempty"`
+			CompareUrl       string `json:"compare_url,omitempty"`
+			ContentsUrl      string `json:"contents_url,omitempty"`
+			ContributorsUrl  string `json:"contributors_url,omitempty"`
+			CreatedAt        string `json:"created_at,omitempty"`
+			DefaultBranch    string `json:"default_branch,omitempty"`
+			DeploymentsUrl   string `json:"deployments_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			Disabled         bool   `json:"disabled,omitempty"`
+			DownloadsUrl     string `json:"downloads_url,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			Fork             bool   `json:"fork,omitempty"`
+			ForksCount       int64  `json:"forks_count,omitempty"`
+			ForksUrl         string `json:"forks_url,omitempty"`
+			FullName         string `json:"full_name,omitempty"`
+			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+			GitRefsUrl       string `json:"git_refs_url,omitempty"`
+			GitTagsUrl       string `json:"git_tags_url,omitempty"`
+			GitUrl           string `json:"git_url,omitempty"`
+			HasDownloads     bool   `json:"has_downloads,omitempty"`
+			HasIssues        bool   `json:"has_issues,omitempty"`
+			HasPages         bool   `json:"has_pages,omitempty"`
+			HasProjects      bool   `json:"has_projects,omitempty"`
+			HasWiki          bool   `json:"has_wiki,omitempty"`
+			Homepage         string `json:"homepage,omitempty"`
+			HooksUrl         string `json:"hooks_url,omitempty"`
+			HtmlUrl          string `json:"html_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IsTemplate       bool   `json:"is_template,omitempty"`
+			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			KeysUrl          string `json:"keys_url,omitempty"`
+			LabelsUrl        string `json:"labels_url,omitempty"`
+			Language         string `json:"language,omitempty"`
+			LanguagesUrl     string `json:"languages_url,omitempty"`
+			MergesUrl        string `json:"merges_url,omitempty"`
+			MilestonesUrl    string `json:"milestones_url,omitempty"`
+			MirrorUrl        string `json:"mirror_url,omitempty"`
+			Name             string `json:"name,omitempty"`
+			NetworkCount     int64  `json:"network_count,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			NotificationsUrl string `json:"notifications_url,omitempty"`
+			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+			Owner            struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Permissions struct {
+				Admin bool `json:"admin,omitempty"`
+				Pull  bool `json:"pull,omitempty"`
+				Push  bool `json:"push,omitempty"`
+			} `json:"permissions,omitempty"`
+			Private            bool        `json:"private,omitempty"`
+			PullsUrl           string      `json:"pulls_url,omitempty"`
+			PushedAt           string      `json:"pushed_at,omitempty"`
+			ReleasesUrl        string      `json:"releases_url,omitempty"`
+			Size               json.Number `json:"size,omitempty"`
+			SshUrl             string      `json:"ssh_url,omitempty"`
+			StargazersCount    int64       `json:"stargazers_count,omitempty"`
+			StargazersUrl      string      `json:"stargazers_url,omitempty"`
+			StatusesUrl        string      `json:"statuses_url,omitempty"`
+			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+			SvnUrl             string      `json:"svn_url,omitempty"`
+			TagsUrl            string      `json:"tags_url,omitempty"`
+			TeamsUrl           string      `json:"teams_url,omitempty"`
+			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+			TemplateRepository string      `json:"template_repository,omitempty"`
+			Topics             []string    `json:"topics,omitempty"`
+			TreesUrl           string      `json:"trees_url,omitempty"`
+			UpdatedAt          string      `json:"updated_at,omitempty"`
+			Url                string      `json:"url,omitempty"`
+			Visibility         string      `json:"visibility,omitempty"`
+			WatchersCount      int64       `json:"watchers_count,omitempty"`
+		} `json:"repo,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		User struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+	} `json:"base,omitempty"`
+	Body        string `json:"body,omitempty"`
+	ClosedAt    string `json:"closed_at,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CommitsUrl  string `json:"commits_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	DiffUrl     string `json:"diff_url,omitempty"`
+	Draft       bool   `json:"draft,omitempty"`
+	Head        struct {
+		Label string `json:"label,omitempty"`
+		Ref   string `json:"ref,omitempty"`
+		Repo  struct {
+			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+			ArchiveUrl       string `json:"archive_url,omitempty"`
+			Archived         bool   `json:"archived,omitempty"`
+			AssigneesUrl     string `json:"assignees_url,omitempty"`
+			BlobsUrl         string `json:"blobs_url,omitempty"`
+			BranchesUrl      string `json:"branches_url,omitempty"`
+			CloneUrl         string `json:"clone_url,omitempty"`
+			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+			CommentsUrl      string `json:"comments_url,omitempty"`
+			CommitsUrl       string `json:"commits_url,omitempty"`
+			CompareUrl       string `json:"compare_url,omitempty"`
+			ContentsUrl      string `json:"contents_url,omitempty"`
+			ContributorsUrl  string `json:"contributors_url,omitempty"`
+			CreatedAt        string `json:"created_at,omitempty"`
+			DefaultBranch    string `json:"default_branch,omitempty"`
+			DeploymentsUrl   string `json:"deployments_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			Disabled         bool   `json:"disabled,omitempty"`
+			DownloadsUrl     string `json:"downloads_url,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			Fork             bool   `json:"fork,omitempty"`
+			ForksCount       int64  `json:"forks_count,omitempty"`
+			ForksUrl         string `json:"forks_url,omitempty"`
+			FullName         string `json:"full_name,omitempty"`
+			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+			GitRefsUrl       string `json:"git_refs_url,omitempty"`
+			GitTagsUrl       string `json:"git_tags_url,omitempty"`
+			GitUrl           string `json:"git_url,omitempty"`
+			HasDownloads     bool   `json:"has_downloads,omitempty"`
+			HasIssues        bool   `json:"has_issues,omitempty"`
+			HasPages         bool   `json:"has_pages,omitempty"`
+			HasProjects      bool   `json:"has_projects,omitempty"`
+			HasWiki          bool   `json:"has_wiki,omitempty"`
+			Homepage         string `json:"homepage,omitempty"`
+			HooksUrl         string `json:"hooks_url,omitempty"`
+			HtmlUrl          string `json:"html_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IsTemplate       bool   `json:"is_template,omitempty"`
+			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			KeysUrl          string `json:"keys_url,omitempty"`
+			LabelsUrl        string `json:"labels_url,omitempty"`
+			Language         string `json:"language,omitempty"`
+			LanguagesUrl     string `json:"languages_url,omitempty"`
+			MergesUrl        string `json:"merges_url,omitempty"`
+			MilestonesUrl    string `json:"milestones_url,omitempty"`
+			MirrorUrl        string `json:"mirror_url,omitempty"`
+			Name             string `json:"name,omitempty"`
+			NetworkCount     int64  `json:"network_count,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			NotificationsUrl string `json:"notifications_url,omitempty"`
+			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+			Owner            struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Permissions struct {
+				Admin bool `json:"admin,omitempty"`
+				Pull  bool `json:"pull,omitempty"`
+				Push  bool `json:"push,omitempty"`
+			} `json:"permissions,omitempty"`
+			Private            bool        `json:"private,omitempty"`
+			PullsUrl           string      `json:"pulls_url,omitempty"`
+			PushedAt           string      `json:"pushed_at,omitempty"`
+			ReleasesUrl        string      `json:"releases_url,omitempty"`
+			Size               json.Number `json:"size,omitempty"`
+			SshUrl             string      `json:"ssh_url,omitempty"`
+			StargazersCount    int64       `json:"stargazers_count,omitempty"`
+			StargazersUrl      string      `json:"stargazers_url,omitempty"`
+			StatusesUrl        string      `json:"statuses_url,omitempty"`
+			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+			SvnUrl             string      `json:"svn_url,omitempty"`
+			TagsUrl            string      `json:"tags_url,omitempty"`
+			TeamsUrl           string      `json:"teams_url,omitempty"`
+			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+			TemplateRepository string      `json:"template_repository,omitempty"`
+			Topics             []string    `json:"topics,omitempty"`
+			TreesUrl           string      `json:"trees_url,omitempty"`
+			UpdatedAt          string      `json:"updated_at,omitempty"`
+			Url                string      `json:"url,omitempty"`
+			Visibility         string      `json:"visibility,omitempty"`
+			WatchersCount      int64       `json:"watchers_count,omitempty"`
+		} `json:"repo,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		User struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+	} `json:"head,omitempty"`
+	HtmlUrl  string `json:"html_url,omitempty"`
+	Id       int64  `json:"id,omitempty"`
+	IssueUrl string `json:"issue_url,omitempty"`
+	Labels   []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	Locked         bool   `json:"locked,omitempty"`
+	MergeCommitSha string `json:"merge_commit_sha,omitempty"`
+	MergedAt       string `json:"merged_at,omitempty"`
+	Milestone      struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId             string `json:"node_id,omitempty"`
+	Number             int64  `json:"number,omitempty"`
+	PatchUrl           string `json:"patch_url,omitempty"`
+	RequestedReviewers []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"requested_reviewers,omitempty"`
+	RequestedTeams []struct {
+		Description     string `json:"description,omitempty"`
+		HtmlUrl         string `json:"html_url,omitempty"`
+		Id              int64  `json:"id,omitempty"`
+		MembersUrl      string `json:"members_url,omitempty"`
+		Name            string `json:"name,omitempty"`
+		NodeId          string `json:"node_id,omitempty"`
+		Parent          string `json:"parent,omitempty"`
+		Permission      string `json:"permission,omitempty"`
+		Privacy         string `json:"privacy,omitempty"`
+		RepositoriesUrl string `json:"repositories_url,omitempty"`
+		Slug            string `json:"slug,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"requested_teams,omitempty"`
+	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
+	ReviewCommentsUrl string `json:"review_comments_url,omitempty"`
+	State             string `json:"state,omitempty"`
+	StatusesUrl       string `json:"statuses_url,omitempty"`
+	Title             string `json:"title,omitempty"`
+	UpdatedAt         string `json:"updated_at,omitempty"`
+	Url               string `json:"url,omitempty"`
+	User              struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
 ReposRemoveBranchProtectionReq builds requests for "repos/remove-branch-protection"
 
 Remove branch protection.
@@ -548,17 +1538,62 @@ type ReposUpdateBranchProtectionResponseBody200 struct {
 }
 
 /*
-ReposListPagesBuildsReq builds requests for "repos/list-pages-builds"
+ReposGetPunchCardStatsReq builds requests for "repos/get-punch-card-stats"
 
-List Pages builds.
+Get the number of commits per hour in each day.
 
-  GET /repos/{owner}/{repo}/pages/builds
+  GET /repos/{owner}/{repo}/stats/punch_card
 
-https://developer.github.com/v3/repos/pages/#list-pages-builds
+https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
 */
-type ReposListPagesBuildsReq struct {
+type ReposGetPunchCardStatsReq struct {
 	Owner string
 	Repo  string
+}
+
+func (r ReposGetPunchCardStatsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/stats/punch_card", r.Owner, r.Repo)
+}
+
+func (r ReposGetPunchCardStatsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetPunchCardStatsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetPunchCardStatsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetPunchCardStatsResponseBody200 is a response body for repos/get-punch-card-stats
+
+API documentation: https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+*/
+type ReposGetPunchCardStatsResponseBody200 [][]int64
+
+/*
+ReposListStatusesForRefReq builds requests for "repos/list-statuses-for-ref"
+
+List statuses for a specific ref.
+
+  GET /repos/{owner}/{repo}/commits/{ref}/statuses
+
+https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
+*/
+type ReposListStatusesForRefReq struct {
+	Owner string
+	Repo  string
+	Ref   string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -567,15 +1602,15 @@ type ReposListPagesBuildsReq struct {
 	Page *int64
 }
 
-func (r ReposListPagesBuildsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
+func (r ReposListStatusesForRefReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v/statuses", r.Owner, r.Repo, r.Ref)
 }
 
-func (r ReposListPagesBuildsReq) method() string {
+func (r ReposListStatusesForRefReq) method() string {
 	return "GET"
 }
 
-func (r ReposListPagesBuildsReq) urlQuery() url.Values {
+func (r ReposListStatusesForRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -586,29 +1621,26 @@ func (r ReposListPagesBuildsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListPagesBuildsReq) header() http.Header {
+func (r ReposListStatusesForRefReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListPagesBuildsResponseBody200 is a response body for repos/list-pages-builds
+ReposListStatusesForRefResponseBody200 is a response body for repos/list-statuses-for-ref
 
-API documentation: https://developer.github.com/v3/repos/pages/#list-pages-builds
+API documentation: https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
 */
-type ReposListPagesBuildsResponseBody200 []struct {
-	Commit    string `json:"commit,omitempty"`
+type ReposListStatusesForRefResponseBody200 []struct {
+	AvatarUrl string `json:"avatar_url,omitempty"`
+	Context   string `json:"context,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
-	Duration  int64  `json:"duration,omitempty"`
-	Error     struct {
-		Message string `json:"message,omitempty"`
-	} `json:"error,omitempty"`
-	Pusher struct {
+	Creator   struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -627,57 +1659,1248 @@ type ReposListPagesBuildsResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"pusher,omitempty"`
-	Status    string `json:"status,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	State       string `json:"state,omitempty"`
+	TargetUrl   string `json:"target_url,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	Url         string `json:"url,omitempty"`
 }
 
 /*
-ReposRequestPageBuildReq builds requests for "repos/request-page-build"
+ReposListHooksReq builds requests for "repos/list-hooks"
 
-Request a page build.
+List hooks.
 
-  POST /repos/{owner}/{repo}/pages/builds
+  GET /repos/{owner}/{repo}/hooks
 
-https://developer.github.com/v3/repos/pages/#request-a-page-build
+https://developer.github.com/v3/repos/hooks/#list-hooks
 */
-type ReposRequestPageBuildReq struct {
+type ReposListHooksReq struct {
 	Owner string
 	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r ReposRequestPageBuildReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
+func (r ReposListHooksReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
 }
 
-func (r ReposRequestPageBuildReq) method() string {
-	return "POST"
+func (r ReposListHooksReq) method() string {
+	return "GET"
 }
 
-func (r ReposRequestPageBuildReq) urlQuery() url.Values {
+func (r ReposListHooksReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r ReposRequestPageBuildReq) header() http.Header {
+func (r ReposListHooksReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposRequestPageBuildResponseBody200 is a response body for repos/request-page-build
+ReposListHooksResponseBody200 is a response body for repos/list-hooks
 
-API documentation: https://developer.github.com/v3/repos/pages/#request-a-page-build
+API documentation: https://developer.github.com/v3/repos/hooks/#list-hooks
 */
-type ReposRequestPageBuildResponseBody200 struct {
-	Status string `json:"status,omitempty"`
-	Url    string `json:"url,omitempty"`
+type ReposListHooksResponseBody200 []struct {
+	Active bool `json:"active,omitempty"`
+	Config struct {
+		ContentType string `json:"content_type,omitempty"`
+		InsecureSsl string `json:"insecure_ssl,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"config,omitempty"`
+	CreatedAt    string   `json:"created_at,omitempty"`
+	Events       []string `json:"events,omitempty"`
+	Id           int64    `json:"id,omitempty"`
+	LastResponse struct {
+		Code    string `json:"code,omitempty"`
+		Message string `json:"message,omitempty"`
+		Status  string `json:"status,omitempty"`
+	} `json:"last_response,omitempty"`
+	Name      string `json:"name,omitempty"`
+	PingUrl   string `json:"ping_url,omitempty"`
+	TestUrl   string `json:"test_url,omitempty"`
+	Type      string `json:"type,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ReposCreateHookReq builds requests for "repos/create-hook"
+
+Create a hook.
+
+  POST /repos/{owner}/{repo}/hooks
+
+https://developer.github.com/v3/repos/hooks/#create-a-hook
+*/
+type ReposCreateHookReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposCreateHookReqBody
+}
+
+func (r ReposCreateHookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
+}
+
+func (r ReposCreateHookReq) method() string {
+	return "POST"
+}
+
+func (r ReposCreateHookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCreateHookReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposCreateHookReqBody is a request body for repos/create-hook
+
+API documentation: https://developer.github.com/v3/repos/hooks/#create-a-hook
+*/
+type ReposCreateHookReqBody struct {
+
+	/*
+	   Determines if notifications are sent when the webhook is triggered. Set to
+	   `true` to send notifications.
+	*/
+	Active *bool `json:"active,omitempty"`
+
+	/*
+	   Key/value pairs to provide settings for this webhook. [These are defined
+	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
+	*/
+	Config *struct {
+
+		/*
+		   The media type used to serialize the payloads. Supported values include `json`
+		   and `form`. The default is `form`.
+		*/
+		ContentType *string `json:"content_type,omitempty"`
+
+		/*
+		   Determines whether the SSL certificate of the host for `url` will be verified
+		   when delivering payloads. Supported values include `0` (verification is
+		   performed) and `1` (verification is not performed). The default is `0`. **We
+		   strongly recommend not setting this to `1` as you are subject to
+		   man-in-the-middle and other attacks.**
+		*/
+		InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+		/*
+		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+		   digest value in the
+		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+		   header.
+		*/
+		Secret *string `json:"secret,omitempty"`
+
+		// The URL to which the payloads will be delivered.
+		Url *string `json:"url"`
+	} `json:"config"`
+
+	/*
+	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
+	   the hook is triggered for.
+	*/
+	Events []string `json:"events,omitempty"`
+
+	/*
+	   Use `web` to create a webhook. Default: `web`. This parameter only accepts the
+	   value `web`.
+	*/
+	Name *string `json:"name,omitempty"`
+}
+
+/*
+ReposCreateHookResponseBody201 is a response body for repos/create-hook
+
+API documentation: https://developer.github.com/v3/repos/hooks/#create-a-hook
+*/
+type ReposCreateHookResponseBody201 struct {
+	Active bool `json:"active,omitempty"`
+	Config struct {
+		ContentType string `json:"content_type,omitempty"`
+		InsecureSsl string `json:"insecure_ssl,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"config,omitempty"`
+	CreatedAt    string   `json:"created_at,omitempty"`
+	Events       []string `json:"events,omitempty"`
+	Id           int64    `json:"id,omitempty"`
+	LastResponse struct {
+		Code    string `json:"code,omitempty"`
+		Message string `json:"message,omitempty"`
+		Status  string `json:"status,omitempty"`
+	} `json:"last_response,omitempty"`
+	Name      string `json:"name,omitempty"`
+	PingUrl   string `json:"ping_url,omitempty"`
+	TestUrl   string `json:"test_url,omitempty"`
+	Type      string `json:"type,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ReposGetArchiveLinkReq builds requests for "repos/get-archive-link"
+
+Get archive link.
+
+  GET /repos/{owner}/{repo}/{archive_format}/{ref}
+
+https://developer.github.com/v3/repos/contents/#get-archive-link
+*/
+type ReposGetArchiveLinkReq struct {
+	Owner         string
+	Repo          string
+	ArchiveFormat string
+	Ref           string
+}
+
+func (r ReposGetArchiveLinkReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/%v/%v", r.Owner, r.Repo, r.ArchiveFormat, r.Ref)
+}
+
+func (r ReposGetArchiveLinkReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetArchiveLinkReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetArchiveLinkReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetArchiveLinkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetCollaboratorPermissionLevelReq builds requests for "repos/get-collaborator-permission-level"
+
+Review a user's permission level.
+
+  GET /repos/{owner}/{repo}/collaborators/{username}/permission
+
+https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+*/
+type ReposGetCollaboratorPermissionLevelReq struct {
+	Owner    string
+	Repo     string
+	Username string
+}
+
+func (r ReposGetCollaboratorPermissionLevelReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/collaborators/%v/permission", r.Owner, r.Repo, r.Username)
+}
+
+func (r ReposGetCollaboratorPermissionLevelReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetCollaboratorPermissionLevelReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetCollaboratorPermissionLevelReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetCollaboratorPermissionLevelResponseBody200 is a response body for repos/get-collaborator-permission-level
+
+API documentation: https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+*/
+type ReposGetCollaboratorPermissionLevelResponseBody200 struct {
+	Permission string `json:"permission,omitempty"`
+	User       struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReposListDeploymentStatusesReq builds requests for "repos/list-deployment-statuses"
+
+List deployment statuses.
+
+  GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
+
+https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
+*/
+type ReposListDeploymentStatusesReq struct {
+	Owner        string
+	Repo         string
+	DeploymentId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	New features in the Deployments API on GitHub are currently available during a
+	public beta. Please see the [blog
+	post](https://developer.github.com/changes/2018-10-16-deployments-environments-states-and-auto-inactive-updates/)
+	for full details.
+
+	To access the new `environment` parameter, the two new values for the `state`
+	parameter (`in_progress` and `queued`), and use `auto_inactive` on production
+	deployments during the public beta period, you must set this to true.
+	*/
+	FlashPreview bool
+
+	/*
+	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
+	parameters are currently available for developers to preview. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
+	for full details.
+
+	To access the API during the preview period, you must set this to true.
+	*/
+	AntManPreview bool
+}
+
+func (r ReposListDeploymentStatusesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses", r.Owner, r.Repo, r.DeploymentId)
+}
+
+func (r ReposListDeploymentStatusesReq) method() string {
+	return "GET"
+}
+
+func (r ReposListDeploymentStatusesReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListDeploymentStatusesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"ant-man": r.AntManPreview,
+		"flash":   r.FlashPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListDeploymentStatusesResponseBody200 is a response body for repos/list-deployment-statuses
+
+API documentation: https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
+*/
+type ReposListDeploymentStatusesResponseBody200 []struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Creator   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	DeploymentUrl  string `json:"deployment_url,omitempty"`
+	Description    string `json:"description,omitempty"`
+	Environment    string `json:"environment,omitempty"`
+	EnvironmentUrl string `json:"environment_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	LogUrl         string `json:"log_url,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	RepositoryUrl  string `json:"repository_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	TargetUrl      string `json:"target_url,omitempty"`
+	UpdatedAt      string `json:"updated_at,omitempty"`
+	Url            string `json:"url,omitempty"`
+}
+
+/*
+ReposCreateDeploymentStatusReq builds requests for "repos/create-deployment-status"
+
+Create a deployment status.
+
+  POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
+
+https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+*/
+type ReposCreateDeploymentStatusReq struct {
+	Owner        string
+	Repo         string
+	DeploymentId int64
+	RequestBody  ReposCreateDeploymentStatusReqBody
+
+	/*
+	New features in the Deployments API on GitHub are currently available during a
+	public beta. Please see the [blog
+	post](https://developer.github.com/changes/2018-10-16-deployments-environments-states-and-auto-inactive-updates/)
+	for full details.
+
+	To access the new `environment` parameter, the two new values for the `state`
+	parameter (`in_progress` and `queued`), and use `auto_inactive` on production
+	deployments during the public beta period, you must set this to true.
+	*/
+	FlashPreview bool
+
+	/*
+	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
+	parameters are currently available for developers to preview. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
+	for full details.
+
+	To access the API during the preview period, you must set this to true.
+	*/
+	AntManPreview bool
+}
+
+func (r ReposCreateDeploymentStatusReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses", r.Owner, r.Repo, r.DeploymentId)
+}
+
+func (r ReposCreateDeploymentStatusReq) method() string {
+	return "POST"
+}
+
+func (r ReposCreateDeploymentStatusReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCreateDeploymentStatusReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"ant-man": r.AntManPreview,
+		"flash":   r.FlashPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposCreateDeploymentStatusReqBody is a request body for repos/create-deployment-status
+
+API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+*/
+type ReposCreateDeploymentStatusReqBody struct {
+
+	/*
+	   Adds a new `inactive` status to all prior non-transient, non-production
+	   environment deployments with the same repository and `environment` name as the
+	   created status's deployment. An `inactive` status is only added to deployments
+	   that had a `success` state. Default: `true`
+	   **Note:** To add an `inactive` status to `production` environments, you must use
+	   the
+	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
+	   custom media type.
+	   **Note:** This parameter requires you to use the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type.
+	*/
+	AutoInactive *bool `json:"auto_inactive,omitempty"`
+
+	/*
+	   A short description of the status. The maximum description length is 140
+	   characters.
+	*/
+	Description *string `json:"description,omitempty"`
+
+	/*
+	   Name for the target deployment environment, which can be changed when setting a
+	   deploy status. For example, `production`, `staging`, or `qa`. **Note:** This
+	   parameter requires you to use the
+	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
+	   custom media type.
+	*/
+	Environment *string `json:"environment,omitempty"`
+
+	/*
+	   Sets the URL for accessing your environment. Default: `""`
+	   **Note:** This parameter requires you to use the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type. **Note:** This parameter requires you to use the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type.
+	*/
+	EnvironmentUrl *string `json:"environment_url,omitempty"`
+
+	/*
+	   The full URL of the deployment's output. This parameter replaces `target_url`.
+	   We will continue to accept `target_url` to support legacy uses, but we recommend
+	   replacing `target_url` with `log_url`. Setting `log_url` will automatically set
+	   `target_url` to the same value. Default: `""`
+	   **Note:** This parameter requires you to use the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type. **Note:** This parameter requires you to use the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type.
+	*/
+	LogUrl *string `json:"log_url,omitempty"`
+
+	/*
+	   The state of the status. Can be one of `error`, `failure`, `inactive`,
+	   `in_progress`, `queued` `pending`, or `success`. **Note:** To use the `inactive`
+	   state, you must provide the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type. To use the `in_progress` and `queued` states, you must
+	   provide the
+	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
+	   custom media type.
+	*/
+	State *string `json:"state"`
+
+	/*
+	   The target URL to associate with this status. This URL should contain output to
+	   keep the user updated while the task is running or serve as historical
+	   information for what happened in the deployment. **Note:** It's recommended to
+	   use the `log_url` parameter, which replaces `target_url`.
+	*/
+	TargetUrl *string `json:"target_url,omitempty"`
+}
+
+/*
+ReposCreateDeploymentStatusResponseBody201 is a response body for repos/create-deployment-status
+
+API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+*/
+type ReposCreateDeploymentStatusResponseBody201 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Creator   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	DeploymentUrl  string `json:"deployment_url,omitempty"`
+	Description    string `json:"description,omitempty"`
+	Environment    string `json:"environment,omitempty"`
+	EnvironmentUrl string `json:"environment_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	LogUrl         string `json:"log_url,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	RepositoryUrl  string `json:"repository_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	TargetUrl      string `json:"target_url,omitempty"`
+	UpdatedAt      string `json:"updated_at,omitempty"`
+	Url            string `json:"url,omitempty"`
+}
+
+/*
+ReposRemoveDeployKeyReq builds requests for "repos/remove-deploy-key"
+
+Remove a deploy key.
+
+  DELETE /repos/{owner}/{repo}/keys/{key_id}
+
+https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
+*/
+type ReposRemoveDeployKeyReq struct {
+	Owner string
+	Repo  string
+	KeyId int64
+}
+
+func (r ReposRemoveDeployKeyReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
+}
+
+func (r ReposRemoveDeployKeyReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveDeployKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveDeployKeyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDeployKeyReq builds requests for "repos/get-deploy-key"
+
+Get a deploy key.
+
+  GET /repos/{owner}/{repo}/keys/{key_id}
+
+https://developer.github.com/v3/repos/keys/#get-a-deploy-key
+*/
+type ReposGetDeployKeyReq struct {
+	Owner string
+	Repo  string
+	KeyId int64
+}
+
+func (r ReposGetDeployKeyReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
+}
+
+func (r ReposGetDeployKeyReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetDeployKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetDeployKeyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDeployKeyResponseBody200 is a response body for repos/get-deploy-key
+
+API documentation: https://developer.github.com/v3/repos/keys/#get-a-deploy-key
+*/
+type ReposGetDeployKeyResponseBody200 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Key       string `json:"key,omitempty"`
+	ReadOnly  bool   `json:"read_only,omitempty"`
+	Title     string `json:"title,omitempty"`
+	Url       string `json:"url,omitempty"`
+	Verified  bool   `json:"verified,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchAdminEnforcementReq builds requests for "repos/remove-protected-branch-admin-enforcement"
+
+Remove admin enforcement of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
+*/
+type ReposRemoveProtectedBranchAdminEnforcementReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposRemoveProtectedBranchAdminEnforcementReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchAdminEnforcementReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchAdminEnforcementReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchAdminEnforcementReq builds requests for "repos/get-protected-branch-admin-enforcement"
+
+Get admin enforcement of protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
+*/
+type ReposGetProtectedBranchAdminEnforcementReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposGetProtectedBranchAdminEnforcementReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetProtectedBranchAdminEnforcementReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetProtectedBranchAdminEnforcementReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchAdminEnforcementResponseBody200 is a response body for repos/get-protected-branch-admin-enforcement
+
+API documentation: https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
+*/
+type ReposGetProtectedBranchAdminEnforcementResponseBody200 struct {
+	Enabled bool   `json:"enabled,omitempty"`
+	Url     string `json:"url,omitempty"`
+}
+
+/*
+ReposAddProtectedBranchAdminEnforcementReq builds requests for "repos/add-protected-branch-admin-enforcement"
+
+Add admin enforcement of protected branch.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
+*/
+type ReposAddProtectedBranchAdminEnforcementReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposAddProtectedBranchAdminEnforcementReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposAddProtectedBranchAdminEnforcementReq) method() string {
+	return "POST"
+}
+
+func (r ReposAddProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAddProtectedBranchAdminEnforcementReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAddProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposAddProtectedBranchAdminEnforcementResponseBody200 is a response body for repos/add-protected-branch-admin-enforcement
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
+*/
+type ReposAddProtectedBranchAdminEnforcementResponseBody200 struct {
+	Enabled bool   `json:"enabled,omitempty"`
+	Url     string `json:"url,omitempty"`
+}
+
+/*
+ReposCreateOrUpdateFileReq builds requests for "repos/create-or-update-file"
+
+Create or update a file.
+
+  PUT /repos/{owner}/{repo}/contents/{path}
+
+https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+*/
+type ReposCreateOrUpdateFileReq struct {
+	Owner       string
+	Repo        string
+	Path        string
+	RequestBody ReposCreateOrUpdateFileReqBody
+}
+
+func (r ReposCreateOrUpdateFileReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
+}
+
+func (r ReposCreateOrUpdateFileReq) method() string {
+	return "PUT"
+}
+
+func (r ReposCreateOrUpdateFileReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCreateOrUpdateFileReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposCreateOrUpdateFileReqBody is a request body for repos/create-or-update-file
+
+API documentation: https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+*/
+type ReposCreateOrUpdateFileReqBody struct {
+
+	/*
+	   The author of the file. Default: The `committer` or the authenticated user if
+	   you omit `committer`.
+	*/
+	Author *struct {
+
+		/*
+		   The email of the author or committer of the commit. You'll receive a `422`
+		   status code if `email` is omitted.
+		*/
+		Email *string `json:"email"`
+
+		/*
+		   The name of the author or committer of the commit. You'll receive a `422` status
+		   code if `name` is omitted.
+		*/
+		Name *string `json:"name"`
+	} `json:"author,omitempty"`
+
+	// The branch name. Default: the repository’s default branch (usually `master`)
+	Branch *string `json:"branch,omitempty"`
+
+	// The person that committed the file. Default: the authenticated user.
+	Committer *struct {
+
+		/*
+		   The email of the author or committer of the commit. You'll receive a `422`
+		   status code if `email` is omitted.
+		*/
+		Email *string `json:"email"`
+
+		/*
+		   The name of the author or committer of the commit. You'll receive a `422` status
+		   code if `name` is omitted.
+		*/
+		Name *string `json:"name"`
+	} `json:"committer,omitempty"`
+
+	// The new file content, using Base64 encoding.
+	Content *string `json:"content"`
+
+	// The commit message.
+	Message *string `json:"message"`
+
+	/*
+	   **Required if you are updating a file**. The blob SHA of the file being
+	   replaced.
+	*/
+	Sha *string `json:"sha,omitempty"`
+}
+
+/*
+ReposCreateOrUpdateFileResponseBody200 is a response body for repos/create-or-update-file
+
+API documentation: https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+*/
+type ReposCreateOrUpdateFileResponseBody200 struct {
+	Commit struct {
+		Author struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"author,omitempty"`
+		Committer struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"committer,omitempty"`
+		HtmlUrl string `json:"html_url,omitempty"`
+		Message string `json:"message,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Sha     string `json:"sha,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"parents,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		Tree struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"tree,omitempty"`
+		Url          string `json:"url,omitempty"`
+		Verification struct {
+			Payload   string `json:"payload,omitempty"`
+			Reason    string `json:"reason,omitempty"`
+			Signature string `json:"signature,omitempty"`
+			Verified  bool   `json:"verified,omitempty"`
+		} `json:"verification,omitempty"`
+	} `json:"commit,omitempty"`
+	Content struct {
+		Links struct {
+			Git  string `json:"git,omitempty"`
+			Html string `json:"html,omitempty"`
+			Self string `json:"self,omitempty"`
+		} `json:"_links,omitempty"`
+		DownloadUrl string      `json:"download_url,omitempty"`
+		GitUrl      string      `json:"git_url,omitempty"`
+		HtmlUrl     string      `json:"html_url,omitempty"`
+		Name        string      `json:"name,omitempty"`
+		Path        string      `json:"path,omitempty"`
+		Sha         string      `json:"sha,omitempty"`
+		Size        json.Number `json:"size,omitempty"`
+		Type        string      `json:"type,omitempty"`
+		Url         string      `json:"url,omitempty"`
+	} `json:"content,omitempty"`
+}
+
+/*
+ReposCreateOrUpdateFileResponseBody201 is a response body for repos/create-or-update-file
+
+API documentation: https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+*/
+type ReposCreateOrUpdateFileResponseBody201 struct {
+	Commit struct {
+		Author struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"author,omitempty"`
+		Committer struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"committer,omitempty"`
+		HtmlUrl string `json:"html_url,omitempty"`
+		Message string `json:"message,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Sha     string `json:"sha,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"parents,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		Tree struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"tree,omitempty"`
+		Url          string `json:"url,omitempty"`
+		Verification struct {
+			Payload   string `json:"payload,omitempty"`
+			Reason    string `json:"reason,omitempty"`
+			Signature string `json:"signature,omitempty"`
+			Verified  bool   `json:"verified,omitempty"`
+		} `json:"verification,omitempty"`
+	} `json:"commit,omitempty"`
+	Content struct {
+		Links struct {
+			Git  string `json:"git,omitempty"`
+			Html string `json:"html,omitempty"`
+			Self string `json:"self,omitempty"`
+		} `json:"_links,omitempty"`
+		DownloadUrl string      `json:"download_url,omitempty"`
+		GitUrl      string      `json:"git_url,omitempty"`
+		HtmlUrl     string      `json:"html_url,omitempty"`
+		Name        string      `json:"name,omitempty"`
+		Path        string      `json:"path,omitempty"`
+		Sha         string      `json:"sha,omitempty"`
+		Size        json.Number `json:"size,omitempty"`
+		Type        string      `json:"type,omitempty"`
+		Url         string      `json:"url,omitempty"`
+	} `json:"content,omitempty"`
+}
+
+/*
+ReposDeleteFileReq builds requests for "repos/delete-file"
+
+Delete a file.
+
+  DELETE /repos/{owner}/{repo}/contents/{path}
+
+https://developer.github.com/v3/repos/contents/#delete-a-file
+*/
+type ReposDeleteFileReq struct {
+	Owner       string
+	Repo        string
+	Path        string
+	RequestBody ReposDeleteFileReqBody
+}
+
+func (r ReposDeleteFileReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
+}
+
+func (r ReposDeleteFileReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDeleteFileReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDeleteFileReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDeleteFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposDeleteFileReqBody is a request body for repos/delete-file
+
+API documentation: https://developer.github.com/v3/repos/contents/#delete-a-file
+*/
+type ReposDeleteFileReqBody struct {
+
+	// object containing information about the author.
+	Author *struct {
+
+		// The email of the author (or committer) of the commit
+		Email *string `json:"email,omitempty"`
+
+		// The name of the author (or committer) of the commit
+		Name *string `json:"name,omitempty"`
+	} `json:"author,omitempty"`
+
+	// The branch name. Default: the repository’s default branch (usually `master`)
+	Branch *string `json:"branch,omitempty"`
+
+	// object containing information about the committer.
+	Committer *struct {
+
+		// The email of the author (or committer) of the commit
+		Email *string `json:"email,omitempty"`
+
+		// The name of the author (or committer) of the commit
+		Name *string `json:"name,omitempty"`
+	} `json:"committer,omitempty"`
+
+	// The commit message.
+	Message *string `json:"message"`
+
+	// The blob SHA of the file being replaced.
+	Sha *string `json:"sha"`
+}
+
+/*
+ReposDeleteFileResponseBody200 is a response body for repos/delete-file
+
+API documentation: https://developer.github.com/v3/repos/contents/#delete-a-file
+*/
+type ReposDeleteFileResponseBody200 struct {
+	Commit struct {
+		Author struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"author,omitempty"`
+		Committer struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"committer,omitempty"`
+		HtmlUrl string `json:"html_url,omitempty"`
+		Message string `json:"message,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Sha     string `json:"sha,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"parents,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		Tree struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"tree,omitempty"`
+		Url          string `json:"url,omitempty"`
+		Verification struct {
+			Payload   string `json:"payload,omitempty"`
+			Reason    string `json:"reason,omitempty"`
+			Signature string `json:"signature,omitempty"`
+			Verified  bool   `json:"verified,omitempty"`
+		} `json:"verification,omitempty"`
+	} `json:"commit,omitempty"`
+	Content string `json:"content,omitempty"`
+}
+
+/*
+ReposGetContentsReq builds requests for "repos/get-contents"
+
+Get contents.
+
+  GET /repos/{owner}/{repo}/contents/{path}
+
+https://developer.github.com/v3/repos/contents/#get-contents
+*/
+type ReposGetContentsReq struct {
+	Owner string
+	Repo  string
+	Path  string
+
+	/*
+	The name of the commit/branch/tag. Default: the repository’s default branch
+	(usually `master`)
+	*/
+	Ref *string
+}
+
+func (r ReposGetContentsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
+}
+
+func (r ReposGetContentsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetContentsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Ref != nil {
+		query.Set("ref", *r.Ref)
+	}
+	return query
+}
+
+func (r ReposGetContentsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetContentsResponseBody200 is a response body for repos/get-contents
+
+API documentation: https://developer.github.com/v3/repos/contents/#get-contents
+*/
+type ReposGetContentsResponseBody200 struct {
+	Links struct {
+		Git  string `json:"git,omitempty"`
+		Html string `json:"html,omitempty"`
+		Self string `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	Content     string      `json:"content,omitempty"`
+	DownloadUrl string      `json:"download_url,omitempty"`
+	Encoding    string      `json:"encoding,omitempty"`
+	GitUrl      string      `json:"git_url,omitempty"`
+	HtmlUrl     string      `json:"html_url,omitempty"`
+	Name        string      `json:"name,omitempty"`
+	Path        string      `json:"path,omitempty"`
+	Sha         string      `json:"sha,omitempty"`
+	Size        json.Number `json:"size,omitempty"`
+	Type        string      `json:"type,omitempty"`
+	Url         string      `json:"url,omitempty"`
 }
 
 /*
@@ -985,46 +3208,161 @@ type ReposUpdateReleaseResponseBody200 struct {
 }
 
 /*
-ReposListCollaboratorsReq builds requests for "repos/list-collaborators"
+ReposGetCommitActivityStatsReq builds requests for "repos/get-commit-activity-stats"
 
-List collaborators.
+Get the last year of commit activity data.
 
-  GET /repos/{owner}/{repo}/collaborators
+  GET /repos/{owner}/{repo}/stats/commit_activity
 
-https://developer.github.com/v3/repos/collaborators/#list-collaborators
+https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
 */
-type ReposListCollaboratorsReq struct {
+type ReposGetCommitActivityStatsReq struct {
 	Owner string
 	Repo  string
+}
+
+func (r ReposGetCommitActivityStatsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/stats/commit_activity", r.Owner, r.Repo)
+}
+
+func (r ReposGetCommitActivityStatsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetCommitActivityStatsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetCommitActivityStatsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetCommitActivityStatsResponseBody200 is a response body for repos/get-commit-activity-stats
+
+API documentation: https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+*/
+type ReposGetCommitActivityStatsResponseBody200 []struct {
+	Days  []int64 `json:"days,omitempty"`
+	Total int64   `json:"total,omitempty"`
+	Week  int64   `json:"week,omitempty"`
+}
+
+/*
+ReposGetParticipationStatsReq builds requests for "repos/get-participation-stats"
+
+Get the weekly commit count for the repository owner and everyone else.
+
+  GET /repos/{owner}/{repo}/stats/participation
+
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+*/
+type ReposGetParticipationStatsReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposGetParticipationStatsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/stats/participation", r.Owner, r.Repo)
+}
+
+func (r ReposGetParticipationStatsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetParticipationStatsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetParticipationStatsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetParticipationStatsResponseBody200 is a response body for repos/get-participation-stats
+
+API documentation: https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+*/
+type ReposGetParticipationStatsResponseBody200 struct {
+	All   []int64 `json:"all,omitempty"`
+	Owner []int64 `json:"owner,omitempty"`
+}
+
+/*
+ReposListForUserReq builds requests for "repos/list-for-user"
+
+List repositories for a user.
+
+  GET /users/{username}/repos
+
+https://developer.github.com/v3/repos/#list-repositories-for-a-user
+*/
+type ReposListForUserReq struct {
+	Username string
+
+	// Can be one of `all`, `owner`, `member`.
+	Type *string
+
+	// Can be one of `created`, `updated`, `pushed`, `full_name`.
+	Sort *string
 
 	/*
-	Filter collaborators returned by their affiliation. Can be one of:
-	\* `outside`: All outside collaborators of an organization-owned repository.
-	\* `direct`: All collaborators with permissions to an organization-owned
-	repository, regardless of organization membership status.
-	\* `all`: All collaborators the authenticated user can see.
+	Can be one of `asc` or `desc`. Default: `asc` when using `full_name`, otherwise
+	`desc`
 	*/
-	Affiliation *string
+	Direction *string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+
+	/*
+	You can set the visibility of a repository using the new `visibility` parameter
+	in the [Repositories API](https://developer.github.com/v3/repos/), and get a
+	repository's visibility with a new response key. For more information, see the
+	[blog
+	post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes/).
+
+	To access repository visibility during the preview period, you must set this to
+	true.
+	*/
+	NebulaPreview bool
 }
 
-func (r ReposListCollaboratorsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/collaborators", r.Owner, r.Repo)
+func (r ReposListForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/repos", r.Username)
 }
 
-func (r ReposListCollaboratorsReq) method() string {
+func (r ReposListForUserReq) method() string {
 	return "GET"
 }
 
-func (r ReposListCollaboratorsReq) urlQuery() url.Values {
+func (r ReposListForUserReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.Affiliation != nil {
-		query.Set("affiliation", *r.Affiliation)
+	if r.Type != nil {
+		query.Set("type", *r.Type)
+	}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
 	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1035,98 +3373,72 @@ func (r ReposListCollaboratorsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListCollaboratorsReq) header() http.Header {
+func (r ReposListForUserReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"nebula": r.NebulaPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListCollaboratorsResponseBody200 is a response body for repos/list-collaborators
+ReposGetReleaseAssetReq builds requests for "repos/get-release-asset"
 
-API documentation: https://developer.github.com/v3/repos/collaborators/#list-collaborators
+Get a single release asset.
+
+  GET /repos/{owner}/{repo}/releases/assets/{asset_id}
+
+https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
 */
-type ReposListCollaboratorsResponseBody200 []struct {
-	AvatarUrl        string `json:"avatar_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	FollowersUrl     string `json:"followers_url,omitempty"`
-	FollowingUrl     string `json:"following_url,omitempty"`
-	GistsUrl         string `json:"gists_url,omitempty"`
-	GravatarId       string `json:"gravatar_id,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	Login            string `json:"login,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	OrganizationsUrl string `json:"organizations_url,omitempty"`
-	Permissions      struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-ReposGetPagesBuildReq builds requests for "repos/get-pages-build"
-
-Get a specific Pages build.
-
-  GET /repos/{owner}/{repo}/pages/builds/{build_id}
-
-https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
-*/
-type ReposGetPagesBuildReq struct {
+type ReposGetReleaseAssetReq struct {
 	Owner   string
 	Repo    string
-	BuildId int64
+	AssetId int64
 }
 
-func (r ReposGetPagesBuildReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages/builds/%v", r.Owner, r.Repo, r.BuildId)
+func (r ReposGetReleaseAssetReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
 }
 
-func (r ReposGetPagesBuildReq) method() string {
+func (r ReposGetReleaseAssetReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetPagesBuildReq) urlQuery() url.Values {
+func (r ReposGetReleaseAssetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetPagesBuildReq) header() http.Header {
+func (r ReposGetReleaseAssetReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposGetPagesBuildResponseBody200 is a response body for repos/get-pages-build
+ReposGetReleaseAssetResponseBody200 is a response body for repos/get-release-asset
 
-API documentation: https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+API documentation: https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
 */
-type ReposGetPagesBuildResponseBody200 struct {
-	Commit    string `json:"commit,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Duration  int64  `json:"duration,omitempty"`
-	Error     struct {
-		Message string `json:"message,omitempty"`
-	} `json:"error,omitempty"`
-	Pusher struct {
+type ReposGetReleaseAssetResponseBody200 struct {
+	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
+	ContentType        string      `json:"content_type,omitempty"`
+	CreatedAt          string      `json:"created_at,omitempty"`
+	DownloadCount      int64       `json:"download_count,omitempty"`
+	Id                 int64       `json:"id,omitempty"`
+	Label              string      `json:"label,omitempty"`
+	Name               string      `json:"name,omitempty"`
+	NodeId             string      `json:"node_id,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	State              string      `json:"state,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Uploader           struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -1145,10 +3457,1542 @@ type ReposGetPagesBuildResponseBody200 struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"pusher,omitempty"`
-	Status    string `json:"status,omitempty"`
+	} `json:"uploader,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposUpdateReleaseAssetReq builds requests for "repos/update-release-asset"
+
+Edit a release asset.
+
+  PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}
+
+https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+*/
+type ReposUpdateReleaseAssetReq struct {
+	Owner       string
+	Repo        string
+	AssetId     int64
+	RequestBody ReposUpdateReleaseAssetReqBody
+}
+
+func (r ReposUpdateReleaseAssetReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
+}
+
+func (r ReposUpdateReleaseAssetReq) method() string {
+	return "PATCH"
+}
+
+func (r ReposUpdateReleaseAssetReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposUpdateReleaseAssetReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposUpdateReleaseAssetReqBody is a request body for repos/update-release-asset
+
+API documentation: https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+*/
+type ReposUpdateReleaseAssetReqBody struct {
+
+	// An alternate short description of the asset. Used in place of the filename.
+	Label *string `json:"label,omitempty"`
+
+	// The file name of the asset.
+	Name *string `json:"name,omitempty"`
+}
+
+/*
+ReposUpdateReleaseAssetResponseBody200 is a response body for repos/update-release-asset
+
+API documentation: https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+*/
+type ReposUpdateReleaseAssetResponseBody200 struct {
+	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
+	ContentType        string      `json:"content_type,omitempty"`
+	CreatedAt          string      `json:"created_at,omitempty"`
+	DownloadCount      int64       `json:"download_count,omitempty"`
+	Id                 int64       `json:"id,omitempty"`
+	Label              string      `json:"label,omitempty"`
+	Name               string      `json:"name,omitempty"`
+	NodeId             string      `json:"node_id,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	State              string      `json:"state,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Uploader           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"uploader,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposDeleteReleaseAssetReq builds requests for "repos/delete-release-asset"
+
+Delete a release asset.
+
+  DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}
+
+https://developer.github.com/v3/repos/releases/#delete-a-release-asset
+*/
+type ReposDeleteReleaseAssetReq struct {
+	Owner   string
+	Repo    string
+	AssetId int64
+}
+
+func (r ReposDeleteReleaseAssetReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
+}
+
+func (r ReposDeleteReleaseAssetReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDeleteReleaseAssetReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDeleteReleaseAssetReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposDisableAutomatedSecurityFixesReq builds requests for "repos/disable-automated-security-fixes"
+
+Disable automated security fixes.
+
+  DELETE /repos/{owner}/{repo}/automated-security-fixes
+
+https://developer.github.com/v3/repos/#disable-automated-security-fixes
+*/
+type ReposDisableAutomatedSecurityFixesReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Enabling or disabling automated security fixes is currently available for
+	developers to preview. To access this new endpoint during the preview period,
+	you must set this to true.
+	*/
+	LondonPreview bool
+}
+
+func (r ReposDisableAutomatedSecurityFixesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/automated-security-fixes", r.Owner, r.Repo)
+}
+
+func (r ReposDisableAutomatedSecurityFixesReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDisableAutomatedSecurityFixesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDisableAutomatedSecurityFixesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"london": r.LondonPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposEnableAutomatedSecurityFixesReq builds requests for "repos/enable-automated-security-fixes"
+
+Enable automated security fixes.
+
+  PUT /repos/{owner}/{repo}/automated-security-fixes
+
+https://developer.github.com/v3/repos/#enable-automated-security-fixes
+*/
+type ReposEnableAutomatedSecurityFixesReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Enabling or disabling automated security fixes is currently available for
+	developers to preview. To access this new endpoint during the preview period,
+	you must set this to true.
+	*/
+	LondonPreview bool
+}
+
+func (r ReposEnableAutomatedSecurityFixesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/automated-security-fixes", r.Owner, r.Repo)
+}
+
+func (r ReposEnableAutomatedSecurityFixesReq) method() string {
+	return "PUT"
+}
+
+func (r ReposEnableAutomatedSecurityFixesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposEnableAutomatedSecurityFixesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"london": r.LondonPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposCompareCommitsReq builds requests for "repos/compare-commits"
+
+Compare two commits.
+
+  GET /repos/{owner}/{repo}/compare/{base}...{head}
+
+https://developer.github.com/v3/repos/commits/#compare-two-commits
+*/
+type ReposCompareCommitsReq struct {
+	Owner string
+	Repo  string
+	Base  string
+	Head  string
+}
+
+func (r ReposCompareCommitsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/compare/%v...%v", r.Owner, r.Repo, r.Base, r.Head)
+}
+
+func (r ReposCompareCommitsReq) method() string {
+	return "GET"
+}
+
+func (r ReposCompareCommitsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCompareCommitsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCompareCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposCompareCommitsResponseBody200 is a response body for repos/compare-commits
+
+API documentation: https://developer.github.com/v3/repos/commits/#compare-two-commits
+*/
+type ReposCompareCommitsResponseBody200 struct {
+	AheadBy    int64 `json:"ahead_by,omitempty"`
+	BaseCommit struct {
+		Author struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"author,omitempty"`
+		CommentsUrl string `json:"comments_url,omitempty"`
+		Commit      struct {
+			Author struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"author,omitempty"`
+			CommentCount int64 `json:"comment_count,omitempty"`
+			Committer    struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"committer,omitempty"`
+			Message string `json:"message,omitempty"`
+			Tree    struct {
+				Sha string `json:"sha,omitempty"`
+				Url string `json:"url,omitempty"`
+			} `json:"tree,omitempty"`
+			Url          string `json:"url,omitempty"`
+			Verification struct {
+				Payload   string `json:"payload,omitempty"`
+				Reason    string `json:"reason,omitempty"`
+				Signature string `json:"signature,omitempty"`
+				Verified  bool   `json:"verified,omitempty"`
+			} `json:"verification,omitempty"`
+		} `json:"commit,omitempty"`
+		Committer struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"committer,omitempty"`
+		HtmlUrl string `json:"html_url,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"parents,omitempty"`
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"base_commit,omitempty"`
+	BehindBy int64 `json:"behind_by,omitempty"`
+	Commits  []struct {
+		Author struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"author,omitempty"`
+		CommentsUrl string `json:"comments_url,omitempty"`
+		Commit      struct {
+			Author struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"author,omitempty"`
+			CommentCount int64 `json:"comment_count,omitempty"`
+			Committer    struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"committer,omitempty"`
+			Message string `json:"message,omitempty"`
+			Tree    struct {
+				Sha string `json:"sha,omitempty"`
+				Url string `json:"url,omitempty"`
+			} `json:"tree,omitempty"`
+			Url          string `json:"url,omitempty"`
+			Verification struct {
+				Payload   string `json:"payload,omitempty"`
+				Reason    string `json:"reason,omitempty"`
+				Signature string `json:"signature,omitempty"`
+				Verified  bool   `json:"verified,omitempty"`
+			} `json:"verification,omitempty"`
+		} `json:"commit,omitempty"`
+		Committer struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"committer,omitempty"`
+		HtmlUrl string `json:"html_url,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"parents,omitempty"`
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"commits,omitempty"`
+	DiffUrl string `json:"diff_url,omitempty"`
+	Files   []struct {
+		Additions   int64  `json:"additions,omitempty"`
+		BlobUrl     string `json:"blob_url,omitempty"`
+		Changes     int64  `json:"changes,omitempty"`
+		ContentsUrl string `json:"contents_url,omitempty"`
+		Deletions   int64  `json:"deletions,omitempty"`
+		Filename    string `json:"filename,omitempty"`
+		Patch       string `json:"patch,omitempty"`
+		RawUrl      string `json:"raw_url,omitempty"`
+		Sha         string `json:"sha,omitempty"`
+		Status      string `json:"status,omitempty"`
+	} `json:"files,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	MergeBaseCommit struct {
+		Author struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"author,omitempty"`
+		CommentsUrl string `json:"comments_url,omitempty"`
+		Commit      struct {
+			Author struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"author,omitempty"`
+			CommentCount int64 `json:"comment_count,omitempty"`
+			Committer    struct {
+				Date  string `json:"date,omitempty"`
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"committer,omitempty"`
+			Message string `json:"message,omitempty"`
+			Tree    struct {
+				Sha string `json:"sha,omitempty"`
+				Url string `json:"url,omitempty"`
+			} `json:"tree,omitempty"`
+			Url          string `json:"url,omitempty"`
+			Verification struct {
+				Payload   string `json:"payload,omitempty"`
+				Reason    string `json:"reason,omitempty"`
+				Signature string `json:"signature,omitempty"`
+				Verified  bool   `json:"verified,omitempty"`
+			} `json:"verification,omitempty"`
+		} `json:"commit,omitempty"`
+		Committer struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"committer,omitempty"`
+		HtmlUrl string `json:"html_url,omitempty"`
+		NodeId  string `json:"node_id,omitempty"`
+		Parents []struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"parents,omitempty"`
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"merge_base_commit,omitempty"`
+	PatchUrl     string `json:"patch_url,omitempty"`
+	PermalinkUrl string `json:"permalink_url,omitempty"`
+	Status       string `json:"status,omitempty"`
+	TotalCommits int64  `json:"total_commits,omitempty"`
+	Url          string `json:"url,omitempty"`
+}
+
+/*
+ReposDeleteHookReq builds requests for "repos/delete-hook"
+
+Delete a hook.
+
+  DELETE /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#delete-a-hook
+*/
+type ReposDeleteHookReq struct {
+	Owner  string
+	Repo   string
+	HookId int64
+}
+
+func (r ReposDeleteHookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
+}
+
+func (r ReposDeleteHookReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDeleteHookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDeleteHookReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetHookReq builds requests for "repos/get-hook"
+
+Get single hook.
+
+  GET /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#get-single-hook
+*/
+type ReposGetHookReq struct {
+	Owner  string
+	Repo   string
+	HookId int64
+}
+
+func (r ReposGetHookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
+}
+
+func (r ReposGetHookReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetHookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetHookReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetHookResponseBody200 is a response body for repos/get-hook
+
+API documentation: https://developer.github.com/v3/repos/hooks/#get-single-hook
+*/
+type ReposGetHookResponseBody200 struct {
+	Active bool `json:"active,omitempty"`
+	Config struct {
+		ContentType string `json:"content_type,omitempty"`
+		InsecureSsl string `json:"insecure_ssl,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"config,omitempty"`
+	CreatedAt    string   `json:"created_at,omitempty"`
+	Events       []string `json:"events,omitempty"`
+	Id           int64    `json:"id,omitempty"`
+	LastResponse struct {
+		Code    string `json:"code,omitempty"`
+		Message string `json:"message,omitempty"`
+		Status  string `json:"status,omitempty"`
+	} `json:"last_response,omitempty"`
+	Name      string `json:"name,omitempty"`
+	PingUrl   string `json:"ping_url,omitempty"`
+	TestUrl   string `json:"test_url,omitempty"`
+	Type      string `json:"type,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
 	Url       string `json:"url,omitempty"`
+}
+
+/*
+ReposUpdateHookReq builds requests for "repos/update-hook"
+
+Edit a hook.
+
+  PATCH /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#edit-a-hook
+*/
+type ReposUpdateHookReq struct {
+	Owner       string
+	Repo        string
+	HookId      int64
+	RequestBody ReposUpdateHookReqBody
+}
+
+func (r ReposUpdateHookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
+}
+
+func (r ReposUpdateHookReq) method() string {
+	return "PATCH"
+}
+
+func (r ReposUpdateHookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposUpdateHookReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposUpdateHookReqBody is a request body for repos/update-hook
+
+API documentation: https://developer.github.com/v3/repos/hooks/#edit-a-hook
+*/
+type ReposUpdateHookReqBody struct {
+
+	/*
+	   Determines if notifications are sent when the webhook is triggered. Set to
+	   `true` to send notifications.
+	*/
+	Active *bool `json:"active,omitempty"`
+
+	/*
+	   Determines a list of events to be added to the list of events that the Hook
+	   triggers for.
+	*/
+	AddEvents []string `json:"add_events,omitempty"`
+
+	/*
+	   Key/value pairs to provide settings for this webhook. [These are defined
+	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
+	*/
+	Config *struct {
+
+		/*
+		   The media type used to serialize the payloads. Supported values include `json`
+		   and `form`. The default is `form`.
+		*/
+		ContentType *string `json:"content_type,omitempty"`
+
+		/*
+		   Determines whether the SSL certificate of the host for `url` will be verified
+		   when delivering payloads. Supported values include `0` (verification is
+		   performed) and `1` (verification is not performed). The default is `0`. **We
+		   strongly recommend not setting this to `1` as you are subject to
+		   man-in-the-middle and other attacks.**
+		*/
+		InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+		/*
+		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+		   digest value in the
+		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+		   header.
+		*/
+		Secret *string `json:"secret,omitempty"`
+
+		// The URL to which the payloads will be delivered.
+		Url *string `json:"url"`
+	} `json:"config,omitempty"`
+
+	/*
+	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
+	   the hook is triggered for. This replaces the entire array of events.
+	*/
+	Events []string `json:"events,omitempty"`
+
+	/*
+	   Determines a list of events to be removed from the list of events that the Hook
+	   triggers for.
+	*/
+	RemoveEvents []string `json:"remove_events,omitempty"`
+}
+
+/*
+ReposUpdateHookResponseBody200 is a response body for repos/update-hook
+
+API documentation: https://developer.github.com/v3/repos/hooks/#edit-a-hook
+*/
+type ReposUpdateHookResponseBody200 struct {
+	Active bool `json:"active,omitempty"`
+	Config struct {
+		ContentType string `json:"content_type,omitempty"`
+		InsecureSsl string `json:"insecure_ssl,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"config,omitempty"`
+	CreatedAt    string   `json:"created_at,omitempty"`
+	Events       []string `json:"events,omitempty"`
+	Id           int64    `json:"id,omitempty"`
+	LastResponse struct {
+		Code    string `json:"code,omitempty"`
+		Message string `json:"message,omitempty"`
+		Status  string `json:"status,omitempty"`
+	} `json:"last_response,omitempty"`
+	Name      string `json:"name,omitempty"`
+	PingUrl   string `json:"ping_url,omitempty"`
+	TestUrl   string `json:"test_url,omitempty"`
+	Type      string `json:"type,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ReposListInvitationsReq builds requests for "repos/list-invitations"
+
+List invitations for a repository.
+
+  GET /repos/{owner}/{repo}/invitations
+
+https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+*/
+type ReposListInvitationsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListInvitationsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/invitations", r.Owner, r.Repo)
+}
+
+func (r ReposListInvitationsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListInvitationsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListInvitationsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListInvitationsResponseBody200 is a response body for repos/list-invitations
+
+API documentation: https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+*/
+type ReposListInvitationsResponseBody200 []struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Invitee   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"invitee,omitempty"`
+	Inviter struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"inviter,omitempty"`
+	Permissions string `json:"permissions,omitempty"`
+	Repository  struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repository,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchUserRestrictionsReq builds requests for "repos/remove-protected-branch-user-restrictions"
+
+Remove user restrictions of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
+
+https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchUserRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposRemoveProtectedBranchUserRestrictionsReqBody
+}
+
+func (r ReposRemoveProtectedBranchUserRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchUserRestrictionsReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchUserRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposRemoveProtectedBranchUserRestrictionsReqBody is a request body for repos/remove-protected-branch-user-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchUserRestrictionsReqBody []string
+
+/*
+ReposRemoveProtectedBranchUserRestrictionsResponseBody200 is a response body for repos/remove-protected-branch-user-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchUserRestrictionsResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+ReposGetUsersWithAccessToProtectedBranchReq builds requests for "repos/get-users-with-access-to-protected-branch"
+
+Get users with access to protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
+
+https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+*/
+type ReposGetUsersWithAccessToProtectedBranchReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposGetUsersWithAccessToProtectedBranchReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetUsersWithAccessToProtectedBranchReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetUsersWithAccessToProtectedBranchReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetUsersWithAccessToProtectedBranchReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetUsersWithAccessToProtectedBranchResponseBody200 is a response body for repos/get-users-with-access-to-protected-branch
+
+API documentation: https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+*/
+type ReposGetUsersWithAccessToProtectedBranchResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+ReposAddProtectedBranchUserRestrictionsReq builds requests for "repos/add-protected-branch-user-restrictions"
+
+Add user restrictions of protected branch.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
+
+https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+*/
+type ReposAddProtectedBranchUserRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposAddProtectedBranchUserRestrictionsReqBody
+}
+
+func (r ReposAddProtectedBranchUserRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposAddProtectedBranchUserRestrictionsReq) method() string {
+	return "POST"
+}
+
+func (r ReposAddProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAddProtectedBranchUserRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposAddProtectedBranchUserRestrictionsReqBody is a request body for repos/add-protected-branch-user-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+*/
+type ReposAddProtectedBranchUserRestrictionsReqBody []string
+
+/*
+ReposAddProtectedBranchUserRestrictionsResponseBody200 is a response body for repos/add-protected-branch-user-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+*/
+type ReposAddProtectedBranchUserRestrictionsResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+ReposReplaceProtectedBranchUserRestrictionsReq builds requests for "repos/replace-protected-branch-user-restrictions"
+
+Replace user restrictions of protected branch.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
+
+https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
+*/
+type ReposReplaceProtectedBranchUserRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposReplaceProtectedBranchUserRestrictionsReqBody
+}
+
+func (r ReposReplaceProtectedBranchUserRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposReplaceProtectedBranchUserRestrictionsReq) method() string {
+	return "PUT"
+}
+
+func (r ReposReplaceProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposReplaceProtectedBranchUserRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposReplaceProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposReplaceProtectedBranchUserRestrictionsReqBody is a request body for repos/replace-protected-branch-user-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
+*/
+type ReposReplaceProtectedBranchUserRestrictionsReqBody []string
+
+/*
+ReposReplaceProtectedBranchUserRestrictionsResponseBody200 is a response body for repos/replace-protected-branch-user-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
+*/
+type ReposReplaceProtectedBranchUserRestrictionsResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+ReposGetCommitCommentReq builds requests for "repos/get-commit-comment"
+
+Get a single commit comment.
+
+  GET /repos/{owner}/{repo}/comments/{comment_id}
+
+https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+*/
+type ReposGetCommitCommentReq struct {
+	Owner     string
+	Repo      string
+	CommentId int64
+
+	/*
+	An additional `reactions` object in the commit comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReposGetCommitCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r ReposGetCommitCommentReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetCommitCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetCommitCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetCommitCommentResponseBody200 is a response body for repos/get-commit-comment
+
+API documentation: https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+*/
+type ReposGetCommitCommentResponseBody200 struct {
+	Body      string `json:"body,omitempty"`
+	CommitId  string `json:"commit_id,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Line      int64  `json:"line,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Path      string `json:"path,omitempty"`
+	Position  int64  `json:"position,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReposUpdateCommitCommentReq builds requests for "repos/update-commit-comment"
+
+Update a commit comment.
+
+  PATCH /repos/{owner}/{repo}/comments/{comment_id}
+
+https://developer.github.com/v3/repos/comments/#update-a-commit-comment
+*/
+type ReposUpdateCommitCommentReq struct {
+	Owner       string
+	Repo        string
+	CommentId   int64
+	RequestBody ReposUpdateCommitCommentReqBody
+}
+
+func (r ReposUpdateCommitCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r ReposUpdateCommitCommentReq) method() string {
+	return "PATCH"
+}
+
+func (r ReposUpdateCommitCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposUpdateCommitCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposUpdateCommitCommentReqBody is a request body for repos/update-commit-comment
+
+API documentation: https://developer.github.com/v3/repos/comments/#update-a-commit-comment
+*/
+type ReposUpdateCommitCommentReqBody struct {
+
+	// The contents of the comment
+	Body *string `json:"body"`
+}
+
+/*
+ReposUpdateCommitCommentResponseBody200 is a response body for repos/update-commit-comment
+
+API documentation: https://developer.github.com/v3/repos/comments/#update-a-commit-comment
+*/
+type ReposUpdateCommitCommentResponseBody200 struct {
+	Body      string `json:"body,omitempty"`
+	CommitId  string `json:"commit_id,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Line      int64  `json:"line,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Path      string `json:"path,omitempty"`
+	Position  int64  `json:"position,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReposDeleteCommitCommentReq builds requests for "repos/delete-commit-comment"
+
+Delete a commit comment.
+
+  DELETE /repos/{owner}/{repo}/comments/{comment_id}
+
+https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
+*/
+type ReposDeleteCommitCommentReq struct {
+	Owner     string
+	Repo      string
+	CommentId int64
+}
+
+func (r ReposDeleteCommitCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r ReposDeleteCommitCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDeleteCommitCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDeleteCommitCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDeploymentStatusReq builds requests for "repos/get-deployment-status"
+
+Get a single deployment status.
+
+  GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}
+
+https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+*/
+type ReposGetDeploymentStatusReq struct {
+	Owner        string
+	Repo         string
+	DeploymentId int64
+	StatusId     int64
+
+	/*
+	If a deployment is created via a GitHub App, the response will include the
+	`performed_via_github_app` object with information about the GitHub App. For
+	more information, see the [related blog
+	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
+
+	To receive the `performed_via_github_app` object in the response, you must set
+	this to true.
+	*/
+	MachineManPreview bool
+
+	/*
+	New features in the Deployments API on GitHub are currently available during a
+	public beta. Please see the [blog
+	post](https://developer.github.com/changes/2018-10-16-deployments-environments-states-and-auto-inactive-updates/)
+	for full details.
+
+	To access the new `environment` parameter, the two new values for the `state`
+	parameter (`in_progress` and `queued`), and use `auto_inactive` on production
+	deployments during the public beta period, you must set this to true.
+	*/
+	FlashPreview bool
+
+	/*
+	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
+	parameters are currently available for developers to preview. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
+	for full details.
+
+	To access the API during the preview period, you must set this to true.
+	*/
+	AntManPreview bool
+}
+
+func (r ReposGetDeploymentStatusReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses/%v", r.Owner, r.Repo, r.DeploymentId, r.StatusId)
+}
+
+func (r ReposGetDeploymentStatusReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetDeploymentStatusReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetDeploymentStatusReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"ant-man":     r.AntManPreview,
+		"flash":       r.FlashPreview,
+		"machine-man": r.MachineManPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDeploymentStatusResponseBody200 is a response body for repos/get-deployment-status
+
+API documentation: https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+*/
+type ReposGetDeploymentStatusResponseBody200 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Creator   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	DeploymentUrl  string `json:"deployment_url,omitempty"`
+	Description    string `json:"description,omitempty"`
+	Environment    string `json:"environment,omitempty"`
+	EnvironmentUrl string `json:"environment_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	LogUrl         string `json:"log_url,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	RepositoryUrl  string `json:"repository_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	TargetUrl      string `json:"target_url,omitempty"`
+	UpdatedAt      string `json:"updated_at,omitempty"`
+	Url            string `json:"url,omitempty"`
 }
 
 /*
@@ -1210,104 +5054,200 @@ type ReposGetClonesResponseBody200 struct {
 }
 
 /*
-ReposGetArchiveLinkReq builds requests for "repos/get-archive-link"
+ReposGetTopPathsReq builds requests for "repos/get-top-paths"
 
-Get archive link.
+List paths.
 
-  GET /repos/{owner}/{repo}/{archive_format}/{ref}
+  GET /repos/{owner}/{repo}/traffic/popular/paths
 
-https://developer.github.com/v3/repos/contents/#get-archive-link
+https://developer.github.com/v3/repos/traffic/#list-paths
 */
-type ReposGetArchiveLinkReq struct {
-	Owner         string
-	Repo          string
-	ArchiveFormat string
-	Ref           string
-}
-
-func (r ReposGetArchiveLinkReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/%v/%v", r.Owner, r.Repo, r.ArchiveFormat, r.Ref)
-}
-
-func (r ReposGetArchiveLinkReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetArchiveLinkReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetArchiveLinkReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetArchiveLinkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListStatusesForRefReq builds requests for "repos/list-statuses-for-ref"
-
-List statuses for a specific ref.
-
-  GET /repos/{owner}/{repo}/commits/{ref}/statuses
-
-https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
-*/
-type ReposListStatusesForRefReq struct {
+type ReposGetTopPathsReq struct {
 	Owner string
 	Repo  string
-	Ref   string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
 }
 
-func (r ReposListStatusesForRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/statuses", r.Owner, r.Repo, r.Ref)
+func (r ReposGetTopPathsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/traffic/popular/paths", r.Owner, r.Repo)
 }
 
-func (r ReposListStatusesForRefReq) method() string {
+func (r ReposGetTopPathsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListStatusesForRefReq) urlQuery() url.Values {
+func (r ReposGetTopPathsReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r ReposListStatusesForRefReq) header() http.Header {
+func (r ReposGetTopPathsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListStatusesForRefResponseBody200 is a response body for repos/list-statuses-for-ref
+ReposGetTopPathsResponseBody200 is a response body for repos/get-top-paths
 
-API documentation: https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
+API documentation: https://developer.github.com/v3/repos/traffic/#list-paths
 */
-type ReposListStatusesForRefResponseBody200 []struct {
-	AvatarUrl string `json:"avatar_url,omitempty"`
-	Context   string `json:"context,omitempty"`
+type ReposGetTopPathsResponseBody200 []struct {
+	Count   int64  `json:"count,omitempty"`
+	Path    string `json:"path,omitempty"`
+	Title   string `json:"title,omitempty"`
+	Uniques int64  `json:"uniques,omitempty"`
+}
+
+/*
+ReposRemoveCollaboratorReq builds requests for "repos/remove-collaborator"
+
+Remove user as a collaborator.
+
+  DELETE /repos/{owner}/{repo}/collaborators/{username}
+
+https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
+*/
+type ReposRemoveCollaboratorReq struct {
+	Owner    string
+	Repo     string
+	Username string
+}
+
+func (r ReposRemoveCollaboratorReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
+}
+
+func (r ReposRemoveCollaboratorReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveCollaboratorReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveCollaboratorReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposCheckCollaboratorReq builds requests for "repos/check-collaborator"
+
+Check if a user is a collaborator.
+
+  GET /repos/{owner}/{repo}/collaborators/{username}
+
+https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+*/
+type ReposCheckCollaboratorReq struct {
+	Owner    string
+	Repo     string
+	Username string
+}
+
+func (r ReposCheckCollaboratorReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
+}
+
+func (r ReposCheckCollaboratorReq) method() string {
+	return "GET"
+}
+
+func (r ReposCheckCollaboratorReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCheckCollaboratorReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposAddCollaboratorReq builds requests for "repos/add-collaborator"
+
+Add user as a collaborator.
+
+  PUT /repos/{owner}/{repo}/collaborators/{username}
+
+https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+*/
+type ReposAddCollaboratorReq struct {
+	Owner       string
+	Repo        string
+	Username    string
+	RequestBody ReposAddCollaboratorReqBody
+}
+
+func (r ReposAddCollaboratorReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
+}
+
+func (r ReposAddCollaboratorReq) method() string {
+	return "PUT"
+}
+
+func (r ReposAddCollaboratorReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAddCollaboratorReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposAddCollaboratorReqBody is a request body for repos/add-collaborator
+
+API documentation: https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+*/
+type ReposAddCollaboratorReqBody struct {
+
+	/*
+	   The permission to grant the collaborator. **Only valid on organization-owned
+	   repositories.** Can be one of:
+	   \* `pull` - can pull, but not push to or administer this repository.
+	   \* `push` - can pull and push, but not administer this repository.
+	   \* `admin` - can pull, push and administer this repository.
+	   \* `maintain` - Recommended for project managers who need to manage the
+	   repository without access to sensitive or destructive actions.
+	   \* `triage` - Recommended for contributors who need to proactively manage issues
+	   and pull requests without write access.
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+ReposAddCollaboratorResponseBody201 is a response body for repos/add-collaborator
+
+API documentation: https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+*/
+type ReposAddCollaboratorResponseBody201 struct {
 	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Invitee   struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -1326,60 +5266,8 @@ type ReposListStatusesForRefResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	State       string `json:"state,omitempty"`
-	TargetUrl   string `json:"target_url,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-ReposGetContributorsStatsReq builds requests for "repos/get-contributors-stats"
-
-Get contributors list with additions, deletions, and commit counts.
-
-  GET /repos/{owner}/{repo}/stats/contributors
-
-https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
-*/
-type ReposGetContributorsStatsReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetContributorsStatsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/stats/contributors", r.Owner, r.Repo)
-}
-
-func (r ReposGetContributorsStatsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetContributorsStatsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetContributorsStatsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetContributorsStatsResponseBody200 is a response body for repos/get-contributors-stats
-
-API documentation: https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
-*/
-type ReposGetContributorsStatsResponseBody200 []struct {
-	Author struct {
+	} `json:"invitee,omitempty"`
+	Inviter struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -1398,14 +5286,77 @@ type ReposGetContributorsStatsResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Total int64 `json:"total,omitempty"`
-	Weeks []struct {
-		A int64  `json:"a,omitempty"`
-		C int64  `json:"c,omitempty"`
-		D int64  `json:"d,omitempty"`
-		W string `json:"w,omitempty"`
-	} `json:"weeks,omitempty"`
+	} `json:"inviter,omitempty"`
+	Permissions string `json:"permissions,omitempty"`
+	Repository  struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repository,omitempty"`
+	Url string `json:"url,omitempty"`
 }
 
 /*
@@ -2366,48 +6317,1658 @@ type ReposUpdateResponseBody200 struct {
 }
 
 /*
-ReposGetCodeFrequencyStatsReq builds requests for "repos/get-code-frequency-stats"
+ReposDeleteInvitationReq builds requests for "repos/delete-invitation"
 
-Get the number of additions and deletions per week.
+Delete a repository invitation.
 
-  GET /repos/{owner}/{repo}/stats/code_frequency
+  DELETE /repos/{owner}/{repo}/invitations/{invitation_id}
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
-type ReposGetCodeFrequencyStatsReq struct {
-	Owner string
-	Repo  string
+type ReposDeleteInvitationReq struct {
+	Owner        string
+	Repo         string
+	InvitationId int64
 }
 
-func (r ReposGetCodeFrequencyStatsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/stats/code_frequency", r.Owner, r.Repo)
+func (r ReposDeleteInvitationReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId)
 }
 
-func (r ReposGetCodeFrequencyStatsReq) method() string {
-	return "GET"
+func (r ReposDeleteInvitationReq) method() string {
+	return "DELETE"
 }
 
-func (r ReposGetCodeFrequencyStatsReq) urlQuery() url.Values {
+func (r ReposDeleteInvitationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCodeFrequencyStatsReq) header() http.Header {
+func (r ReposDeleteInvitationReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposGetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposGetCodeFrequencyStatsResponseBody200 is a response body for repos/get-code-frequency-stats
+ReposUpdateInvitationReq builds requests for "repos/update-invitation"
 
-API documentation: https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+Update a repository invitation.
+
+  PATCH /repos/{owner}/{repo}/invitations/{invitation_id}
+
+https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
-type ReposGetCodeFrequencyStatsResponseBody200 [][]int64
+type ReposUpdateInvitationReq struct {
+	Owner        string
+	Repo         string
+	InvitationId int64
+	RequestBody  ReposUpdateInvitationReqBody
+}
+
+func (r ReposUpdateInvitationReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId)
+}
+
+func (r ReposUpdateInvitationReq) method() string {
+	return "PATCH"
+}
+
+func (r ReposUpdateInvitationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposUpdateInvitationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposUpdateInvitationReqBody is a request body for repos/update-invitation
+
+API documentation: https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
+*/
+type ReposUpdateInvitationReqBody struct {
+
+	/*
+	   The permissions that the associated user will have on the repository. Valid
+	   values are `read`, `write`, `maintain`, `triage`, and `admin`.
+	*/
+	Permissions *string `json:"permissions,omitempty"`
+}
+
+/*
+ReposUpdateInvitationResponseBody200 is a response body for repos/update-invitation
+
+API documentation: https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
+*/
+type ReposUpdateInvitationResponseBody200 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Invitee   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"invitee,omitempty"`
+	Inviter struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"inviter,omitempty"`
+	Permissions string `json:"permissions,omitempty"`
+	Repository  struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repository,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchRequiredSignaturesReq builds requests for "repos/remove-protected-branch-required-signatures"
+
+Remove required signatures of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
+*/
+type ReposRemoveProtectedBranchRequiredSignaturesReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	Protected Branches API can now manage a setting for requiring signed commits.
+	This feature is currently available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	ZzzaxPreview bool
+}
+
+func (r ReposRemoveProtectedBranchRequiredSignaturesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchRequiredSignaturesReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchRequiredSignaturesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchRequiredSignaturesReq builds requests for "repos/get-protected-branch-required-signatures"
+
+Get required signatures of protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
+*/
+type ReposGetProtectedBranchRequiredSignaturesReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	Protected Branches API can now manage a setting for requiring signed commits.
+	This feature is currently available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	ZzzaxPreview bool
+}
+
+func (r ReposGetProtectedBranchRequiredSignaturesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetProtectedBranchRequiredSignaturesReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetProtectedBranchRequiredSignaturesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchRequiredSignaturesResponseBody200 is a response body for repos/get-protected-branch-required-signatures
+
+API documentation: https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
+*/
+type ReposGetProtectedBranchRequiredSignaturesResponseBody200 struct {
+	Enabled bool   `json:"enabled,omitempty"`
+	Url     string `json:"url,omitempty"`
+}
+
+/*
+ReposAddProtectedBranchRequiredSignaturesReq builds requests for "repos/add-protected-branch-required-signatures"
+
+Add required signatures of protected branch.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
+*/
+type ReposAddProtectedBranchRequiredSignaturesReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	Protected Branches API can now manage a setting for requiring signed commits.
+	This feature is currently available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	ZzzaxPreview bool
+}
+
+func (r ReposAddProtectedBranchRequiredSignaturesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposAddProtectedBranchRequiredSignaturesReq) method() string {
+	return "POST"
+}
+
+func (r ReposAddProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAddProtectedBranchRequiredSignaturesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAddProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposAddProtectedBranchRequiredSignaturesResponseBody200 is a response body for repos/add-protected-branch-required-signatures
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
+*/
+type ReposAddProtectedBranchRequiredSignaturesResponseBody200 struct {
+	Enabled bool   `json:"enabled,omitempty"`
+	Url     string `json:"url,omitempty"`
+}
+
+/*
+ReposReplaceProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/replace-protected-branch-required-status-checks-contexts"
+
+Replace required status checks contexts of protected branch.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
+*/
+type ReposReplaceProtectedBranchRequiredStatusChecksContextsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody
+}
+
+func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) method() string {
+	return "PUT"
+}
+
+func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/replace-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
+*/
+type ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody []string
+
+/*
+ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/replace-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
+*/
+type ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
+
+/*
+ReposRemoveProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/remove-protected-branch-required-status-checks-contexts"
+
+Remove required status checks contexts of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
+*/
+type ReposRemoveProtectedBranchRequiredStatusChecksContextsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody
+}
+
+func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/remove-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
+*/
+type ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody []string
+
+/*
+ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/remove-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
+*/
+type ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
+
+/*
+ReposListProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/list-protected-branch-required-status-checks-contexts"
+
+List required status checks contexts of protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
+*/
+type ReposListProtectedBranchRequiredStatusChecksContextsReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/list-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
+*/
+type ReposListProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
+
+/*
+ReposAddProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/add-protected-branch-required-status-checks-contexts"
+
+Add required status checks contexts of protected branch.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
+*/
+type ReposAddProtectedBranchRequiredStatusChecksContextsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposAddProtectedBranchRequiredStatusChecksContextsReqBody
+}
+
+func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) method() string {
+	return "POST"
+}
+
+func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposAddProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/add-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
+*/
+type ReposAddProtectedBranchRequiredStatusChecksContextsReqBody []string
+
+/*
+ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/add-protected-branch-required-status-checks-contexts
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
+*/
+type ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
+
+/*
+ReposMergeReq builds requests for "repos/merge"
+
+Perform a merge.
+
+  POST /repos/{owner}/{repo}/merges
+
+https://developer.github.com/v3/repos/merging/#perform-a-merge
+*/
+type ReposMergeReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposMergeReqBody
+}
+
+func (r ReposMergeReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/merges", r.Owner, r.Repo)
+}
+
+func (r ReposMergeReq) method() string {
+	return "POST"
+}
+
+func (r ReposMergeReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposMergeReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposMergeReqBody is a request body for repos/merge
+
+API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
+*/
+type ReposMergeReqBody struct {
+
+	// The name of the base branch that the head will be merged into.
+	Base *string `json:"base"`
+
+	/*
+	   Commit message to use for the merge commit. If omitted, a default message will
+	   be used.
+	*/
+	CommitMessage *string `json:"commit_message,omitempty"`
+
+	// The head to merge. This can be a branch name or a commit SHA1.
+	Head *string `json:"head"`
+}
+
+/*
+ReposMergeResponseBody201 is a response body for repos/merge
+
+API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
+*/
+type ReposMergeResponseBody201 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	Commit      struct {
+		Author struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"author,omitempty"`
+		CommentCount int64 `json:"comment_count,omitempty"`
+		Committer    struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"committer,omitempty"`
+		Message string `json:"message,omitempty"`
+		Tree    struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"tree,omitempty"`
+		Url          string `json:"url,omitempty"`
+		Verification struct {
+			Payload   string `json:"payload,omitempty"`
+			Reason    string `json:"reason,omitempty"`
+			Signature string `json:"signature,omitempty"`
+			Verified  bool   `json:"verified,omitempty"`
+		} `json:"verification,omitempty"`
+	} `json:"commit,omitempty"`
+	Committer struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"committer,omitempty"`
+	HtmlUrl string `json:"html_url,omitempty"`
+	NodeId  string `json:"node_id,omitempty"`
+	Parents []struct {
+		Sha string `json:"sha"`
+		Url string `json:"url"`
+	} `json:"parents,omitempty"`
+	Sha string `json:"sha,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposMergeResponseBody404 is a response body for repos/merge
+
+API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
+*/
+type ReposMergeResponseBody404 struct {
+	Message string `json:"message,omitempty"`
+}
+
+/*
+ReposMergeResponseBody409 is a response body for repos/merge
+
+API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
+*/
+type ReposMergeResponseBody409 struct {
+	Message string `json:"message,omitempty"`
+}
+
+/*
+ReposListDownloadsReq builds requests for "repos/list-downloads"
+
+List downloads for a repository.
+
+  GET /repos/{owner}/{repo}/downloads
+
+https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
+*/
+type ReposListDownloadsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListDownloadsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/downloads", r.Owner, r.Repo)
+}
+
+func (r ReposListDownloadsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListDownloadsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListDownloadsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListDownloadsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListDownloadsResponseBody200 is a response body for repos/list-downloads
+
+API documentation: https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
+*/
+type ReposListDownloadsResponseBody200 []struct {
+	ContentType   string      `json:"content_type,omitempty"`
+	Description   string      `json:"description,omitempty"`
+	DownloadCount int64       `json:"download_count,omitempty"`
+	HtmlUrl       string      `json:"html_url,omitempty"`
+	Id            int64       `json:"id,omitempty"`
+	Name          string      `json:"name,omitempty"`
+	Size          json.Number `json:"size,omitempty"`
+	Url           string      `json:"url,omitempty"`
+}
+
+/*
+ReposListInvitationsForAuthenticatedUserReq builds requests for "repos/list-invitations-for-authenticated-user"
+
+List a user's repository invitations.
+
+  GET /user/repository_invitations
+
+https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+*/
+type ReposListInvitationsForAuthenticatedUserReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListInvitationsForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/repository_invitations")
+}
+
+func (r ReposListInvitationsForAuthenticatedUserReq) method() string {
+	return "GET"
+}
+
+func (r ReposListInvitationsForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListInvitationsForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListInvitationsForAuthenticatedUserResponseBody200 is a response body for repos/list-invitations-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+*/
+type ReposListInvitationsForAuthenticatedUserResponseBody200 []struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Invitee   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"invitee,omitempty"`
+	Inviter struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"inviter,omitempty"`
+	Permissions string `json:"permissions,omitempty"`
+	Repository  struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repository,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposEnablePagesSiteReq builds requests for "repos/enable-pages-site"
+
+Enable a Pages site.
+
+  POST /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#enable-a-pages-site
+*/
+type ReposEnablePagesSiteReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposEnablePagesSiteReqBody
+
+	/*
+	Enabling and disabling Pages in the Pages API is currently available for
+	developers to preview. See the [blog
+	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
+	preview for more details. To access the new endpoints during the preview period,
+	you must set this to true.
+	*/
+	SwitcherooPreview bool
+}
+
+func (r ReposEnablePagesSiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
+}
+
+func (r ReposEnablePagesSiteReq) method() string {
+	return "POST"
+}
+
+func (r ReposEnablePagesSiteReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposEnablePagesSiteReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposEnablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposEnablePagesSiteReqBody is a request body for repos/enable-pages-site
+
+API documentation: https://developer.github.com/v3/repos/pages/#enable-a-pages-site
+*/
+type ReposEnablePagesSiteReqBody struct {
+	Source *struct {
+
+		/*
+		   The repository branch used to publish your [site's source
+		   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
+		   Can be either `master` or `gh-pages`.
+		*/
+		Branch *string `json:"branch,omitempty"`
+
+		/*
+		   The repository directory that includes the source files for the Pages site. When
+		   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
+		   `gh-pages`, you are unable to specify a `path` other than `/`.
+		*/
+		Path *string `json:"path,omitempty"`
+	} `json:"source,omitempty"`
+}
+
+/*
+ReposEnablePagesSiteResponseBody201 is a response body for repos/enable-pages-site
+
+API documentation: https://developer.github.com/v3/repos/pages/#enable-a-pages-site
+*/
+type ReposEnablePagesSiteResponseBody201 struct {
+	Cname     string `json:"cname,omitempty"`
+	Custom404 bool   `json:"custom_404,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Source    struct {
+		Branch    string `json:"branch,omitempty"`
+		Directory string `json:"directory,omitempty"`
+	} `json:"source,omitempty"`
+	Status string `json:"status,omitempty"`
+	Url    string `json:"url,omitempty"`
+}
+
+/*
+ReposUpdateInformationAboutPagesSiteReq builds requests for "repos/update-information-about-pages-site"
+
+Update information about a Pages site.
+
+  PUT /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+*/
+type ReposUpdateInformationAboutPagesSiteReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposUpdateInformationAboutPagesSiteReqBody
+}
+
+func (r ReposUpdateInformationAboutPagesSiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
+}
+
+func (r ReposUpdateInformationAboutPagesSiteReq) method() string {
+	return "PUT"
+}
+
+func (r ReposUpdateInformationAboutPagesSiteReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposUpdateInformationAboutPagesSiteReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposUpdateInformationAboutPagesSiteReqBody is a request body for repos/update-information-about-pages-site
+
+API documentation: https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+*/
+type ReposUpdateInformationAboutPagesSiteReqBody struct {
+
+	/*
+	   Specify a custom domain for the repository. Sending a `null` value will remove
+	   the custom domain. For more about custom domains, see "[Using a custom domain
+	   with GitHub
+	   Pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)."
+	*/
+	Cname *string `json:"cname,omitempty"`
+
+	/*
+	   Update the source for the repository. Must include the branch name, and may
+	   optionally specify the subdirectory `/docs`. Possible values are `"gh-pages"`,
+	   `"master"`, and `"master /docs"`.
+	*/
+	Source *string `json:"source,omitempty"`
+}
+
+/*
+ReposDisablePagesSiteReq builds requests for "repos/disable-pages-site"
+
+Disable a Pages site.
+
+  DELETE /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#disable-a-pages-site
+*/
+type ReposDisablePagesSiteReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Enabling and disabling Pages in the Pages API is currently available for
+	developers to preview. See the [blog
+	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
+	preview for more details. To access the new endpoints during the preview period,
+	you must set this to true.
+	*/
+	SwitcherooPreview bool
+}
+
+func (r ReposDisablePagesSiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
+}
+
+func (r ReposDisablePagesSiteReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDisablePagesSiteReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDisablePagesSiteReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDisablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetPagesReq builds requests for "repos/get-pages"
+
+Get information about a Pages site.
+
+  GET /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+*/
+type ReposGetPagesReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposGetPagesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
+}
+
+func (r ReposGetPagesReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetPagesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetPagesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetPagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetPagesResponseBody200 is a response body for repos/get-pages
+
+API documentation: https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+*/
+type ReposGetPagesResponseBody200 struct {
+	Cname     string `json:"cname,omitempty"`
+	Custom404 bool   `json:"custom_404,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Source    struct {
+		Branch    string `json:"branch,omitempty"`
+		Directory string `json:"directory,omitempty"`
+	} `json:"source,omitempty"`
+	Status string `json:"status,omitempty"`
+	Url    string `json:"url,omitempty"`
+}
+
+/*
+ReposListBranchesReq builds requests for "repos/list-branches"
+
+List branches.
+
+  GET /repos/{owner}/{repo}/branches
+
+https://developer.github.com/v3/repos/branches/#list-branches
+*/
+type ReposListBranchesReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Setting to `true` returns only protected branches. When set to `false`, only
+	unprotected branches are returned. Omitting this parameter returns all branches.
+	*/
+	Protected *bool
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListBranchesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches", r.Owner, r.Repo)
+}
+
+func (r ReposListBranchesReq) method() string {
+	return "GET"
+}
+
+func (r ReposListBranchesReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Protected != nil {
+		query.Set("protected", strconv.FormatBool(*r.Protected))
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListBranchesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListBranchesResponseBody200 is a response body for repos/list-branches
+
+API documentation: https://developer.github.com/v3/repos/branches/#list-branches
+*/
+type ReposListBranchesResponseBody200 []struct {
+	Commit struct {
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"commit,omitempty"`
+	Name       string `json:"name,omitempty"`
+	Protected  bool   `json:"protected,omitempty"`
+	Protection struct {
+		Enabled              bool `json:"enabled,omitempty"`
+		RequiredStatusChecks struct {
+			Contexts         []string `json:"contexts,omitempty"`
+			EnforcementLevel string   `json:"enforcement_level,omitempty"`
+		} `json:"required_status_checks,omitempty"`
+	} `json:"protection,omitempty"`
+	ProtectionUrl string `json:"protection_url,omitempty"`
+}
+
+/*
+ReposCreateDispatchEventReq builds requests for "repos/create-dispatch-event"
+
+Create a repository dispatch event.
+
+  POST /repos/{owner}/{repo}/dispatches
+
+https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
+*/
+type ReposCreateDispatchEventReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposCreateDispatchEventReqBody
+}
+
+func (r ReposCreateDispatchEventReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/dispatches", r.Owner, r.Repo)
+}
+
+func (r ReposCreateDispatchEventReq) method() string {
+	return "POST"
+}
+
+func (r ReposCreateDispatchEventReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCreateDispatchEventReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposCreateDispatchEventReqBody is a request body for repos/create-dispatch-event
+
+API documentation: https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
+*/
+type ReposCreateDispatchEventReqBody struct {
+
+	/*
+	   JSON payload with extra information about the webhook event that your action or
+	   worklow may use.
+	*/
+	ClientPayload interface{} `json:"client_payload,omitempty"`
+
+	// **Required:** A custom webhook event name.
+	EventType *string `json:"event_type,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchPullRequestReviewEnforcementReq builds requests for "repos/remove-protected-branch-pull-request-review-enforcement"
+
+Remove pull request review enforcement of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
+
+https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
+*/
+type ReposRemoveProtectedBranchPullRequestReviewEnforcementReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetProtectedBranchPullRequestReviewEnforcementReq builds requests for "repos/get-protected-branch-pull-request-review-enforcement"
+
+Get pull request review enforcement of protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
+
+https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
+*/
+type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	The Protected Branches API now has a setting for requiring a specified number of
+	approving pull request reviews before merging. This feature is currently
+	available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-03-16-protected-branches-required-approving-reviews)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	LukeCagePreview bool
+}
+
+func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposUpdateProtectedBranchPullRequestReviewEnforcementReq builds requests for "repos/update-protected-branch-pull-request-review-enforcement"
+
+Update pull request review enforcement of protected branch.
+
+  PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
+
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+*/
+type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody
+
+	/*
+	The Protected Branches API now has a setting for requiring a specified number of
+	approving pull request reviews before merging. This feature is currently
+	available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-03-16-protected-branches-required-approving-reviews)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	LukeCagePreview bool
+}
+
+func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) method() string {
+	return "PATCH"
+}
+
+func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody is a request body for repos/update-protected-branch-pull-request-review-enforcement
+
+API documentation: https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+*/
+type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody struct {
+
+	/*
+	   Set to `true` if you want to automatically dismiss approving reviews when
+	   someone pushes a new commit.
+	*/
+	DismissStaleReviews *bool `json:"dismiss_stale_reviews,omitempty"`
+
+	/*
+	   Specify which users and teams can dismiss pull request reviews. Pass an empty
+	   `dismissal_restrictions` object to disable. User and team
+	   `dismissal_restrictions` are only available for organization-owned repositories.
+	   Omit this parameter for personal repositories.
+	*/
+	DismissalRestrictions *struct {
+
+		// The list of team `slug`s with dismissal access
+		Teams []string `json:"teams,omitempty"`
+
+		// The list of user `login`s with dismissal access
+		Users []string `json:"users,omitempty"`
+	} `json:"dismissal_restrictions,omitempty"`
+
+	/*
+	   Blocks merging pull requests until [code
+	   owners](https://help.github.com/articles/about-code-owners/) have reviewed.
+	*/
+	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
+
+	/*
+	   Specifies the number of reviewers required to approve pull requests. Use a
+	   number between 1 and 6.
+	*/
+	RequiredApprovingReviewCount *int64 `json:"required_approving_review_count,omitempty"`
+}
+
+/*
+ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody200 is a response body for repos/update-protected-branch-pull-request-review-enforcement
+
+API documentation: https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+*/
+type ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody200 struct {
+	DismissStaleReviews   bool `json:"dismiss_stale_reviews,omitempty"`
+	DismissalRestrictions struct {
+		Teams []struct {
+			Description     string `json:"description,omitempty"`
+			HtmlUrl         string `json:"html_url,omitempty"`
+			Id              int64  `json:"id,omitempty"`
+			MembersUrl      string `json:"members_url,omitempty"`
+			Name            string `json:"name,omitempty"`
+			NodeId          string `json:"node_id,omitempty"`
+			Parent          string `json:"parent,omitempty"`
+			Permission      string `json:"permission,omitempty"`
+			Privacy         string `json:"privacy,omitempty"`
+			RepositoriesUrl string `json:"repositories_url,omitempty"`
+			Slug            string `json:"slug,omitempty"`
+			Url             string `json:"url,omitempty"`
+		} `json:"teams,omitempty"`
+		TeamsUrl string `json:"teams_url,omitempty"`
+		Url      string `json:"url,omitempty"`
+		Users    []struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"users,omitempty"`
+		UsersUrl string `json:"users_url,omitempty"`
+	} `json:"dismissal_restrictions,omitempty"`
+	RequireCodeOwnerReviews      bool   `json:"require_code_owner_reviews,omitempty"`
+	RequiredApprovingReviewCount int64  `json:"required_approving_review_count,omitempty"`
+	Url                          string `json:"url,omitempty"`
+}
+
+/*
+ReposGetPagesBuildReq builds requests for "repos/get-pages-build"
+
+Get a specific Pages build.
+
+  GET /repos/{owner}/{repo}/pages/builds/{build_id}
+
+https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+*/
+type ReposGetPagesBuildReq struct {
+	Owner   string
+	Repo    string
+	BuildId int64
+}
+
+func (r ReposGetPagesBuildReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages/builds/%v", r.Owner, r.Repo, r.BuildId)
+}
+
+func (r ReposGetPagesBuildReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetPagesBuildReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetPagesBuildReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetPagesBuildResponseBody200 is a response body for repos/get-pages-build
+
+API documentation: https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+*/
+type ReposGetPagesBuildResponseBody200 struct {
+	Commit    string `json:"commit,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Duration  int64  `json:"duration,omitempty"`
+	Error     struct {
+		Message string `json:"message,omitempty"`
+	} `json:"error,omitempty"`
+	Pusher struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"pusher,omitempty"`
+	Status    string `json:"status,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
 
 /*
 ReposGetLatestReleaseReq builds requests for "repos/get-latest-release"
@@ -2525,6 +8086,1400 @@ type ReposGetLatestReleaseResponseBody200 struct {
 }
 
 /*
+ReposRetrieveCommunityProfileMetricsReq builds requests for "repos/retrieve-community-profile-metrics"
+
+Retrieve community profile metrics.
+
+  GET /repos/{owner}/{repo}/community/profile
+
+https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+*/
+type ReposRetrieveCommunityProfileMetricsReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposRetrieveCommunityProfileMetricsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/community/profile", r.Owner, r.Repo)
+}
+
+func (r ReposRetrieveCommunityProfileMetricsReq) method() string {
+	return "GET"
+}
+
+func (r ReposRetrieveCommunityProfileMetricsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRetrieveCommunityProfileMetricsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposRetrieveCommunityProfileMetricsResponseBody200 is a response body for repos/retrieve-community-profile-metrics
+
+API documentation: https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+*/
+type ReposRetrieveCommunityProfileMetricsResponseBody200 struct {
+	Description   string `json:"description,omitempty"`
+	Documentation bool   `json:"documentation,omitempty"`
+	Files         struct {
+		CodeOfConduct struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Key     string `json:"key,omitempty"`
+			Name    string `json:"name,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"code_of_conduct,omitempty"`
+		Contributing struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"contributing,omitempty"`
+		IssueTemplate struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"issue_template,omitempty"`
+		License struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Key     string `json:"key,omitempty"`
+			Name    string `json:"name,omitempty"`
+			SpdxId  string `json:"spdx_id,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"license,omitempty"`
+		PullRequestTemplate struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"pull_request_template,omitempty"`
+		Readme struct {
+			HtmlUrl string `json:"html_url,omitempty"`
+			Url     string `json:"url,omitempty"`
+		} `json:"readme,omitempty"`
+	} `json:"files,omitempty"`
+	HealthPercentage json.Number `json:"health_percentage,omitempty"`
+	UpdatedAt        string      `json:"updated_at,omitempty"`
+}
+
+/*
+ReposGetCombinedStatusForRefReq builds requests for "repos/get-combined-status-for-ref"
+
+Get the combined status for a specific ref.
+
+  GET /repos/{owner}/{repo}/commits/{ref}/status
+
+https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+*/
+type ReposGetCombinedStatusForRefReq struct {
+	Owner string
+	Repo  string
+	Ref   string
+}
+
+func (r ReposGetCombinedStatusForRefReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v/status", r.Owner, r.Repo, r.Ref)
+}
+
+func (r ReposGetCombinedStatusForRefReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetCombinedStatusForRefReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetCombinedStatusForRefReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetCombinedStatusForRefResponseBody200 is a response body for repos/get-combined-status-for-ref
+
+API documentation: https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+*/
+type ReposGetCombinedStatusForRefResponseBody200 struct {
+	CommitUrl  string `json:"commit_url,omitempty"`
+	Repository struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repository,omitempty"`
+	Sha      string `json:"sha,omitempty"`
+	State    string `json:"state,omitempty"`
+	Statuses []struct {
+		AvatarUrl   string `json:"avatar_url"`
+		Context     string `json:"context"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int64  `json:"id"`
+		NodeId      string `json:"node_id"`
+		State       string `json:"state"`
+		TargetUrl   string `json:"target_url"`
+		UpdatedAt   string `json:"updated_at"`
+		Url         string `json:"url"`
+	} `json:"statuses,omitempty"`
+	TotalCount int64  `json:"total_count,omitempty"`
+	Url        string `json:"url,omitempty"`
+}
+
+/*
+ReposGetContributorsStatsReq builds requests for "repos/get-contributors-stats"
+
+Get contributors list with additions, deletions, and commit counts.
+
+  GET /repos/{owner}/{repo}/stats/contributors
+
+https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+*/
+type ReposGetContributorsStatsReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposGetContributorsStatsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/stats/contributors", r.Owner, r.Repo)
+}
+
+func (r ReposGetContributorsStatsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetContributorsStatsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetContributorsStatsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetContributorsStatsResponseBody200 is a response body for repos/get-contributors-stats
+
+API documentation: https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+*/
+type ReposGetContributorsStatsResponseBody200 []struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Total int64 `json:"total,omitempty"`
+	Weeks []struct {
+		A int64  `json:"a,omitempty"`
+		C int64  `json:"c,omitempty"`
+		D int64  `json:"d,omitempty"`
+		W string `json:"w,omitempty"`
+	} `json:"weeks,omitempty"`
+}
+
+/*
+ReposDeclineInvitationReq builds requests for "repos/decline-invitation"
+
+Decline a repository invitation.
+
+  DELETE /user/repository_invitations/{invitation_id}
+
+https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
+*/
+type ReposDeclineInvitationReq struct {
+	InvitationId int64
+}
+
+func (r ReposDeclineInvitationReq) urlPath() string {
+	return fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId)
+}
+
+func (r ReposDeclineInvitationReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDeclineInvitationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDeclineInvitationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposAcceptInvitationReq builds requests for "repos/accept-invitation"
+
+Accept a repository invitation.
+
+  PATCH /user/repository_invitations/{invitation_id}
+
+https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
+*/
+type ReposAcceptInvitationReq struct {
+	InvitationId int64
+}
+
+func (r ReposAcceptInvitationReq) urlPath() string {
+	return fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId)
+}
+
+func (r ReposAcceptInvitationReq) method() string {
+	return "PATCH"
+}
+
+func (r ReposAcceptInvitationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAcceptInvitationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetAllTopicsReq builds requests for "repos/get-all-topics"
+
+Get all repository topics.
+
+  GET /repos/{owner}/{repo}/topics
+
+https://developer.github.com/v3/repos/#get-all-repository-topics
+*/
+type ReposGetAllTopicsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	The `topics` property for repositories on GitHub is currently available for
+	developers to preview. To view the `topics` property in calls that return
+	repository results, you must set this to true.
+	*/
+	MercyPreview bool
+}
+
+func (r ReposGetAllTopicsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/topics", r.Owner, r.Repo)
+}
+
+func (r ReposGetAllTopicsReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetAllTopicsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetAllTopicsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetAllTopicsResponseBody200 is a response body for repos/get-all-topics
+
+API documentation: https://developer.github.com/v3/repos/#get-all-repository-topics
+*/
+type ReposGetAllTopicsResponseBody200 struct {
+	Names []string `json:"names,omitempty"`
+}
+
+/*
+ReposReplaceAllTopicsReq builds requests for "repos/replace-all-topics"
+
+Replace all repository topics.
+
+  PUT /repos/{owner}/{repo}/topics
+
+https://developer.github.com/v3/repos/#replace-all-repository-topics
+*/
+type ReposReplaceAllTopicsReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposReplaceAllTopicsReqBody
+
+	/*
+	Repository topics on GitHub are currently available for developers to preview.
+	To use this endpoint, you must set this to true.
+	*/
+	MercyPreview bool
+}
+
+func (r ReposReplaceAllTopicsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/topics", r.Owner, r.Repo)
+}
+
+func (r ReposReplaceAllTopicsReq) method() string {
+	return "PUT"
+}
+
+func (r ReposReplaceAllTopicsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposReplaceAllTopicsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposReplaceAllTopicsReqBody is a request body for repos/replace-all-topics
+
+API documentation: https://developer.github.com/v3/repos/#replace-all-repository-topics
+*/
+type ReposReplaceAllTopicsReqBody struct {
+
+	/*
+	   An array of topics to add to the repository. Pass one or more topics to
+	   _replace_ the set of existing topics. Send an empty array (`[]`) to clear all
+	   topics from the repository. **Note:** Topic `names` cannot contain uppercase
+	   letters.
+	*/
+	Names []string `json:"names"`
+}
+
+/*
+ReposReplaceAllTopicsResponseBody200 is a response body for repos/replace-all-topics
+
+API documentation: https://developer.github.com/v3/repos/#replace-all-repository-topics
+*/
+type ReposReplaceAllTopicsResponseBody200 struct {
+	Names []string `json:"names,omitempty"`
+}
+
+/*
+ReposDeleteDeploymentReq builds requests for "repos/delete-deployment"
+
+Delete a deployment.
+
+  DELETE /repos/{owner}/{repo}/deployments/{deployment_id}
+
+https://developer.github.com/v3/repos/deployments/#delete-a-deployment
+*/
+type ReposDeleteDeploymentReq struct {
+	Owner        string
+	Repo         string
+	DeploymentId int64
+}
+
+func (r ReposDeleteDeploymentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId)
+}
+
+func (r ReposDeleteDeploymentReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDeleteDeploymentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDeleteDeploymentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDeploymentReq builds requests for "repos/get-deployment"
+
+Get a single deployment.
+
+  GET /repos/{owner}/{repo}/deployments/{deployment_id}
+
+https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+*/
+type ReposGetDeploymentReq struct {
+	Owner        string
+	Repo         string
+	DeploymentId int64
+
+	/*
+	If a deployment is created via a GitHub App, the response will include the
+	`performed_via_github_app` object with information about the GitHub App. For
+	more information, see the [related blog
+	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
+
+	To receive the `performed_via_github_app` object in the response, you must set
+	this to true.
+	*/
+	MachineManPreview bool
+
+	/*
+	The `transient_environment` and `production_environment` parameters are
+	currently available for developers to preview. During the preview period, the
+	API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
+	for full details.
+
+	To access the API during the preview period, you must set this to true.
+	*/
+	AntManPreview bool
+}
+
+func (r ReposGetDeploymentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId)
+}
+
+func (r ReposGetDeploymentReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetDeploymentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetDeploymentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"ant-man":     r.AntManPreview,
+		"machine-man": r.MachineManPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDeploymentResponseBody200 is a response body for repos/get-deployment
+
+API documentation: https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+*/
+type ReposGetDeploymentResponseBody200 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Creator   struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description         string `json:"description,omitempty"`
+	Environment         string `json:"environment,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalEnvironment string `json:"original_environment,omitempty"`
+	Payload             struct {
+		Deploy string `json:"deploy,omitempty"`
+	} `json:"payload,omitempty"`
+	ProductionEnvironment bool   `json:"production_environment,omitempty"`
+	Ref                   string `json:"ref,omitempty"`
+	RepositoryUrl         string `json:"repository_url,omitempty"`
+	Sha                   string `json:"sha,omitempty"`
+	StatusesUrl           string `json:"statuses_url,omitempty"`
+	Task                  string `json:"task,omitempty"`
+	TransientEnvironment  bool   `json:"transient_environment,omitempty"`
+	UpdatedAt             string `json:"updated_at,omitempty"`
+	Url                   string `json:"url,omitempty"`
+}
+
+/*
+ReposListLanguagesReq builds requests for "repos/list-languages"
+
+List languages.
+
+  GET /repos/{owner}/{repo}/languages
+
+https://developer.github.com/v3/repos/#list-languages
+*/
+type ReposListLanguagesReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposListLanguagesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/languages", r.Owner, r.Repo)
+}
+
+func (r ReposListLanguagesReq) method() string {
+	return "GET"
+}
+
+func (r ReposListLanguagesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposListLanguagesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListLanguagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListLanguagesResponseBody200 is a response body for repos/list-languages
+
+API documentation: https://developer.github.com/v3/repos/#list-languages
+*/
+type ReposListLanguagesResponseBody200 map[string]int64
+
+/*
+ReposDisableVulnerabilityAlertsReq builds requests for "repos/disable-vulnerability-alerts"
+
+Disable vulnerability alerts.
+
+  DELETE /repos/{owner}/{repo}/vulnerability-alerts
+
+https://developer.github.com/v3/repos/#disable-vulnerability-alerts
+*/
+type ReposDisableVulnerabilityAlertsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Enabling and disabling vulnerability alerts for a repository using the REST API
+	is currently available for developers to preview. To access these new endpoints
+	during the preview period, you must set this to true.
+	*/
+	DorianPreview bool
+}
+
+func (r ReposDisableVulnerabilityAlertsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
+}
+
+func (r ReposDisableVulnerabilityAlertsReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposDisableVulnerabilityAlertsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposDisableVulnerabilityAlertsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposCheckVulnerabilityAlertsReq builds requests for "repos/check-vulnerability-alerts"
+
+Check if vulnerability alerts are enabled for a repository.
+
+  GET /repos/{owner}/{repo}/vulnerability-alerts
+
+https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
+*/
+type ReposCheckVulnerabilityAlertsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Enabling and disabling vulnerability alerts for a repository using the REST API
+	is currently available for developers to preview. To access these new endpoints
+	during the preview period, you must set this to true.
+	*/
+	DorianPreview bool
+}
+
+func (r ReposCheckVulnerabilityAlertsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
+}
+
+func (r ReposCheckVulnerabilityAlertsReq) method() string {
+	return "GET"
+}
+
+func (r ReposCheckVulnerabilityAlertsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCheckVulnerabilityAlertsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposEnableVulnerabilityAlertsReq builds requests for "repos/enable-vulnerability-alerts"
+
+Enable vulnerability alerts.
+
+  PUT /repos/{owner}/{repo}/vulnerability-alerts
+
+https://developer.github.com/v3/repos/#enable-vulnerability-alerts
+*/
+type ReposEnableVulnerabilityAlertsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Enabling and disabling vulnerability alerts for a repository using the REST API
+	is currently available for developers to preview. To access these new endpoints
+	during the preview period, you must set this to true.
+	*/
+	DorianPreview bool
+}
+
+func (r ReposEnableVulnerabilityAlertsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
+}
+
+func (r ReposEnableVulnerabilityAlertsReq) method() string {
+	return "PUT"
+}
+
+func (r ReposEnableVulnerabilityAlertsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposEnableVulnerabilityAlertsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposEnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposTestPushHookReq builds requests for "repos/test-push-hook"
+
+Test a push hook.
+
+  POST /repos/{owner}/{repo}/hooks/{hook_id}/tests
+
+https://developer.github.com/v3/repos/hooks/#test-a-push-hook
+*/
+type ReposTestPushHookReq struct {
+	Owner  string
+	Repo   string
+	HookId int64
+}
+
+func (r ReposTestPushHookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v/tests", r.Owner, r.Repo, r.HookId)
+}
+
+func (r ReposTestPushHookReq) method() string {
+	return "POST"
+}
+
+func (r ReposTestPushHookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposTestPushHookReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposCreateReleaseReq builds requests for "repos/create-release"
+
+Create a release.
+
+  POST /repos/{owner}/{repo}/releases
+
+https://developer.github.com/v3/repos/releases/#create-a-release
+*/
+type ReposCreateReleaseReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposCreateReleaseReqBody
+}
+
+func (r ReposCreateReleaseReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases", r.Owner, r.Repo)
+}
+
+func (r ReposCreateReleaseReq) method() string {
+	return "POST"
+}
+
+func (r ReposCreateReleaseReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCreateReleaseReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCreateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposCreateReleaseReqBody is a request body for repos/create-release
+
+API documentation: https://developer.github.com/v3/repos/releases/#create-a-release
+*/
+type ReposCreateReleaseReqBody struct {
+
+	// Text describing the contents of the tag.
+	Body *string `json:"body,omitempty"`
+
+	/*
+	   `true` to create a draft (unpublished) release, `false` to create a published
+	   one.
+	*/
+	Draft *bool `json:"draft,omitempty"`
+
+	// The name of the release.
+	Name *string `json:"name,omitempty"`
+
+	/*
+	   `true` to identify the release as a prerelease. `false` to identify the release
+	   as a full release.
+	*/
+	Prerelease *bool `json:"prerelease,omitempty"`
+
+	// The name of the tag.
+	TagName *string `json:"tag_name"`
+
+	/*
+	   Specifies the commitish value that determines where the Git tag is created from.
+	   Can be any branch or commit SHA. Unused if the Git tag already exists. Default:
+	   the repository's default branch (usually `master`).
+	*/
+	TargetCommitish *string `json:"target_commitish,omitempty"`
+}
+
+/*
+ReposCreateReleaseResponseBody201 is a response body for repos/create-release
+
+API documentation: https://developer.github.com/v3/repos/releases/#create-a-release
+*/
+type ReposCreateReleaseResponseBody201 struct {
+	Assets    []interface{} `json:"assets,omitempty"`
+	AssetsUrl string        `json:"assets_url,omitempty"`
+	Author    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body            string `json:"body,omitempty"`
+	CreatedAt       string `json:"created_at,omitempty"`
+	Draft           bool   `json:"draft,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	Id              int64  `json:"id,omitempty"`
+	Name            string `json:"name,omitempty"`
+	NodeId          string `json:"node_id,omitempty"`
+	Prerelease      bool   `json:"prerelease,omitempty"`
+	PublishedAt     string `json:"published_at,omitempty"`
+	TagName         string `json:"tag_name,omitempty"`
+	TarballUrl      string `json:"tarball_url,omitempty"`
+	TargetCommitish string `json:"target_commitish,omitempty"`
+	UploadUrl       string `json:"upload_url,omitempty"`
+	Url             string `json:"url,omitempty"`
+	ZipballUrl      string `json:"zipball_url,omitempty"`
+}
+
+/*
+ReposListReleasesReq builds requests for "repos/list-releases"
+
+List releases for a repository.
+
+  GET /repos/{owner}/{repo}/releases
+
+https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+*/
+type ReposListReleasesReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListReleasesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases", r.Owner, r.Repo)
+}
+
+func (r ReposListReleasesReq) method() string {
+	return "GET"
+}
+
+func (r ReposListReleasesReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListReleasesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListReleasesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListReleasesResponseBody200 is a response body for repos/list-releases
+
+API documentation: https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+*/
+type ReposListReleasesResponseBody200 []struct {
+	Assets []struct {
+		BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
+		ContentType        string      `json:"content_type,omitempty"`
+		CreatedAt          string      `json:"created_at,omitempty"`
+		DownloadCount      int64       `json:"download_count,omitempty"`
+		Id                 int64       `json:"id,omitempty"`
+		Label              string      `json:"label,omitempty"`
+		Name               string      `json:"name,omitempty"`
+		NodeId             string      `json:"node_id,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		State              string      `json:"state,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Uploader           struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"uploader,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"assets,omitempty"`
+	AssetsUrl string `json:"assets_url,omitempty"`
+	Author    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body            string `json:"body,omitempty"`
+	CreatedAt       string `json:"created_at,omitempty"`
+	Draft           bool   `json:"draft,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	Id              int64  `json:"id,omitempty"`
+	Name            string `json:"name,omitempty"`
+	NodeId          string `json:"node_id,omitempty"`
+	Prerelease      bool   `json:"prerelease,omitempty"`
+	PublishedAt     string `json:"published_at,omitempty"`
+	TagName         string `json:"tag_name,omitempty"`
+	TarballUrl      string `json:"tarball_url,omitempty"`
+	TargetCommitish string `json:"target_commitish,omitempty"`
+	UploadUrl       string `json:"upload_url,omitempty"`
+	Url             string `json:"url,omitempty"`
+	ZipballUrl      string `json:"zipball_url,omitempty"`
+}
+
+/*
+ReposGetReleaseByTagReq builds requests for "repos/get-release-by-tag"
+
+Get a release by tag name.
+
+  GET /repos/{owner}/{repo}/releases/tags/{tag}
+
+https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
+*/
+type ReposGetReleaseByTagReq struct {
+	Owner string
+	Repo  string
+	Tag   string
+}
+
+func (r ReposGetReleaseByTagReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/tags/%v", r.Owner, r.Repo, r.Tag)
+}
+
+func (r ReposGetReleaseByTagReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetReleaseByTagReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetReleaseByTagReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetReleaseByTagResponseBody200 is a response body for repos/get-release-by-tag
+
+API documentation: https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
+*/
+type ReposGetReleaseByTagResponseBody200 struct {
+	Assets []struct {
+		BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
+		ContentType        string      `json:"content_type,omitempty"`
+		CreatedAt          string      `json:"created_at,omitempty"`
+		DownloadCount      int64       `json:"download_count,omitempty"`
+		Id                 int64       `json:"id,omitempty"`
+		Label              string      `json:"label,omitempty"`
+		Name               string      `json:"name,omitempty"`
+		NodeId             string      `json:"node_id,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		State              string      `json:"state,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Uploader           struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"uploader,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"assets,omitempty"`
+	AssetsUrl string `json:"assets_url,omitempty"`
+	Author    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body            string `json:"body,omitempty"`
+	CreatedAt       string `json:"created_at,omitempty"`
+	Draft           bool   `json:"draft,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	Id              int64  `json:"id,omitempty"`
+	Name            string `json:"name,omitempty"`
+	NodeId          string `json:"node_id,omitempty"`
+	Prerelease      bool   `json:"prerelease,omitempty"`
+	PublishedAt     string `json:"published_at,omitempty"`
+	TagName         string `json:"tag_name,omitempty"`
+	TarballUrl      string `json:"tarball_url,omitempty"`
+	TargetCommitish string `json:"target_commitish,omitempty"`
+	UploadUrl       string `json:"upload_url,omitempty"`
+	Url             string `json:"url,omitempty"`
+	ZipballUrl      string `json:"zipball_url,omitempty"`
+}
+
+/*
+ReposListBranchesForHeadCommitReq builds requests for "repos/list-branches-for-head-commit"
+
+List branches for HEAD commit.
+
+  GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head
+
+https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
+*/
+type ReposListBranchesForHeadCommitReq struct {
+	Owner     string
+	Repo      string
+	CommitSha string
+
+	/*
+	Listing branches or pull requests for a commit in the Commits API is currently
+	available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2019-04-11-pulls-branches-for-commit/)
+	for more details. To access the new endpoints during the preview period, you
+	must set this to true.
+	*/
+	GrootPreview bool
+}
+
+func (r ReposListBranchesForHeadCommitReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v/branches-where-head", r.Owner, r.Repo, r.CommitSha)
+}
+
+func (r ReposListBranchesForHeadCommitReq) method() string {
+	return "GET"
+}
+
+func (r ReposListBranchesForHeadCommitReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposListBranchesForHeadCommitReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"groot": r.GrootPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListBranchesForHeadCommitResponseBody200 is a response body for repos/list-branches-for-head-commit
+
+API documentation: https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
+*/
+type ReposListBranchesForHeadCommitResponseBody200 []struct {
+	Commit struct {
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"commit,omitempty"`
+	Name      string `json:"name,omitempty"`
+	Protected bool   `json:"protected,omitempty"`
+}
+
+/*
+ReposListPagesBuildsReq builds requests for "repos/list-pages-builds"
+
+List Pages builds.
+
+  GET /repos/{owner}/{repo}/pages/builds
+
+https://developer.github.com/v3/repos/pages/#list-pages-builds
+*/
+type ReposListPagesBuildsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListPagesBuildsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
+}
+
+func (r ReposListPagesBuildsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListPagesBuildsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListPagesBuildsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListPagesBuildsResponseBody200 is a response body for repos/list-pages-builds
+
+API documentation: https://developer.github.com/v3/repos/pages/#list-pages-builds
+*/
+type ReposListPagesBuildsResponseBody200 []struct {
+	Commit    string `json:"commit,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Duration  int64  `json:"duration,omitempty"`
+	Error     struct {
+		Message string `json:"message,omitempty"`
+	} `json:"error,omitempty"`
+	Pusher struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"pusher,omitempty"`
+	Status    string `json:"status,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+ReposRequestPageBuildReq builds requests for "repos/request-page-build"
+
+Request a page build.
+
+  POST /repos/{owner}/{repo}/pages/builds
+
+https://developer.github.com/v3/repos/pages/#request-a-page-build
+*/
+type ReposRequestPageBuildReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposRequestPageBuildReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
+}
+
+func (r ReposRequestPageBuildReq) method() string {
+	return "POST"
+}
+
+func (r ReposRequestPageBuildReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRequestPageBuildReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposRequestPageBuildResponseBody200 is a response body for repos/request-page-build
+
+API documentation: https://developer.github.com/v3/repos/pages/#request-a-page-build
+*/
+type ReposRequestPageBuildResponseBody200 struct {
+	Status string `json:"status,omitempty"`
+	Url    string `json:"url,omitempty"`
+}
+
+/*
 ReposListContributorsReq builds requests for "repos/list-contributors"
 
 List contributors.
@@ -2604,6 +9559,738 @@ type ReposListContributorsResponseBody200 []struct {
 	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 	Type              string `json:"type,omitempty"`
 	Url               string `json:"url,omitempty"`
+}
+
+/*
+ReposListTeamsReq builds requests for "repos/list-teams"
+
+List teams.
+
+  GET /repos/{owner}/{repo}/teams
+
+https://developer.github.com/v3/repos/#list-teams
+*/
+type ReposListTeamsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListTeamsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/teams", r.Owner, r.Repo)
+}
+
+func (r ReposListTeamsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListTeamsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListTeamsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListTeamsResponseBody200 is a response body for repos/list-teams
+
+API documentation: https://developer.github.com/v3/repos/#list-teams
+*/
+type ReposListTeamsResponseBody200 []struct {
+	Description     string `json:"description,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	Id              int64  `json:"id,omitempty"`
+	MembersUrl      string `json:"members_url,omitempty"`
+	Name            string `json:"name,omitempty"`
+	NodeId          string `json:"node_id,omitempty"`
+	Parent          string `json:"parent,omitempty"`
+	Permission      string `json:"permission,omitempty"`
+	Privacy         string `json:"privacy,omitempty"`
+	RepositoriesUrl string `json:"repositories_url,omitempty"`
+	Slug            string `json:"slug,omitempty"`
+	Url             string `json:"url,omitempty"`
+}
+
+/*
+ReposListAssetsForReleaseReq builds requests for "repos/list-assets-for-release"
+
+List assets for a release.
+
+  GET /repos/{owner}/{repo}/releases/{release_id}/assets
+
+https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+*/
+type ReposListAssetsForReleaseReq struct {
+	Owner     string
+	Repo      string
+	ReleaseId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListAssetsForReleaseReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
+}
+
+func (r ReposListAssetsForReleaseReq) method() string {
+	return "GET"
+}
+
+func (r ReposListAssetsForReleaseReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListAssetsForReleaseReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListAssetsForReleaseResponseBody200 is a response body for repos/list-assets-for-release
+
+API documentation: https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+*/
+type ReposListAssetsForReleaseResponseBody200 []struct {
+	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
+	ContentType        string      `json:"content_type,omitempty"`
+	CreatedAt          string      `json:"created_at,omitempty"`
+	DownloadCount      int64       `json:"download_count,omitempty"`
+	Id                 int64       `json:"id,omitempty"`
+	Label              string      `json:"label,omitempty"`
+	Name               string      `json:"name,omitempty"`
+	NodeId             string      `json:"node_id,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	State              string      `json:"state,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Uploader           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"uploader,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposUploadReleaseAssetReq builds requests for "repos/upload-release-asset"
+
+Upload a release asset.
+
+  POST /repos/{owner}/{repo}/releases/{release_id}/assets
+
+https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+*/
+type ReposUploadReleaseAssetReq struct {
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// release_id parameter
+	ReleaseId int64
+
+	// name parameter
+	Name *string
+
+	// label parameter
+	Label *string
+
+	/*
+	Size of the asset in bytes. Most libraries will calculate the header
+	automatically
+	*/
+	ContentLengthHeader *string
+
+	/*
+	Media Type of the asset. For a list of media types, see
+	https://www.iana.org/assignments/media-types/media-types.xhtml
+	*/
+	ContentTypeHeader *string
+}
+
+func (r ReposUploadReleaseAssetReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
+}
+
+func (r ReposUploadReleaseAssetReq) method() string {
+	return "POST"
+}
+
+func (r ReposUploadReleaseAssetReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Name != nil {
+		query.Set("name", *r.Name)
+	}
+	if r.Label != nil {
+		query.Set("label", *r.Label)
+	}
+	return query
+}
+
+func (r ReposUploadReleaseAssetReq) header() http.Header {
+	headerVals := map[string]*string{
+		"content-length": r.ContentLengthHeader,
+		"content-type":   r.ContentTypeHeader,
+	}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposUploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposUploadReleaseAssetResponseBody201 is a response body for repos/upload-release-asset
+
+API documentation: https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+*/
+type ReposUploadReleaseAssetResponseBody201 struct {
+	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
+	ContentType        string      `json:"content_type,omitempty"`
+	CreatedAt          string      `json:"created_at,omitempty"`
+	DownloadCount      int64       `json:"download_count,omitempty"`
+	Id                 int64       `json:"id,omitempty"`
+	Label              string      `json:"label,omitempty"`
+	Name               string      `json:"name,omitempty"`
+	NodeId             string      `json:"node_id,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	State              string      `json:"state,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Uploader           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"uploader,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposTransferReq builds requests for "repos/transfer"
+
+Transfer a repository.
+
+  POST /repos/{owner}/{repo}/transfer
+
+https://developer.github.com/v3/repos/#transfer-a-repository
+*/
+type ReposTransferReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposTransferReqBody
+}
+
+func (r ReposTransferReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/transfer", r.Owner, r.Repo)
+}
+
+func (r ReposTransferReq) method() string {
+	return "POST"
+}
+
+func (r ReposTransferReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposTransferReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposTransferReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposTransferReqBody is a request body for repos/transfer
+
+API documentation: https://developer.github.com/v3/repos/#transfer-a-repository
+*/
+type ReposTransferReqBody struct {
+
+	/*
+	   **Required:** The username or organization name the repository will be
+	   transferred to.
+	*/
+	NewOwner *string `json:"new_owner,omitempty"`
+
+	/*
+	   ID of the team or teams to add to the repository. Teams can only be added to
+	   organization-owned repositories.
+	*/
+	TeamIds []int64 `json:"team_ids,omitempty"`
+}
+
+/*
+ReposTransferResponseBody202 is a response body for repos/transfer
+
+API documentation: https://developer.github.com/v3/repos/#transfer-a-repository
+*/
+type ReposTransferResponseBody202 struct {
+	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository string      `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
+}
+
+/*
+ReposGetCommitReq builds requests for "repos/get-commit"
+
+Get a single commit.
+
+  GET /repos/{owner}/{repo}/commits/{ref}
+
+https://developer.github.com/v3/repos/commits/#get-a-single-commit
+*/
+type ReposGetCommitReq struct {
+	Owner string
+	Repo  string
+	Ref   string
+}
+
+func (r ReposGetCommitReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v", r.Owner, r.Repo, r.Ref)
+}
+
+func (r ReposGetCommitReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetCommitReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetCommitReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetCommitResponseBody200 is a response body for repos/get-commit
+
+API documentation: https://developer.github.com/v3/repos/commits/#get-a-single-commit
+*/
+type ReposGetCommitResponseBody200 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	Commit      struct {
+		Author struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"author,omitempty"`
+		CommentCount int64 `json:"comment_count,omitempty"`
+		Committer    struct {
+			Date  string `json:"date,omitempty"`
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"committer,omitempty"`
+		Message string `json:"message,omitempty"`
+		Tree    struct {
+			Sha string `json:"sha,omitempty"`
+			Url string `json:"url,omitempty"`
+		} `json:"tree,omitempty"`
+		Url          string `json:"url,omitempty"`
+		Verification struct {
+			Payload   string `json:"payload,omitempty"`
+			Reason    string `json:"reason,omitempty"`
+			Signature string `json:"signature,omitempty"`
+			Verified  bool   `json:"verified,omitempty"`
+		} `json:"verification,omitempty"`
+	} `json:"commit,omitempty"`
+	Committer struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"committer,omitempty"`
+	Files []struct {
+		Additions int64  `json:"additions,omitempty"`
+		BlobUrl   string `json:"blob_url,omitempty"`
+		Changes   int64  `json:"changes,omitempty"`
+		Deletions int64  `json:"deletions,omitempty"`
+		Filename  string `json:"filename,omitempty"`
+		Patch     string `json:"patch,omitempty"`
+		RawUrl    string `json:"raw_url,omitempty"`
+		Status    string `json:"status,omitempty"`
+	} `json:"files,omitempty"`
+	HtmlUrl string `json:"html_url,omitempty"`
+	NodeId  string `json:"node_id,omitempty"`
+	Parents []struct {
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"parents,omitempty"`
+	Sha   string `json:"sha,omitempty"`
+	Stats struct {
+		Additions int64 `json:"additions,omitempty"`
+		Deletions int64 `json:"deletions,omitempty"`
+		Total     int64 `json:"total,omitempty"`
+	} `json:"stats,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ReposListCollaboratorsReq builds requests for "repos/list-collaborators"
+
+List collaborators.
+
+  GET /repos/{owner}/{repo}/collaborators
+
+https://developer.github.com/v3/repos/collaborators/#list-collaborators
+*/
+type ReposListCollaboratorsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Filter collaborators returned by their affiliation. Can be one of:
+	\* `outside`: All outside collaborators of an organization-owned repository.
+	\* `direct`: All collaborators with permissions to an organization-owned
+	repository, regardless of organization membership status.
+	\* `all`: All collaborators the authenticated user can see.
+	*/
+	Affiliation *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListCollaboratorsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/collaborators", r.Owner, r.Repo)
+}
+
+func (r ReposListCollaboratorsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListCollaboratorsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Affiliation != nil {
+		query.Set("affiliation", *r.Affiliation)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListCollaboratorsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListCollaboratorsResponseBody200 is a response body for repos/list-collaborators
+
+API documentation: https://developer.github.com/v3/repos/collaborators/#list-collaborators
+*/
+type ReposListCollaboratorsResponseBody200 []struct {
+	AvatarUrl        string `json:"avatar_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	FollowersUrl     string `json:"followers_url,omitempty"`
+	FollowingUrl     string `json:"following_url,omitempty"`
+	GistsUrl         string `json:"gists_url,omitempty"`
+	GravatarId       string `json:"gravatar_id,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	Login            string `json:"login,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	OrganizationsUrl string `json:"organizations_url,omitempty"`
+	Permissions      struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchTeamRestrictionsReq builds requests for "repos/remove-protected-branch-team-restrictions"
+
+Remove team restrictions of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
+
+https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchTeamRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposRemoveProtectedBranchTeamRestrictionsReqBody
+}
+
+func (r ReposRemoveProtectedBranchTeamRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchTeamRestrictionsReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchTeamRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposRemoveProtectedBranchTeamRestrictionsReqBody is a request body for repos/remove-protected-branch-team-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchTeamRestrictionsReqBody []string
+
+/*
+ReposRemoveProtectedBranchTeamRestrictionsResponseBody200 is a response body for repos/remove-protected-branch-team-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchTeamRestrictionsResponseBody200 []struct {
+	Description     string `json:"description,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	Id              int64  `json:"id,omitempty"`
+	MembersUrl      string `json:"members_url,omitempty"`
+	Name            string `json:"name,omitempty"`
+	NodeId          string `json:"node_id,omitempty"`
+	Parent          string `json:"parent,omitempty"`
+	Permission      string `json:"permission,omitempty"`
+	Privacy         string `json:"privacy,omitempty"`
+	RepositoriesUrl string `json:"repositories_url,omitempty"`
+	Slug            string `json:"slug,omitempty"`
+	Url             string `json:"url,omitempty"`
 }
 
 /*
@@ -2797,790 +10484,20 @@ type ReposReplaceProtectedBranchTeamRestrictionsResponseBody200 []struct {
 }
 
 /*
-ReposRemoveProtectedBranchTeamRestrictionsReq builds requests for "repos/remove-protected-branch-team-restrictions"
+ReposListForksReq builds requests for "repos/list-forks"
 
-Remove team restrictions of protected branch.
+List forks.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
+  GET /repos/{owner}/{repo}/forks
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/forks/#list-forks
 */
-type ReposRemoveProtectedBranchTeamRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposRemoveProtectedBranchTeamRestrictionsReqBody
-}
-
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposRemoveProtectedBranchTeamRestrictionsReqBody is a request body for repos/remove-protected-branch-team-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchTeamRestrictionsReqBody []string
-
-/*
-ReposRemoveProtectedBranchTeamRestrictionsResponseBody200 is a response body for repos/remove-protected-branch-team-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchTeamRestrictionsResponseBody200 []struct {
-	Description     string `json:"description,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	MembersUrl      string `json:"members_url,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveDeployKeyReq builds requests for "repos/remove-deploy-key"
-
-Remove a deploy key.
-
-  DELETE /repos/{owner}/{repo}/keys/{key_id}
-
-https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
-*/
-type ReposRemoveDeployKeyReq struct {
-	Owner string
-	Repo  string
-	KeyId int64
-}
-
-func (r ReposRemoveDeployKeyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
-}
-
-func (r ReposRemoveDeployKeyReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveDeployKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveDeployKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDeployKeyReq builds requests for "repos/get-deploy-key"
-
-Get a deploy key.
-
-  GET /repos/{owner}/{repo}/keys/{key_id}
-
-https://developer.github.com/v3/repos/keys/#get-a-deploy-key
-*/
-type ReposGetDeployKeyReq struct {
-	Owner string
-	Repo  string
-	KeyId int64
-}
-
-func (r ReposGetDeployKeyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
-}
-
-func (r ReposGetDeployKeyReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetDeployKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetDeployKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDeployKeyResponseBody200 is a response body for repos/get-deploy-key
-
-API documentation: https://developer.github.com/v3/repos/keys/#get-a-deploy-key
-*/
-type ReposGetDeployKeyResponseBody200 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Key       string `json:"key,omitempty"`
-	ReadOnly  bool   `json:"read_only,omitempty"`
-	Title     string `json:"title,omitempty"`
-	Url       string `json:"url,omitempty"`
-	Verified  bool   `json:"verified,omitempty"`
-}
-
-/*
-ReposDeleteHookReq builds requests for "repos/delete-hook"
-
-Delete a hook.
-
-  DELETE /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#delete-a-hook
-*/
-type ReposDeleteHookReq struct {
-	Owner  string
-	Repo   string
-	HookId int64
-}
-
-func (r ReposDeleteHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
-}
-
-func (r ReposDeleteHookReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteHookReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetHookReq builds requests for "repos/get-hook"
-
-Get single hook.
-
-  GET /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-type ReposGetHookReq struct {
-	Owner  string
-	Repo   string
-	HookId int64
-}
-
-func (r ReposGetHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
-}
-
-func (r ReposGetHookReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetHookReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetHookResponseBody200 is a response body for repos/get-hook
-
-API documentation: https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-type ReposGetHookResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		InsecureSsl string `json:"insecure_ssl,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt    string   `json:"created_at,omitempty"`
-	Events       []string `json:"events,omitempty"`
-	Id           int64    `json:"id,omitempty"`
-	LastResponse struct {
-		Code    string `json:"code,omitempty"`
-		Message string `json:"message,omitempty"`
-		Status  string `json:"status,omitempty"`
-	} `json:"last_response,omitempty"`
-	Name      string `json:"name,omitempty"`
-	PingUrl   string `json:"ping_url,omitempty"`
-	TestUrl   string `json:"test_url,omitempty"`
-	Type      string `json:"type,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ReposUpdateHookReq builds requests for "repos/update-hook"
-
-Edit a hook.
-
-  PATCH /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookReq struct {
-	Owner       string
-	Repo        string
-	HookId      int64
-	RequestBody ReposUpdateHookReqBody
-}
-
-func (r ReposUpdateHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
-}
-
-func (r ReposUpdateHookReq) method() string {
-	return "PATCH"
-}
-
-func (r ReposUpdateHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposUpdateHookReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposUpdateHookReqBody is a request body for repos/update-hook
-
-API documentation: https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookReqBody struct {
-
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
-	Active *bool `json:"active,omitempty"`
-
-	/*
-	   Determines a list of events to be added to the list of events that the Hook
-	   triggers for.
-	*/
-	AddEvents []string `json:"add_events,omitempty"`
-
-	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
-	*/
-	Config *struct {
-
-		/*
-		   The media type used to serialize the payloads. Supported values include `json`
-		   and `form`. The default is `form`.
-		*/
-		ContentType *string `json:"content_type,omitempty"`
-
-		/*
-		   Determines whether the SSL certificate of the host for `url` will be verified
-		   when delivering payloads. Supported values include `0` (verification is
-		   performed) and `1` (verification is not performed). The default is `0`. **We
-		   strongly recommend not setting this to `1` as you are subject to
-		   man-in-the-middle and other attacks.**
-		*/
-		InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-		/*
-		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-		   digest value in the
-		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-		   header.
-		*/
-		Secret *string `json:"secret,omitempty"`
-
-		// The URL to which the payloads will be delivered.
-		Url *string `json:"url"`
-	} `json:"config,omitempty"`
-
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for. This replaces the entire array of events.
-	*/
-	Events []string `json:"events,omitempty"`
-
-	/*
-	   Determines a list of events to be removed from the list of events that the Hook
-	   triggers for.
-	*/
-	RemoveEvents []string `json:"remove_events,omitempty"`
-}
-
-/*
-ReposUpdateHookResponseBody200 is a response body for repos/update-hook
-
-API documentation: https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		InsecureSsl string `json:"insecure_ssl,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt    string   `json:"created_at,omitempty"`
-	Events       []string `json:"events,omitempty"`
-	Id           int64    `json:"id,omitempty"`
-	LastResponse struct {
-		Code    string `json:"code,omitempty"`
-		Message string `json:"message,omitempty"`
-		Status  string `json:"status,omitempty"`
-	} `json:"last_response,omitempty"`
-	Name      string `json:"name,omitempty"`
-	PingUrl   string `json:"ping_url,omitempty"`
-	TestUrl   string `json:"test_url,omitempty"`
-	Type      string `json:"type,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ReposDisablePagesSiteReq builds requests for "repos/disable-pages-site"
-
-Disable a Pages site.
-
-  DELETE /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#disable-a-pages-site
-*/
-type ReposDisablePagesSiteReq struct {
+type ReposListForksReq struct {
 	Owner string
 	Repo  string
 
-	/*
-	Enabling and disabling Pages in the Pages API is currently available for
-	developers to preview. See the [blog
-	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
-	preview for more details. To access the new endpoints during the preview period,
-	you must set this to true.
-	*/
-	SwitcherooPreview bool
-}
-
-func (r ReposDisablePagesSiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
-}
-
-func (r ReposDisablePagesSiteReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDisablePagesSiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDisablePagesSiteReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDisablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetPagesReq builds requests for "repos/get-pages"
-
-Get information about a Pages site.
-
-  GET /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
-*/
-type ReposGetPagesReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetPagesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
-}
-
-func (r ReposGetPagesReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetPagesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetPagesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetPagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetPagesResponseBody200 is a response body for repos/get-pages
-
-API documentation: https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
-*/
-type ReposGetPagesResponseBody200 struct {
-	Cname     string `json:"cname,omitempty"`
-	Custom404 bool   `json:"custom_404,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Source    struct {
-		Branch    string `json:"branch,omitempty"`
-		Directory string `json:"directory,omitempty"`
-	} `json:"source,omitempty"`
-	Status string `json:"status,omitempty"`
-	Url    string `json:"url,omitempty"`
-}
-
-/*
-ReposEnablePagesSiteReq builds requests for "repos/enable-pages-site"
-
-Enable a Pages site.
-
-  POST /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposEnablePagesSiteReqBody
-
-	/*
-	Enabling and disabling Pages in the Pages API is currently available for
-	developers to preview. See the [blog
-	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
-	preview for more details. To access the new endpoints during the preview period,
-	you must set this to true.
-	*/
-	SwitcherooPreview bool
-}
-
-func (r ReposEnablePagesSiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
-}
-
-func (r ReposEnablePagesSiteReq) method() string {
-	return "POST"
-}
-
-func (r ReposEnablePagesSiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposEnablePagesSiteReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposEnablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposEnablePagesSiteReqBody is a request body for repos/enable-pages-site
-
-API documentation: https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteReqBody struct {
-	Source *struct {
-
-		/*
-		   The repository branch used to publish your [site's source
-		   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
-		   Can be either `master` or `gh-pages`.
-		*/
-		Branch *string `json:"branch,omitempty"`
-
-		/*
-		   The repository directory that includes the source files for the Pages site. When
-		   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
-		   `gh-pages`, you are unable to specify a `path` other than `/`.
-		*/
-		Path *string `json:"path,omitempty"`
-	} `json:"source,omitempty"`
-}
-
-/*
-ReposEnablePagesSiteResponseBody201 is a response body for repos/enable-pages-site
-
-API documentation: https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteResponseBody201 struct {
-	Cname     string `json:"cname,omitempty"`
-	Custom404 bool   `json:"custom_404,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Source    struct {
-		Branch    string `json:"branch,omitempty"`
-		Directory string `json:"directory,omitempty"`
-	} `json:"source,omitempty"`
-	Status string `json:"status,omitempty"`
-	Url    string `json:"url,omitempty"`
-}
-
-/*
-ReposUpdateInformationAboutPagesSiteReq builds requests for "repos/update-information-about-pages-site"
-
-Update information about a Pages site.
-
-  PUT /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
-*/
-type ReposUpdateInformationAboutPagesSiteReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposUpdateInformationAboutPagesSiteReqBody
-}
-
-func (r ReposUpdateInformationAboutPagesSiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
-}
-
-func (r ReposUpdateInformationAboutPagesSiteReq) method() string {
-	return "PUT"
-}
-
-func (r ReposUpdateInformationAboutPagesSiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposUpdateInformationAboutPagesSiteReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposUpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposUpdateInformationAboutPagesSiteReqBody is a request body for repos/update-information-about-pages-site
-
-API documentation: https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
-*/
-type ReposUpdateInformationAboutPagesSiteReqBody struct {
-
-	/*
-	   Specify a custom domain for the repository. Sending a `null` value will remove
-	   the custom domain. For more about custom domains, see "[Using a custom domain
-	   with GitHub
-	   Pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)."
-	*/
-	Cname *string `json:"cname,omitempty"`
-
-	/*
-	   Update the source for the repository. Must include the branch name, and may
-	   optionally specify the subdirectory `/docs`. Possible values are `"gh-pages"`,
-	   `"master"`, and `"master /docs"`.
-	*/
-	Source *string `json:"source,omitempty"`
-}
-
-/*
-ReposGetCombinedStatusForRefReq builds requests for "repos/get-combined-status-for-ref"
-
-Get the combined status for a specific ref.
-
-  GET /repos/{owner}/{repo}/commits/{ref}/status
-
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
-*/
-type ReposGetCombinedStatusForRefReq struct {
-	Owner string
-	Repo  string
-	Ref   string
-}
-
-func (r ReposGetCombinedStatusForRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/status", r.Owner, r.Repo, r.Ref)
-}
-
-func (r ReposGetCombinedStatusForRefReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetCombinedStatusForRefReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetCombinedStatusForRefReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetCombinedStatusForRefResponseBody200 is a response body for repos/get-combined-status-for-ref
-
-API documentation: https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
-*/
-type ReposGetCombinedStatusForRefResponseBody200 struct {
-	CommitUrl  string `json:"commit_url,omitempty"`
-	Repository struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repository,omitempty"`
-	Sha      string `json:"sha,omitempty"`
-	State    string `json:"state,omitempty"`
-	Statuses []struct {
-		AvatarUrl   string `json:"avatar_url"`
-		Context     string `json:"context"`
-		CreatedAt   string `json:"created_at"`
-		Description string `json:"description"`
-		Id          int64  `json:"id"`
-		NodeId      string `json:"node_id"`
-		State       string `json:"state"`
-		TargetUrl   string `json:"target_url"`
-		UpdatedAt   string `json:"updated_at"`
-		Url         string `json:"url"`
-	} `json:"statuses,omitempty"`
-	TotalCount int64  `json:"total_count,omitempty"`
-	Url        string `json:"url,omitempty"`
-}
-
-/*
-ReposListTeamsReq builds requests for "repos/list-teams"
-
-List teams.
-
-  GET /repos/{owner}/{repo}/teams
-
-https://developer.github.com/v3/repos/#list-teams
-*/
-type ReposListTeamsReq struct {
-	Owner string
-	Repo  string
+	// The sort order. Can be either `newest`, `oldest`, or `stargazers`.
+	Sort *string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3589,16 +10506,19 @@ type ReposListTeamsReq struct {
 	Page *int64
 }
 
-func (r ReposListTeamsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/teams", r.Owner, r.Repo)
+func (r ReposListForksReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo)
 }
 
-func (r ReposListTeamsReq) method() string {
+func (r ReposListForksReq) method() string {
 	return "GET"
 }
 
-func (r ReposListTeamsReq) urlQuery() url.Values {
+func (r ReposListForksReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
@@ -3608,114 +10528,82 @@ func (r ReposListTeamsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListTeamsReq) header() http.Header {
+func (r ReposListForksReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListTeamsResponseBody200 is a response body for repos/list-teams
+ReposListForksResponseBody200 is a response body for repos/list-forks
 
-API documentation: https://developer.github.com/v3/repos/#list-teams
+API documentation: https://developer.github.com/v3/repos/forks/#list-forks
 */
-type ReposListTeamsResponseBody200 []struct {
-	Description     string `json:"description,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	MembersUrl      string `json:"members_url,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
-}
-
-/*
-ReposListCommitCommentsReq builds requests for "repos/list-commit-comments"
-
-List commit comments for a repository.
-
-  GET /repos/{owner}/{repo}/comments
-
-https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
-*/
-type ReposListCommitCommentsReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	An additional `reactions` object in the commit comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReposListCommitCommentsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments", r.Owner, r.Repo)
-}
-
-func (r ReposListCommitCommentsReq) method() string {
-	return "GET"
-}
-
-func (r ReposListCommitCommentsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListCommitCommentsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListCommitCommentsResponseBody200 is a response body for repos/list-commit-comments
-
-API documentation: https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
-*/
-type ReposListCommitCommentsResponseBody200 []struct {
-	Body      string `json:"body,omitempty"`
-	CommitId  string `json:"commit_id,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Line      int64  `json:"line,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Path      string `json:"path,omitempty"`
-	Position  int64  `json:"position,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
+type ReposListForksResponseBody200 []struct {
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	License          struct {
+		Key    string `json:"key,omitempty"`
+		Name   string `json:"name,omitempty"`
+		NodeId string `json:"node_id,omitempty"`
+		SpdxId string `json:"spdx_id,omitempty"`
+		Url    string `json:"url,omitempty"`
+	} `json:"license,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -3734,451 +10622,151 @@ type ReposListCommitCommentsResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository string      `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
 }
 
 /*
-ReposGetPunchCardStatsReq builds requests for "repos/get-punch-card-stats"
+ReposCreateForkReq builds requests for "repos/create-fork"
 
-Get the number of commits per hour in each day.
+Create a fork.
 
-  GET /repos/{owner}/{repo}/stats/punch_card
+  POST /repos/{owner}/{repo}/forks
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-type ReposGetPunchCardStatsReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetPunchCardStatsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/stats/punch_card", r.Owner, r.Repo)
-}
-
-func (r ReposGetPunchCardStatsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetPunchCardStatsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetPunchCardStatsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetPunchCardStatsResponseBody200 is a response body for repos/get-punch-card-stats
-
-API documentation: https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
-*/
-type ReposGetPunchCardStatsResponseBody200 [][]int64
-
-/*
-ReposGetViewsReq builds requests for "repos/get-views"
-
-Views.
-
-  GET /repos/{owner}/{repo}/traffic/views
-
-https://developer.github.com/v3/repos/traffic/#views
-*/
-type ReposGetViewsReq struct {
-	Owner string
-	Repo  string
-
-	// Must be one of: `day`, `week`.
-	Per *string
-}
-
-func (r ReposGetViewsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/traffic/views", r.Owner, r.Repo)
-}
-
-func (r ReposGetViewsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetViewsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Per != nil {
-		query.Set("per", *r.Per)
-	}
-	return query
-}
-
-func (r ReposGetViewsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetViewsResponseBody200 is a response body for repos/get-views
-
-API documentation: https://developer.github.com/v3/repos/traffic/#views
-*/
-type ReposGetViewsResponseBody200 struct {
-	Count   int64 `json:"count,omitempty"`
-	Uniques int64 `json:"uniques,omitempty"`
-	Views   []struct {
-		Count     int64  `json:"count"`
-		Timestamp string `json:"timestamp"`
-		Uniques   int64  `json:"uniques"`
-	} `json:"views,omitempty"`
-}
-
-/*
-ReposDeleteCommitCommentReq builds requests for "repos/delete-commit-comment"
-
-Delete a commit comment.
-
-  DELETE /repos/{owner}/{repo}/comments/{comment_id}
-
-https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
-*/
-type ReposDeleteCommitCommentReq struct {
-	Owner     string
-	Repo      string
-	CommentId int64
-}
-
-func (r ReposDeleteCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r ReposDeleteCommitCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteCommitCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetCommitCommentReq builds requests for "repos/get-commit-comment"
-
-Get a single commit comment.
-
-  GET /repos/{owner}/{repo}/comments/{comment_id}
-
-https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
-*/
-type ReposGetCommitCommentReq struct {
-	Owner     string
-	Repo      string
-	CommentId int64
-
-	/*
-	An additional `reactions` object in the commit comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r ReposGetCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r ReposGetCommitCommentReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetCommitCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetCommitCommentResponseBody200 is a response body for repos/get-commit-comment
-
-API documentation: https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
-*/
-type ReposGetCommitCommentResponseBody200 struct {
-	Body      string `json:"body,omitempty"`
-	CommitId  string `json:"commit_id,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Line      int64  `json:"line,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Path      string `json:"path,omitempty"`
-	Position  int64  `json:"position,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReposUpdateCommitCommentReq builds requests for "repos/update-commit-comment"
-
-Update a commit comment.
-
-  PATCH /repos/{owner}/{repo}/comments/{comment_id}
-
-https://developer.github.com/v3/repos/comments/#update-a-commit-comment
-*/
-type ReposUpdateCommitCommentReq struct {
+type ReposCreateForkReq struct {
 	Owner       string
 	Repo        string
-	CommentId   int64
-	RequestBody ReposUpdateCommitCommentReqBody
+	RequestBody ReposCreateForkReqBody
 }
 
-func (r ReposUpdateCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
+func (r ReposCreateForkReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo)
 }
 
-func (r ReposUpdateCommitCommentReq) method() string {
-	return "PATCH"
-}
-
-func (r ReposUpdateCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposUpdateCommitCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposUpdateCommitCommentReqBody is a request body for repos/update-commit-comment
-
-API documentation: https://developer.github.com/v3/repos/comments/#update-a-commit-comment
-*/
-type ReposUpdateCommitCommentReqBody struct {
-
-	// The contents of the comment
-	Body *string `json:"body"`
-}
-
-/*
-ReposUpdateCommitCommentResponseBody200 is a response body for repos/update-commit-comment
-
-API documentation: https://developer.github.com/v3/repos/comments/#update-a-commit-comment
-*/
-type ReposUpdateCommitCommentResponseBody200 struct {
-	Body      string `json:"body,omitempty"`
-	CommitId  string `json:"commit_id,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Line      int64  `json:"line,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Path      string `json:"path,omitempty"`
-	Position  int64  `json:"position,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReposGetParticipationStatsReq builds requests for "repos/get-participation-stats"
-
-Get the weekly commit count for the repository owner and everyone else.
-
-  GET /repos/{owner}/{repo}/stats/participation
-
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
-*/
-type ReposGetParticipationStatsReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetParticipationStatsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/stats/participation", r.Owner, r.Repo)
-}
-
-func (r ReposGetParticipationStatsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetParticipationStatsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetParticipationStatsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetParticipationStatsResponseBody200 is a response body for repos/get-participation-stats
-
-API documentation: https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
-*/
-type ReposGetParticipationStatsResponseBody200 struct {
-	All   []int64 `json:"all,omitempty"`
-	Owner []int64 `json:"owner,omitempty"`
-}
-
-/*
-ReposCreateStatusReq builds requests for "repos/create-status"
-
-Create a status.
-
-  POST /repos/{owner}/{repo}/statuses/{sha}
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-type ReposCreateStatusReq struct {
-	Owner       string
-	Repo        string
-	Sha         string
-	RequestBody ReposCreateStatusReqBody
-}
-
-func (r ReposCreateStatusReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/statuses/%v", r.Owner, r.Repo, r.Sha)
-}
-
-func (r ReposCreateStatusReq) method() string {
+func (r ReposCreateForkReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateStatusReq) urlQuery() url.Values {
+func (r ReposCreateForkReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateStatusReq) header() http.Header {
+func (r ReposCreateForkReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposCreateStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ReposCreateStatusReqBody is a request body for repos/create-status
+ReposCreateForkReqBody is a request body for repos/create-fork
 
-API documentation: https://developer.github.com/v3/repos/statuses/#create-a-status
+API documentation: https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-type ReposCreateStatusReqBody struct {
-
-	// A string label to differentiate this status from the status of other systems.
-	Context *string `json:"context,omitempty"`
-
-	// A short description of the status.
-	Description *string `json:"description,omitempty"`
+type ReposCreateForkReqBody struct {
 
 	/*
-	   The state of the status. Can be one of `error`, `failure`, `pending`, or
-	   `success`.
+	   Optional parameter to specify the organization name if forking into an
+	   organization.
 	*/
-	State *string `json:"state"`
-
-	/*
-	   The target URL to associate with this status. This URL will be linked from the
-	   GitHub UI to allow users to easily see the source of the status.
-	   For example, if your continuous integration system is posting build status, you
-	   would want to provide the deep link for the build output for this specific SHA:
-	   `http://ci.example.com/user/repo/build/sha`
-	*/
-	TargetUrl *string `json:"target_url,omitempty"`
+	Organization *string `json:"organization,omitempty"`
 }
 
 /*
-ReposCreateStatusResponseBody201 is a response body for repos/create-status
+ReposCreateForkResponseBody202 is a response body for repos/create-fork
 
-API documentation: https://developer.github.com/v3/repos/statuses/#create-a-status
+API documentation: https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-type ReposCreateStatusResponseBody201 struct {
-	AvatarUrl string `json:"avatar_url,omitempty"`
-	Context   string `json:"context,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
+type ReposCreateForkResponseBody202 struct {
+	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -4197,1244 +10785,80 @@ type ReposCreateStatusResponseBody201 struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	State       string `json:"state,omitempty"`
-	TargetUrl   string `json:"target_url,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository string      `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
 }
 
 /*
-ReposDisableVulnerabilityAlertsReq builds requests for "repos/disable-vulnerability-alerts"
+ReposGetCodeFrequencyStatsReq builds requests for "repos/get-code-frequency-stats"
 
-Disable vulnerability alerts.
+Get the number of additions and deletions per week.
 
-  DELETE /repos/{owner}/{repo}/vulnerability-alerts
+  GET /repos/{owner}/{repo}/stats/code_frequency
 
-https://developer.github.com/v3/repos/#disable-vulnerability-alerts
+https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
 */
-type ReposDisableVulnerabilityAlertsReq struct {
+type ReposGetCodeFrequencyStatsReq struct {
 	Owner string
 	Repo  string
-
-	/*
-	Enabling and disabling vulnerability alerts for a repository using the REST API
-	is currently available for developers to preview. To access these new endpoints
-	during the preview period, you must set this to true.
-	*/
-	DorianPreview bool
 }
 
-func (r ReposDisableVulnerabilityAlertsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
+func (r ReposGetCodeFrequencyStatsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/stats/code_frequency", r.Owner, r.Repo)
 }
 
-func (r ReposDisableVulnerabilityAlertsReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDisableVulnerabilityAlertsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDisableVulnerabilityAlertsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"dorian": r.DorianPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposCheckVulnerabilityAlertsReq builds requests for "repos/check-vulnerability-alerts"
-
-Check if vulnerability alerts are enabled for a repository.
-
-  GET /repos/{owner}/{repo}/vulnerability-alerts
-
-https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
-*/
-type ReposCheckVulnerabilityAlertsReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Enabling and disabling vulnerability alerts for a repository using the REST API
-	is currently available for developers to preview. To access these new endpoints
-	during the preview period, you must set this to true.
-	*/
-	DorianPreview bool
-}
-
-func (r ReposCheckVulnerabilityAlertsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
-}
-
-func (r ReposCheckVulnerabilityAlertsReq) method() string {
+func (r ReposGetCodeFrequencyStatsReq) method() string {
 	return "GET"
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) urlQuery() url.Values {
+func (r ReposGetCodeFrequencyStatsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) header() http.Header {
+func (r ReposGetCodeFrequencyStatsReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposGetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposEnableVulnerabilityAlertsReq builds requests for "repos/enable-vulnerability-alerts"
+ReposGetCodeFrequencyStatsResponseBody200 is a response body for repos/get-code-frequency-stats
 
-Enable vulnerability alerts.
-
-  PUT /repos/{owner}/{repo}/vulnerability-alerts
-
-https://developer.github.com/v3/repos/#enable-vulnerability-alerts
+API documentation: https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
 */
-type ReposEnableVulnerabilityAlertsReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Enabling and disabling vulnerability alerts for a repository using the REST API
-	is currently available for developers to preview. To access these new endpoints
-	during the preview period, you must set this to true.
-	*/
-	DorianPreview bool
-}
-
-func (r ReposEnableVulnerabilityAlertsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
-}
-
-func (r ReposEnableVulnerabilityAlertsReq) method() string {
-	return "PUT"
-}
-
-func (r ReposEnableVulnerabilityAlertsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposEnableVulnerabilityAlertsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"dorian": r.DorianPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposEnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListHooksReq builds requests for "repos/list-hooks"
-
-List hooks.
-
-  GET /repos/{owner}/{repo}/hooks
-
-https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-type ReposListHooksReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListHooksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
-}
-
-func (r ReposListHooksReq) method() string {
-	return "GET"
-}
-
-func (r ReposListHooksReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListHooksReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListHooksResponseBody200 is a response body for repos/list-hooks
-
-API documentation: https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-type ReposListHooksResponseBody200 []struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		InsecureSsl string `json:"insecure_ssl,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt    string   `json:"created_at,omitempty"`
-	Events       []string `json:"events,omitempty"`
-	Id           int64    `json:"id,omitempty"`
-	LastResponse struct {
-		Code    string `json:"code,omitempty"`
-		Message string `json:"message,omitempty"`
-		Status  string `json:"status,omitempty"`
-	} `json:"last_response,omitempty"`
-	Name      string `json:"name,omitempty"`
-	PingUrl   string `json:"ping_url,omitempty"`
-	TestUrl   string `json:"test_url,omitempty"`
-	Type      string `json:"type,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ReposCreateHookReq builds requests for "repos/create-hook"
-
-Create a hook.
-
-  POST /repos/{owner}/{repo}/hooks
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposCreateHookReqBody
-}
-
-func (r ReposCreateHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
-}
-
-func (r ReposCreateHookReq) method() string {
-	return "POST"
-}
-
-func (r ReposCreateHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateHookReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateHookReqBody is a request body for repos/create-hook
-
-API documentation: https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookReqBody struct {
-
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
-	Active *bool `json:"active,omitempty"`
-
-	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
-	*/
-	Config *struct {
-
-		/*
-		   The media type used to serialize the payloads. Supported values include `json`
-		   and `form`. The default is `form`.
-		*/
-		ContentType *string `json:"content_type,omitempty"`
-
-		/*
-		   Determines whether the SSL certificate of the host for `url` will be verified
-		   when delivering payloads. Supported values include `0` (verification is
-		   performed) and `1` (verification is not performed). The default is `0`. **We
-		   strongly recommend not setting this to `1` as you are subject to
-		   man-in-the-middle and other attacks.**
-		*/
-		InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-		/*
-		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-		   digest value in the
-		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-		   header.
-		*/
-		Secret *string `json:"secret,omitempty"`
-
-		// The URL to which the payloads will be delivered.
-		Url *string `json:"url"`
-	} `json:"config"`
-
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for.
-	*/
-	Events []string `json:"events,omitempty"`
-
-	/*
-	   Use `web` to create a webhook. Default: `web`. This parameter only accepts the
-	   value `web`.
-	*/
-	Name *string `json:"name,omitempty"`
-}
-
-/*
-ReposCreateHookResponseBody201 is a response body for repos/create-hook
-
-API documentation: https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookResponseBody201 struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		InsecureSsl string `json:"insecure_ssl,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt    string   `json:"created_at,omitempty"`
-	Events       []string `json:"events,omitempty"`
-	Id           int64    `json:"id,omitempty"`
-	LastResponse struct {
-		Code    string `json:"code,omitempty"`
-		Message string `json:"message,omitempty"`
-		Status  string `json:"status,omitempty"`
-	} `json:"last_response,omitempty"`
-	Name      string `json:"name,omitempty"`
-	PingUrl   string `json:"ping_url,omitempty"`
-	TestUrl   string `json:"test_url,omitempty"`
-	Type      string `json:"type,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-ReposDeleteFileReq builds requests for "repos/delete-file"
-
-Delete a file.
-
-  DELETE /repos/{owner}/{repo}/contents/{path}
-
-https://developer.github.com/v3/repos/contents/#delete-a-file
-*/
-type ReposDeleteFileReq struct {
-	Owner       string
-	Repo        string
-	Path        string
-	RequestBody ReposDeleteFileReqBody
-}
-
-func (r ReposDeleteFileReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
-}
-
-func (r ReposDeleteFileReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteFileReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteFileReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposDeleteFileReqBody is a request body for repos/delete-file
-
-API documentation: https://developer.github.com/v3/repos/contents/#delete-a-file
-*/
-type ReposDeleteFileReqBody struct {
-
-	// object containing information about the author.
-	Author *struct {
-
-		// The email of the author (or committer) of the commit
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author (or committer) of the commit
-		Name *string `json:"name,omitempty"`
-	} `json:"author,omitempty"`
-
-	// The branch name. Default: the repository’s default branch (usually `master`)
-	Branch *string `json:"branch,omitempty"`
-
-	// object containing information about the committer.
-	Committer *struct {
-
-		// The email of the author (or committer) of the commit
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author (or committer) of the commit
-		Name *string `json:"name,omitempty"`
-	} `json:"committer,omitempty"`
-
-	// The commit message.
-	Message *string `json:"message"`
-
-	// The blob SHA of the file being replaced.
-	Sha *string `json:"sha"`
-}
-
-/*
-ReposDeleteFileResponseBody200 is a response body for repos/delete-file
-
-API documentation: https://developer.github.com/v3/repos/contents/#delete-a-file
-*/
-type ReposDeleteFileResponseBody200 struct {
-	Commit struct {
-		Author struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"author,omitempty"`
-		Committer struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"committer,omitempty"`
-		HtmlUrl string `json:"html_url,omitempty"`
-		Message string `json:"message,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Sha     string `json:"sha,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"parents,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		Tree struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"tree,omitempty"`
-		Url          string `json:"url,omitempty"`
-		Verification struct {
-			Payload   string `json:"payload,omitempty"`
-			Reason    string `json:"reason,omitempty"`
-			Signature string `json:"signature,omitempty"`
-			Verified  bool   `json:"verified,omitempty"`
-		} `json:"verification,omitempty"`
-	} `json:"commit,omitempty"`
-	Content string `json:"content,omitempty"`
-}
-
-/*
-ReposGetContentsReq builds requests for "repos/get-contents"
-
-Get contents.
-
-  GET /repos/{owner}/{repo}/contents/{path}
-
-https://developer.github.com/v3/repos/contents/#get-contents
-*/
-type ReposGetContentsReq struct {
-	Owner string
-	Repo  string
-	Path  string
-
-	/*
-	The name of the commit/branch/tag. Default: the repository’s default branch
-	(usually `master`)
-	*/
-	Ref *string
-}
-
-func (r ReposGetContentsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
-}
-
-func (r ReposGetContentsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetContentsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Ref != nil {
-		query.Set("ref", *r.Ref)
-	}
-	return query
-}
-
-func (r ReposGetContentsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetContentsResponseBody200 is a response body for repos/get-contents
-
-API documentation: https://developer.github.com/v3/repos/contents/#get-contents
-*/
-type ReposGetContentsResponseBody200 struct {
-	Links struct {
-		Git  string `json:"git,omitempty"`
-		Html string `json:"html,omitempty"`
-		Self string `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	Content     string      `json:"content,omitempty"`
-	DownloadUrl string      `json:"download_url,omitempty"`
-	Encoding    string      `json:"encoding,omitempty"`
-	GitUrl      string      `json:"git_url,omitempty"`
-	HtmlUrl     string      `json:"html_url,omitempty"`
-	Name        string      `json:"name,omitempty"`
-	Path        string      `json:"path,omitempty"`
-	Sha         string      `json:"sha,omitempty"`
-	Size        json.Number `json:"size,omitempty"`
-	Type        string      `json:"type,omitempty"`
-	Url         string      `json:"url,omitempty"`
-}
-
-/*
-ReposCreateOrUpdateFileReq builds requests for "repos/create-or-update-file"
-
-Create or update a file.
-
-  PUT /repos/{owner}/{repo}/contents/{path}
-
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
-*/
-type ReposCreateOrUpdateFileReq struct {
-	Owner       string
-	Repo        string
-	Path        string
-	RequestBody ReposCreateOrUpdateFileReqBody
-}
-
-func (r ReposCreateOrUpdateFileReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
-}
-
-func (r ReposCreateOrUpdateFileReq) method() string {
-	return "PUT"
-}
-
-func (r ReposCreateOrUpdateFileReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateOrUpdateFileReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateOrUpdateFileReqBody is a request body for repos/create-or-update-file
-
-API documentation: https://developer.github.com/v3/repos/contents/#create-or-update-a-file
-*/
-type ReposCreateOrUpdateFileReqBody struct {
-
-	/*
-	   The author of the file. Default: The `committer` or the authenticated user if
-	   you omit `committer`.
-	*/
-	Author *struct {
-
-		/*
-		   The email of the author or committer of the commit. You'll receive a `422`
-		   status code if `email` is omitted.
-		*/
-		Email *string `json:"email"`
-
-		/*
-		   The name of the author or committer of the commit. You'll receive a `422` status
-		   code if `name` is omitted.
-		*/
-		Name *string `json:"name"`
-	} `json:"author,omitempty"`
-
-	// The branch name. Default: the repository’s default branch (usually `master`)
-	Branch *string `json:"branch,omitempty"`
-
-	// The person that committed the file. Default: the authenticated user.
-	Committer *struct {
-
-		/*
-		   The email of the author or committer of the commit. You'll receive a `422`
-		   status code if `email` is omitted.
-		*/
-		Email *string `json:"email"`
-
-		/*
-		   The name of the author or committer of the commit. You'll receive a `422` status
-		   code if `name` is omitted.
-		*/
-		Name *string `json:"name"`
-	} `json:"committer,omitempty"`
-
-	// The new file content, using Base64 encoding.
-	Content *string `json:"content"`
-
-	// The commit message.
-	Message *string `json:"message"`
-
-	/*
-	   **Required if you are updating a file**. The blob SHA of the file being
-	   replaced.
-	*/
-	Sha *string `json:"sha,omitempty"`
-}
-
-/*
-ReposCreateOrUpdateFileResponseBody200 is a response body for repos/create-or-update-file
-
-API documentation: https://developer.github.com/v3/repos/contents/#create-or-update-a-file
-*/
-type ReposCreateOrUpdateFileResponseBody200 struct {
-	Commit struct {
-		Author struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"author,omitempty"`
-		Committer struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"committer,omitempty"`
-		HtmlUrl string `json:"html_url,omitempty"`
-		Message string `json:"message,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Sha     string `json:"sha,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"parents,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		Tree struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"tree,omitempty"`
-		Url          string `json:"url,omitempty"`
-		Verification struct {
-			Payload   string `json:"payload,omitempty"`
-			Reason    string `json:"reason,omitempty"`
-			Signature string `json:"signature,omitempty"`
-			Verified  bool   `json:"verified,omitempty"`
-		} `json:"verification,omitempty"`
-	} `json:"commit,omitempty"`
-	Content struct {
-		Links struct {
-			Git  string `json:"git,omitempty"`
-			Html string `json:"html,omitempty"`
-			Self string `json:"self,omitempty"`
-		} `json:"_links,omitempty"`
-		DownloadUrl string      `json:"download_url,omitempty"`
-		GitUrl      string      `json:"git_url,omitempty"`
-		HtmlUrl     string      `json:"html_url,omitempty"`
-		Name        string      `json:"name,omitempty"`
-		Path        string      `json:"path,omitempty"`
-		Sha         string      `json:"sha,omitempty"`
-		Size        json.Number `json:"size,omitempty"`
-		Type        string      `json:"type,omitempty"`
-		Url         string      `json:"url,omitempty"`
-	} `json:"content,omitempty"`
-}
-
-/*
-ReposCreateOrUpdateFileResponseBody201 is a response body for repos/create-or-update-file
-
-API documentation: https://developer.github.com/v3/repos/contents/#create-or-update-a-file
-*/
-type ReposCreateOrUpdateFileResponseBody201 struct {
-	Commit struct {
-		Author struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"author,omitempty"`
-		Committer struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"committer,omitempty"`
-		HtmlUrl string `json:"html_url,omitempty"`
-		Message string `json:"message,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Sha     string `json:"sha,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"parents,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		Tree struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"tree,omitempty"`
-		Url          string `json:"url,omitempty"`
-		Verification struct {
-			Payload   string `json:"payload,omitempty"`
-			Reason    string `json:"reason,omitempty"`
-			Signature string `json:"signature,omitempty"`
-			Verified  bool   `json:"verified,omitempty"`
-		} `json:"verification,omitempty"`
-	} `json:"commit,omitempty"`
-	Content struct {
-		Links struct {
-			Git  string `json:"git,omitempty"`
-			Html string `json:"html,omitempty"`
-			Self string `json:"self,omitempty"`
-		} `json:"_links,omitempty"`
-		DownloadUrl string      `json:"download_url,omitempty"`
-		GitUrl      string      `json:"git_url,omitempty"`
-		HtmlUrl     string      `json:"html_url,omitempty"`
-		Name        string      `json:"name,omitempty"`
-		Path        string      `json:"path,omitempty"`
-		Sha         string      `json:"sha,omitempty"`
-		Size        json.Number `json:"size,omitempty"`
-		Type        string      `json:"type,omitempty"`
-		Url         string      `json:"url,omitempty"`
-	} `json:"content,omitempty"`
-}
-
-/*
-ReposListInvitationsReq builds requests for "repos/list-invitations"
-
-List invitations for a repository.
-
-  GET /repos/{owner}/{repo}/invitations
-
-https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
-*/
-type ReposListInvitationsReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListInvitationsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/invitations", r.Owner, r.Repo)
-}
-
-func (r ReposListInvitationsReq) method() string {
-	return "GET"
-}
-
-func (r ReposListInvitationsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListInvitationsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListInvitationsResponseBody200 is a response body for repos/list-invitations
-
-API documentation: https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
-*/
-type ReposListInvitationsResponseBody200 []struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Invitee   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"invitee,omitempty"`
-	Inviter struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Permissions string `json:"permissions,omitempty"`
-	Repository  struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repository,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsReq builds requests for "repos/replace-protected-branch-user-restrictions"
-
-Replace user restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchUserRestrictionsReqBody
-}
-
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) method() string {
-	return "PUT"
-}
-
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsReqBody is a request body for repos/replace-protected-branch-user-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsReqBody []string
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsResponseBody200 is a response body for repos/replace-protected-branch-user-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveProtectedBranchUserRestrictionsReq builds requests for "repos/remove-protected-branch-user-restrictions"
-
-Remove user restrictions of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
-
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchUserRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposRemoveProtectedBranchUserRestrictionsReqBody
-}
-
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposRemoveProtectedBranchUserRestrictionsReqBody is a request body for repos/remove-protected-branch-user-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchUserRestrictionsReqBody []string
-
-/*
-ReposRemoveProtectedBranchUserRestrictionsResponseBody200 is a response body for repos/remove-protected-branch-user-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchUserRestrictionsResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-ReposGetUsersWithAccessToProtectedBranchReq builds requests for "repos/get-users-with-access-to-protected-branch"
-
-Get users with access to protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
-
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
-*/
-type ReposGetUsersWithAccessToProtectedBranchReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposGetUsersWithAccessToProtectedBranchReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposGetUsersWithAccessToProtectedBranchReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetUsersWithAccessToProtectedBranchReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetUsersWithAccessToProtectedBranchReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetUsersWithAccessToProtectedBranchResponseBody200 is a response body for repos/get-users-with-access-to-protected-branch
-
-API documentation: https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
-*/
-type ReposGetUsersWithAccessToProtectedBranchResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-ReposAddProtectedBranchUserRestrictionsReq builds requests for "repos/add-protected-branch-user-restrictions"
-
-Add user restrictions of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
-
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchUserRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposAddProtectedBranchUserRestrictionsReqBody
-}
-
-func (r ReposAddProtectedBranchUserRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposAddProtectedBranchUserRestrictionsReq) method() string {
-	return "POST"
-}
-
-func (r ReposAddProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddProtectedBranchUserRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposAddProtectedBranchUserRestrictionsReqBody is a request body for repos/add-protected-branch-user-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchUserRestrictionsReqBody []string
-
-/*
-ReposAddProtectedBranchUserRestrictionsResponseBody200 is a response body for repos/add-protected-branch-user-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchUserRestrictionsResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-ReposGetTopReferrersReq builds requests for "repos/get-top-referrers"
-
-List referrers.
-
-  GET /repos/{owner}/{repo}/traffic/popular/referrers
-
-https://developer.github.com/v3/repos/traffic/#list-referrers
-*/
-type ReposGetTopReferrersReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetTopReferrersReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/traffic/popular/referrers", r.Owner, r.Repo)
-}
-
-func (r ReposGetTopReferrersReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetTopReferrersReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetTopReferrersReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetTopReferrersResponseBody200 is a response body for repos/get-top-referrers
-
-API documentation: https://developer.github.com/v3/repos/traffic/#list-referrers
-*/
-type ReposGetTopReferrersResponseBody200 []struct {
-	Count    int64  `json:"count,omitempty"`
-	Referrer string `json:"referrer,omitempty"`
-	Uniques  int64  `json:"uniques,omitempty"`
-}
+type ReposGetCodeFrequencyStatsResponseBody200 [][]int64
 
 /*
 ReposListForOrgReq builds requests for "repos/list-for-org"
@@ -5923,41 +11347,921 @@ type ReposCreateInOrgResponseBody201 struct {
 }
 
 /*
-ReposRemoveProtectedBranchRequiredStatusChecksReq builds requests for "repos/remove-protected-branch-required-status-checks"
+ReposDeleteDownloadReq builds requests for "repos/delete-download"
 
-Remove required status checks of protected branch.
+Delete a download.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
+  DELETE /repos/{owner}/{repo}/downloads/{download_id}
 
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
+https://developer.github.com/v3/repos/downloads/#delete-a-download
 */
-type ReposRemoveProtectedBranchRequiredStatusChecksReq struct {
-	Owner  string
-	Repo   string
-	Branch string
+type ReposDeleteDownloadReq struct {
+	Owner      string
+	Repo       string
+	DownloadId int64
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
+func (r ReposDeleteDownloadReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) method() string {
+func (r ReposDeleteDownloadReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
+func (r ReposDeleteDownloadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) header() http.Header {
+func (r ReposDeleteDownloadReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposDeleteDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDownloadReq builds requests for "repos/get-download"
+
+Get a single download.
+
+  GET /repos/{owner}/{repo}/downloads/{download_id}
+
+https://developer.github.com/v3/repos/downloads/#get-a-single-download
+*/
+type ReposGetDownloadReq struct {
+	Owner      string
+	Repo       string
+	DownloadId int64
+}
+
+func (r ReposGetDownloadReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
+}
+
+func (r ReposGetDownloadReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetDownloadReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetDownloadReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetDownloadResponseBody200 is a response body for repos/get-download
+
+API documentation: https://developer.github.com/v3/repos/downloads/#get-a-single-download
+*/
+type ReposGetDownloadResponseBody200 struct {
+	ContentType   string      `json:"content_type,omitempty"`
+	Description   string      `json:"description,omitempty"`
+	DownloadCount int64       `json:"download_count,omitempty"`
+	HtmlUrl       string      `json:"html_url,omitempty"`
+	Id            int64       `json:"id,omitempty"`
+	Name          string      `json:"name,omitempty"`
+	Size          json.Number `json:"size,omitempty"`
+	Url           string      `json:"url,omitempty"`
+}
+
+/*
+ReposListCommitCommentsReq builds requests for "repos/list-commit-comments"
+
+List commit comments for a repository.
+
+  GET /repos/{owner}/{repo}/comments
+
+https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
+*/
+type ReposListCommitCommentsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the commit comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r ReposListCommitCommentsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/comments", r.Owner, r.Repo)
+}
+
+func (r ReposListCommitCommentsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListCommitCommentsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListCommitCommentsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListCommitCommentsResponseBody200 is a response body for repos/list-commit-comments
+
+API documentation: https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
+*/
+type ReposListCommitCommentsResponseBody200 []struct {
+	Body      string `json:"body,omitempty"`
+	CommitId  string `json:"commit_id,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Line      int64  `json:"line,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Path      string `json:"path,omitempty"`
+	Position  int64  `json:"position,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+ReposRemoveProtectedBranchAppRestrictionsReq builds requests for "repos/remove-protected-branch-app-restrictions"
+
+Remove app restrictions of protected branch.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchAppRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposRemoveProtectedBranchAppRestrictionsReqBody
+}
+
+func (r ReposRemoveProtectedBranchAppRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposRemoveProtectedBranchAppRestrictionsReq) method() string {
+	return "DELETE"
+}
+
+func (r ReposRemoveProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposRemoveProtectedBranchAppRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposRemoveProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposRemoveProtectedBranchAppRestrictionsReqBody is a request body for repos/remove-protected-branch-app-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchAppRestrictionsReqBody []string
+
+/*
+ReposRemoveProtectedBranchAppRestrictionsResponseBody200 is a response body for repos/remove-protected-branch-app-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
+*/
+type ReposRemoveProtectedBranchAppRestrictionsResponseBody200 []struct {
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Description string   `json:"description,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	ExternalUrl string   `json:"external_url,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	NodeId      string   `json:"node_id,omitempty"`
+	Owner       struct {
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Contents   string `json:"contents,omitempty"`
+		Issues     string `json:"issues,omitempty"`
+		Metadata   string `json:"metadata,omitempty"`
+		SingleFile string `json:"single_file,omitempty"`
+	} `json:"permissions,omitempty"`
+	Slug      string `json:"slug,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+ReposGetAppsWithAccessToProtectedBranchReq builds requests for "repos/get-apps-with-access-to-protected-branch"
+
+Get apps with access to protected branch.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+*/
+type ReposGetAppsWithAccessToProtectedBranchReq struct {
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r ReposGetAppsWithAccessToProtectedBranchReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposGetAppsWithAccessToProtectedBranchReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetAppsWithAccessToProtectedBranchReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetAppsWithAccessToProtectedBranchReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetAppsWithAccessToProtectedBranchResponseBody200 is a response body for repos/get-apps-with-access-to-protected-branch
+
+API documentation: https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+*/
+type ReposGetAppsWithAccessToProtectedBranchResponseBody200 []struct {
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Description string   `json:"description,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	ExternalUrl string   `json:"external_url,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	NodeId      string   `json:"node_id,omitempty"`
+	Owner       struct {
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Contents   string `json:"contents,omitempty"`
+		Issues     string `json:"issues,omitempty"`
+		Metadata   string `json:"metadata,omitempty"`
+		SingleFile string `json:"single_file,omitempty"`
+	} `json:"permissions,omitempty"`
+	Slug      string `json:"slug,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+ReposAddProtectedBranchAppRestrictionsReq builds requests for "repos/add-protected-branch-app-restrictions"
+
+Add app restrictions of protected branch.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
+*/
+type ReposAddProtectedBranchAppRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposAddProtectedBranchAppRestrictionsReqBody
+}
+
+func (r ReposAddProtectedBranchAppRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposAddProtectedBranchAppRestrictionsReq) method() string {
+	return "POST"
+}
+
+func (r ReposAddProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposAddProtectedBranchAppRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposAddProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposAddProtectedBranchAppRestrictionsReqBody is a request body for repos/add-protected-branch-app-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
+*/
+type ReposAddProtectedBranchAppRestrictionsReqBody []string
+
+/*
+ReposAddProtectedBranchAppRestrictionsResponseBody200 is a response body for repos/add-protected-branch-app-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
+*/
+type ReposAddProtectedBranchAppRestrictionsResponseBody200 []struct {
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Description string   `json:"description,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	ExternalUrl string   `json:"external_url,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	NodeId      string   `json:"node_id,omitempty"`
+	Owner       struct {
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Contents   string `json:"contents,omitempty"`
+		Issues     string `json:"issues,omitempty"`
+		Metadata   string `json:"metadata,omitempty"`
+		SingleFile string `json:"single_file,omitempty"`
+	} `json:"permissions,omitempty"`
+	Slug      string `json:"slug,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+ReposReplaceProtectedBranchAppRestrictionsReq builds requests for "repos/replace-protected-branch-app-restrictions"
+
+Replace app restrictions of protected branch.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
+*/
+type ReposReplaceProtectedBranchAppRestrictionsReq struct {
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposReplaceProtectedBranchAppRestrictionsReqBody
+}
+
+func (r ReposReplaceProtectedBranchAppRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
+}
+
+func (r ReposReplaceProtectedBranchAppRestrictionsReq) method() string {
+	return "PUT"
+}
+
+func (r ReposReplaceProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposReplaceProtectedBranchAppRestrictionsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposReplaceProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposReplaceProtectedBranchAppRestrictionsReqBody is a request body for repos/replace-protected-branch-app-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
+*/
+type ReposReplaceProtectedBranchAppRestrictionsReqBody []string
+
+/*
+ReposReplaceProtectedBranchAppRestrictionsResponseBody200 is a response body for repos/replace-protected-branch-app-restrictions
+
+API documentation: https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
+*/
+type ReposReplaceProtectedBranchAppRestrictionsResponseBody200 []struct {
+	CreatedAt   string   `json:"created_at,omitempty"`
+	Description string   `json:"description,omitempty"`
+	Events      []string `json:"events,omitempty"`
+	ExternalUrl string   `json:"external_url,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+	Id          int64    `json:"id,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	NodeId      string   `json:"node_id,omitempty"`
+	Owner       struct {
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Contents   string `json:"contents,omitempty"`
+		Issues     string `json:"issues,omitempty"`
+		Metadata   string `json:"metadata,omitempty"`
+		SingleFile string `json:"single_file,omitempty"`
+	} `json:"permissions,omitempty"`
+	Slug      string `json:"slug,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+ReposCreateUsingTemplateReq builds requests for "repos/create-using-template"
+
+Create a repository using a template.
+
+  POST /repos/{template_owner}/{template_repo}/generate
+
+https://developer.github.com/v3/repos/#create-a-repository-using-a-template
+*/
+type ReposCreateUsingTemplateReq struct {
+	TemplateOwner string
+	TemplateRepo  string
+	RequestBody   ReposCreateUsingTemplateReqBody
+
+	/*
+	Creating and using repository templates is currently available for developers to
+	preview. To access this new endpoint during the preview period, you must set
+	this to true.
+	*/
+	BaptistePreview bool
+}
+
+func (r ReposCreateUsingTemplateReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/generate", r.TemplateOwner, r.TemplateRepo)
+}
+
+func (r ReposCreateUsingTemplateReq) method() string {
+	return "POST"
+}
+
+func (r ReposCreateUsingTemplateReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposCreateUsingTemplateReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"baptiste": r.BaptistePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposCreateUsingTemplateReqBody is a request body for repos/create-using-template
+
+API documentation: https://developer.github.com/v3/repos/#create-a-repository-using-a-template
+*/
+type ReposCreateUsingTemplateReqBody struct {
+
+	// A short description of the new repository.
+	Description *string `json:"description,omitempty"`
+
+	// The name of the new repository.
+	Name *string `json:"name"`
+
+	/*
+	   The organization or person who will own the new repository. To create a new
+	   repository in an organization, the authenticated user must be a member of the
+	   specified organization.
+	*/
+	Owner *string `json:"owner,omitempty"`
+
+	/*
+	   Either `true` to create a new private repository or `false` to create a new
+	   public one.
+	*/
+	Private *bool `json:"private,omitempty"`
+}
+
+/*
+ReposCreateUsingTemplateResponseBody201 is a response body for repos/create-using-template
+
+API documentation: https://developer.github.com/v3/repos/#create-a-repository-using-a-template
+*/
+type ReposCreateUsingTemplateResponseBody201 struct {
+	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository struct {
+		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		Archived         bool   `json:"archived,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CloneUrl         string `json:"clone_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		CreatedAt        string `json:"created_at,omitempty"`
+		DefaultBranch    string `json:"default_branch,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		Disabled         bool   `json:"disabled,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksCount       int64  `json:"forks_count,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HasDownloads     bool   `json:"has_downloads,omitempty"`
+		HasIssues        bool   `json:"has_issues,omitempty"`
+		HasPages         bool   `json:"has_pages,omitempty"`
+		HasProjects      bool   `json:"has_projects,omitempty"`
+		HasWiki          bool   `json:"has_wiki,omitempty"`
+		Homepage         string `json:"homepage,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IsTemplate       bool   `json:"is_template,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		Language         string `json:"language,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		MirrorUrl        string `json:"mirror_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NetworkCount     int64  `json:"network_count,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Permissions struct {
+			Admin bool `json:"admin,omitempty"`
+			Pull  bool `json:"pull,omitempty"`
+			Push  bool `json:"push,omitempty"`
+		} `json:"permissions,omitempty"`
+		Private            bool        `json:"private,omitempty"`
+		PullsUrl           string      `json:"pulls_url,omitempty"`
+		PushedAt           string      `json:"pushed_at,omitempty"`
+		ReleasesUrl        string      `json:"releases_url,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		SshUrl             string      `json:"ssh_url,omitempty"`
+		StargazersCount    int64       `json:"stargazers_count,omitempty"`
+		StargazersUrl      string      `json:"stargazers_url,omitempty"`
+		StatusesUrl        string      `json:"statuses_url,omitempty"`
+		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+		SvnUrl             string      `json:"svn_url,omitempty"`
+		TagsUrl            string      `json:"tags_url,omitempty"`
+		TeamsUrl           string      `json:"teams_url,omitempty"`
+		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+		TemplateRepository string      `json:"template_repository,omitempty"`
+		Topics             []string    `json:"topics,omitempty"`
+		TreesUrl           string      `json:"trees_url,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Url                string      `json:"url,omitempty"`
+		Visibility         string      `json:"visibility,omitempty"`
+		WatchersCount      int64       `json:"watchers_count,omitempty"`
+	} `json:"template_repository,omitempty"`
+	Topics        []string `json:"topics,omitempty"`
+	TreesUrl      string   `json:"trees_url,omitempty"`
+	UpdatedAt     string   `json:"updated_at,omitempty"`
+	Url           string   `json:"url,omitempty"`
+	Visibility    string   `json:"visibility,omitempty"`
+	WatchersCount int64    `json:"watchers_count,omitempty"`
+}
+
+/*
+ReposGetTopReferrersReq builds requests for "repos/get-top-referrers"
+
+List referrers.
+
+  GET /repos/{owner}/{repo}/traffic/popular/referrers
+
+https://developer.github.com/v3/repos/traffic/#list-referrers
+*/
+type ReposGetTopReferrersReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposGetTopReferrersReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/traffic/popular/referrers", r.Owner, r.Repo)
+}
+
+func (r ReposGetTopReferrersReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetTopReferrersReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetTopReferrersReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposGetTopReferrersResponseBody200 is a response body for repos/get-top-referrers
+
+API documentation: https://developer.github.com/v3/repos/traffic/#list-referrers
+*/
+type ReposGetTopReferrersResponseBody200 []struct {
+	Count    int64  `json:"count,omitempty"`
+	Referrer string `json:"referrer,omitempty"`
+	Uniques  int64  `json:"uniques,omitempty"`
+}
+
+/*
+ReposListTagsReq builds requests for "repos/list-tags"
+
+List tags.
+
+  GET /repos/{owner}/{repo}/tags
+
+https://developer.github.com/v3/repos/#list-tags
+*/
+type ReposListTagsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ReposListTagsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/tags", r.Owner, r.Repo)
+}
+
+func (r ReposListTagsReq) method() string {
+	return "GET"
+}
+
+func (r ReposListTagsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ReposListTagsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ReposListTagsResponseBody200 is a response body for repos/list-tags
+
+API documentation: https://developer.github.com/v3/repos/#list-tags
+*/
+type ReposListTagsResponseBody200 []struct {
+	Commit struct {
+		Sha string `json:"sha,omitempty"`
+		Url string `json:"url,omitempty"`
+	} `json:"commit,omitempty"`
+	Name       string `json:"name,omitempty"`
+	TarballUrl string `json:"tarball_url,omitempty"`
+	ZipballUrl string `json:"zipball_url,omitempty"`
 }
 
 /*
@@ -6076,606 +12380,191 @@ type ReposUpdateProtectedBranchRequiredStatusChecksResponseBody200 struct {
 }
 
 /*
-ReposListDeploymentsReq builds requests for "repos/list-deployments"
+ReposRemoveProtectedBranchRequiredStatusChecksReq builds requests for "repos/remove-protected-branch-required-status-checks"
 
-List deployments.
+Remove required status checks of protected branch.
 
-  GET /repos/{owner}/{repo}/deployments
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
 
-https://developer.github.com/v3/repos/deployments/#list-deployments
+https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
 */
-type ReposListDeploymentsReq struct {
-	Owner string
-	Repo  string
-
-	// The SHA recorded at creation time.
-	Sha *string
-
-	// The name of the ref. This can be a branch, tag, or SHA.
-	Ref *string
-
-	// The name of the task for the deployment (e.g., `deploy` or `deploy:migrations`).
-	Task *string
-
-	/*
-	The name of the environment that was deployed to (e.g., `staging` or
-	`production`).
-	*/
-	Environment *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The `transient_environment` and `production_environment` parameters are
-	currently available for developers to preview. During the preview period, the
-	API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
-	for full details.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	AntManPreview bool
-}
-
-func (r ReposListDeploymentsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments", r.Owner, r.Repo)
-}
-
-func (r ReposListDeploymentsReq) method() string {
-	return "GET"
-}
-
-func (r ReposListDeploymentsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sha != nil {
-		query.Set("sha", *r.Sha)
-	}
-	if r.Ref != nil {
-		query.Set("ref", *r.Ref)
-	}
-	if r.Task != nil {
-		query.Set("task", *r.Task)
-	}
-	if r.Environment != nil {
-		query.Set("environment", *r.Environment)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListDeploymentsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"ant-man": r.AntManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListDeploymentsResponseBody200 is a response body for repos/list-deployments
-
-API documentation: https://developer.github.com/v3/repos/deployments/#list-deployments
-*/
-type ReposListDeploymentsResponseBody200 []struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description         string `json:"description,omitempty"`
-	Environment         string `json:"environment,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalEnvironment string `json:"original_environment,omitempty"`
-	Payload             struct {
-		Deploy string `json:"deploy,omitempty"`
-	} `json:"payload,omitempty"`
-	ProductionEnvironment bool   `json:"production_environment,omitempty"`
-	Ref                   string `json:"ref,omitempty"`
-	RepositoryUrl         string `json:"repository_url,omitempty"`
-	Sha                   string `json:"sha,omitempty"`
-	StatusesUrl           string `json:"statuses_url,omitempty"`
-	Task                  string `json:"task,omitempty"`
-	TransientEnvironment  bool   `json:"transient_environment,omitempty"`
-	UpdatedAt             string `json:"updated_at,omitempty"`
-	Url                   string `json:"url,omitempty"`
-}
-
-/*
-ReposCreateDeploymentReq builds requests for "repos/create-deployment"
-
-Create a deployment.
-
-  POST /repos/{owner}/{repo}/deployments
-
-https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposCreateDeploymentReqBody
-
-	/*
-	The `transient_environment` and `production_environment` parameters are
-	currently available for developers to preview. During the preview period, the
-	API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
-	for full details.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	AntManPreview bool
-}
-
-func (r ReposCreateDeploymentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments", r.Owner, r.Repo)
-}
-
-func (r ReposCreateDeploymentReq) method() string {
-	return "POST"
-}
-
-func (r ReposCreateDeploymentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateDeploymentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"ant-man": r.AntManPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateDeploymentReqBody is a request body for repos/create-deployment
-
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentReqBody struct {
-
-	/*
-	   Attempts to automatically merge the default branch into the requested ref, if
-	   it's behind the default branch.
-	*/
-	AutoMerge *bool `json:"auto_merge,omitempty"`
-
-	// Short description of the deployment.
-	Description *string `json:"description,omitempty"`
-
-	/*
-	   Name for the target deployment environment (e.g., `production`, `staging`,
-	   `qa`).
-	*/
-	Environment *string `json:"environment,omitempty"`
-
-	// JSON payload with extra information about the deployment.
-	Payload *string `json:"payload,omitempty"`
-
-	/*
-	   Specifies if the given environment is one that end-users directly interact with.
-	   Default: `true` when `environment` is `production` and `false` otherwise.
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
-	*/
-	ProductionEnvironment *bool `json:"production_environment,omitempty"`
-
-	// The ref to deploy. This can be a branch, tag, or SHA.
-	Ref *string `json:"ref"`
-
-	/*
-	   The [status](https://developer.github.com/v3/repos/statuses/) contexts to verify
-	   against commit status checks. If you omit this parameter, GitHub verifies all
-	   unique contexts before creating a deployment. To bypass checking entirely, pass
-	   an empty array. Defaults to all unique contexts.
-	*/
-	RequiredContexts []string `json:"required_contexts,omitempty"`
-
-	// Specifies a task to execute (e.g., `deploy` or `deploy:migrations`).
-	Task *string `json:"task,omitempty"`
-
-	/*
-	   Specifies if the given environment is specific to the deployment and will no
-	   longer exist at some point in the future. Default: `false`
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
-	*/
-	TransientEnvironment *bool `json:"transient_environment,omitempty"`
-}
-
-/*
-ReposCreateDeploymentResponseBody201 is a response body for repos/create-deployment
-
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentResponseBody201 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description         string `json:"description,omitempty"`
-	Environment         string `json:"environment,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalEnvironment string `json:"original_environment,omitempty"`
-	Payload             struct {
-		Deploy string `json:"deploy,omitempty"`
-	} `json:"payload,omitempty"`
-	ProductionEnvironment bool   `json:"production_environment,omitempty"`
-	Ref                   string `json:"ref,omitempty"`
-	RepositoryUrl         string `json:"repository_url,omitempty"`
-	Sha                   string `json:"sha,omitempty"`
-	StatusesUrl           string `json:"statuses_url,omitempty"`
-	Task                  string `json:"task,omitempty"`
-	TransientEnvironment  bool   `json:"transient_environment,omitempty"`
-	UpdatedAt             string `json:"updated_at,omitempty"`
-	Url                   string `json:"url,omitempty"`
-}
-
-/*
-ReposCreateDeploymentResponseBody202 is a response body for repos/create-deployment
-
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentResponseBody202 struct {
-	Message string `json:"message,omitempty"`
-}
-
-/*
-ReposCreateDeploymentResponseBody409 is a response body for repos/create-deployment
-
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentResponseBody409 struct {
-	Message string `json:"message,omitempty"`
-}
-
-/*
-ReposRemoveProtectedBranchPullRequestReviewEnforcementReq builds requests for "repos/remove-protected-branch-pull-request-review-enforcement"
-
-Remove pull request review enforcement of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
-
-https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
-*/
-type ReposRemoveProtectedBranchPullRequestReviewEnforcementReq struct {
+type ReposRemoveProtectedBranchRequiredStatusChecksReq struct {
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposGetProtectedBranchPullRequestReviewEnforcementReq builds requests for "repos/get-protected-branch-pull-request-review-enforcement"
+ReposGetReadmeReq builds requests for "repos/get-readme"
 
-Get pull request review enforcement of protected branch.
+Get the README.
 
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
+  GET /repos/{owner}/{repo}/readme
 
-https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/contents/#get-the-readme
 */
-type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
-	Owner  string
-	Repo   string
-	Branch string
+type ReposGetReadmeReq struct {
+	Owner string
+	Repo  string
 
 	/*
-	The Protected Branches API now has a setting for requiring a specified number of
-	approving pull request reviews before merging. This feature is currently
-	available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-03-16-protected-branches-required-approving-reviews)
-	for full details. To access the API during the preview period, you must set this
-	to true.
+	The name of the commit/branch/tag. Default: the repository’s default branch
+	(usually `master`)
 	*/
-	LukeCagePreview bool
+	Ref *string
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+func (r ReposGetReadmeReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/readme", r.Owner, r.Repo)
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r ReposGetReadmeReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r ReposGetReadmeReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Ref != nil {
+		query.Set("ref", *r.Ref)
+	}
 	return query
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+func (r ReposGetReadmeReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementReq builds requests for "repos/update-protected-branch-pull-request-review-enforcement"
+ReposGetReadmeResponseBody200 is a response body for repos/get-readme
 
-Update pull request review enforcement of protected branch.
-
-  PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
-
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+API documentation: https://developer.github.com/v3/repos/contents/#get-the-readme
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
+type ReposGetReadmeResponseBody200 struct {
+	Links struct {
+		Git  string `json:"git,omitempty"`
+		Html string `json:"html,omitempty"`
+		Self string `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	Content     string      `json:"content,omitempty"`
+	DownloadUrl string      `json:"download_url,omitempty"`
+	Encoding    string      `json:"encoding,omitempty"`
+	GitUrl      string      `json:"git_url,omitempty"`
+	HtmlUrl     string      `json:"html_url,omitempty"`
+	Name        string      `json:"name,omitempty"`
+	Path        string      `json:"path,omitempty"`
+	Sha         string      `json:"sha,omitempty"`
+	Size        json.Number `json:"size,omitempty"`
+	Type        string      `json:"type,omitempty"`
+	Url         string      `json:"url,omitempty"`
+}
+
+/*
+ReposCreateStatusReq builds requests for "repos/create-status"
+
+Create a status.
+
+  POST /repos/{owner}/{repo}/statuses/{sha}
+
+https://developer.github.com/v3/repos/statuses/#create-a-status
+*/
+type ReposCreateStatusReq struct {
 	Owner       string
 	Repo        string
-	Branch      string
-	RequestBody ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody
-
-	/*
-	The Protected Branches API now has a setting for requiring a specified number of
-	approving pull request reviews before merging. This feature is currently
-	available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-03-16-protected-branches-required-approving-reviews)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	LukeCagePreview bool
+	Sha         string
+	RequestBody ReposCreateStatusReqBody
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+func (r ReposCreateStatusReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/statuses/%v", r.Owner, r.Repo, r.Sha)
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) method() string {
-	return "PATCH"
+func (r ReposCreateStatusReq) method() string {
+	return "POST"
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r ReposCreateStatusReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+func (r ReposCreateStatusReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposCreateStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody is a request body for repos/update-protected-branch-pull-request-review-enforcement
+ReposCreateStatusReqBody is a request body for repos/create-status
 
-API documentation: https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+API documentation: https://developer.github.com/v3/repos/statuses/#create-a-status
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody struct {
+type ReposCreateStatusReqBody struct {
+
+	// A string label to differentiate this status from the status of other systems.
+	Context *string `json:"context,omitempty"`
+
+	// A short description of the status.
+	Description *string `json:"description,omitempty"`
 
 	/*
-	   Set to `true` if you want to automatically dismiss approving reviews when
-	   someone pushes a new commit.
+	   The state of the status. Can be one of `error`, `failure`, `pending`, or
+	   `success`.
 	*/
-	DismissStaleReviews *bool `json:"dismiss_stale_reviews,omitempty"`
+	State *string `json:"state"`
 
 	/*
-	   Specify which users and teams can dismiss pull request reviews. Pass an empty
-	   `dismissal_restrictions` object to disable. User and team
-	   `dismissal_restrictions` are only available for organization-owned repositories.
-	   Omit this parameter for personal repositories.
+	   The target URL to associate with this status. This URL will be linked from the
+	   GitHub UI to allow users to easily see the source of the status.
+	   For example, if your continuous integration system is posting build status, you
+	   would want to provide the deep link for the build output for this specific SHA:
+	   `http://ci.example.com/user/repo/build/sha`
 	*/
-	DismissalRestrictions *struct {
-
-		// The list of team `slug`s with dismissal access
-		Teams []string `json:"teams,omitempty"`
-
-		// The list of user `login`s with dismissal access
-		Users []string `json:"users,omitempty"`
-	} `json:"dismissal_restrictions,omitempty"`
-
-	/*
-	   Blocks merging pull requests until [code
-	   owners](https://help.github.com/articles/about-code-owners/) have reviewed.
-	*/
-	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
-
-	/*
-	   Specifies the number of reviewers required to approve pull requests. Use a
-	   number between 1 and 6.
-	*/
-	RequiredApprovingReviewCount *int64 `json:"required_approving_review_count,omitempty"`
+	TargetUrl *string `json:"target_url,omitempty"`
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody200 is a response body for repos/update-protected-branch-pull-request-review-enforcement
+ReposCreateStatusResponseBody201 is a response body for repos/create-status
 
-API documentation: https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+API documentation: https://developer.github.com/v3/repos/statuses/#create-a-status
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody200 struct {
-	DismissStaleReviews   bool `json:"dismiss_stale_reviews,omitempty"`
-	DismissalRestrictions struct {
-		Teams []struct {
-			Description     string `json:"description,omitempty"`
-			HtmlUrl         string `json:"html_url,omitempty"`
-			Id              int64  `json:"id,omitempty"`
-			MembersUrl      string `json:"members_url,omitempty"`
-			Name            string `json:"name,omitempty"`
-			NodeId          string `json:"node_id,omitempty"`
-			Parent          string `json:"parent,omitempty"`
-			Permission      string `json:"permission,omitempty"`
-			Privacy         string `json:"privacy,omitempty"`
-			RepositoriesUrl string `json:"repositories_url,omitempty"`
-			Slug            string `json:"slug,omitempty"`
-			Url             string `json:"url,omitempty"`
-		} `json:"teams,omitempty"`
-		TeamsUrl string `json:"teams_url,omitempty"`
-		Url      string `json:"url,omitempty"`
-		Users    []struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"users,omitempty"`
-		UsersUrl string `json:"users_url,omitempty"`
-	} `json:"dismissal_restrictions,omitempty"`
-	RequireCodeOwnerReviews      bool   `json:"require_code_owner_reviews,omitempty"`
-	RequiredApprovingReviewCount int64  `json:"required_approving_review_count,omitempty"`
-	Url                          string `json:"url,omitempty"`
-}
-
-/*
-ReposListAssetsForReleaseReq builds requests for "repos/list-assets-for-release"
-
-List assets for a release.
-
-  GET /repos/{owner}/{repo}/releases/{release_id}/assets
-
-https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
-*/
-type ReposListAssetsForReleaseReq struct {
-	Owner     string
-	Repo      string
-	ReleaseId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListAssetsForReleaseReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
-}
-
-func (r ReposListAssetsForReleaseReq) method() string {
-	return "GET"
-}
-
-func (r ReposListAssetsForReleaseReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListAssetsForReleaseReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListAssetsForReleaseResponseBody200 is a response body for repos/list-assets-for-release
-
-API documentation: https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
-*/
-type ReposListAssetsForReleaseResponseBody200 []struct {
-	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
-	ContentType        string      `json:"content_type,omitempty"`
-	CreatedAt          string      `json:"created_at,omitempty"`
-	DownloadCount      int64       `json:"download_count,omitempty"`
-	Id                 int64       `json:"id,omitempty"`
-	Label              string      `json:"label,omitempty"`
-	Name               string      `json:"name,omitempty"`
-	NodeId             string      `json:"node_id,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	State              string      `json:"state,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Uploader           struct {
+type ReposCreateStatusResponseBody201 struct {
+	AvatarUrl string `json:"avatar_url,omitempty"`
+	Context   string `json:"context,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Creator   struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -6694,119 +12583,14 @@ type ReposListAssetsForReleaseResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"uploader,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposUploadReleaseAssetReq builds requests for "repos/upload-release-asset"
-
-Upload a release asset.
-
-  POST /repos/{owner}/{repo}/releases/{release_id}/assets
-
-https://developer.github.com/v3/repos/releases/#upload-a-release-asset
-*/
-type ReposUploadReleaseAssetReq struct {
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// release_id parameter
-	ReleaseId int64
-
-	// name parameter
-	Name *string
-
-	// label parameter
-	Label *string
-
-	/*
-	Size of the asset in bytes. Most libraries will calculate the header
-	automatically
-	*/
-	ContentLengthHeader *string
-
-	/*
-	Media Type of the asset. For a list of media types, see
-	https://www.iana.org/assignments/media-types/media-types.xhtml
-	*/
-	ContentTypeHeader *string
-}
-
-func (r ReposUploadReleaseAssetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
-}
-
-func (r ReposUploadReleaseAssetReq) method() string {
-	return "POST"
-}
-
-func (r ReposUploadReleaseAssetReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Name != nil {
-		query.Set("name", *r.Name)
-	}
-	if r.Label != nil {
-		query.Set("label", *r.Label)
-	}
-	return query
-}
-
-func (r ReposUploadReleaseAssetReq) header() http.Header {
-	headerVals := map[string]*string{
-		"content-length": r.ContentLengthHeader,
-		"content-type":   r.ContentTypeHeader,
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposUploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposUploadReleaseAssetResponseBody201 is a response body for repos/upload-release-asset
-
-API documentation: https://developer.github.com/v3/repos/releases/#upload-a-release-asset
-*/
-type ReposUploadReleaseAssetResponseBody201 struct {
-	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
-	ContentType        string      `json:"content_type,omitempty"`
-	CreatedAt          string      `json:"created_at,omitempty"`
-	DownloadCount      int64       `json:"download_count,omitempty"`
-	Id                 int64       `json:"id,omitempty"`
-	Label              string      `json:"label,omitempty"`
-	Name               string      `json:"name,omitempty"`
-	NodeId             string      `json:"node_id,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	State              string      `json:"state,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Uploader           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"uploader,omitempty"`
-	Url string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	State       string `json:"state,omitempty"`
+	TargetUrl   string `json:"target_url,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	Url         string `json:"url,omitempty"`
 }
 
 /*
@@ -7175,150 +12959,15 @@ type ReposCreateForAuthenticatedUserResponseBody201 struct {
 }
 
 /*
-ReposGetCommitReq builds requests for "repos/get-commit"
+ReposListDeployKeysReq builds requests for "repos/list-deploy-keys"
 
-Get a single commit.
+List deploy keys.
 
-  GET /repos/{owner}/{repo}/commits/{ref}
+  GET /repos/{owner}/{repo}/keys
 
-https://developer.github.com/v3/repos/commits/#get-a-single-commit
+https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
-type ReposGetCommitReq struct {
-	Owner string
-	Repo  string
-	Ref   string
-}
-
-func (r ReposGetCommitReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v", r.Owner, r.Repo, r.Ref)
-}
-
-func (r ReposGetCommitReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetCommitReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetCommitReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetCommitResponseBody200 is a response body for repos/get-commit
-
-API documentation: https://developer.github.com/v3/repos/commits/#get-a-single-commit
-*/
-type ReposGetCommitResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	Commit      struct {
-		Author struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"author,omitempty"`
-		CommentCount int64 `json:"comment_count,omitempty"`
-		Committer    struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"committer,omitempty"`
-		Message string `json:"message,omitempty"`
-		Tree    struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"tree,omitempty"`
-		Url          string `json:"url,omitempty"`
-		Verification struct {
-			Payload   string `json:"payload,omitempty"`
-			Reason    string `json:"reason,omitempty"`
-			Signature string `json:"signature,omitempty"`
-			Verified  bool   `json:"verified,omitempty"`
-		} `json:"verification,omitempty"`
-	} `json:"commit,omitempty"`
-	Committer struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"committer,omitempty"`
-	Files []struct {
-		Additions int64  `json:"additions,omitempty"`
-		BlobUrl   string `json:"blob_url,omitempty"`
-		Changes   int64  `json:"changes,omitempty"`
-		Deletions int64  `json:"deletions,omitempty"`
-		Filename  string `json:"filename,omitempty"`
-		Patch     string `json:"patch,omitempty"`
-		RawUrl    string `json:"raw_url,omitempty"`
-		Status    string `json:"status,omitempty"`
-	} `json:"files,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Parents []struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"parents,omitempty"`
-	Sha   string `json:"sha,omitempty"`
-	Stats struct {
-		Additions int64 `json:"additions,omitempty"`
-		Deletions int64 `json:"deletions,omitempty"`
-		Total     int64 `json:"total,omitempty"`
-	} `json:"stats,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposListTagsReq builds requests for "repos/list-tags"
-
-List tags.
-
-  GET /repos/{owner}/{repo}/tags
-
-https://developer.github.com/v3/repos/#list-tags
-*/
-type ReposListTagsReq struct {
+type ReposListDeployKeysReq struct {
 	Owner string
 	Repo  string
 
@@ -7329,15 +12978,15 @@ type ReposListTagsReq struct {
 	Page *int64
 }
 
-func (r ReposListTagsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/tags", r.Owner, r.Repo)
+func (r ReposListDeployKeysReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
 }
 
-func (r ReposListTagsReq) method() string {
+func (r ReposListDeployKeysReq) method() string {
 	return "GET"
 }
 
-func (r ReposListTagsReq) urlQuery() url.Values {
+func (r ReposListDeployKeysReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7348,1194 +12997,161 @@ func (r ReposListTagsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListTagsReq) header() http.Header {
+func (r ReposListDeployKeysReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListTagsResponseBody200 is a response body for repos/list-tags
+ReposListDeployKeysResponseBody200 is a response body for repos/list-deploy-keys
 
-API documentation: https://developer.github.com/v3/repos/#list-tags
+API documentation: https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
-type ReposListTagsResponseBody200 []struct {
-	Commit struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"commit,omitempty"`
-	Name       string `json:"name,omitempty"`
-	TarballUrl string `json:"tarball_url,omitempty"`
-	ZipballUrl string `json:"zipball_url,omitempty"`
-}
-
-/*
-ReposEnableAutomatedSecurityFixesReq builds requests for "repos/enable-automated-security-fixes"
-
-Enable automated security fixes.
-
-  PUT /repos/{owner}/{repo}/automated-security-fixes
-
-https://developer.github.com/v3/repos/#enable-automated-security-fixes
-*/
-type ReposEnableAutomatedSecurityFixesReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Enabling or disabling automated security fixes is currently available for
-	developers to preview. To access this new endpoint during the preview period,
-	you must set this to true.
-	*/
-	LondonPreview bool
-}
-
-func (r ReposEnableAutomatedSecurityFixesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/automated-security-fixes", r.Owner, r.Repo)
-}
-
-func (r ReposEnableAutomatedSecurityFixesReq) method() string {
-	return "PUT"
-}
-
-func (r ReposEnableAutomatedSecurityFixesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposEnableAutomatedSecurityFixesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"london": r.LondonPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposDisableAutomatedSecurityFixesReq builds requests for "repos/disable-automated-security-fixes"
-
-Disable automated security fixes.
-
-  DELETE /repos/{owner}/{repo}/automated-security-fixes
-
-https://developer.github.com/v3/repos/#disable-automated-security-fixes
-*/
-type ReposDisableAutomatedSecurityFixesReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Enabling or disabling automated security fixes is currently available for
-	developers to preview. To access this new endpoint during the preview period,
-	you must set this to true.
-	*/
-	LondonPreview bool
-}
-
-func (r ReposDisableAutomatedSecurityFixesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/automated-security-fixes", r.Owner, r.Repo)
-}
-
-func (r ReposDisableAutomatedSecurityFixesReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDisableAutomatedSecurityFixesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDisableAutomatedSecurityFixesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"london": r.LondonPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposCompareCommitsReq builds requests for "repos/compare-commits"
-
-Compare two commits.
-
-  GET /repos/{owner}/{repo}/compare/{base}...{head}
-
-https://developer.github.com/v3/repos/commits/#compare-two-commits
-*/
-type ReposCompareCommitsReq struct {
-	Owner string
-	Repo  string
-	Base  string
-	Head  string
-}
-
-func (r ReposCompareCommitsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/compare/%v...%v", r.Owner, r.Repo, r.Base, r.Head)
-}
-
-func (r ReposCompareCommitsReq) method() string {
-	return "GET"
-}
-
-func (r ReposCompareCommitsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCompareCommitsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCompareCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposCompareCommitsResponseBody200 is a response body for repos/compare-commits
-
-API documentation: https://developer.github.com/v3/repos/commits/#compare-two-commits
-*/
-type ReposCompareCommitsResponseBody200 struct {
-	AheadBy    int64 `json:"ahead_by,omitempty"`
-	BaseCommit struct {
-		Author struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"author,omitempty"`
-		CommentsUrl string `json:"comments_url,omitempty"`
-		Commit      struct {
-			Author struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"author,omitempty"`
-			CommentCount int64 `json:"comment_count,omitempty"`
-			Committer    struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"committer,omitempty"`
-			Message string `json:"message,omitempty"`
-			Tree    struct {
-				Sha string `json:"sha,omitempty"`
-				Url string `json:"url,omitempty"`
-			} `json:"tree,omitempty"`
-			Url          string `json:"url,omitempty"`
-			Verification struct {
-				Payload   string `json:"payload,omitempty"`
-				Reason    string `json:"reason,omitempty"`
-				Signature string `json:"signature,omitempty"`
-				Verified  bool   `json:"verified,omitempty"`
-			} `json:"verification,omitempty"`
-		} `json:"commit,omitempty"`
-		Committer struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"committer,omitempty"`
-		HtmlUrl string `json:"html_url,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"parents,omitempty"`
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"base_commit,omitempty"`
-	BehindBy int64 `json:"behind_by,omitempty"`
-	Commits  []struct {
-		Author struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"author,omitempty"`
-		CommentsUrl string `json:"comments_url,omitempty"`
-		Commit      struct {
-			Author struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"author,omitempty"`
-			CommentCount int64 `json:"comment_count,omitempty"`
-			Committer    struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"committer,omitempty"`
-			Message string `json:"message,omitempty"`
-			Tree    struct {
-				Sha string `json:"sha,omitempty"`
-				Url string `json:"url,omitempty"`
-			} `json:"tree,omitempty"`
-			Url          string `json:"url,omitempty"`
-			Verification struct {
-				Payload   string `json:"payload,omitempty"`
-				Reason    string `json:"reason,omitempty"`
-				Signature string `json:"signature,omitempty"`
-				Verified  bool   `json:"verified,omitempty"`
-			} `json:"verification,omitempty"`
-		} `json:"commit,omitempty"`
-		Committer struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"committer,omitempty"`
-		HtmlUrl string `json:"html_url,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"parents,omitempty"`
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"commits,omitempty"`
-	DiffUrl string `json:"diff_url,omitempty"`
-	Files   []struct {
-		Additions   int64  `json:"additions,omitempty"`
-		BlobUrl     string `json:"blob_url,omitempty"`
-		Changes     int64  `json:"changes,omitempty"`
-		ContentsUrl string `json:"contents_url,omitempty"`
-		Deletions   int64  `json:"deletions,omitempty"`
-		Filename    string `json:"filename,omitempty"`
-		Patch       string `json:"patch,omitempty"`
-		RawUrl      string `json:"raw_url,omitempty"`
-		Sha         string `json:"sha,omitempty"`
-		Status      string `json:"status,omitempty"`
-	} `json:"files,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	MergeBaseCommit struct {
-		Author struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"author,omitempty"`
-		CommentsUrl string `json:"comments_url,omitempty"`
-		Commit      struct {
-			Author struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"author,omitempty"`
-			CommentCount int64 `json:"comment_count,omitempty"`
-			Committer    struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"committer,omitempty"`
-			Message string `json:"message,omitempty"`
-			Tree    struct {
-				Sha string `json:"sha,omitempty"`
-				Url string `json:"url,omitempty"`
-			} `json:"tree,omitempty"`
-			Url          string `json:"url,omitempty"`
-			Verification struct {
-				Payload   string `json:"payload,omitempty"`
-				Reason    string `json:"reason,omitempty"`
-				Signature string `json:"signature,omitempty"`
-				Verified  bool   `json:"verified,omitempty"`
-			} `json:"verification,omitempty"`
-		} `json:"commit,omitempty"`
-		Committer struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"committer,omitempty"`
-		HtmlUrl string `json:"html_url,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"parents,omitempty"`
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"merge_base_commit,omitempty"`
-	PatchUrl     string `json:"patch_url,omitempty"`
-	PermalinkUrl string `json:"permalink_url,omitempty"`
-	Status       string `json:"status,omitempty"`
-	TotalCommits int64  `json:"total_commits,omitempty"`
-	Url          string `json:"url,omitempty"`
-}
-
-/*
-ReposGetDeploymentStatusReq builds requests for "repos/get-deployment-status"
-
-Get a single deployment status.
-
-  GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}
-
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
-*/
-type ReposGetDeploymentStatusReq struct {
-	Owner        string
-	Repo         string
-	DeploymentId int64
-	StatusId     int64
-
-	/*
-	If a deployment is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
-	*/
-	MachineManPreview bool
-
-	/*
-	New features in the Deployments API on GitHub are currently available during a
-	public beta. Please see the [blog
-	post](https://developer.github.com/changes/2018-10-16-deployments-environments-states-and-auto-inactive-updates/)
-	for full details.
-
-	To access the new `environment` parameter, the two new values for the `state`
-	parameter (`in_progress` and `queued`), and use `auto_inactive` on production
-	deployments during the public beta period, you must set this to true.
-	*/
-	FlashPreview bool
-
-	/*
-	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
-	parameters are currently available for developers to preview. Please see the
-	[blog
-	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
-	for full details.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	AntManPreview bool
-}
-
-func (r ReposGetDeploymentStatusReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses/%v", r.Owner, r.Repo, r.DeploymentId, r.StatusId)
-}
-
-func (r ReposGetDeploymentStatusReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetDeploymentStatusReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetDeploymentStatusReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"ant-man":     r.AntManPreview,
-		"flash":       r.FlashPreview,
-		"machine-man": r.MachineManPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDeploymentStatusResponseBody200 is a response body for repos/get-deployment-status
-
-API documentation: https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
-*/
-type ReposGetDeploymentStatusResponseBody200 struct {
+type ReposListDeployKeysResponseBody200 []struct {
 	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	DeploymentUrl  string `json:"deployment_url,omitempty"`
-	Description    string `json:"description,omitempty"`
-	Environment    string `json:"environment,omitempty"`
-	EnvironmentUrl string `json:"environment_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	LogUrl         string `json:"log_url,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	RepositoryUrl  string `json:"repository_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	TargetUrl      string `json:"target_url,omitempty"`
-	UpdatedAt      string `json:"updated_at,omitempty"`
-	Url            string `json:"url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Key       string `json:"key,omitempty"`
+	ReadOnly  bool   `json:"read_only,omitempty"`
+	Title     string `json:"title,omitempty"`
+	Url       string `json:"url,omitempty"`
+	Verified  bool   `json:"verified,omitempty"`
 }
 
 /*
-ReposListBranchesForHeadCommitReq builds requests for "repos/list-branches-for-head-commit"
+ReposAddDeployKeyReq builds requests for "repos/add-deploy-key"
 
-List branches for HEAD commit.
+Add a new deploy key.
 
-  GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head
+  POST /repos/{owner}/{repo}/keys
 
-https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
+https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
 */
-type ReposListBranchesForHeadCommitReq struct {
-	Owner     string
-	Repo      string
-	CommitSha string
-
-	/*
-	Listing branches or pull requests for a commit in the Commits API is currently
-	available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2019-04-11-pulls-branches-for-commit/)
-	for more details. To access the new endpoints during the preview period, you
-	must set this to true.
-	*/
-	GrootPreview bool
+type ReposAddDeployKeyReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposAddDeployKeyReqBody
 }
 
-func (r ReposListBranchesForHeadCommitReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/branches-where-head", r.Owner, r.Repo, r.CommitSha)
+func (r ReposAddDeployKeyReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
 }
 
-func (r ReposListBranchesForHeadCommitReq) method() string {
-	return "GET"
+func (r ReposAddDeployKeyReq) method() string {
+	return "POST"
 }
 
-func (r ReposListBranchesForHeadCommitReq) urlQuery() url.Values {
+func (r ReposAddDeployKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposListBranchesForHeadCommitReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"groot": r.GrootPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListBranchesForHeadCommitResponseBody200 is a response body for repos/list-branches-for-head-commit
-
-API documentation: https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
-*/
-type ReposListBranchesForHeadCommitResponseBody200 []struct {
-	Commit struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"commit,omitempty"`
-	Name      string `json:"name,omitempty"`
-	Protected bool   `json:"protected,omitempty"`
-}
-
-/*
-ReposListPullRequestsAssociatedWithCommitReq builds requests for "repos/list-pull-requests-associated-with-commit"
-
-List pull requests associated with commit.
-
-  GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls
-
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
-*/
-type ReposListPullRequestsAssociatedWithCommitReq struct {
-	Owner     string
-	Repo      string
-	CommitSha string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	Listing branches or pull requests for a commit in the Commits API is currently
-	available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2019-04-11-pulls-branches-for-commit/)
-	for more details. To access the new endpoints during the preview period, you
-	must set this to true.
-	*/
-	GrootPreview bool
-}
-
-func (r ReposListPullRequestsAssociatedWithCommitReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/pulls", r.Owner, r.Repo, r.CommitSha)
-}
-
-func (r ReposListPullRequestsAssociatedWithCommitReq) method() string {
-	return "GET"
-}
-
-func (r ReposListPullRequestsAssociatedWithCommitReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListPullRequestsAssociatedWithCommitReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"groot": r.GrootPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListPullRequestsAssociatedWithCommitResponseBody200 is a response body for repos/list-pull-requests-associated-with-commit
-
-API documentation: https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
-*/
-type ReposListPullRequestsAssociatedWithCommitResponseBody200 []struct {
-	Links struct {
-		Comments struct {
-			Href string `json:"href,omitempty"`
-		} `json:"comments,omitempty"`
-		Commits struct {
-			Href string `json:"href,omitempty"`
-		} `json:"commits,omitempty"`
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		Issue struct {
-			Href string `json:"href,omitempty"`
-		} `json:"issue,omitempty"`
-		ReviewComment struct {
-			Href string `json:"href,omitempty"`
-		} `json:"review_comment,omitempty"`
-		ReviewComments struct {
-			Href string `json:"href,omitempty"`
-		} `json:"review_comments,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-		Statuses struct {
-			Href string `json:"href,omitempty"`
-		} `json:"statuses,omitempty"`
-	} `json:"_links,omitempty"`
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url"`
-		EventsUrl         string `json:"events_url"`
-		FollowersUrl      string `json:"followers_url"`
-		FollowingUrl      string `json:"following_url"`
-		GistsUrl          string `json:"gists_url"`
-		GravatarId        string `json:"gravatar_id"`
-		HtmlUrl           string `json:"html_url"`
-		Id                int64  `json:"id"`
-		Login             string `json:"login"`
-		NodeId            string `json:"node_id"`
-		OrganizationsUrl  string `json:"organizations_url"`
-		ReceivedEventsUrl string `json:"received_events_url"`
-		ReposUrl          string `json:"repos_url"`
-		SiteAdmin         bool   `json:"site_admin"`
-		StarredUrl        string `json:"starred_url"`
-		SubscriptionsUrl  string `json:"subscriptions_url"`
-		Type              string `json:"type"`
-		Url               string `json:"url"`
-	} `json:"assignees,omitempty"`
-	AuthorAssociation string `json:"author_association,omitempty"`
-	Base              struct {
-		Label string `json:"label,omitempty"`
-		Ref   string `json:"ref,omitempty"`
-		Repo  struct {
-			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-			ArchiveUrl       string `json:"archive_url,omitempty"`
-			Archived         bool   `json:"archived,omitempty"`
-			AssigneesUrl     string `json:"assignees_url,omitempty"`
-			BlobsUrl         string `json:"blobs_url,omitempty"`
-			BranchesUrl      string `json:"branches_url,omitempty"`
-			CloneUrl         string `json:"clone_url,omitempty"`
-			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-			CommentsUrl      string `json:"comments_url,omitempty"`
-			CommitsUrl       string `json:"commits_url,omitempty"`
-			CompareUrl       string `json:"compare_url,omitempty"`
-			ContentsUrl      string `json:"contents_url,omitempty"`
-			ContributorsUrl  string `json:"contributors_url,omitempty"`
-			CreatedAt        string `json:"created_at,omitempty"`
-			DefaultBranch    string `json:"default_branch,omitempty"`
-			DeploymentsUrl   string `json:"deployments_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			Disabled         bool   `json:"disabled,omitempty"`
-			DownloadsUrl     string `json:"downloads_url,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			Fork             bool   `json:"fork,omitempty"`
-			ForksCount       int64  `json:"forks_count,omitempty"`
-			ForksUrl         string `json:"forks_url,omitempty"`
-			FullName         string `json:"full_name,omitempty"`
-			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-			GitRefsUrl       string `json:"git_refs_url,omitempty"`
-			GitTagsUrl       string `json:"git_tags_url,omitempty"`
-			GitUrl           string `json:"git_url,omitempty"`
-			HasDownloads     bool   `json:"has_downloads,omitempty"`
-			HasIssues        bool   `json:"has_issues,omitempty"`
-			HasPages         bool   `json:"has_pages,omitempty"`
-			HasProjects      bool   `json:"has_projects,omitempty"`
-			HasWiki          bool   `json:"has_wiki,omitempty"`
-			Homepage         string `json:"homepage,omitempty"`
-			HooksUrl         string `json:"hooks_url,omitempty"`
-			HtmlUrl          string `json:"html_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IsTemplate       bool   `json:"is_template,omitempty"`
-			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			KeysUrl          string `json:"keys_url,omitempty"`
-			LabelsUrl        string `json:"labels_url,omitempty"`
-			Language         string `json:"language,omitempty"`
-			LanguagesUrl     string `json:"languages_url,omitempty"`
-			MergesUrl        string `json:"merges_url,omitempty"`
-			MilestonesUrl    string `json:"milestones_url,omitempty"`
-			MirrorUrl        string `json:"mirror_url,omitempty"`
-			Name             string `json:"name,omitempty"`
-			NetworkCount     int64  `json:"network_count,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			NotificationsUrl string `json:"notifications_url,omitempty"`
-			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-			Owner            struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
-		} `json:"repo,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		User struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"base,omitempty"`
-	Body        string `json:"body,omitempty"`
-	ClosedAt    string `json:"closed_at,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	DiffUrl     string `json:"diff_url,omitempty"`
-	Draft       bool   `json:"draft,omitempty"`
-	Head        struct {
-		Label string `json:"label,omitempty"`
-		Ref   string `json:"ref,omitempty"`
-		Repo  struct {
-			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-			ArchiveUrl       string `json:"archive_url,omitempty"`
-			Archived         bool   `json:"archived,omitempty"`
-			AssigneesUrl     string `json:"assignees_url,omitempty"`
-			BlobsUrl         string `json:"blobs_url,omitempty"`
-			BranchesUrl      string `json:"branches_url,omitempty"`
-			CloneUrl         string `json:"clone_url,omitempty"`
-			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-			CommentsUrl      string `json:"comments_url,omitempty"`
-			CommitsUrl       string `json:"commits_url,omitempty"`
-			CompareUrl       string `json:"compare_url,omitempty"`
-			ContentsUrl      string `json:"contents_url,omitempty"`
-			ContributorsUrl  string `json:"contributors_url,omitempty"`
-			CreatedAt        string `json:"created_at,omitempty"`
-			DefaultBranch    string `json:"default_branch,omitempty"`
-			DeploymentsUrl   string `json:"deployments_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			Disabled         bool   `json:"disabled,omitempty"`
-			DownloadsUrl     string `json:"downloads_url,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			Fork             bool   `json:"fork,omitempty"`
-			ForksCount       int64  `json:"forks_count,omitempty"`
-			ForksUrl         string `json:"forks_url,omitempty"`
-			FullName         string `json:"full_name,omitempty"`
-			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-			GitRefsUrl       string `json:"git_refs_url,omitempty"`
-			GitTagsUrl       string `json:"git_tags_url,omitempty"`
-			GitUrl           string `json:"git_url,omitempty"`
-			HasDownloads     bool   `json:"has_downloads,omitempty"`
-			HasIssues        bool   `json:"has_issues,omitempty"`
-			HasPages         bool   `json:"has_pages,omitempty"`
-			HasProjects      bool   `json:"has_projects,omitempty"`
-			HasWiki          bool   `json:"has_wiki,omitempty"`
-			Homepage         string `json:"homepage,omitempty"`
-			HooksUrl         string `json:"hooks_url,omitempty"`
-			HtmlUrl          string `json:"html_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IsTemplate       bool   `json:"is_template,omitempty"`
-			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			KeysUrl          string `json:"keys_url,omitempty"`
-			LabelsUrl        string `json:"labels_url,omitempty"`
-			Language         string `json:"language,omitempty"`
-			LanguagesUrl     string `json:"languages_url,omitempty"`
-			MergesUrl        string `json:"merges_url,omitempty"`
-			MilestonesUrl    string `json:"milestones_url,omitempty"`
-			MirrorUrl        string `json:"mirror_url,omitempty"`
-			Name             string `json:"name,omitempty"`
-			NetworkCount     int64  `json:"network_count,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			NotificationsUrl string `json:"notifications_url,omitempty"`
-			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-			Owner            struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
-		} `json:"repo,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		User struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"head,omitempty"`
-	HtmlUrl  string `json:"html_url,omitempty"`
-	Id       int64  `json:"id,omitempty"`
-	IssueUrl string `json:"issue_url,omitempty"`
-	Labels   []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	Locked         bool   `json:"locked,omitempty"`
-	MergeCommitSha string `json:"merge_commit_sha,omitempty"`
-	MergedAt       string `json:"merged_at,omitempty"`
-	Milestone      struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
-	NodeId             string `json:"node_id,omitempty"`
-	Number             int64  `json:"number,omitempty"`
-	PatchUrl           string `json:"patch_url,omitempty"`
-	RequestedReviewers []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"requested_reviewers,omitempty"`
-	RequestedTeams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"requested_teams,omitempty"`
-	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
-	ReviewCommentsUrl string `json:"review_comments_url,omitempty"`
-	State             string `json:"state,omitempty"`
-	StatusesUrl       string `json:"statuses_url,omitempty"`
-	Title             string `json:"title,omitempty"`
-	UpdatedAt         string `json:"updated_at,omitempty"`
-	Url               string `json:"url,omitempty"`
-	User              struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReposListPublicReq builds requests for "repos/list-public"
-
-List public repositories.
-
-  GET /repositories
-
-https://developer.github.com/v3/repos/#list-public-repositories
-*/
-type ReposListPublicReq struct {
-
-	// The integer ID of the last repository that you've seen.
-	Since *int64
-}
-
-func (r ReposListPublicReq) urlPath() string {
-	return fmt.Sprintf("/repositories")
-}
-
-func (r ReposListPublicReq) method() string {
-	return "GET"
-}
-
-func (r ReposListPublicReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Since != nil {
-		query.Set("since", strconv.FormatInt(*r.Since, 10))
-	}
-	return query
-}
-
-func (r ReposListPublicReq) header() http.Header {
+func (r ReposAddDeployKeyReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposAddDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ReposAddDeployKeyReqBody is a request body for repos/add-deploy-key
+
+API documentation: https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
+*/
+type ReposAddDeployKeyReqBody struct {
+
+	// The contents of the key.
+	Key *string `json:"key"`
+
+	/*
+	   If `true`, the key will only be able to read repository contents. Otherwise, the
+	   key will be able to read and write.
+
+	   Deploy keys with write access can perform the same actions as an organization
+	   member with admin access, or a collaborator on a personal repository. For more
+	   information, see "[Repository permission levels for an
+	   organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
+	   and "[Permission levels for a user account
+	   repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
+	*/
+	ReadOnly *bool `json:"read_only,omitempty"`
+
+	// A name for the key.
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+ReposAddDeployKeyResponseBody201 is a response body for repos/add-deploy-key
+
+API documentation: https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
+*/
+type ReposAddDeployKeyResponseBody201 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Key       string `json:"key,omitempty"`
+	ReadOnly  bool   `json:"read_only,omitempty"`
+	Title     string `json:"title,omitempty"`
+	Url       string `json:"url,omitempty"`
+	Verified  bool   `json:"verified,omitempty"`
+}
+
+/*
+ReposGetLatestPagesBuildReq builds requests for "repos/get-latest-pages-build"
+
+Get latest Pages build.
+
+  GET /repos/{owner}/{repo}/pages/builds/latest
+
+https://developer.github.com/v3/repos/pages/#get-latest-pages-build
+*/
+type ReposGetLatestPagesBuildReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ReposGetLatestPagesBuildReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages/builds/latest", r.Owner, r.Repo)
+}
+
+func (r ReposGetLatestPagesBuildReq) method() string {
+	return "GET"
+}
+
+func (r ReposGetLatestPagesBuildReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ReposGetLatestPagesBuildReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ReposGetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListPublicResponseBody200 is a response body for repos/list-public
+ReposGetLatestPagesBuildResponseBody200 is a response body for repos/get-latest-pages-build
 
-API documentation: https://developer.github.com/v3/repos/#list-public-repositories
+API documentation: https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
-type ReposListPublicResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	Owner            struct {
+type ReposGetLatestPagesBuildResponseBody200 struct {
+	Commit    string `json:"commit,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Duration  int64  `json:"duration,omitempty"`
+	Error     struct {
+		Message string `json:"message,omitempty"`
+	} `json:"error,omitempty"`
+	Pusher struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -8554,19 +13170,10 @@ type ReposListPublicResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Private         bool   `json:"private,omitempty"`
-	PullsUrl        string `json:"pulls_url,omitempty"`
-	ReleasesUrl     string `json:"releases_url,omitempty"`
-	SshUrl          string `json:"ssh_url,omitempty"`
-	StargazersUrl   string `json:"stargazers_url,omitempty"`
-	StatusesUrl     string `json:"statuses_url,omitempty"`
-	SubscribersUrl  string `json:"subscribers_url,omitempty"`
-	SubscriptionUrl string `json:"subscription_url,omitempty"`
-	TagsUrl         string `json:"tags_url,omitempty"`
-	TeamsUrl        string `json:"teams_url,omitempty"`
-	TreesUrl        string `json:"trees_url,omitempty"`
-	Url             string `json:"url,omitempty"`
+	} `json:"pusher,omitempty"`
+	Status    string `json:"status,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
 }
 
 /*
@@ -8740,89 +13347,23 @@ type ReposListCommitsResponseBody200 []struct {
 }
 
 /*
-ReposGetCommitActivityStatsReq builds requests for "repos/get-commit-activity-stats"
+ReposCreateDeploymentReq builds requests for "repos/create-deployment"
 
-Get the last year of commit activity data.
+Create a deployment.
 
-  GET /repos/{owner}/{repo}/stats/commit_activity
+  POST /repos/{owner}/{repo}/deployments
 
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-type ReposGetCommitActivityStatsReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetCommitActivityStatsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/stats/commit_activity", r.Owner, r.Repo)
-}
-
-func (r ReposGetCommitActivityStatsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetCommitActivityStatsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetCommitActivityStatsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetCommitActivityStatsResponseBody200 is a response body for repos/get-commit-activity-stats
-
-API documentation: https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
-*/
-type ReposGetCommitActivityStatsResponseBody200 []struct {
-	Days  []int64 `json:"days,omitempty"`
-	Total int64   `json:"total,omitempty"`
-	Week  int64   `json:"week,omitempty"`
-}
-
-/*
-ReposListDeploymentStatusesReq builds requests for "repos/list-deployment-statuses"
-
-List deployment statuses.
-
-  GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
-
-https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
-*/
-type ReposListDeploymentStatusesReq struct {
-	Owner        string
-	Repo         string
-	DeploymentId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+type ReposCreateDeploymentReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ReposCreateDeploymentReqBody
 
 	/*
-	New features in the Deployments API on GitHub are currently available during a
-	public beta. Please see the [blog
-	post](https://developer.github.com/changes/2018-10-16-deployments-environments-states-and-auto-inactive-updates/)
-	for full details.
-
-	To access the new `environment` parameter, the two new values for the `state`
-	parameter (`in_progress` and `queued`), and use `auto_inactive` on production
-	deployments during the public beta period, you must set this to true.
-	*/
-	FlashPreview bool
-
-	/*
-	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
-	parameters are currently available for developers to preview. Please see the
-	[blog
+	The `transient_environment` and `production_environment` parameters are
+	currently available for developers to preview. During the preview period, the
+	API may change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
 	for full details.
 
@@ -8831,231 +13372,95 @@ type ReposListDeploymentStatusesReq struct {
 	AntManPreview bool
 }
 
-func (r ReposListDeploymentStatusesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses", r.Owner, r.Repo, r.DeploymentId)
+func (r ReposCreateDeploymentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments", r.Owner, r.Repo)
 }
 
-func (r ReposListDeploymentStatusesReq) method() string {
-	return "GET"
-}
-
-func (r ReposListDeploymentStatusesReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListDeploymentStatusesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"ant-man": r.AntManPreview,
-		"flash":   r.FlashPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListDeploymentStatusesResponseBody200 is a response body for repos/list-deployment-statuses
-
-API documentation: https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
-*/
-type ReposListDeploymentStatusesResponseBody200 []struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	DeploymentUrl  string `json:"deployment_url,omitempty"`
-	Description    string `json:"description,omitempty"`
-	Environment    string `json:"environment,omitempty"`
-	EnvironmentUrl string `json:"environment_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	LogUrl         string `json:"log_url,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	RepositoryUrl  string `json:"repository_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	TargetUrl      string `json:"target_url,omitempty"`
-	UpdatedAt      string `json:"updated_at,omitempty"`
-	Url            string `json:"url,omitempty"`
-}
-
-/*
-ReposCreateDeploymentStatusReq builds requests for "repos/create-deployment-status"
-
-Create a deployment status.
-
-  POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
-
-https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
-*/
-type ReposCreateDeploymentStatusReq struct {
-	Owner        string
-	Repo         string
-	DeploymentId int64
-	RequestBody  ReposCreateDeploymentStatusReqBody
-
-	/*
-	New features in the Deployments API on GitHub are currently available during a
-	public beta. Please see the [blog
-	post](https://developer.github.com/changes/2018-10-16-deployments-environments-states-and-auto-inactive-updates/)
-	for full details.
-
-	To access the new `environment` parameter, the two new values for the `state`
-	parameter (`in_progress` and `queued`), and use `auto_inactive` on production
-	deployments during the public beta period, you must set this to true.
-	*/
-	FlashPreview bool
-
-	/*
-	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
-	parameters are currently available for developers to preview. Please see the
-	[blog
-	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
-	for full details.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	AntManPreview bool
-}
-
-func (r ReposCreateDeploymentStatusReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses", r.Owner, r.Repo, r.DeploymentId)
-}
-
-func (r ReposCreateDeploymentStatusReq) method() string {
+func (r ReposCreateDeploymentReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateDeploymentStatusReq) urlQuery() url.Values {
+func (r ReposCreateDeploymentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateDeploymentStatusReq) header() http.Header {
+func (r ReposCreateDeploymentReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"ant-man": r.AntManPreview,
-		"flash":   r.FlashPreview,
-	}
+	previewVals := map[string]bool{"ant-man": r.AntManPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposCreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-ReposCreateDeploymentStatusReqBody is a request body for repos/create-deployment-status
+ReposCreateDeploymentReqBody is a request body for repos/create-deployment
 
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-type ReposCreateDeploymentStatusReqBody struct {
+type ReposCreateDeploymentReqBody struct {
 
 	/*
-	   Adds a new `inactive` status to all prior non-transient, non-production
-	   environment deployments with the same repository and `environment` name as the
-	   created status's deployment. An `inactive` status is only added to deployments
-	   that had a `success` state. Default: `true`
-	   **Note:** To add an `inactive` status to `production` environments, you must use
-	   the
-	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type.
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
+	   Attempts to automatically merge the default branch into the requested ref, if
+	   it's behind the default branch.
 	*/
-	AutoInactive *bool `json:"auto_inactive,omitempty"`
+	AutoMerge *bool `json:"auto_merge,omitempty"`
 
-	/*
-	   A short description of the status. The maximum description length is 140
-	   characters.
-	*/
+	// Short description of the deployment.
 	Description *string `json:"description,omitempty"`
 
 	/*
-	   Name for the target deployment environment, which can be changed when setting a
-	   deploy status. For example, `production`, `staging`, or `qa`. **Note:** This
-	   parameter requires you to use the
-	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type.
+	   Name for the target deployment environment (e.g., `production`, `staging`,
+	   `qa`).
 	*/
 	Environment *string `json:"environment,omitempty"`
 
+	// JSON payload with extra information about the deployment.
+	Payload *string `json:"payload,omitempty"`
+
 	/*
-	   Sets the URL for accessing your environment. Default: `""`
+	   Specifies if the given environment is one that end-users directly interact with.
+	   Default: `true` when `environment` is `production` and `false` otherwise.
+	   **Note:** This parameter requires you to use the
+	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	   custom media type.
+	*/
+	ProductionEnvironment *bool `json:"production_environment,omitempty"`
+
+	// The ref to deploy. This can be a branch, tag, or SHA.
+	Ref *string `json:"ref"`
+
+	/*
+	   The [status](https://developer.github.com/v3/repos/statuses/) contexts to verify
+	   against commit status checks. If you omit this parameter, GitHub verifies all
+	   unique contexts before creating a deployment. To bypass checking entirely, pass
+	   an empty array. Defaults to all unique contexts.
+	*/
+	RequiredContexts []string `json:"required_contexts,omitempty"`
+
+	// Specifies a task to execute (e.g., `deploy` or `deploy:migrations`).
+	Task *string `json:"task,omitempty"`
+
+	/*
+	   Specifies if the given environment is specific to the deployment and will no
+	   longer exist at some point in the future. Default: `false`
 	   **Note:** This parameter requires you to use the
 	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
 	   custom media type. **Note:** This parameter requires you to use the
 	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
 	   custom media type.
 	*/
-	EnvironmentUrl *string `json:"environment_url,omitempty"`
-
-	/*
-	   The full URL of the deployment's output. This parameter replaces `target_url`.
-	   We will continue to accept `target_url` to support legacy uses, but we recommend
-	   replacing `target_url` with `log_url`. Setting `log_url` will automatically set
-	   `target_url` to the same value. Default: `""`
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
-	*/
-	LogUrl *string `json:"log_url,omitempty"`
-
-	/*
-	   The state of the status. Can be one of `error`, `failure`, `inactive`,
-	   `in_progress`, `queued` `pending`, or `success`. **Note:** To use the `inactive`
-	   state, you must provide the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. To use the `in_progress` and `queued` states, you must
-	   provide the
-	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type.
-	*/
-	State *string `json:"state"`
-
-	/*
-	   The target URL to associate with this status. This URL should contain output to
-	   keep the user updated while the task is running or serve as historical
-	   information for what happened in the deployment. **Note:** It's recommended to
-	   use the `log_url` parameter, which replaces `target_url`.
-	*/
-	TargetUrl *string `json:"target_url,omitempty"`
+	TransientEnvironment *bool `json:"transient_environment,omitempty"`
 }
 
 /*
-ReposCreateDeploymentStatusResponseBody201 is a response body for repos/create-deployment-status
+ReposCreateDeploymentResponseBody201 is a response body for repos/create-deployment
 
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-type ReposCreateDeploymentStatusResponseBody201 struct {
+type ReposCreateDeploymentResponseBody201 struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	Creator   struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
@@ -9077,2718 +13482,70 @@ type ReposCreateDeploymentStatusResponseBody201 struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"creator,omitempty"`
-	DeploymentUrl  string `json:"deployment_url,omitempty"`
-	Description    string `json:"description,omitempty"`
-	Environment    string `json:"environment,omitempty"`
-	EnvironmentUrl string `json:"environment_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	LogUrl         string `json:"log_url,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	RepositoryUrl  string `json:"repository_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	TargetUrl      string `json:"target_url,omitempty"`
-	UpdatedAt      string `json:"updated_at,omitempty"`
-	Url            string `json:"url,omitempty"`
+	Description         string `json:"description,omitempty"`
+	Environment         string `json:"environment,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalEnvironment string `json:"original_environment,omitempty"`
+	Payload             struct {
+		Deploy string `json:"deploy,omitempty"`
+	} `json:"payload,omitempty"`
+	ProductionEnvironment bool   `json:"production_environment,omitempty"`
+	Ref                   string `json:"ref,omitempty"`
+	RepositoryUrl         string `json:"repository_url,omitempty"`
+	Sha                   string `json:"sha,omitempty"`
+	StatusesUrl           string `json:"statuses_url,omitempty"`
+	Task                  string `json:"task,omitempty"`
+	TransientEnvironment  bool   `json:"transient_environment,omitempty"`
+	UpdatedAt             string `json:"updated_at,omitempty"`
+	Url                   string `json:"url,omitempty"`
 }
 
 /*
-ReposListDownloadsReq builds requests for "repos/list-downloads"
+ReposCreateDeploymentResponseBody202 is a response body for repos/create-deployment
 
-List downloads for a repository.
-
-  GET /repos/{owner}/{repo}/downloads
-
-https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
+API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-type ReposListDownloadsReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListDownloadsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/downloads", r.Owner, r.Repo)
-}
-
-func (r ReposListDownloadsReq) method() string {
-	return "GET"
-}
-
-func (r ReposListDownloadsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListDownloadsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListDownloadsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListDownloadsResponseBody200 is a response body for repos/list-downloads
-
-API documentation: https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
-*/
-type ReposListDownloadsResponseBody200 []struct {
-	ContentType   string      `json:"content_type,omitempty"`
-	Description   string      `json:"description,omitempty"`
-	DownloadCount int64       `json:"download_count,omitempty"`
-	HtmlUrl       string      `json:"html_url,omitempty"`
-	Id            int64       `json:"id,omitempty"`
-	Name          string      `json:"name,omitempty"`
-	Size          json.Number `json:"size,omitempty"`
-	Url           string      `json:"url,omitempty"`
-}
-
-/*
-ReposDeleteReleaseAssetReq builds requests for "repos/delete-release-asset"
-
-Delete a release asset.
-
-  DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}
-
-https://developer.github.com/v3/repos/releases/#delete-a-release-asset
-*/
-type ReposDeleteReleaseAssetReq struct {
-	Owner   string
-	Repo    string
-	AssetId int64
-}
-
-func (r ReposDeleteReleaseAssetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
-}
-
-func (r ReposDeleteReleaseAssetReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteReleaseAssetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteReleaseAssetReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetReleaseAssetReq builds requests for "repos/get-release-asset"
-
-Get a single release asset.
-
-  GET /repos/{owner}/{repo}/releases/assets/{asset_id}
-
-https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
-*/
-type ReposGetReleaseAssetReq struct {
-	Owner   string
-	Repo    string
-	AssetId int64
-}
-
-func (r ReposGetReleaseAssetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
-}
-
-func (r ReposGetReleaseAssetReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetReleaseAssetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetReleaseAssetReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetReleaseAssetResponseBody200 is a response body for repos/get-release-asset
-
-API documentation: https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
-*/
-type ReposGetReleaseAssetResponseBody200 struct {
-	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
-	ContentType        string      `json:"content_type,omitempty"`
-	CreatedAt          string      `json:"created_at,omitempty"`
-	DownloadCount      int64       `json:"download_count,omitempty"`
-	Id                 int64       `json:"id,omitempty"`
-	Label              string      `json:"label,omitempty"`
-	Name               string      `json:"name,omitempty"`
-	NodeId             string      `json:"node_id,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	State              string      `json:"state,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Uploader           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"uploader,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposUpdateReleaseAssetReq builds requests for "repos/update-release-asset"
-
-Edit a release asset.
-
-  PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}
-
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
-*/
-type ReposUpdateReleaseAssetReq struct {
-	Owner       string
-	Repo        string
-	AssetId     int64
-	RequestBody ReposUpdateReleaseAssetReqBody
-}
-
-func (r ReposUpdateReleaseAssetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
-}
-
-func (r ReposUpdateReleaseAssetReq) method() string {
-	return "PATCH"
-}
-
-func (r ReposUpdateReleaseAssetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposUpdateReleaseAssetReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposUpdateReleaseAssetReqBody is a request body for repos/update-release-asset
-
-API documentation: https://developer.github.com/v3/repos/releases/#edit-a-release-asset
-*/
-type ReposUpdateReleaseAssetReqBody struct {
-
-	// An alternate short description of the asset. Used in place of the filename.
-	Label *string `json:"label,omitempty"`
-
-	// The file name of the asset.
-	Name *string `json:"name,omitempty"`
-}
-
-/*
-ReposUpdateReleaseAssetResponseBody200 is a response body for repos/update-release-asset
-
-API documentation: https://developer.github.com/v3/repos/releases/#edit-a-release-asset
-*/
-type ReposUpdateReleaseAssetResponseBody200 struct {
-	BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
-	ContentType        string      `json:"content_type,omitempty"`
-	CreatedAt          string      `json:"created_at,omitempty"`
-	DownloadCount      int64       `json:"download_count,omitempty"`
-	Id                 int64       `json:"id,omitempty"`
-	Label              string      `json:"label,omitempty"`
-	Name               string      `json:"name,omitempty"`
-	NodeId             string      `json:"node_id,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	State              string      `json:"state,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Uploader           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"uploader,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposCreateUsingTemplateReq builds requests for "repos/create-using-template"
-
-Create a repository using a template.
-
-  POST /repos/{template_owner}/{template_repo}/generate
-
-https://developer.github.com/v3/repos/#create-a-repository-using-a-template
-*/
-type ReposCreateUsingTemplateReq struct {
-	TemplateOwner string
-	TemplateRepo  string
-	RequestBody   ReposCreateUsingTemplateReqBody
-
-	/*
-	Creating and using repository templates is currently available for developers to
-	preview. To access this new endpoint during the preview period, you must set
-	this to true.
-	*/
-	BaptistePreview bool
-}
-
-func (r ReposCreateUsingTemplateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/generate", r.TemplateOwner, r.TemplateRepo)
-}
-
-func (r ReposCreateUsingTemplateReq) method() string {
-	return "POST"
-}
-
-func (r ReposCreateUsingTemplateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateUsingTemplateReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"baptiste": r.BaptistePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateUsingTemplateReqBody is a request body for repos/create-using-template
-
-API documentation: https://developer.github.com/v3/repos/#create-a-repository-using-a-template
-*/
-type ReposCreateUsingTemplateReqBody struct {
-
-	// A short description of the new repository.
-	Description *string `json:"description,omitempty"`
-
-	// The name of the new repository.
-	Name *string `json:"name"`
-
-	/*
-	   The organization or person who will own the new repository. To create a new
-	   repository in an organization, the authenticated user must be a member of the
-	   specified organization.
-	*/
-	Owner *string `json:"owner,omitempty"`
-
-	/*
-	   Either `true` to create a new private repository or `false` to create a new
-	   public one.
-	*/
-	Private *bool `json:"private,omitempty"`
-}
-
-/*
-ReposCreateUsingTemplateResponseBody201 is a response body for repos/create-using-template
-
-API documentation: https://developer.github.com/v3/repos/#create-a-repository-using-a-template
-*/
-type ReposCreateUsingTemplateResponseBody201 struct {
-	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
-	} `json:"template_repository,omitempty"`
-	Topics        []string `json:"topics,omitempty"`
-	TreesUrl      string   `json:"trees_url,omitempty"`
-	UpdatedAt     string   `json:"updated_at,omitempty"`
-	Url           string   `json:"url,omitempty"`
-	Visibility    string   `json:"visibility,omitempty"`
-	WatchersCount int64    `json:"watchers_count,omitempty"`
-}
-
-/*
-ReposListForksReq builds requests for "repos/list-forks"
-
-List forks.
-
-  GET /repos/{owner}/{repo}/forks
-
-https://developer.github.com/v3/repos/forks/#list-forks
-*/
-type ReposListForksReq struct {
-	Owner string
-	Repo  string
-
-	// The sort order. Can be either `newest`, `oldest`, or `stargazers`.
-	Sort *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListForksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo)
-}
-
-func (r ReposListForksReq) method() string {
-	return "GET"
-}
-
-func (r ReposListForksReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListForksReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListForksResponseBody200 is a response body for repos/list-forks
-
-API documentation: https://developer.github.com/v3/repos/forks/#list-forks
-*/
-type ReposListForksResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	License          struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
-}
-
-/*
-ReposCreateForkReq builds requests for "repos/create-fork"
-
-Create a fork.
-
-  POST /repos/{owner}/{repo}/forks
-
-https://developer.github.com/v3/repos/forks/#create-a-fork
-*/
-type ReposCreateForkReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposCreateForkReqBody
-}
-
-func (r ReposCreateForkReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo)
-}
-
-func (r ReposCreateForkReq) method() string {
-	return "POST"
-}
-
-func (r ReposCreateForkReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateForkReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateForkReqBody is a request body for repos/create-fork
-
-API documentation: https://developer.github.com/v3/repos/forks/#create-a-fork
-*/
-type ReposCreateForkReqBody struct {
-
-	/*
-	   Optional parameter to specify the organization name if forking into an
-	   organization.
-	*/
-	Organization *string `json:"organization,omitempty"`
-}
-
-/*
-ReposCreateForkResponseBody202 is a response body for repos/create-fork
-
-API documentation: https://developer.github.com/v3/repos/forks/#create-a-fork
-*/
-type ReposCreateForkResponseBody202 struct {
-	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
-}
-
-/*
-ReposGetAllTopicsReq builds requests for "repos/get-all-topics"
-
-Get all repository topics.
-
-  GET /repos/{owner}/{repo}/topics
-
-https://developer.github.com/v3/repos/#get-all-repository-topics
-*/
-type ReposGetAllTopicsReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	The `topics` property for repositories on GitHub is currently available for
-	developers to preview. To view the `topics` property in calls that return
-	repository results, you must set this to true.
-	*/
-	MercyPreview bool
-}
-
-func (r ReposGetAllTopicsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/topics", r.Owner, r.Repo)
-}
-
-func (r ReposGetAllTopicsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetAllTopicsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetAllTopicsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"mercy": r.MercyPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetAllTopicsResponseBody200 is a response body for repos/get-all-topics
-
-API documentation: https://developer.github.com/v3/repos/#get-all-repository-topics
-*/
-type ReposGetAllTopicsResponseBody200 struct {
-	Names []string `json:"names,omitempty"`
-}
-
-/*
-ReposReplaceAllTopicsReq builds requests for "repos/replace-all-topics"
-
-Replace all repository topics.
-
-  PUT /repos/{owner}/{repo}/topics
-
-https://developer.github.com/v3/repos/#replace-all-repository-topics
-*/
-type ReposReplaceAllTopicsReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposReplaceAllTopicsReqBody
-
-	/*
-	Repository topics on GitHub are currently available for developers to preview.
-	To use this endpoint, you must set this to true.
-	*/
-	MercyPreview bool
-}
-
-func (r ReposReplaceAllTopicsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/topics", r.Owner, r.Repo)
-}
-
-func (r ReposReplaceAllTopicsReq) method() string {
-	return "PUT"
-}
-
-func (r ReposReplaceAllTopicsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposReplaceAllTopicsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"mercy": r.MercyPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposReplaceAllTopicsReqBody is a request body for repos/replace-all-topics
-
-API documentation: https://developer.github.com/v3/repos/#replace-all-repository-topics
-*/
-type ReposReplaceAllTopicsReqBody struct {
-
-	/*
-	   An array of topics to add to the repository. Pass one or more topics to
-	   _replace_ the set of existing topics. Send an empty array (`[]`) to clear all
-	   topics from the repository. **Note:** Topic `names` cannot contain uppercase
-	   letters.
-	*/
-	Names []string `json:"names"`
-}
-
-/*
-ReposReplaceAllTopicsResponseBody200 is a response body for repos/replace-all-topics
-
-API documentation: https://developer.github.com/v3/repos/#replace-all-repository-topics
-*/
-type ReposReplaceAllTopicsResponseBody200 struct {
-	Names []string `json:"names,omitempty"`
-}
-
-/*
-ReposGetBranchReq builds requests for "repos/get-branch"
-
-Get branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}
-
-https://developer.github.com/v3/repos/branches/#get-branch
-*/
-type ReposGetBranchReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposGetBranchReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposGetBranchReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetBranchReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetBranchReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetBranchResponseBody200 is a response body for repos/get-branch
-
-API documentation: https://developer.github.com/v3/repos/branches/#get-branch
-*/
-type ReposGetBranchResponseBody200 struct {
-	Links struct {
-		Html string `json:"html,omitempty"`
-		Self string `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	Commit struct {
-		Author struct {
-			AvatarUrl  string `json:"avatar_url,omitempty"`
-			GravatarId string `json:"gravatar_id,omitempty"`
-			Id         int64  `json:"id,omitempty"`
-			Login      string `json:"login,omitempty"`
-			Url        string `json:"url,omitempty"`
-		} `json:"author,omitempty"`
-		Commit struct {
-			Author struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"author,omitempty"`
-			Committer struct {
-				Date  string `json:"date,omitempty"`
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"committer,omitempty"`
-			Message string `json:"message,omitempty"`
-			Tree    struct {
-				Sha string `json:"sha,omitempty"`
-				Url string `json:"url,omitempty"`
-			} `json:"tree,omitempty"`
-			Url          string `json:"url,omitempty"`
-			Verification struct {
-				Payload   string `json:"payload,omitempty"`
-				Reason    string `json:"reason,omitempty"`
-				Signature string `json:"signature,omitempty"`
-				Verified  bool   `json:"verified,omitempty"`
-			} `json:"verification,omitempty"`
-		} `json:"commit,omitempty"`
-		Committer struct {
-			AvatarUrl  string `json:"avatar_url,omitempty"`
-			GravatarId string `json:"gravatar_id,omitempty"`
-			Id         int64  `json:"id,omitempty"`
-			Login      string `json:"login,omitempty"`
-			Url        string `json:"url,omitempty"`
-		} `json:"committer,omitempty"`
-		NodeId  string `json:"node_id,omitempty"`
-		Parents []struct {
-			Sha string `json:"sha"`
-			Url string `json:"url"`
-		} `json:"parents,omitempty"`
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"commit,omitempty"`
-	Name       string `json:"name,omitempty"`
-	Protected  bool   `json:"protected,omitempty"`
-	Protection struct {
-		Enabled              bool `json:"enabled,omitempty"`
-		RequiredStatusChecks struct {
-			Contexts         []string `json:"contexts,omitempty"`
-			EnforcementLevel string   `json:"enforcement_level,omitempty"`
-		} `json:"required_status_checks,omitempty"`
-	} `json:"protection,omitempty"`
-	ProtectionUrl string `json:"protection_url,omitempty"`
-}
-
-/*
-ReposDeleteInvitationReq builds requests for "repos/delete-invitation"
-
-Delete a repository invitation.
-
-  DELETE /repos/{owner}/{repo}/invitations/{invitation_id}
-
-https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
-*/
-type ReposDeleteInvitationReq struct {
-	Owner        string
-	Repo         string
-	InvitationId int64
-}
-
-func (r ReposDeleteInvitationReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId)
-}
-
-func (r ReposDeleteInvitationReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteInvitationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteInvitationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposUpdateInvitationReq builds requests for "repos/update-invitation"
-
-Update a repository invitation.
-
-  PATCH /repos/{owner}/{repo}/invitations/{invitation_id}
-
-https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
-*/
-type ReposUpdateInvitationReq struct {
-	Owner        string
-	Repo         string
-	InvitationId int64
-	RequestBody  ReposUpdateInvitationReqBody
-}
-
-func (r ReposUpdateInvitationReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId)
-}
-
-func (r ReposUpdateInvitationReq) method() string {
-	return "PATCH"
-}
-
-func (r ReposUpdateInvitationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposUpdateInvitationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposUpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposUpdateInvitationReqBody is a request body for repos/update-invitation
-
-API documentation: https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
-*/
-type ReposUpdateInvitationReqBody struct {
-
-	/*
-	   The permissions that the associated user will have on the repository. Valid
-	   values are `read`, `write`, `maintain`, `triage`, and `admin`.
-	*/
-	Permissions *string `json:"permissions,omitempty"`
-}
-
-/*
-ReposUpdateInvitationResponseBody200 is a response body for repos/update-invitation
-
-API documentation: https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
-*/
-type ReposUpdateInvitationResponseBody200 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Invitee   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"invitee,omitempty"`
-	Inviter struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Permissions string `json:"permissions,omitempty"`
-	Repository  struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repository,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveProtectedBranchRestrictionsReq builds requests for "repos/remove-protected-branch-restrictions"
-
-Remove restrictions of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
-
-https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRestrictionsReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposRemoveProtectedBranchRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchRestrictionsReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetProtectedBranchRestrictionsReq builds requests for "repos/get-protected-branch-restrictions"
-
-Get restrictions of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
-
-https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-type ReposGetProtectedBranchRestrictionsReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposGetProtectedBranchRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposGetProtectedBranchRestrictionsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetProtectedBranchRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetProtectedBranchRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetProtectedBranchRestrictionsResponseBody200 is a response body for repos/get-protected-branch-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-type ReposGetProtectedBranchRestrictionsResponseBody200 struct {
-	Apps []struct {
-		CreatedAt   string   `json:"created_at,omitempty"`
-		Description string   `json:"description,omitempty"`
-		Events      []string `json:"events,omitempty"`
-		ExternalUrl string   `json:"external_url,omitempty"`
-		HtmlUrl     string   `json:"html_url,omitempty"`
-		Id          int64    `json:"id,omitempty"`
-		Name        string   `json:"name,omitempty"`
-		NodeId      string   `json:"node_id,omitempty"`
-		Owner       struct {
-			AvatarUrl        string `json:"avatar_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			HooksUrl         string `json:"hooks_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			Login            string `json:"login,omitempty"`
-			MembersUrl       string `json:"members_url,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			PublicMembersUrl string `json:"public_members_url,omitempty"`
-			ReposUrl         string `json:"repos_url,omitempty"`
-			Url              string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions,omitempty"`
-		Slug      string `json:"slug,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"apps,omitempty"`
-	AppsUrl string `json:"apps_url,omitempty"`
-	Teams   []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"teams,omitempty"`
-	TeamsUrl string `json:"teams_url,omitempty"`
-	Url      string `json:"url,omitempty"`
-	Users    []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"users,omitempty"`
-	UsersUrl string `json:"users_url,omitempty"`
-}
-
-/*
-ReposListDeployKeysReq builds requests for "repos/list-deploy-keys"
-
-List deploy keys.
-
-  GET /repos/{owner}/{repo}/keys
-
-https://developer.github.com/v3/repos/keys/#list-deploy-keys
-*/
-type ReposListDeployKeysReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListDeployKeysReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
-}
-
-func (r ReposListDeployKeysReq) method() string {
-	return "GET"
-}
-
-func (r ReposListDeployKeysReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListDeployKeysReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListDeployKeysResponseBody200 is a response body for repos/list-deploy-keys
-
-API documentation: https://developer.github.com/v3/repos/keys/#list-deploy-keys
-*/
-type ReposListDeployKeysResponseBody200 []struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Key       string `json:"key,omitempty"`
-	ReadOnly  bool   `json:"read_only,omitempty"`
-	Title     string `json:"title,omitempty"`
-	Url       string `json:"url,omitempty"`
-	Verified  bool   `json:"verified,omitempty"`
-}
-
-/*
-ReposAddDeployKeyReq builds requests for "repos/add-deploy-key"
-
-Add a new deploy key.
-
-  POST /repos/{owner}/{repo}/keys
-
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
-*/
-type ReposAddDeployKeyReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposAddDeployKeyReqBody
-}
-
-func (r ReposAddDeployKeyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
-}
-
-func (r ReposAddDeployKeyReq) method() string {
-	return "POST"
-}
-
-func (r ReposAddDeployKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddDeployKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposAddDeployKeyReqBody is a request body for repos/add-deploy-key
-
-API documentation: https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
-*/
-type ReposAddDeployKeyReqBody struct {
-
-	// The contents of the key.
-	Key *string `json:"key"`
-
-	/*
-	   If `true`, the key will only be able to read repository contents. Otherwise, the
-	   key will be able to read and write.
-
-	   Deploy keys with write access can perform the same actions as an organization
-	   member with admin access, or a collaborator on a personal repository. For more
-	   information, see "[Repository permission levels for an
-	   organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
-	   and "[Permission levels for a user account
-	   repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
-	*/
-	ReadOnly *bool `json:"read_only,omitempty"`
-
-	// A name for the key.
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-ReposAddDeployKeyResponseBody201 is a response body for repos/add-deploy-key
-
-API documentation: https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
-*/
-type ReposAddDeployKeyResponseBody201 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Key       string `json:"key,omitempty"`
-	ReadOnly  bool   `json:"read_only,omitempty"`
-	Title     string `json:"title,omitempty"`
-	Url       string `json:"url,omitempty"`
-	Verified  bool   `json:"verified,omitempty"`
-}
-
-/*
-ReposGetTopPathsReq builds requests for "repos/get-top-paths"
-
-List paths.
-
-  GET /repos/{owner}/{repo}/traffic/popular/paths
-
-https://developer.github.com/v3/repos/traffic/#list-paths
-*/
-type ReposGetTopPathsReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetTopPathsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/traffic/popular/paths", r.Owner, r.Repo)
-}
-
-func (r ReposGetTopPathsReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetTopPathsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetTopPathsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetTopPathsResponseBody200 is a response body for repos/get-top-paths
-
-API documentation: https://developer.github.com/v3/repos/traffic/#list-paths
-*/
-type ReposGetTopPathsResponseBody200 []struct {
-	Count   int64  `json:"count,omitempty"`
-	Path    string `json:"path,omitempty"`
-	Title   string `json:"title,omitempty"`
-	Uniques int64  `json:"uniques,omitempty"`
-}
-
-/*
-ReposListForUserReq builds requests for "repos/list-for-user"
-
-List repositories for a user.
-
-  GET /users/{username}/repos
-
-https://developer.github.com/v3/repos/#list-repositories-for-a-user
-*/
-type ReposListForUserReq struct {
-	Username string
-
-	// Can be one of `all`, `owner`, `member`.
-	Type *string
-
-	// Can be one of `created`, `updated`, `pushed`, `full_name`.
-	Sort *string
-
-	/*
-	Can be one of `asc` or `desc`. Default: `asc` when using `full_name`, otherwise
-	`desc`
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	You can set the visibility of a repository using the new `visibility` parameter
-	in the [Repositories API](https://developer.github.com/v3/repos/), and get a
-	repository's visibility with a new response key. For more information, see the
-	[blog
-	post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes/).
-
-	To access repository visibility during the preview period, you must set this to
-	true.
-	*/
-	NebulaPreview bool
-}
-
-func (r ReposListForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/repos", r.Username)
-}
-
-func (r ReposListForUserReq) method() string {
-	return "GET"
-}
-
-func (r ReposListForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Type != nil {
-		query.Set("type", *r.Type)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"nebula": r.NebulaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetReleaseByTagReq builds requests for "repos/get-release-by-tag"
-
-Get a release by tag name.
-
-  GET /repos/{owner}/{repo}/releases/tags/{tag}
-
-https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
-*/
-type ReposGetReleaseByTagReq struct {
-	Owner string
-	Repo  string
-	Tag   string
-}
-
-func (r ReposGetReleaseByTagReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/tags/%v", r.Owner, r.Repo, r.Tag)
-}
-
-func (r ReposGetReleaseByTagReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetReleaseByTagReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetReleaseByTagReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetReleaseByTagResponseBody200 is a response body for repos/get-release-by-tag
-
-API documentation: https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
-*/
-type ReposGetReleaseByTagResponseBody200 struct {
-	Assets []struct {
-		BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
-		ContentType        string      `json:"content_type,omitempty"`
-		CreatedAt          string      `json:"created_at,omitempty"`
-		DownloadCount      int64       `json:"download_count,omitempty"`
-		Id                 int64       `json:"id,omitempty"`
-		Label              string      `json:"label,omitempty"`
-		Name               string      `json:"name,omitempty"`
-		NodeId             string      `json:"node_id,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		State              string      `json:"state,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Uploader           struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"uploader,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"assets,omitempty"`
-	AssetsUrl string `json:"assets_url,omitempty"`
-	Author    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body            string `json:"body,omitempty"`
-	CreatedAt       string `json:"created_at,omitempty"`
-	Draft           bool   `json:"draft,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Prerelease      bool   `json:"prerelease,omitempty"`
-	PublishedAt     string `json:"published_at,omitempty"`
-	TagName         string `json:"tag_name,omitempty"`
-	TarballUrl      string `json:"tarball_url,omitempty"`
-	TargetCommitish string `json:"target_commitish,omitempty"`
-	UploadUrl       string `json:"upload_url,omitempty"`
-	Url             string `json:"url,omitempty"`
-	ZipballUrl      string `json:"zipball_url,omitempty"`
-}
-
-/*
-ReposTransferReq builds requests for "repos/transfer"
-
-Transfer a repository.
-
-  POST /repos/{owner}/{repo}/transfer
-
-https://developer.github.com/v3/repos/#transfer-a-repository
-*/
-type ReposTransferReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposTransferReqBody
-}
-
-func (r ReposTransferReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/transfer", r.Owner, r.Repo)
-}
-
-func (r ReposTransferReq) method() string {
-	return "POST"
-}
-
-func (r ReposTransferReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposTransferReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposTransferReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposTransferReqBody is a request body for repos/transfer
-
-API documentation: https://developer.github.com/v3/repos/#transfer-a-repository
-*/
-type ReposTransferReqBody struct {
-
-	/*
-	   **Required:** The username or organization name the repository will be
-	   transferred to.
-	*/
-	NewOwner *string `json:"new_owner,omitempty"`
-
-	/*
-	   ID of the team or teams to add to the repository. Teams can only be added to
-	   organization-owned repositories.
-	*/
-	TeamIds []int64 `json:"team_ids,omitempty"`
-}
-
-/*
-ReposTransferResponseBody202 is a response body for repos/transfer
-
-API documentation: https://developer.github.com/v3/repos/#transfer-a-repository
-*/
-type ReposTransferResponseBody202 struct {
-	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
-}
-
-/*
-ReposCreateDispatchEventReq builds requests for "repos/create-dispatch-event"
-
-Create a repository dispatch event.
-
-  POST /repos/{owner}/{repo}/dispatches
-
-https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
-*/
-type ReposCreateDispatchEventReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposCreateDispatchEventReqBody
-}
-
-func (r ReposCreateDispatchEventReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/dispatches", r.Owner, r.Repo)
-}
-
-func (r ReposCreateDispatchEventReq) method() string {
-	return "POST"
-}
-
-func (r ReposCreateDispatchEventReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateDispatchEventReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateDispatchEventReqBody is a request body for repos/create-dispatch-event
-
-API documentation: https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
-*/
-type ReposCreateDispatchEventReqBody struct {
-
-	/*
-	   JSON payload with extra information about the webhook event that your action or
-	   worklow may use.
-	*/
-	ClientPayload interface{} `json:"client_payload,omitempty"`
-
-	// **Required:** A custom webhook event name.
-	EventType *string `json:"event_type,omitempty"`
-}
-
-/*
-ReposDeclineInvitationReq builds requests for "repos/decline-invitation"
-
-Decline a repository invitation.
-
-  DELETE /user/repository_invitations/{invitation_id}
-
-https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
-*/
-type ReposDeclineInvitationReq struct {
-	InvitationId int64
-}
-
-func (r ReposDeclineInvitationReq) urlPath() string {
-	return fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId)
-}
-
-func (r ReposDeclineInvitationReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeclineInvitationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeclineInvitationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposAcceptInvitationReq builds requests for "repos/accept-invitation"
-
-Accept a repository invitation.
-
-  PATCH /user/repository_invitations/{invitation_id}
-
-https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
-*/
-type ReposAcceptInvitationReq struct {
-	InvitationId int64
-}
-
-func (r ReposAcceptInvitationReq) urlPath() string {
-	return fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId)
-}
-
-func (r ReposAcceptInvitationReq) method() string {
-	return "PATCH"
-}
-
-func (r ReposAcceptInvitationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAcceptInvitationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetProtectedBranchRequiredSignaturesReq builds requests for "repos/get-protected-branch-required-signatures"
-
-Get required signatures of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredSignaturesReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-
-	/*
-	Protected Branches API can now manage a setting for requiring signed commits.
-	This feature is currently available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	ZzzaxPreview bool
-}
-
-func (r ReposGetProtectedBranchRequiredSignaturesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposGetProtectedBranchRequiredSignaturesReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetProtectedBranchRequiredSignaturesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetProtectedBranchRequiredSignaturesResponseBody200 is a response body for repos/get-protected-branch-required-signatures
-
-API documentation: https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredSignaturesResponseBody200 struct {
-	Enabled bool   `json:"enabled,omitempty"`
-	Url     string `json:"url,omitempty"`
-}
-
-/*
-ReposAddProtectedBranchRequiredSignaturesReq builds requests for "repos/add-protected-branch-required-signatures"
-
-Add required signatures of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredSignaturesReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-
-	/*
-	Protected Branches API can now manage a setting for requiring signed commits.
-	This feature is currently available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	ZzzaxPreview bool
-}
-
-func (r ReposAddProtectedBranchRequiredSignaturesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposAddProtectedBranchRequiredSignaturesReq) method() string {
-	return "POST"
-}
-
-func (r ReposAddProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddProtectedBranchRequiredSignaturesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposAddProtectedBranchRequiredSignaturesResponseBody200 is a response body for repos/add-protected-branch-required-signatures
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredSignaturesResponseBody200 struct {
-	Enabled bool   `json:"enabled,omitempty"`
-	Url     string `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveProtectedBranchRequiredSignaturesReq builds requests for "repos/remove-protected-branch-required-signatures"
-
-Remove required signatures of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredSignaturesReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-
-	/*
-	Protected Branches API can now manage a setting for requiring signed commits.
-	This feature is currently available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	ZzzaxPreview bool
-}
-
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListLanguagesReq builds requests for "repos/list-languages"
-
-List languages.
-
-  GET /repos/{owner}/{repo}/languages
-
-https://developer.github.com/v3/repos/#list-languages
-*/
-type ReposListLanguagesReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposListLanguagesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/languages", r.Owner, r.Repo)
-}
-
-func (r ReposListLanguagesReq) method() string {
-	return "GET"
-}
-
-func (r ReposListLanguagesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposListLanguagesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListLanguagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListLanguagesResponseBody200 is a response body for repos/list-languages
-
-API documentation: https://developer.github.com/v3/repos/#list-languages
-*/
-type ReposListLanguagesResponseBody200 map[string]int64
-
-/*
-ReposListBranchesReq builds requests for "repos/list-branches"
-
-List branches.
-
-  GET /repos/{owner}/{repo}/branches
-
-https://developer.github.com/v3/repos/branches/#list-branches
-*/
-type ReposListBranchesReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Setting to `true` returns only protected branches. When set to `false`, only
-	unprotected branches are returned. Omitting this parameter returns all branches.
-	*/
-	Protected *bool
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListBranchesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches", r.Owner, r.Repo)
-}
-
-func (r ReposListBranchesReq) method() string {
-	return "GET"
-}
-
-func (r ReposListBranchesReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Protected != nil {
-		query.Set("protected", strconv.FormatBool(*r.Protected))
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListBranchesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListBranchesResponseBody200 is a response body for repos/list-branches
-
-API documentation: https://developer.github.com/v3/repos/branches/#list-branches
-*/
-type ReposListBranchesResponseBody200 []struct {
-	Commit struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"commit,omitempty"`
-	Name       string `json:"name,omitempty"`
-	Protected  bool   `json:"protected,omitempty"`
-	Protection struct {
-		Enabled              bool `json:"enabled,omitempty"`
-		RequiredStatusChecks struct {
-			Contexts         []string `json:"contexts,omitempty"`
-			EnforcementLevel string   `json:"enforcement_level,omitempty"`
-		} `json:"required_status_checks,omitempty"`
-	} `json:"protection,omitempty"`
-	ProtectionUrl string `json:"protection_url,omitempty"`
-}
-
-/*
-ReposGetCollaboratorPermissionLevelReq builds requests for "repos/get-collaborator-permission-level"
-
-Review a user's permission level.
-
-  GET /repos/{owner}/{repo}/collaborators/{username}/permission
-
-https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
-*/
-type ReposGetCollaboratorPermissionLevelReq struct {
-	Owner    string
-	Repo     string
-	Username string
-}
-
-func (r ReposGetCollaboratorPermissionLevelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/collaborators/%v/permission", r.Owner, r.Repo, r.Username)
-}
-
-func (r ReposGetCollaboratorPermissionLevelReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetCollaboratorPermissionLevelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetCollaboratorPermissionLevelReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetCollaboratorPermissionLevelResponseBody200 is a response body for repos/get-collaborator-permission-level
-
-API documentation: https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
-*/
-type ReposGetCollaboratorPermissionLevelResponseBody200 struct {
-	Permission string `json:"permission,omitempty"`
-	User       struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-ReposMergeReq builds requests for "repos/merge"
-
-Perform a merge.
-
-  POST /repos/{owner}/{repo}/merges
-
-https://developer.github.com/v3/repos/merging/#perform-a-merge
-*/
-type ReposMergeReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposMergeReqBody
-}
-
-func (r ReposMergeReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/merges", r.Owner, r.Repo)
-}
-
-func (r ReposMergeReq) method() string {
-	return "POST"
-}
-
-func (r ReposMergeReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposMergeReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposMergeReqBody is a request body for repos/merge
-
-API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
-*/
-type ReposMergeReqBody struct {
-
-	// The name of the base branch that the head will be merged into.
-	Base *string `json:"base"`
-
-	/*
-	   Commit message to use for the merge commit. If omitted, a default message will
-	   be used.
-	*/
-	CommitMessage *string `json:"commit_message,omitempty"`
-
-	// The head to merge. This can be a branch name or a commit SHA1.
-	Head *string `json:"head"`
-}
-
-/*
-ReposMergeResponseBody201 is a response body for repos/merge
-
-API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
-*/
-type ReposMergeResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	Commit      struct {
-		Author struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"author,omitempty"`
-		CommentCount int64 `json:"comment_count,omitempty"`
-		Committer    struct {
-			Date  string `json:"date,omitempty"`
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"committer,omitempty"`
-		Message string `json:"message,omitempty"`
-		Tree    struct {
-			Sha string `json:"sha,omitempty"`
-			Url string `json:"url,omitempty"`
-		} `json:"tree,omitempty"`
-		Url          string `json:"url,omitempty"`
-		Verification struct {
-			Payload   string `json:"payload,omitempty"`
-			Reason    string `json:"reason,omitempty"`
-			Signature string `json:"signature,omitempty"`
-			Verified  bool   `json:"verified,omitempty"`
-		} `json:"verification,omitempty"`
-	} `json:"commit,omitempty"`
-	Committer struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"committer,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Parents []struct {
-		Sha string `json:"sha"`
-		Url string `json:"url"`
-	} `json:"parents,omitempty"`
-	Sha string `json:"sha,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposMergeResponseBody404 is a response body for repos/merge
-
-API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
-*/
-type ReposMergeResponseBody404 struct {
+type ReposCreateDeploymentResponseBody202 struct {
 	Message string `json:"message,omitempty"`
 }
 
 /*
-ReposMergeResponseBody409 is a response body for repos/merge
+ReposCreateDeploymentResponseBody409 is a response body for repos/create-deployment
 
-API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
+API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-type ReposMergeResponseBody409 struct {
+type ReposCreateDeploymentResponseBody409 struct {
 	Message string `json:"message,omitempty"`
 }
 
 /*
-ReposListCommentsForCommitReq builds requests for "repos/list-comments-for-commit"
+ReposListDeploymentsReq builds requests for "repos/list-deployments"
 
-List comments for a single commit.
+List deployments.
 
-  GET /repos/{owner}/{repo}/commits/{commit_sha}/comments
+  GET /repos/{owner}/{repo}/deployments
 
-https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+https://developer.github.com/v3/repos/deployments/#list-deployments
 */
-type ReposListCommentsForCommitReq struct {
-	Owner     string
-	Repo      string
-	CommitSha string
+type ReposListDeploymentsReq struct {
+	Owner string
+	Repo  string
+
+	// The SHA recorded at creation time.
+	Sha *string
+
+	// The name of the ref. This can be a branch, tag, or SHA.
+	Ref *string
+
+	// The name of the task for the deployment (e.g., `deploy` or `deploy:migrations`).
+	Task *string
+
+	/*
+	The name of the environment that was deployed to (e.g., `staging` or
+	`production`).
+	*/
+	Environment *string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -11797,27 +13554,39 @@ type ReposListCommentsForCommitReq struct {
 	Page *int64
 
 	/*
-	An additional `reactions` object in the commit comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
+	The `transient_environment` and `production_environment` parameters are
+	currently available for developers to preview. During the preview period, the
+	API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
+	for full details.
 
-	To access the API you must set this to true.
+	To access the API during the preview period, you must set this to true.
 	*/
-	SquirrelGirlPreview bool
+	AntManPreview bool
 }
 
-func (r ReposListCommentsForCommitReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/comments", r.Owner, r.Repo, r.CommitSha)
+func (r ReposListDeploymentsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/deployments", r.Owner, r.Repo)
 }
 
-func (r ReposListCommentsForCommitReq) method() string {
+func (r ReposListDeploymentsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListCommentsForCommitReq) urlQuery() url.Values {
+func (r ReposListDeploymentsReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Sha != nil {
+		query.Set("sha", *r.Sha)
+	}
+	if r.Ref != nil {
+		query.Set("ref", *r.Ref)
+	}
+	if r.Task != nil {
+		query.Set("task", *r.Task)
+	}
+	if r.Environment != nil {
+		query.Set("environment", *r.Environment)
+	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
@@ -11827,34 +13596,24 @@ func (r ReposListCommentsForCommitReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListCommentsForCommitReq) header() http.Header {
+func (r ReposListDeploymentsReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	previewVals := map[string]bool{"ant-man": r.AntManPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposListCommentsForCommitResponseBody200 is a response body for repos/list-comments-for-commit
+ReposListDeploymentsResponseBody200 is a response body for repos/list-deployments
 
-API documentation: https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+API documentation: https://developer.github.com/v3/repos/deployments/#list-deployments
 */
-type ReposListCommentsForCommitResponseBody200 []struct {
-	Body      string `json:"body,omitempty"`
-	CommitId  string `json:"commit_id,omitempty"`
+type ReposListDeploymentsResponseBody200 []struct {
 	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Line      int64  `json:"line,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Path      string `json:"path,omitempty"`
-	Position  int64  `json:"position,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
+	Creator   struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -11873,7 +13632,24 @@ type ReposListCommentsForCommitResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	} `json:"creator,omitempty"`
+	Description         string `json:"description,omitempty"`
+	Environment         string `json:"environment,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalEnvironment string `json:"original_environment,omitempty"`
+	Payload             struct {
+		Deploy string `json:"deploy,omitempty"`
+	} `json:"payload,omitempty"`
+	ProductionEnvironment bool   `json:"production_environment,omitempty"`
+	Ref                   string `json:"ref,omitempty"`
+	RepositoryUrl         string `json:"repository_url,omitempty"`
+	Sha                   string `json:"sha,omitempty"`
+	StatusesUrl           string `json:"statuses_url,omitempty"`
+	Task                  string `json:"task,omitempty"`
+	TransientEnvironment  bool   `json:"transient_environment,omitempty"`
+	UpdatedAt             string `json:"updated_at,omitempty"`
+	Url                   string `json:"url,omitempty"`
 }
 
 /*
@@ -11978,950 +13754,84 @@ type ReposCreateCommitCommentResponseBody201 struct {
 }
 
 /*
-ReposRetrieveCommunityProfileMetricsReq builds requests for "repos/retrieve-community-profile-metrics"
+ReposListCommentsForCommitReq builds requests for "repos/list-comments-for-commit"
 
-Retrieve community profile metrics.
+List comments for a single commit.
 
-  GET /repos/{owner}/{repo}/community/profile
+  GET /repos/{owner}/{repo}/commits/{commit_sha}/comments
 
-https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
 */
-type ReposRetrieveCommunityProfileMetricsReq struct {
-	Owner string
-	Repo  string
+type ReposListCommentsForCommitReq struct {
+	Owner     string
+	Repo      string
+	CommitSha string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the commit comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/community/profile", r.Owner, r.Repo)
+func (r ReposListCommentsForCommitReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v/comments", r.Owner, r.Repo, r.CommitSha)
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) method() string {
+func (r ReposListCommentsForCommitReq) method() string {
 	return "GET"
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) urlQuery() url.Values {
+func (r ReposListCommentsForCommitReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) header() http.Header {
+func (r ReposListCommentsForCommitReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ReposRetrieveCommunityProfileMetricsResponseBody200 is a response body for repos/retrieve-community-profile-metrics
+ReposListCommentsForCommitResponseBody200 is a response body for repos/list-comments-for-commit
 
-API documentation: https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+API documentation: https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
 */
-type ReposRetrieveCommunityProfileMetricsResponseBody200 struct {
-	Description   string `json:"description,omitempty"`
-	Documentation bool   `json:"documentation,omitempty"`
-	Files         struct {
-		CodeOfConduct struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Key     string `json:"key,omitempty"`
-			Name    string `json:"name,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"code_of_conduct,omitempty"`
-		Contributing struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"contributing,omitempty"`
-		IssueTemplate struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"issue_template,omitempty"`
-		License struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Key     string `json:"key,omitempty"`
-			Name    string `json:"name,omitempty"`
-			SpdxId  string `json:"spdx_id,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"license,omitempty"`
-		PullRequestTemplate struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"pull_request_template,omitempty"`
-		Readme struct {
-			HtmlUrl string `json:"html_url,omitempty"`
-			Url     string `json:"url,omitempty"`
-		} `json:"readme,omitempty"`
-	} `json:"files,omitempty"`
-	HealthPercentage json.Number `json:"health_percentage,omitempty"`
-	UpdatedAt        string      `json:"updated_at,omitempty"`
-}
-
-/*
-ReposPingHookReq builds requests for "repos/ping-hook"
-
-Ping a hook.
-
-  POST /repos/{owner}/{repo}/hooks/{hook_id}/pings
-
-https://developer.github.com/v3/repos/hooks/#ping-a-hook
-*/
-type ReposPingHookReq struct {
-	Owner  string
-	Repo   string
-	HookId int64
-}
-
-func (r ReposPingHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v/pings", r.Owner, r.Repo, r.HookId)
-}
-
-func (r ReposPingHookReq) method() string {
-	return "POST"
-}
-
-func (r ReposPingHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposPingHookReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetLatestPagesBuildReq builds requests for "repos/get-latest-pages-build"
-
-Get latest Pages build.
-
-  GET /repos/{owner}/{repo}/pages/builds/latest
-
-https://developer.github.com/v3/repos/pages/#get-latest-pages-build
-*/
-type ReposGetLatestPagesBuildReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ReposGetLatestPagesBuildReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages/builds/latest", r.Owner, r.Repo)
-}
-
-func (r ReposGetLatestPagesBuildReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetLatestPagesBuildReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetLatestPagesBuildReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetLatestPagesBuildResponseBody200 is a response body for repos/get-latest-pages-build
-
-API documentation: https://developer.github.com/v3/repos/pages/#get-latest-pages-build
-*/
-type ReposGetLatestPagesBuildResponseBody200 struct {
-	Commit    string `json:"commit,omitempty"`
+type ReposListCommentsForCommitResponseBody200 []struct {
+	Body      string `json:"body,omitempty"`
+	CommitId  string `json:"commit_id,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
-	Duration  int64  `json:"duration,omitempty"`
-	Error     struct {
-		Message string `json:"message,omitempty"`
-	} `json:"error,omitempty"`
-	Pusher struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"pusher,omitempty"`
-	Status    string `json:"status,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Line      int64  `json:"line,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Path      string `json:"path,omitempty"`
+	Position  int64  `json:"position,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
 	Url       string `json:"url,omitempty"`
-}
-
-/*
-ReposTestPushHookReq builds requests for "repos/test-push-hook"
-
-Test a push hook.
-
-  POST /repos/{owner}/{repo}/hooks/{hook_id}/tests
-
-https://developer.github.com/v3/repos/hooks/#test-a-push-hook
-*/
-type ReposTestPushHookReq struct {
-	Owner  string
-	Repo   string
-	HookId int64
-}
-
-func (r ReposTestPushHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v/tests", r.Owner, r.Repo, r.HookId)
-}
-
-func (r ReposTestPushHookReq) method() string {
-	return "POST"
-}
-
-func (r ReposTestPushHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposTestPushHookReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposDeleteDownloadReq builds requests for "repos/delete-download"
-
-Delete a download.
-
-  DELETE /repos/{owner}/{repo}/downloads/{download_id}
-
-https://developer.github.com/v3/repos/downloads/#delete-a-download
-*/
-type ReposDeleteDownloadReq struct {
-	Owner      string
-	Repo       string
-	DownloadId int64
-}
-
-func (r ReposDeleteDownloadReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
-}
-
-func (r ReposDeleteDownloadReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteDownloadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteDownloadReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDownloadReq builds requests for "repos/get-download"
-
-Get a single download.
-
-  GET /repos/{owner}/{repo}/downloads/{download_id}
-
-https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-type ReposGetDownloadReq struct {
-	Owner      string
-	Repo       string
-	DownloadId int64
-}
-
-func (r ReposGetDownloadReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
-}
-
-func (r ReposGetDownloadReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetDownloadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetDownloadReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDownloadResponseBody200 is a response body for repos/get-download
-
-API documentation: https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-type ReposGetDownloadResponseBody200 struct {
-	ContentType   string      `json:"content_type,omitempty"`
-	Description   string      `json:"description,omitempty"`
-	DownloadCount int64       `json:"download_count,omitempty"`
-	HtmlUrl       string      `json:"html_url,omitempty"`
-	Id            int64       `json:"id,omitempty"`
-	Name          string      `json:"name,omitempty"`
-	Size          json.Number `json:"size,omitempty"`
-	Url           string      `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/remove-protected-branch-required-status-checks-contexts"
-
-Remove required status checks contexts of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody
-}
-
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/remove-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody []string
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/remove-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/list-protected-branch-required-status-checks-contexts"
-
-List required status checks contexts of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-type ReposListProtectedBranchRequiredStatusChecksContextsReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) method() string {
-	return "GET"
-}
-
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/list-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-type ReposListProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
-
-/*
-ReposAddProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/add-protected-branch-required-status-checks-contexts"
-
-Add required status checks contexts of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredStatusChecksContextsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposAddProtectedBranchRequiredStatusChecksContextsReqBody
-}
-
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) method() string {
-	return "POST"
-}
-
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposAddProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/add-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredStatusChecksContextsReqBody []string
-
-/*
-ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/add-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsReq builds requests for "repos/replace-protected-branch-required-status-checks-contexts"
-
-Replace required status checks contexts of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody
-}
-
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) method() string {
-	return "PUT"
-}
-
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/replace-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody []string
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody200 is a response body for repos/replace-protected-branch-required-status-checks-contexts
-
-API documentation: https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody200 []string
-
-/*
-ReposRemoveProtectedBranchAppRestrictionsReq builds requests for "repos/remove-protected-branch-app-restrictions"
-
-Remove app restrictions of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAppRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposRemoveProtectedBranchAppRestrictionsReqBody
-}
-
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposRemoveProtectedBranchAppRestrictionsReqBody is a request body for repos/remove-protected-branch-app-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAppRestrictionsReqBody []string
-
-/*
-ReposRemoveProtectedBranchAppRestrictionsResponseBody200 is a response body for repos/remove-protected-branch-app-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAppRestrictionsResponseBody200 []struct {
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	ExternalUrl string   `json:"external_url,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	NodeId      string   `json:"node_id,omitempty"`
-	Owner       struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-}
-
-/*
-ReposGetAppsWithAccessToProtectedBranchReq builds requests for "repos/get-apps-with-access-to-protected-branch"
-
-Get apps with access to protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
-*/
-type ReposGetAppsWithAccessToProtectedBranchReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposGetAppsWithAccessToProtectedBranchReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposGetAppsWithAccessToProtectedBranchReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetAppsWithAccessToProtectedBranchReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetAppsWithAccessToProtectedBranchReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetAppsWithAccessToProtectedBranchResponseBody200 is a response body for repos/get-apps-with-access-to-protected-branch
-
-API documentation: https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
-*/
-type ReposGetAppsWithAccessToProtectedBranchResponseBody200 []struct {
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	ExternalUrl string   `json:"external_url,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	NodeId      string   `json:"node_id,omitempty"`
-	Owner       struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-}
-
-/*
-ReposAddProtectedBranchAppRestrictionsReq builds requests for "repos/add-protected-branch-app-restrictions"
-
-Add app restrictions of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposAddProtectedBranchAppRestrictionsReqBody
-}
-
-func (r ReposAddProtectedBranchAppRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposAddProtectedBranchAppRestrictionsReq) method() string {
-	return "POST"
-}
-
-func (r ReposAddProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddProtectedBranchAppRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposAddProtectedBranchAppRestrictionsReqBody is a request body for repos/add-protected-branch-app-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsReqBody []string
-
-/*
-ReposAddProtectedBranchAppRestrictionsResponseBody200 is a response body for repos/add-protected-branch-app-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsResponseBody200 []struct {
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	ExternalUrl string   `json:"external_url,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	NodeId      string   `json:"node_id,omitempty"`
-	Owner       struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-}
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsReq builds requests for "repos/replace-protected-branch-app-restrictions"
-
-Replace app restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsReq struct {
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchAppRestrictionsReqBody
-}
-
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) method() string {
-	return "PUT"
-}
-
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsReqBody is a request body for repos/replace-protected-branch-app-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsReqBody []string
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsResponseBody200 is a response body for repos/replace-protected-branch-app-restrictions
-
-API documentation: https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsResponseBody200 []struct {
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	ExternalUrl string   `json:"external_url,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	NodeId      string   `json:"node_id,omitempty"`
-	Owner       struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-}
-
-/*
-ReposListReleasesReq builds requests for "repos/list-releases"
-
-List releases for a repository.
-
-  GET /repos/{owner}/{repo}/releases
-
-https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
-*/
-type ReposListReleasesReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListReleasesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases", r.Owner, r.Repo)
-}
-
-func (r ReposListReleasesReq) method() string {
-	return "GET"
-}
-
-func (r ReposListReleasesReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListReleasesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListReleasesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListReleasesResponseBody200 is a response body for repos/list-releases
-
-API documentation: https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
-*/
-type ReposListReleasesResponseBody200 []struct {
-	Assets []struct {
-		BrowserDownloadUrl string      `json:"browser_download_url,omitempty"`
-		ContentType        string      `json:"content_type,omitempty"`
-		CreatedAt          string      `json:"created_at,omitempty"`
-		DownloadCount      int64       `json:"download_count,omitempty"`
-		Id                 int64       `json:"id,omitempty"`
-		Label              string      `json:"label,omitempty"`
-		Name               string      `json:"name,omitempty"`
-		NodeId             string      `json:"node_id,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		State              string      `json:"state,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Uploader           struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"uploader,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"assets,omitempty"`
-	AssetsUrl string `json:"assets_url,omitempty"`
-	Author    struct {
+	User      struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -12940,915 +13850,5 @@ type ReposListReleasesResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body            string `json:"body,omitempty"`
-	CreatedAt       string `json:"created_at,omitempty"`
-	Draft           bool   `json:"draft,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Prerelease      bool   `json:"prerelease,omitempty"`
-	PublishedAt     string `json:"published_at,omitempty"`
-	TagName         string `json:"tag_name,omitempty"`
-	TarballUrl      string `json:"tarball_url,omitempty"`
-	TargetCommitish string `json:"target_commitish,omitempty"`
-	UploadUrl       string `json:"upload_url,omitempty"`
-	Url             string `json:"url,omitempty"`
-	ZipballUrl      string `json:"zipball_url,omitempty"`
-}
-
-/*
-ReposCreateReleaseReq builds requests for "repos/create-release"
-
-Create a release.
-
-  POST /repos/{owner}/{repo}/releases
-
-https://developer.github.com/v3/repos/releases/#create-a-release
-*/
-type ReposCreateReleaseReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ReposCreateReleaseReqBody
-}
-
-func (r ReposCreateReleaseReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases", r.Owner, r.Repo)
-}
-
-func (r ReposCreateReleaseReq) method() string {
-	return "POST"
-}
-
-func (r ReposCreateReleaseReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCreateReleaseReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCreateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposCreateReleaseReqBody is a request body for repos/create-release
-
-API documentation: https://developer.github.com/v3/repos/releases/#create-a-release
-*/
-type ReposCreateReleaseReqBody struct {
-
-	// Text describing the contents of the tag.
-	Body *string `json:"body,omitempty"`
-
-	/*
-	   `true` to create a draft (unpublished) release, `false` to create a published
-	   one.
-	*/
-	Draft *bool `json:"draft,omitempty"`
-
-	// The name of the release.
-	Name *string `json:"name,omitempty"`
-
-	/*
-	   `true` to identify the release as a prerelease. `false` to identify the release
-	   as a full release.
-	*/
-	Prerelease *bool `json:"prerelease,omitempty"`
-
-	// The name of the tag.
-	TagName *string `json:"tag_name"`
-
-	/*
-	   Specifies the commitish value that determines where the Git tag is created from.
-	   Can be any branch or commit SHA. Unused if the Git tag already exists. Default:
-	   the repository's default branch (usually `master`).
-	*/
-	TargetCommitish *string `json:"target_commitish,omitempty"`
-}
-
-/*
-ReposCreateReleaseResponseBody201 is a response body for repos/create-release
-
-API documentation: https://developer.github.com/v3/repos/releases/#create-a-release
-*/
-type ReposCreateReleaseResponseBody201 struct {
-	Assets    []interface{} `json:"assets,omitempty"`
-	AssetsUrl string        `json:"assets_url,omitempty"`
-	Author    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body            string `json:"body,omitempty"`
-	CreatedAt       string `json:"created_at,omitempty"`
-	Draft           bool   `json:"draft,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Prerelease      bool   `json:"prerelease,omitempty"`
-	PublishedAt     string `json:"published_at,omitempty"`
-	TagName         string `json:"tag_name,omitempty"`
-	TarballUrl      string `json:"tarball_url,omitempty"`
-	TargetCommitish string `json:"target_commitish,omitempty"`
-	UploadUrl       string `json:"upload_url,omitempty"`
-	Url             string `json:"url,omitempty"`
-	ZipballUrl      string `json:"zipball_url,omitempty"`
-}
-
-/*
-ReposListInvitationsForAuthenticatedUserReq builds requests for "repos/list-invitations-for-authenticated-user"
-
-List a user's repository invitations.
-
-  GET /user/repository_invitations
-
-https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
-*/
-type ReposListInvitationsForAuthenticatedUserReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ReposListInvitationsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/repository_invitations")
-}
-
-func (r ReposListInvitationsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r ReposListInvitationsForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ReposListInvitationsForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposListInvitationsForAuthenticatedUserResponseBody200 is a response body for repos/list-invitations-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
-*/
-type ReposListInvitationsForAuthenticatedUserResponseBody200 []struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Invitee   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"invitee,omitempty"`
-	Inviter struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Permissions string `json:"permissions,omitempty"`
-	Repository  struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repository,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveProtectedBranchAdminEnforcementReq builds requests for "repos/remove-protected-branch-admin-enforcement"
-
-Remove admin enforcement of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAdminEnforcementReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetProtectedBranchAdminEnforcementReq builds requests for "repos/get-protected-branch-admin-enforcement"
-
-Get admin enforcement of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-type ReposGetProtectedBranchAdminEnforcementReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposGetProtectedBranchAdminEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposGetProtectedBranchAdminEnforcementReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetProtectedBranchAdminEnforcementReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetProtectedBranchAdminEnforcementResponseBody200 is a response body for repos/get-protected-branch-admin-enforcement
-
-API documentation: https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-type ReposGetProtectedBranchAdminEnforcementResponseBody200 struct {
-	Enabled bool   `json:"enabled,omitempty"`
-	Url     string `json:"url,omitempty"`
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcementReq builds requests for "repos/add-protected-branch-admin-enforcement"
-
-Add admin enforcement of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-type ReposAddProtectedBranchAdminEnforcementReq struct {
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r ReposAddProtectedBranchAdminEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
-}
-
-func (r ReposAddProtectedBranchAdminEnforcementReq) method() string {
-	return "POST"
-}
-
-func (r ReposAddProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddProtectedBranchAdminEnforcementReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcementResponseBody200 is a response body for repos/add-protected-branch-admin-enforcement
-
-API documentation: https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-type ReposAddProtectedBranchAdminEnforcementResponseBody200 struct {
-	Enabled bool   `json:"enabled,omitempty"`
-	Url     string `json:"url,omitempty"`
-}
-
-/*
-ReposRemoveCollaboratorReq builds requests for "repos/remove-collaborator"
-
-Remove user as a collaborator.
-
-  DELETE /repos/{owner}/{repo}/collaborators/{username}
-
-https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
-*/
-type ReposRemoveCollaboratorReq struct {
-	Owner    string
-	Repo     string
-	Username string
-}
-
-func (r ReposRemoveCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
-}
-
-func (r ReposRemoveCollaboratorReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposRemoveCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposRemoveCollaboratorReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposCheckCollaboratorReq builds requests for "repos/check-collaborator"
-
-Check if a user is a collaborator.
-
-  GET /repos/{owner}/{repo}/collaborators/{username}
-
-https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
-*/
-type ReposCheckCollaboratorReq struct {
-	Owner    string
-	Repo     string
-	Username string
-}
-
-func (r ReposCheckCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
-}
-
-func (r ReposCheckCollaboratorReq) method() string {
-	return "GET"
-}
-
-func (r ReposCheckCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposCheckCollaboratorReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposCheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposAddCollaboratorReq builds requests for "repos/add-collaborator"
-
-Add user as a collaborator.
-
-  PUT /repos/{owner}/{repo}/collaborators/{username}
-
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
-*/
-type ReposAddCollaboratorReq struct {
-	Owner       string
-	Repo        string
-	Username    string
-	RequestBody ReposAddCollaboratorReqBody
-}
-
-func (r ReposAddCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
-}
-
-func (r ReposAddCollaboratorReq) method() string {
-	return "PUT"
-}
-
-func (r ReposAddCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposAddCollaboratorReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ReposAddCollaboratorReqBody is a request body for repos/add-collaborator
-
-API documentation: https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
-*/
-type ReposAddCollaboratorReqBody struct {
-
-	/*
-	   The permission to grant the collaborator. **Only valid on organization-owned
-	   repositories.** Can be one of:
-	   \* `pull` - can pull, but not push to or administer this repository.
-	   \* `push` - can pull and push, but not administer this repository.
-	   \* `admin` - can pull, push and administer this repository.
-	   \* `maintain` - Recommended for project managers who need to manage the
-	   repository without access to sensitive or destructive actions.
-	   \* `triage` - Recommended for contributors who need to proactively manage issues
-	   and pull requests without write access.
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-ReposAddCollaboratorResponseBody201 is a response body for repos/add-collaborator
-
-API documentation: https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
-*/
-type ReposAddCollaboratorResponseBody201 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Invitee   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"invitee,omitempty"`
-	Inviter struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Permissions string `json:"permissions,omitempty"`
-	Repository  struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repository,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposGetReadmeReq builds requests for "repos/get-readme"
-
-Get the README.
-
-  GET /repos/{owner}/{repo}/readme
-
-https://developer.github.com/v3/repos/contents/#get-the-readme
-*/
-type ReposGetReadmeReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	The name of the commit/branch/tag. Default: the repository’s default branch
-	(usually `master`)
-	*/
-	Ref *string
-}
-
-func (r ReposGetReadmeReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/readme", r.Owner, r.Repo)
-}
-
-func (r ReposGetReadmeReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetReadmeReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Ref != nil {
-		query.Set("ref", *r.Ref)
-	}
-	return query
-}
-
-func (r ReposGetReadmeReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetReadmeResponseBody200 is a response body for repos/get-readme
-
-API documentation: https://developer.github.com/v3/repos/contents/#get-the-readme
-*/
-type ReposGetReadmeResponseBody200 struct {
-	Links struct {
-		Git  string `json:"git,omitempty"`
-		Html string `json:"html,omitempty"`
-		Self string `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	Content     string      `json:"content,omitempty"`
-	DownloadUrl string      `json:"download_url,omitempty"`
-	Encoding    string      `json:"encoding,omitempty"`
-	GitUrl      string      `json:"git_url,omitempty"`
-	HtmlUrl     string      `json:"html_url,omitempty"`
-	Name        string      `json:"name,omitempty"`
-	Path        string      `json:"path,omitempty"`
-	Sha         string      `json:"sha,omitempty"`
-	Size        json.Number `json:"size,omitempty"`
-	Type        string      `json:"type,omitempty"`
-	Url         string      `json:"url,omitempty"`
-}
-
-/*
-ReposDeleteDeploymentReq builds requests for "repos/delete-deployment"
-
-Delete a deployment.
-
-  DELETE /repos/{owner}/{repo}/deployments/{deployment_id}
-
-https://developer.github.com/v3/repos/deployments/#delete-a-deployment
-*/
-type ReposDeleteDeploymentReq struct {
-	Owner        string
-	Repo         string
-	DeploymentId int64
-}
-
-func (r ReposDeleteDeploymentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId)
-}
-
-func (r ReposDeleteDeploymentReq) method() string {
-	return "DELETE"
-}
-
-func (r ReposDeleteDeploymentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposDeleteDeploymentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposDeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDeploymentReq builds requests for "repos/get-deployment"
-
-Get a single deployment.
-
-  GET /repos/{owner}/{repo}/deployments/{deployment_id}
-
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
-*/
-type ReposGetDeploymentReq struct {
-	Owner        string
-	Repo         string
-	DeploymentId int64
-
-	/*
-	If a deployment is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
-	*/
-	MachineManPreview bool
-
-	/*
-	The `transient_environment` and `production_environment` parameters are
-	currently available for developers to preview. During the preview period, the
-	API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
-	for full details.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	AntManPreview bool
-}
-
-func (r ReposGetDeploymentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId)
-}
-
-func (r ReposGetDeploymentReq) method() string {
-	return "GET"
-}
-
-func (r ReposGetDeploymentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ReposGetDeploymentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"ant-man":     r.AntManPreview,
-		"machine-man": r.MachineManPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ReposGetDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposGetDeploymentResponseBody200 is a response body for repos/get-deployment
-
-API documentation: https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
-*/
-type ReposGetDeploymentResponseBody200 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Creator   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description         string `json:"description,omitempty"`
-	Environment         string `json:"environment,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalEnvironment string `json:"original_environment,omitempty"`
-	Payload             struct {
-		Deploy string `json:"deploy,omitempty"`
-	} `json:"payload,omitempty"`
-	ProductionEnvironment bool   `json:"production_environment,omitempty"`
-	Ref                   string `json:"ref,omitempty"`
-	RepositoryUrl         string `json:"repository_url,omitempty"`
-	Sha                   string `json:"sha,omitempty"`
-	StatusesUrl           string `json:"statuses_url,omitempty"`
-	Task                  string `json:"task,omitempty"`
-	TransientEnvironment  bool   `json:"transient_environment,omitempty"`
-	UpdatedAt             string `json:"updated_at,omitempty"`
-	Url                   string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
 }

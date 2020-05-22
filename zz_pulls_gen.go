@@ -12,6 +12,395 @@ import (
 )
 
 /*
+PullsCheckIfMergedReq builds requests for "pulls/check-if-merged"
+
+Get if a pull request has been merged.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/merge
+
+https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+*/
+type PullsCheckIfMergedReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+}
+
+func (r PullsCheckIfMergedReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsCheckIfMergedReq) method() string {
+	return "GET"
+}
+
+func (r PullsCheckIfMergedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsCheckIfMergedReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsCheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsMergeReq builds requests for "pulls/merge"
+
+Merge a pull request (Merge Button).
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
+
+https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+type PullsMergeReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsMergeReqBody
+}
+
+func (r PullsMergeReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsMergeReq) method() string {
+	return "PUT"
+}
+
+func (r PullsMergeReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsMergeReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsMergeReqBody is a request body for pulls/merge
+
+API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+type PullsMergeReqBody struct {
+
+	// Extra detail to append to automatic commit message.
+	CommitMessage *string `json:"commit_message,omitempty"`
+
+	// Title for the automatic commit message.
+	CommitTitle *string `json:"commit_title,omitempty"`
+
+	/*
+	   Merge method to use. Possible values are `merge`, `squash` or `rebase`. Default
+	   is `merge`.
+	*/
+	MergeMethod *string `json:"merge_method,omitempty"`
+
+	// SHA that pull request head must match to allow merge.
+	Sha *string `json:"sha,omitempty"`
+}
+
+/*
+PullsMergeResponseBody200 is a response body for pulls/merge
+
+API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+type PullsMergeResponseBody200 struct {
+	Merged  bool   `json:"merged,omitempty"`
+	Message string `json:"message,omitempty"`
+	Sha     string `json:"sha,omitempty"`
+}
+
+/*
+PullsMergeResponseBody405 is a response body for pulls/merge
+
+API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+type PullsMergeResponseBody405 struct {
+	DocumentationUrl string `json:"documentation_url,omitempty"`
+	Message          string `json:"message,omitempty"`
+}
+
+/*
+PullsMergeResponseBody409 is a response body for pulls/merge
+
+API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+type PullsMergeResponseBody409 struct {
+	DocumentationUrl string `json:"documentation_url,omitempty"`
+	Message          string `json:"message,omitempty"`
+}
+
+/*
+PullsSubmitReviewReq builds requests for "pulls/submit-review"
+
+Submit a pull request review.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events
+
+https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+*/
+type PullsSubmitReviewReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	ReviewId    int64
+	RequestBody PullsSubmitReviewReqBody
+}
+
+func (r PullsSubmitReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/events", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
+}
+
+func (r PullsSubmitReviewReq) method() string {
+	return "POST"
+}
+
+func (r PullsSubmitReviewReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsSubmitReviewReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsSubmitReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsSubmitReviewReqBody is a request body for pulls/submit-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+*/
+type PullsSubmitReviewReqBody struct {
+
+	// The body text of the pull request review
+	Body *string `json:"body,omitempty"`
+
+	/*
+	   The review action you want to perform. The review actions include: `APPROVE`,
+	   `REQUEST_CHANGES`, or `COMMENT`. When you leave this blank, the API returns
+	   _HTTP 422 (Unrecognizable entity)_ and sets the review action state to
+	   `PENDING`, which means you will need to re-submit the pull request review using
+	   a review action.
+	*/
+	Event *string `json:"event"`
+}
+
+/*
+PullsSubmitReviewResponseBody200 is a response body for pulls/submit-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+*/
+type PullsSubmitReviewResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+	} `json:"_links,omitempty"`
+	Body           string `json:"body,omitempty"`
+	CommitId       string `json:"commit_id,omitempty"`
+	HtmlUrl        string `json:"html_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	PullRequestUrl string `json:"pull_request_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	SubmittedAt    string `json:"submitted_at,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsListCommentsForRepoReq builds requests for "pulls/list-comments-for-repo"
+
+List comments in a repository.
+
+  GET /repos/{owner}/{repo}/pulls/comments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+*/
+type PullsListCommentsForRepoReq struct {
+	Owner string
+	Repo  string
+
+	// Can be either `created` or `updated` comments.
+	Sort *string
+
+	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
+	Direction *string
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
+	time.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+
+	/*
+	An additional `reactions` object in the review comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r PullsListCommentsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments", r.Owner, r.Repo)
+}
+
+func (r PullsListCommentsForRepoReq) method() string {
+	return "GET"
+}
+
+func (r PullsListCommentsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r PullsListCommentsForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"comfort-fade":  r.ComfortFadePreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsListCommentsForRepoResponseBody200 is a response body for pulls/list-comments-for-repo
+
+API documentation: https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+*/
+type PullsListCommentsForRepoResponseBody200 []struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
+	Line                int64  `json:"line,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalLine        int64  `json:"original_line,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	Side                string `json:"side,omitempty"`
+	StartLine           int64  `json:"start_line,omitempty"`
+	StartSide           string `json:"start_side,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
 PullsGetReq builds requests for "pulls/get"
 
 Get a single pull request.
@@ -1120,6 +1509,219 @@ type PullsUpdateResponseBody200 struct {
 }
 
 /*
+PullsCreateReviewCommentReplyReq builds requests for "pulls/create-review-comment-reply"
+
+Create a review comment reply.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
+
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+*/
+type PullsCreateReviewCommentReplyReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	CommentId   int64
+	RequestBody PullsCreateReviewCommentReplyReqBody
+}
+
+func (r PullsCreateReviewCommentReplyReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId)
+}
+
+func (r PullsCreateReviewCommentReplyReq) method() string {
+	return "POST"
+}
+
+func (r PullsCreateReviewCommentReplyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsCreateReviewCommentReplyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsCreateReviewCommentReplyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsCreateReviewCommentReplyReqBody is a request body for pulls/create-review-comment-reply
+
+API documentation: https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+*/
+type PullsCreateReviewCommentReplyReqBody struct {
+
+	// The text of the review comment.
+	Body *string `json:"body"`
+}
+
+/*
+PullsCreateReviewCommentReplyResponseBody201 is a response body for pulls/create-review-comment-reply
+
+API documentation: https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+*/
+type PullsCreateReviewCommentReplyResponseBody201 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsGetCommentsForReviewReq builds requests for "pulls/get-comments-for-review"
+
+Get comments for a single review.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
+
+https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+*/
+type PullsGetCommentsForReviewReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+	ReviewId   int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r PullsGetCommentsForReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/comments", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
+}
+
+func (r PullsGetCommentsForReviewReq) method() string {
+	return "GET"
+}
+
+func (r PullsGetCommentsForReviewReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r PullsGetCommentsForReviewReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsGetCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsGetCommentsForReviewResponseBody200 is a response body for pulls/get-comments-for-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+*/
+type PullsGetCommentsForReviewResponseBody200 []struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
 PullsListCommitsReq builds requests for "pulls/list-commits"
 
 List commits on a pull request.
@@ -1252,263 +1854,61 @@ type PullsListCommitsResponseBody200 []struct {
 }
 
 /*
-PullsCheckIfMergedReq builds requests for "pulls/check-if-merged"
+PullsListReviewsReq builds requests for "pulls/list-reviews"
 
-Get if a pull request has been merged.
+List reviews on a pull request.
 
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/merge
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
 
-https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
 */
-type PullsCheckIfMergedReq struct {
+type PullsListReviewsReq struct {
 	Owner      string
 	Repo       string
 	PullNumber int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r PullsCheckIfMergedReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber)
+func (r PullsListReviewsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber)
 }
 
-func (r PullsCheckIfMergedReq) method() string {
+func (r PullsListReviewsReq) method() string {
 	return "GET"
 }
 
-func (r PullsCheckIfMergedReq) urlQuery() url.Values {
+func (r PullsListReviewsReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r PullsCheckIfMergedReq) header() http.Header {
+func (r PullsListReviewsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r PullsCheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r PullsListReviewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-PullsMergeReq builds requests for "pulls/merge"
+PullsListReviewsResponseBody200 is a response body for pulls/list-reviews
 
-Merge a pull request (Merge Button).
-
-  PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
-
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+API documentation: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
 */
-type PullsMergeReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsMergeReqBody
-}
-
-func (r PullsMergeReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsMergeReq) method() string {
-	return "PUT"
-}
-
-func (r PullsMergeReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsMergeReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsMergeReqBody is a request body for pulls/merge
-
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
-*/
-type PullsMergeReqBody struct {
-
-	// Extra detail to append to automatic commit message.
-	CommitMessage *string `json:"commit_message,omitempty"`
-
-	// Title for the automatic commit message.
-	CommitTitle *string `json:"commit_title,omitempty"`
-
-	/*
-	   Merge method to use. Possible values are `merge`, `squash` or `rebase`. Default
-	   is `merge`.
-	*/
-	MergeMethod *string `json:"merge_method,omitempty"`
-
-	// SHA that pull request head must match to allow merge.
-	Sha *string `json:"sha,omitempty"`
-}
-
-/*
-PullsMergeResponseBody200 is a response body for pulls/merge
-
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
-*/
-type PullsMergeResponseBody200 struct {
-	Merged  bool   `json:"merged,omitempty"`
-	Message string `json:"message,omitempty"`
-	Sha     string `json:"sha,omitempty"`
-}
-
-/*
-PullsMergeResponseBody405 is a response body for pulls/merge
-
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
-*/
-type PullsMergeResponseBody405 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
-PullsMergeResponseBody409 is a response body for pulls/merge
-
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
-*/
-type PullsMergeResponseBody409 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
-PullsDeletePendingReviewReq builds requests for "pulls/delete-pending-review"
-
-Delete a pending review.
-
-  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
-
-https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
-*/
-type PullsDeletePendingReviewReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-	ReviewId   int64
-}
-
-func (r PullsDeletePendingReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r PullsDeletePendingReviewReq) method() string {
-	return "DELETE"
-}
-
-func (r PullsDeletePendingReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsDeletePendingReviewReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsDeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsDeletePendingReviewResponseBody200 is a response body for pulls/delete-pending-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
-*/
-type PullsDeletePendingReviewResponseBody200 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-	} `json:"_links,omitempty"`
-	Body           string `json:"body,omitempty"`
-	CommitId       string `json:"commit_id,omitempty"`
-	HtmlUrl        string `json:"html_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	PullRequestUrl string `json:"pull_request_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsGetReviewReq builds requests for "pulls/get-review"
-
-Get a single review.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
-
-https://developer.github.com/v3/pulls/reviews/#get-a-single-review
-*/
-type PullsGetReviewReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-	ReviewId   int64
-}
-
-func (r PullsGetReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r PullsGetReviewReq) method() string {
-	return "GET"
-}
-
-func (r PullsGetReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsGetReviewReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsGetReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsGetReviewResponseBody200 is a response body for pulls/get-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#get-a-single-review
-*/
-type PullsGetReviewResponseBody200 struct {
+type PullsListReviewsResponseBody200 []struct {
 	Links struct {
 		Html struct {
 			Href string `json:"href,omitempty"`
@@ -1525,194 +1925,6 @@ type PullsGetReviewResponseBody200 struct {
 	PullRequestUrl string `json:"pull_request_url,omitempty"`
 	State          string `json:"state,omitempty"`
 	SubmittedAt    string `json:"submitted_at,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsUpdateReviewReq builds requests for "pulls/update-review"
-
-Update a pull request review.
-
-  PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
-
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
-*/
-type PullsUpdateReviewReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	ReviewId    int64
-	RequestBody PullsUpdateReviewReqBody
-}
-
-func (r PullsUpdateReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r PullsUpdateReviewReq) method() string {
-	return "PUT"
-}
-
-func (r PullsUpdateReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsUpdateReviewReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsUpdateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsUpdateReviewReqBody is a request body for pulls/update-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
-*/
-type PullsUpdateReviewReqBody struct {
-
-	// The body text of the pull request review.
-	Body *string `json:"body"`
-}
-
-/*
-PullsUpdateReviewResponseBody200 is a response body for pulls/update-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
-*/
-type PullsUpdateReviewResponseBody200 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-	} `json:"_links,omitempty"`
-	Body           string `json:"body,omitempty"`
-	CommitId       string `json:"commit_id,omitempty"`
-	HtmlUrl        string `json:"html_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	PullRequestUrl string `json:"pull_request_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsDismissReviewReq builds requests for "pulls/dismiss-review"
-
-Dismiss a pull request review.
-
-  PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals
-
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
-*/
-type PullsDismissReviewReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	ReviewId    int64
-	RequestBody PullsDismissReviewReqBody
-}
-
-func (r PullsDismissReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/dismissals", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r PullsDismissReviewReq) method() string {
-	return "PUT"
-}
-
-func (r PullsDismissReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsDismissReviewReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsDismissReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsDismissReviewReqBody is a request body for pulls/dismiss-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
-*/
-type PullsDismissReviewReqBody struct {
-
-	// The message for the pull request review dismissal
-	Message *string `json:"message"`
-}
-
-/*
-PullsDismissReviewResponseBody200 is a response body for pulls/dismiss-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
-*/
-type PullsDismissReviewResponseBody200 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-	} `json:"_links,omitempty"`
-	Body           string `json:"body,omitempty"`
-	CommitId       string `json:"commit_id,omitempty"`
-	HtmlUrl        string `json:"html_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	PullRequestUrl string `json:"pull_request_url,omitempty"`
-	State          string `json:"state,omitempty"`
 	User           struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
@@ -1846,1980 +2058,6 @@ type PullsCreateReviewResponseBody200 struct {
 	NodeId         string `json:"node_id,omitempty"`
 	PullRequestUrl string `json:"pull_request_url,omitempty"`
 	State          string `json:"state,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsListReviewsReq builds requests for "pulls/list-reviews"
-
-List reviews on a pull request.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
-
-https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
-*/
-type PullsListReviewsReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r PullsListReviewsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsListReviewsReq) method() string {
-	return "GET"
-}
-
-func (r PullsListReviewsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r PullsListReviewsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsListReviewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsListReviewsResponseBody200 is a response body for pulls/list-reviews
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
-*/
-type PullsListReviewsResponseBody200 []struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-	} `json:"_links,omitempty"`
-	Body           string `json:"body,omitempty"`
-	CommitId       string `json:"commit_id,omitempty"`
-	HtmlUrl        string `json:"html_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	PullRequestUrl string `json:"pull_request_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	SubmittedAt    string `json:"submitted_at,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsDeleteReviewRequestReq builds requests for "pulls/delete-review-request"
-
-Delete a review request.
-
-  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
-
-https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
-*/
-type PullsDeleteReviewRequestReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsDeleteReviewRequestReqBody
-}
-
-func (r PullsDeleteReviewRequestReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsDeleteReviewRequestReq) method() string {
-	return "DELETE"
-}
-
-func (r PullsDeleteReviewRequestReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsDeleteReviewRequestReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsDeleteReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsDeleteReviewRequestReqBody is a request body for pulls/delete-review-request
-
-API documentation: https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
-*/
-type PullsDeleteReviewRequestReqBody struct {
-
-	// An array of user `login`s that will be removed.
-	Reviewers []string `json:"reviewers,omitempty"`
-
-	// An array of team `slug`s that will be removed.
-	TeamReviewers []string `json:"team_reviewers,omitempty"`
-}
-
-/*
-PullsListReviewRequestsReq builds requests for "pulls/list-review-requests"
-
-List review requests.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
-
-https://developer.github.com/v3/pulls/review_requests/#list-review-requests
-*/
-type PullsListReviewRequestsReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r PullsListReviewRequestsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsListReviewRequestsReq) method() string {
-	return "GET"
-}
-
-func (r PullsListReviewRequestsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r PullsListReviewRequestsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsListReviewRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsListReviewRequestsResponseBody200 is a response body for pulls/list-review-requests
-
-API documentation: https://developer.github.com/v3/pulls/review_requests/#list-review-requests
-*/
-type PullsListReviewRequestsResponseBody200 struct {
-	Teams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"teams,omitempty"`
-	Users []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"users,omitempty"`
-}
-
-/*
-PullsCreateReviewRequestReq builds requests for "pulls/create-review-request"
-
-Create a review request.
-
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsCreateReviewRequestReqBody
-}
-
-func (r PullsCreateReviewRequestReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsCreateReviewRequestReq) method() string {
-	return "POST"
-}
-
-func (r PullsCreateReviewRequestReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsCreateReviewRequestReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsCreateReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsCreateReviewRequestReqBody is a request body for pulls/create-review-request
-
-API documentation: https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestReqBody struct {
-
-	// An array of user `login`s that will be requested.
-	Reviewers []string `json:"reviewers,omitempty"`
-
-	// An array of team `slug`s that will be requested.
-	TeamReviewers []string `json:"team_reviewers,omitempty"`
-}
-
-/*
-PullsCreateReviewRequestResponseBody201 is a response body for pulls/create-review-request
-
-API documentation: https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestResponseBody201 struct {
-	Links struct {
-		Comments struct {
-			Href string `json:"href,omitempty"`
-		} `json:"comments,omitempty"`
-		Commits struct {
-			Href string `json:"href,omitempty"`
-		} `json:"commits,omitempty"`
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		Issue struct {
-			Href string `json:"href,omitempty"`
-		} `json:"issue,omitempty"`
-		ReviewComment struct {
-			Href string `json:"href,omitempty"`
-		} `json:"review_comment,omitempty"`
-		ReviewComments struct {
-			Href string `json:"href,omitempty"`
-		} `json:"review_comments,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-		Statuses struct {
-			Href string `json:"href,omitempty"`
-		} `json:"statuses,omitempty"`
-	} `json:"_links,omitempty"`
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url"`
-		EventsUrl         string `json:"events_url"`
-		FollowersUrl      string `json:"followers_url"`
-		FollowingUrl      string `json:"following_url"`
-		GistsUrl          string `json:"gists_url"`
-		GravatarId        string `json:"gravatar_id"`
-		HtmlUrl           string `json:"html_url"`
-		Id                int64  `json:"id"`
-		Login             string `json:"login"`
-		NodeId            string `json:"node_id"`
-		OrganizationsUrl  string `json:"organizations_url"`
-		ReceivedEventsUrl string `json:"received_events_url"`
-		ReposUrl          string `json:"repos_url"`
-		SiteAdmin         bool   `json:"site_admin"`
-		StarredUrl        string `json:"starred_url"`
-		SubscriptionsUrl  string `json:"subscriptions_url"`
-		Type              string `json:"type"`
-		Url               string `json:"url"`
-	} `json:"assignees,omitempty"`
-	AuthorAssociation string `json:"author_association,omitempty"`
-	Base              struct {
-		Label string `json:"label,omitempty"`
-		Ref   string `json:"ref,omitempty"`
-		Repo  struct {
-			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-			ArchiveUrl       string `json:"archive_url,omitempty"`
-			Archived         bool   `json:"archived,omitempty"`
-			AssigneesUrl     string `json:"assignees_url,omitempty"`
-			BlobsUrl         string `json:"blobs_url,omitempty"`
-			BranchesUrl      string `json:"branches_url,omitempty"`
-			CloneUrl         string `json:"clone_url,omitempty"`
-			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-			CommentsUrl      string `json:"comments_url,omitempty"`
-			CommitsUrl       string `json:"commits_url,omitempty"`
-			CompareUrl       string `json:"compare_url,omitempty"`
-			ContentsUrl      string `json:"contents_url,omitempty"`
-			ContributorsUrl  string `json:"contributors_url,omitempty"`
-			CreatedAt        string `json:"created_at,omitempty"`
-			DefaultBranch    string `json:"default_branch,omitempty"`
-			DeploymentsUrl   string `json:"deployments_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			Disabled         bool   `json:"disabled,omitempty"`
-			DownloadsUrl     string `json:"downloads_url,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			Fork             bool   `json:"fork,omitempty"`
-			ForksCount       int64  `json:"forks_count,omitempty"`
-			ForksUrl         string `json:"forks_url,omitempty"`
-			FullName         string `json:"full_name,omitempty"`
-			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-			GitRefsUrl       string `json:"git_refs_url,omitempty"`
-			GitTagsUrl       string `json:"git_tags_url,omitempty"`
-			GitUrl           string `json:"git_url,omitempty"`
-			HasDownloads     bool   `json:"has_downloads,omitempty"`
-			HasIssues        bool   `json:"has_issues,omitempty"`
-			HasPages         bool   `json:"has_pages,omitempty"`
-			HasProjects      bool   `json:"has_projects,omitempty"`
-			HasWiki          bool   `json:"has_wiki,omitempty"`
-			Homepage         string `json:"homepage,omitempty"`
-			HooksUrl         string `json:"hooks_url,omitempty"`
-			HtmlUrl          string `json:"html_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IsTemplate       bool   `json:"is_template,omitempty"`
-			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			KeysUrl          string `json:"keys_url,omitempty"`
-			LabelsUrl        string `json:"labels_url,omitempty"`
-			Language         string `json:"language,omitempty"`
-			LanguagesUrl     string `json:"languages_url,omitempty"`
-			MergesUrl        string `json:"merges_url,omitempty"`
-			MilestonesUrl    string `json:"milestones_url,omitempty"`
-			MirrorUrl        string `json:"mirror_url,omitempty"`
-			Name             string `json:"name,omitempty"`
-			NetworkCount     int64  `json:"network_count,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			NotificationsUrl string `json:"notifications_url,omitempty"`
-			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-			Owner            struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
-		} `json:"repo,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		User struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"base,omitempty"`
-	Body        string `json:"body,omitempty"`
-	ClosedAt    string `json:"closed_at,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	DiffUrl     string `json:"diff_url,omitempty"`
-	Draft       bool   `json:"draft,omitempty"`
-	Head        struct {
-		Label string `json:"label,omitempty"`
-		Ref   string `json:"ref,omitempty"`
-		Repo  struct {
-			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-			ArchiveUrl       string `json:"archive_url,omitempty"`
-			Archived         bool   `json:"archived,omitempty"`
-			AssigneesUrl     string `json:"assignees_url,omitempty"`
-			BlobsUrl         string `json:"blobs_url,omitempty"`
-			BranchesUrl      string `json:"branches_url,omitempty"`
-			CloneUrl         string `json:"clone_url,omitempty"`
-			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-			CommentsUrl      string `json:"comments_url,omitempty"`
-			CommitsUrl       string `json:"commits_url,omitempty"`
-			CompareUrl       string `json:"compare_url,omitempty"`
-			ContentsUrl      string `json:"contents_url,omitempty"`
-			ContributorsUrl  string `json:"contributors_url,omitempty"`
-			CreatedAt        string `json:"created_at,omitempty"`
-			DefaultBranch    string `json:"default_branch,omitempty"`
-			DeploymentsUrl   string `json:"deployments_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			Disabled         bool   `json:"disabled,omitempty"`
-			DownloadsUrl     string `json:"downloads_url,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			Fork             bool   `json:"fork,omitempty"`
-			ForksCount       int64  `json:"forks_count,omitempty"`
-			ForksUrl         string `json:"forks_url,omitempty"`
-			FullName         string `json:"full_name,omitempty"`
-			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-			GitRefsUrl       string `json:"git_refs_url,omitempty"`
-			GitTagsUrl       string `json:"git_tags_url,omitempty"`
-			GitUrl           string `json:"git_url,omitempty"`
-			HasDownloads     bool   `json:"has_downloads,omitempty"`
-			HasIssues        bool   `json:"has_issues,omitempty"`
-			HasPages         bool   `json:"has_pages,omitempty"`
-			HasProjects      bool   `json:"has_projects,omitempty"`
-			HasWiki          bool   `json:"has_wiki,omitempty"`
-			Homepage         string `json:"homepage,omitempty"`
-			HooksUrl         string `json:"hooks_url,omitempty"`
-			HtmlUrl          string `json:"html_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IsTemplate       bool   `json:"is_template,omitempty"`
-			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			KeysUrl          string `json:"keys_url,omitempty"`
-			LabelsUrl        string `json:"labels_url,omitempty"`
-			Language         string `json:"language,omitempty"`
-			LanguagesUrl     string `json:"languages_url,omitempty"`
-			MergesUrl        string `json:"merges_url,omitempty"`
-			MilestonesUrl    string `json:"milestones_url,omitempty"`
-			MirrorUrl        string `json:"mirror_url,omitempty"`
-			Name             string `json:"name,omitempty"`
-			NetworkCount     int64  `json:"network_count,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			NotificationsUrl string `json:"notifications_url,omitempty"`
-			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-			Owner            struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
-		} `json:"repo,omitempty"`
-		Sha  string `json:"sha,omitempty"`
-		User struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"head,omitempty"`
-	HtmlUrl  string `json:"html_url,omitempty"`
-	Id       int64  `json:"id,omitempty"`
-	IssueUrl string `json:"issue_url,omitempty"`
-	Labels   []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	Locked         bool   `json:"locked,omitempty"`
-	MergeCommitSha string `json:"merge_commit_sha,omitempty"`
-	MergedAt       string `json:"merged_at,omitempty"`
-	Milestone      struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
-	NodeId             string `json:"node_id,omitempty"`
-	Number             int64  `json:"number,omitempty"`
-	PatchUrl           string `json:"patch_url,omitempty"`
-	RequestedReviewers []struct {
-		AvatarUrl         string `json:"avatar_url"`
-		EventsUrl         string `json:"events_url"`
-		FollowersUrl      string `json:"followers_url"`
-		FollowingUrl      string `json:"following_url"`
-		GistsUrl          string `json:"gists_url"`
-		GravatarId        string `json:"gravatar_id"`
-		HtmlUrl           string `json:"html_url"`
-		Id                int64  `json:"id"`
-		Login             string `json:"login"`
-		NodeId            string `json:"node_id"`
-		OrganizationsUrl  string `json:"organizations_url"`
-		ReceivedEventsUrl string `json:"received_events_url"`
-		ReposUrl          string `json:"repos_url"`
-		SiteAdmin         bool   `json:"site_admin"`
-		StarredUrl        string `json:"starred_url"`
-		SubscriptionsUrl  string `json:"subscriptions_url"`
-		Type              string `json:"type"`
-		Url               string `json:"url"`
-	} `json:"requested_reviewers,omitempty"`
-	RequestedTeams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"requested_teams,omitempty"`
-	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
-	ReviewCommentsUrl string `json:"review_comments_url,omitempty"`
-	State             string `json:"state,omitempty"`
-	StatusesUrl       string `json:"statuses_url,omitempty"`
-	Title             string `json:"title,omitempty"`
-	UpdatedAt         string `json:"updated_at,omitempty"`
-	Url               string `json:"url,omitempty"`
-	User              struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsUpdateBranchReq builds requests for "pulls/update-branch"
-
-Update a pull request branch.
-
-  PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch
-
-https://developer.github.com/v3/pulls/#update-a-pull-request-branch
-*/
-type PullsUpdateBranchReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsUpdateBranchReqBody
-
-	/*
-	Updating the pull request branch with latest upstream changes is currently
-	available for developers to preview. To access this new endpoint during the
-	preview period, you must set this to true.
-	*/
-	LydianPreview bool
-}
-
-func (r PullsUpdateBranchReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/update-branch", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsUpdateBranchReq) method() string {
-	return "PUT"
-}
-
-func (r PullsUpdateBranchReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsUpdateBranchReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"lydian": r.LydianPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsUpdateBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsUpdateBranchReqBody is a request body for pulls/update-branch
-
-API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request-branch
-*/
-type PullsUpdateBranchReqBody struct {
-
-	/*
-	   The expected SHA of the pull request's HEAD ref. This is the most recent commit
-	   on the pull request's branch. If the expected SHA does not match the pull
-	   request's HEAD, you will receive a `422 Unprocessable Entity` status. You can
-	   use the "[List commits on a
-	   repository](https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository)"
-	   endpoint to find the most recent commit SHA. Default: SHA of the pull request's
-	   current HEAD ref.
-	*/
-	ExpectedHeadSha *string `json:"expected_head_sha,omitempty"`
-}
-
-/*
-PullsUpdateBranchResponseBody202 is a response body for pulls/update-branch
-
-API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request-branch
-*/
-type PullsUpdateBranchResponseBody202 struct {
-	Message string `json:"message,omitempty"`
-	Url     string `json:"url,omitempty"`
-}
-
-/*
-PullsDeleteCommentReq builds requests for "pulls/delete-comment"
-
-Delete a comment.
-
-  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#delete-a-comment
-*/
-type PullsDeleteCommentReq struct {
-	Owner     string
-	Repo      string
-	CommentId int64
-}
-
-func (r PullsDeleteCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r PullsDeleteCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r PullsDeleteCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsDeleteCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsGetCommentReq builds requests for "pulls/get-comment"
-
-Get a single comment.
-
-  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-type PullsGetCommentReq struct {
-	Owner     string
-	Repo      string
-	CommentId int64
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-
-	/*
-	An additional `reactions` object in the review comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r PullsGetCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r PullsGetCommentReq) method() string {
-	return "GET"
-}
-
-func (r PullsGetCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsGetCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"comfort-fade":  r.ComfortFadePreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsGetCommentResponseBody200 is a response body for pulls/get-comment
-
-API documentation: https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-type PullsGetCommentResponseBody200 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
-	Line                int64  `json:"line,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalLine        int64  `json:"original_line,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	Side                string `json:"side,omitempty"`
-	StartLine           int64  `json:"start_line,omitempty"`
-	StartSide           string `json:"start_side,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsUpdateCommentReq builds requests for "pulls/update-comment"
-
-Edit a comment.
-
-  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentReq struct {
-	Owner       string
-	Repo        string
-	CommentId   int64
-	RequestBody PullsUpdateCommentReqBody
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-}
-
-func (r PullsUpdateCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r PullsUpdateCommentReq) method() string {
-	return "PATCH"
-}
-
-func (r PullsUpdateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsUpdateCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsUpdateCommentReqBody is a request body for pulls/update-comment
-
-API documentation: https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentReqBody struct {
-
-	// The text of the reply to the review comment.
-	Body *string `json:"body"`
-}
-
-/*
-PullsUpdateCommentResponseBody200 is a response body for pulls/update-comment
-
-API documentation: https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentResponseBody200 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
-	Line                int64  `json:"line,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalLine        int64  `json:"original_line,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	Side                string `json:"side,omitempty"`
-	StartLine           int64  `json:"start_line,omitempty"`
-	StartSide           string `json:"start_side,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsCreateReviewCommentReplyReq builds requests for "pulls/create-review-comment-reply"
-
-Create a review comment reply.
-
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
-
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
-*/
-type PullsCreateReviewCommentReplyReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	CommentId   int64
-	RequestBody PullsCreateReviewCommentReplyReqBody
-}
-
-func (r PullsCreateReviewCommentReplyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId)
-}
-
-func (r PullsCreateReviewCommentReplyReq) method() string {
-	return "POST"
-}
-
-func (r PullsCreateReviewCommentReplyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsCreateReviewCommentReplyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsCreateReviewCommentReplyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsCreateReviewCommentReplyReqBody is a request body for pulls/create-review-comment-reply
-
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
-*/
-type PullsCreateReviewCommentReplyReqBody struct {
-
-	// The text of the review comment.
-	Body *string `json:"body"`
-}
-
-/*
-PullsCreateReviewCommentReplyResponseBody201 is a response body for pulls/create-review-comment-reply
-
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
-*/
-type PullsCreateReviewCommentReplyResponseBody201 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsListCommentsReq builds requests for "pulls/list-comments"
-
-List comments on a pull request.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
-
-https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
-*/
-type PullsListCommentsReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-
-	// Can be either `created` or `updated` comments.
-	Sort *string
-
-	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
-	Direction *string
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
-	time.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-
-	/*
-	An additional `reactions` object in the review comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r PullsListCommentsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsListCommentsReq) method() string {
-	return "GET"
-}
-
-func (r PullsListCommentsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r PullsListCommentsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"comfort-fade":  r.ComfortFadePreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsListCommentsResponseBody200 is a response body for pulls/list-comments
-
-API documentation: https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
-*/
-type PullsListCommentsResponseBody200 []struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
-	Line                int64  `json:"line,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalLine        int64  `json:"original_line,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	Side                string `json:"side,omitempty"`
-	StartLine           int64  `json:"start_line,omitempty"`
-	StartSide           string `json:"start_side,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsCreateCommentReq builds requests for "pulls/create-comment"
-
-Create a comment.
-
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
-
-https://developer.github.com/v3/pulls/comments/#create-a-comment
-*/
-type PullsCreateCommentReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsCreateCommentReqBody
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-}
-
-func (r PullsCreateCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsCreateCommentReq) method() string {
-	return "POST"
-}
-
-func (r PullsCreateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsCreateCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsCreateCommentReqBody is a request body for pulls/create-comment
-
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-comment
-*/
-type PullsCreateCommentReqBody struct {
-
-	// The text of the review comment.
-	Body *string `json:"body"`
-
-	/*
-	   The SHA of the commit needing a comment. Not using the latest commit SHA may
-	   render your comment outdated if a subsequent commit modifies the line you
-	   specify as the `position`.
-	*/
-	CommitId *string `json:"commit_id"`
-
-	/*
-	   **Required with `comfort-fade` preview**. The line of the blob in the pull
-	   request diff that the comment applies to. For a multi-line comment, the last
-	   line of the range that your comment applies to.
-	*/
-	Line *int64 `json:"line,omitempty"`
-
-	// The relative path to the file that necessitates a comment.
-	Path *string `json:"path"`
-
-	/*
-	   **Required without `comfort-fade` preview**. The position in the diff where you
-	   want to add a review comment. Note this value is not the same as the line number
-	   in the file. For help finding the position value, read the note above.
-	*/
-	Position *int64 `json:"position,omitempty"`
-
-	/*
-	   **Required with `comfort-fade` preview**. In a split diff view, the side of the
-	   diff that the pull request's changes appear on. Can be `LEFT` or `RIGHT`. Use
-	   `LEFT` for deletions that appear in red. Use `RIGHT` for additions that appear
-	   in green or unchanged lines that appear in white and are shown for context. For
-	   a multi-line comment, side represents whether the last line of the comment range
-	   is a deletion or addition. For more information, see "[Diff view
-	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)"
-	   in the GitHub Help documentation.
-	*/
-	Side *string `json:"side,omitempty"`
-
-	/*
-	   **Required when using multi-line comments**. To create multi-line comments, you
-	   must use the `comfort-fade` preview header. The `start_line` is the first line
-	   in the pull request diff that your multi-line comment applies to. To learn more
-	   about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
-	   in the GitHub Help documentation.
-	*/
-	StartLine *int64 `json:"start_line,omitempty"`
-
-	/*
-	   **Required when using multi-line comments**. To create multi-line comments, you
-	   must use the `comfort-fade` preview header. The `start_side` is the starting
-	   side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
-	   more about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
-	   in the GitHub Help documentation. See `side` in this table for additional
-	   context.
-	*/
-	StartSide *string `json:"start_side,omitempty"`
-}
-
-/*
-PullsCreateCommentResponseBody201 is a response body for pulls/create-comment
-
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-comment
-*/
-type PullsCreateCommentResponseBody201 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
-	Line                int64  `json:"line,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalLine        int64  `json:"original_line,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	Side                string `json:"side,omitempty"`
-	StartLine           int64  `json:"start_line,omitempty"`
-	StartSide           string `json:"start_side,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsListCommentsForRepoReq builds requests for "pulls/list-comments-for-repo"
-
-List comments in a repository.
-
-  GET /repos/{owner}/{repo}/pulls/comments
-
-https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-type PullsListCommentsForRepoReq struct {
-	Owner string
-	Repo  string
-
-	// Can be either `created` or `updated` comments.
-	Sort *string
-
-	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
-	Direction *string
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
-	time.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-
-	/*
-	An additional `reactions` object in the review comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r PullsListCommentsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments", r.Owner, r.Repo)
-}
-
-func (r PullsListCommentsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r PullsListCommentsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r PullsListCommentsForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"comfort-fade":  r.ComfortFadePreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsListCommentsForRepoResponseBody200 is a response body for pulls/list-comments-for-repo
-
-API documentation: https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-type PullsListCommentsForRepoResponseBody200 []struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
-	Line                int64  `json:"line,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalLine        int64  `json:"original_line,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	Side                string `json:"side,omitempty"`
-	StartLine           int64  `json:"start_line,omitempty"`
-	StartSide           string `json:"start_side,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsGetCommentsForReviewReq builds requests for "pulls/get-comments-for-review"
-
-Get comments for a single review.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
-
-https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-type PullsGetCommentsForReviewReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-	ReviewId   int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r PullsGetCommentsForReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/comments", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r PullsGetCommentsForReviewReq) method() string {
-	return "GET"
-}
-
-func (r PullsGetCommentsForReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r PullsGetCommentsForReviewReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsGetCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsGetCommentsForReviewResponseBody200 is a response body for pulls/get-comments-for-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-type PullsGetCommentsForReviewResponseBody200 []struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-		Self struct {
-			Href string `json:"href,omitempty"`
-		} `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	AuthorAssociation   string `json:"author_association,omitempty"`
-	Body                string `json:"body,omitempty"`
-	CommitId            string `json:"commit_id,omitempty"`
-	CreatedAt           string `json:"created_at,omitempty"`
-	DiffHunk            string `json:"diff_hunk,omitempty"`
-	HtmlUrl             string `json:"html_url,omitempty"`
-	Id                  int64  `json:"id,omitempty"`
-	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
-	NodeId              string `json:"node_id,omitempty"`
-	OriginalCommitId    string `json:"original_commit_id,omitempty"`
-	OriginalPosition    int64  `json:"original_position,omitempty"`
-	Path                string `json:"path,omitempty"`
-	Position            int64  `json:"position,omitempty"`
-	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
-	PullRequestUrl      string `json:"pull_request_url,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
-	Url                 string `json:"url,omitempty"`
-	User                struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-PullsListFilesReq builds requests for "pulls/list-files"
-
-List pull requests files.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/files
-
-https://developer.github.com/v3/pulls/#list-pull-requests-files
-*/
-type PullsListFilesReq struct {
-	Owner      string
-	Repo       string
-	PullNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r PullsListFilesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/files", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r PullsListFilesReq) method() string {
-	return "GET"
-}
-
-func (r PullsListFilesReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r PullsListFilesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsListFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-PullsListFilesResponseBody200 is a response body for pulls/list-files
-
-API documentation: https://developer.github.com/v3/pulls/#list-pull-requests-files
-*/
-type PullsListFilesResponseBody200 []struct {
-	Additions   int64  `json:"additions,omitempty"`
-	BlobUrl     string `json:"blob_url,omitempty"`
-	Changes     int64  `json:"changes,omitempty"`
-	ContentsUrl string `json:"contents_url,omitempty"`
-	Deletions   int64  `json:"deletions,omitempty"`
-	Filename    string `json:"filename,omitempty"`
-	Patch       string `json:"patch,omitempty"`
-	RawUrl      string `json:"raw_url,omitempty"`
-	Sha         string `json:"sha,omitempty"`
-	Status      string `json:"status,omitempty"`
-}
-
-/*
-PullsSubmitReviewReq builds requests for "pulls/submit-review"
-
-Submit a pull request review.
-
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events
-
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
-*/
-type PullsSubmitReviewReq struct {
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	ReviewId    int64
-	RequestBody PullsSubmitReviewReqBody
-}
-
-func (r PullsSubmitReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/events", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r PullsSubmitReviewReq) method() string {
-	return "POST"
-}
-
-func (r PullsSubmitReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r PullsSubmitReviewReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r PullsSubmitReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-PullsSubmitReviewReqBody is a request body for pulls/submit-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
-*/
-type PullsSubmitReviewReqBody struct {
-
-	// The body text of the pull request review
-	Body *string `json:"body,omitempty"`
-
-	/*
-	   The review action you want to perform. The review actions include: `APPROVE`,
-	   `REQUEST_CHANGES`, or `COMMENT`. When you leave this blank, the API returns
-	   _HTTP 422 (Unrecognizable entity)_ and sets the review action state to
-	   `PENDING`, which means you will need to re-submit the pull request review using
-	   a review action.
-	*/
-	Event *string `json:"event"`
-}
-
-/*
-PullsSubmitReviewResponseBody200 is a response body for pulls/submit-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
-*/
-type PullsSubmitReviewResponseBody200 struct {
-	Links struct {
-		Html struct {
-			Href string `json:"href,omitempty"`
-		} `json:"html,omitempty"`
-		PullRequest struct {
-			Href string `json:"href,omitempty"`
-		} `json:"pull_request,omitempty"`
-	} `json:"_links,omitempty"`
-	Body           string `json:"body,omitempty"`
-	CommitId       string `json:"commit_id,omitempty"`
-	HtmlUrl        string `json:"html_url,omitempty"`
-	Id             int64  `json:"id,omitempty"`
-	NodeId         string `json:"node_id,omitempty"`
-	PullRequestUrl string `json:"pull_request_url,omitempty"`
-	State          string `json:"state,omitempty"`
-	SubmittedAt    string `json:"submitted_at,omitempty"`
 	User           struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
@@ -4960,6 +3198,1768 @@ type PullsCreateResponseBody201 struct {
 	UpdatedAt         string `json:"updated_at,omitempty"`
 	Url               string `json:"url,omitempty"`
 	User              struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsCreateReviewRequestReq builds requests for "pulls/create-review-request"
+
+Create a review request.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+*/
+type PullsCreateReviewRequestReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsCreateReviewRequestReqBody
+}
+
+func (r PullsCreateReviewRequestReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsCreateReviewRequestReq) method() string {
+	return "POST"
+}
+
+func (r PullsCreateReviewRequestReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsCreateReviewRequestReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsCreateReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsCreateReviewRequestReqBody is a request body for pulls/create-review-request
+
+API documentation: https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+*/
+type PullsCreateReviewRequestReqBody struct {
+
+	// An array of user `login`s that will be requested.
+	Reviewers []string `json:"reviewers,omitempty"`
+
+	// An array of team `slug`s that will be requested.
+	TeamReviewers []string `json:"team_reviewers,omitempty"`
+}
+
+/*
+PullsCreateReviewRequestResponseBody201 is a response body for pulls/create-review-request
+
+API documentation: https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+*/
+type PullsCreateReviewRequestResponseBody201 struct {
+	Links struct {
+		Comments struct {
+			Href string `json:"href,omitempty"`
+		} `json:"comments,omitempty"`
+		Commits struct {
+			Href string `json:"href,omitempty"`
+		} `json:"commits,omitempty"`
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		Issue struct {
+			Href string `json:"href,omitempty"`
+		} `json:"issue,omitempty"`
+		ReviewComment struct {
+			Href string `json:"href,omitempty"`
+		} `json:"review_comment,omitempty"`
+		ReviewComments struct {
+			Href string `json:"href,omitempty"`
+		} `json:"review_comments,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+		Statuses struct {
+			Href string `json:"href,omitempty"`
+		} `json:"statuses,omitempty"`
+	} `json:"_links,omitempty"`
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url"`
+		EventsUrl         string `json:"events_url"`
+		FollowersUrl      string `json:"followers_url"`
+		FollowingUrl      string `json:"following_url"`
+		GistsUrl          string `json:"gists_url"`
+		GravatarId        string `json:"gravatar_id"`
+		HtmlUrl           string `json:"html_url"`
+		Id                int64  `json:"id"`
+		Login             string `json:"login"`
+		NodeId            string `json:"node_id"`
+		OrganizationsUrl  string `json:"organizations_url"`
+		ReceivedEventsUrl string `json:"received_events_url"`
+		ReposUrl          string `json:"repos_url"`
+		SiteAdmin         bool   `json:"site_admin"`
+		StarredUrl        string `json:"starred_url"`
+		SubscriptionsUrl  string `json:"subscriptions_url"`
+		Type              string `json:"type"`
+		Url               string `json:"url"`
+	} `json:"assignees,omitempty"`
+	AuthorAssociation string `json:"author_association,omitempty"`
+	Base              struct {
+		Label string `json:"label,omitempty"`
+		Ref   string `json:"ref,omitempty"`
+		Repo  struct {
+			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+			ArchiveUrl       string `json:"archive_url,omitempty"`
+			Archived         bool   `json:"archived,omitempty"`
+			AssigneesUrl     string `json:"assignees_url,omitempty"`
+			BlobsUrl         string `json:"blobs_url,omitempty"`
+			BranchesUrl      string `json:"branches_url,omitempty"`
+			CloneUrl         string `json:"clone_url,omitempty"`
+			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+			CommentsUrl      string `json:"comments_url,omitempty"`
+			CommitsUrl       string `json:"commits_url,omitempty"`
+			CompareUrl       string `json:"compare_url,omitempty"`
+			ContentsUrl      string `json:"contents_url,omitempty"`
+			ContributorsUrl  string `json:"contributors_url,omitempty"`
+			CreatedAt        string `json:"created_at,omitempty"`
+			DefaultBranch    string `json:"default_branch,omitempty"`
+			DeploymentsUrl   string `json:"deployments_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			Disabled         bool   `json:"disabled,omitempty"`
+			DownloadsUrl     string `json:"downloads_url,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			Fork             bool   `json:"fork,omitempty"`
+			ForksCount       int64  `json:"forks_count,omitempty"`
+			ForksUrl         string `json:"forks_url,omitempty"`
+			FullName         string `json:"full_name,omitempty"`
+			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+			GitRefsUrl       string `json:"git_refs_url,omitempty"`
+			GitTagsUrl       string `json:"git_tags_url,omitempty"`
+			GitUrl           string `json:"git_url,omitempty"`
+			HasDownloads     bool   `json:"has_downloads,omitempty"`
+			HasIssues        bool   `json:"has_issues,omitempty"`
+			HasPages         bool   `json:"has_pages,omitempty"`
+			HasProjects      bool   `json:"has_projects,omitempty"`
+			HasWiki          bool   `json:"has_wiki,omitempty"`
+			Homepage         string `json:"homepage,omitempty"`
+			HooksUrl         string `json:"hooks_url,omitempty"`
+			HtmlUrl          string `json:"html_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IsTemplate       bool   `json:"is_template,omitempty"`
+			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			KeysUrl          string `json:"keys_url,omitempty"`
+			LabelsUrl        string `json:"labels_url,omitempty"`
+			Language         string `json:"language,omitempty"`
+			LanguagesUrl     string `json:"languages_url,omitempty"`
+			MergesUrl        string `json:"merges_url,omitempty"`
+			MilestonesUrl    string `json:"milestones_url,omitempty"`
+			MirrorUrl        string `json:"mirror_url,omitempty"`
+			Name             string `json:"name,omitempty"`
+			NetworkCount     int64  `json:"network_count,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			NotificationsUrl string `json:"notifications_url,omitempty"`
+			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+			Owner            struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Permissions struct {
+				Admin bool `json:"admin,omitempty"`
+				Pull  bool `json:"pull,omitempty"`
+				Push  bool `json:"push,omitempty"`
+			} `json:"permissions,omitempty"`
+			Private            bool        `json:"private,omitempty"`
+			PullsUrl           string      `json:"pulls_url,omitempty"`
+			PushedAt           string      `json:"pushed_at,omitempty"`
+			ReleasesUrl        string      `json:"releases_url,omitempty"`
+			Size               json.Number `json:"size,omitempty"`
+			SshUrl             string      `json:"ssh_url,omitempty"`
+			StargazersCount    int64       `json:"stargazers_count,omitempty"`
+			StargazersUrl      string      `json:"stargazers_url,omitempty"`
+			StatusesUrl        string      `json:"statuses_url,omitempty"`
+			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+			SvnUrl             string      `json:"svn_url,omitempty"`
+			TagsUrl            string      `json:"tags_url,omitempty"`
+			TeamsUrl           string      `json:"teams_url,omitempty"`
+			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+			TemplateRepository string      `json:"template_repository,omitempty"`
+			Topics             []string    `json:"topics,omitempty"`
+			TreesUrl           string      `json:"trees_url,omitempty"`
+			UpdatedAt          string      `json:"updated_at,omitempty"`
+			Url                string      `json:"url,omitempty"`
+			Visibility         string      `json:"visibility,omitempty"`
+			WatchersCount      int64       `json:"watchers_count,omitempty"`
+		} `json:"repo,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		User struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+	} `json:"base,omitempty"`
+	Body        string `json:"body,omitempty"`
+	ClosedAt    string `json:"closed_at,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CommitsUrl  string `json:"commits_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	DiffUrl     string `json:"diff_url,omitempty"`
+	Draft       bool   `json:"draft,omitempty"`
+	Head        struct {
+		Label string `json:"label,omitempty"`
+		Ref   string `json:"ref,omitempty"`
+		Repo  struct {
+			AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+			AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+			AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+			ArchiveUrl       string `json:"archive_url,omitempty"`
+			Archived         bool   `json:"archived,omitempty"`
+			AssigneesUrl     string `json:"assignees_url,omitempty"`
+			BlobsUrl         string `json:"blobs_url,omitempty"`
+			BranchesUrl      string `json:"branches_url,omitempty"`
+			CloneUrl         string `json:"clone_url,omitempty"`
+			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+			CommentsUrl      string `json:"comments_url,omitempty"`
+			CommitsUrl       string `json:"commits_url,omitempty"`
+			CompareUrl       string `json:"compare_url,omitempty"`
+			ContentsUrl      string `json:"contents_url,omitempty"`
+			ContributorsUrl  string `json:"contributors_url,omitempty"`
+			CreatedAt        string `json:"created_at,omitempty"`
+			DefaultBranch    string `json:"default_branch,omitempty"`
+			DeploymentsUrl   string `json:"deployments_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			Disabled         bool   `json:"disabled,omitempty"`
+			DownloadsUrl     string `json:"downloads_url,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			Fork             bool   `json:"fork,omitempty"`
+			ForksCount       int64  `json:"forks_count,omitempty"`
+			ForksUrl         string `json:"forks_url,omitempty"`
+			FullName         string `json:"full_name,omitempty"`
+			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+			GitRefsUrl       string `json:"git_refs_url,omitempty"`
+			GitTagsUrl       string `json:"git_tags_url,omitempty"`
+			GitUrl           string `json:"git_url,omitempty"`
+			HasDownloads     bool   `json:"has_downloads,omitempty"`
+			HasIssues        bool   `json:"has_issues,omitempty"`
+			HasPages         bool   `json:"has_pages,omitempty"`
+			HasProjects      bool   `json:"has_projects,omitempty"`
+			HasWiki          bool   `json:"has_wiki,omitempty"`
+			Homepage         string `json:"homepage,omitempty"`
+			HooksUrl         string `json:"hooks_url,omitempty"`
+			HtmlUrl          string `json:"html_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IsTemplate       bool   `json:"is_template,omitempty"`
+			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			KeysUrl          string `json:"keys_url,omitempty"`
+			LabelsUrl        string `json:"labels_url,omitempty"`
+			Language         string `json:"language,omitempty"`
+			LanguagesUrl     string `json:"languages_url,omitempty"`
+			MergesUrl        string `json:"merges_url,omitempty"`
+			MilestonesUrl    string `json:"milestones_url,omitempty"`
+			MirrorUrl        string `json:"mirror_url,omitempty"`
+			Name             string `json:"name,omitempty"`
+			NetworkCount     int64  `json:"network_count,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			NotificationsUrl string `json:"notifications_url,omitempty"`
+			OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+			Owner            struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Permissions struct {
+				Admin bool `json:"admin,omitempty"`
+				Pull  bool `json:"pull,omitempty"`
+				Push  bool `json:"push,omitempty"`
+			} `json:"permissions,omitempty"`
+			Private            bool        `json:"private,omitempty"`
+			PullsUrl           string      `json:"pulls_url,omitempty"`
+			PushedAt           string      `json:"pushed_at,omitempty"`
+			ReleasesUrl        string      `json:"releases_url,omitempty"`
+			Size               json.Number `json:"size,omitempty"`
+			SshUrl             string      `json:"ssh_url,omitempty"`
+			StargazersCount    int64       `json:"stargazers_count,omitempty"`
+			StargazersUrl      string      `json:"stargazers_url,omitempty"`
+			StatusesUrl        string      `json:"statuses_url,omitempty"`
+			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+			SvnUrl             string      `json:"svn_url,omitempty"`
+			TagsUrl            string      `json:"tags_url,omitempty"`
+			TeamsUrl           string      `json:"teams_url,omitempty"`
+			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+			TemplateRepository string      `json:"template_repository,omitempty"`
+			Topics             []string    `json:"topics,omitempty"`
+			TreesUrl           string      `json:"trees_url,omitempty"`
+			UpdatedAt          string      `json:"updated_at,omitempty"`
+			Url                string      `json:"url,omitempty"`
+			Visibility         string      `json:"visibility,omitempty"`
+			WatchersCount      int64       `json:"watchers_count,omitempty"`
+		} `json:"repo,omitempty"`
+		Sha  string `json:"sha,omitempty"`
+		User struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+	} `json:"head,omitempty"`
+	HtmlUrl  string `json:"html_url,omitempty"`
+	Id       int64  `json:"id,omitempty"`
+	IssueUrl string `json:"issue_url,omitempty"`
+	Labels   []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	Locked         bool   `json:"locked,omitempty"`
+	MergeCommitSha string `json:"merge_commit_sha,omitempty"`
+	MergedAt       string `json:"merged_at,omitempty"`
+	Milestone      struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId             string `json:"node_id,omitempty"`
+	Number             int64  `json:"number,omitempty"`
+	PatchUrl           string `json:"patch_url,omitempty"`
+	RequestedReviewers []struct {
+		AvatarUrl         string `json:"avatar_url"`
+		EventsUrl         string `json:"events_url"`
+		FollowersUrl      string `json:"followers_url"`
+		FollowingUrl      string `json:"following_url"`
+		GistsUrl          string `json:"gists_url"`
+		GravatarId        string `json:"gravatar_id"`
+		HtmlUrl           string `json:"html_url"`
+		Id                int64  `json:"id"`
+		Login             string `json:"login"`
+		NodeId            string `json:"node_id"`
+		OrganizationsUrl  string `json:"organizations_url"`
+		ReceivedEventsUrl string `json:"received_events_url"`
+		ReposUrl          string `json:"repos_url"`
+		SiteAdmin         bool   `json:"site_admin"`
+		StarredUrl        string `json:"starred_url"`
+		SubscriptionsUrl  string `json:"subscriptions_url"`
+		Type              string `json:"type"`
+		Url               string `json:"url"`
+	} `json:"requested_reviewers,omitempty"`
+	RequestedTeams []struct {
+		Description     string `json:"description,omitempty"`
+		HtmlUrl         string `json:"html_url,omitempty"`
+		Id              int64  `json:"id,omitempty"`
+		MembersUrl      string `json:"members_url,omitempty"`
+		Name            string `json:"name,omitempty"`
+		NodeId          string `json:"node_id,omitempty"`
+		Parent          string `json:"parent,omitempty"`
+		Permission      string `json:"permission,omitempty"`
+		Privacy         string `json:"privacy,omitempty"`
+		RepositoriesUrl string `json:"repositories_url,omitempty"`
+		Slug            string `json:"slug,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"requested_teams,omitempty"`
+	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
+	ReviewCommentsUrl string `json:"review_comments_url,omitempty"`
+	State             string `json:"state,omitempty"`
+	StatusesUrl       string `json:"statuses_url,omitempty"`
+	Title             string `json:"title,omitempty"`
+	UpdatedAt         string `json:"updated_at,omitempty"`
+	Url               string `json:"url,omitempty"`
+	User              struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsDeleteReviewRequestReq builds requests for "pulls/delete-review-request"
+
+Delete a review request.
+
+  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+*/
+type PullsDeleteReviewRequestReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsDeleteReviewRequestReqBody
+}
+
+func (r PullsDeleteReviewRequestReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsDeleteReviewRequestReq) method() string {
+	return "DELETE"
+}
+
+func (r PullsDeleteReviewRequestReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsDeleteReviewRequestReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsDeleteReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsDeleteReviewRequestReqBody is a request body for pulls/delete-review-request
+
+API documentation: https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+*/
+type PullsDeleteReviewRequestReqBody struct {
+
+	// An array of user `login`s that will be removed.
+	Reviewers []string `json:"reviewers,omitempty"`
+
+	// An array of team `slug`s that will be removed.
+	TeamReviewers []string `json:"team_reviewers,omitempty"`
+}
+
+/*
+PullsListReviewRequestsReq builds requests for "pulls/list-review-requests"
+
+List review requests.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+*/
+type PullsListReviewRequestsReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r PullsListReviewRequestsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsListReviewRequestsReq) method() string {
+	return "GET"
+}
+
+func (r PullsListReviewRequestsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r PullsListReviewRequestsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsListReviewRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsListReviewRequestsResponseBody200 is a response body for pulls/list-review-requests
+
+API documentation: https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+*/
+type PullsListReviewRequestsResponseBody200 struct {
+	Teams []struct {
+		Description     string `json:"description,omitempty"`
+		HtmlUrl         string `json:"html_url,omitempty"`
+		Id              int64  `json:"id,omitempty"`
+		MembersUrl      string `json:"members_url,omitempty"`
+		Name            string `json:"name,omitempty"`
+		NodeId          string `json:"node_id,omitempty"`
+		Parent          string `json:"parent,omitempty"`
+		Permission      string `json:"permission,omitempty"`
+		Privacy         string `json:"privacy,omitempty"`
+		RepositoriesUrl string `json:"repositories_url,omitempty"`
+		Slug            string `json:"slug,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"teams,omitempty"`
+	Users []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"users,omitempty"`
+}
+
+/*
+PullsDeleteCommentReq builds requests for "pulls/delete-comment"
+
+Delete a comment.
+
+  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#delete-a-comment
+*/
+type PullsDeleteCommentReq struct {
+	Owner     string
+	Repo      string
+	CommentId int64
+}
+
+func (r PullsDeleteCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r PullsDeleteCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r PullsDeleteCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsDeleteCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsGetCommentReq builds requests for "pulls/get-comment"
+
+Get a single comment.
+
+  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+*/
+type PullsGetCommentReq struct {
+	Owner     string
+	Repo      string
+	CommentId int64
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+
+	/*
+	An additional `reactions` object in the review comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r PullsGetCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r PullsGetCommentReq) method() string {
+	return "GET"
+}
+
+func (r PullsGetCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsGetCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"comfort-fade":  r.ComfortFadePreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsGetCommentResponseBody200 is a response body for pulls/get-comment
+
+API documentation: https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+*/
+type PullsGetCommentResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
+	Line                int64  `json:"line,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalLine        int64  `json:"original_line,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	Side                string `json:"side,omitempty"`
+	StartLine           int64  `json:"start_line,omitempty"`
+	StartSide           string `json:"start_side,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsUpdateCommentReq builds requests for "pulls/update-comment"
+
+Edit a comment.
+
+  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#edit-a-comment
+*/
+type PullsUpdateCommentReq struct {
+	Owner       string
+	Repo        string
+	CommentId   int64
+	RequestBody PullsUpdateCommentReqBody
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+}
+
+func (r PullsUpdateCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r PullsUpdateCommentReq) method() string {
+	return "PATCH"
+}
+
+func (r PullsUpdateCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsUpdateCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsUpdateCommentReqBody is a request body for pulls/update-comment
+
+API documentation: https://developer.github.com/v3/pulls/comments/#edit-a-comment
+*/
+type PullsUpdateCommentReqBody struct {
+
+	// The text of the reply to the review comment.
+	Body *string `json:"body"`
+}
+
+/*
+PullsUpdateCommentResponseBody200 is a response body for pulls/update-comment
+
+API documentation: https://developer.github.com/v3/pulls/comments/#edit-a-comment
+*/
+type PullsUpdateCommentResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
+	Line                int64  `json:"line,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalLine        int64  `json:"original_line,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	Side                string `json:"side,omitempty"`
+	StartLine           int64  `json:"start_line,omitempty"`
+	StartSide           string `json:"start_side,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsListFilesReq builds requests for "pulls/list-files"
+
+List pull requests files.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/files
+
+https://developer.github.com/v3/pulls/#list-pull-requests-files
+*/
+type PullsListFilesReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r PullsListFilesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/files", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsListFilesReq) method() string {
+	return "GET"
+}
+
+func (r PullsListFilesReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r PullsListFilesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsListFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsListFilesResponseBody200 is a response body for pulls/list-files
+
+API documentation: https://developer.github.com/v3/pulls/#list-pull-requests-files
+*/
+type PullsListFilesResponseBody200 []struct {
+	Additions   int64  `json:"additions,omitempty"`
+	BlobUrl     string `json:"blob_url,omitempty"`
+	Changes     int64  `json:"changes,omitempty"`
+	ContentsUrl string `json:"contents_url,omitempty"`
+	Deletions   int64  `json:"deletions,omitempty"`
+	Filename    string `json:"filename,omitempty"`
+	Patch       string `json:"patch,omitempty"`
+	RawUrl      string `json:"raw_url,omitempty"`
+	Sha         string `json:"sha,omitempty"`
+	Status      string `json:"status,omitempty"`
+}
+
+/*
+PullsListCommentsReq builds requests for "pulls/list-comments"
+
+List comments on a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+*/
+type PullsListCommentsReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+
+	// Can be either `created` or `updated` comments.
+	Sort *string
+
+	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
+	Direction *string
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
+	time.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+
+	/*
+	An additional `reactions` object in the review comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r PullsListCommentsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsListCommentsReq) method() string {
+	return "GET"
+}
+
+func (r PullsListCommentsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r PullsListCommentsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"comfort-fade":  r.ComfortFadePreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsListCommentsResponseBody200 is a response body for pulls/list-comments
+
+API documentation: https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+*/
+type PullsListCommentsResponseBody200 []struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
+	Line                int64  `json:"line,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalLine        int64  `json:"original_line,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	Side                string `json:"side,omitempty"`
+	StartLine           int64  `json:"start_line,omitempty"`
+	StartSide           string `json:"start_side,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsCreateCommentReq builds requests for "pulls/create-comment"
+
+Create a comment.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
+
+https://developer.github.com/v3/pulls/comments/#create-a-comment
+*/
+type PullsCreateCommentReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsCreateCommentReqBody
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+}
+
+func (r PullsCreateCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsCreateCommentReq) method() string {
+	return "POST"
+}
+
+func (r PullsCreateCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsCreateCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsCreateCommentReqBody is a request body for pulls/create-comment
+
+API documentation: https://developer.github.com/v3/pulls/comments/#create-a-comment
+*/
+type PullsCreateCommentReqBody struct {
+
+	// The text of the review comment.
+	Body *string `json:"body"`
+
+	/*
+	   The SHA of the commit needing a comment. Not using the latest commit SHA may
+	   render your comment outdated if a subsequent commit modifies the line you
+	   specify as the `position`.
+	*/
+	CommitId *string `json:"commit_id"`
+
+	/*
+	   **Required with `comfort-fade` preview**. The line of the blob in the pull
+	   request diff that the comment applies to. For a multi-line comment, the last
+	   line of the range that your comment applies to.
+	*/
+	Line *int64 `json:"line,omitempty"`
+
+	// The relative path to the file that necessitates a comment.
+	Path *string `json:"path"`
+
+	/*
+	   **Required without `comfort-fade` preview**. The position in the diff where you
+	   want to add a review comment. Note this value is not the same as the line number
+	   in the file. For help finding the position value, read the note above.
+	*/
+	Position *int64 `json:"position,omitempty"`
+
+	/*
+	   **Required with `comfort-fade` preview**. In a split diff view, the side of the
+	   diff that the pull request's changes appear on. Can be `LEFT` or `RIGHT`. Use
+	   `LEFT` for deletions that appear in red. Use `RIGHT` for additions that appear
+	   in green or unchanged lines that appear in white and are shown for context. For
+	   a multi-line comment, side represents whether the last line of the comment range
+	   is a deletion or addition. For more information, see "[Diff view
+	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)"
+	   in the GitHub Help documentation.
+	*/
+	Side *string `json:"side,omitempty"`
+
+	/*
+	   **Required when using multi-line comments**. To create multi-line comments, you
+	   must use the `comfort-fade` preview header. The `start_line` is the first line
+	   in the pull request diff that your multi-line comment applies to. To learn more
+	   about multi-line comments, see "[Commenting on a pull
+	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
+	   in the GitHub Help documentation.
+	*/
+	StartLine *int64 `json:"start_line,omitempty"`
+
+	/*
+	   **Required when using multi-line comments**. To create multi-line comments, you
+	   must use the `comfort-fade` preview header. The `start_side` is the starting
+	   side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
+	   more about multi-line comments, see "[Commenting on a pull
+	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
+	   in the GitHub Help documentation. See `side` in this table for additional
+	   context.
+	*/
+	StartSide *string `json:"start_side,omitempty"`
+}
+
+/*
+PullsCreateCommentResponseBody201 is a response body for pulls/create-comment
+
+API documentation: https://developer.github.com/v3/pulls/comments/#create-a-comment
+*/
+type PullsCreateCommentResponseBody201 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	AuthorAssociation   string `json:"author_association,omitempty"`
+	Body                string `json:"body,omitempty"`
+	CommitId            string `json:"commit_id,omitempty"`
+	CreatedAt           string `json:"created_at,omitempty"`
+	DiffHunk            string `json:"diff_hunk,omitempty"`
+	HtmlUrl             string `json:"html_url,omitempty"`
+	Id                  int64  `json:"id,omitempty"`
+	InReplyToId         int64  `json:"in_reply_to_id,omitempty"`
+	Line                int64  `json:"line,omitempty"`
+	NodeId              string `json:"node_id,omitempty"`
+	OriginalCommitId    string `json:"original_commit_id,omitempty"`
+	OriginalLine        int64  `json:"original_line,omitempty"`
+	OriginalPosition    int64  `json:"original_position,omitempty"`
+	OriginalStartLine   int64  `json:"original_start_line,omitempty"`
+	Path                string `json:"path,omitempty"`
+	Position            int64  `json:"position,omitempty"`
+	PullRequestReviewId int64  `json:"pull_request_review_id,omitempty"`
+	PullRequestUrl      string `json:"pull_request_url,omitempty"`
+	Side                string `json:"side,omitempty"`
+	StartLine           int64  `json:"start_line,omitempty"`
+	StartSide           string `json:"start_side,omitempty"`
+	UpdatedAt           string `json:"updated_at,omitempty"`
+	Url                 string `json:"url,omitempty"`
+	User                struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsUpdateBranchReq builds requests for "pulls/update-branch"
+
+Update a pull request branch.
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch
+
+https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+*/
+type PullsUpdateBranchReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsUpdateBranchReqBody
+
+	/*
+	Updating the pull request branch with latest upstream changes is currently
+	available for developers to preview. To access this new endpoint during the
+	preview period, you must set this to true.
+	*/
+	LydianPreview bool
+}
+
+func (r PullsUpdateBranchReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/update-branch", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r PullsUpdateBranchReq) method() string {
+	return "PUT"
+}
+
+func (r PullsUpdateBranchReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsUpdateBranchReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"lydian": r.LydianPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsUpdateBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsUpdateBranchReqBody is a request body for pulls/update-branch
+
+API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+*/
+type PullsUpdateBranchReqBody struct {
+
+	/*
+	   The expected SHA of the pull request's HEAD ref. This is the most recent commit
+	   on the pull request's branch. If the expected SHA does not match the pull
+	   request's HEAD, you will receive a `422 Unprocessable Entity` status. You can
+	   use the "[List commits on a
+	   repository](https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository)"
+	   endpoint to find the most recent commit SHA. Default: SHA of the pull request's
+	   current HEAD ref.
+	*/
+	ExpectedHeadSha *string `json:"expected_head_sha,omitempty"`
+}
+
+/*
+PullsUpdateBranchResponseBody202 is a response body for pulls/update-branch
+
+API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+*/
+type PullsUpdateBranchResponseBody202 struct {
+	Message string `json:"message,omitempty"`
+	Url     string `json:"url,omitempty"`
+}
+
+/*
+PullsUpdateReviewReq builds requests for "pulls/update-review"
+
+Update a pull request review.
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
+
+https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+*/
+type PullsUpdateReviewReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	ReviewId    int64
+	RequestBody PullsUpdateReviewReqBody
+}
+
+func (r PullsUpdateReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
+}
+
+func (r PullsUpdateReviewReq) method() string {
+	return "PUT"
+}
+
+func (r PullsUpdateReviewReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsUpdateReviewReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsUpdateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsUpdateReviewReqBody is a request body for pulls/update-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+*/
+type PullsUpdateReviewReqBody struct {
+
+	// The body text of the pull request review.
+	Body *string `json:"body"`
+}
+
+/*
+PullsUpdateReviewResponseBody200 is a response body for pulls/update-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+*/
+type PullsUpdateReviewResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+	} `json:"_links,omitempty"`
+	Body           string `json:"body,omitempty"`
+	CommitId       string `json:"commit_id,omitempty"`
+	HtmlUrl        string `json:"html_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	PullRequestUrl string `json:"pull_request_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsDeletePendingReviewReq builds requests for "pulls/delete-pending-review"
+
+Delete a pending review.
+
+  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
+
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+*/
+type PullsDeletePendingReviewReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+	ReviewId   int64
+}
+
+func (r PullsDeletePendingReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
+}
+
+func (r PullsDeletePendingReviewReq) method() string {
+	return "DELETE"
+}
+
+func (r PullsDeletePendingReviewReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsDeletePendingReviewReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsDeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsDeletePendingReviewResponseBody200 is a response body for pulls/delete-pending-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+*/
+type PullsDeletePendingReviewResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+	} `json:"_links,omitempty"`
+	Body           string `json:"body,omitempty"`
+	CommitId       string `json:"commit_id,omitempty"`
+	HtmlUrl        string `json:"html_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	PullRequestUrl string `json:"pull_request_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsGetReviewReq builds requests for "pulls/get-review"
+
+Get a single review.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
+
+https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+*/
+type PullsGetReviewReq struct {
+	Owner      string
+	Repo       string
+	PullNumber int64
+	ReviewId   int64
+}
+
+func (r PullsGetReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
+}
+
+func (r PullsGetReviewReq) method() string {
+	return "GET"
+}
+
+func (r PullsGetReviewReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsGetReviewReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsGetReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+PullsGetReviewResponseBody200 is a response body for pulls/get-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+*/
+type PullsGetReviewResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+	} `json:"_links,omitempty"`
+	Body           string `json:"body,omitempty"`
+	CommitId       string `json:"commit_id,omitempty"`
+	HtmlUrl        string `json:"html_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	PullRequestUrl string `json:"pull_request_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	SubmittedAt    string `json:"submitted_at,omitempty"`
+	User           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+PullsDismissReviewReq builds requests for "pulls/dismiss-review"
+
+Dismiss a pull request review.
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals
+
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+*/
+type PullsDismissReviewReq struct {
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	ReviewId    int64
+	RequestBody PullsDismissReviewReqBody
+}
+
+func (r PullsDismissReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/dismissals", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
+}
+
+func (r PullsDismissReviewReq) method() string {
+	return "PUT"
+}
+
+func (r PullsDismissReviewReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r PullsDismissReviewReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r PullsDismissReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+PullsDismissReviewReqBody is a request body for pulls/dismiss-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+*/
+type PullsDismissReviewReqBody struct {
+
+	// The message for the pull request review dismissal
+	Message *string `json:"message"`
+}
+
+/*
+PullsDismissReviewResponseBody200 is a response body for pulls/dismiss-review
+
+API documentation: https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+*/
+type PullsDismissReviewResponseBody200 struct {
+	Links struct {
+		Html struct {
+			Href string `json:"href,omitempty"`
+		} `json:"html,omitempty"`
+		PullRequest struct {
+			Href string `json:"href,omitempty"`
+		} `json:"pull_request,omitempty"`
+	} `json:"_links,omitempty"`
+	Body           string `json:"body,omitempty"`
+	CommitId       string `json:"commit_id,omitempty"`
+	HtmlUrl        string `json:"html_url,omitempty"`
+	Id             int64  `json:"id,omitempty"`
+	NodeId         string `json:"node_id,omitempty"`
+	PullRequestUrl string `json:"pull_request_url,omitempty"`
+	State          string `json:"state,omitempty"`
+	User           struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`

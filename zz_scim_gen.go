@@ -168,6 +168,108 @@ type ScimProvisionAndInviteUsersResponseBody201 struct {
 }
 
 /*
+ScimRemoveUserFromOrgReq builds requests for "scim/remove-user-from-org"
+
+Remove a user from the organization.
+
+  DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}
+
+https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
+*/
+type ScimRemoveUserFromOrgReq struct {
+	Org        string
+	ScimUserId int64
+}
+
+func (r ScimRemoveUserFromOrgReq) urlPath() string {
+	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
+}
+
+func (r ScimRemoveUserFromOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r ScimRemoveUserFromOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ScimRemoveUserFromOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ScimRemoveUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ScimGetProvisioningDetailsForUserReq builds requests for "scim/get-provisioning-details-for-user"
+
+Get provisioning details for a single user.
+
+  GET /scim/v2/organizations/{org}/Users/{scim_user_id}
+
+https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
+*/
+type ScimGetProvisioningDetailsForUserReq struct {
+	Org        string
+	ScimUserId int64
+}
+
+func (r ScimGetProvisioningDetailsForUserReq) urlPath() string {
+	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
+}
+
+func (r ScimGetProvisioningDetailsForUserReq) method() string {
+	return "GET"
+}
+
+func (r ScimGetProvisioningDetailsForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ScimGetProvisioningDetailsForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ScimGetProvisioningDetailsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ScimGetProvisioningDetailsForUserResponseBody200 is a response body for scim/get-provisioning-details-for-user
+
+API documentation: https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
+*/
+type ScimGetProvisioningDetailsForUserResponseBody200 struct {
+	Active bool `json:"active,omitempty"`
+	Emails []struct {
+		Primary bool   `json:"primary,omitempty"`
+		Type    string `json:"type,omitempty"`
+		Value   string `json:"value,omitempty"`
+	} `json:"emails,omitempty"`
+	ExternalId string `json:"externalId,omitempty"`
+	Id         string `json:"id,omitempty"`
+	Meta       struct {
+		Created      string `json:"created,omitempty"`
+		LastModified string `json:"lastModified,omitempty"`
+		Location     string `json:"location,omitempty"`
+		ResourceType string `json:"resourceType,omitempty"`
+	} `json:"meta,omitempty"`
+	Name struct {
+		FamilyName string `json:"familyName,omitempty"`
+		GivenName  string `json:"givenName,omitempty"`
+	} `json:"name,omitempty"`
+	Schemas  []string `json:"schemas,omitempty"`
+	UserName string   `json:"userName,omitempty"`
+}
+
+/*
 ScimUpdateUserAttributeReq builds requests for "scim/update-user-attribute"
 
 Update a user attribute.
@@ -275,108 +377,6 @@ ScimReplaceProvisionedUserInformationResponseBody200 is a response body for scim
 API documentation: https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 type ScimReplaceProvisionedUserInformationResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Emails []struct {
-		Primary bool   `json:"primary,omitempty"`
-		Type    string `json:"type,omitempty"`
-		Value   string `json:"value,omitempty"`
-	} `json:"emails,omitempty"`
-	ExternalId string `json:"externalId,omitempty"`
-	Id         string `json:"id,omitempty"`
-	Meta       struct {
-		Created      string `json:"created,omitempty"`
-		LastModified string `json:"lastModified,omitempty"`
-		Location     string `json:"location,omitempty"`
-		ResourceType string `json:"resourceType,omitempty"`
-	} `json:"meta,omitempty"`
-	Name struct {
-		FamilyName string `json:"familyName,omitempty"`
-		GivenName  string `json:"givenName,omitempty"`
-	} `json:"name,omitempty"`
-	Schemas  []string `json:"schemas,omitempty"`
-	UserName string   `json:"userName,omitempty"`
-}
-
-/*
-ScimRemoveUserFromOrgReq builds requests for "scim/remove-user-from-org"
-
-Remove a user from the organization.
-
-  DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}
-
-https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
-*/
-type ScimRemoveUserFromOrgReq struct {
-	Org        string
-	ScimUserId int64
-}
-
-func (r ScimRemoveUserFromOrgReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
-}
-
-func (r ScimRemoveUserFromOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r ScimRemoveUserFromOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ScimRemoveUserFromOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ScimRemoveUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ScimGetProvisioningDetailsForUserReq builds requests for "scim/get-provisioning-details-for-user"
-
-Get provisioning details for a single user.
-
-  GET /scim/v2/organizations/{org}/Users/{scim_user_id}
-
-https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
-*/
-type ScimGetProvisioningDetailsForUserReq struct {
-	Org        string
-	ScimUserId int64
-}
-
-func (r ScimGetProvisioningDetailsForUserReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
-}
-
-func (r ScimGetProvisioningDetailsForUserReq) method() string {
-	return "GET"
-}
-
-func (r ScimGetProvisioningDetailsForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ScimGetProvisioningDetailsForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ScimGetProvisioningDetailsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ScimGetProvisioningDetailsForUserResponseBody200 is a response body for scim/get-provisioning-details-for-user
-
-API documentation: https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
-*/
-type ScimGetProvisioningDetailsForUserResponseBody200 struct {
 	Active bool `json:"active,omitempty"`
 	Emails []struct {
 		Primary bool   `json:"primary,omitempty"`

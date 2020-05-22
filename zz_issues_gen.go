@@ -12,6 +12,662 @@ import (
 )
 
 /*
+IssuesListLabelsForMilestoneReq builds requests for "issues/list-labels-for-milestone"
+
+Get labels for every issue in a milestone.
+
+  GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels
+
+https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+*/
+type IssuesListLabelsForMilestoneReq struct {
+	Owner           string
+	Repo            string
+	MilestoneNumber int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r IssuesListLabelsForMilestoneReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber)
+}
+
+func (r IssuesListLabelsForMilestoneReq) method() string {
+	return "GET"
+}
+
+func (r IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r IssuesListLabelsForMilestoneReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesListLabelsForMilestoneResponseBody200 is a response body for issues/list-labels-for-milestone
+
+API documentation: https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+*/
+type IssuesListLabelsForMilestoneResponseBody200 []struct {
+	Color       string `json:"color,omitempty"`
+	Default     bool   `json:"default,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesListAssigneesReq builds requests for "issues/list-assignees"
+
+List assignees.
+
+  GET /repos/{owner}/{repo}/assignees
+
+https://developer.github.com/v3/issues/assignees/#list-assignees
+*/
+type IssuesListAssigneesReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r IssuesListAssigneesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo)
+}
+
+func (r IssuesListAssigneesReq) method() string {
+	return "GET"
+}
+
+func (r IssuesListAssigneesReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r IssuesListAssigneesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesListAssigneesResponseBody200 is a response body for issues/list-assignees
+
+API documentation: https://developer.github.com/v3/issues/assignees/#list-assignees
+*/
+type IssuesListAssigneesResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+IssuesListForRepoReq builds requests for "issues/list-for-repo"
+
+List repository issues.
+
+  GET /repos/{owner}/{repo}/issues
+
+https://developer.github.com/v3/issues/#list-repository-issues
+*/
+type IssuesListForRepoReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	If an `integer` is passed, it should refer to a milestone by its `number` field.
+	If the string `*` is passed, issues with any milestone are accepted. If the
+	string `none` is passed, issues without milestones are returned.
+	*/
+	Milestone *string
+
+	/*
+	Indicates the state of the issues to return. Can be either `open`, `closed`, or
+	`all`.
+	*/
+	State *string
+
+	/*
+	Can be the name of a user. Pass in `none` for issues with no assigned user, and
+	`*` for issues assigned to any user.
+	*/
+	Assignee *string
+
+	// The user that created the issue.
+	Creator *string
+
+	// A user that's mentioned in the issue.
+	Mentioned *string
+
+	// A list of comma separated label names. Example: `bug,ui,@high`
+	Labels *string
+
+	// What to sort results by. Can be either `created`, `updated`, `comments`.
+	Sort *string
+
+	// The direction of the sort. Can be either `asc` or `desc`.
+	Direction *string
+
+	/*
+	Only issues updated at or after this time are returned. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	If an issue is opened via a GitHub App, the response will include the
+	`performed_via_github_app` object with information about the GitHub App. For
+	more information, see the [related blog
+	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
+
+	To receive the `performed_via_github_app` object in the response, you must set
+	this to true.
+	*/
+	MachineManPreview bool
+
+	/*
+	An additional `reactions` object in the issue payload is currently available for
+	developers to preview. During the preview period, the APIs may change without
+	advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r IssuesListForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
+}
+
+func (r IssuesListForRepoReq) method() string {
+	return "GET"
+}
+
+func (r IssuesListForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Milestone != nil {
+		query.Set("milestone", *r.Milestone)
+	}
+	if r.State != nil {
+		query.Set("state", *r.State)
+	}
+	if r.Assignee != nil {
+		query.Set("assignee", *r.Assignee)
+	}
+	if r.Creator != nil {
+		query.Set("creator", *r.Creator)
+	}
+	if r.Mentioned != nil {
+		query.Set("mentioned", *r.Mentioned)
+	}
+	if r.Labels != nil {
+		query.Set("labels", *r.Labels)
+	}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r IssuesListForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"machine-man":   r.MachineManPreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesListForRepoResponseBody200 is a response body for issues/list-for-repo
+
+API documentation: https://developer.github.com/v3/issues/#list-repository-issues
+*/
+type IssuesListForRepoResponseBody200 []struct {
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignees,omitempty"`
+	Body        string `json:"body,omitempty"`
+	ClosedAt    string `json:"closed_at,omitempty"`
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	EventsUrl   string `json:"events_url,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Labels      []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	LabelsUrl string `json:"labels_url,omitempty"`
+	Locked    bool   `json:"locked,omitempty"`
+	Milestone struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	PullRequest struct {
+		DiffUrl  string `json:"diff_url,omitempty"`
+		HtmlUrl  string `json:"html_url,omitempty"`
+		PatchUrl string `json:"patch_url,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"pull_request,omitempty"`
+	RepositoryUrl string `json:"repository_url,omitempty"`
+	State         string `json:"state,omitempty"`
+	Title         string `json:"title,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	Url           string `json:"url,omitempty"`
+	User          struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+IssuesCreateReq builds requests for "issues/create"
+
+Create an issue.
+
+  POST /repos/{owner}/{repo}/issues
+
+https://developer.github.com/v3/issues/#create-an-issue
+*/
+type IssuesCreateReq struct {
+	Owner       string
+	Repo        string
+	RequestBody IssuesCreateReqBody
+}
+
+func (r IssuesCreateReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
+}
+
+func (r IssuesCreateReq) method() string {
+	return "POST"
+}
+
+func (r IssuesCreateReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesCreateReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesCreateReqBody is a request body for issues/create
+
+API documentation: https://developer.github.com/v3/issues/#create-an-issue
+*/
+type IssuesCreateReqBody struct {
+
+	/*
+	   Login for the user that this issue should be assigned to. _NOTE: Only users with
+	   push access can set the assignee for new issues. The assignee is silently
+	   dropped otherwise. **This field is deprecated.**_
+	*/
+	Assignee *string `json:"assignee,omitempty"`
+
+	/*
+	   Logins for Users to assign to this issue. _NOTE: Only users with push access can
+	   set assignees for new issues. Assignees are silently dropped otherwise._
+	*/
+	Assignees []string `json:"assignees,omitempty"`
+
+	// The contents of the issue.
+	Body *string `json:"body,omitempty"`
+
+	/*
+	   Labels to associate with this issue. _NOTE: Only users with push access can set
+	   labels for new issues. Labels are silently dropped otherwise._
+	*/
+	Labels []string `json:"labels,omitempty"`
+
+	/*
+	   The `number` of the milestone to associate this issue with. _NOTE: Only users
+	   with push access can set the milestone for new issues. The milestone is silently
+	   dropped otherwise._
+	*/
+	Milestone *int64 `json:"milestone,omitempty"`
+
+	// The title of the issue.
+	Title *string `json:"title"`
+}
+
+/*
+IssuesCreateResponseBody201 is a response body for issues/create
+
+API documentation: https://developer.github.com/v3/issues/#create-an-issue
+*/
+type IssuesCreateResponseBody201 struct {
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignees,omitempty"`
+	Body     string `json:"body,omitempty"`
+	ClosedAt string `json:"closed_at,omitempty"`
+	ClosedBy struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"closed_by,omitempty"`
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	EventsUrl   string `json:"events_url,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Labels      []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	LabelsUrl string `json:"labels_url,omitempty"`
+	Locked    bool   `json:"locked,omitempty"`
+	Milestone struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	PullRequest struct {
+		DiffUrl  string `json:"diff_url,omitempty"`
+		HtmlUrl  string `json:"html_url,omitempty"`
+		PatchUrl string `json:"patch_url,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"pull_request,omitempty"`
+	RepositoryUrl string `json:"repository_url,omitempty"`
+	State         string `json:"state,omitempty"`
+	Title         string `json:"title,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	Url           string `json:"url,omitempty"`
+	User          struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
 IssuesListForAuthenticatedUserReq builds requests for "issues/list-for-authenticated-user"
 
 List user account issues assigned to the authenticated user.
@@ -378,170 +1034,45 @@ type IssuesListForAuthenticatedUserResponseBody200 []struct {
 }
 
 /*
-IssuesListLabelsForRepoReq builds requests for "issues/list-labels-for-repo"
+IssuesListForOrgReq builds requests for "issues/list-for-org"
 
-List all labels for this repository.
+List organization issues assigned to the authenticated user.
 
-  GET /repos/{owner}/{repo}/labels
+  GET /orgs/{org}/issues
 
-https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-type IssuesListLabelsForRepoReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r IssuesListLabelsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
-}
-
-func (r IssuesListLabelsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListLabelsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListLabelsForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListLabelsForRepoResponseBody200 is a response body for issues/list-labels-for-repo
-
-API documentation: https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
-*/
-type IssuesListLabelsForRepoResponseBody200 []struct {
-	Color       string `json:"color,omitempty"`
-	Default     bool   `json:"default,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesCreateLabelReq builds requests for "issues/create-label"
-
-Create a label.
-
-  POST /repos/{owner}/{repo}/labels
-
-https://developer.github.com/v3/issues/labels/#create-a-label
-*/
-type IssuesCreateLabelReq struct {
-	Owner       string
-	Repo        string
-	RequestBody IssuesCreateLabelReqBody
-}
-
-func (r IssuesCreateLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
-}
-
-func (r IssuesCreateLabelReq) method() string {
-	return "POST"
-}
-
-func (r IssuesCreateLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesCreateLabelReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesCreateLabelReqBody is a request body for issues/create-label
-
-API documentation: https://developer.github.com/v3/issues/labels/#create-a-label
-*/
-type IssuesCreateLabelReqBody struct {
+type IssuesListForOrgReq struct {
+	Org string
 
 	/*
-	   The [hexadecimal color code](http://www.color-hex.com/) for the label, without
-	   the leading `#`.
+	Indicates which sorts of issues to return. Can be one of:
+	\* `assigned`: Issues assigned to you
+	\* `created`: Issues created by you
+	\* `mentioned`: Issues mentioning you
+	\* `subscribed`: Issues you're subscribed to updates for
+	\* `all`: All issues the authenticated user can see, regardless of participation
+	or creation
 	*/
-	Color *string `json:"color"`
-
-	// A short description of the label.
-	Description *string `json:"description,omitempty"`
+	Filter *string
 
 	/*
-	   The name of the label. Emoji can be added to label names, using either native
-	   emoji or colon-style markup. For example, typing `:strawberry:` will render the
-	   emoji
-	   ![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
-	   ":strawberry:"). For a full list of available emoji and codes, see
-	   [emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
+	Indicates the state of the issues to return. Can be either `open`, `closed`, or
+	`all`.
 	*/
-	Name *string `json:"name"`
-}
+	State *string
 
-/*
-IssuesCreateLabelResponseBody201 is a response body for issues/create-label
+	// A list of comma separated label names. Example: `bug,ui,@high`
+	Labels *string
 
-API documentation: https://developer.github.com/v3/issues/labels/#create-a-label
-*/
-type IssuesCreateLabelResponseBody201 struct {
-	Color       string `json:"color,omitempty"`
-	Default     bool   `json:"default,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesListCommentsForRepoReq builds requests for "issues/list-comments-for-repo"
-
-List comments in a repository.
-
-  GET /repos/{owner}/{repo}/issues/comments
-
-https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
-*/
-type IssuesListCommentsForRepoReq struct {
-	Owner string
-	Repo  string
-
-	// Either `created` or `updated`.
+	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// Either `asc` or `desc`. Ignored without the `sort` parameter.
+	// The direction of the sort. Can be either `asc` or `desc`.
 	Direction *string
 
 	/*
-	Only comments updated at or after this time are returned. This is a timestamp in
+	Only issues updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -554,9 +1085,20 @@ type IssuesListCommentsForRepoReq struct {
 	Page *int64
 
 	/*
-	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	If an issue is opened via a GitHub App, the response will include the
+	`performed_via_github_app` object with information about the GitHub App. For
+	more information, see the [related blog
+	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
+
+	To receive the `performed_via_github_app` object in the response, you must set
+	this to true.
+	*/
+	MachineManPreview bool
+
+	/*
+	An additional `reactions` object in the issue payload is currently available for
+	developers to preview. During the preview period, the APIs may change without
+	advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
 
@@ -565,16 +1107,25 @@ type IssuesListCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListCommentsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo)
+func (r IssuesListForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/issues", r.Org)
 }
 
-func (r IssuesListCommentsForRepoReq) method() string {
+func (r IssuesListForOrgReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListCommentsForRepoReq) urlQuery() url.Values {
+func (r IssuesListForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Filter != nil {
+		query.Set("filter", *r.Filter)
+	}
+	if r.State != nil {
+		query.Set("state", *r.State)
+	}
+	if r.Labels != nil {
+		query.Set("labels", *r.Labels)
+	}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
 	}
@@ -593,30 +1144,241 @@ func (r IssuesListCommentsForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListCommentsForRepoReq) header() http.Header {
+func (r IssuesListForOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	previewVals := map[string]bool{
+		"machine-man":   r.MachineManPreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-IssuesListCommentsForRepoResponseBody200 is a response body for issues/list-comments-for-repo
+IssuesListForOrgResponseBody200 is a response body for issues/list-for-org
 
-API documentation: https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+API documentation: https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-type IssuesListCommentsForRepoResponseBody200 []struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
+type IssuesListForOrgResponseBody200 []struct {
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignees,omitempty"`
+	Body        string `json:"body,omitempty"`
+	ClosedAt    string `json:"closed_at,omitempty"`
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	EventsUrl   string `json:"events_url,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Labels      []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	LabelsUrl string `json:"labels_url,omitempty"`
+	Locked    bool   `json:"locked,omitempty"`
+	Milestone struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	PullRequest struct {
+		DiffUrl  string `json:"diff_url,omitempty"`
+		HtmlUrl  string `json:"html_url,omitempty"`
+		PatchUrl string `json:"patch_url,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"pull_request,omitempty"`
+	Repository struct {
+		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		Archived         bool   `json:"archived,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CloneUrl         string `json:"clone_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		CreatedAt        string `json:"created_at,omitempty"`
+		DefaultBranch    string `json:"default_branch,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		Disabled         bool   `json:"disabled,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksCount       int64  `json:"forks_count,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HasDownloads     bool   `json:"has_downloads,omitempty"`
+		HasIssues        bool   `json:"has_issues,omitempty"`
+		HasPages         bool   `json:"has_pages,omitempty"`
+		HasProjects      bool   `json:"has_projects,omitempty"`
+		HasWiki          bool   `json:"has_wiki,omitempty"`
+		Homepage         string `json:"homepage,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IsTemplate       bool   `json:"is_template,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		Language         string `json:"language,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		MirrorUrl        string `json:"mirror_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NetworkCount     int64  `json:"network_count,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Permissions struct {
+			Admin bool `json:"admin,omitempty"`
+			Pull  bool `json:"pull,omitempty"`
+			Push  bool `json:"push,omitempty"`
+		} `json:"permissions,omitempty"`
+		Private            bool        `json:"private,omitempty"`
+		PullsUrl           string      `json:"pulls_url,omitempty"`
+		PushedAt           string      `json:"pushed_at,omitempty"`
+		ReleasesUrl        string      `json:"releases_url,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		SshUrl             string      `json:"ssh_url,omitempty"`
+		StargazersCount    int64       `json:"stargazers_count,omitempty"`
+		StargazersUrl      string      `json:"stargazers_url,omitempty"`
+		StatusesUrl        string      `json:"statuses_url,omitempty"`
+		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+		SvnUrl             string      `json:"svn_url,omitempty"`
+		TagsUrl            string      `json:"tags_url,omitempty"`
+		TeamsUrl           string      `json:"teams_url,omitempty"`
+		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+		TemplateRepository string      `json:"template_repository,omitempty"`
+		Topics             []string    `json:"topics,omitempty"`
+		TreesUrl           string      `json:"trees_url,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Url                string      `json:"url,omitempty"`
+		Visibility         string      `json:"visibility,omitempty"`
+		WatchersCount      int64       `json:"watchers_count,omitempty"`
+	} `json:"repository,omitempty"`
+	RepositoryUrl string `json:"repository_url,omitempty"`
+	State         string `json:"state,omitempty"`
+	Title         string `json:"title,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	Url           string `json:"url,omitempty"`
+	User          struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -636,358 +1398,6 @@ type IssuesListCommentsForRepoResponseBody200 []struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"user,omitempty"`
-}
-
-/*
-IssuesListEventsForTimelineReq builds requests for "issues/list-events-for-timeline"
-
-List events for an issue.
-
-  GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
-
-https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
-*/
-type IssuesListEventsForTimelineReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The API to get issue timeline events is currently available for developers to
-	preview. During the preview period, the APIs may change without advance notice.
-	Please see the [blog
-	post](https://developer.github.com/changes/2016-05-23-timeline-preview-api/) for
-	full details. To access the API you must set this to true.
-	*/
-	MockingbirdPreview bool
-
-	/*
-	Project card details are now shown in REST API v3 responses for project-related
-	issue and timeline events. This feature is now available for developers to
-	preview. For details, see the [blog
-	post](https://developer.github.com/changes/2018-09-05-project-card-events).
-
-	To receive the `project_card` attribute, project boards must be
-	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
-	for a repository, and you must set this to true.
-	*/
-	StarfoxPreview bool
-}
-
-func (r IssuesListEventsForTimelineReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/timeline", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesListEventsForTimelineReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListEventsForTimelineReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListEventsForTimelineReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"mockingbird": r.MockingbirdPreview,
-		"starfox":     r.StarfoxPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListEventsForTimelineResponseBody200 is a response body for issues/list-events-for-timeline
-
-API documentation: https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
-*/
-type IssuesListEventsForTimelineResponseBody200 []struct {
-	Actor struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"actor,omitempty"`
-	CommitId  string `json:"commit_id,omitempty"`
-	CommitUrl string `json:"commit_url,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Event     string `json:"event,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-IssuesReplaceAllLabelsReq builds requests for "issues/replace-all-labels"
-
-Replace all labels for an issue.
-
-  PUT /repos/{owner}/{repo}/issues/{issue_number}/labels
-
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
-*/
-type IssuesReplaceAllLabelsReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	RequestBody IssuesReplaceAllLabelsReqBody
-}
-
-func (r IssuesReplaceAllLabelsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesReplaceAllLabelsReq) method() string {
-	return "PUT"
-}
-
-func (r IssuesReplaceAllLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesReplaceAllLabelsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesReplaceAllLabelsReqBody is a request body for issues/replace-all-labels
-
-API documentation: https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
-*/
-type IssuesReplaceAllLabelsReqBody struct {
-
-	/*
-	   The names of the labels to add to the issue. You can pass an empty array to
-	   remove all labels. **Note:** Alternatively, you can pass a single label as a
-	   `string` or an `array` of labels directly, but GitHub recommends passing an
-	   object with the `labels` key.
-	*/
-	Labels []string `json:"labels,omitempty"`
-}
-
-/*
-IssuesReplaceAllLabelsResponseBody200 is a response body for issues/replace-all-labels
-
-API documentation: https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
-*/
-type IssuesReplaceAllLabelsResponseBody200 []struct {
-	Color       string `json:"color,omitempty"`
-	Default     bool   `json:"default,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesRemoveAllLabelsReq builds requests for "issues/remove-all-labels"
-
-Remove all labels from an issue.
-
-  DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels
-
-https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
-*/
-type IssuesRemoveAllLabelsReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-}
-
-func (r IssuesRemoveAllLabelsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesRemoveAllLabelsReq) method() string {
-	return "DELETE"
-}
-
-func (r IssuesRemoveAllLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesRemoveAllLabelsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListLabelsOnIssueReq builds requests for "issues/list-labels-on-issue"
-
-List labels on an issue.
-
-  GET /repos/{owner}/{repo}/issues/{issue_number}/labels
-
-https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
-*/
-type IssuesListLabelsOnIssueReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r IssuesListLabelsOnIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesListLabelsOnIssueReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListLabelsOnIssueReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListLabelsOnIssueReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListLabelsOnIssueResponseBody200 is a response body for issues/list-labels-on-issue
-
-API documentation: https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
-*/
-type IssuesListLabelsOnIssueResponseBody200 []struct {
-	Color       string `json:"color,omitempty"`
-	Default     bool   `json:"default,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesAddLabelsReq builds requests for "issues/add-labels"
-
-Add labels to an issue.
-
-  POST /repos/{owner}/{repo}/issues/{issue_number}/labels
-
-https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
-*/
-type IssuesAddLabelsReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	RequestBody IssuesAddLabelsReqBody
-}
-
-func (r IssuesAddLabelsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesAddLabelsReq) method() string {
-	return "POST"
-}
-
-func (r IssuesAddLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesAddLabelsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesAddLabelsReqBody is a request body for issues/add-labels
-
-API documentation: https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
-*/
-type IssuesAddLabelsReqBody struct {
-
-	/*
-	   The name of the label to add to the issue. Must contain at least one label.
-	   **Note:** Alternatively, you can pass a single label as a `string` or an `array`
-	   of labels directly, but GitHub recommends passing an object with the `labels`
-	   key.
-	*/
-	Labels []string `json:"labels"`
-}
-
-/*
-IssuesAddLabelsResponseBody200 is a response body for issues/add-labels
-
-API documentation: https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
-*/
-type IssuesAddLabelsResponseBody200 []struct {
-	Color       string `json:"color,omitempty"`
-	Default     bool   `json:"default,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Url         string `json:"url,omitempty"`
 }
 
 /*
@@ -1212,116 +1622,6 @@ type IssuesUpdateCommentResponseBody200 struct {
 }
 
 /*
-IssuesListEventsReq builds requests for "issues/list-events"
-
-List events for an issue.
-
-  GET /repos/{owner}/{repo}/issues/{issue_number}/events
-
-https://developer.github.com/v3/issues/events/#list-events-for-an-issue
-*/
-type IssuesListEventsReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	Project card details are now shown in REST API v3 responses for project-related
-	issue and timeline events. This feature is now available for developers to
-	preview. For details, see the [blog
-	post](https://developer.github.com/changes/2018-09-05-project-card-events).
-
-	To receive the `project_card` attribute, project boards must be
-	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
-	for a repository, and you must set this to true.
-	*/
-	StarfoxPreview bool
-
-	/*
-	You can now use the REST API to add a reason when you lock an issue, and you
-	will see lock reasons in responses that include issues or pull requests. You
-	will also see lock reasons in `locked` events. This feature is currently
-	available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-01-10-lock-reason-api-preview)
-	for full details. To access this feature, you must set this to true.
-	*/
-	SailorVPreview bool
-}
-
-func (r IssuesListEventsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesListEventsReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListEventsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListEventsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"sailor-v": r.SailorVPreview,
-		"starfox":  r.StarfoxPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListEventsResponseBody200 is a response body for issues/list-events
-
-API documentation: https://developer.github.com/v3/issues/events/#list-events-for-an-issue
-*/
-type IssuesListEventsResponseBody200 []struct {
-	Actor struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"actor,omitempty"`
-	CommitId  string `json:"commit_id,omitempty"`
-	CommitUrl string `json:"commit_url,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Event     string `json:"event,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
 IssuesCheckAssigneeReq builds requests for "issues/check-assignee"
 
 Check assignee.
@@ -1357,6 +1657,975 @@ func (r IssuesCheckAssigneeReq) header() http.Header {
 
 func (r IssuesCheckAssigneeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetEventReq builds requests for "issues/get-event"
+
+Get a single event.
+
+  GET /repos/{owner}/{repo}/issues/events/{event_id}
+
+https://developer.github.com/v3/issues/events/#get-a-single-event
+*/
+type IssuesGetEventReq struct {
+	Owner   string
+	Repo    string
+	EventId int64
+
+	/*
+	Project card details are now shown in REST API v3 responses for project-related
+	issue and timeline events. This feature is now available for developers to
+	preview. For details, see the [blog
+	post](https://developer.github.com/changes/2018-09-05-project-card-events).
+
+	To receive the `project_card` attribute, project boards must be
+	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
+	for a repository, and you must set this to true.
+	*/
+	StarfoxPreview bool
+
+	/*
+	If an issue event is created via a GitHub App, the response will include the
+	`performed_via_github_app` object with information about the GitHub App. For
+	more information, see the [related blog
+	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
+
+	To receive the `performed_via_github_app` object in the response, you must set
+	this to true.
+	*/
+	MachineManPreview bool
+
+	/*
+	You can now use the REST API to add a reason when you lock an issue, and you
+	will see lock reasons in responses that include issues or pull requests. You
+	will also see lock reasons in `locked` events. This feature is currently
+	available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-01-10-lock-reason-api-preview)
+	for full details. To access this feature, you must set this to true.
+	*/
+	SailorVPreview bool
+}
+
+func (r IssuesGetEventReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId)
+}
+
+func (r IssuesGetEventReq) method() string {
+	return "GET"
+}
+
+func (r IssuesGetEventReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesGetEventReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"machine-man": r.MachineManPreview,
+		"sailor-v":    r.SailorVPreview,
+		"starfox":     r.StarfoxPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetEventResponseBody200 is a response body for issues/get-event
+
+API documentation: https://developer.github.com/v3/issues/events/#get-a-single-event
+*/
+type IssuesGetEventResponseBody200 struct {
+	Actor struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"actor,omitempty"`
+	CommitId  string `json:"commit_id,omitempty"`
+	CommitUrl string `json:"commit_url,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Event     string `json:"event,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	Issue     struct {
+		ActiveLockReason string `json:"active_lock_reason,omitempty"`
+		Assignee         struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"assignee,omitempty"`
+		Assignees []struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"assignees,omitempty"`
+		Body        string `json:"body,omitempty"`
+		ClosedAt    string `json:"closed_at,omitempty"`
+		Comments    int64  `json:"comments,omitempty"`
+		CommentsUrl string `json:"comments_url,omitempty"`
+		CreatedAt   string `json:"created_at,omitempty"`
+		EventsUrl   string `json:"events_url,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Labels      []struct {
+			Color       string `json:"color,omitempty"`
+			Default     bool   `json:"default,omitempty"`
+			Description string `json:"description,omitempty"`
+			Id          int64  `json:"id,omitempty"`
+			Name        string `json:"name,omitempty"`
+			NodeId      string `json:"node_id,omitempty"`
+			Url         string `json:"url,omitempty"`
+		} `json:"labels,omitempty"`
+		LabelsUrl string `json:"labels_url,omitempty"`
+		Locked    bool   `json:"locked,omitempty"`
+		Milestone struct {
+			ClosedAt     string `json:"closed_at,omitempty"`
+			ClosedIssues int64  `json:"closed_issues,omitempty"`
+			CreatedAt    string `json:"created_at,omitempty"`
+			Creator      struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"creator,omitempty"`
+			Description string `json:"description,omitempty"`
+			DueOn       string `json:"due_on,omitempty"`
+			HtmlUrl     string `json:"html_url,omitempty"`
+			Id          int64  `json:"id,omitempty"`
+			LabelsUrl   string `json:"labels_url,omitempty"`
+			NodeId      string `json:"node_id,omitempty"`
+			Number      int64  `json:"number,omitempty"`
+			OpenIssues  int64  `json:"open_issues,omitempty"`
+			State       string `json:"state,omitempty"`
+			Title       string `json:"title,omitempty"`
+			UpdatedAt   string `json:"updated_at,omitempty"`
+			Url         string `json:"url,omitempty"`
+		} `json:"milestone,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		PullRequest struct {
+			DiffUrl  string `json:"diff_url,omitempty"`
+			HtmlUrl  string `json:"html_url,omitempty"`
+			PatchUrl string `json:"patch_url,omitempty"`
+			Url      string `json:"url,omitempty"`
+		} `json:"pull_request,omitempty"`
+		RepositoryUrl string `json:"repository_url,omitempty"`
+		State         string `json:"state,omitempty"`
+		Title         string `json:"title,omitempty"`
+		UpdatedAt     string `json:"updated_at,omitempty"`
+		Url           string `json:"url,omitempty"`
+		User          struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+	} `json:"issue,omitempty"`
+	NodeId string `json:"node_id,omitempty"`
+	Url    string `json:"url,omitempty"`
+}
+
+/*
+IssuesGetReq builds requests for "issues/get"
+
+Get an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}
+
+https://developer.github.com/v3/issues/#get-an-issue
+*/
+type IssuesGetReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+
+	/*
+	An additional `reactions` object in the issue payload is currently available for
+	developers to preview. During the preview period, the APIs may change without
+	advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r IssuesGetReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r IssuesGetReq) method() string {
+	return "GET"
+}
+
+func (r IssuesGetReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesGetReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetResponseBody200 is a response body for issues/get
+
+API documentation: https://developer.github.com/v3/issues/#get-an-issue
+*/
+type IssuesGetResponseBody200 struct {
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignees,omitempty"`
+	Body     string `json:"body,omitempty"`
+	ClosedAt string `json:"closed_at,omitempty"`
+	ClosedBy struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"closed_by,omitempty"`
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	EventsUrl   string `json:"events_url,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Labels      []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	LabelsUrl string `json:"labels_url,omitempty"`
+	Locked    bool   `json:"locked,omitempty"`
+	Milestone struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	PullRequest struct {
+		DiffUrl  string `json:"diff_url,omitempty"`
+		HtmlUrl  string `json:"html_url,omitempty"`
+		PatchUrl string `json:"patch_url,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"pull_request,omitempty"`
+	RepositoryUrl string `json:"repository_url,omitempty"`
+	State         string `json:"state,omitempty"`
+	Title         string `json:"title,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	Url           string `json:"url,omitempty"`
+	User          struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+IssuesUpdateReq builds requests for "issues/update"
+
+Update an issue.
+
+  PATCH /repos/{owner}/{repo}/issues/{issue_number}
+
+https://developer.github.com/v3/issues/#update-an-issue
+*/
+type IssuesUpdateReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+	RequestBody IssuesUpdateReqBody
+}
+
+func (r IssuesUpdateReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r IssuesUpdateReq) method() string {
+	return "PATCH"
+}
+
+func (r IssuesUpdateReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesUpdateReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesUpdateReqBody is a request body for issues/update
+
+API documentation: https://developer.github.com/v3/issues/#update-an-issue
+*/
+type IssuesUpdateReqBody struct {
+
+	/*
+	   Login for the user that this issue should be assigned to. **This field is
+	   deprecated.**
+	*/
+	Assignee *string `json:"assignee,omitempty"`
+
+	/*
+	   Logins for Users to assign to this issue. Pass one or more user logins to
+	   _replace_ the set of assignees on this Issue. Send an empty array (`[]`) to
+	   clear all assignees from the Issue. _NOTE: Only users with push access can set
+	   assignees for new issues. Assignees are silently dropped otherwise._
+	*/
+	Assignees []string `json:"assignees,omitempty"`
+
+	// The contents of the issue.
+	Body *string `json:"body,omitempty"`
+
+	/*
+	   Labels to associate with this issue. Pass one or more Labels to _replace_ the
+	   set of Labels on this Issue. Send an empty array (`[]`) to clear all Labels from
+	   the Issue. _NOTE: Only users with push access can set labels for issues. Labels
+	   are silently dropped otherwise._
+	*/
+	Labels []string `json:"labels,omitempty"`
+
+	/*
+	   The `number` of the milestone to associate this issue with or `null` to remove
+	   current. _NOTE: Only users with push access can set the milestone for issues.
+	   The milestone is silently dropped otherwise._
+	*/
+	Milestone *int64 `json:"milestone,omitempty"`
+
+	// State of the issue. Either `open` or `closed`.
+	State *string `json:"state,omitempty"`
+
+	// The title of the issue.
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+IssuesUpdateResponseBody200 is a response body for issues/update
+
+API documentation: https://developer.github.com/v3/issues/#update-an-issue
+*/
+type IssuesUpdateResponseBody200 struct {
+	ActiveLockReason string `json:"active_lock_reason,omitempty"`
+	Assignee         struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignee,omitempty"`
+	Assignees []struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"assignees,omitempty"`
+	Body     string `json:"body,omitempty"`
+	ClosedAt string `json:"closed_at,omitempty"`
+	ClosedBy struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"closed_by,omitempty"`
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	EventsUrl   string `json:"events_url,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Labels      []struct {
+		Color       string `json:"color,omitempty"`
+		Default     bool   `json:"default,omitempty"`
+		Description string `json:"description,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"labels,omitempty"`
+	LabelsUrl string `json:"labels_url,omitempty"`
+	Locked    bool   `json:"locked,omitempty"`
+	Milestone struct {
+		ClosedAt     string `json:"closed_at,omitempty"`
+		ClosedIssues int64  `json:"closed_issues,omitempty"`
+		CreatedAt    string `json:"created_at,omitempty"`
+		Creator      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"creator,omitempty"`
+		Description string `json:"description,omitempty"`
+		DueOn       string `json:"due_on,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		OpenIssues  int64  `json:"open_issues,omitempty"`
+		State       string `json:"state,omitempty"`
+		Title       string `json:"title,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+	} `json:"milestone,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	PullRequest struct {
+		DiffUrl  string `json:"diff_url,omitempty"`
+		HtmlUrl  string `json:"html_url,omitempty"`
+		PatchUrl string `json:"patch_url,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"pull_request,omitempty"`
+	RepositoryUrl string `json:"repository_url,omitempty"`
+	State         string `json:"state,omitempty"`
+	Title         string `json:"title,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	Url           string `json:"url,omitempty"`
+	User          struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+IssuesDeleteLabelReq builds requests for "issues/delete-label"
+
+Delete a label.
+
+  DELETE /repos/{owner}/{repo}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#delete-a-label
+*/
+type IssuesDeleteLabelReq struct {
+	Owner string
+	Repo  string
+	Name  string
+}
+
+func (r IssuesDeleteLabelReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
+}
+
+func (r IssuesDeleteLabelReq) method() string {
+	return "DELETE"
+}
+
+func (r IssuesDeleteLabelReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesDeleteLabelReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetLabelReq builds requests for "issues/get-label"
+
+Get a single label.
+
+  GET /repos/{owner}/{repo}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#get-a-single-label
+*/
+type IssuesGetLabelReq struct {
+	Owner string
+	Repo  string
+	Name  string
+}
+
+func (r IssuesGetLabelReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
+}
+
+func (r IssuesGetLabelReq) method() string {
+	return "GET"
+}
+
+func (r IssuesGetLabelReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesGetLabelReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetLabelResponseBody200 is a response body for issues/get-label
+
+API documentation: https://developer.github.com/v3/issues/labels/#get-a-single-label
+*/
+type IssuesGetLabelResponseBody200 struct {
+	Color       string `json:"color,omitempty"`
+	Default     bool   `json:"default,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesUpdateLabelReq builds requests for "issues/update-label"
+
+Update a label.
+
+  PATCH /repos/{owner}/{repo}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#update-a-label
+*/
+type IssuesUpdateLabelReq struct {
+	Owner       string
+	Repo        string
+	Name        string
+	RequestBody IssuesUpdateLabelReqBody
+}
+
+func (r IssuesUpdateLabelReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
+}
+
+func (r IssuesUpdateLabelReq) method() string {
+	return "PATCH"
+}
+
+func (r IssuesUpdateLabelReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesUpdateLabelReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesUpdateLabelReqBody is a request body for issues/update-label
+
+API documentation: https://developer.github.com/v3/issues/labels/#update-a-label
+*/
+type IssuesUpdateLabelReqBody struct {
+
+	/*
+	   The [hexadecimal color code](http://www.color-hex.com/) for the label, without
+	   the leading `#`.
+	*/
+	Color *string `json:"color,omitempty"`
+
+	// A short description of the label.
+	Description *string `json:"description,omitempty"`
+
+	/*
+	   The new name of the label. Emoji can be added to label names, using either
+	   native emoji or colon-style markup. For example, typing `:strawberry:` will
+	   render the emoji
+	   ![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
+	   ":strawberry:"). For a full list of available emoji and codes, see
+	   [emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
+	*/
+	NewName *string `json:"new_name,omitempty"`
+}
+
+/*
+IssuesUpdateLabelResponseBody200 is a response body for issues/update-label
+
+API documentation: https://developer.github.com/v3/issues/labels/#update-a-label
+*/
+type IssuesUpdateLabelResponseBody200 struct {
+	Color       string `json:"color,omitempty"`
+	Default     bool   `json:"default,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesUnlockReq builds requests for "issues/unlock"
+
+Unlock an issue.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock
+
+https://developer.github.com/v3/issues/#unlock-an-issue
+*/
+type IssuesUnlockReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+}
+
+func (r IssuesUnlockReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r IssuesUnlockReq) method() string {
+	return "DELETE"
+}
+
+func (r IssuesUnlockReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesUnlockReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesLockReq builds requests for "issues/lock"
+
+Lock an issue.
+
+  PUT /repos/{owner}/{repo}/issues/{issue_number}/lock
+
+https://developer.github.com/v3/issues/#lock-an-issue
+*/
+type IssuesLockReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+	RequestBody IssuesLockReqBody
+
+	/*
+	You can now use the REST API to add a reason when you lock an issue, and you
+	will see lock reasons in responses that include issues or pull requests. You
+	will also see lock reasons in `locked` events. This feature is currently
+	available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-01-10-lock-reason-api-preview)
+	for full details. To access this feature, you must set this to true.
+	*/
+	SailorVPreview bool
+}
+
+func (r IssuesLockReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r IssuesLockReq) method() string {
+	return "PUT"
+}
+
+func (r IssuesLockReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesLockReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesLockReqBody is a request body for issues/lock
+
+API documentation: https://developer.github.com/v3/issues/#lock-an-issue
+*/
+type IssuesLockReqBody struct {
+
+	/*
+	   The reason for locking the issue or pull request conversation. Lock will fail if
+	   you don't use one of these reasons:
+	   \* `off-topic`
+	   \* `too heated`
+	   \* `resolved`
+	   \* `spam`
+	*/
+	LockReason *string `json:"lock_reason,omitempty"`
 }
 
 /*
@@ -1934,87 +3203,99 @@ type IssuesAddAssigneesResponseBody201 struct {
 }
 
 /*
-IssuesDeleteLabelReq builds requests for "issues/delete-label"
+IssuesRemoveAllLabelsReq builds requests for "issues/remove-all-labels"
 
-Delete a label.
+Remove all labels from an issue.
 
-  DELETE /repos/{owner}/{repo}/labels/{name}
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#delete-a-label
+https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-type IssuesDeleteLabelReq struct {
-	Owner string
-	Repo  string
-	Name  string
+type IssuesRemoveAllLabelsReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
 }
 
-func (r IssuesDeleteLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
+func (r IssuesRemoveAllLabelsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesDeleteLabelReq) method() string {
+func (r IssuesRemoveAllLabelsReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesDeleteLabelReq) urlQuery() url.Values {
+func (r IssuesRemoveAllLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesDeleteLabelReq) header() http.Header {
+func (r IssuesRemoveAllLabelsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-IssuesGetLabelReq builds requests for "issues/get-label"
+IssuesListLabelsOnIssueReq builds requests for "issues/list-labels-on-issue"
 
-Get a single label.
+List labels on an issue.
 
-  GET /repos/{owner}/{repo}/labels/{name}
+  GET /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#get-a-single-label
+https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
-type IssuesGetLabelReq struct {
-	Owner string
-	Repo  string
-	Name  string
+type IssuesListLabelsOnIssueReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r IssuesGetLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
+func (r IssuesListLabelsOnIssueReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesGetLabelReq) method() string {
+func (r IssuesListLabelsOnIssueReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetLabelReq) urlQuery() url.Values {
+func (r IssuesListLabelsOnIssueReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r IssuesGetLabelReq) header() http.Header {
+func (r IssuesListLabelsOnIssueReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-IssuesGetLabelResponseBody200 is a response body for issues/get-label
+IssuesListLabelsOnIssueResponseBody200 is a response body for issues/list-labels-on-issue
 
-API documentation: https://developer.github.com/v3/issues/labels/#get-a-single-label
+API documentation: https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
-type IssuesGetLabelResponseBody200 struct {
+type IssuesListLabelsOnIssueResponseBody200 []struct {
 	Color       string `json:"color,omitempty"`
 	Default     bool   `json:"default,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -2025,83 +3306,743 @@ type IssuesGetLabelResponseBody200 struct {
 }
 
 /*
-IssuesUpdateLabelReq builds requests for "issues/update-label"
+IssuesAddLabelsReq builds requests for "issues/add-labels"
 
-Update a label.
+Add labels to an issue.
 
-  PATCH /repos/{owner}/{repo}/labels/{name}
+  POST /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#update-a-label
+https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-type IssuesUpdateLabelReq struct {
+type IssuesAddLabelsReq struct {
 	Owner       string
 	Repo        string
-	Name        string
-	RequestBody IssuesUpdateLabelReqBody
+	IssueNumber int64
+	RequestBody IssuesAddLabelsReqBody
 }
 
-func (r IssuesUpdateLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
+func (r IssuesAddLabelsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesUpdateLabelReq) method() string {
-	return "PATCH"
+func (r IssuesAddLabelsReq) method() string {
+	return "POST"
 }
 
-func (r IssuesUpdateLabelReq) urlQuery() url.Values {
+func (r IssuesAddLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesUpdateLabelReq) header() http.Header {
+func (r IssuesAddLabelsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-IssuesUpdateLabelReqBody is a request body for issues/update-label
+IssuesAddLabelsReqBody is a request body for issues/add-labels
 
-API documentation: https://developer.github.com/v3/issues/labels/#update-a-label
+API documentation: https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-type IssuesUpdateLabelReqBody struct {
+type IssuesAddLabelsReqBody struct {
 
 	/*
-	   The [hexadecimal color code](http://www.color-hex.com/) for the label, without
-	   the leading `#`.
+	   The name of the label to add to the issue. Must contain at least one label.
+	   **Note:** Alternatively, you can pass a single label as a `string` or an `array`
+	   of labels directly, but GitHub recommends passing an object with the `labels`
+	   key.
 	*/
-	Color *string `json:"color,omitempty"`
-
-	// A short description of the label.
-	Description *string `json:"description,omitempty"`
-
-	/*
-	   The new name of the label. Emoji can be added to label names, using either
-	   native emoji or colon-style markup. For example, typing `:strawberry:` will
-	   render the emoji
-	   ![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
-	   ":strawberry:"). For a full list of available emoji and codes, see
-	   [emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
-	*/
-	NewName *string `json:"new_name,omitempty"`
+	Labels []string `json:"labels"`
 }
 
 /*
-IssuesUpdateLabelResponseBody200 is a response body for issues/update-label
+IssuesAddLabelsResponseBody200 is a response body for issues/add-labels
 
-API documentation: https://developer.github.com/v3/issues/labels/#update-a-label
+API documentation: https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-type IssuesUpdateLabelResponseBody200 struct {
+type IssuesAddLabelsResponseBody200 []struct {
 	Color       string `json:"color,omitempty"`
 	Default     bool   `json:"default,omitempty"`
 	Description string `json:"description,omitempty"`
 	Id          int64  `json:"id,omitempty"`
 	Name        string `json:"name,omitempty"`
 	NodeId      string `json:"node_id,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesReplaceAllLabelsReq builds requests for "issues/replace-all-labels"
+
+Replace all labels for an issue.
+
+  PUT /repos/{owner}/{repo}/issues/{issue_number}/labels
+
+https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+*/
+type IssuesReplaceAllLabelsReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+	RequestBody IssuesReplaceAllLabelsReqBody
+}
+
+func (r IssuesReplaceAllLabelsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r IssuesReplaceAllLabelsReq) method() string {
+	return "PUT"
+}
+
+func (r IssuesReplaceAllLabelsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesReplaceAllLabelsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesReplaceAllLabelsReqBody is a request body for issues/replace-all-labels
+
+API documentation: https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+*/
+type IssuesReplaceAllLabelsReqBody struct {
+
+	/*
+	   The names of the labels to add to the issue. You can pass an empty array to
+	   remove all labels. **Note:** Alternatively, you can pass a single label as a
+	   `string` or an `array` of labels directly, but GitHub recommends passing an
+	   object with the `labels` key.
+	*/
+	Labels []string `json:"labels,omitempty"`
+}
+
+/*
+IssuesReplaceAllLabelsResponseBody200 is a response body for issues/replace-all-labels
+
+API documentation: https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+*/
+type IssuesReplaceAllLabelsResponseBody200 []struct {
+	Color       string `json:"color,omitempty"`
+	Default     bool   `json:"default,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesRemoveLabelReq builds requests for "issues/remove-label"
+
+Remove a label from an issue.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+*/
+type IssuesRemoveLabelReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+	Name        string
+}
+
+func (r IssuesRemoveLabelReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name)
+}
+
+func (r IssuesRemoveLabelReq) method() string {
+	return "DELETE"
+}
+
+func (r IssuesRemoveLabelReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesRemoveLabelReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesRemoveLabelResponseBody200 is a response body for issues/remove-label
+
+API documentation: https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+*/
+type IssuesRemoveLabelResponseBody200 []struct {
+	Color       string `json:"color,omitempty"`
+	Default     bool   `json:"default,omitempty"`
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesListMilestonesForRepoReq builds requests for "issues/list-milestones-for-repo"
+
+List milestones for a repository.
+
+  GET /repos/{owner}/{repo}/milestones
+
+https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+*/
+type IssuesListMilestonesForRepoReq struct {
+	Owner string
+	Repo  string
+
+	// The state of the milestone. Either `open`, `closed`, or `all`.
+	State *string
+
+	// What to sort results by. Either `due_on` or `completeness`.
+	Sort *string
+
+	// The direction of the sort. Either `asc` or `desc`.
+	Direction *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r IssuesListMilestonesForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
+}
+
+func (r IssuesListMilestonesForRepoReq) method() string {
+	return "GET"
+}
+
+func (r IssuesListMilestonesForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.State != nil {
+		query.Set("state", *r.State)
+	}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r IssuesListMilestonesForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesListMilestonesForRepoResponseBody200 is a response body for issues/list-milestones-for-repo
+
+API documentation: https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+*/
+type IssuesListMilestonesForRepoResponseBody200 []struct {
+	ClosedAt     string `json:"closed_at,omitempty"`
+	ClosedIssues int64  `json:"closed_issues,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Creator      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description string `json:"description,omitempty"`
+	DueOn       string `json:"due_on,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	LabelsUrl   string `json:"labels_url,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	OpenIssues  int64  `json:"open_issues,omitempty"`
+	State       string `json:"state,omitempty"`
+	Title       string `json:"title,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesCreateMilestoneReq builds requests for "issues/create-milestone"
+
+Create a milestone.
+
+  POST /repos/{owner}/{repo}/milestones
+
+https://developer.github.com/v3/issues/milestones/#create-a-milestone
+*/
+type IssuesCreateMilestoneReq struct {
+	Owner       string
+	Repo        string
+	RequestBody IssuesCreateMilestoneReqBody
+}
+
+func (r IssuesCreateMilestoneReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
+}
+
+func (r IssuesCreateMilestoneReq) method() string {
+	return "POST"
+}
+
+func (r IssuesCreateMilestoneReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesCreateMilestoneReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesCreateMilestoneReqBody is a request body for issues/create-milestone
+
+API documentation: https://developer.github.com/v3/issues/milestones/#create-a-milestone
+*/
+type IssuesCreateMilestoneReqBody struct {
+
+	// A description of the milestone.
+	Description *string `json:"description,omitempty"`
+
+	/*
+	   The milestone due date. This is a timestamp in [ISO
+	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	DueOn *string `json:"due_on,omitempty"`
+
+	// The state of the milestone. Either `open` or `closed`.
+	State *string `json:"state,omitempty"`
+
+	// The title of the milestone.
+	Title *string `json:"title"`
+}
+
+/*
+IssuesCreateMilestoneResponseBody201 is a response body for issues/create-milestone
+
+API documentation: https://developer.github.com/v3/issues/milestones/#create-a-milestone
+*/
+type IssuesCreateMilestoneResponseBody201 struct {
+	ClosedAt     string `json:"closed_at,omitempty"`
+	ClosedIssues int64  `json:"closed_issues,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Creator      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description string `json:"description,omitempty"`
+	DueOn       string `json:"due_on,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	LabelsUrl   string `json:"labels_url,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	OpenIssues  int64  `json:"open_issues,omitempty"`
+	State       string `json:"state,omitempty"`
+	Title       string `json:"title,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesListEventsForTimelineReq builds requests for "issues/list-events-for-timeline"
+
+List events for an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
+
+https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+*/
+type IssuesListEventsForTimelineReq struct {
+	Owner       string
+	Repo        string
+	IssueNumber int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The API to get issue timeline events is currently available for developers to
+	preview. During the preview period, the APIs may change without advance notice.
+	Please see the [blog
+	post](https://developer.github.com/changes/2016-05-23-timeline-preview-api/) for
+	full details. To access the API you must set this to true.
+	*/
+	MockingbirdPreview bool
+
+	/*
+	Project card details are now shown in REST API v3 responses for project-related
+	issue and timeline events. This feature is now available for developers to
+	preview. For details, see the [blog
+	post](https://developer.github.com/changes/2018-09-05-project-card-events).
+
+	To receive the `project_card` attribute, project boards must be
+	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
+	for a repository, and you must set this to true.
+	*/
+	StarfoxPreview bool
+}
+
+func (r IssuesListEventsForTimelineReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/timeline", r.Owner, r.Repo, r.IssueNumber)
+}
+
+func (r IssuesListEventsForTimelineReq) method() string {
+	return "GET"
+}
+
+func (r IssuesListEventsForTimelineReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r IssuesListEventsForTimelineReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"mockingbird": r.MockingbirdPreview,
+		"starfox":     r.StarfoxPreview,
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesListEventsForTimelineResponseBody200 is a response body for issues/list-events-for-timeline
+
+API documentation: https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+*/
+type IssuesListEventsForTimelineResponseBody200 []struct {
+	Actor struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"actor,omitempty"`
+	CommitId  string `json:"commit_id,omitempty"`
+	CommitUrl string `json:"commit_url,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Event     string `json:"event,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+IssuesDeleteMilestoneReq builds requests for "issues/delete-milestone"
+
+Delete a milestone.
+
+  DELETE /repos/{owner}/{repo}/milestones/{milestone_number}
+
+https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+*/
+type IssuesDeleteMilestoneReq struct {
+	Owner           string
+	Repo            string
+	MilestoneNumber int64
+}
+
+func (r IssuesDeleteMilestoneReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
+}
+
+func (r IssuesDeleteMilestoneReq) method() string {
+	return "DELETE"
+}
+
+func (r IssuesDeleteMilestoneReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesDeleteMilestoneReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetMilestoneReq builds requests for "issues/get-milestone"
+
+Get a single milestone.
+
+  GET /repos/{owner}/{repo}/milestones/{milestone_number}
+
+https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+*/
+type IssuesGetMilestoneReq struct {
+	Owner           string
+	Repo            string
+	MilestoneNumber int64
+}
+
+func (r IssuesGetMilestoneReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
+}
+
+func (r IssuesGetMilestoneReq) method() string {
+	return "GET"
+}
+
+func (r IssuesGetMilestoneReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesGetMilestoneReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+IssuesGetMilestoneResponseBody200 is a response body for issues/get-milestone
+
+API documentation: https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+*/
+type IssuesGetMilestoneResponseBody200 struct {
+	ClosedAt     string `json:"closed_at,omitempty"`
+	ClosedIssues int64  `json:"closed_issues,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Creator      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description string `json:"description,omitempty"`
+	DueOn       string `json:"due_on,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	LabelsUrl   string `json:"labels_url,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	OpenIssues  int64  `json:"open_issues,omitempty"`
+	State       string `json:"state,omitempty"`
+	Title       string `json:"title,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	Url         string `json:"url,omitempty"`
+}
+
+/*
+IssuesUpdateMilestoneReq builds requests for "issues/update-milestone"
+
+Update a milestone.
+
+  PATCH /repos/{owner}/{repo}/milestones/{milestone_number}
+
+https://developer.github.com/v3/issues/milestones/#update-a-milestone
+*/
+type IssuesUpdateMilestoneReq struct {
+	Owner           string
+	Repo            string
+	MilestoneNumber int64
+	RequestBody     IssuesUpdateMilestoneReqBody
+}
+
+func (r IssuesUpdateMilestoneReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
+}
+
+func (r IssuesUpdateMilestoneReq) method() string {
+	return "PATCH"
+}
+
+func (r IssuesUpdateMilestoneReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r IssuesUpdateMilestoneReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+IssuesUpdateMilestoneReqBody is a request body for issues/update-milestone
+
+API documentation: https://developer.github.com/v3/issues/milestones/#update-a-milestone
+*/
+type IssuesUpdateMilestoneReqBody struct {
+
+	// A description of the milestone.
+	Description *string `json:"description,omitempty"`
+
+	/*
+	   The milestone due date. This is a timestamp in [ISO
+	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	DueOn *string `json:"due_on,omitempty"`
+
+	// The state of the milestone. Either `open` or `closed`.
+	State *string `json:"state,omitempty"`
+
+	// The title of the milestone.
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+IssuesUpdateMilestoneResponseBody200 is a response body for issues/update-milestone
+
+API documentation: https://developer.github.com/v3/issues/milestones/#update-a-milestone
+*/
+type IssuesUpdateMilestoneResponseBody200 struct {
+	ClosedAt     string `json:"closed_at,omitempty"`
+	ClosedIssues int64  `json:"closed_issues,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Creator      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	Description string `json:"description,omitempty"`
+	DueOn       string `json:"due_on,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	LabelsUrl   string `json:"labels_url,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Number      int64  `json:"number,omitempty"`
+	OpenIssues  int64  `json:"open_issues,omitempty"`
+	State       string `json:"state,omitempty"`
+	Title       string `json:"title,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
 	Url         string `json:"url,omitempty"`
 }
 
@@ -2347,822 +4288,24 @@ type IssuesListEventsForRepoResponseBody200 []struct {
 }
 
 /*
-IssuesListLabelsForMilestoneReq builds requests for "issues/list-labels-for-milestone"
+IssuesListEventsReq builds requests for "issues/list-events"
 
-Get labels for every issue in a milestone.
+List events for an issue.
 
-  GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels
+  GET /repos/{owner}/{repo}/issues/{issue_number}/events
 
-https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
-type IssuesListLabelsForMilestoneReq struct {
-	Owner           string
-	Repo            string
-	MilestoneNumber int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r IssuesListLabelsForMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber)
-}
-
-func (r IssuesListLabelsForMilestoneReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListLabelsForMilestoneReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListLabelsForMilestoneResponseBody200 is a response body for issues/list-labels-for-milestone
-
-API documentation: https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
-*/
-type IssuesListLabelsForMilestoneResponseBody200 []struct {
-	Color       string `json:"color,omitempty"`
-	Default     bool   `json:"default,omitempty"`
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesGetReq builds requests for "issues/get"
-
-Get an issue.
-
-  GET /repos/{owner}/{repo}/issues/{issue_number}
-
-https://developer.github.com/v3/issues/#get-an-issue
-*/
-type IssuesGetReq struct {
+type IssuesListEventsReq struct {
 	Owner       string
 	Repo        string
 	IssueNumber int64
 
-	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r IssuesGetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesGetReq) method() string {
-	return "GET"
-}
-
-func (r IssuesGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesGetReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesGetResponseBody200 is a response body for issues/get
-
-API documentation: https://developer.github.com/v3/issues/#get-an-issue
-*/
-type IssuesGetResponseBody200 struct {
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignees,omitempty"`
-	Body     string `json:"body,omitempty"`
-	ClosedAt string `json:"closed_at,omitempty"`
-	ClosedBy struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"closed_by,omitempty"`
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	EventsUrl   string `json:"events_url,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Labels      []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	LabelsUrl string `json:"labels_url,omitempty"`
-	Locked    bool   `json:"locked,omitempty"`
-	Milestone struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	PullRequest struct {
-		DiffUrl  string `json:"diff_url,omitempty"`
-		HtmlUrl  string `json:"html_url,omitempty"`
-		PatchUrl string `json:"patch_url,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"pull_request,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	State         string `json:"state,omitempty"`
-	Title         string `json:"title,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	Url           string `json:"url,omitempty"`
-	User          struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-IssuesUpdateReq builds requests for "issues/update"
-
-Update an issue.
-
-  PATCH /repos/{owner}/{repo}/issues/{issue_number}
-
-https://developer.github.com/v3/issues/#update-an-issue
-*/
-type IssuesUpdateReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	RequestBody IssuesUpdateReqBody
-}
-
-func (r IssuesUpdateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesUpdateReq) method() string {
-	return "PATCH"
-}
-
-func (r IssuesUpdateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesUpdateReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesUpdateReqBody is a request body for issues/update
-
-API documentation: https://developer.github.com/v3/issues/#update-an-issue
-*/
-type IssuesUpdateReqBody struct {
-
-	/*
-	   Login for the user that this issue should be assigned to. **This field is
-	   deprecated.**
-	*/
-	Assignee *string `json:"assignee,omitempty"`
-
-	/*
-	   Logins for Users to assign to this issue. Pass one or more user logins to
-	   _replace_ the set of assignees on this Issue. Send an empty array (`[]`) to
-	   clear all assignees from the Issue. _NOTE: Only users with push access can set
-	   assignees for new issues. Assignees are silently dropped otherwise._
-	*/
-	Assignees []string `json:"assignees,omitempty"`
-
-	// The contents of the issue.
-	Body *string `json:"body,omitempty"`
-
-	/*
-	   Labels to associate with this issue. Pass one or more Labels to _replace_ the
-	   set of Labels on this Issue. Send an empty array (`[]`) to clear all Labels from
-	   the Issue. _NOTE: Only users with push access can set labels for issues. Labels
-	   are silently dropped otherwise._
-	*/
-	Labels []string `json:"labels,omitempty"`
-
-	/*
-	   The `number` of the milestone to associate this issue with or `null` to remove
-	   current. _NOTE: Only users with push access can set the milestone for issues.
-	   The milestone is silently dropped otherwise._
-	*/
-	Milestone *int64 `json:"milestone,omitempty"`
-
-	// State of the issue. Either `open` or `closed`.
-	State *string `json:"state,omitempty"`
-
-	// The title of the issue.
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-IssuesUpdateResponseBody200 is a response body for issues/update
-
-API documentation: https://developer.github.com/v3/issues/#update-an-issue
-*/
-type IssuesUpdateResponseBody200 struct {
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignees,omitempty"`
-	Body     string `json:"body,omitempty"`
-	ClosedAt string `json:"closed_at,omitempty"`
-	ClosedBy struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"closed_by,omitempty"`
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	EventsUrl   string `json:"events_url,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Labels      []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	LabelsUrl string `json:"labels_url,omitempty"`
-	Locked    bool   `json:"locked,omitempty"`
-	Milestone struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	PullRequest struct {
-		DiffUrl  string `json:"diff_url,omitempty"`
-		HtmlUrl  string `json:"html_url,omitempty"`
-		PatchUrl string `json:"patch_url,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"pull_request,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	State         string `json:"state,omitempty"`
-	Title         string `json:"title,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	Url           string `json:"url,omitempty"`
-	User          struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-IssuesListMilestonesForRepoReq builds requests for "issues/list-milestones-for-repo"
-
-List milestones for a repository.
-
-  GET /repos/{owner}/{repo}/milestones
-
-https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
-*/
-type IssuesListMilestonesForRepoReq struct {
-	Owner string
-	Repo  string
-
-	// The state of the milestone. Either `open`, `closed`, or `all`.
-	State *string
-
-	// What to sort results by. Either `due_on` or `completeness`.
-	Sort *string
-
-	// The direction of the sort. Either `asc` or `desc`.
-	Direction *string
-
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
-}
-
-func (r IssuesListMilestonesForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
-}
-
-func (r IssuesListMilestonesForRepoReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListMilestonesForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.State != nil {
-		query.Set("state", *r.State)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListMilestonesForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListMilestonesForRepoResponseBody200 is a response body for issues/list-milestones-for-repo
-
-API documentation: https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
-*/
-type IssuesListMilestonesForRepoResponseBody200 []struct {
-	ClosedAt     string `json:"closed_at,omitempty"`
-	ClosedIssues int64  `json:"closed_issues,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Creator      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description string `json:"description,omitempty"`
-	DueOn       string `json:"due_on,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	LabelsUrl   string `json:"labels_url,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	OpenIssues  int64  `json:"open_issues,omitempty"`
-	State       string `json:"state,omitempty"`
-	Title       string `json:"title,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesCreateMilestoneReq builds requests for "issues/create-milestone"
-
-Create a milestone.
-
-  POST /repos/{owner}/{repo}/milestones
-
-https://developer.github.com/v3/issues/milestones/#create-a-milestone
-*/
-type IssuesCreateMilestoneReq struct {
-	Owner       string
-	Repo        string
-	RequestBody IssuesCreateMilestoneReqBody
-}
-
-func (r IssuesCreateMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
-}
-
-func (r IssuesCreateMilestoneReq) method() string {
-	return "POST"
-}
-
-func (r IssuesCreateMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesCreateMilestoneReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesCreateMilestoneReqBody is a request body for issues/create-milestone
-
-API documentation: https://developer.github.com/v3/issues/milestones/#create-a-milestone
-*/
-type IssuesCreateMilestoneReqBody struct {
-
-	// A description of the milestone.
-	Description *string `json:"description,omitempty"`
-
-	/*
-	   The milestone due date. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
-	*/
-	DueOn *string `json:"due_on,omitempty"`
-
-	// The state of the milestone. Either `open` or `closed`.
-	State *string `json:"state,omitempty"`
-
-	// The title of the milestone.
-	Title *string `json:"title"`
-}
-
-/*
-IssuesCreateMilestoneResponseBody201 is a response body for issues/create-milestone
-
-API documentation: https://developer.github.com/v3/issues/milestones/#create-a-milestone
-*/
-type IssuesCreateMilestoneResponseBody201 struct {
-	ClosedAt     string `json:"closed_at,omitempty"`
-	ClosedIssues int64  `json:"closed_issues,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Creator      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description string `json:"description,omitempty"`
-	DueOn       string `json:"due_on,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	LabelsUrl   string `json:"labels_url,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	OpenIssues  int64  `json:"open_issues,omitempty"`
-	State       string `json:"state,omitempty"`
-	Title       string `json:"title,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesListAssigneesReq builds requests for "issues/list-assignees"
-
-List assignees.
-
-  GET /repos/{owner}/{repo}/assignees
-
-https://developer.github.com/v3/issues/assignees/#list-assignees
-*/
-type IssuesListAssigneesReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r IssuesListAssigneesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo)
-}
-
-func (r IssuesListAssigneesReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListAssigneesReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListAssigneesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListAssigneesResponseBody200 is a response body for issues/list-assignees
-
-API documentation: https://developer.github.com/v3/issues/assignees/#list-assignees
-*/
-type IssuesListAssigneesResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-IssuesGetEventReq builds requests for "issues/get-event"
-
-Get a single event.
-
-  GET /repos/{owner}/{repo}/issues/events/{event_id}
-
-https://developer.github.com/v3/issues/events/#get-a-single-event
-*/
-type IssuesGetEventReq struct {
-	Owner   string
-	Repo    string
-	EventId int64
 
 	/*
 	Project card details are now shown in REST API v3 responses for project-related
@@ -3177,17 +4320,6 @@ type IssuesGetEventReq struct {
 	StarfoxPreview bool
 
 	/*
-	If an issue event is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
-	*/
-	MachineManPreview bool
-
-	/*
 	You can now use the REST API to add a reason when you lock an issue, and you
 	will see lock reasons in responses that include issues or pull requests. You
 	will also see lock reasons in `locked` events. This feature is currently
@@ -3198,39 +4330,44 @@ type IssuesGetEventReq struct {
 	SailorVPreview bool
 }
 
-func (r IssuesGetEventReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId)
+func (r IssuesListEventsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesGetEventReq) method() string {
+func (r IssuesListEventsReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetEventReq) urlQuery() url.Values {
+func (r IssuesListEventsReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r IssuesGetEventReq) header() http.Header {
+func (r IssuesListEventsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
-		"machine-man": r.MachineManPreview,
-		"sailor-v":    r.SailorVPreview,
-		"starfox":     r.StarfoxPreview,
+		"sailor-v": r.SailorVPreview,
+		"starfox":  r.StarfoxPreview,
 	}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-IssuesGetEventResponseBody200 is a response body for issues/get-event
+IssuesListEventsResponseBody200 is a response body for issues/list-events
 
-API documentation: https://developer.github.com/v3/issues/events/#get-a-single-event
+API documentation: https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
-type IssuesGetEventResponseBody200 struct {
+type IssuesListEventsResponseBody200 []struct {
 	Actor struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
@@ -3256,140 +4393,8 @@ type IssuesGetEventResponseBody200 struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	Event     string `json:"event,omitempty"`
 	Id        int64  `json:"id,omitempty"`
-	Issue     struct {
-		ActiveLockReason string `json:"active_lock_reason,omitempty"`
-		Assignee         struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"assignee,omitempty"`
-		Assignees []struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"assignees,omitempty"`
-		Body        string `json:"body,omitempty"`
-		ClosedAt    string `json:"closed_at,omitempty"`
-		Comments    int64  `json:"comments,omitempty"`
-		CommentsUrl string `json:"comments_url,omitempty"`
-		CreatedAt   string `json:"created_at,omitempty"`
-		EventsUrl   string `json:"events_url,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Labels      []struct {
-			Color       string `json:"color,omitempty"`
-			Default     bool   `json:"default,omitempty"`
-			Description string `json:"description,omitempty"`
-			Id          int64  `json:"id,omitempty"`
-			Name        string `json:"name,omitempty"`
-			NodeId      string `json:"node_id,omitempty"`
-			Url         string `json:"url,omitempty"`
-		} `json:"labels,omitempty"`
-		LabelsUrl string `json:"labels_url,omitempty"`
-		Locked    bool   `json:"locked,omitempty"`
-		Milestone struct {
-			ClosedAt     string `json:"closed_at,omitempty"`
-			ClosedIssues int64  `json:"closed_issues,omitempty"`
-			CreatedAt    string `json:"created_at,omitempty"`
-			Creator      struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"creator,omitempty"`
-			Description string `json:"description,omitempty"`
-			DueOn       string `json:"due_on,omitempty"`
-			HtmlUrl     string `json:"html_url,omitempty"`
-			Id          int64  `json:"id,omitempty"`
-			LabelsUrl   string `json:"labels_url,omitempty"`
-			NodeId      string `json:"node_id,omitempty"`
-			Number      int64  `json:"number,omitempty"`
-			OpenIssues  int64  `json:"open_issues,omitempty"`
-			State       string `json:"state,omitempty"`
-			Title       string `json:"title,omitempty"`
-			UpdatedAt   string `json:"updated_at,omitempty"`
-			Url         string `json:"url,omitempty"`
-		} `json:"milestone,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		PullRequest struct {
-			DiffUrl  string `json:"diff_url,omitempty"`
-			HtmlUrl  string `json:"html_url,omitempty"`
-			PatchUrl string `json:"patch_url,omitempty"`
-			Url      string `json:"url,omitempty"`
-		} `json:"pull_request,omitempty"`
-		RepositoryUrl string `json:"repository_url,omitempty"`
-		State         string `json:"state,omitempty"`
-		Title         string `json:"title,omitempty"`
-		UpdatedAt     string `json:"updated_at,omitempty"`
-		Url           string `json:"url,omitempty"`
-		User          struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"issue,omitempty"`
-	NodeId string `json:"node_id,omitempty"`
-	Url    string `json:"url,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	Url       string `json:"url,omitempty"`
 }
 
 /*
@@ -3759,53 +4764,101 @@ type IssuesListResponseBody200 []struct {
 }
 
 /*
-IssuesGetMilestoneReq builds requests for "issues/get-milestone"
+IssuesListCommentsForRepoReq builds requests for "issues/list-comments-for-repo"
 
-Get a single milestone.
+List comments in a repository.
 
-  GET /repos/{owner}/{repo}/milestones/{milestone_number}
+  GET /repos/{owner}/{repo}/issues/comments
 
-https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
-type IssuesGetMilestoneReq struct {
-	Owner           string
-	Repo            string
-	MilestoneNumber int64
+type IssuesListCommentsForRepoReq struct {
+	Owner string
+	Repo  string
+
+	// Either `created` or `updated`.
+	Sort *string
+
+	// Either `asc` or `desc`. Ignored without the `sort` parameter.
+	Direction *string
+
+	/*
+	Only comments updated at or after this time are returned. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
 }
 
-func (r IssuesGetMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
+func (r IssuesListCommentsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo)
 }
 
-func (r IssuesGetMilestoneReq) method() string {
+func (r IssuesListCommentsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetMilestoneReq) urlQuery() url.Values {
+func (r IssuesListCommentsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r IssuesGetMilestoneReq) header() http.Header {
+func (r IssuesListCommentsForRepoReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-IssuesGetMilestoneResponseBody200 is a response body for issues/get-milestone
+IssuesListCommentsForRepoResponseBody200 is a response body for issues/list-comments-for-repo
 
-API documentation: https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+API documentation: https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
-type IssuesGetMilestoneResponseBody200 struct {
-	ClosedAt     string `json:"closed_at,omitempty"`
-	ClosedIssues int64  `json:"closed_issues,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Creator      struct {
+type IssuesListCommentsForRepoResponseBody200 []struct {
+	Body      string `json:"body,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	HtmlUrl   string `json:"html_url,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -3824,314 +4877,64 @@ type IssuesGetMilestoneResponseBody200 struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description string `json:"description,omitempty"`
-	DueOn       string `json:"due_on,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	LabelsUrl   string `json:"labels_url,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	OpenIssues  int64  `json:"open_issues,omitempty"`
-	State       string `json:"state,omitempty"`
-	Title       string `json:"title,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
 }
 
 /*
-IssuesUpdateMilestoneReq builds requests for "issues/update-milestone"
+IssuesListLabelsForRepoReq builds requests for "issues/list-labels-for-repo"
 
-Update a milestone.
+List all labels for this repository.
 
-  PATCH /repos/{owner}/{repo}/milestones/{milestone_number}
+  GET /repos/{owner}/{repo}/labels
 
-https://developer.github.com/v3/issues/milestones/#update-a-milestone
+https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
-type IssuesUpdateMilestoneReq struct {
-	Owner           string
-	Repo            string
-	MilestoneNumber int64
-	RequestBody     IssuesUpdateMilestoneReqBody
+type IssuesListLabelsForRepoReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r IssuesUpdateMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
+func (r IssuesListLabelsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
 }
 
-func (r IssuesUpdateMilestoneReq) method() string {
-	return "PATCH"
+func (r IssuesListLabelsForRepoReq) method() string {
+	return "GET"
 }
 
-func (r IssuesUpdateMilestoneReq) urlQuery() url.Values {
+func (r IssuesListLabelsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r IssuesUpdateMilestoneReq) header() http.Header {
+func (r IssuesListLabelsForRepoReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesUpdateMilestoneReqBody is a request body for issues/update-milestone
-
-API documentation: https://developer.github.com/v3/issues/milestones/#update-a-milestone
-*/
-type IssuesUpdateMilestoneReqBody struct {
-
-	// A description of the milestone.
-	Description *string `json:"description,omitempty"`
-
-	/*
-	   The milestone due date. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
-	*/
-	DueOn *string `json:"due_on,omitempty"`
-
-	// The state of the milestone. Either `open` or `closed`.
-	State *string `json:"state,omitempty"`
-
-	// The title of the milestone.
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-IssuesUpdateMilestoneResponseBody200 is a response body for issues/update-milestone
-
-API documentation: https://developer.github.com/v3/issues/milestones/#update-a-milestone
-*/
-type IssuesUpdateMilestoneResponseBody200 struct {
-	ClosedAt     string `json:"closed_at,omitempty"`
-	ClosedIssues int64  `json:"closed_issues,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Creator      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Description string `json:"description,omitempty"`
-	DueOn       string `json:"due_on,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	LabelsUrl   string `json:"labels_url,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	OpenIssues  int64  `json:"open_issues,omitempty"`
-	State       string `json:"state,omitempty"`
-	Title       string `json:"title,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-}
-
-/*
-IssuesDeleteMilestoneReq builds requests for "issues/delete-milestone"
-
-Delete a milestone.
-
-  DELETE /repos/{owner}/{repo}/milestones/{milestone_number}
-
-https://developer.github.com/v3/issues/milestones/#delete-a-milestone
-*/
-type IssuesDeleteMilestoneReq struct {
-	Owner           string
-	Repo            string
-	MilestoneNumber int64
-}
-
-func (r IssuesDeleteMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
-}
-
-func (r IssuesDeleteMilestoneReq) method() string {
-	return "DELETE"
-}
-
-func (r IssuesDeleteMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesDeleteMilestoneReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-IssuesUnlockReq builds requests for "issues/unlock"
+IssuesListLabelsForRepoResponseBody200 is a response body for issues/list-labels-for-repo
 
-Unlock an issue.
-
-  DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock
-
-https://developer.github.com/v3/issues/#unlock-an-issue
+API documentation: https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
-type IssuesUnlockReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-}
-
-func (r IssuesUnlockReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesUnlockReq) method() string {
-	return "DELETE"
-}
-
-func (r IssuesUnlockReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesUnlockReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesLockReq builds requests for "issues/lock"
-
-Lock an issue.
-
-  PUT /repos/{owner}/{repo}/issues/{issue_number}/lock
-
-https://developer.github.com/v3/issues/#lock-an-issue
-*/
-type IssuesLockReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	RequestBody IssuesLockReqBody
-
-	/*
-	You can now use the REST API to add a reason when you lock an issue, and you
-	will see lock reasons in responses that include issues or pull requests. You
-	will also see lock reasons in `locked` events. This feature is currently
-	available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-01-10-lock-reason-api-preview)
-	for full details. To access this feature, you must set this to true.
-	*/
-	SailorVPreview bool
-}
-
-func (r IssuesLockReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r IssuesLockReq) method() string {
-	return "PUT"
-}
-
-func (r IssuesLockReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesLockReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-IssuesLockReqBody is a request body for issues/lock
-
-API documentation: https://developer.github.com/v3/issues/#lock-an-issue
-*/
-type IssuesLockReqBody struct {
-
-	/*
-	   The reason for locking the issue or pull request conversation. Lock will fail if
-	   you don't use one of these reasons:
-	   \* `off-topic`
-	   \* `too heated`
-	   \* `resolved`
-	   \* `spam`
-	*/
-	LockReason *string `json:"lock_reason,omitempty"`
-}
-
-/*
-IssuesRemoveLabelReq builds requests for "issues/remove-label"
-
-Remove a label from an issue.
-
-  DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}
-
-https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
-*/
-type IssuesRemoveLabelReq struct {
-	Owner       string
-	Repo        string
-	IssueNumber int64
-	Name        string
-}
-
-func (r IssuesRemoveLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name)
-}
-
-func (r IssuesRemoveLabelReq) method() string {
-	return "DELETE"
-}
-
-func (r IssuesRemoveLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r IssuesRemoveLabelReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesRemoveLabelResponseBody200 is a response body for issues/remove-label
-
-API documentation: https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
-*/
-type IssuesRemoveLabelResponseBody200 []struct {
+type IssuesListLabelsForRepoResponseBody200 []struct {
 	Color       string `json:"color,omitempty"`
 	Default     bool   `json:"default,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -4142,884 +4945,81 @@ type IssuesRemoveLabelResponseBody200 []struct {
 }
 
 /*
-IssuesListForOrgReq builds requests for "issues/list-for-org"
+IssuesCreateLabelReq builds requests for "issues/create-label"
 
-List organization issues assigned to the authenticated user.
+Create a label.
 
-  GET /orgs/{org}/issues
+  POST /repos/{owner}/{repo}/labels
 
-https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/labels/#create-a-label
 */
-type IssuesListForOrgReq struct {
-	Org string
-
-	/*
-	Indicates which sorts of issues to return. Can be one of:
-	\* `assigned`: Issues assigned to you
-	\* `created`: Issues created by you
-	\* `mentioned`: Issues mentioning you
-	\* `subscribed`: Issues you're subscribed to updates for
-	\* `all`: All issues the authenticated user can see, regardless of participation
-	or creation
-	*/
-	Filter *string
-
-	/*
-	Indicates the state of the issues to return. Can be either `open`, `closed`, or
-	`all`.
-	*/
-	State *string
-
-	// A list of comma separated label names. Example: `bug,ui,@high`
-	Labels *string
-
-	// What to sort results by. Can be either `created`, `updated`, `comments`.
-	Sort *string
-
-	// The direction of the sort. Can be either `asc` or `desc`.
-	Direction *string
-
-	/*
-	Only issues updated at or after this time are returned. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	If an issue is opened via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
-	*/
-	MachineManPreview bool
-
-	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r IssuesListForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/issues", r.Org)
-}
-
-func (r IssuesListForOrgReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Filter != nil {
-		query.Set("filter", *r.Filter)
-	}
-	if r.State != nil {
-		query.Set("state", *r.State)
-	}
-	if r.Labels != nil {
-		query.Set("labels", *r.Labels)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListForOrgResponseBody200 is a response body for issues/list-for-org
-
-API documentation: https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
-*/
-type IssuesListForOrgResponseBody200 []struct {
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignees,omitempty"`
-	Body        string `json:"body,omitempty"`
-	ClosedAt    string `json:"closed_at,omitempty"`
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	EventsUrl   string `json:"events_url,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Labels      []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	LabelsUrl string `json:"labels_url,omitempty"`
-	Locked    bool   `json:"locked,omitempty"`
-	Milestone struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	PullRequest struct {
-		DiffUrl  string `json:"diff_url,omitempty"`
-		HtmlUrl  string `json:"html_url,omitempty"`
-		PatchUrl string `json:"patch_url,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"pull_request,omitempty"`
-	Repository struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
-	} `json:"repository,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	State         string `json:"state,omitempty"`
-	Title         string `json:"title,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	Url           string `json:"url,omitempty"`
-	User          struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-IssuesListForRepoReq builds requests for "issues/list-for-repo"
-
-List repository issues.
-
-  GET /repos/{owner}/{repo}/issues
-
-https://developer.github.com/v3/issues/#list-repository-issues
-*/
-type IssuesListForRepoReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	If an `integer` is passed, it should refer to a milestone by its `number` field.
-	If the string `*` is passed, issues with any milestone are accepted. If the
-	string `none` is passed, issues without milestones are returned.
-	*/
-	Milestone *string
-
-	/*
-	Indicates the state of the issues to return. Can be either `open`, `closed`, or
-	`all`.
-	*/
-	State *string
-
-	/*
-	Can be the name of a user. Pass in `none` for issues with no assigned user, and
-	`*` for issues assigned to any user.
-	*/
-	Assignee *string
-
-	// The user that created the issue.
-	Creator *string
-
-	// A user that's mentioned in the issue.
-	Mentioned *string
-
-	// A list of comma separated label names. Example: `bug,ui,@high`
-	Labels *string
-
-	// What to sort results by. Can be either `created`, `updated`, `comments`.
-	Sort *string
-
-	// The direction of the sort. Can be either `asc` or `desc`.
-	Direction *string
-
-	/*
-	Only issues updated at or after this time are returned. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	If an issue is opened via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
-	*/
-	MachineManPreview bool
-
-	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r IssuesListForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
-}
-
-func (r IssuesListForRepoReq) method() string {
-	return "GET"
-}
-
-func (r IssuesListForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Milestone != nil {
-		query.Set("milestone", *r.Milestone)
-	}
-	if r.State != nil {
-		query.Set("state", *r.State)
-	}
-	if r.Assignee != nil {
-		query.Set("assignee", *r.Assignee)
-	}
-	if r.Creator != nil {
-		query.Set("creator", *r.Creator)
-	}
-	if r.Mentioned != nil {
-		query.Set("mentioned", *r.Mentioned)
-	}
-	if r.Labels != nil {
-		query.Set("labels", *r.Labels)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r IssuesListForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-IssuesListForRepoResponseBody200 is a response body for issues/list-for-repo
-
-API documentation: https://developer.github.com/v3/issues/#list-repository-issues
-*/
-type IssuesListForRepoResponseBody200 []struct {
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignees,omitempty"`
-	Body        string `json:"body,omitempty"`
-	ClosedAt    string `json:"closed_at,omitempty"`
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	EventsUrl   string `json:"events_url,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Labels      []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	LabelsUrl string `json:"labels_url,omitempty"`
-	Locked    bool   `json:"locked,omitempty"`
-	Milestone struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	PullRequest struct {
-		DiffUrl  string `json:"diff_url,omitempty"`
-		HtmlUrl  string `json:"html_url,omitempty"`
-		PatchUrl string `json:"patch_url,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"pull_request,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	State         string `json:"state,omitempty"`
-	Title         string `json:"title,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	Url           string `json:"url,omitempty"`
-	User          struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-IssuesCreateReq builds requests for "issues/create"
-
-Create an issue.
-
-  POST /repos/{owner}/{repo}/issues
-
-https://developer.github.com/v3/issues/#create-an-issue
-*/
-type IssuesCreateReq struct {
+type IssuesCreateLabelReq struct {
 	Owner       string
 	Repo        string
-	RequestBody IssuesCreateReqBody
+	RequestBody IssuesCreateLabelReqBody
 }
 
-func (r IssuesCreateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
+func (r IssuesCreateLabelReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
 }
 
-func (r IssuesCreateReq) method() string {
+func (r IssuesCreateLabelReq) method() string {
 	return "POST"
 }
 
-func (r IssuesCreateReq) urlQuery() url.Values {
+func (r IssuesCreateLabelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesCreateReq) header() http.Header {
+func (r IssuesCreateLabelReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-IssuesCreateReqBody is a request body for issues/create
+IssuesCreateLabelReqBody is a request body for issues/create-label
 
-API documentation: https://developer.github.com/v3/issues/#create-an-issue
+API documentation: https://developer.github.com/v3/issues/labels/#create-a-label
 */
-type IssuesCreateReqBody struct {
+type IssuesCreateLabelReqBody struct {
 
 	/*
-	   Login for the user that this issue should be assigned to. _NOTE: Only users with
-	   push access can set the assignee for new issues. The assignee is silently
-	   dropped otherwise. **This field is deprecated.**_
+	   The [hexadecimal color code](http://www.color-hex.com/) for the label, without
+	   the leading `#`.
 	*/
-	Assignee *string `json:"assignee,omitempty"`
+	Color *string `json:"color"`
+
+	// A short description of the label.
+	Description *string `json:"description,omitempty"`
 
 	/*
-	   Logins for Users to assign to this issue. _NOTE: Only users with push access can
-	   set assignees for new issues. Assignees are silently dropped otherwise._
+	   The name of the label. Emoji can be added to label names, using either native
+	   emoji or colon-style markup. For example, typing `:strawberry:` will render the
+	   emoji
+	   ![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
+	   ":strawberry:"). For a full list of available emoji and codes, see
+	   [emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
 	*/
-	Assignees []string `json:"assignees,omitempty"`
-
-	// The contents of the issue.
-	Body *string `json:"body,omitempty"`
-
-	/*
-	   Labels to associate with this issue. _NOTE: Only users with push access can set
-	   labels for new issues. Labels are silently dropped otherwise._
-	*/
-	Labels []string `json:"labels,omitempty"`
-
-	/*
-	   The `number` of the milestone to associate this issue with. _NOTE: Only users
-	   with push access can set the milestone for new issues. The milestone is silently
-	   dropped otherwise._
-	*/
-	Milestone *int64 `json:"milestone,omitempty"`
-
-	// The title of the issue.
-	Title *string `json:"title"`
+	Name *string `json:"name"`
 }
 
 /*
-IssuesCreateResponseBody201 is a response body for issues/create
+IssuesCreateLabelResponseBody201 is a response body for issues/create-label
 
-API documentation: https://developer.github.com/v3/issues/#create-an-issue
+API documentation: https://developer.github.com/v3/issues/labels/#create-a-label
 */
-type IssuesCreateResponseBody201 struct {
-	ActiveLockReason string `json:"active_lock_reason,omitempty"`
-	Assignee         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignee,omitempty"`
-	Assignees []struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"assignees,omitempty"`
-	Body     string `json:"body,omitempty"`
-	ClosedAt string `json:"closed_at,omitempty"`
-	ClosedBy struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"closed_by,omitempty"`
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	EventsUrl   string `json:"events_url,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
+type IssuesCreateLabelResponseBody201 struct {
+	Color       string `json:"color,omitempty"`
+	Default     bool   `json:"default,omitempty"`
+	Description string `json:"description,omitempty"`
 	Id          int64  `json:"id,omitempty"`
-	Labels      []struct {
-		Color       string `json:"color,omitempty"`
-		Default     bool   `json:"default,omitempty"`
-		Description string `json:"description,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"labels,omitempty"`
-	LabelsUrl string `json:"labels_url,omitempty"`
-	Locked    bool   `json:"locked,omitempty"`
-	Milestone struct {
-		ClosedAt     string `json:"closed_at,omitempty"`
-		ClosedIssues int64  `json:"closed_issues,omitempty"`
-		CreatedAt    string `json:"created_at,omitempty"`
-		Creator      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"creator,omitempty"`
-		Description string `json:"description,omitempty"`
-		DueOn       string `json:"due_on,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		OpenIssues  int64  `json:"open_issues,omitempty"`
-		State       string `json:"state,omitempty"`
-		Title       string `json:"title,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"milestone,omitempty"`
+	Name        string `json:"name,omitempty"`
 	NodeId      string `json:"node_id,omitempty"`
-	Number      int64  `json:"number,omitempty"`
-	PullRequest struct {
-		DiffUrl  string `json:"diff_url,omitempty"`
-		HtmlUrl  string `json:"html_url,omitempty"`
-		PatchUrl string `json:"patch_url,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"pull_request,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	State         string `json:"state,omitempty"`
-	Title         string `json:"title,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	Url           string `json:"url,omitempty"`
-	User          struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	Url         string `json:"url,omitempty"`
 }

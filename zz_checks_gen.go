@@ -12,177 +12,6 @@ import (
 )
 
 /*
-ChecksListForSuiteReq builds requests for "checks/list-for-suite"
-
-List check runs in a check suite.
-
-  GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs
-
-https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
-*/
-type ChecksListForSuiteReq struct {
-	Owner        string
-	Repo         string
-	CheckSuiteId int64
-
-	// Returns check runs with the specified `name`.
-	CheckName *string
-
-	/*
-	Returns check runs with the specified `status`. Can be one of `queued`,
-	`in_progress`, or `completed`.
-	*/
-	Status *string
-
-	/*
-	Filters check runs by their `completed_at` timestamp. Can be one of `latest`
-	(returning the most recent check runs) or `all`.
-	*/
-	Filter *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Checks API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	AntiopePreview bool
-}
-
-func (r ChecksListForSuiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId)
-}
-
-func (r ChecksListForSuiteReq) method() string {
-	return "GET"
-}
-
-func (r ChecksListForSuiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.CheckName != nil {
-		query.Set("check_name", *r.CheckName)
-	}
-	if r.Status != nil {
-		query.Set("status", *r.Status)
-	}
-	if r.Filter != nil {
-		query.Set("filter", *r.Filter)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ChecksListForSuiteReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ChecksListForSuiteResponseBody200 is a response body for checks/list-for-suite
-
-API documentation: https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
-*/
-type ChecksListForSuiteResponseBody200 struct {
-	CheckRuns []struct {
-		App struct {
-			CreatedAt   string   `json:"created_at,omitempty"`
-			Description string   `json:"description,omitempty"`
-			Events      []string `json:"events,omitempty"`
-			ExternalUrl string   `json:"external_url,omitempty"`
-			HtmlUrl     string   `json:"html_url,omitempty"`
-			Id          int64    `json:"id,omitempty"`
-			Name        string   `json:"name,omitempty"`
-			NodeId      string   `json:"node_id,omitempty"`
-			Owner       struct {
-				AvatarUrl        string `json:"avatar_url,omitempty"`
-				Description      string `json:"description,omitempty"`
-				EventsUrl        string `json:"events_url,omitempty"`
-				HooksUrl         string `json:"hooks_url,omitempty"`
-				Id               int64  `json:"id,omitempty"`
-				IssuesUrl        string `json:"issues_url,omitempty"`
-				Login            string `json:"login,omitempty"`
-				MembersUrl       string `json:"members_url,omitempty"`
-				NodeId           string `json:"node_id,omitempty"`
-				PublicMembersUrl string `json:"public_members_url,omitempty"`
-				ReposUrl         string `json:"repos_url,omitempty"`
-				Url              string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Permissions struct {
-				Contents   string `json:"contents,omitempty"`
-				Issues     string `json:"issues,omitempty"`
-				Metadata   string `json:"metadata,omitempty"`
-				SingleFile string `json:"single_file,omitempty"`
-			} `json:"permissions,omitempty"`
-			Slug      string `json:"slug,omitempty"`
-			UpdatedAt string `json:"updated_at,omitempty"`
-		} `json:"app,omitempty"`
-		CheckSuite struct {
-			Id int64 `json:"id,omitempty"`
-		} `json:"check_suite,omitempty"`
-		CompletedAt string `json:"completed_at,omitempty"`
-		Conclusion  string `json:"conclusion,omitempty"`
-		DetailsUrl  string `json:"details_url,omitempty"`
-		ExternalId  string `json:"external_id,omitempty"`
-		HeadSha     string `json:"head_sha,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Name        string `json:"name,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Output      struct {
-			AnnotationsCount int64  `json:"annotations_count,omitempty"`
-			AnnotationsUrl   string `json:"annotations_url,omitempty"`
-			Summary          string `json:"summary,omitempty"`
-			Text             string `json:"text,omitempty"`
-			Title            string `json:"title,omitempty"`
-		} `json:"output,omitempty"`
-		PullRequests []struct {
-			Base struct {
-				Ref  string `json:"ref,omitempty"`
-				Repo struct {
-					Id   int64  `json:"id,omitempty"`
-					Name string `json:"name,omitempty"`
-					Url  string `json:"url,omitempty"`
-				} `json:"repo,omitempty"`
-				Sha string `json:"sha,omitempty"`
-			} `json:"base,omitempty"`
-			Head struct {
-				Ref  string `json:"ref,omitempty"`
-				Repo struct {
-					Id   int64  `json:"id,omitempty"`
-					Name string `json:"name,omitempty"`
-					Url  string `json:"url,omitempty"`
-				} `json:"repo,omitempty"`
-				Sha string `json:"sha,omitempty"`
-			} `json:"head,omitempty"`
-			Id     int64  `json:"id,omitempty"`
-			Number int64  `json:"number,omitempty"`
-			Url    string `json:"url,omitempty"`
-		} `json:"pull_requests,omitempty"`
-		StartedAt string `json:"started_at,omitempty"`
-		Status    string `json:"status,omitempty"`
-		Url       string `json:"url,omitempty"`
-	} `json:"check_runs,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
 ChecksListForRefReq builds requests for "checks/list-for-ref"
 
 List check runs for a Git reference.
@@ -351,6 +180,82 @@ type ChecksListForRefResponseBody200 struct {
 		Url       string `json:"url,omitempty"`
 	} `json:"check_runs,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+ChecksListAnnotationsReq builds requests for "checks/list-annotations"
+
+List check run annotations.
+
+  GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations
+
+https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+*/
+type ChecksListAnnotationsReq struct {
+	Owner      string
+	Repo       string
+	CheckRunId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Checks API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	AntiopePreview bool
+}
+
+func (r ChecksListAnnotationsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId)
+}
+
+func (r ChecksListAnnotationsReq) method() string {
+	return "GET"
+}
+
+func (r ChecksListAnnotationsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ChecksListAnnotationsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ChecksListAnnotationsResponseBody200 is a response body for checks/list-annotations
+
+API documentation: https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+*/
+type ChecksListAnnotationsResponseBody200 []struct {
+	AnnotationLevel string `json:"annotation_level,omitempty"`
+	EndColumn       int64  `json:"end_column,omitempty"`
+	EndLine         int64  `json:"end_line,omitempty"`
+	Message         string `json:"message,omitempty"`
+	Path            string `json:"path,omitempty"`
+	RawDetails      string `json:"raw_details,omitempty"`
+	StartColumn     int64  `json:"start_column,omitempty"`
+	StartLine       int64  `json:"start_line,omitempty"`
+	Title           string `json:"title,omitempty"`
 }
 
 /*
@@ -553,53 +458,6 @@ type ChecksGetSuiteResponseBody200 struct {
 	} `json:"repository,omitempty"`
 	Status string `json:"status,omitempty"`
 	Url    string `json:"url,omitempty"`
-}
-
-/*
-ChecksRerequestSuiteReq builds requests for "checks/rerequest-suite"
-
-Rerequest a check suite.
-
-  POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest
-
-https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
-*/
-type ChecksRerequestSuiteReq struct {
-	Owner        string
-	Repo         string
-	CheckSuiteId int64
-
-	/*
-	The Checks API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	AntiopePreview bool
-}
-
-func (r ChecksRerequestSuiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId)
-}
-
-func (r ChecksRerequestSuiteReq) method() string {
-	return "POST"
-}
-
-func (r ChecksRerequestSuiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ChecksRerequestSuiteReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
@@ -914,18 +772,33 @@ type ChecksCreateResponseBody201 struct {
 }
 
 /*
-ChecksListAnnotationsReq builds requests for "checks/list-annotations"
+ChecksListForSuiteReq builds requests for "checks/list-for-suite"
 
-List check run annotations.
+List check runs in a check suite.
 
-  GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations
+  GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs
 
-https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-type ChecksListAnnotationsReq struct {
-	Owner      string
-	Repo       string
-	CheckRunId int64
+type ChecksListForSuiteReq struct {
+	Owner        string
+	Repo         string
+	CheckSuiteId int64
+
+	// Returns check runs with the specified `name`.
+	CheckName *string
+
+	/*
+	Returns check runs with the specified `status`. Can be one of `queued`,
+	`in_progress`, or `completed`.
+	*/
+	Status *string
+
+	/*
+	Filters check runs by their `completed_at` timestamp. Can be one of `latest`
+	(returning the most recent check runs) or `all`.
+	*/
+	Filter *string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -943,16 +816,25 @@ type ChecksListAnnotationsReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksListAnnotationsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId)
+func (r ChecksListForSuiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId)
 }
 
-func (r ChecksListAnnotationsReq) method() string {
+func (r ChecksListForSuiteReq) method() string {
 	return "GET"
 }
 
-func (r ChecksListAnnotationsReq) urlQuery() url.Values {
+func (r ChecksListForSuiteReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.CheckName != nil {
+		query.Set("check_name", *r.CheckName)
+	}
+	if r.Status != nil {
+		query.Set("status", *r.Status)
+	}
+	if r.Filter != nil {
+		query.Set("filter", *r.Filter)
+	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
@@ -962,31 +844,102 @@ func (r ChecksListAnnotationsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ChecksListAnnotationsReq) header() http.Header {
+func (r ChecksListForSuiteReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ChecksListAnnotationsResponseBody200 is a response body for checks/list-annotations
+ChecksListForSuiteResponseBody200 is a response body for checks/list-for-suite
 
-API documentation: https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+API documentation: https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-type ChecksListAnnotationsResponseBody200 []struct {
-	AnnotationLevel string `json:"annotation_level,omitempty"`
-	EndColumn       int64  `json:"end_column,omitempty"`
-	EndLine         int64  `json:"end_line,omitempty"`
-	Message         string `json:"message,omitempty"`
-	Path            string `json:"path,omitempty"`
-	RawDetails      string `json:"raw_details,omitempty"`
-	StartColumn     int64  `json:"start_column,omitempty"`
-	StartLine       int64  `json:"start_line,omitempty"`
-	Title           string `json:"title,omitempty"`
+type ChecksListForSuiteResponseBody200 struct {
+	CheckRuns []struct {
+		App struct {
+			CreatedAt   string   `json:"created_at,omitempty"`
+			Description string   `json:"description,omitempty"`
+			Events      []string `json:"events,omitempty"`
+			ExternalUrl string   `json:"external_url,omitempty"`
+			HtmlUrl     string   `json:"html_url,omitempty"`
+			Id          int64    `json:"id,omitempty"`
+			Name        string   `json:"name,omitempty"`
+			NodeId      string   `json:"node_id,omitempty"`
+			Owner       struct {
+				AvatarUrl        string `json:"avatar_url,omitempty"`
+				Description      string `json:"description,omitempty"`
+				EventsUrl        string `json:"events_url,omitempty"`
+				HooksUrl         string `json:"hooks_url,omitempty"`
+				Id               int64  `json:"id,omitempty"`
+				IssuesUrl        string `json:"issues_url,omitempty"`
+				Login            string `json:"login,omitempty"`
+				MembersUrl       string `json:"members_url,omitempty"`
+				NodeId           string `json:"node_id,omitempty"`
+				PublicMembersUrl string `json:"public_members_url,omitempty"`
+				ReposUrl         string `json:"repos_url,omitempty"`
+				Url              string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Permissions struct {
+				Contents   string `json:"contents,omitempty"`
+				Issues     string `json:"issues,omitempty"`
+				Metadata   string `json:"metadata,omitempty"`
+				SingleFile string `json:"single_file,omitempty"`
+			} `json:"permissions,omitempty"`
+			Slug      string `json:"slug,omitempty"`
+			UpdatedAt string `json:"updated_at,omitempty"`
+		} `json:"app,omitempty"`
+		CheckSuite struct {
+			Id int64 `json:"id,omitempty"`
+		} `json:"check_suite,omitempty"`
+		CompletedAt string `json:"completed_at,omitempty"`
+		Conclusion  string `json:"conclusion,omitempty"`
+		DetailsUrl  string `json:"details_url,omitempty"`
+		ExternalId  string `json:"external_id,omitempty"`
+		HeadSha     string `json:"head_sha,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Name        string `json:"name,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Output      struct {
+			AnnotationsCount int64  `json:"annotations_count,omitempty"`
+			AnnotationsUrl   string `json:"annotations_url,omitempty"`
+			Summary          string `json:"summary,omitempty"`
+			Text             string `json:"text,omitempty"`
+			Title            string `json:"title,omitempty"`
+		} `json:"output,omitempty"`
+		PullRequests []struct {
+			Base struct {
+				Ref  string `json:"ref,omitempty"`
+				Repo struct {
+					Id   int64  `json:"id,omitempty"`
+					Name string `json:"name,omitempty"`
+					Url  string `json:"url,omitempty"`
+				} `json:"repo,omitempty"`
+				Sha string `json:"sha,omitempty"`
+			} `json:"base,omitempty"`
+			Head struct {
+				Ref  string `json:"ref,omitempty"`
+				Repo struct {
+					Id   int64  `json:"id,omitempty"`
+					Name string `json:"name,omitempty"`
+					Url  string `json:"url,omitempty"`
+				} `json:"repo,omitempty"`
+				Sha string `json:"sha,omitempty"`
+			} `json:"head,omitempty"`
+			Id     int64  `json:"id,omitempty"`
+			Number int64  `json:"number,omitempty"`
+			Url    string `json:"url,omitempty"`
+		} `json:"pull_requests,omitempty"`
+		StartedAt string `json:"started_at,omitempty"`
+		Status    string `json:"status,omitempty"`
+		Url       string `json:"url,omitempty"`
+	} `json:"check_runs,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
 }
 
 /*
@@ -1654,6 +1607,245 @@ type ChecksListSuitesForRefResponseBody200 struct {
 }
 
 /*
+ChecksSetSuitesPreferencesReq builds requests for "checks/set-suites-preferences"
+
+Update repository preferences for check suites.
+
+  PATCH /repos/{owner}/{repo}/check-suites/preferences
+
+https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+*/
+type ChecksSetSuitesPreferencesReq struct {
+	Owner       string
+	Repo        string
+	RequestBody ChecksSetSuitesPreferencesReqBody
+
+	/*
+	The Checks API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	AntiopePreview bool
+}
+
+func (r ChecksSetSuitesPreferencesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo)
+}
+
+func (r ChecksSetSuitesPreferencesReq) method() string {
+	return "PATCH"
+}
+
+func (r ChecksSetSuitesPreferencesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ChecksSetSuitesPreferencesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ChecksSetSuitesPreferencesReqBody is a request body for checks/set-suites-preferences
+
+API documentation: https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+*/
+type ChecksSetSuitesPreferencesReqBody struct {
+
+	/*
+	   Enables or disables automatic creation of CheckSuite events upon pushes to the
+	   repository. Enabled by default. See the [`auto_trigger_checks`
+	   object](https://developer.github.com/v3/checks/suites/#auto_trigger_checks-object)
+	   description for details.
+	*/
+	AutoTriggerChecks []struct {
+
+		// The `id` of the GitHub App.
+		AppId *int64 `json:"app_id"`
+
+		/*
+		   Set to `true` to enable automatic creation of CheckSuite events upon pushes to
+		   the repository, or `false` to disable them.
+		*/
+		Setting *bool `json:"setting"`
+	} `json:"auto_trigger_checks,omitempty"`
+}
+
+/*
+ChecksSetSuitesPreferencesResponseBody200 is a response body for checks/set-suites-preferences
+
+API documentation: https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+*/
+type ChecksSetSuitesPreferencesResponseBody200 struct {
+	Preferences struct {
+		AutoTriggerChecks []struct {
+			AppId   int64 `json:"app_id"`
+			Setting bool  `json:"setting"`
+		} `json:"auto_trigger_checks,omitempty"`
+	} `json:"preferences,omitempty"`
+	Repository struct {
+		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		Archived         bool   `json:"archived,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CloneUrl         string `json:"clone_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		CreatedAt        string `json:"created_at,omitempty"`
+		DefaultBranch    string `json:"default_branch,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		Disabled         bool   `json:"disabled,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksCount       int64  `json:"forks_count,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HasDownloads     bool   `json:"has_downloads,omitempty"`
+		HasIssues        bool   `json:"has_issues,omitempty"`
+		HasPages         bool   `json:"has_pages,omitempty"`
+		HasProjects      bool   `json:"has_projects,omitempty"`
+		HasWiki          bool   `json:"has_wiki,omitempty"`
+		Homepage         string `json:"homepage,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IsTemplate       bool   `json:"is_template,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		Language         string `json:"language,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		MirrorUrl        string `json:"mirror_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NetworkCount     int64  `json:"network_count,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Permissions struct {
+			Admin bool `json:"admin,omitempty"`
+			Pull  bool `json:"pull,omitempty"`
+			Push  bool `json:"push,omitempty"`
+		} `json:"permissions,omitempty"`
+		Private            bool        `json:"private,omitempty"`
+		PullsUrl           string      `json:"pulls_url,omitempty"`
+		PushedAt           string      `json:"pushed_at,omitempty"`
+		ReleasesUrl        string      `json:"releases_url,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		SshUrl             string      `json:"ssh_url,omitempty"`
+		StargazersCount    int64       `json:"stargazers_count,omitempty"`
+		StargazersUrl      string      `json:"stargazers_url,omitempty"`
+		StatusesUrl        string      `json:"statuses_url,omitempty"`
+		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+		SvnUrl             string      `json:"svn_url,omitempty"`
+		TagsUrl            string      `json:"tags_url,omitempty"`
+		TeamsUrl           string      `json:"teams_url,omitempty"`
+		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+		TemplateRepository string      `json:"template_repository,omitempty"`
+		Topics             []string    `json:"topics,omitempty"`
+		TreesUrl           string      `json:"trees_url,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Url                string      `json:"url,omitempty"`
+		Visibility         string      `json:"visibility,omitempty"`
+		WatchersCount      int64       `json:"watchers_count,omitempty"`
+	} `json:"repository,omitempty"`
+}
+
+/*
+ChecksRerequestSuiteReq builds requests for "checks/rerequest-suite"
+
+Rerequest a check suite.
+
+  POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest
+
+https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
+*/
+type ChecksRerequestSuiteReq struct {
+	Owner        string
+	Repo         string
+	CheckSuiteId int64
+
+	/*
+	The Checks API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	AntiopePreview bool
+}
+
+func (r ChecksRerequestSuiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId)
+}
+
+func (r ChecksRerequestSuiteReq) method() string {
+	return "POST"
+}
+
+func (r ChecksRerequestSuiteReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ChecksRerequestSuiteReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
 ChecksCreateSuiteReq builds requests for "checks/create-suite"
 
 Create a check suite.
@@ -1864,196 +2056,4 @@ type ChecksCreateSuiteResponseBody201 struct {
 	} `json:"repository,omitempty"`
 	Status string `json:"status,omitempty"`
 	Url    string `json:"url,omitempty"`
-}
-
-/*
-ChecksSetSuitesPreferencesReq builds requests for "checks/set-suites-preferences"
-
-Update repository preferences for check suites.
-
-  PATCH /repos/{owner}/{repo}/check-suites/preferences
-
-https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
-*/
-type ChecksSetSuitesPreferencesReq struct {
-	Owner       string
-	Repo        string
-	RequestBody ChecksSetSuitesPreferencesReqBody
-
-	/*
-	The Checks API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	AntiopePreview bool
-}
-
-func (r ChecksSetSuitesPreferencesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo)
-}
-
-func (r ChecksSetSuitesPreferencesReq) method() string {
-	return "PATCH"
-}
-
-func (r ChecksSetSuitesPreferencesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ChecksSetSuitesPreferencesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ChecksSetSuitesPreferencesReqBody is a request body for checks/set-suites-preferences
-
-API documentation: https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
-*/
-type ChecksSetSuitesPreferencesReqBody struct {
-
-	/*
-	   Enables or disables automatic creation of CheckSuite events upon pushes to the
-	   repository. Enabled by default. See the [`auto_trigger_checks`
-	   object](https://developer.github.com/v3/checks/suites/#auto_trigger_checks-object)
-	   description for details.
-	*/
-	AutoTriggerChecks []struct {
-
-		// The `id` of the GitHub App.
-		AppId *int64 `json:"app_id"`
-
-		/*
-		   Set to `true` to enable automatic creation of CheckSuite events upon pushes to
-		   the repository, or `false` to disable them.
-		*/
-		Setting *bool `json:"setting"`
-	} `json:"auto_trigger_checks,omitempty"`
-}
-
-/*
-ChecksSetSuitesPreferencesResponseBody200 is a response body for checks/set-suites-preferences
-
-API documentation: https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
-*/
-type ChecksSetSuitesPreferencesResponseBody200 struct {
-	Preferences struct {
-		AutoTriggerChecks []struct {
-			AppId   int64 `json:"app_id"`
-			Setting bool  `json:"setting"`
-		} `json:"auto_trigger_checks,omitempty"`
-	} `json:"preferences,omitempty"`
-	Repository struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
-	} `json:"repository,omitempty"`
 }

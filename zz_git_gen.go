@@ -12,6 +12,77 @@ import (
 )
 
 /*
+GitCreateRefReq builds requests for "git/create-ref"
+
+Create a reference.
+
+  POST /repos/{owner}/{repo}/git/refs
+
+https://developer.github.com/v3/git/refs/#create-a-reference
+*/
+type GitCreateRefReq struct {
+	Owner       string
+	Repo        string
+	RequestBody GitCreateRefReqBody
+}
+
+func (r GitCreateRefReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo)
+}
+
+func (r GitCreateRefReq) method() string {
+	return "POST"
+}
+
+func (r GitCreateRefReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GitCreateRefReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+GitCreateRefReqBody is a request body for git/create-ref
+
+API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
+*/
+type GitCreateRefReqBody struct {
+
+	/*
+	   The name of the fully qualified reference (ie: `refs/heads/master`). If it
+	   doesn't start with 'refs' and have at least two slashes, it will be rejected.
+	*/
+	Ref *string `json:"ref"`
+
+	// The SHA1 value for this reference.
+	Sha *string `json:"sha"`
+}
+
+/*
+GitCreateRefResponseBody201 is a response body for git/create-ref
+
+API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
+*/
+type GitCreateRefResponseBody201 struct {
+	NodeId string `json:"node_id,omitempty"`
+	Object struct {
+		Sha  string `json:"sha,omitempty"`
+		Type string `json:"type,omitempty"`
+		Url  string `json:"url,omitempty"`
+	} `json:"object,omitempty"`
+	Ref string `json:"ref,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
 GitCreateTagReq builds requests for "git/create-tag"
 
 Create a tag object.
@@ -166,6 +237,423 @@ type GitGetBlobResponseBody200 struct {
 	Sha      string      `json:"sha,omitempty"`
 	Size     json.Number `json:"size,omitempty"`
 	Url      string      `json:"url,omitempty"`
+}
+
+/*
+GitListMatchingRefsReq builds requests for "git/list-matching-refs"
+
+List matching references.
+
+  GET /repos/{owner}/{repo}/git/matching-refs/{ref}
+
+https://developer.github.com/v3/git/refs/#list-matching-references
+*/
+type GitListMatchingRefsReq struct {
+	Owner string
+	Repo  string
+	Ref   string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r GitListMatchingRefsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref)
+}
+
+func (r GitListMatchingRefsReq) method() string {
+	return "GET"
+}
+
+func (r GitListMatchingRefsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r GitListMatchingRefsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GitListMatchingRefsResponseBody200 is a response body for git/list-matching-refs
+
+API documentation: https://developer.github.com/v3/git/refs/#list-matching-references
+*/
+type GitListMatchingRefsResponseBody200 []struct {
+	NodeId string `json:"node_id,omitempty"`
+	Object struct {
+		Sha  string `json:"sha,omitempty"`
+		Type string `json:"type,omitempty"`
+		Url  string `json:"url,omitempty"`
+	} `json:"object,omitempty"`
+	Ref string `json:"ref,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+GitDeleteRefReq builds requests for "git/delete-ref"
+
+Delete a reference.
+
+  DELETE /repos/{owner}/{repo}/git/refs/{ref}
+
+https://developer.github.com/v3/git/refs/#delete-a-reference
+*/
+type GitDeleteRefReq struct {
+	Owner string
+	Repo  string
+	Ref   string
+}
+
+func (r GitDeleteRefReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref)
+}
+
+func (r GitDeleteRefReq) method() string {
+	return "DELETE"
+}
+
+func (r GitDeleteRefReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GitDeleteRefReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GitUpdateRefReq builds requests for "git/update-ref"
+
+Update a reference.
+
+  PATCH /repos/{owner}/{repo}/git/refs/{ref}
+
+https://developer.github.com/v3/git/refs/#update-a-reference
+*/
+type GitUpdateRefReq struct {
+	Owner       string
+	Repo        string
+	Ref         string
+	RequestBody GitUpdateRefReqBody
+}
+
+func (r GitUpdateRefReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref)
+}
+
+func (r GitUpdateRefReq) method() string {
+	return "PATCH"
+}
+
+func (r GitUpdateRefReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GitUpdateRefReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+GitUpdateRefReqBody is a request body for git/update-ref
+
+API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
+*/
+type GitUpdateRefReqBody struct {
+
+	/*
+	   Indicates whether to force the update or to make sure the update is a
+	   fast-forward update. Leaving this out or setting it to `false` will make sure
+	   you're not overwriting work.
+	*/
+	Force *bool `json:"force,omitempty"`
+
+	// The SHA1 value to set this reference to
+	Sha *string `json:"sha"`
+}
+
+/*
+GitUpdateRefResponseBody200 is a response body for git/update-ref
+
+API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
+*/
+type GitUpdateRefResponseBody200 struct {
+	NodeId string `json:"node_id,omitempty"`
+	Object struct {
+		Sha  string `json:"sha,omitempty"`
+		Type string `json:"type,omitempty"`
+		Url  string `json:"url,omitempty"`
+	} `json:"object,omitempty"`
+	Ref string `json:"ref,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+GitCreateTreeReq builds requests for "git/create-tree"
+
+Create a tree.
+
+  POST /repos/{owner}/{repo}/git/trees
+
+https://developer.github.com/v3/git/trees/#create-a-tree
+*/
+type GitCreateTreeReq struct {
+	Owner       string
+	Repo        string
+	RequestBody GitCreateTreeReqBody
+}
+
+func (r GitCreateTreeReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo)
+}
+
+func (r GitCreateTreeReq) method() string {
+	return "POST"
+}
+
+func (r GitCreateTreeReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GitCreateTreeReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+GitCreateTreeReqBody is a request body for git/create-tree
+
+API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
+*/
+type GitCreateTreeReqBody struct {
+
+	/*
+	   The SHA1 of the tree you want to update with new data. If you don't set this,
+	   the commit will be created on top of everything; however, it will only contain
+	   your change, the rest of your files will show up as deleted.
+	*/
+	BaseTree *string `json:"base_tree,omitempty"`
+
+	// Objects (of `path`, `mode`, `type`, and `sha`) specifying a tree structure.
+	Tree []struct {
+
+		/*
+		   The content you want this file to have. GitHub will write this blob out and use
+		   that SHA for this entry. Use either this, or `tree.sha`.
+
+		   **Note:** Use either `tree.sha` or `content` to specify the contents of the
+		   entry. Using both `tree.sha` and `content` will return an error.
+		*/
+		Content *string `json:"content,omitempty"`
+
+		/*
+		   The file mode; one of `100644` for file (blob), `100755` for executable (blob),
+		   `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000`
+		   for a blob that specifies the path of a symlink.
+		*/
+		Mode *string `json:"mode,omitempty"`
+
+		// The file referenced in the tree.
+		Path *string `json:"path,omitempty"`
+
+		/*
+		   The SHA1 checksum ID of the object in the tree. Also called `tree.sha`. If the
+		   value is `null` then the file will be deleted.
+
+		   **Note:** Use either `tree.sha` or `content` to specify the contents of the
+		   entry. Using both `tree.sha` and `content` will return an error.
+		*/
+		Sha *string `json:"sha,omitempty"`
+
+		// Either `blob`, `tree`, or `commit`.
+		Type *string `json:"type,omitempty"`
+	} `json:"tree"`
+}
+
+/*
+GitCreateTreeResponseBody201 is a response body for git/create-tree
+
+API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
+*/
+type GitCreateTreeResponseBody201 struct {
+	Sha  string `json:"sha,omitempty"`
+	Tree []struct {
+		Mode string      `json:"mode,omitempty"`
+		Path string      `json:"path,omitempty"`
+		Sha  string      `json:"sha,omitempty"`
+		Size json.Number `json:"size,omitempty"`
+		Type string      `json:"type,omitempty"`
+		Url  string      `json:"url,omitempty"`
+	} `json:"tree,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+GitCreateBlobReq builds requests for "git/create-blob"
+
+Create a blob.
+
+  POST /repos/{owner}/{repo}/git/blobs
+
+https://developer.github.com/v3/git/blobs/#create-a-blob
+*/
+type GitCreateBlobReq struct {
+	Owner       string
+	Repo        string
+	RequestBody GitCreateBlobReqBody
+}
+
+func (r GitCreateBlobReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo)
+}
+
+func (r GitCreateBlobReq) method() string {
+	return "POST"
+}
+
+func (r GitCreateBlobReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GitCreateBlobReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+GitCreateBlobReqBody is a request body for git/create-blob
+
+API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
+*/
+type GitCreateBlobReqBody struct {
+
+	// The new blob's content.
+	Content *string `json:"content"`
+
+	/*
+	   The encoding used for `content`. Currently, `"utf-8"` and `"base64"` are
+	   supported.
+	*/
+	Encoding *string `json:"encoding,omitempty"`
+}
+
+/*
+GitCreateBlobResponseBody201 is a response body for git/create-blob
+
+API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
+*/
+type GitCreateBlobResponseBody201 struct {
+	Sha string `json:"sha,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+GitGetTreeReq builds requests for "git/get-tree"
+
+Get a tree.
+
+  GET /repos/{owner}/{repo}/git/trees/{tree_sha}
+
+https://developer.github.com/v3/git/trees/#get-a-tree
+*/
+type GitGetTreeReq struct {
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// tree_sha parameter
+	TreeSha string
+
+	// recursive parameter
+	Recursive *int64
+}
+
+func (r GitGetTreeReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha)
+}
+
+func (r GitGetTreeReq) method() string {
+	return "GET"
+}
+
+func (r GitGetTreeReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Recursive != nil {
+		query.Set("recursive", strconv.FormatInt(*r.Recursive, 10))
+	}
+	return query
+}
+
+func (r GitGetTreeReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GitGetTreeResponseBody200 is a response body for git/get-tree
+
+API documentation: https://developer.github.com/v3/git/trees/#get-a-tree
+*/
+type GitGetTreeResponseBody200 struct {
+	Sha  string `json:"sha,omitempty"`
+	Tree []struct {
+		Mode string      `json:"mode"`
+		Path string      `json:"path"`
+		Sha  string      `json:"sha"`
+		Size json.Number `json:"size"`
+		Type string      `json:"type"`
+		Url  string      `json:"url"`
+	} `json:"tree,omitempty"`
+	Truncated bool   `json:"truncated,omitempty"`
+	Url       string `json:"url,omitempty"`
 }
 
 /*
@@ -438,494 +926,6 @@ type GitCreateCommitResponseBody201 struct {
 		Signature string `json:"signature,omitempty"`
 		Verified  bool   `json:"verified,omitempty"`
 	} `json:"verification,omitempty"`
-}
-
-/*
-GitCreateBlobReq builds requests for "git/create-blob"
-
-Create a blob.
-
-  POST /repos/{owner}/{repo}/git/blobs
-
-https://developer.github.com/v3/git/blobs/#create-a-blob
-*/
-type GitCreateBlobReq struct {
-	Owner       string
-	Repo        string
-	RequestBody GitCreateBlobReqBody
-}
-
-func (r GitCreateBlobReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo)
-}
-
-func (r GitCreateBlobReq) method() string {
-	return "POST"
-}
-
-func (r GitCreateBlobReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GitCreateBlobReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-GitCreateBlobReqBody is a request body for git/create-blob
-
-API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
-*/
-type GitCreateBlobReqBody struct {
-
-	// The new blob's content.
-	Content *string `json:"content"`
-
-	/*
-	   The encoding used for `content`. Currently, `"utf-8"` and `"base64"` are
-	   supported.
-	*/
-	Encoding *string `json:"encoding,omitempty"`
-}
-
-/*
-GitCreateBlobResponseBody201 is a response body for git/create-blob
-
-API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
-*/
-type GitCreateBlobResponseBody201 struct {
-	Sha string `json:"sha,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-GitGetTreeReq builds requests for "git/get-tree"
-
-Get a tree.
-
-  GET /repos/{owner}/{repo}/git/trees/{tree_sha}
-
-https://developer.github.com/v3/git/trees/#get-a-tree
-*/
-type GitGetTreeReq struct {
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// tree_sha parameter
-	TreeSha string
-
-	// recursive parameter
-	Recursive *int64
-}
-
-func (r GitGetTreeReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha)
-}
-
-func (r GitGetTreeReq) method() string {
-	return "GET"
-}
-
-func (r GitGetTreeReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Recursive != nil {
-		query.Set("recursive", strconv.FormatInt(*r.Recursive, 10))
-	}
-	return query
-}
-
-func (r GitGetTreeReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GitGetTreeResponseBody200 is a response body for git/get-tree
-
-API documentation: https://developer.github.com/v3/git/trees/#get-a-tree
-*/
-type GitGetTreeResponseBody200 struct {
-	Sha  string `json:"sha,omitempty"`
-	Tree []struct {
-		Mode string      `json:"mode"`
-		Path string      `json:"path"`
-		Sha  string      `json:"sha"`
-		Size json.Number `json:"size"`
-		Type string      `json:"type"`
-		Url  string      `json:"url"`
-	} `json:"tree,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-GitListMatchingRefsReq builds requests for "git/list-matching-refs"
-
-List matching references.
-
-  GET /repos/{owner}/{repo}/git/matching-refs/{ref}
-
-https://developer.github.com/v3/git/refs/#list-matching-references
-*/
-type GitListMatchingRefsReq struct {
-	Owner string
-	Repo  string
-	Ref   string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r GitListMatchingRefsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref)
-}
-
-func (r GitListMatchingRefsReq) method() string {
-	return "GET"
-}
-
-func (r GitListMatchingRefsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r GitListMatchingRefsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GitListMatchingRefsResponseBody200 is a response body for git/list-matching-refs
-
-API documentation: https://developer.github.com/v3/git/refs/#list-matching-references
-*/
-type GitListMatchingRefsResponseBody200 []struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-GitUpdateRefReq builds requests for "git/update-ref"
-
-Update a reference.
-
-  PATCH /repos/{owner}/{repo}/git/refs/{ref}
-
-https://developer.github.com/v3/git/refs/#update-a-reference
-*/
-type GitUpdateRefReq struct {
-	Owner       string
-	Repo        string
-	Ref         string
-	RequestBody GitUpdateRefReqBody
-}
-
-func (r GitUpdateRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref)
-}
-
-func (r GitUpdateRefReq) method() string {
-	return "PATCH"
-}
-
-func (r GitUpdateRefReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GitUpdateRefReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-GitUpdateRefReqBody is a request body for git/update-ref
-
-API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
-*/
-type GitUpdateRefReqBody struct {
-
-	/*
-	   Indicates whether to force the update or to make sure the update is a
-	   fast-forward update. Leaving this out or setting it to `false` will make sure
-	   you're not overwriting work.
-	*/
-	Force *bool `json:"force,omitempty"`
-
-	// The SHA1 value to set this reference to
-	Sha *string `json:"sha"`
-}
-
-/*
-GitUpdateRefResponseBody200 is a response body for git/update-ref
-
-API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
-*/
-type GitUpdateRefResponseBody200 struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-GitDeleteRefReq builds requests for "git/delete-ref"
-
-Delete a reference.
-
-  DELETE /repos/{owner}/{repo}/git/refs/{ref}
-
-https://developer.github.com/v3/git/refs/#delete-a-reference
-*/
-type GitDeleteRefReq struct {
-	Owner string
-	Repo  string
-	Ref   string
-}
-
-func (r GitDeleteRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref)
-}
-
-func (r GitDeleteRefReq) method() string {
-	return "DELETE"
-}
-
-func (r GitDeleteRefReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GitDeleteRefReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GitCreateTreeReq builds requests for "git/create-tree"
-
-Create a tree.
-
-  POST /repos/{owner}/{repo}/git/trees
-
-https://developer.github.com/v3/git/trees/#create-a-tree
-*/
-type GitCreateTreeReq struct {
-	Owner       string
-	Repo        string
-	RequestBody GitCreateTreeReqBody
-}
-
-func (r GitCreateTreeReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo)
-}
-
-func (r GitCreateTreeReq) method() string {
-	return "POST"
-}
-
-func (r GitCreateTreeReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GitCreateTreeReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-GitCreateTreeReqBody is a request body for git/create-tree
-
-API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
-*/
-type GitCreateTreeReqBody struct {
-
-	/*
-	   The SHA1 of the tree you want to update with new data. If you don't set this,
-	   the commit will be created on top of everything; however, it will only contain
-	   your change, the rest of your files will show up as deleted.
-	*/
-	BaseTree *string `json:"base_tree,omitempty"`
-
-	// Objects (of `path`, `mode`, `type`, and `sha`) specifying a tree structure.
-	Tree []struct {
-
-		/*
-		   The content you want this file to have. GitHub will write this blob out and use
-		   that SHA for this entry. Use either this, or `tree.sha`.
-
-		   **Note:** Use either `tree.sha` or `content` to specify the contents of the
-		   entry. Using both `tree.sha` and `content` will return an error.
-		*/
-		Content *string `json:"content,omitempty"`
-
-		/*
-		   The file mode; one of `100644` for file (blob), `100755` for executable (blob),
-		   `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000`
-		   for a blob that specifies the path of a symlink.
-		*/
-		Mode *string `json:"mode,omitempty"`
-
-		// The file referenced in the tree.
-		Path *string `json:"path,omitempty"`
-
-		/*
-		   The SHA1 checksum ID of the object in the tree. Also called `tree.sha`. If the
-		   value is `null` then the file will be deleted.
-
-		   **Note:** Use either `tree.sha` or `content` to specify the contents of the
-		   entry. Using both `tree.sha` and `content` will return an error.
-		*/
-		Sha *string `json:"sha,omitempty"`
-
-		// Either `blob`, `tree`, or `commit`.
-		Type *string `json:"type,omitempty"`
-	} `json:"tree"`
-}
-
-/*
-GitCreateTreeResponseBody201 is a response body for git/create-tree
-
-API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
-*/
-type GitCreateTreeResponseBody201 struct {
-	Sha  string `json:"sha,omitempty"`
-	Tree []struct {
-		Mode string      `json:"mode,omitempty"`
-		Path string      `json:"path,omitempty"`
-		Sha  string      `json:"sha,omitempty"`
-		Size json.Number `json:"size,omitempty"`
-		Type string      `json:"type,omitempty"`
-		Url  string      `json:"url,omitempty"`
-	} `json:"tree,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-GitCreateRefReq builds requests for "git/create-ref"
-
-Create a reference.
-
-  POST /repos/{owner}/{repo}/git/refs
-
-https://developer.github.com/v3/git/refs/#create-a-reference
-*/
-type GitCreateRefReq struct {
-	Owner       string
-	Repo        string
-	RequestBody GitCreateRefReqBody
-}
-
-func (r GitCreateRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo)
-}
-
-func (r GitCreateRefReq) method() string {
-	return "POST"
-}
-
-func (r GitCreateRefReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GitCreateRefReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-GitCreateRefReqBody is a request body for git/create-ref
-
-API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
-*/
-type GitCreateRefReqBody struct {
-
-	/*
-	   The name of the fully qualified reference (ie: `refs/heads/master`). If it
-	   doesn't start with 'refs' and have at least two slashes, it will be rejected.
-	*/
-	Ref *string `json:"ref"`
-
-	// The SHA1 value for this reference.
-	Sha *string `json:"sha"`
-}
-
-/*
-GitCreateRefResponseBody201 is a response body for git/create-ref
-
-API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
-*/
-type GitCreateRefResponseBody201 struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
 }
 
 /*

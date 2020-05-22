@@ -10,47 +10,6 @@ import (
 )
 
 /*
-GitignoreListTemplatesReq builds requests for "gitignore/list-templates"
-
-Listing available templates.
-
-  GET /gitignore/templates
-
-https://developer.github.com/v3/gitignore/#listing-available-templates
-*/
-type GitignoreListTemplatesReq struct{}
-
-func (r GitignoreListTemplatesReq) urlPath() string {
-	return fmt.Sprintf("/gitignore/templates")
-}
-
-func (r GitignoreListTemplatesReq) method() string {
-	return "GET"
-}
-
-func (r GitignoreListTemplatesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GitignoreListTemplatesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GitignoreListTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GitignoreListTemplatesResponseBody200 is a response body for gitignore/list-templates
-
-API documentation: https://developer.github.com/v3/gitignore/#listing-available-templates
-*/
-type GitignoreListTemplatesResponseBody200 []string
-
-/*
 GitignoreGetTemplateReq builds requests for "gitignore/get-template"
 
 Get a single template.
@@ -95,3 +54,44 @@ type GitignoreGetTemplateResponseBody200 struct {
 	Name   string `json:"name,omitempty"`
 	Source string `json:"source,omitempty"`
 }
+
+/*
+GitignoreListTemplatesReq builds requests for "gitignore/list-templates"
+
+Listing available templates.
+
+  GET /gitignore/templates
+
+https://developer.github.com/v3/gitignore/#listing-available-templates
+*/
+type GitignoreListTemplatesReq struct{}
+
+func (r GitignoreListTemplatesReq) urlPath() string {
+	return fmt.Sprintf("/gitignore/templates")
+}
+
+func (r GitignoreListTemplatesReq) method() string {
+	return "GET"
+}
+
+func (r GitignoreListTemplatesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GitignoreListTemplatesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GitignoreListTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GitignoreListTemplatesResponseBody200 is a response body for gitignore/list-templates
+
+API documentation: https://developer.github.com/v3/gitignore/#listing-available-templates
+*/
+type GitignoreListTemplatesResponseBody200 []string

@@ -11,41 +11,199 @@ import (
 )
 
 /*
-ActionsDownloadWorkflowJobLogsReq builds requests for "actions/download-workflow-job-logs"
+ActionsListSelfHostedRunnersForOrgReq builds requests for "actions/list-self-hosted-runners-for-org"
 
-Download workflow job logs.
+List self-hosted runners for an organization.
 
-  GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs
+  GET /orgs/{org}/actions/runners
 
-https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-type ActionsDownloadWorkflowJobLogsReq struct {
-	Owner string
-	Repo  string
-	JobId int64
+type ActionsListSelfHostedRunnersForOrgReq struct {
+	Org string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId)
+func (r ActionsListSelfHostedRunnersForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/runners", r.Org)
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) method() string {
+func (r ActionsListSelfHostedRunnersForOrgReq) method() string {
 	return "GET"
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) urlQuery() url.Values {
+func (r ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) header() http.Header {
+func (r ActionsListSelfHostedRunnersForOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListSelfHostedRunnersForOrgResponseBody200 is a response body for actions/list-self-hosted-runners-for-org
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
+*/
+type ActionsListSelfHostedRunnersForOrgResponseBody200 struct {
+	Runners []struct {
+		Id     int64  `json:"id"`
+		Name   string `json:"name"`
+		Os     string `json:"os"`
+		Status string `json:"status"`
+	} `json:"runners,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+ActionsListArtifactsForRepoReq builds requests for "actions/list-artifacts-for-repo"
+
+List artifacts for a repository.
+
+  GET /repos/{owner}/{repo}/actions/artifacts
+
+https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
+*/
+type ActionsListArtifactsForRepoReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ActionsListArtifactsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo)
+}
+
+func (r ActionsListArtifactsForRepoReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListArtifactsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ActionsListArtifactsForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListArtifactsForRepoResponseBody200 is a response body for actions/list-artifacts-for-repo
+
+API documentation: https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
+*/
+type ActionsListArtifactsForRepoResponseBody200 struct {
+	Artifacts []struct {
+		ArchiveDownloadUrl string `json:"archive_download_url"`
+		CreatedAt          string `json:"created_at"`
+		Expired            bool   `json:"expired"`
+		ExpiresAt          string `json:"expires_at"`
+		Id                 int64  `json:"id"`
+		Name               string `json:"name"`
+		NodeId             string `json:"node_id"`
+		SizeInBytes        int64  `json:"size_in_bytes"`
+		Url                string `json:"url"`
+	} `json:"artifacts,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+ActionsListSelfHostedRunnersForRepoReq builds requests for "actions/list-self-hosted-runners-for-repo"
+
+List self-hosted runners for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runners
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
+*/
+type ActionsListSelfHostedRunnersForRepoReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ActionsListSelfHostedRunnersForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo)
+}
+
+func (r ActionsListSelfHostedRunnersForRepoReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ActionsListSelfHostedRunnersForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListSelfHostedRunnersForRepoResponseBody200 is a response body for actions/list-self-hosted-runners-for-repo
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
+*/
+type ActionsListSelfHostedRunnersForRepoResponseBody200 struct {
+	Runners []struct {
+		Id     int64  `json:"id"`
+		Name   string `json:"name"`
+		Os     string `json:"os"`
+		Status string `json:"status"`
+	} `json:"runners,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
 }
 
 /*
@@ -142,1265 +300,6 @@ type ActionsListJobsForWorkflowRunResponseBody200 struct {
 }
 
 /*
-ActionsDownloadArtifactReq builds requests for "actions/download-artifact"
-
-Download an artifact.
-
-  GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}
-
-https://developer.github.com/v3/actions/artifacts/#download-an-artifact
-*/
-type ActionsDownloadArtifactReq struct {
-	Owner         string
-	Repo          string
-	ArtifactId    int64
-	ArchiveFormat string
-}
-
-func (r ActionsDownloadArtifactReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat)
-}
-
-func (r ActionsDownloadArtifactReq) method() string {
-	return "GET"
-}
-
-func (r ActionsDownloadArtifactReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDownloadArtifactReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetWorkflowRunUsageReq builds requests for "actions/get-workflow-run-usage"
-
-Get workflow run usage.
-
-  GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing
-
-https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
-*/
-type ActionsGetWorkflowRunUsageReq struct {
-	Owner string
-	Repo  string
-	RunId int64
-}
-
-func (r ActionsGetWorkflowRunUsageReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId)
-}
-
-func (r ActionsGetWorkflowRunUsageReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetWorkflowRunUsageReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetWorkflowRunUsageReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetWorkflowRunUsageResponseBody200 is a response body for actions/get-workflow-run-usage
-
-API documentation: https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
-*/
-type ActionsGetWorkflowRunUsageResponseBody200 struct {
-	Billable struct {
-		MACOS struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"MACOS,omitempty"`
-		UBUNTU struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"UBUNTU,omitempty"`
-		WINDOWS struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"WINDOWS,omitempty"`
-	} `json:"billable,omitempty"`
-	RunDurationMs int64 `json:"run_duration_ms,omitempty"`
-}
-
-/*
-ActionsDeleteSelfHostedRunnerFromOrgReq builds requests for "actions/delete-self-hosted-runner-from-org"
-
-Delete a self-hosted runner from an organization.
-
-  DELETE /orgs/{org}/actions/runners/{runner_id}
-
-https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
-*/
-type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
-	Org      string
-	RunnerId int64
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetSelfHostedRunnerForOrgReq builds requests for "actions/get-self-hosted-runner-for-org"
-
-Get a self-hosted runner for an organization.
-
-  GET /orgs/{org}/actions/runners/{runner_id}
-
-https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
-*/
-type ActionsGetSelfHostedRunnerForOrgReq struct {
-	Org      string
-	RunnerId int64
-}
-
-func (r ActionsGetSelfHostedRunnerForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
-}
-
-func (r ActionsGetSelfHostedRunnerForOrgReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetSelfHostedRunnerForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetSelfHostedRunnerForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetSelfHostedRunnerForOrgResponseBody200 is a response body for actions/get-self-hosted-runner-for-org
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
-*/
-type ActionsGetSelfHostedRunnerForOrgResponseBody200 struct {
-	Id     int64  `json:"id,omitempty"`
-	Name   string `json:"name,omitempty"`
-	Os     string `json:"os,omitempty"`
-	Status string `json:"status,omitempty"`
-}
-
-/*
-ActionsGetOrgPublicKeyReq builds requests for "actions/get-org-public-key"
-
-Get an organization public key.
-
-  GET /orgs/{org}/actions/secrets/public-key
-
-https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
-*/
-type ActionsGetOrgPublicKeyReq struct {
-	Org string
-}
-
-func (r ActionsGetOrgPublicKeyReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org)
-}
-
-func (r ActionsGetOrgPublicKeyReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetOrgPublicKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetOrgPublicKeyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetOrgPublicKeyResponseBody200 is a response body for actions/get-org-public-key
-
-API documentation: https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
-*/
-type ActionsGetOrgPublicKeyResponseBody200 struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
-}
-
-/*
-ActionsDeleteOrgSecretReq builds requests for "actions/delete-org-secret"
-
-Delete an organization secret.
-
-  DELETE /orgs/{org}/actions/secrets/{secret_name}
-
-https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
-*/
-type ActionsDeleteOrgSecretReq struct {
-	Org        string
-	SecretName string
-}
-
-func (r ActionsDeleteOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
-}
-
-func (r ActionsDeleteOrgSecretReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsDeleteOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDeleteOrgSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetOrgSecretReq builds requests for "actions/get-org-secret"
-
-Get an organization secret.
-
-  GET /orgs/{org}/actions/secrets/{secret_name}
-
-https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
-*/
-type ActionsGetOrgSecretReq struct {
-	Org        string
-	SecretName string
-}
-
-func (r ActionsGetOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
-}
-
-func (r ActionsGetOrgSecretReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetOrgSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetOrgSecretResponseBody200 is a response body for actions/get-org-secret
-
-API documentation: https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
-*/
-type ActionsGetOrgSecretResponseBody200 struct {
-	CreatedAt               string `json:"created_at,omitempty"`
-	Name                    string `json:"name,omitempty"`
-	SelectedRepositoriesUrl string `json:"selected_repositories_url,omitempty"`
-	UpdatedAt               string `json:"updated_at,omitempty"`
-	Visibility              string `json:"visibility,omitempty"`
-}
-
-/*
-ActionsCreateOrUpdateOrgSecretReq builds requests for "actions/create-or-update-org-secret"
-
-Create or update an organization secret.
-
-  PUT /orgs/{org}/actions/secrets/{secret_name}
-
-https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
-*/
-type ActionsCreateOrUpdateOrgSecretReq struct {
-	Org         string
-	SecretName  string
-	RequestBody ActionsCreateOrUpdateOrgSecretReqBody
-}
-
-func (r ActionsCreateOrUpdateOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
-}
-
-func (r ActionsCreateOrUpdateOrgSecretReq) method() string {
-	return "PUT"
-}
-
-func (r ActionsCreateOrUpdateOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCreateOrUpdateOrgSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ActionsCreateOrUpdateOrgSecretReqBody is a request body for actions/create-or-update-org-secret
-
-API documentation: https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
-*/
-type ActionsCreateOrUpdateOrgSecretReqBody struct {
-
-	/*
-	   Value for your secret, encrypted with
-	   [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
-	   the public key retrieved from the [Get an organization public
-	   key](https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key)
-	   endpoint.
-	*/
-	EncryptedValue *string `json:"encrypted_value,omitempty"`
-
-	// ID of the key you used to encrypt the secret.
-	KeyId *string `json:"key_id,omitempty"`
-
-	/*
-	   An array of repository ids that can access the organization secret. You can only
-	   provide a list of repository ids when the `visibility` is set to `selected`. You
-	   can manage the list of selected repositories using the [List selected
-	   repositories for an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret),
-	   [Set selected repositories for an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret),
-	   and [Remove selected repository from an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
-	   endpoints.
-	*/
-	SelectedRepositoryIds []string `json:"selected_repository_ids,omitempty"`
-
-	/*
-	   Configures the access that repositories have to the organization secret. Can be
-	   one of:
-	   \- `all` - All repositories in an organization can access the secret.
-	   \- `private` - Private repositories in an organization can access the secret.
-	   \- `selected` - Only specific repositories can access the secret.
-	*/
-	Visibility *string `json:"visibility,omitempty"`
-}
-
-/*
-ActionsListSelfHostedRunnersForRepoReq builds requests for "actions/list-self-hosted-runners-for-repo"
-
-List self-hosted runners for a repository.
-
-  GET /repos/{owner}/{repo}/actions/runners
-
-https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
-*/
-type ActionsListSelfHostedRunnersForRepoReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ActionsListSelfHostedRunnersForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo)
-}
-
-func (r ActionsListSelfHostedRunnersForRepoReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ActionsListSelfHostedRunnersForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListSelfHostedRunnersForRepoResponseBody200 is a response body for actions/list-self-hosted-runners-for-repo
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
-*/
-type ActionsListSelfHostedRunnersForRepoResponseBody200 struct {
-	Runners []struct {
-		Id     int64  `json:"id"`
-		Name   string `json:"name"`
-		Os     string `json:"os"`
-		Status string `json:"status"`
-	} `json:"runners,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-ActionsListSelfHostedRunnersForOrgReq builds requests for "actions/list-self-hosted-runners-for-org"
-
-List self-hosted runners for an organization.
-
-  GET /orgs/{org}/actions/runners
-
-https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
-*/
-type ActionsListSelfHostedRunnersForOrgReq struct {
-	Org string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ActionsListSelfHostedRunnersForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners", r.Org)
-}
-
-func (r ActionsListSelfHostedRunnersForOrgReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ActionsListSelfHostedRunnersForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListSelfHostedRunnersForOrgResponseBody200 is a response body for actions/list-self-hosted-runners-for-org
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
-*/
-type ActionsListSelfHostedRunnersForOrgResponseBody200 struct {
-	Runners []struct {
-		Id     int64  `json:"id"`
-		Name   string `json:"name"`
-		Os     string `json:"os"`
-		Status string `json:"status"`
-	} `json:"runners,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-ActionsCreateRemoveTokenForRepoReq builds requests for "actions/create-remove-token-for-repo"
-
-Create a remove token for a repository.
-
-  POST /repos/{owner}/{repo}/actions/runners/remove-token
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
-*/
-type ActionsCreateRemoveTokenForRepoReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ActionsCreateRemoveTokenForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo)
-}
-
-func (r ActionsCreateRemoveTokenForRepoReq) method() string {
-	return "POST"
-}
-
-func (r ActionsCreateRemoveTokenForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCreateRemoveTokenForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsCreateRemoveTokenForRepoResponseBody201 is a response body for actions/create-remove-token-for-repo
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
-*/
-type ActionsCreateRemoveTokenForRepoResponseBody201 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Token     string `json:"token,omitempty"`
-}
-
-/*
-ActionsCreateRegistrationTokenForRepoReq builds requests for "actions/create-registration-token-for-repo"
-
-Create a registration token for a repository.
-
-  POST /repos/{owner}/{repo}/actions/runners/registration-token
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
-*/
-type ActionsCreateRegistrationTokenForRepoReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ActionsCreateRegistrationTokenForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo)
-}
-
-func (r ActionsCreateRegistrationTokenForRepoReq) method() string {
-	return "POST"
-}
-
-func (r ActionsCreateRegistrationTokenForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCreateRegistrationTokenForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsCreateRegistrationTokenForRepoResponseBody201 is a response body for actions/create-registration-token-for-repo
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
-*/
-type ActionsCreateRegistrationTokenForRepoResponseBody201 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Token     string `json:"token,omitempty"`
-}
-
-/*
-ActionsGetWorkflowJobReq builds requests for "actions/get-workflow-job"
-
-Get a workflow job.
-
-  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-type ActionsGetWorkflowJobReq struct {
-	Owner string
-	Repo  string
-	JobId int64
-}
-
-func (r ActionsGetWorkflowJobReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId)
-}
-
-func (r ActionsGetWorkflowJobReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetWorkflowJobReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetWorkflowJobReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetWorkflowJobResponseBody202 is a response body for actions/get-workflow-job
-
-API documentation: https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-type ActionsGetWorkflowJobResponseBody202 struct {
-	CheckRunUrl string `json:"check_run_url,omitempty"`
-	CompletedAt string `json:"completed_at,omitempty"`
-	Conclusion  string `json:"conclusion,omitempty"`
-	HeadSha     string `json:"head_sha,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	RunId       int64  `json:"run_id,omitempty"`
-	RunUrl      string `json:"run_url,omitempty"`
-	StartedAt   string `json:"started_at,omitempty"`
-	Status      string `json:"status,omitempty"`
-	Steps       []struct {
-		CompletedAt string `json:"completed_at"`
-		Conclusion  string `json:"conclusion"`
-		Name        string `json:"name"`
-		Number      int64  `json:"number"`
-		StartedAt   string `json:"started_at"`
-		Status      string `json:"status"`
-	} `json:"steps,omitempty"`
-	Url string `json:"url,omitempty"`
-}
-
-/*
-ActionsAddSelectedRepoToOrgSecretReq builds requests for "actions/add-selected-repo-to-org-secret"
-
-Add selected repository to an organization secret.
-
-  PUT /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
-
-https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
-*/
-type ActionsAddSelectedRepoToOrgSecretReq struct {
-	Org          string
-	SecretName   string
-	RepositoryId int64
-}
-
-func (r ActionsAddSelectedRepoToOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
-}
-
-func (r ActionsAddSelectedRepoToOrgSecretReq) method() string {
-	return "PUT"
-}
-
-func (r ActionsAddSelectedRepoToOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsAddSelectedRepoToOrgSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsRemoveSelectedRepoFromOrgSecretReq builds requests for "actions/remove-selected-repo-from-org-secret"
-
-Remove selected repository from an organization secret.
-
-  DELETE /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
-
-https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
-*/
-type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
-	Org          string
-	SecretName   string
-	RepositoryId int64
-}
-
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
-}
-
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListRepoWorkflowsReq builds requests for "actions/list-repo-workflows"
-
-List repository workflows.
-
-  GET /repos/{owner}/{repo}/actions/workflows
-
-https://developer.github.com/v3/actions/workflows/#list-repository-workflows
-*/
-type ActionsListRepoWorkflowsReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ActionsListRepoWorkflowsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo)
-}
-
-func (r ActionsListRepoWorkflowsReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListRepoWorkflowsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ActionsListRepoWorkflowsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListRepoWorkflowsResponseBody200 is a response body for actions/list-repo-workflows
-
-API documentation: https://developer.github.com/v3/actions/workflows/#list-repository-workflows
-*/
-type ActionsListRepoWorkflowsResponseBody200 struct {
-	TotalCount int64 `json:"total_count,omitempty"`
-	Workflows  []struct {
-		BadgeUrl  string `json:"badge_url"`
-		CreatedAt string `json:"created_at"`
-		HtmlUrl   string `json:"html_url"`
-		Id        int64  `json:"id"`
-		Name      string `json:"name"`
-		NodeId    string `json:"node_id"`
-		Path      string `json:"path"`
-		State     string `json:"state"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
-	} `json:"workflows,omitempty"`
-}
-
-/*
-ActionsGetWorkflowRunReq builds requests for "actions/get-workflow-run"
-
-Get a workflow run.
-
-  GET /repos/{owner}/{repo}/actions/runs/{run_id}
-
-https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
-*/
-type ActionsGetWorkflowRunReq struct {
-	Owner string
-	Repo  string
-	RunId int64
-}
-
-func (r ActionsGetWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId)
-}
-
-func (r ActionsGetWorkflowRunReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetWorkflowRunReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetWorkflowRunResponseBody200 is a response body for actions/get-workflow-run
-
-API documentation: https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
-*/
-type ActionsGetWorkflowRunResponseBody200 struct {
-	ArtifactsUrl  string `json:"artifacts_url,omitempty"`
-	CancelUrl     string `json:"cancel_url,omitempty"`
-	CheckSuiteUrl string `json:"check_suite_url,omitempty"`
-	Conclusion    string `json:"conclusion,omitempty"`
-	CreatedAt     string `json:"created_at,omitempty"`
-	Event         string `json:"event,omitempty"`
-	HeadBranch    string `json:"head_branch,omitempty"`
-	HeadCommit    struct {
-		Author struct {
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"author,omitempty"`
-		Committer struct {
-			Email string `json:"email,omitempty"`
-			Name  string `json:"name,omitempty"`
-		} `json:"committer,omitempty"`
-		Id        string `json:"id,omitempty"`
-		Message   string `json:"message,omitempty"`
-		Timestamp string `json:"timestamp,omitempty"`
-		TreeId    string `json:"tree_id,omitempty"`
-	} `json:"head_commit,omitempty"`
-	HeadRepository struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"head_repository,omitempty"`
-	HeadSha      string        `json:"head_sha,omitempty"`
-	HtmlUrl      string        `json:"html_url,omitempty"`
-	Id           int64         `json:"id,omitempty"`
-	JobsUrl      string        `json:"jobs_url,omitempty"`
-	LogsUrl      string        `json:"logs_url,omitempty"`
-	NodeId       string        `json:"node_id,omitempty"`
-	PullRequests []interface{} `json:"pull_requests,omitempty"`
-	Repository   struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repository,omitempty"`
-	RerunUrl    string `json:"rerun_url,omitempty"`
-	RunNumber   int64  `json:"run_number,omitempty"`
-	Status      string `json:"status,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-	WorkflowUrl string `json:"workflow_url,omitempty"`
-}
-
-/*
-ActionsListOrgSecretsReq builds requests for "actions/list-org-secrets"
-
-List organization secrets.
-
-  GET /orgs/{org}/actions/secrets
-
-https://developer.github.com/v3/actions/secrets/#list-organization-secrets
-*/
-type ActionsListOrgSecretsReq struct {
-	Org string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ActionsListOrgSecretsReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets", r.Org)
-}
-
-func (r ActionsListOrgSecretsReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListOrgSecretsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ActionsListOrgSecretsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListOrgSecretsResponseBody200 is a response body for actions/list-org-secrets
-
-API documentation: https://developer.github.com/v3/actions/secrets/#list-organization-secrets
-*/
-type ActionsListOrgSecretsResponseBody200 struct {
-	Secrets []struct {
-		CreatedAt               string `json:"created_at"`
-		Name                    string `json:"name"`
-		SelectedRepositoriesUrl string `json:"selected_repositories_url,omitempty"`
-		UpdatedAt               string `json:"updated_at"`
-		Visibility              string `json:"visibility"`
-	} `json:"secrets,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-ActionsDeleteRepoSecretReq builds requests for "actions/delete-repo-secret"
-
-Delete a repository secret.
-
-  DELETE /repos/{owner}/{repo}/actions/secrets/{secret_name}
-
-https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
-*/
-type ActionsDeleteRepoSecretReq struct {
-	Owner      string
-	Repo       string
-	SecretName string
-}
-
-func (r ActionsDeleteRepoSecretReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
-}
-
-func (r ActionsDeleteRepoSecretReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsDeleteRepoSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDeleteRepoSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetRepoSecretReq builds requests for "actions/get-repo-secret"
-
-Get a repository secret.
-
-  GET /repos/{owner}/{repo}/actions/secrets/{secret_name}
-
-https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
-*/
-type ActionsGetRepoSecretReq struct {
-	Owner      string
-	Repo       string
-	SecretName string
-}
-
-func (r ActionsGetRepoSecretReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
-}
-
-func (r ActionsGetRepoSecretReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetRepoSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetRepoSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetRepoSecretResponseBody200 is a response body for actions/get-repo-secret
-
-API documentation: https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
-*/
-type ActionsGetRepoSecretResponseBody200 struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Name      string `json:"name,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-}
-
-/*
-ActionsCreateOrUpdateRepoSecretReq builds requests for "actions/create-or-update-repo-secret"
-
-Create or update a repository secret.
-
-  PUT /repos/{owner}/{repo}/actions/secrets/{secret_name}
-
-https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
-*/
-type ActionsCreateOrUpdateRepoSecretReq struct {
-	Owner       string
-	Repo        string
-	SecretName  string
-	RequestBody ActionsCreateOrUpdateRepoSecretReqBody
-}
-
-func (r ActionsCreateOrUpdateRepoSecretReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
-}
-
-func (r ActionsCreateOrUpdateRepoSecretReq) method() string {
-	return "PUT"
-}
-
-func (r ActionsCreateOrUpdateRepoSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCreateOrUpdateRepoSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ActionsCreateOrUpdateRepoSecretReqBody is a request body for actions/create-or-update-repo-secret
-
-API documentation: https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
-*/
-type ActionsCreateOrUpdateRepoSecretReqBody struct {
-
-	/*
-	   Value for your secret, encrypted with
-	   [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
-	   the public key retrieved from the [Get a repository public
-	   key](https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key)
-	   endpoint.
-	*/
-	EncryptedValue *string `json:"encrypted_value,omitempty"`
-
-	// ID of the key you used to encrypt the secret.
-	KeyId *string `json:"key_id,omitempty"`
-}
-
-/*
 ActionsListRepoSecretsReq builds requests for "actions/list-repo-secrets"
 
 List repository secrets.
@@ -1464,798 +363,126 @@ type ActionsListRepoSecretsResponseBody200 struct {
 }
 
 /*
-ActionsListWorkflowRunArtifactsReq builds requests for "actions/list-workflow-run-artifacts"
+ActionsCreateRegistrationTokenForRepoReq builds requests for "actions/create-registration-token-for-repo"
 
-List workflow run artifacts.
+Create a registration token for a repository.
 
-  GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts
+  POST /repos/{owner}/{repo}/actions/runners/registration-token
 
-https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-type ActionsListWorkflowRunArtifactsReq struct {
+type ActionsCreateRegistrationTokenForRepoReq struct {
 	Owner string
 	Repo  string
-	RunId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId)
+func (r ActionsCreateRegistrationTokenForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo)
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) method() string {
-	return "GET"
+func (r ActionsCreateRegistrationTokenForRepoReq) method() string {
+	return "POST"
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
+func (r ActionsCreateRegistrationTokenForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) header() http.Header {
+func (r ActionsCreateRegistrationTokenForRepoReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ActionsListWorkflowRunArtifactsResponseBody200 is a response body for actions/list-workflow-run-artifacts
+ActionsCreateRegistrationTokenForRepoResponseBody201 is a response body for actions/create-registration-token-for-repo
 
-API documentation: https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-type ActionsListWorkflowRunArtifactsResponseBody200 struct {
-	Artifacts []struct {
-		ArchiveDownloadUrl string `json:"archive_download_url"`
-		CreatedAt          string `json:"created_at"`
-		Expired            bool   `json:"expired"`
-		ExpiresAt          string `json:"expires_at"`
-		Id                 int64  `json:"id"`
-		Name               string `json:"name"`
-		NodeId             string `json:"node_id"`
-		SizeInBytes        int64  `json:"size_in_bytes"`
-		Url                string `json:"url"`
-	} `json:"artifacts,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+type ActionsCreateRegistrationTokenForRepoResponseBody201 struct {
+	ExpiresAt string `json:"expires_at,omitempty"`
+	Token     string `json:"token,omitempty"`
 }
 
 /*
-ActionsSetSelectedReposForOrgSecretReq builds requests for "actions/set-selected-repos-for-org-secret"
+ActionsRemoveSelectedRepoFromOrgSecretReq builds requests for "actions/remove-selected-repo-from-org-secret"
 
-Set selected repositories for an organization secret.
+Remove selected repository from an organization secret.
 
-  PUT /orgs/{org}/actions/secrets/{secret_name}/repositories
+  DELETE /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
 
-https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
+https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-type ActionsSetSelectedReposForOrgSecretReq struct {
-	Org         string
-	SecretName  string
-	RequestBody ActionsSetSelectedReposForOrgSecretReqBody
+type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
+	Org          string
+	SecretName   string
+	RepositoryId int64
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
+func (r ActionsRemoveSelectedRepoFromOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) method() string {
+func (r ActionsRemoveSelectedRepoFromOrgSecretReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsRemoveSelectedRepoFromOrgSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsRemoveSelectedRepoFromOrgSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsAddSelectedRepoToOrgSecretReq builds requests for "actions/add-selected-repo-to-org-secret"
+
+Add selected repository to an organization secret.
+
+  PUT /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
+
+https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
+*/
+type ActionsAddSelectedRepoToOrgSecretReq struct {
+	Org          string
+	SecretName   string
+	RepositoryId int64
+}
+
+func (r ActionsAddSelectedRepoToOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
+}
+
+func (r ActionsAddSelectedRepoToOrgSecretReq) method() string {
 	return "PUT"
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) urlQuery() url.Values {
+func (r ActionsAddSelectedRepoToOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) header() http.Header {
+func (r ActionsAddSelectedRepoToOrgSecretReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-ActionsSetSelectedReposForOrgSecretReqBody is a request body for actions/set-selected-repos-for-org-secret
-
-API documentation: https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
-*/
-type ActionsSetSelectedReposForOrgSecretReqBody struct {
-
-	/*
-	   An array of repository ids that can access the organization secret. You can only
-	   provide a list of repository ids when the `visibility` is set to `selected`. You
-	   can add and remove individual repositories using the [Set selected repositories
-	   for an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret)
-	   and [Remove selected repository from an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
-	   endpoints.
-	*/
-	SelectedRepositoryIds []int64 `json:"selected_repository_ids,omitempty"`
-}
-
-/*
-ActionsListSelectedReposForOrgSecretReq builds requests for "actions/list-selected-repos-for-org-secret"
-
-List selected repositories for an organization secret.
-
-  GET /orgs/{org}/actions/secrets/{secret_name}/repositories
-
-https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
-*/
-type ActionsListSelectedReposForOrgSecretReq struct {
-	Org        string
-	SecretName string
-}
-
-func (r ActionsListSelectedReposForOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
-}
-
-func (r ActionsListSelectedReposForOrgSecretReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListSelectedReposForOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsListSelectedReposForOrgSecretReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListSelectedReposForOrgSecretResponseBody200 is a response body for actions/list-selected-repos-for-org-secret
-
-API documentation: https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
-*/
-type ActionsListSelectedReposForOrgSecretResponseBody200 struct {
-	Repositories []struct {
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool   `json:"private,omitempty"`
-		PullsUrl        string `json:"pulls_url,omitempty"`
-		ReleasesUrl     string `json:"releases_url,omitempty"`
-		SshUrl          string `json:"ssh_url,omitempty"`
-		StargazersUrl   string `json:"stargazers_url,omitempty"`
-		StatusesUrl     string `json:"statuses_url,omitempty"`
-		SubscribersUrl  string `json:"subscribers_url,omitempty"`
-		SubscriptionUrl string `json:"subscription_url,omitempty"`
-		TagsUrl         string `json:"tags_url,omitempty"`
-		TeamsUrl        string `json:"teams_url,omitempty"`
-		TreesUrl        string `json:"trees_url,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"repositories,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-ActionsDeleteArtifactReq builds requests for "actions/delete-artifact"
-
-Delete an artifact.
-
-  DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
-
-https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
-*/
-type ActionsDeleteArtifactReq struct {
-	Owner      string
-	Repo       string
-	ArtifactId int64
-}
-
-func (r ActionsDeleteArtifactReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
-}
-
-func (r ActionsDeleteArtifactReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsDeleteArtifactReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDeleteArtifactReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetArtifactReq builds requests for "actions/get-artifact"
-
-Get an artifact.
-
-  GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
-
-https://developer.github.com/v3/actions/artifacts/#get-an-artifact
-*/
-type ActionsGetArtifactReq struct {
-	Owner      string
-	Repo       string
-	ArtifactId int64
-}
-
-func (r ActionsGetArtifactReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
-}
-
-func (r ActionsGetArtifactReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetArtifactReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetArtifactReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetArtifactResponseBody200 is a response body for actions/get-artifact
-
-API documentation: https://developer.github.com/v3/actions/artifacts/#get-an-artifact
-*/
-type ActionsGetArtifactResponseBody200 struct {
-	ArchiveDownloadUrl string `json:"archive_download_url,omitempty"`
-	CreatedAt          string `json:"created_at,omitempty"`
-	Expired            bool   `json:"expired,omitempty"`
-	ExpiresAt          string `json:"expires_at,omitempty"`
-	Id                 int64  `json:"id,omitempty"`
-	Name               string `json:"name,omitempty"`
-	NodeId             string `json:"node_id,omitempty"`
-	SizeInBytes        int64  `json:"size_in_bytes,omitempty"`
-	Url                string `json:"url,omitempty"`
-}
-
-/*
-ActionsCancelWorkflowRunReq builds requests for "actions/cancel-workflow-run"
-
-Cancel a workflow run.
-
-  POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
-
-https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
-*/
-type ActionsCancelWorkflowRunReq struct {
-	Owner string
-	Repo  string
-	RunId int64
-}
-
-func (r ActionsCancelWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId)
-}
-
-func (r ActionsCancelWorkflowRunReq) method() string {
-	return "POST"
-}
-
-func (r ActionsCancelWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCancelWorkflowRunReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsDeleteSelfHostedRunnerFromRepoReq builds requests for "actions/delete-self-hosted-runner-from-repo"
-
-Delete a self-hosted runner from a repository.
-
-  DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}
-
-https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
-*/
-type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
-	Owner    string
-	Repo     string
-	RunnerId int64
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetSelfHostedRunnerForRepoReq builds requests for "actions/get-self-hosted-runner-for-repo"
-
-Get a self-hosted runner for a repository.
-
-  GET /repos/{owner}/{repo}/actions/runners/{runner_id}
-
-https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
-*/
-type ActionsGetSelfHostedRunnerForRepoReq struct {
-	Owner    string
-	Repo     string
-	RunnerId int64
-}
-
-func (r ActionsGetSelfHostedRunnerForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
-}
-
-func (r ActionsGetSelfHostedRunnerForRepoReq) method() string {
-	return "GET"
-}
-
-func (r ActionsGetSelfHostedRunnerForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsGetSelfHostedRunnerForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsGetSelfHostedRunnerForRepoResponseBody200 is a response body for actions/get-self-hosted-runner-for-repo
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
-*/
-type ActionsGetSelfHostedRunnerForRepoResponseBody200 struct {
-	Id     int64  `json:"id,omitempty"`
-	Name   string `json:"name,omitempty"`
-	Os     string `json:"os,omitempty"`
-	Status string `json:"status,omitempty"`
-}
-
-/*
-ActionsCreateRegistrationTokenForOrgReq builds requests for "actions/create-registration-token-for-org"
-
-Create a registration token for an organization.
-
-  POST /orgs/{org}/actions/runners/registration-token
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
-*/
-type ActionsCreateRegistrationTokenForOrgReq struct {
-	Org string
-}
-
-func (r ActionsCreateRegistrationTokenForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org)
-}
-
-func (r ActionsCreateRegistrationTokenForOrgReq) method() string {
-	return "POST"
-}
-
-func (r ActionsCreateRegistrationTokenForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCreateRegistrationTokenForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsCreateRegistrationTokenForOrgResponseBody201 is a response body for actions/create-registration-token-for-org
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
-*/
-type ActionsCreateRegistrationTokenForOrgResponseBody201 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Token     string `json:"token,omitempty"`
-}
-
-/*
-ActionsListArtifactsForRepoReq builds requests for "actions/list-artifacts-for-repo"
-
-List artifacts for a repository.
-
-  GET /repos/{owner}/{repo}/actions/artifacts
-
-https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
-*/
-type ActionsListArtifactsForRepoReq struct {
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ActionsListArtifactsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo)
-}
-
-func (r ActionsListArtifactsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListArtifactsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ActionsListArtifactsForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListArtifactsForRepoResponseBody200 is a response body for actions/list-artifacts-for-repo
-
-API documentation: https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
-*/
-type ActionsListArtifactsForRepoResponseBody200 struct {
-	Artifacts []struct {
-		ArchiveDownloadUrl string `json:"archive_download_url"`
-		CreatedAt          string `json:"created_at"`
-		Expired            bool   `json:"expired"`
-		ExpiresAt          string `json:"expires_at"`
-		Id                 int64  `json:"id"`
-		Name               string `json:"name"`
-		NodeId             string `json:"node_id"`
-		SizeInBytes        int64  `json:"size_in_bytes"`
-		Url                string `json:"url"`
-	} `json:"artifacts,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-ActionsListRunnerApplicationsForOrgReq builds requests for "actions/list-runner-applications-for-org"
-
-List runner applications for an organization.
-
-  GET /orgs/{org}/actions/runners/downloads
-
-https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
-*/
-type ActionsListRunnerApplicationsForOrgReq struct {
-	Org string
-}
-
-func (r ActionsListRunnerApplicationsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org)
-}
-
-func (r ActionsListRunnerApplicationsForOrgReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListRunnerApplicationsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsListRunnerApplicationsForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListRunnerApplicationsForOrgResponseBody200 is a response body for actions/list-runner-applications-for-org
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
-*/
-type ActionsListRunnerApplicationsForOrgResponseBody200 []struct {
-	Architecture string `json:"architecture,omitempty"`
-	DownloadUrl  string `json:"download_url,omitempty"`
-	Filename     string `json:"filename,omitempty"`
-	Os           string `json:"os,omitempty"`
-}
-
-/*
-ActionsListRunnerApplicationsForRepoReq builds requests for "actions/list-runner-applications-for-repo"
-
-List runner applications for a repository.
-
-  GET /repos/{owner}/{repo}/actions/runners/downloads
-
-https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
-*/
-type ActionsListRunnerApplicationsForRepoReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r ActionsListRunnerApplicationsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo)
-}
-
-func (r ActionsListRunnerApplicationsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListRunnerApplicationsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsListRunnerApplicationsForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListRunnerApplicationsForRepoResponseBody200 is a response body for actions/list-runner-applications-for-repo
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
-*/
-type ActionsListRunnerApplicationsForRepoResponseBody200 []struct {
-	Architecture string `json:"architecture,omitempty"`
-	DownloadUrl  string `json:"download_url,omitempty"`
-	Filename     string `json:"filename,omitempty"`
-	Os           string `json:"os,omitempty"`
-}
-
-/*
-ActionsDeleteWorkflowRunLogsReq builds requests for "actions/delete-workflow-run-logs"
-
-Delete workflow run logs.
-
-  DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs
-
-https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
-*/
-type ActionsDeleteWorkflowRunLogsReq struct {
-	Owner string
-	Repo  string
-	RunId int64
-}
-
-func (r ActionsDeleteWorkflowRunLogsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
-}
-
-func (r ActionsDeleteWorkflowRunLogsReq) method() string {
-	return "DELETE"
-}
-
-func (r ActionsDeleteWorkflowRunLogsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDeleteWorkflowRunLogsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsDownloadWorkflowRunLogsReq builds requests for "actions/download-workflow-run-logs"
-
-Download workflow run logs.
-
-  GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs
-
-https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
-*/
-type ActionsDownloadWorkflowRunLogsReq struct {
-	Owner string
-	Repo  string
-	RunId int64
-}
-
-func (r ActionsDownloadWorkflowRunLogsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
-}
-
-func (r ActionsDownloadWorkflowRunLogsReq) method() string {
-	return "GET"
-}
-
-func (r ActionsDownloadWorkflowRunLogsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsDownloadWorkflowRunLogsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsCreateRemoveTokenForOrgReq builds requests for "actions/create-remove-token-for-org"
-
-Create a remove token for an organization.
-
-  POST /orgs/{org}/actions/runners/remove-token
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
-*/
-type ActionsCreateRemoveTokenForOrgReq struct {
-	Org string
-}
-
-func (r ActionsCreateRemoveTokenForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org)
-}
-
-func (r ActionsCreateRemoveTokenForOrgReq) method() string {
-	return "POST"
-}
-
-func (r ActionsCreateRemoveTokenForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r ActionsCreateRemoveTokenForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsCreateRemoveTokenForOrgResponseBody201 is a response body for actions/create-remove-token-for-org
-
-API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
-*/
-type ActionsCreateRemoveTokenForOrgResponseBody201 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Token     string `json:"token,omitempty"`
 }
 
 /*
@@ -2315,368 +542,110 @@ type ActionsGetWorkflowResponseBody200 struct {
 }
 
 /*
-ActionsGetWorkflowUsageReq builds requests for "actions/get-workflow-usage"
+ActionsCreateRemoveTokenForOrgReq builds requests for "actions/create-remove-token-for-org"
 
-Get workflow usage.
+Create a remove token for an organization.
 
-  GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing
+  POST /orgs/{org}/actions/runners/remove-token
 
-https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-type ActionsGetWorkflowUsageReq struct {
-	Owner      string
-	Repo       string
-	WorkflowId int64
+type ActionsCreateRemoveTokenForOrgReq struct {
+	Org string
 }
 
-func (r ActionsGetWorkflowUsageReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId)
+func (r ActionsCreateRemoveTokenForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org)
 }
 
-func (r ActionsGetWorkflowUsageReq) method() string {
-	return "GET"
+func (r ActionsCreateRemoveTokenForOrgReq) method() string {
+	return "POST"
 }
 
-func (r ActionsGetWorkflowUsageReq) urlQuery() url.Values {
+func (r ActionsCreateRemoveTokenForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetWorkflowUsageReq) header() http.Header {
+func (r ActionsCreateRemoveTokenForOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-ActionsGetWorkflowUsageResponseBody200 is a response body for actions/get-workflow-usage
+ActionsCreateRemoveTokenForOrgResponseBody201 is a response body for actions/create-remove-token-for-org
 
-API documentation: https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-type ActionsGetWorkflowUsageResponseBody200 struct {
-	Billable struct {
-		MACOS struct {
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"MACOS,omitempty"`
-		UBUNTU struct {
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"UBUNTU,omitempty"`
-		WINDOWS struct {
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"WINDOWS,omitempty"`
-	} `json:"billable,omitempty"`
+type ActionsCreateRemoveTokenForOrgResponseBody201 struct {
+	ExpiresAt string `json:"expires_at,omitempty"`
+	Token     string `json:"token,omitempty"`
 }
 
 /*
-ActionsListRepoWorkflowRunsReq builds requests for "actions/list-repo-workflow-runs"
+ActionsGetWorkflowRunUsageReq builds requests for "actions/get-workflow-run-usage"
 
-List repository workflow runs.
+Get workflow run usage.
 
-  GET /repos/{owner}/{repo}/actions/runs
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing
 
-https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
+https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-type ActionsListRepoWorkflowRunsReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Returns someone's workflow runs. Use the login for the user who created the
-	`push` associated with the check suite or workflow run.
-	*/
-	Actor *string
-
-	/*
-	Returns workflow runs associated with a branch. Use the name of the branch of
-	the `push`.
-	*/
-	Branch *string
-
-	/*
-	Returns workflow run triggered by the event you specify. For example, `push`,
-	`pull_request` or `issue`. For more information, see "[Events that trigger
-	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)"
-	in the GitHub Help documentation.
-	*/
-	Event *string
-
-	/*
-	Returns workflow runs associated with the check run `status` or `conclusion` you
-	specify. For example, a conclusion can be `success` or a status can be
-	`completed`. For more information, see the `status` and `conclusion` options
-	available in "[Create a check
-	run](https://developer.github.com/v3/checks/runs/#create-a-check-run)."
-	*/
-	Status *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r ActionsListRepoWorkflowRunsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo)
-}
-
-func (r ActionsListRepoWorkflowRunsReq) method() string {
-	return "GET"
-}
-
-func (r ActionsListRepoWorkflowRunsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Actor != nil {
-		query.Set("actor", *r.Actor)
-	}
-	if r.Branch != nil {
-		query.Set("branch", *r.Branch)
-	}
-	if r.Event != nil {
-		query.Set("event", *r.Event)
-	}
-	if r.Status != nil {
-		query.Set("status", *r.Status)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r ActionsListRepoWorkflowRunsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ActionsListRepoWorkflowRunsResponseBody200 is a response body for actions/list-repo-workflow-runs
-
-API documentation: https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
-*/
-type ActionsListRepoWorkflowRunsResponseBody200 struct {
-	TotalCount   int64 `json:"total_count,omitempty"`
-	WorkflowRuns []struct {
-		ArtifactsUrl  string `json:"artifacts_url,omitempty"`
-		CancelUrl     string `json:"cancel_url,omitempty"`
-		CheckSuiteUrl string `json:"check_suite_url,omitempty"`
-		Conclusion    string `json:"conclusion,omitempty"`
-		CreatedAt     string `json:"created_at,omitempty"`
-		Event         string `json:"event,omitempty"`
-		HeadBranch    string `json:"head_branch,omitempty"`
-		HeadCommit    struct {
-			Author struct {
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"author,omitempty"`
-			Committer struct {
-				Email string `json:"email,omitempty"`
-				Name  string `json:"name,omitempty"`
-			} `json:"committer,omitempty"`
-			Id        string `json:"id,omitempty"`
-			Message   string `json:"message,omitempty"`
-			Timestamp string `json:"timestamp,omitempty"`
-			TreeId    string `json:"tree_id,omitempty"`
-		} `json:"head_commit,omitempty"`
-		HeadRepository struct {
-			ArchiveUrl       string `json:"archive_url,omitempty"`
-			AssigneesUrl     string `json:"assignees_url,omitempty"`
-			BlobsUrl         string `json:"blobs_url,omitempty"`
-			BranchesUrl      string `json:"branches_url,omitempty"`
-			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-			CommentsUrl      string `json:"comments_url,omitempty"`
-			CommitsUrl       string `json:"commits_url,omitempty"`
-			CompareUrl       string `json:"compare_url,omitempty"`
-			ContentsUrl      string `json:"contents_url,omitempty"`
-			ContributorsUrl  string `json:"contributors_url,omitempty"`
-			DeploymentsUrl   string `json:"deployments_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			DownloadsUrl     string `json:"downloads_url,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			Fork             bool   `json:"fork,omitempty"`
-			ForksUrl         string `json:"forks_url,omitempty"`
-			FullName         string `json:"full_name,omitempty"`
-			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-			GitRefsUrl       string `json:"git_refs_url,omitempty"`
-			GitTagsUrl       string `json:"git_tags_url,omitempty"`
-			HooksUrl         string `json:"hooks_url,omitempty"`
-			HtmlUrl          string `json:"html_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			KeysUrl          string `json:"keys_url,omitempty"`
-			LabelsUrl        string `json:"labels_url,omitempty"`
-			LanguagesUrl     string `json:"languages_url,omitempty"`
-			MergesUrl        string `json:"merges_url,omitempty"`
-			MilestonesUrl    string `json:"milestones_url,omitempty"`
-			Name             string `json:"name,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			NotificationsUrl string `json:"notifications_url,omitempty"`
-			Owner            struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Private         bool   `json:"private,omitempty"`
-			PullsUrl        string `json:"pulls_url,omitempty"`
-			ReleasesUrl     string `json:"releases_url,omitempty"`
-			StargazersUrl   string `json:"stargazers_url,omitempty"`
-			StatusesUrl     string `json:"statuses_url,omitempty"`
-			SubscribersUrl  string `json:"subscribers_url,omitempty"`
-			SubscriptionUrl string `json:"subscription_url,omitempty"`
-			TagsUrl         string `json:"tags_url,omitempty"`
-			TeamsUrl        string `json:"teams_url,omitempty"`
-			TreesUrl        string `json:"trees_url,omitempty"`
-			Url             string `json:"url,omitempty"`
-		} `json:"head_repository,omitempty"`
-		HeadSha      string        `json:"head_sha,omitempty"`
-		HtmlUrl      string        `json:"html_url,omitempty"`
-		Id           int64         `json:"id,omitempty"`
-		JobsUrl      string        `json:"jobs_url,omitempty"`
-		LogsUrl      string        `json:"logs_url,omitempty"`
-		NodeId       string        `json:"node_id,omitempty"`
-		PullRequests []interface{} `json:"pull_requests,omitempty"`
-		Repository   struct {
-			ArchiveUrl       string `json:"archive_url,omitempty"`
-			AssigneesUrl     string `json:"assignees_url,omitempty"`
-			BlobsUrl         string `json:"blobs_url,omitempty"`
-			BranchesUrl      string `json:"branches_url,omitempty"`
-			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-			CommentsUrl      string `json:"comments_url,omitempty"`
-			CommitsUrl       string `json:"commits_url,omitempty"`
-			CompareUrl       string `json:"compare_url,omitempty"`
-			ContentsUrl      string `json:"contents_url,omitempty"`
-			ContributorsUrl  string `json:"contributors_url,omitempty"`
-			DeploymentsUrl   string `json:"deployments_url,omitempty"`
-			Description      string `json:"description,omitempty"`
-			DownloadsUrl     string `json:"downloads_url,omitempty"`
-			EventsUrl        string `json:"events_url,omitempty"`
-			Fork             bool   `json:"fork,omitempty"`
-			ForksUrl         string `json:"forks_url,omitempty"`
-			FullName         string `json:"full_name,omitempty"`
-			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-			GitRefsUrl       string `json:"git_refs_url,omitempty"`
-			GitTagsUrl       string `json:"git_tags_url,omitempty"`
-			GitUrl           string `json:"git_url,omitempty"`
-			HtmlUrl          string `json:"html_url,omitempty"`
-			Id               int64  `json:"id,omitempty"`
-			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-			IssuesUrl        string `json:"issues_url,omitempty"`
-			KeysUrl          string `json:"keys_url,omitempty"`
-			LabelsUrl        string `json:"labels_url,omitempty"`
-			LanguagesUrl     string `json:"languages_url,omitempty"`
-			MergesUrl        string `json:"merges_url,omitempty"`
-			MilestonesUrl    string `json:"milestones_url,omitempty"`
-			Name             string `json:"name,omitempty"`
-			NodeId           string `json:"node_id,omitempty"`
-			NotificationsUrl string `json:"notifications_url,omitempty"`
-			Owner            struct {
-				AvatarUrl         string `json:"avatar_url,omitempty"`
-				EventsUrl         string `json:"events_url,omitempty"`
-				FollowersUrl      string `json:"followers_url,omitempty"`
-				FollowingUrl      string `json:"following_url,omitempty"`
-				GistsUrl          string `json:"gists_url,omitempty"`
-				GravatarId        string `json:"gravatar_id,omitempty"`
-				HtmlUrl           string `json:"html_url,omitempty"`
-				Id                int64  `json:"id,omitempty"`
-				Login             string `json:"login,omitempty"`
-				NodeId            string `json:"node_id,omitempty"`
-				OrganizationsUrl  string `json:"organizations_url,omitempty"`
-				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-				ReposUrl          string `json:"repos_url,omitempty"`
-				SiteAdmin         bool   `json:"site_admin,omitempty"`
-				StarredUrl        string `json:"starred_url,omitempty"`
-				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-				Type              string `json:"type,omitempty"`
-				Url               string `json:"url,omitempty"`
-			} `json:"owner,omitempty"`
-			Private         bool   `json:"private,omitempty"`
-			PullsUrl        string `json:"pulls_url,omitempty"`
-			ReleasesUrl     string `json:"releases_url,omitempty"`
-			SshUrl          string `json:"ssh_url,omitempty"`
-			StargazersUrl   string `json:"stargazers_url,omitempty"`
-			StatusesUrl     string `json:"statuses_url,omitempty"`
-			SubscribersUrl  string `json:"subscribers_url,omitempty"`
-			SubscriptionUrl string `json:"subscription_url,omitempty"`
-			TagsUrl         string `json:"tags_url,omitempty"`
-			TeamsUrl        string `json:"teams_url,omitempty"`
-			TreesUrl        string `json:"trees_url,omitempty"`
-			Url             string `json:"url,omitempty"`
-		} `json:"repository,omitempty"`
-		RerunUrl    string `json:"rerun_url,omitempty"`
-		RunNumber   int64  `json:"run_number,omitempty"`
-		Status      string `json:"status,omitempty"`
-		UpdatedAt   string `json:"updated_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		WorkflowUrl string `json:"workflow_url,omitempty"`
-	} `json:"workflow_runs,omitempty"`
-}
-
-/*
-ActionsReRunWorkflowReq builds requests for "actions/re-run-workflow"
-
-Re-run a workflow.
-
-  POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun
-
-https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
-*/
-type ActionsReRunWorkflowReq struct {
+type ActionsGetWorkflowRunUsageReq struct {
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r ActionsReRunWorkflowReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId)
+func (r ActionsGetWorkflowRunUsageReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsReRunWorkflowReq) method() string {
-	return "POST"
+func (r ActionsGetWorkflowRunUsageReq) method() string {
+	return "GET"
 }
 
-func (r ActionsReRunWorkflowReq) urlQuery() url.Values {
+func (r ActionsGetWorkflowRunUsageReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsReRunWorkflowReq) header() http.Header {
+func (r ActionsGetWorkflowRunUsageReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetWorkflowRunUsageResponseBody200 is a response body for actions/get-workflow-run-usage
+
+API documentation: https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
+*/
+type ActionsGetWorkflowRunUsageResponseBody200 struct {
+	Billable struct {
+		MACOS struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"MACOS,omitempty"`
+		UBUNTU struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"UBUNTU,omitempty"`
+		WINDOWS struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"WINDOWS,omitempty"`
+	} `json:"billable,omitempty"`
+	RunDurationMs int64 `json:"run_duration_ms,omitempty"`
 }
 
 /*
@@ -2995,4 +964,2035 @@ type ActionsListWorkflowRunsResponseBody200 struct {
 		Url         string `json:"url,omitempty"`
 		WorkflowUrl string `json:"workflow_url,omitempty"`
 	} `json:"workflow_runs,omitempty"`
+}
+
+/*
+ActionsListRepoWorkflowsReq builds requests for "actions/list-repo-workflows"
+
+List repository workflows.
+
+  GET /repos/{owner}/{repo}/actions/workflows
+
+https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+*/
+type ActionsListRepoWorkflowsReq struct {
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ActionsListRepoWorkflowsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo)
+}
+
+func (r ActionsListRepoWorkflowsReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListRepoWorkflowsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ActionsListRepoWorkflowsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListRepoWorkflowsResponseBody200 is a response body for actions/list-repo-workflows
+
+API documentation: https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+*/
+type ActionsListRepoWorkflowsResponseBody200 struct {
+	TotalCount int64 `json:"total_count,omitempty"`
+	Workflows  []struct {
+		BadgeUrl  string `json:"badge_url"`
+		CreatedAt string `json:"created_at"`
+		HtmlUrl   string `json:"html_url"`
+		Id        int64  `json:"id"`
+		Name      string `json:"name"`
+		NodeId    string `json:"node_id"`
+		Path      string `json:"path"`
+		State     string `json:"state"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+	} `json:"workflows,omitempty"`
+}
+
+/*
+ActionsListSelectedReposForOrgSecretReq builds requests for "actions/list-selected-repos-for-org-secret"
+
+List selected repositories for an organization secret.
+
+  GET /orgs/{org}/actions/secrets/{secret_name}/repositories
+
+https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
+*/
+type ActionsListSelectedReposForOrgSecretReq struct {
+	Org        string
+	SecretName string
+}
+
+func (r ActionsListSelectedReposForOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
+}
+
+func (r ActionsListSelectedReposForOrgSecretReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListSelectedReposForOrgSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsListSelectedReposForOrgSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListSelectedReposForOrgSecretResponseBody200 is a response body for actions/list-selected-repos-for-org-secret
+
+API documentation: https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
+*/
+type ActionsListSelectedReposForOrgSecretResponseBody200 struct {
+	Repositories []struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repositories,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+ActionsSetSelectedReposForOrgSecretReq builds requests for "actions/set-selected-repos-for-org-secret"
+
+Set selected repositories for an organization secret.
+
+  PUT /orgs/{org}/actions/secrets/{secret_name}/repositories
+
+https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
+*/
+type ActionsSetSelectedReposForOrgSecretReq struct {
+	Org         string
+	SecretName  string
+	RequestBody ActionsSetSelectedReposForOrgSecretReqBody
+}
+
+func (r ActionsSetSelectedReposForOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
+}
+
+func (r ActionsSetSelectedReposForOrgSecretReq) method() string {
+	return "PUT"
+}
+
+func (r ActionsSetSelectedReposForOrgSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsSetSelectedReposForOrgSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ActionsSetSelectedReposForOrgSecretReqBody is a request body for actions/set-selected-repos-for-org-secret
+
+API documentation: https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
+*/
+type ActionsSetSelectedReposForOrgSecretReqBody struct {
+
+	/*
+	   An array of repository ids that can access the organization secret. You can only
+	   provide a list of repository ids when the `visibility` is set to `selected`. You
+	   can add and remove individual repositories using the [Set selected repositories
+	   for an organization
+	   secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret)
+	   and [Remove selected repository from an organization
+	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
+	   endpoints.
+	*/
+	SelectedRepositoryIds []int64 `json:"selected_repository_ids,omitempty"`
+}
+
+/*
+ActionsListRepoWorkflowRunsReq builds requests for "actions/list-repo-workflow-runs"
+
+List repository workflow runs.
+
+  GET /repos/{owner}/{repo}/actions/runs
+
+https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
+*/
+type ActionsListRepoWorkflowRunsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Returns someone's workflow runs. Use the login for the user who created the
+	`push` associated with the check suite or workflow run.
+	*/
+	Actor *string
+
+	/*
+	Returns workflow runs associated with a branch. Use the name of the branch of
+	the `push`.
+	*/
+	Branch *string
+
+	/*
+	Returns workflow run triggered by the event you specify. For example, `push`,
+	`pull_request` or `issue`. For more information, see "[Events that trigger
+	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)"
+	in the GitHub Help documentation.
+	*/
+	Event *string
+
+	/*
+	Returns workflow runs associated with the check run `status` or `conclusion` you
+	specify. For example, a conclusion can be `success` or a status can be
+	`completed`. For more information, see the `status` and `conclusion` options
+	available in "[Create a check
+	run](https://developer.github.com/v3/checks/runs/#create-a-check-run)."
+	*/
+	Status *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ActionsListRepoWorkflowRunsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo)
+}
+
+func (r ActionsListRepoWorkflowRunsReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListRepoWorkflowRunsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Actor != nil {
+		query.Set("actor", *r.Actor)
+	}
+	if r.Branch != nil {
+		query.Set("branch", *r.Branch)
+	}
+	if r.Event != nil {
+		query.Set("event", *r.Event)
+	}
+	if r.Status != nil {
+		query.Set("status", *r.Status)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ActionsListRepoWorkflowRunsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListRepoWorkflowRunsResponseBody200 is a response body for actions/list-repo-workflow-runs
+
+API documentation: https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
+*/
+type ActionsListRepoWorkflowRunsResponseBody200 struct {
+	TotalCount   int64 `json:"total_count,omitempty"`
+	WorkflowRuns []struct {
+		ArtifactsUrl  string `json:"artifacts_url,omitempty"`
+		CancelUrl     string `json:"cancel_url,omitempty"`
+		CheckSuiteUrl string `json:"check_suite_url,omitempty"`
+		Conclusion    string `json:"conclusion,omitempty"`
+		CreatedAt     string `json:"created_at,omitempty"`
+		Event         string `json:"event,omitempty"`
+		HeadBranch    string `json:"head_branch,omitempty"`
+		HeadCommit    struct {
+			Author struct {
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"author,omitempty"`
+			Committer struct {
+				Email string `json:"email,omitempty"`
+				Name  string `json:"name,omitempty"`
+			} `json:"committer,omitempty"`
+			Id        string `json:"id,omitempty"`
+			Message   string `json:"message,omitempty"`
+			Timestamp string `json:"timestamp,omitempty"`
+			TreeId    string `json:"tree_id,omitempty"`
+		} `json:"head_commit,omitempty"`
+		HeadRepository struct {
+			ArchiveUrl       string `json:"archive_url,omitempty"`
+			AssigneesUrl     string `json:"assignees_url,omitempty"`
+			BlobsUrl         string `json:"blobs_url,omitempty"`
+			BranchesUrl      string `json:"branches_url,omitempty"`
+			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+			CommentsUrl      string `json:"comments_url,omitempty"`
+			CommitsUrl       string `json:"commits_url,omitempty"`
+			CompareUrl       string `json:"compare_url,omitempty"`
+			ContentsUrl      string `json:"contents_url,omitempty"`
+			ContributorsUrl  string `json:"contributors_url,omitempty"`
+			DeploymentsUrl   string `json:"deployments_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			DownloadsUrl     string `json:"downloads_url,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			Fork             bool   `json:"fork,omitempty"`
+			ForksUrl         string `json:"forks_url,omitempty"`
+			FullName         string `json:"full_name,omitempty"`
+			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+			GitRefsUrl       string `json:"git_refs_url,omitempty"`
+			GitTagsUrl       string `json:"git_tags_url,omitempty"`
+			HooksUrl         string `json:"hooks_url,omitempty"`
+			HtmlUrl          string `json:"html_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			KeysUrl          string `json:"keys_url,omitempty"`
+			LabelsUrl        string `json:"labels_url,omitempty"`
+			LanguagesUrl     string `json:"languages_url,omitempty"`
+			MergesUrl        string `json:"merges_url,omitempty"`
+			MilestonesUrl    string `json:"milestones_url,omitempty"`
+			Name             string `json:"name,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			NotificationsUrl string `json:"notifications_url,omitempty"`
+			Owner            struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Private         bool   `json:"private,omitempty"`
+			PullsUrl        string `json:"pulls_url,omitempty"`
+			ReleasesUrl     string `json:"releases_url,omitempty"`
+			StargazersUrl   string `json:"stargazers_url,omitempty"`
+			StatusesUrl     string `json:"statuses_url,omitempty"`
+			SubscribersUrl  string `json:"subscribers_url,omitempty"`
+			SubscriptionUrl string `json:"subscription_url,omitempty"`
+			TagsUrl         string `json:"tags_url,omitempty"`
+			TeamsUrl        string `json:"teams_url,omitempty"`
+			TreesUrl        string `json:"trees_url,omitempty"`
+			Url             string `json:"url,omitempty"`
+		} `json:"head_repository,omitempty"`
+		HeadSha      string        `json:"head_sha,omitempty"`
+		HtmlUrl      string        `json:"html_url,omitempty"`
+		Id           int64         `json:"id,omitempty"`
+		JobsUrl      string        `json:"jobs_url,omitempty"`
+		LogsUrl      string        `json:"logs_url,omitempty"`
+		NodeId       string        `json:"node_id,omitempty"`
+		PullRequests []interface{} `json:"pull_requests,omitempty"`
+		Repository   struct {
+			ArchiveUrl       string `json:"archive_url,omitempty"`
+			AssigneesUrl     string `json:"assignees_url,omitempty"`
+			BlobsUrl         string `json:"blobs_url,omitempty"`
+			BranchesUrl      string `json:"branches_url,omitempty"`
+			CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+			CommentsUrl      string `json:"comments_url,omitempty"`
+			CommitsUrl       string `json:"commits_url,omitempty"`
+			CompareUrl       string `json:"compare_url,omitempty"`
+			ContentsUrl      string `json:"contents_url,omitempty"`
+			ContributorsUrl  string `json:"contributors_url,omitempty"`
+			DeploymentsUrl   string `json:"deployments_url,omitempty"`
+			Description      string `json:"description,omitempty"`
+			DownloadsUrl     string `json:"downloads_url,omitempty"`
+			EventsUrl        string `json:"events_url,omitempty"`
+			Fork             bool   `json:"fork,omitempty"`
+			ForksUrl         string `json:"forks_url,omitempty"`
+			FullName         string `json:"full_name,omitempty"`
+			GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+			GitRefsUrl       string `json:"git_refs_url,omitempty"`
+			GitTagsUrl       string `json:"git_tags_url,omitempty"`
+			GitUrl           string `json:"git_url,omitempty"`
+			HtmlUrl          string `json:"html_url,omitempty"`
+			Id               int64  `json:"id,omitempty"`
+			IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+			IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+			IssuesUrl        string `json:"issues_url,omitempty"`
+			KeysUrl          string `json:"keys_url,omitempty"`
+			LabelsUrl        string `json:"labels_url,omitempty"`
+			LanguagesUrl     string `json:"languages_url,omitempty"`
+			MergesUrl        string `json:"merges_url,omitempty"`
+			MilestonesUrl    string `json:"milestones_url,omitempty"`
+			Name             string `json:"name,omitempty"`
+			NodeId           string `json:"node_id,omitempty"`
+			NotificationsUrl string `json:"notifications_url,omitempty"`
+			Owner            struct {
+				AvatarUrl         string `json:"avatar_url,omitempty"`
+				EventsUrl         string `json:"events_url,omitempty"`
+				FollowersUrl      string `json:"followers_url,omitempty"`
+				FollowingUrl      string `json:"following_url,omitempty"`
+				GistsUrl          string `json:"gists_url,omitempty"`
+				GravatarId        string `json:"gravatar_id,omitempty"`
+				HtmlUrl           string `json:"html_url,omitempty"`
+				Id                int64  `json:"id,omitempty"`
+				Login             string `json:"login,omitempty"`
+				NodeId            string `json:"node_id,omitempty"`
+				OrganizationsUrl  string `json:"organizations_url,omitempty"`
+				ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+				ReposUrl          string `json:"repos_url,omitempty"`
+				SiteAdmin         bool   `json:"site_admin,omitempty"`
+				StarredUrl        string `json:"starred_url,omitempty"`
+				SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+				Type              string `json:"type,omitempty"`
+				Url               string `json:"url,omitempty"`
+			} `json:"owner,omitempty"`
+			Private         bool   `json:"private,omitempty"`
+			PullsUrl        string `json:"pulls_url,omitempty"`
+			ReleasesUrl     string `json:"releases_url,omitempty"`
+			SshUrl          string `json:"ssh_url,omitempty"`
+			StargazersUrl   string `json:"stargazers_url,omitempty"`
+			StatusesUrl     string `json:"statuses_url,omitempty"`
+			SubscribersUrl  string `json:"subscribers_url,omitempty"`
+			SubscriptionUrl string `json:"subscription_url,omitempty"`
+			TagsUrl         string `json:"tags_url,omitempty"`
+			TeamsUrl        string `json:"teams_url,omitempty"`
+			TreesUrl        string `json:"trees_url,omitempty"`
+			Url             string `json:"url,omitempty"`
+		} `json:"repository,omitempty"`
+		RerunUrl    string `json:"rerun_url,omitempty"`
+		RunNumber   int64  `json:"run_number,omitempty"`
+		Status      string `json:"status,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+		WorkflowUrl string `json:"workflow_url,omitempty"`
+	} `json:"workflow_runs,omitempty"`
+}
+
+/*
+ActionsDeleteSelfHostedRunnerFromOrgReq builds requests for "actions/delete-self-hosted-runner-from-org"
+
+Delete a self-hosted runner from an organization.
+
+  DELETE /orgs/{org}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
+*/
+type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
+	Org      string
+	RunnerId int64
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetSelfHostedRunnerForOrgReq builds requests for "actions/get-self-hosted-runner-for-org"
+
+Get a self-hosted runner for an organization.
+
+  GET /orgs/{org}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
+*/
+type ActionsGetSelfHostedRunnerForOrgReq struct {
+	Org      string
+	RunnerId int64
+}
+
+func (r ActionsGetSelfHostedRunnerForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
+}
+
+func (r ActionsGetSelfHostedRunnerForOrgReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetSelfHostedRunnerForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetSelfHostedRunnerForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetSelfHostedRunnerForOrgResponseBody200 is a response body for actions/get-self-hosted-runner-for-org
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
+*/
+type ActionsGetSelfHostedRunnerForOrgResponseBody200 struct {
+	Id     int64  `json:"id,omitempty"`
+	Name   string `json:"name,omitempty"`
+	Os     string `json:"os,omitempty"`
+	Status string `json:"status,omitempty"`
+}
+
+/*
+ActionsCreateRemoveTokenForRepoReq builds requests for "actions/create-remove-token-for-repo"
+
+Create a remove token for a repository.
+
+  POST /repos/{owner}/{repo}/actions/runners/remove-token
+
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
+*/
+type ActionsCreateRemoveTokenForRepoReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ActionsCreateRemoveTokenForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo)
+}
+
+func (r ActionsCreateRemoveTokenForRepoReq) method() string {
+	return "POST"
+}
+
+func (r ActionsCreateRemoveTokenForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsCreateRemoveTokenForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsCreateRemoveTokenForRepoResponseBody201 is a response body for actions/create-remove-token-for-repo
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
+*/
+type ActionsCreateRemoveTokenForRepoResponseBody201 struct {
+	ExpiresAt string `json:"expires_at,omitempty"`
+	Token     string `json:"token,omitempty"`
+}
+
+/*
+ActionsListOrgSecretsReq builds requests for "actions/list-org-secrets"
+
+List organization secrets.
+
+  GET /orgs/{org}/actions/secrets
+
+https://developer.github.com/v3/actions/secrets/#list-organization-secrets
+*/
+type ActionsListOrgSecretsReq struct {
+	Org string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ActionsListOrgSecretsReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets", r.Org)
+}
+
+func (r ActionsListOrgSecretsReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListOrgSecretsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ActionsListOrgSecretsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListOrgSecretsResponseBody200 is a response body for actions/list-org-secrets
+
+API documentation: https://developer.github.com/v3/actions/secrets/#list-organization-secrets
+*/
+type ActionsListOrgSecretsResponseBody200 struct {
+	Secrets []struct {
+		CreatedAt               string `json:"created_at"`
+		Name                    string `json:"name"`
+		SelectedRepositoriesUrl string `json:"selected_repositories_url,omitempty"`
+		UpdatedAt               string `json:"updated_at"`
+		Visibility              string `json:"visibility"`
+	} `json:"secrets,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+ActionsListRunnerApplicationsForOrgReq builds requests for "actions/list-runner-applications-for-org"
+
+List runner applications for an organization.
+
+  GET /orgs/{org}/actions/runners/downloads
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
+*/
+type ActionsListRunnerApplicationsForOrgReq struct {
+	Org string
+}
+
+func (r ActionsListRunnerApplicationsForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org)
+}
+
+func (r ActionsListRunnerApplicationsForOrgReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListRunnerApplicationsForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsListRunnerApplicationsForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListRunnerApplicationsForOrgResponseBody200 is a response body for actions/list-runner-applications-for-org
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
+*/
+type ActionsListRunnerApplicationsForOrgResponseBody200 []struct {
+	Architecture string `json:"architecture,omitempty"`
+	DownloadUrl  string `json:"download_url,omitempty"`
+	Filename     string `json:"filename,omitempty"`
+	Os           string `json:"os,omitempty"`
+}
+
+/*
+ActionsCreateRegistrationTokenForOrgReq builds requests for "actions/create-registration-token-for-org"
+
+Create a registration token for an organization.
+
+  POST /orgs/{org}/actions/runners/registration-token
+
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
+*/
+type ActionsCreateRegistrationTokenForOrgReq struct {
+	Org string
+}
+
+func (r ActionsCreateRegistrationTokenForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org)
+}
+
+func (r ActionsCreateRegistrationTokenForOrgReq) method() string {
+	return "POST"
+}
+
+func (r ActionsCreateRegistrationTokenForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsCreateRegistrationTokenForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsCreateRegistrationTokenForOrgResponseBody201 is a response body for actions/create-registration-token-for-org
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
+*/
+type ActionsCreateRegistrationTokenForOrgResponseBody201 struct {
+	ExpiresAt string `json:"expires_at,omitempty"`
+	Token     string `json:"token,omitempty"`
+}
+
+/*
+ActionsDeleteWorkflowRunLogsReq builds requests for "actions/delete-workflow-run-logs"
+
+Delete workflow run logs.
+
+  DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs
+
+https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
+*/
+type ActionsDeleteWorkflowRunLogsReq struct {
+	Owner string
+	Repo  string
+	RunId int64
+}
+
+func (r ActionsDeleteWorkflowRunLogsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
+}
+
+func (r ActionsDeleteWorkflowRunLogsReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsDeleteWorkflowRunLogsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDeleteWorkflowRunLogsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsDownloadWorkflowRunLogsReq builds requests for "actions/download-workflow-run-logs"
+
+Download workflow run logs.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs
+
+https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
+*/
+type ActionsDownloadWorkflowRunLogsReq struct {
+	Owner string
+	Repo  string
+	RunId int64
+}
+
+func (r ActionsDownloadWorkflowRunLogsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
+}
+
+func (r ActionsDownloadWorkflowRunLogsReq) method() string {
+	return "GET"
+}
+
+func (r ActionsDownloadWorkflowRunLogsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDownloadWorkflowRunLogsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListWorkflowRunArtifactsReq builds requests for "actions/list-workflow-run-artifacts"
+
+List workflow run artifacts.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts
+
+https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+*/
+type ActionsListWorkflowRunArtifactsReq struct {
+	Owner string
+	Repo  string
+	RunId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r ActionsListWorkflowRunArtifactsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId)
+}
+
+func (r ActionsListWorkflowRunArtifactsReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r ActionsListWorkflowRunArtifactsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListWorkflowRunArtifactsResponseBody200 is a response body for actions/list-workflow-run-artifacts
+
+API documentation: https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+*/
+type ActionsListWorkflowRunArtifactsResponseBody200 struct {
+	Artifacts []struct {
+		ArchiveDownloadUrl string `json:"archive_download_url"`
+		CreatedAt          string `json:"created_at"`
+		Expired            bool   `json:"expired"`
+		ExpiresAt          string `json:"expires_at"`
+		Id                 int64  `json:"id"`
+		Name               string `json:"name"`
+		NodeId             string `json:"node_id"`
+		SizeInBytes        int64  `json:"size_in_bytes"`
+		Url                string `json:"url"`
+	} `json:"artifacts,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+ActionsListRunnerApplicationsForRepoReq builds requests for "actions/list-runner-applications-for-repo"
+
+List runner applications for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runners/downloads
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
+*/
+type ActionsListRunnerApplicationsForRepoReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r ActionsListRunnerApplicationsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo)
+}
+
+func (r ActionsListRunnerApplicationsForRepoReq) method() string {
+	return "GET"
+}
+
+func (r ActionsListRunnerApplicationsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsListRunnerApplicationsForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsListRunnerApplicationsForRepoResponseBody200 is a response body for actions/list-runner-applications-for-repo
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
+*/
+type ActionsListRunnerApplicationsForRepoResponseBody200 []struct {
+	Architecture string `json:"architecture,omitempty"`
+	DownloadUrl  string `json:"download_url,omitempty"`
+	Filename     string `json:"filename,omitempty"`
+	Os           string `json:"os,omitempty"`
+}
+
+/*
+ActionsDeleteOrgSecretReq builds requests for "actions/delete-org-secret"
+
+Delete an organization secret.
+
+  DELETE /orgs/{org}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
+*/
+type ActionsDeleteOrgSecretReq struct {
+	Org        string
+	SecretName string
+}
+
+func (r ActionsDeleteOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
+}
+
+func (r ActionsDeleteOrgSecretReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsDeleteOrgSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDeleteOrgSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetOrgSecretReq builds requests for "actions/get-org-secret"
+
+Get an organization secret.
+
+  GET /orgs/{org}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
+*/
+type ActionsGetOrgSecretReq struct {
+	Org        string
+	SecretName string
+}
+
+func (r ActionsGetOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
+}
+
+func (r ActionsGetOrgSecretReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetOrgSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetOrgSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetOrgSecretResponseBody200 is a response body for actions/get-org-secret
+
+API documentation: https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
+*/
+type ActionsGetOrgSecretResponseBody200 struct {
+	CreatedAt               string `json:"created_at,omitempty"`
+	Name                    string `json:"name,omitempty"`
+	SelectedRepositoriesUrl string `json:"selected_repositories_url,omitempty"`
+	UpdatedAt               string `json:"updated_at,omitempty"`
+	Visibility              string `json:"visibility,omitempty"`
+}
+
+/*
+ActionsCreateOrUpdateOrgSecretReq builds requests for "actions/create-or-update-org-secret"
+
+Create or update an organization secret.
+
+  PUT /orgs/{org}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
+*/
+type ActionsCreateOrUpdateOrgSecretReq struct {
+	Org         string
+	SecretName  string
+	RequestBody ActionsCreateOrUpdateOrgSecretReqBody
+}
+
+func (r ActionsCreateOrUpdateOrgSecretReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
+}
+
+func (r ActionsCreateOrUpdateOrgSecretReq) method() string {
+	return "PUT"
+}
+
+func (r ActionsCreateOrUpdateOrgSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsCreateOrUpdateOrgSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ActionsCreateOrUpdateOrgSecretReqBody is a request body for actions/create-or-update-org-secret
+
+API documentation: https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
+*/
+type ActionsCreateOrUpdateOrgSecretReqBody struct {
+
+	/*
+	   Value for your secret, encrypted with
+	   [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
+	   the public key retrieved from the [Get an organization public
+	   key](https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key)
+	   endpoint.
+	*/
+	EncryptedValue *string `json:"encrypted_value,omitempty"`
+
+	// ID of the key you used to encrypt the secret.
+	KeyId *string `json:"key_id,omitempty"`
+
+	/*
+	   An array of repository ids that can access the organization secret. You can only
+	   provide a list of repository ids when the `visibility` is set to `selected`. You
+	   can manage the list of selected repositories using the [List selected
+	   repositories for an organization
+	   secret](https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret),
+	   [Set selected repositories for an organization
+	   secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret),
+	   and [Remove selected repository from an organization
+	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
+	   endpoints.
+	*/
+	SelectedRepositoryIds []string `json:"selected_repository_ids,omitempty"`
+
+	/*
+	   Configures the access that repositories have to the organization secret. Can be
+	   one of:
+	   \- `all` - All repositories in an organization can access the secret.
+	   \- `private` - Private repositories in an organization can access the secret.
+	   \- `selected` - Only specific repositories can access the secret.
+	*/
+	Visibility *string `json:"visibility,omitempty"`
+}
+
+/*
+ActionsDeleteSelfHostedRunnerFromRepoReq builds requests for "actions/delete-self-hosted-runner-from-repo"
+
+Delete a self-hosted runner from a repository.
+
+  DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
+*/
+type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
+	Owner    string
+	Repo     string
+	RunnerId int64
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromRepoReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetSelfHostedRunnerForRepoReq builds requests for "actions/get-self-hosted-runner-for-repo"
+
+Get a self-hosted runner for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
+*/
+type ActionsGetSelfHostedRunnerForRepoReq struct {
+	Owner    string
+	Repo     string
+	RunnerId int64
+}
+
+func (r ActionsGetSelfHostedRunnerForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
+}
+
+func (r ActionsGetSelfHostedRunnerForRepoReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetSelfHostedRunnerForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetSelfHostedRunnerForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetSelfHostedRunnerForRepoResponseBody200 is a response body for actions/get-self-hosted-runner-for-repo
+
+API documentation: https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
+*/
+type ActionsGetSelfHostedRunnerForRepoResponseBody200 struct {
+	Id     int64  `json:"id,omitempty"`
+	Name   string `json:"name,omitempty"`
+	Os     string `json:"os,omitempty"`
+	Status string `json:"status,omitempty"`
+}
+
+/*
+ActionsCancelWorkflowRunReq builds requests for "actions/cancel-workflow-run"
+
+Cancel a workflow run.
+
+  POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
+
+https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
+*/
+type ActionsCancelWorkflowRunReq struct {
+	Owner string
+	Repo  string
+	RunId int64
+}
+
+func (r ActionsCancelWorkflowRunReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId)
+}
+
+func (r ActionsCancelWorkflowRunReq) method() string {
+	return "POST"
+}
+
+func (r ActionsCancelWorkflowRunReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsCancelWorkflowRunReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetWorkflowUsageReq builds requests for "actions/get-workflow-usage"
+
+Get workflow usage.
+
+  GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing
+
+https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+*/
+type ActionsGetWorkflowUsageReq struct {
+	Owner      string
+	Repo       string
+	WorkflowId int64
+}
+
+func (r ActionsGetWorkflowUsageReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId)
+}
+
+func (r ActionsGetWorkflowUsageReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetWorkflowUsageReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetWorkflowUsageReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetWorkflowUsageResponseBody200 is a response body for actions/get-workflow-usage
+
+API documentation: https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+*/
+type ActionsGetWorkflowUsageResponseBody200 struct {
+	Billable struct {
+		MACOS struct {
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"MACOS,omitempty"`
+		UBUNTU struct {
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"UBUNTU,omitempty"`
+		WINDOWS struct {
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"WINDOWS,omitempty"`
+	} `json:"billable,omitempty"`
+}
+
+/*
+ActionsDeleteRepoSecretReq builds requests for "actions/delete-repo-secret"
+
+Delete a repository secret.
+
+  DELETE /repos/{owner}/{repo}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
+*/
+type ActionsDeleteRepoSecretReq struct {
+	Owner      string
+	Repo       string
+	SecretName string
+}
+
+func (r ActionsDeleteRepoSecretReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
+}
+
+func (r ActionsDeleteRepoSecretReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsDeleteRepoSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDeleteRepoSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetRepoSecretReq builds requests for "actions/get-repo-secret"
+
+Get a repository secret.
+
+  GET /repos/{owner}/{repo}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
+*/
+type ActionsGetRepoSecretReq struct {
+	Owner      string
+	Repo       string
+	SecretName string
+}
+
+func (r ActionsGetRepoSecretReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
+}
+
+func (r ActionsGetRepoSecretReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetRepoSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetRepoSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetRepoSecretResponseBody200 is a response body for actions/get-repo-secret
+
+API documentation: https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
+*/
+type ActionsGetRepoSecretResponseBody200 struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Name      string `json:"name,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+}
+
+/*
+ActionsCreateOrUpdateRepoSecretReq builds requests for "actions/create-or-update-repo-secret"
+
+Create or update a repository secret.
+
+  PUT /repos/{owner}/{repo}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
+*/
+type ActionsCreateOrUpdateRepoSecretReq struct {
+	Owner       string
+	Repo        string
+	SecretName  string
+	RequestBody ActionsCreateOrUpdateRepoSecretReqBody
+}
+
+func (r ActionsCreateOrUpdateRepoSecretReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
+}
+
+func (r ActionsCreateOrUpdateRepoSecretReq) method() string {
+	return "PUT"
+}
+
+func (r ActionsCreateOrUpdateRepoSecretReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsCreateOrUpdateRepoSecretReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+ActionsCreateOrUpdateRepoSecretReqBody is a request body for actions/create-or-update-repo-secret
+
+API documentation: https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
+*/
+type ActionsCreateOrUpdateRepoSecretReqBody struct {
+
+	/*
+	   Value for your secret, encrypted with
+	   [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
+	   the public key retrieved from the [Get a repository public
+	   key](https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key)
+	   endpoint.
+	*/
+	EncryptedValue *string `json:"encrypted_value,omitempty"`
+
+	// ID of the key you used to encrypt the secret.
+	KeyId *string `json:"key_id,omitempty"`
+}
+
+/*
+ActionsDeleteArtifactReq builds requests for "actions/delete-artifact"
+
+Delete an artifact.
+
+  DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
+
+https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
+*/
+type ActionsDeleteArtifactReq struct {
+	Owner      string
+	Repo       string
+	ArtifactId int64
+}
+
+func (r ActionsDeleteArtifactReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
+}
+
+func (r ActionsDeleteArtifactReq) method() string {
+	return "DELETE"
+}
+
+func (r ActionsDeleteArtifactReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDeleteArtifactReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetArtifactReq builds requests for "actions/get-artifact"
+
+Get an artifact.
+
+  GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
+
+https://developer.github.com/v3/actions/artifacts/#get-an-artifact
+*/
+type ActionsGetArtifactReq struct {
+	Owner      string
+	Repo       string
+	ArtifactId int64
+}
+
+func (r ActionsGetArtifactReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
+}
+
+func (r ActionsGetArtifactReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetArtifactReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetArtifactReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetArtifactResponseBody200 is a response body for actions/get-artifact
+
+API documentation: https://developer.github.com/v3/actions/artifacts/#get-an-artifact
+*/
+type ActionsGetArtifactResponseBody200 struct {
+	ArchiveDownloadUrl string `json:"archive_download_url,omitempty"`
+	CreatedAt          string `json:"created_at,omitempty"`
+	Expired            bool   `json:"expired,omitempty"`
+	ExpiresAt          string `json:"expires_at,omitempty"`
+	Id                 int64  `json:"id,omitempty"`
+	Name               string `json:"name,omitempty"`
+	NodeId             string `json:"node_id,omitempty"`
+	SizeInBytes        int64  `json:"size_in_bytes,omitempty"`
+	Url                string `json:"url,omitempty"`
+}
+
+/*
+ActionsGetWorkflowRunReq builds requests for "actions/get-workflow-run"
+
+Get a workflow run.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}
+
+https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
+*/
+type ActionsGetWorkflowRunReq struct {
+	Owner string
+	Repo  string
+	RunId int64
+}
+
+func (r ActionsGetWorkflowRunReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId)
+}
+
+func (r ActionsGetWorkflowRunReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetWorkflowRunReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetWorkflowRunReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetWorkflowRunResponseBody200 is a response body for actions/get-workflow-run
+
+API documentation: https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
+*/
+type ActionsGetWorkflowRunResponseBody200 struct {
+	ArtifactsUrl  string `json:"artifacts_url,omitempty"`
+	CancelUrl     string `json:"cancel_url,omitempty"`
+	CheckSuiteUrl string `json:"check_suite_url,omitempty"`
+	Conclusion    string `json:"conclusion,omitempty"`
+	CreatedAt     string `json:"created_at,omitempty"`
+	Event         string `json:"event,omitempty"`
+	HeadBranch    string `json:"head_branch,omitempty"`
+	HeadCommit    struct {
+		Author struct {
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"author,omitempty"`
+		Committer struct {
+			Email string `json:"email,omitempty"`
+			Name  string `json:"name,omitempty"`
+		} `json:"committer,omitempty"`
+		Id        string `json:"id,omitempty"`
+		Message   string `json:"message,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+		TreeId    string `json:"tree_id,omitempty"`
+	} `json:"head_commit,omitempty"`
+	HeadRepository struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"head_repository,omitempty"`
+	HeadSha      string        `json:"head_sha,omitempty"`
+	HtmlUrl      string        `json:"html_url,omitempty"`
+	Id           int64         `json:"id,omitempty"`
+	JobsUrl      string        `json:"jobs_url,omitempty"`
+	LogsUrl      string        `json:"logs_url,omitempty"`
+	NodeId       string        `json:"node_id,omitempty"`
+	PullRequests []interface{} `json:"pull_requests,omitempty"`
+	Repository   struct {
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool   `json:"private,omitempty"`
+		PullsUrl        string `json:"pulls_url,omitempty"`
+		ReleasesUrl     string `json:"releases_url,omitempty"`
+		SshUrl          string `json:"ssh_url,omitempty"`
+		StargazersUrl   string `json:"stargazers_url,omitempty"`
+		StatusesUrl     string `json:"statuses_url,omitempty"`
+		SubscribersUrl  string `json:"subscribers_url,omitempty"`
+		SubscriptionUrl string `json:"subscription_url,omitempty"`
+		TagsUrl         string `json:"tags_url,omitempty"`
+		TeamsUrl        string `json:"teams_url,omitempty"`
+		TreesUrl        string `json:"trees_url,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"repository,omitempty"`
+	RerunUrl    string `json:"rerun_url,omitempty"`
+	RunNumber   int64  `json:"run_number,omitempty"`
+	Status      string `json:"status,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	Url         string `json:"url,omitempty"`
+	WorkflowUrl string `json:"workflow_url,omitempty"`
+}
+
+/*
+ActionsReRunWorkflowReq builds requests for "actions/re-run-workflow"
+
+Re-run a workflow.
+
+  POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun
+
+https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
+*/
+type ActionsReRunWorkflowReq struct {
+	Owner string
+	Repo  string
+	RunId int64
+}
+
+func (r ActionsReRunWorkflowReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId)
+}
+
+func (r ActionsReRunWorkflowReq) method() string {
+	return "POST"
+}
+
+func (r ActionsReRunWorkflowReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsReRunWorkflowReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsDownloadWorkflowJobLogsReq builds requests for "actions/download-workflow-job-logs"
+
+Download workflow job logs.
+
+  GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs
+
+https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+*/
+type ActionsDownloadWorkflowJobLogsReq struct {
+	Owner string
+	Repo  string
+	JobId int64
+}
+
+func (r ActionsDownloadWorkflowJobLogsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId)
+}
+
+func (r ActionsDownloadWorkflowJobLogsReq) method() string {
+	return "GET"
+}
+
+func (r ActionsDownloadWorkflowJobLogsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDownloadWorkflowJobLogsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetOrgPublicKeyReq builds requests for "actions/get-org-public-key"
+
+Get an organization public key.
+
+  GET /orgs/{org}/actions/secrets/public-key
+
+https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
+*/
+type ActionsGetOrgPublicKeyReq struct {
+	Org string
+}
+
+func (r ActionsGetOrgPublicKeyReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org)
+}
+
+func (r ActionsGetOrgPublicKeyReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetOrgPublicKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetOrgPublicKeyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetOrgPublicKeyResponseBody200 is a response body for actions/get-org-public-key
+
+API documentation: https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
+*/
+type ActionsGetOrgPublicKeyResponseBody200 struct {
+	Key   string `json:"key,omitempty"`
+	KeyId string `json:"key_id,omitempty"`
+}
+
+/*
+ActionsGetWorkflowJobReq builds requests for "actions/get-workflow-job"
+
+Get a workflow job.
+
+  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
+*/
+type ActionsGetWorkflowJobReq struct {
+	Owner string
+	Repo  string
+	JobId int64
+}
+
+func (r ActionsGetWorkflowJobReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId)
+}
+
+func (r ActionsGetWorkflowJobReq) method() string {
+	return "GET"
+}
+
+func (r ActionsGetWorkflowJobReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsGetWorkflowJobReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+ActionsGetWorkflowJobResponseBody202 is a response body for actions/get-workflow-job
+
+API documentation: https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
+*/
+type ActionsGetWorkflowJobResponseBody202 struct {
+	CheckRunUrl string `json:"check_run_url,omitempty"`
+	CompletedAt string `json:"completed_at,omitempty"`
+	Conclusion  string `json:"conclusion,omitempty"`
+	HeadSha     string `json:"head_sha,omitempty"`
+	HtmlUrl     string `json:"html_url,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	RunId       int64  `json:"run_id,omitempty"`
+	RunUrl      string `json:"run_url,omitempty"`
+	StartedAt   string `json:"started_at,omitempty"`
+	Status      string `json:"status,omitempty"`
+	Steps       []struct {
+		CompletedAt string `json:"completed_at"`
+		Conclusion  string `json:"conclusion"`
+		Name        string `json:"name"`
+		Number      int64  `json:"number"`
+		StartedAt   string `json:"started_at"`
+		Status      string `json:"status"`
+	} `json:"steps,omitempty"`
+	Url string `json:"url,omitempty"`
+}
+
+/*
+ActionsDownloadArtifactReq builds requests for "actions/download-artifact"
+
+Download an artifact.
+
+  GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}
+
+https://developer.github.com/v3/actions/artifacts/#download-an-artifact
+*/
+type ActionsDownloadArtifactReq struct {
+	Owner         string
+	Repo          string
+	ArtifactId    int64
+	ArchiveFormat string
+}
+
+func (r ActionsDownloadArtifactReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat)
+}
+
+func (r ActionsDownloadArtifactReq) method() string {
+	return "GET"
+}
+
+func (r ActionsDownloadArtifactReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r ActionsDownloadArtifactReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }

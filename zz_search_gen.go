@@ -12,15 +12,106 @@ import (
 )
 
 /*
-SearchIssuesAndPullRequestsReq builds requests for "search/issues-and-pull-requests"
+SearchLabelsReq builds requests for "search/labels"
 
-Search issues and pull requests.
+Search labels.
 
-  GET /search/issues
+  GET /search/labels
 
-https://developer.github.com/v3/search/#search-issues-and-pull-requests
+https://developer.github.com/v3/search/#search-labels
 */
-type SearchIssuesAndPullRequestsReq struct {
+type SearchLabelsReq struct {
+
+	// The id of the repository.
+	RepositoryId *int64
+
+	/*
+	The search keywords. This endpoint does not accept qualifiers in the query. To
+	learn more about the format of the query, see [Constructing a search
+	query](https://developer.github.com/v3/search/#constructing-a-search-query).
+	*/
+	Q *string
+
+	/*
+	Sorts the results of your query by when the label was `created` or `updated`.
+	Default: [best
+	match](https://developer.github.com/v3/search/#ranking-search-results)
+	*/
+	Sort *string
+
+	/*
+	Determines whether the first search result returned is the highest number of
+	matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored
+	unless you provide `sort`.
+	*/
+	Order *string
+}
+
+func (r SearchLabelsReq) urlPath() string {
+	return fmt.Sprintf("/search/labels")
+}
+
+func (r SearchLabelsReq) method() string {
+	return "GET"
+}
+
+func (r SearchLabelsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.RepositoryId != nil {
+		query.Set("repository_id", strconv.FormatInt(*r.RepositoryId, 10))
+	}
+	if r.Q != nil {
+		query.Set("q", *r.Q)
+	}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Order != nil {
+		query.Set("order", *r.Order)
+	}
+	return query
+}
+
+func (r SearchLabelsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+SearchLabelsResponseBody200 is a response body for search/labels
+
+API documentation: https://developer.github.com/v3/search/#search-labels
+*/
+type SearchLabelsResponseBody200 struct {
+	IncompleteResults bool `json:"incomplete_results,omitempty"`
+	Items             []struct {
+		Color       string      `json:"color"`
+		Default     bool        `json:"default"`
+		Description string      `json:"description"`
+		Id          int64       `json:"id"`
+		Name        string      `json:"name"`
+		NodeId      string      `json:"node_id"`
+		Score       json.Number `json:"score"`
+		Url         string      `json:"url"`
+	} `json:"items,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+SearchUsersReq builds requests for "search/users"
+
+Search users.
+
+  GET /search/users
+
+https://developer.github.com/v3/search/#search-users
+*/
+type SearchUsersReq struct {
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -28,17 +119,14 @@ type SearchIssuesAndPullRequestsReq struct {
 	same qualifiers as GitHub.com. To learn more about the format of the query, see
 	[Constructing a search
 	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
-	"[Searching issues and pull
-	requests](https://help.github.com/articles/searching-issues-and-pull-requests/)"
-	for a detailed list of qualifiers.
+	"[Searching users](https://help.github.com/articles/searching-users/)" for a
+	detailed list of qualifiers.
 	*/
 	Q *string
 
 	/*
-	Sorts the results of your query by the number of `comments`, `reactions`,
-	`reactions-+1`, `reactions--1`, `reactions-smile`, `reactions-thinking_face`,
-	`reactions-heart`, `reactions-tada`, or `interactions`. You can also sort
-	results by how recently the items were `created` or `updated`, Default: [best
+	Sorts the results of your query by number of `followers` or `repositories`, or
+	when the person `joined` GitHub. Default: [best
 	match](https://developer.github.com/v3/search/#ranking-search-results)
 	*/
 	Sort *string
@@ -57,15 +145,15 @@ type SearchIssuesAndPullRequestsReq struct {
 	Page *int64
 }
 
-func (r SearchIssuesAndPullRequestsReq) urlPath() string {
-	return fmt.Sprintf("/search/issues")
+func (r SearchUsersReq) urlPath() string {
+	return fmt.Sprintf("/search/users")
 }
 
-func (r SearchIssuesAndPullRequestsReq) method() string {
+func (r SearchUsersReq) method() string {
 	return "GET"
 }
 
-func (r SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
+func (r SearchUsersReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -85,74 +173,38 @@ func (r SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchIssuesAndPullRequestsReq) header() http.Header {
+func (r SearchUsersReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-SearchIssuesAndPullRequestsResponseBody200 is a response body for search/issues-and-pull-requests
+SearchUsersResponseBody200 is a response body for search/users
 
-API documentation: https://developer.github.com/v3/search/#search-issues-and-pull-requests
+API documentation: https://developer.github.com/v3/search/#search-users
 */
-type SearchIssuesAndPullRequestsResponseBody200 struct {
+type SearchUsersResponseBody200 struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
-		Assignee    string `json:"assignee,omitempty"`
-		Body        string `json:"body,omitempty"`
-		ClosedAt    string `json:"closed_at,omitempty"`
-		Comments    int64  `json:"comments,omitempty"`
-		CommentsUrl string `json:"comments_url,omitempty"`
-		CreatedAt   string `json:"created_at,omitempty"`
-		EventsUrl   string `json:"events_url,omitempty"`
-		HtmlUrl     string `json:"html_url,omitempty"`
-		Id          int64  `json:"id,omitempty"`
-		Labels      []struct {
-			Color  string `json:"color,omitempty"`
-			Id     int64  `json:"id,omitempty"`
-			Name   string `json:"name,omitempty"`
-			NodeId string `json:"node_id,omitempty"`
-			Url    string `json:"url,omitempty"`
-		} `json:"labels,omitempty"`
-		LabelsUrl   string `json:"labels_url,omitempty"`
-		Milestone   string `json:"milestone,omitempty"`
-		NodeId      string `json:"node_id,omitempty"`
-		Number      int64  `json:"number,omitempty"`
-		PullRequest struct {
-			DiffUrl  string `json:"diff_url,omitempty"`
-			HtmlUrl  string `json:"html_url,omitempty"`
-			PatchUrl string `json:"patch_url,omitempty"`
-		} `json:"pull_request,omitempty"`
-		RepositoryUrl string      `json:"repository_url,omitempty"`
-		Score         json.Number `json:"score,omitempty"`
-		State         string      `json:"state,omitempty"`
-		Title         string      `json:"title,omitempty"`
-		UpdatedAt     string      `json:"updated_at,omitempty"`
-		Url           string      `json:"url,omitempty"`
-		User          struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
+		AvatarUrl         string      `json:"avatar_url,omitempty"`
+		FollowersUrl      string      `json:"followers_url,omitempty"`
+		GravatarId        string      `json:"gravatar_id,omitempty"`
+		HtmlUrl           string      `json:"html_url,omitempty"`
+		Id                int64       `json:"id,omitempty"`
+		Login             string      `json:"login,omitempty"`
+		NodeId            string      `json:"node_id,omitempty"`
+		OrganizationsUrl  string      `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string      `json:"received_events_url,omitempty"`
+		ReposUrl          string      `json:"repos_url,omitempty"`
+		Score             json.Number `json:"score,omitempty"`
+		SubscriptionsUrl  string      `json:"subscriptions_url,omitempty"`
+		Type              string      `json:"type,omitempty"`
+		Url               string      `json:"url,omitempty"`
 	} `json:"items,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }
@@ -318,414 +370,6 @@ type SearchCodeResponseBody200 struct {
 		Score json.Number `json:"score,omitempty"`
 		Sha   string      `json:"sha,omitempty"`
 		Url   string      `json:"url,omitempty"`
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-SearchUsersReq builds requests for "search/users"
-
-Search users.
-
-  GET /search/users
-
-https://developer.github.com/v3/search/#search-users
-*/
-type SearchUsersReq struct {
-
-	/*
-	The query contains one or more search keywords and qualifiers. Qualifiers allow
-	you to limit your search to specific areas of GitHub. The REST API supports the
-	same qualifiers as GitHub.com. To learn more about the format of the query, see
-	[Constructing a search
-	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
-	"[Searching users](https://help.github.com/articles/searching-users/)" for a
-	detailed list of qualifiers.
-	*/
-	Q *string
-
-	/*
-	Sorts the results of your query by number of `followers` or `repositories`, or
-	when the person `joined` GitHub. Default: [best
-	match](https://developer.github.com/v3/search/#ranking-search-results)
-	*/
-	Sort *string
-
-	/*
-	Determines whether the first search result returned is the highest number of
-	matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored
-	unless you provide `sort`.
-	*/
-	Order *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r SearchUsersReq) urlPath() string {
-	return fmt.Sprintf("/search/users")
-}
-
-func (r SearchUsersReq) method() string {
-	return "GET"
-}
-
-func (r SearchUsersReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Q != nil {
-		query.Set("q", *r.Q)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Order != nil {
-		query.Set("order", *r.Order)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r SearchUsersReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-SearchUsersResponseBody200 is a response body for search/users
-
-API documentation: https://developer.github.com/v3/search/#search-users
-*/
-type SearchUsersResponseBody200 struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		AvatarUrl         string      `json:"avatar_url,omitempty"`
-		FollowersUrl      string      `json:"followers_url,omitempty"`
-		GravatarId        string      `json:"gravatar_id,omitempty"`
-		HtmlUrl           string      `json:"html_url,omitempty"`
-		Id                int64       `json:"id,omitempty"`
-		Login             string      `json:"login,omitempty"`
-		NodeId            string      `json:"node_id,omitempty"`
-		OrganizationsUrl  string      `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string      `json:"received_events_url,omitempty"`
-		ReposUrl          string      `json:"repos_url,omitempty"`
-		Score             json.Number `json:"score,omitempty"`
-		SubscriptionsUrl  string      `json:"subscriptions_url,omitempty"`
-		Type              string      `json:"type,omitempty"`
-		Url               string      `json:"url,omitempty"`
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-SearchTopicsReq builds requests for "search/topics"
-
-Search topics.
-
-  GET /search/topics
-
-https://developer.github.com/v3/search/#search-topics
-*/
-type SearchTopicsReq struct {
-
-	/*
-	The query contains one or more search keywords and qualifiers. Qualifiers allow
-	you to limit your search to specific areas of GitHub. The REST API supports the
-	same qualifiers as GitHub.com. To learn more about the format of the query, see
-	[Constructing a search
-	query](https://developer.github.com/v3/search/#constructing-a-search-query).
-	*/
-	Q *string
-
-	/*
-	The `topics` property for repositories on GitHub is currently available for
-	developers to preview. To view the `topics` property in calls that return
-	repository results, you must set this to true.
-	*/
-	MercyPreview bool
-}
-
-func (r SearchTopicsReq) urlPath() string {
-	return fmt.Sprintf("/search/topics")
-}
-
-func (r SearchTopicsReq) method() string {
-	return "GET"
-}
-
-func (r SearchTopicsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Q != nil {
-		query.Set("q", *r.Q)
-	}
-	return query
-}
-
-func (r SearchTopicsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"mercy": r.MercyPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-SearchTopicsResponseBody200 is a response body for search/topics
-
-API documentation: https://developer.github.com/v3/search/#search-topics
-*/
-type SearchTopicsResponseBody200 struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		CreatedAt        string      `json:"created_at"`
-		CreatedBy        string      `json:"created_by"`
-		Curated          bool        `json:"curated"`
-		Description      string      `json:"description"`
-		DisplayName      string      `json:"display_name"`
-		Featured         bool        `json:"featured"`
-		Name             string      `json:"name"`
-		Released         string      `json:"released"`
-		Score            json.Number `json:"score"`
-		ShortDescription string      `json:"short_description"`
-		UpdatedAt        string      `json:"updated_at"`
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-SearchReposReq builds requests for "search/repos"
-
-Search repositories.
-
-  GET /search/repositories
-
-https://developer.github.com/v3/search/#search-repositories
-*/
-type SearchReposReq struct {
-
-	/*
-	The query contains one or more search keywords and qualifiers. Qualifiers allow
-	you to limit your search to specific areas of GitHub. The REST API supports the
-	same qualifiers as GitHub.com. To learn more about the format of the query, see
-	[Constructing a search
-	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
-	"[Searching for
-	repositories](https://help.github.com/articles/searching-for-repositories/)" for
-	a detailed list of qualifiers.
-	*/
-	Q *string
-
-	/*
-	Sorts the results of your query by number of `stars`, `forks`, or
-	`help-wanted-issues` or how recently the items were `updated`. Default: [best
-	match](https://developer.github.com/v3/search/#ranking-search-results)
-	*/
-	Sort *string
-
-	/*
-	Determines whether the first search result returned is the highest number of
-	matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored
-	unless you provide `sort`.
-	*/
-	Order *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The `topics` property for repositories on GitHub is currently available for
-	developers to preview. To view the `topics` property in calls that return
-	repository results, you must set this to true.
-	*/
-	MercyPreview bool
-}
-
-func (r SearchReposReq) urlPath() string {
-	return fmt.Sprintf("/search/repositories")
-}
-
-func (r SearchReposReq) method() string {
-	return "GET"
-}
-
-func (r SearchReposReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Q != nil {
-		query.Set("q", *r.Q)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Order != nil {
-		query.Set("order", *r.Order)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r SearchReposReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"mercy": r.MercyPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-SearchReposResponseBody200 is a response body for search/repos
-
-API documentation: https://developer.github.com/v3/search/#search-repositories
-*/
-type SearchReposResponseBody200 struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		CreatedAt       string `json:"created_at,omitempty"`
-		DefaultBranch   string `json:"default_branch,omitempty"`
-		Description     string `json:"description,omitempty"`
-		Fork            bool   `json:"fork,omitempty"`
-		ForksCount      int64  `json:"forks_count,omitempty"`
-		FullName        string `json:"full_name,omitempty"`
-		Homepage        string `json:"homepage,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		Language        string `json:"language,omitempty"`
-		MasterBranch    string `json:"master_branch,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		OpenIssuesCount int64  `json:"open_issues_count,omitempty"`
-		Owner           struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private         bool        `json:"private,omitempty"`
-		PushedAt        string      `json:"pushed_at,omitempty"`
-		Score           json.Number `json:"score,omitempty"`
-		Size            json.Number `json:"size,omitempty"`
-		StargazersCount int64       `json:"stargazers_count,omitempty"`
-		UpdatedAt       string      `json:"updated_at,omitempty"`
-		Url             string      `json:"url,omitempty"`
-		WatchersCount   int64       `json:"watchers_count,omitempty"`
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-SearchLabelsReq builds requests for "search/labels"
-
-Search labels.
-
-  GET /search/labels
-
-https://developer.github.com/v3/search/#search-labels
-*/
-type SearchLabelsReq struct {
-
-	// The id of the repository.
-	RepositoryId *int64
-
-	/*
-	The search keywords. This endpoint does not accept qualifiers in the query. To
-	learn more about the format of the query, see [Constructing a search
-	query](https://developer.github.com/v3/search/#constructing-a-search-query).
-	*/
-	Q *string
-
-	/*
-	Sorts the results of your query by when the label was `created` or `updated`.
-	Default: [best
-	match](https://developer.github.com/v3/search/#ranking-search-results)
-	*/
-	Sort *string
-
-	/*
-	Determines whether the first search result returned is the highest number of
-	matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored
-	unless you provide `sort`.
-	*/
-	Order *string
-}
-
-func (r SearchLabelsReq) urlPath() string {
-	return fmt.Sprintf("/search/labels")
-}
-
-func (r SearchLabelsReq) method() string {
-	return "GET"
-}
-
-func (r SearchLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.RepositoryId != nil {
-		query.Set("repository_id", strconv.FormatInt(*r.RepositoryId, 10))
-	}
-	if r.Q != nil {
-		query.Set("q", *r.Q)
-	}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Order != nil {
-		query.Set("order", *r.Order)
-	}
-	return query
-}
-
-func (r SearchLabelsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-SearchLabelsResponseBody200 is a response body for search/labels
-
-API documentation: https://developer.github.com/v3/search/#search-labels
-*/
-type SearchLabelsResponseBody200 struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		Color       string      `json:"color"`
-		Default     bool        `json:"default"`
-		Description string      `json:"description"`
-		Id          int64       `json:"id"`
-		Name        string      `json:"name"`
-		NodeId      string      `json:"node_id"`
-		Score       json.Number `json:"score"`
-		Url         string      `json:"url"`
 	} `json:"items,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }
@@ -964,6 +608,362 @@ type SearchCommitsResponseBody200 struct {
 		Score json.Number `json:"score,omitempty"`
 		Sha   string      `json:"sha,omitempty"`
 		Url   string      `json:"url,omitempty"`
+	} `json:"items,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+SearchTopicsReq builds requests for "search/topics"
+
+Search topics.
+
+  GET /search/topics
+
+https://developer.github.com/v3/search/#search-topics
+*/
+type SearchTopicsReq struct {
+
+	/*
+	The query contains one or more search keywords and qualifiers. Qualifiers allow
+	you to limit your search to specific areas of GitHub. The REST API supports the
+	same qualifiers as GitHub.com. To learn more about the format of the query, see
+	[Constructing a search
+	query](https://developer.github.com/v3/search/#constructing-a-search-query).
+	*/
+	Q *string
+
+	/*
+	The `topics` property for repositories on GitHub is currently available for
+	developers to preview. To view the `topics` property in calls that return
+	repository results, you must set this to true.
+	*/
+	MercyPreview bool
+}
+
+func (r SearchTopicsReq) urlPath() string {
+	return fmt.Sprintf("/search/topics")
+}
+
+func (r SearchTopicsReq) method() string {
+	return "GET"
+}
+
+func (r SearchTopicsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Q != nil {
+		query.Set("q", *r.Q)
+	}
+	return query
+}
+
+func (r SearchTopicsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+SearchTopicsResponseBody200 is a response body for search/topics
+
+API documentation: https://developer.github.com/v3/search/#search-topics
+*/
+type SearchTopicsResponseBody200 struct {
+	IncompleteResults bool `json:"incomplete_results,omitempty"`
+	Items             []struct {
+		CreatedAt        string      `json:"created_at"`
+		CreatedBy        string      `json:"created_by"`
+		Curated          bool        `json:"curated"`
+		Description      string      `json:"description"`
+		DisplayName      string      `json:"display_name"`
+		Featured         bool        `json:"featured"`
+		Name             string      `json:"name"`
+		Released         string      `json:"released"`
+		Score            json.Number `json:"score"`
+		ShortDescription string      `json:"short_description"`
+		UpdatedAt        string      `json:"updated_at"`
+	} `json:"items,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+SearchReposReq builds requests for "search/repos"
+
+Search repositories.
+
+  GET /search/repositories
+
+https://developer.github.com/v3/search/#search-repositories
+*/
+type SearchReposReq struct {
+
+	/*
+	The query contains one or more search keywords and qualifiers. Qualifiers allow
+	you to limit your search to specific areas of GitHub. The REST API supports the
+	same qualifiers as GitHub.com. To learn more about the format of the query, see
+	[Constructing a search
+	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
+	"[Searching for
+	repositories](https://help.github.com/articles/searching-for-repositories/)" for
+	a detailed list of qualifiers.
+	*/
+	Q *string
+
+	/*
+	Sorts the results of your query by number of `stars`, `forks`, or
+	`help-wanted-issues` or how recently the items were `updated`. Default: [best
+	match](https://developer.github.com/v3/search/#ranking-search-results)
+	*/
+	Sort *string
+
+	/*
+	Determines whether the first search result returned is the highest number of
+	matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored
+	unless you provide `sort`.
+	*/
+	Order *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The `topics` property for repositories on GitHub is currently available for
+	developers to preview. To view the `topics` property in calls that return
+	repository results, you must set this to true.
+	*/
+	MercyPreview bool
+}
+
+func (r SearchReposReq) urlPath() string {
+	return fmt.Sprintf("/search/repositories")
+}
+
+func (r SearchReposReq) method() string {
+	return "GET"
+}
+
+func (r SearchReposReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Q != nil {
+		query.Set("q", *r.Q)
+	}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Order != nil {
+		query.Set("order", *r.Order)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r SearchReposReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+SearchReposResponseBody200 is a response body for search/repos
+
+API documentation: https://developer.github.com/v3/search/#search-repositories
+*/
+type SearchReposResponseBody200 struct {
+	IncompleteResults bool `json:"incomplete_results,omitempty"`
+	Items             []struct {
+		CreatedAt       string `json:"created_at,omitempty"`
+		DefaultBranch   string `json:"default_branch,omitempty"`
+		Description     string `json:"description,omitempty"`
+		Fork            bool   `json:"fork,omitempty"`
+		ForksCount      int64  `json:"forks_count,omitempty"`
+		FullName        string `json:"full_name,omitempty"`
+		Homepage        string `json:"homepage,omitempty"`
+		HtmlUrl         string `json:"html_url,omitempty"`
+		Id              int64  `json:"id,omitempty"`
+		Language        string `json:"language,omitempty"`
+		MasterBranch    string `json:"master_branch,omitempty"`
+		Name            string `json:"name,omitempty"`
+		NodeId          string `json:"node_id,omitempty"`
+		OpenIssuesCount int64  `json:"open_issues_count,omitempty"`
+		Owner           struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Private         bool        `json:"private,omitempty"`
+		PushedAt        string      `json:"pushed_at,omitempty"`
+		Score           json.Number `json:"score,omitempty"`
+		Size            json.Number `json:"size,omitempty"`
+		StargazersCount int64       `json:"stargazers_count,omitempty"`
+		UpdatedAt       string      `json:"updated_at,omitempty"`
+		Url             string      `json:"url,omitempty"`
+		WatchersCount   int64       `json:"watchers_count,omitempty"`
+	} `json:"items,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+SearchIssuesAndPullRequestsReq builds requests for "search/issues-and-pull-requests"
+
+Search issues and pull requests.
+
+  GET /search/issues
+
+https://developer.github.com/v3/search/#search-issues-and-pull-requests
+*/
+type SearchIssuesAndPullRequestsReq struct {
+
+	/*
+	The query contains one or more search keywords and qualifiers. Qualifiers allow
+	you to limit your search to specific areas of GitHub. The REST API supports the
+	same qualifiers as GitHub.com. To learn more about the format of the query, see
+	[Constructing a search
+	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
+	"[Searching issues and pull
+	requests](https://help.github.com/articles/searching-issues-and-pull-requests/)"
+	for a detailed list of qualifiers.
+	*/
+	Q *string
+
+	/*
+	Sorts the results of your query by the number of `comments`, `reactions`,
+	`reactions-+1`, `reactions--1`, `reactions-smile`, `reactions-thinking_face`,
+	`reactions-heart`, `reactions-tada`, or `interactions`. You can also sort
+	results by how recently the items were `created` or `updated`, Default: [best
+	match](https://developer.github.com/v3/search/#ranking-search-results)
+	*/
+	Sort *string
+
+	/*
+	Determines whether the first search result returned is the highest number of
+	matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored
+	unless you provide `sort`.
+	*/
+	Order *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r SearchIssuesAndPullRequestsReq) urlPath() string {
+	return fmt.Sprintf("/search/issues")
+}
+
+func (r SearchIssuesAndPullRequestsReq) method() string {
+	return "GET"
+}
+
+func (r SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Q != nil {
+		query.Set("q", *r.Q)
+	}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Order != nil {
+		query.Set("order", *r.Order)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r SearchIssuesAndPullRequestsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+SearchIssuesAndPullRequestsResponseBody200 is a response body for search/issues-and-pull-requests
+
+API documentation: https://developer.github.com/v3/search/#search-issues-and-pull-requests
+*/
+type SearchIssuesAndPullRequestsResponseBody200 struct {
+	IncompleteResults bool `json:"incomplete_results,omitempty"`
+	Items             []struct {
+		Assignee    string `json:"assignee,omitempty"`
+		Body        string `json:"body,omitempty"`
+		ClosedAt    string `json:"closed_at,omitempty"`
+		Comments    int64  `json:"comments,omitempty"`
+		CommentsUrl string `json:"comments_url,omitempty"`
+		CreatedAt   string `json:"created_at,omitempty"`
+		EventsUrl   string `json:"events_url,omitempty"`
+		HtmlUrl     string `json:"html_url,omitempty"`
+		Id          int64  `json:"id,omitempty"`
+		Labels      []struct {
+			Color  string `json:"color,omitempty"`
+			Id     int64  `json:"id,omitempty"`
+			Name   string `json:"name,omitempty"`
+			NodeId string `json:"node_id,omitempty"`
+			Url    string `json:"url,omitempty"`
+		} `json:"labels,omitempty"`
+		LabelsUrl   string `json:"labels_url,omitempty"`
+		Milestone   string `json:"milestone,omitempty"`
+		NodeId      string `json:"node_id,omitempty"`
+		Number      int64  `json:"number,omitempty"`
+		PullRequest struct {
+			DiffUrl  string `json:"diff_url,omitempty"`
+			HtmlUrl  string `json:"html_url,omitempty"`
+			PatchUrl string `json:"patch_url,omitempty"`
+		} `json:"pull_request,omitempty"`
+		RepositoryUrl string      `json:"repository_url,omitempty"`
+		Score         json.Number `json:"score,omitempty"`
+		State         string      `json:"state,omitempty"`
+		Title         string      `json:"title,omitempty"`
+		UpdatedAt     string      `json:"updated_at,omitempty"`
+		Url           string      `json:"url,omitempty"`
+		User          struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
 	} `json:"items,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }

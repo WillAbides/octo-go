@@ -10,6 +10,59 @@ import (
 )
 
 /*
+CodesOfConductGetAllCodesOfConductReq builds requests for "codes-of-conduct/get-all-codes-of-conduct"
+
+List all codes of conduct.
+
+  GET /codes_of_conduct
+
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+*/
+type CodesOfConductGetAllCodesOfConductReq struct {
+
+	/*
+	The Codes of Conduct API is currently available for developers to preview.
+
+	To access the API during the preview period, you must set this to true.
+	*/
+	ScarletWitchPreview bool
+}
+
+func (r CodesOfConductGetAllCodesOfConductReq) urlPath() string {
+	return fmt.Sprintf("/codes_of_conduct")
+}
+
+func (r CodesOfConductGetAllCodesOfConductReq) method() string {
+	return "GET"
+}
+
+func (r CodesOfConductGetAllCodesOfConductReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r CodesOfConductGetAllCodesOfConductReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+CodesOfConductGetAllCodesOfConductResponseBody200 is a response body for codes-of-conduct/get-all-codes-of-conduct
+
+API documentation: https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+*/
+type CodesOfConductGetAllCodesOfConductResponseBody200 []struct {
+	Key  string `json:"key,omitempty"`
+	Name string `json:"name,omitempty"`
+	Url  string `json:"url,omitempty"`
+}
+
+/*
 CodesOfConductGetForRepoReq builds requests for "codes-of-conduct/get-for-repo"
 
 Get the contents of a repository's code of conduct.
@@ -115,59 +168,6 @@ API documentation: https://developer.github.com/v3/codes_of_conduct/#get-an-indi
 */
 type CodesOfConductGetConductCodeResponseBody200 struct {
 	Body string `json:"body,omitempty"`
-	Key  string `json:"key,omitempty"`
-	Name string `json:"name,omitempty"`
-	Url  string `json:"url,omitempty"`
-}
-
-/*
-CodesOfConductGetAllCodesOfConductReq builds requests for "codes-of-conduct/get-all-codes-of-conduct"
-
-List all codes of conduct.
-
-  GET /codes_of_conduct
-
-https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
-*/
-type CodesOfConductGetAllCodesOfConductReq struct {
-
-	/*
-	The Codes of Conduct API is currently available for developers to preview.
-
-	To access the API during the preview period, you must set this to true.
-	*/
-	ScarletWitchPreview bool
-}
-
-func (r CodesOfConductGetAllCodesOfConductReq) urlPath() string {
-	return fmt.Sprintf("/codes_of_conduct")
-}
-
-func (r CodesOfConductGetAllCodesOfConductReq) method() string {
-	return "GET"
-}
-
-func (r CodesOfConductGetAllCodesOfConductReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r CodesOfConductGetAllCodesOfConductReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-CodesOfConductGetAllCodesOfConductResponseBody200 is a response body for codes-of-conduct/get-all-codes-of-conduct
-
-API documentation: https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
-*/
-type CodesOfConductGetAllCodesOfConductResponseBody200 []struct {
 	Key  string `json:"key,omitempty"`
 	Name string `json:"name,omitempty"`
 	Url  string `json:"url,omitempty"`

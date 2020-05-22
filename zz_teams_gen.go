@@ -12,447 +12,6 @@ import (
 )
 
 /*
-TeamsListDiscussionsInOrgReq builds requests for "teams/list-discussions-in-org"
-
-List discussions.
-
-  GET /orgs/{org}/teams/{team_slug}/discussions
-
-https://developer.github.com/v3/teams/discussions/#list-discussions
-*/
-type TeamsListDiscussionsInOrgReq struct {
-	Org      string
-	TeamSlug string
-
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r TeamsListDiscussionsInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug)
-}
-
-func (r TeamsListDiscussionsInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListDiscussionsInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListDiscussionsInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListDiscussionsInOrgResponseBody200 is a response body for teams/list-discussions-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussions/#list-discussions
-*/
-type TeamsListDiscussionsInOrgResponseBody200 []struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsCreateDiscussionInOrgReq builds requests for "teams/create-discussion-in-org"
-
-Create a discussion.
-
-  POST /orgs/{org}/teams/{team_slug}/discussions
-
-https://developer.github.com/v3/teams/discussions/#create-a-discussion
-*/
-type TeamsCreateDiscussionInOrgReq struct {
-	Org         string
-	TeamSlug    string
-	RequestBody TeamsCreateDiscussionInOrgReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r TeamsCreateDiscussionInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug)
-}
-
-func (r TeamsCreateDiscussionInOrgReq) method() string {
-	return "POST"
-}
-
-func (r TeamsCreateDiscussionInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCreateDiscussionInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsCreateDiscussionInOrgReqBody is a request body for teams/create-discussion-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
-*/
-type TeamsCreateDiscussionInOrgReqBody struct {
-
-	// The discussion post's body text.
-	Body *string `json:"body"`
-
-	/*
-	   Private posts are only visible to team members, organization owners, and team
-	   maintainers. Public posts are visible to all members of the organization. Set to
-	   `true` to create a private post.
-	*/
-	Private *bool `json:"private,omitempty"`
-
-	// The discussion post's title.
-	Title *string `json:"title"`
-}
-
-/*
-TeamsCreateDiscussionInOrgResponseBody201 is a response body for teams/create-discussion-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
-*/
-type TeamsCreateDiscussionInOrgResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsListMembersInOrgReq builds requests for "teams/list-members-in-org"
-
-List team members.
-
-  GET /orgs/{org}/teams/{team_slug}/members
-
-https://developer.github.com/v3/teams/members/#list-team-members
-*/
-type TeamsListMembersInOrgReq struct {
-	Org      string
-	TeamSlug string
-
-	/*
-	Filters members returned by their role in the team. Can be one of:
-	\* `member` - normal members of the team.
-	\* `maintainer` - team maintainers.
-	\* `all` - all members of the team.
-	*/
-	Role *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListMembersInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/members", r.Org, r.TeamSlug)
-}
-
-func (r TeamsListMembersInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListMembersInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Role != nil {
-		query.Set("role", *r.Role)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListMembersInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListMembersInOrgResponseBody200 is a response body for teams/list-members-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#list-team-members
-*/
-type TeamsListMembersInOrgResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-TeamsListIdPGroupsInOrgReq builds requests for "teams/list-id-p-groups-in-org"
-
-List IdP groups for a team.
-
-  GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
-
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
-*/
-type TeamsListIdPGroupsInOrgReq struct {
-	Org      string
-	TeamSlug string
-}
-
-func (r TeamsListIdPGroupsInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
-}
-
-func (r TeamsListIdPGroupsInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListIdPGroupsInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsListIdPGroupsInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListIdPGroupsInOrgResponseBody200 is a response body for teams/list-id-p-groups-in-org
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
-*/
-type TeamsListIdPGroupsInOrgResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description"`
-		GroupId          string `json:"group_id"`
-		GroupName        string `json:"group_name"`
-	} `json:"groups,omitempty"`
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq builds requests for "teams/create-or-update-id-p-group-connections-in-org"
-
-Create or update IdP group connections.
-
-  PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
-
-https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq struct {
-	Org         string
-	TeamSlug    string
-	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) method() string {
-	return "PATCH"
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-id-p-group-connections-in-org
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody struct {
-
-	/*
-	   The IdP groups you want to connect to a GitHub team. When updating, the new
-	   `groups` object will replace the original one. You must include any existing
-	   groups that you don't want to remove.
-	*/
-	Groups []struct {
-
-		// Description of the IdP group.
-		GroupDescription *string `json:"group_description"`
-
-		// ID of the IdP group.
-		GroupId *string `json:"group_id"`
-
-		// Name of the IdP group.
-		GroupName *string `json:"group_name"`
-	} `json:"groups"`
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 is a response body for teams/create-or-update-id-p-group-connections-in-org
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 struct {
-	Groups struct {
-		GroupDescription string `json:"group_description,omitempty"`
-		GroupId          string `json:"group_id,omitempty"`
-		GroupName        string `json:"group_name,omitempty"`
-	} `json:"groups,omitempty"`
-}
-
-/*
 TeamsListChildInOrgReq builds requests for "teams/list-child-in-org"
 
 List child teams.
@@ -530,6 +89,466 @@ type TeamsListChildInOrgResponseBody200 []struct {
 	RepositoriesUrl string `json:"repositories_url,omitempty"`
 	Slug            string `json:"slug,omitempty"`
 	Url             string `json:"url,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateProjectLegacyReq builds requests for "teams/add-or-update-project-legacy"
+
+Add or update team project (Legacy).
+
+  PUT /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
+*/
+type TeamsAddOrUpdateProjectLegacyReq struct {
+	TeamId      int64
+	ProjectId   int64
+	RequestBody TeamsAddOrUpdateProjectLegacyReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r TeamsAddOrUpdateProjectLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
+}
+
+func (r TeamsAddOrUpdateProjectLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r TeamsAddOrUpdateProjectLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsAddOrUpdateProjectLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsAddOrUpdateProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsAddOrUpdateProjectLegacyReqBody is a request body for teams/add-or-update-project-legacy
+
+API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
+*/
+type TeamsAddOrUpdateProjectLegacyReqBody struct {
+
+	/*
+	   The permission to grant to the team for this project. Can be one of:
+	   \* `read` - team members can read, but not write to or administer this project.
+	   \* `write` - team members can read and write, but not administer this project.
+	   \* `admin` - team members can read, write and administer this project.
+	   Default: the team's `permission` attribute will be used to determine what
+	   permission to grant the team on this project. Note that, if you choose not to
+	   pass any parameters, you'll need to set `Content-Length` to zero when calling
+	   out to this endpoint. For more information, see "[HTTP
+	   verbs](https://developer.github.com/v3/#http-verbs)."
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateProjectLegacyResponseBody403 is a response body for teams/add-or-update-project-legacy
+
+API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
+*/
+type TeamsAddOrUpdateProjectLegacyResponseBody403 struct {
+	DocumentationUrl string `json:"documentation_url,omitempty"`
+	Message          string `json:"message,omitempty"`
+}
+
+/*
+TeamsRemoveProjectLegacyReq builds requests for "teams/remove-project-legacy"
+
+Remove team project (Legacy).
+
+  DELETE /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#remove-team-project-legacy
+*/
+type TeamsRemoveProjectLegacyReq struct {
+	TeamId    int64
+	ProjectId int64
+}
+
+func (r TeamsRemoveProjectLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
+}
+
+func (r TeamsRemoveProjectLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsRemoveProjectLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsRemoveProjectLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsReviewProjectLegacyReq builds requests for "teams/review-project-legacy"
+
+Review a team project (Legacy).
+
+  GET /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#review-a-team-project-legacy
+*/
+type TeamsReviewProjectLegacyReq struct {
+	TeamId    int64
+	ProjectId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r TeamsReviewProjectLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
+}
+
+func (r TeamsReviewProjectLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsReviewProjectLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsReviewProjectLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsReviewProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsReviewProjectLegacyResponseBody200 is a response body for teams/review-project-legacy
+
+API documentation: https://developer.github.com/v3/teams/#review-a-team-project-legacy
+*/
+type TeamsReviewProjectLegacyResponseBody200 struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl                string `json:"html_url,omitempty"`
+	Id                     int64  `json:"id,omitempty"`
+	Name                   string `json:"name,omitempty"`
+	NodeId                 string `json:"node_id,omitempty"`
+	Number                 int64  `json:"number,omitempty"`
+	OrganizationPermission string `json:"organization_permission,omitempty"`
+	OwnerUrl               string `json:"owner_url,omitempty"`
+	Permissions            struct {
+		Admin bool `json:"admin,omitempty"`
+		Read  bool `json:"read,omitempty"`
+		Write bool `json:"write,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private   bool   `json:"private,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+TeamsListPendingInvitationsInOrgReq builds requests for "teams/list-pending-invitations-in-org"
+
+List pending team invitations.
+
+  GET /orgs/{org}/teams/{team_slug}/invitations
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+*/
+type TeamsListPendingInvitationsInOrgReq struct {
+	Org      string
+	TeamSlug string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListPendingInvitationsInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/invitations", r.Org, r.TeamSlug)
+}
+
+func (r TeamsListPendingInvitationsInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListPendingInvitationsInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListPendingInvitationsInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListPendingInvitationsInOrgResponseBody200 is a response body for teams/list-pending-invitations-in-org
+
+API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+*/
+type TeamsListPendingInvitationsInOrgResponseBody200 []struct {
+	CreatedAt         string `json:"created_at,omitempty"`
+	Email             string `json:"email,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
+	Inviter           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"inviter,omitempty"`
+	Login     string `json:"login,omitempty"`
+	Role      string `json:"role,omitempty"`
+	TeamCount int64  `json:"team_count,omitempty"`
+}
+
+/*
+TeamsRemoveMembershipInOrgReq builds requests for "teams/remove-membership-in-org"
+
+Remove team membership.
+
+  DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-membership
+*/
+type TeamsRemoveMembershipInOrgReq struct {
+	Org      string
+	TeamSlug string
+	Username string
+}
+
+func (r TeamsRemoveMembershipInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
+}
+
+func (r TeamsRemoveMembershipInOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsRemoveMembershipInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsRemoveMembershipInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetMembershipInOrgReq builds requests for "teams/get-membership-in-org"
+
+Get team membership.
+
+  GET /orgs/{org}/teams/{team_slug}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-membership
+*/
+type TeamsGetMembershipInOrgReq struct {
+	Org      string
+	TeamSlug string
+	Username string
+}
+
+func (r TeamsGetMembershipInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
+}
+
+func (r TeamsGetMembershipInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsGetMembershipInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsGetMembershipInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetMembershipInOrgResponseBody200 is a response body for teams/get-membership-in-org
+
+API documentation: https://developer.github.com/v3/teams/members/#get-team-membership
+*/
+type TeamsGetMembershipInOrgResponseBody200 struct {
+	Role  string `json:"role,omitempty"`
+	State string `json:"state,omitempty"`
+	Url   string `json:"url,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipInOrgReq builds requests for "teams/add-or-update-membership-in-org"
+
+Add or update team membership.
+
+  PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+*/
+type TeamsAddOrUpdateMembershipInOrgReq struct {
+	Org         string
+	TeamSlug    string
+	Username    string
+	RequestBody TeamsAddOrUpdateMembershipInOrgReqBody
+}
+
+func (r TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
+}
+
+func (r TeamsAddOrUpdateMembershipInOrgReq) method() string {
+	return "PUT"
+}
+
+func (r TeamsAddOrUpdateMembershipInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsAddOrUpdateMembershipInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsAddOrUpdateMembershipInOrgReqBody is a request body for teams/add-or-update-membership-in-org
+
+API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+*/
+type TeamsAddOrUpdateMembershipInOrgReqBody struct {
+
+	/*
+	   The role that this user should have in the team. Can be one of:
+	   \* `member` - a normal member of the team.
+	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
+	   promote other team members to team maintainer, and edit the team's name and
+	   description.
+	*/
+	Role *string `json:"role,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipInOrgResponseBody200 is a response body for teams/add-or-update-membership-in-org
+
+API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+*/
+type TeamsAddOrUpdateMembershipInOrgResponseBody200 struct {
+	Role  string `json:"role,omitempty"`
+	State string `json:"state,omitempty"`
+	Url   string `json:"url,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipInOrgResponseBody422 is a response body for teams/add-or-update-membership-in-org
+
+API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+*/
+type TeamsAddOrUpdateMembershipInOrgResponseBody422 struct {
+	Errors []struct {
+		Code     string `json:"code,omitempty"`
+		Field    string `json:"field,omitempty"`
+		Resource string `json:"resource,omitempty"`
+	} `json:"errors,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 /*
@@ -742,54 +761,548 @@ type TeamsCreateDiscussionCommentLegacyResponseBody201 struct {
 }
 
 /*
-TeamsAddMemberLegacyReq builds requests for "teams/add-member-legacy"
+TeamsListChildLegacyReq builds requests for "teams/list-child-legacy"
 
-Add team member (Legacy).
+List child teams (Legacy).
 
-  PUT /teams/{team_id}/members/{username}
+  GET /teams/{team_id}/teams
 
-https://developer.github.com/v3/teams/members/#add-team-member-legacy
+https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
-type TeamsAddMemberLegacyReq struct {
-	TeamId   int64
-	Username string
+type TeamsListChildLegacyReq struct {
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r TeamsAddMemberLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
+func (r TeamsListChildLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/teams", r.TeamId)
 }
 
-func (r TeamsAddMemberLegacyReq) method() string {
-	return "PUT"
+func (r TeamsListChildLegacyReq) method() string {
+	return "GET"
 }
 
-func (r TeamsAddMemberLegacyReq) urlQuery() url.Values {
+func (r TeamsListChildLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r TeamsAddMemberLegacyReq) header() http.Header {
+func (r TeamsListChildLegacyReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-TeamsAddMemberLegacyResponseBody422 is a response body for teams/add-member-legacy
+TeamsListChildLegacyResponseBody200 is a response body for teams/list-child-legacy
 
-API documentation: https://developer.github.com/v3/teams/members/#add-team-member-legacy
+API documentation: https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
-type TeamsAddMemberLegacyResponseBody422 struct {
-	Errors []struct {
-		Code     string `json:"code,omitempty"`
-		Field    string `json:"field,omitempty"`
-		Resource string `json:"resource,omitempty"`
-	} `json:"errors,omitempty"`
-	Message string `json:"message,omitempty"`
+type TeamsListChildLegacyResponseBody200 []struct {
+	Description string `json:"description,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	MembersUrl  string `json:"members_url,omitempty"`
+	Name        string `json:"name,omitempty"`
+	NodeId      string `json:"node_id,omitempty"`
+	Parent      struct {
+		Description     string `json:"description,omitempty"`
+		HtmlUrl         string `json:"html_url,omitempty"`
+		Id              int64  `json:"id,omitempty"`
+		MembersUrl      string `json:"members_url,omitempty"`
+		Name            string `json:"name,omitempty"`
+		NodeId          string `json:"node_id,omitempty"`
+		Permission      string `json:"permission,omitempty"`
+		Privacy         string `json:"privacy,omitempty"`
+		RepositoriesUrl string `json:"repositories_url,omitempty"`
+		Slug            string `json:"slug,omitempty"`
+		Url             string `json:"url,omitempty"`
+	} `json:"parent,omitempty"`
+	Permission      string `json:"permission,omitempty"`
+	Privacy         string `json:"privacy,omitempty"`
+	RepositoriesUrl string `json:"repositories_url,omitempty"`
+	Slug            string `json:"slug,omitempty"`
+	Url             string `json:"url,omitempty"`
+}
+
+/*
+TeamsDeleteDiscussionLegacyReq builds requests for "teams/delete-discussion-legacy"
+
+Delete a discussion (Legacy).
+
+  DELETE /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+*/
+type TeamsDeleteDiscussionLegacyReq struct {
+	TeamId           int64
+	DiscussionNumber int64
+}
+
+func (r TeamsDeleteDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
+}
+
+func (r TeamsDeleteDiscussionLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsDeleteDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsDeleteDiscussionLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetDiscussionLegacyReq builds requests for "teams/get-discussion-legacy"
+
+Get a single discussion (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
+*/
+type TeamsGetDiscussionLegacyReq struct {
+	TeamId           int64
+	DiscussionNumber int64
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsGetDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
+}
+
+func (r TeamsGetDiscussionLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsGetDiscussionLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetDiscussionLegacyResponseBody200 is a response body for teams/get-discussion-legacy
+
+API documentation: https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
+*/
+type TeamsGetDiscussionLegacyResponseBody200 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CommentsCount int64            `json:"comments_count,omitempty"`
+	CommentsUrl   string           `json:"comments_url,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Pinned        bool             `json:"pinned,omitempty"`
+	Private       bool             `json:"private,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	TeamUrl       string           `json:"team_url,omitempty"`
+	Title         string           `json:"title,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsUpdateDiscussionLegacyReq builds requests for "teams/update-discussion-legacy"
+
+Edit a discussion (Legacy).
+
+  PATCH /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyReq struct {
+	TeamId           int64
+	DiscussionNumber int64
+	RequestBody      TeamsUpdateDiscussionLegacyReqBody
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsUpdateDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
+}
+
+func (r TeamsUpdateDiscussionLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsUpdateDiscussionLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsUpdateDiscussionLegacyReqBody is a request body for teams/update-discussion-legacy
+
+API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyReqBody struct {
+
+	// The discussion post's body text.
+	Body *string `json:"body,omitempty"`
+
+	// The discussion post's title.
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+TeamsUpdateDiscussionLegacyResponseBody200 is a response body for teams/update-discussion-legacy
+
+API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyResponseBody200 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CommentsCount int64            `json:"comments_count,omitempty"`
+	CommentsUrl   string           `json:"comments_url,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Pinned        bool             `json:"pinned,omitempty"`
+	Private       bool             `json:"private,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	TeamUrl       string           `json:"team_url,omitempty"`
+	Title         string           `json:"title,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsDeleteDiscussionCommentLegacyReq builds requests for "teams/delete-discussion-comment-legacy"
+
+Delete a comment (Legacy).
+
+  DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment-legacy
+*/
+type TeamsDeleteDiscussionCommentLegacyReq struct {
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+}
+
+func (r TeamsDeleteDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r TeamsDeleteDiscussionCommentLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsDeleteDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsDeleteDiscussionCommentLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetDiscussionCommentLegacyReq builds requests for "teams/get-discussion-comment-legacy"
+
+Get a single comment (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
+*/
+type TeamsGetDiscussionCommentLegacyReq struct {
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsGetDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r TeamsGetDiscussionCommentLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsGetDiscussionCommentLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetDiscussionCommentLegacyResponseBody200 is a response body for teams/get-discussion-comment-legacy
+
+API documentation: https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
+*/
+type TeamsGetDiscussionCommentLegacyResponseBody200 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	DiscussionUrl string           `json:"discussion_url,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyReq builds requests for "teams/update-discussion-comment-legacy"
+
+Edit a comment (Legacy).
+
+  PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyReq struct {
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+	RequestBody      TeamsUpdateDiscussionCommentLegacyReqBody
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsUpdateDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r TeamsUpdateDiscussionCommentLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsUpdateDiscussionCommentLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyReqBody is a request body for teams/update-discussion-comment-legacy
+
+API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyReqBody struct {
+
+	// The discussion comment's body text.
+	Body *string `json:"body"`
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyResponseBody200 is a response body for teams/update-discussion-comment-legacy
+
+API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyResponseBody200 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	DiscussionUrl string           `json:"discussion_url,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
 }
 
 /*
@@ -867,214 +1380,54 @@ func (r TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...Request
 }
 
 /*
-TeamsRemoveProjectInOrgReq builds requests for "teams/remove-project-in-org"
+TeamsAddMemberLegacyReq builds requests for "teams/add-member-legacy"
 
-Remove team project.
+Add team member (Legacy).
 
-  DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}
+  PUT /teams/{team_id}/members/{username}
 
-https://developer.github.com/v3/teams/#remove-team-project
+https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
-type TeamsRemoveProjectInOrgReq struct {
-	Org       string
-	TeamSlug  string
-	ProjectId int64
+type TeamsAddMemberLegacyReq struct {
+	TeamId   int64
+	Username string
 }
 
-func (r TeamsRemoveProjectInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
+func (r TeamsAddMemberLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsRemoveProjectInOrgReq) method() string {
-	return "DELETE"
+func (r TeamsAddMemberLegacyReq) method() string {
+	return "PUT"
 }
 
-func (r TeamsRemoveProjectInOrgReq) urlQuery() url.Values {
+func (r TeamsAddMemberLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveProjectInOrgReq) header() http.Header {
+func (r TeamsAddMemberLegacyReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-TeamsReviewProjectInOrgReq builds requests for "teams/review-project-in-org"
+TeamsAddMemberLegacyResponseBody422 is a response body for teams/add-member-legacy
 
-Review a team project.
-
-  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#review-a-team-project
+API documentation: https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
-type TeamsReviewProjectInOrgReq struct {
-	Org       string
-	TeamSlug  string
-	ProjectId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r TeamsReviewProjectInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
-}
-
-func (r TeamsReviewProjectInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsReviewProjectInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsReviewProjectInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsReviewProjectInOrgResponseBody200 is a response body for teams/review-project-in-org
-
-API documentation: https://developer.github.com/v3/teams/#review-a-team-project
-*/
-type TeamsReviewProjectInOrgResponseBody200 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateProjectInOrgReq builds requests for "teams/add-or-update-project-in-org"
-
-Add or update team project.
-
-  PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#add-or-update-team-project
-*/
-type TeamsAddOrUpdateProjectInOrgReq struct {
-	Org         string
-	TeamSlug    string
-	ProjectId   int64
-	RequestBody TeamsAddOrUpdateProjectInOrgReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
-}
-
-func (r TeamsAddOrUpdateProjectInOrgReq) method() string {
-	return "PUT"
-}
-
-func (r TeamsAddOrUpdateProjectInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsAddOrUpdateProjectInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsAddOrUpdateProjectInOrgReqBody is a request body for teams/add-or-update-project-in-org
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project
-*/
-type TeamsAddOrUpdateProjectInOrgReqBody struct {
-
-	/*
-	   The permission to grant to the team for this project. Can be one of:
-	   \* `read` - team members can read, but not write to or administer this project.
-	   \* `write` - team members can read and write, but not administer this project.
-	   \* `admin` - team members can read, write and administer this project.
-	   Default: the team's `permission` attribute will be used to determine what
-	   permission to grant the team on this project. Note that, if you choose not to
-	   pass any parameters, you'll need to set `Content-Length` to zero when calling
-	   out to this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)."
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateProjectInOrgResponseBody403 is a response body for teams/add-or-update-project-in-org
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project
-*/
-type TeamsAddOrUpdateProjectInOrgResponseBody403 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
+type TeamsAddMemberLegacyResponseBody422 struct {
+	Errors []struct {
+		Code     string `json:"code,omitempty"`
+		Field    string `json:"field,omitempty"`
+		Resource string `json:"resource,omitempty"`
+	} `json:"errors,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 /*
@@ -1179,106 +1532,6 @@ type TeamsListProjectsLegacyResponseBody200 []struct {
 	State     string `json:"state,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
 	Url       string `json:"url,omitempty"`
-}
-
-/*
-TeamsListForAuthenticatedUserReq builds requests for "teams/list-for-authenticated-user"
-
-List user teams.
-
-  GET /user/teams
-
-https://developer.github.com/v3/teams/#list-user-teams
-*/
-type TeamsListForAuthenticatedUserReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/teams")
-}
-
-func (r TeamsListForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListForAuthenticatedUserResponseBody200 is a response body for teams/list-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/teams/#list-user-teams
-*/
-type TeamsListForAuthenticatedUserResponseBody200 []struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
 }
 
 /*
@@ -1513,6 +1766,333 @@ type TeamsUpdateDiscussionCommentInOrgResponseBody200 struct {
 }
 
 /*
+TeamsListReposInOrgReq builds requests for "teams/list-repos-in-org"
+
+List team repos.
+
+  GET /orgs/{org}/teams/{team_slug}/repos
+
+https://developer.github.com/v3/teams/#list-team-repos
+*/
+type TeamsListReposInOrgReq struct {
+	Org      string
+	TeamSlug string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListReposInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/repos", r.Org, r.TeamSlug)
+}
+
+func (r TeamsListReposInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListReposInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListReposInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListReposInOrgResponseBody200 is a response body for teams/list-repos-in-org
+
+API documentation: https://developer.github.com/v3/teams/#list-team-repos
+*/
+type TeamsListReposInOrgResponseBody200 []struct {
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	License          struct {
+		Key    string `json:"key,omitempty"`
+		Name   string `json:"name,omitempty"`
+		NodeId string `json:"node_id,omitempty"`
+		SpdxId string `json:"spdx_id,omitempty"`
+		Url    string `json:"url,omitempty"`
+	} `json:"license,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository string      `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
+}
+
+/*
+TeamsListReposLegacyReq builds requests for "teams/list-repos-legacy"
+
+List team repos (Legacy).
+
+  GET /teams/{team_id}/repos
+
+https://developer.github.com/v3/teams/#list-team-repos-legacy
+*/
+type TeamsListReposLegacyReq struct {
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListReposLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos", r.TeamId)
+}
+
+func (r TeamsListReposLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListReposLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListReposLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListReposLegacyResponseBody200 is a response body for teams/list-repos-legacy
+
+API documentation: https://developer.github.com/v3/teams/#list-team-repos-legacy
+*/
+type TeamsListReposLegacyResponseBody200 []struct {
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	License          struct {
+		Key    string `json:"key,omitempty"`
+		Name   string `json:"name,omitempty"`
+		NodeId string `json:"node_id,omitempty"`
+		SpdxId string `json:"spdx_id,omitempty"`
+		Url    string `json:"url,omitempty"`
+	} `json:"license,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository string      `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
+}
+
+/*
 TeamsListDiscussionsLegacyReq builds requests for "teams/list-discussions-legacy"
 
 List discussions (Legacy).
@@ -1737,754 +2317,6 @@ type TeamsCreateDiscussionLegacyResponseBody201 struct {
 	Title         string           `json:"title,omitempty"`
 	UpdatedAt     string           `json:"updated_at,omitempty"`
 	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsListReq builds requests for "teams/list"
-
-List teams.
-
-  GET /orgs/{org}/teams
-
-https://developer.github.com/v3/teams/#list-teams
-*/
-type TeamsListReq struct {
-	Org string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams", r.Org)
-}
-
-func (r TeamsListReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListResponseBody200 is a response body for teams/list
-
-API documentation: https://developer.github.com/v3/teams/#list-teams
-*/
-type TeamsListResponseBody200 []struct {
-	Description     string `json:"description,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	MembersUrl      string `json:"members_url,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
-}
-
-/*
-TeamsCreateReq builds requests for "teams/create"
-
-Create team.
-
-  POST /orgs/{org}/teams
-
-https://developer.github.com/v3/teams/#create-team
-*/
-type TeamsCreateReq struct {
-	Org         string
-	RequestBody TeamsCreateReqBody
-}
-
-func (r TeamsCreateReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams", r.Org)
-}
-
-func (r TeamsCreateReq) method() string {
-	return "POST"
-}
-
-func (r TeamsCreateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCreateReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsCreateReqBody is a request body for teams/create
-
-API documentation: https://developer.github.com/v3/teams/#create-team
-*/
-type TeamsCreateReqBody struct {
-
-	// The description of the team.
-	Description *string `json:"description,omitempty"`
-
-	// List GitHub IDs for organization members who will become team maintainers.
-	Maintainers []string `json:"maintainers,omitempty"`
-
-	// The name of the team.
-	Name *string `json:"name"`
-
-	// The ID of a team to set as the parent team.
-	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
-
-	/*
-	   **Deprecated**. The permission that new repositories will be added to the team
-	   with when none is specified. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer newly-added
-	   repositories.
-	   \* `push` - team members can pull and push, but not administer newly-added
-	   repositories.
-	   \* `admin` - team members can pull, push and administer newly-added
-	   repositories.
-	*/
-	Permission *string `json:"permission,omitempty"`
-
-	/*
-	   The level of privacy this team should have. The options are:
-	   **For a non-nested team:**
-	   \* `secret` - only visible to organization owners and members of this team.
-	   \* `closed` - visible to all members of this organization.
-	   Default: `secret`
-	   **For a parent or child team:**
-	   \* `closed` - visible to all members of this organization.
-	   Default for child team: `closed`
-	*/
-	Privacy *string `json:"privacy,omitempty"`
-
-	/*
-	   The full name (e.g., "organization-name/repository-name") of repositories to add
-	   the team to.
-	*/
-	RepoNames []string `json:"repo_names,omitempty"`
-}
-
-/*
-TeamsCreateResponseBody201 is a response body for teams/create
-
-API documentation: https://developer.github.com/v3/teams/#create-team
-*/
-type TeamsCreateResponseBody201 struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
-}
-
-/*
-TeamsRemoveMembershipLegacyReq builds requests for "teams/remove-membership-legacy"
-
-Remove team membership (Legacy).
-
-  DELETE /teams/{team_id}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#remove-team-membership-legacy
-*/
-type TeamsRemoveMembershipLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r TeamsRemoveMembershipLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
-}
-
-func (r TeamsRemoveMembershipLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r TeamsRemoveMembershipLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsRemoveMembershipLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsRemoveMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsGetMembershipLegacyReq builds requests for "teams/get-membership-legacy"
-
-Get team membership (Legacy).
-
-  GET /teams/{team_id}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#get-team-membership-legacy
-*/
-type TeamsGetMembershipLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r TeamsGetMembershipLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
-}
-
-func (r TeamsGetMembershipLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsGetMembershipLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsGetMembershipLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsGetMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsGetMembershipLegacyResponseBody200 is a response body for teams/get-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#get-team-membership-legacy
-*/
-type TeamsGetMembershipLegacyResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipLegacyReq builds requests for "teams/add-or-update-membership-legacy"
-
-Add or update team membership (Legacy).
-
-  PUT /teams/{team_id}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyReq struct {
-	TeamId      int64
-	Username    string
-	RequestBody TeamsAddOrUpdateMembershipLegacyReqBody
-}
-
-func (r TeamsAddOrUpdateMembershipLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
-}
-
-func (r TeamsAddOrUpdateMembershipLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r TeamsAddOrUpdateMembershipLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsAddOrUpdateMembershipLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsAddOrUpdateMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsAddOrUpdateMembershipLegacyReqBody is a request body for teams/add-or-update-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyReqBody struct {
-
-	/*
-	   The role that this user should have in the team. Can be one of:
-	   \* `member` - a normal member of the team.
-	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
-	   promote other team members to team maintainer, and edit the team's name and
-	   description.
-	*/
-	Role *string `json:"role,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipLegacyResponseBody200 is a response body for teams/add-or-update-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipLegacyResponseBody422 is a response body for teams/add-or-update-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyResponseBody422 struct {
-	Errors []struct {
-		Code     string `json:"code,omitempty"`
-		Field    string `json:"field,omitempty"`
-		Resource string `json:"resource,omitempty"`
-	} `json:"errors,omitempty"`
-	Message string `json:"message,omitempty"`
-}
-
-/*
-TeamsListDiscussionCommentsInOrgReq builds requests for "teams/list-discussion-comments-in-org"
-
-List comments.
-
-  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
-
-https://developer.github.com/v3/teams/discussion_comments/#list-comments
-*/
-type TeamsListDiscussionCommentsInOrgReq struct {
-	Org              string
-	TeamSlug         string
-	DiscussionNumber int64
-
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r TeamsListDiscussionCommentsInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber)
-}
-
-func (r TeamsListDiscussionCommentsInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListDiscussionCommentsInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListDiscussionCommentsInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListDiscussionCommentsInOrgResponseBody200 is a response body for teams/list-discussion-comments-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#list-comments
-*/
-type TeamsListDiscussionCommentsInOrgResponseBody200 []struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsCreateDiscussionCommentInOrgReq builds requests for "teams/create-discussion-comment-in-org"
-
-Create a comment.
-
-  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
-
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
-*/
-type TeamsCreateDiscussionCommentInOrgReq struct {
-	Org              string
-	TeamSlug         string
-	DiscussionNumber int64
-	RequestBody      TeamsCreateDiscussionCommentInOrgReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r TeamsCreateDiscussionCommentInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber)
-}
-
-func (r TeamsCreateDiscussionCommentInOrgReq) method() string {
-	return "POST"
-}
-
-func (r TeamsCreateDiscussionCommentInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCreateDiscussionCommentInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsCreateDiscussionCommentInOrgReqBody is a request body for teams/create-discussion-comment-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
-*/
-type TeamsCreateDiscussionCommentInOrgReqBody struct {
-
-	// The discussion comment's body text.
-	Body *string `json:"body"`
-}
-
-/*
-TeamsCreateDiscussionCommentInOrgResponseBody201 is a response body for teams/create-discussion-comment-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
-*/
-type TeamsCreateDiscussionCommentInOrgResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsListReposInOrgReq builds requests for "teams/list-repos-in-org"
-
-List team repos.
-
-  GET /orgs/{org}/teams/{team_slug}/repos
-
-https://developer.github.com/v3/teams/#list-team-repos
-*/
-type TeamsListReposInOrgReq struct {
-	Org      string
-	TeamSlug string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListReposInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/repos", r.Org, r.TeamSlug)
-}
-
-func (r TeamsListReposInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListReposInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListReposInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListReposInOrgResponseBody200 is a response body for teams/list-repos-in-org
-
-API documentation: https://developer.github.com/v3/teams/#list-team-repos
-*/
-type TeamsListReposInOrgResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	License          struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
 }
 
 /*
@@ -2743,17 +2575,24 @@ type TeamsUpdateLegacyResponseBody201 struct {
 }
 
 /*
-TeamsListProjectsInOrgReq builds requests for "teams/list-projects-in-org"
+TeamsListDiscussionCommentsInOrgReq builds requests for "teams/list-discussion-comments-in-org"
 
-List team projects.
+List comments.
 
-  GET /orgs/{org}/teams/{team_slug}/projects
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
-https://developer.github.com/v3/teams/#list-team-projects
+https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
-type TeamsListProjectsInOrgReq struct {
-	Org      string
-	TeamSlug string
+type TeamsListDiscussionCommentsInOrgReq struct {
+	Org              string
+	TeamSlug         string
+	DiscussionNumber int64
+
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
+	Direction *string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2762,25 +2601,30 @@ type TeamsListProjectsInOrgReq struct {
 	Page *int64
 
 	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
 	*/
-	InertiaPreview bool
+	SquirrelGirlPreview bool
 }
 
-func (r TeamsListProjectsInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/projects", r.Org, r.TeamSlug)
+func (r TeamsListDiscussionCommentsInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r TeamsListProjectsInOrgReq) method() string {
+func (r TeamsListDiscussionCommentsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListProjectsInOrgReq) urlQuery() url.Values {
+func (r TeamsListDiscussionCommentsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
@@ -2790,26 +2634,23 @@ func (r TeamsListProjectsInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListProjectsInOrgReq) header() http.Header {
+func (r TeamsListDiscussionCommentsInOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-TeamsListProjectsInOrgResponseBody200 is a response body for teams/list-projects-in-org
+TeamsListDiscussionCommentsInOrgResponseBody200 is a response body for teams/list-discussion-comments-in-org
 
-API documentation: https://developer.github.com/v3/teams/#list-team-projects
+API documentation: https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
-type TeamsListProjectsInOrgResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
+type TeamsListDiscussionCommentsInOrgResponseBody200 []struct {
+	Author struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -2828,23 +2669,1542 @@ type TeamsListProjectsInOrgResponseBody200 []struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	DiscussionUrl string           `json:"discussion_url,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsCreateDiscussionCommentInOrgReq builds requests for "teams/create-discussion-comment-in-org"
+
+Create a comment.
+
+  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+*/
+type TeamsCreateDiscussionCommentInOrgReq struct {
+	Org              string
+	TeamSlug         string
+	DiscussionNumber int64
+	RequestBody      TeamsCreateDiscussionCommentInOrgReqBody
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsCreateDiscussionCommentInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber)
+}
+
+func (r TeamsCreateDiscussionCommentInOrgReq) method() string {
+	return "POST"
+}
+
+func (r TeamsCreateDiscussionCommentInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCreateDiscussionCommentInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsCreateDiscussionCommentInOrgReqBody is a request body for teams/create-discussion-comment-in-org
+
+API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+*/
+type TeamsCreateDiscussionCommentInOrgReqBody struct {
+
+	// The discussion comment's body text.
+	Body *string `json:"body"`
+}
+
+/*
+TeamsCreateDiscussionCommentInOrgResponseBody201 is a response body for teams/create-discussion-comment-in-org
+
+API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+*/
+type TeamsCreateDiscussionCommentInOrgResponseBody201 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	DiscussionUrl string           `json:"discussion_url,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsListMembersInOrgReq builds requests for "teams/list-members-in-org"
+
+List team members.
+
+  GET /orgs/{org}/teams/{team_slug}/members
+
+https://developer.github.com/v3/teams/members/#list-team-members
+*/
+type TeamsListMembersInOrgReq struct {
+	Org      string
+	TeamSlug string
+
+	/*
+	Filters members returned by their role in the team. Can be one of:
+	\* `member` - normal members of the team.
+	\* `maintainer` - team maintainers.
+	\* `all` - all members of the team.
+	*/
+	Role *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListMembersInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/members", r.Org, r.TeamSlug)
+}
+
+func (r TeamsListMembersInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListMembersInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Role != nil {
+		query.Set("role", *r.Role)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListMembersInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListMembersInOrgResponseBody200 is a response body for teams/list-members-in-org
+
+API documentation: https://developer.github.com/v3/teams/members/#list-team-members
+*/
+type TeamsListMembersInOrgResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+TeamsListIdPGroupsInOrgReq builds requests for "teams/list-id-p-groups-in-org"
+
+List IdP groups for a team.
+
+  GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+*/
+type TeamsListIdPGroupsInOrgReq struct {
+	Org      string
+	TeamSlug string
+}
+
+func (r TeamsListIdPGroupsInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
+}
+
+func (r TeamsListIdPGroupsInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListIdPGroupsInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsListIdPGroupsInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListIdPGroupsInOrgResponseBody200 is a response body for teams/list-id-p-groups-in-org
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+*/
+type TeamsListIdPGroupsInOrgResponseBody200 struct {
+	Groups []struct {
+		GroupDescription string `json:"group_description"`
+		GroupId          string `json:"group_id"`
+		GroupName        string `json:"group_name"`
+	} `json:"groups,omitempty"`
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq builds requests for "teams/create-or-update-id-p-group-connections-in-org"
+
+Create or update IdP group connections.
+
+  PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq struct {
+	Org         string
+	TeamSlug    string
+	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) method() string {
+	return "PATCH"
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-id-p-group-connections-in-org
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody struct {
+
+	/*
+	   The IdP groups you want to connect to a GitHub team. When updating, the new
+	   `groups` object will replace the original one. You must include any existing
+	   groups that you don't want to remove.
+	*/
+	Groups []struct {
+
+		// Description of the IdP group.
+		GroupDescription *string `json:"group_description"`
+
+		// ID of the IdP group.
+		GroupId *string `json:"group_id"`
+
+		// Name of the IdP group.
+		GroupName *string `json:"group_name"`
+	} `json:"groups"`
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 is a response body for teams/create-or-update-id-p-group-connections-in-org
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 struct {
+	Groups struct {
+		GroupDescription string `json:"group_description,omitempty"`
+		GroupId          string `json:"group_id,omitempty"`
+		GroupName        string `json:"group_name,omitempty"`
+	} `json:"groups,omitempty"`
+}
+
+/*
+TeamsCheckManagesRepoInOrgReq builds requests for "teams/check-manages-repo-in-org"
+
+Check if a team manages a repository.
+
+  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+*/
+type TeamsCheckManagesRepoInOrgReq struct {
+	Org      string
+	TeamSlug string
+	Owner    string
+	Repo     string
+}
+
+func (r TeamsCheckManagesRepoInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
+}
+
+func (r TeamsCheckManagesRepoInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsCheckManagesRepoInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCheckManagesRepoInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsAddOrUpdateRepoInOrgReq builds requests for "teams/add-or-update-repo-in-org"
+
+Add or update team repository.
+
+  PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository
+*/
+type TeamsAddOrUpdateRepoInOrgReq struct {
+	Org         string
+	TeamSlug    string
+	Owner       string
+	Repo        string
+	RequestBody TeamsAddOrUpdateRepoInOrgReqBody
+}
+
+func (r TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
+}
+
+func (r TeamsAddOrUpdateRepoInOrgReq) method() string {
+	return "PUT"
+}
+
+func (r TeamsAddOrUpdateRepoInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsAddOrUpdateRepoInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsAddOrUpdateRepoInOrgReqBody is a request body for teams/add-or-update-repo-in-org
+
+API documentation: https://developer.github.com/v3/teams/#add-or-update-team-repository
+*/
+type TeamsAddOrUpdateRepoInOrgReqBody struct {
+
+	/*
+	   The permission to grant the team on this repository. Can be one of:
+	   \* `pull` - team members can pull, but not push to or administer this
+	   repository.
+	   \* `push` - team members can pull and push, but not administer this repository.
+	   \* `admin` - team members can pull, push and administer this repository.
+	   \* `maintain` - team members can manage the repository without access to
+	   sensitive or destructive actions. Recommended for project managers. Only applies
+	   to repositories owned by organizations.
+	   \* `triage` - team members can proactively manage issues and pull requests
+	   without write access. Recommended for contributors who triage a repository. Only
+	   applies to repositories owned by organizations.
+
+	   If no permission is specified, the team's `permission` attribute will be used to
+	   determine what permission to grant the team on this repository.
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+TeamsRemoveRepoInOrgReq builds requests for "teams/remove-repo-in-org"
+
+Remove team repository.
+
+  DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#remove-team-repository
+*/
+type TeamsRemoveRepoInOrgReq struct {
+	Org      string
+	TeamSlug string
+	Owner    string
+	Repo     string
+}
+
+func (r TeamsRemoveRepoInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
+}
+
+func (r TeamsRemoveRepoInOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsRemoveRepoInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsRemoveRepoInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListDiscussionsInOrgReq builds requests for "teams/list-discussions-in-org"
+
+List discussions.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions
+
+https://developer.github.com/v3/teams/discussions/#list-discussions
+*/
+type TeamsListDiscussionsInOrgReq struct {
+	Org      string
+	TeamSlug string
+
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
+	Direction *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsListDiscussionsInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug)
+}
+
+func (r TeamsListDiscussionsInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListDiscussionsInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListDiscussionsInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListDiscussionsInOrgResponseBody200 is a response body for teams/list-discussions-in-org
+
+API documentation: https://developer.github.com/v3/teams/discussions/#list-discussions
+*/
+type TeamsListDiscussionsInOrgResponseBody200 []struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CommentsCount int64            `json:"comments_count,omitempty"`
+	CommentsUrl   string           `json:"comments_url,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Pinned        bool             `json:"pinned,omitempty"`
+	Private       bool             `json:"private,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	TeamUrl       string           `json:"team_url,omitempty"`
+	Title         string           `json:"title,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsCreateDiscussionInOrgReq builds requests for "teams/create-discussion-in-org"
+
+Create a discussion.
+
+  POST /orgs/{org}/teams/{team_slug}/discussions
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion
+*/
+type TeamsCreateDiscussionInOrgReq struct {
+	Org         string
+	TeamSlug    string
+	RequestBody TeamsCreateDiscussionInOrgReqBody
+
+	/*
+	The [reactions API](https://developer.github.com/v3/reactions/) is available for
+	developers to preview. The `url` can be used to construct the API location for
+	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
+	the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details. To receive the `reactions` object in the response for this
+	endpoint you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r TeamsCreateDiscussionInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug)
+}
+
+func (r TeamsCreateDiscussionInOrgReq) method() string {
+	return "POST"
+}
+
+func (r TeamsCreateDiscussionInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCreateDiscussionInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsCreateDiscussionInOrgReqBody is a request body for teams/create-discussion-in-org
+
+API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
+*/
+type TeamsCreateDiscussionInOrgReqBody struct {
+
+	// The discussion post's body text.
+	Body *string `json:"body"`
+
+	/*
+	   Private posts are only visible to team members, organization owners, and team
+	   maintainers. Public posts are visible to all members of the organization. Set to
+	   `true` to create a private post.
+	*/
+	Private *bool `json:"private,omitempty"`
+
+	// The discussion post's title.
+	Title *string `json:"title"`
+}
+
+/*
+TeamsCreateDiscussionInOrgResponseBody201 is a response body for teams/create-discussion-in-org
+
+API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
+*/
+type TeamsCreateDiscussionInOrgResponseBody201 struct {
+	Author struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"author,omitempty"`
+	Body          string           `json:"body,omitempty"`
+	BodyHtml      string           `json:"body_html,omitempty"`
+	BodyVersion   string           `json:"body_version,omitempty"`
+	CommentsCount int64            `json:"comments_count,omitempty"`
+	CommentsUrl   string           `json:"comments_url,omitempty"`
+	CreatedAt     string           `json:"created_at,omitempty"`
+	HtmlUrl       string           `json:"html_url,omitempty"`
+	LastEditedAt  string           `json:"last_edited_at,omitempty"`
+	NodeId        string           `json:"node_id,omitempty"`
+	Number        int64            `json:"number,omitempty"`
+	Pinned        bool             `json:"pinned,omitempty"`
+	Private       bool             `json:"private,omitempty"`
+	Reactions     map[string]int64 `json:"reactions,omitempty"`
+	TeamUrl       string           `json:"team_url,omitempty"`
+	Title         string           `json:"title,omitempty"`
+	UpdatedAt     string           `json:"updated_at,omitempty"`
+	Url           string           `json:"url,omitempty"`
+}
+
+/*
+TeamsRemoveMembershipLegacyReq builds requests for "teams/remove-membership-legacy"
+
+Remove team membership (Legacy).
+
+  DELETE /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-membership-legacy
+*/
+type TeamsRemoveMembershipLegacyReq struct {
+	TeamId   int64
+	Username string
+}
+
+func (r TeamsRemoveMembershipLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
+}
+
+func (r TeamsRemoveMembershipLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsRemoveMembershipLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsRemoveMembershipLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsRemoveMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetMembershipLegacyReq builds requests for "teams/get-membership-legacy"
+
+Get team membership (Legacy).
+
+  GET /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-membership-legacy
+*/
+type TeamsGetMembershipLegacyReq struct {
+	TeamId   int64
+	Username string
+}
+
+func (r TeamsGetMembershipLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
+}
+
+func (r TeamsGetMembershipLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsGetMembershipLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsGetMembershipLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsGetMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsGetMembershipLegacyResponseBody200 is a response body for teams/get-membership-legacy
+
+API documentation: https://developer.github.com/v3/teams/members/#get-team-membership-legacy
+*/
+type TeamsGetMembershipLegacyResponseBody200 struct {
+	Role  string `json:"role,omitempty"`
+	State string `json:"state,omitempty"`
+	Url   string `json:"url,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipLegacyReq builds requests for "teams/add-or-update-membership-legacy"
+
+Add or update team membership (Legacy).
+
+  PUT /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
+*/
+type TeamsAddOrUpdateMembershipLegacyReq struct {
+	TeamId      int64
+	Username    string
+	RequestBody TeamsAddOrUpdateMembershipLegacyReqBody
+}
+
+func (r TeamsAddOrUpdateMembershipLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
+}
+
+func (r TeamsAddOrUpdateMembershipLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r TeamsAddOrUpdateMembershipLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsAddOrUpdateMembershipLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsAddOrUpdateMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsAddOrUpdateMembershipLegacyReqBody is a request body for teams/add-or-update-membership-legacy
+
+API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
+*/
+type TeamsAddOrUpdateMembershipLegacyReqBody struct {
+
+	/*
+	   The role that this user should have in the team. Can be one of:
+	   \* `member` - a normal member of the team.
+	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
+	   promote other team members to team maintainer, and edit the team's name and
+	   description.
+	*/
+	Role *string `json:"role,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipLegacyResponseBody200 is a response body for teams/add-or-update-membership-legacy
+
+API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
+*/
+type TeamsAddOrUpdateMembershipLegacyResponseBody200 struct {
+	Role  string `json:"role,omitempty"`
+	State string `json:"state,omitempty"`
+	Url   string `json:"url,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipLegacyResponseBody422 is a response body for teams/add-or-update-membership-legacy
+
+API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
+*/
+type TeamsAddOrUpdateMembershipLegacyResponseBody422 struct {
+	Errors []struct {
+		Code     string `json:"code,omitempty"`
+		Field    string `json:"field,omitempty"`
+		Resource string `json:"resource,omitempty"`
+	} `json:"errors,omitempty"`
+	Message string `json:"message,omitempty"`
+}
+
+/*
+TeamsListReq builds requests for "teams/list"
+
+List teams.
+
+  GET /orgs/{org}/teams
+
+https://developer.github.com/v3/teams/#list-teams
+*/
+type TeamsListReq struct {
+	Org string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams", r.Org)
+}
+
+func (r TeamsListReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListResponseBody200 is a response body for teams/list
+
+API documentation: https://developer.github.com/v3/teams/#list-teams
+*/
+type TeamsListResponseBody200 []struct {
+	Description     string `json:"description,omitempty"`
+	HtmlUrl         string `json:"html_url,omitempty"`
+	Id              int64  `json:"id,omitempty"`
+	MembersUrl      string `json:"members_url,omitempty"`
+	Name            string `json:"name,omitempty"`
+	NodeId          string `json:"node_id,omitempty"`
+	Parent          string `json:"parent,omitempty"`
+	Permission      string `json:"permission,omitempty"`
+	Privacy         string `json:"privacy,omitempty"`
+	RepositoriesUrl string `json:"repositories_url,omitempty"`
+	Slug            string `json:"slug,omitempty"`
+	Url             string `json:"url,omitempty"`
+}
+
+/*
+TeamsCreateReq builds requests for "teams/create"
+
+Create team.
+
+  POST /orgs/{org}/teams
+
+https://developer.github.com/v3/teams/#create-team
+*/
+type TeamsCreateReq struct {
+	Org         string
+	RequestBody TeamsCreateReqBody
+}
+
+func (r TeamsCreateReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams", r.Org)
+}
+
+func (r TeamsCreateReq) method() string {
+	return "POST"
+}
+
+func (r TeamsCreateReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCreateReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsCreateReqBody is a request body for teams/create
+
+API documentation: https://developer.github.com/v3/teams/#create-team
+*/
+type TeamsCreateReqBody struct {
+
+	// The description of the team.
+	Description *string `json:"description,omitempty"`
+
+	// List GitHub IDs for organization members who will become team maintainers.
+	Maintainers []string `json:"maintainers,omitempty"`
+
+	// The name of the team.
+	Name *string `json:"name"`
+
+	// The ID of a team to set as the parent team.
+	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
+
+	/*
+	   **Deprecated**. The permission that new repositories will be added to the team
+	   with when none is specified. Can be one of:
+	   \* `pull` - team members can pull, but not push to or administer newly-added
+	   repositories.
+	   \* `push` - team members can pull and push, but not administer newly-added
+	   repositories.
+	   \* `admin` - team members can pull, push and administer newly-added
+	   repositories.
+	*/
+	Permission *string `json:"permission,omitempty"`
+
+	/*
+	   The level of privacy this team should have. The options are:
+	   **For a non-nested team:**
+	   \* `secret` - only visible to organization owners and members of this team.
+	   \* `closed` - visible to all members of this organization.
+	   Default: `secret`
+	   **For a parent or child team:**
+	   \* `closed` - visible to all members of this organization.
+	   Default for child team: `closed`
+	*/
+	Privacy *string `json:"privacy,omitempty"`
+
+	/*
+	   The full name (e.g., "organization-name/repository-name") of repositories to add
+	   the team to.
+	*/
+	RepoNames []string `json:"repo_names,omitempty"`
+}
+
+/*
+TeamsCreateResponseBody201 is a response body for teams/create
+
+API documentation: https://developer.github.com/v3/teams/#create-team
+*/
+type TeamsCreateResponseBody201 struct {
+	CreatedAt    string `json:"created_at,omitempty"`
+	Description  string `json:"description,omitempty"`
+	HtmlUrl      string `json:"html_url,omitempty"`
+	Id           int64  `json:"id,omitempty"`
+	MembersCount int64  `json:"members_count,omitempty"`
+	MembersUrl   string `json:"members_url,omitempty"`
+	Name         string `json:"name,omitempty"`
+	NodeId       string `json:"node_id,omitempty"`
+	Organization struct {
+		AvatarUrl               string `json:"avatar_url,omitempty"`
+		Blog                    string `json:"blog,omitempty"`
+		Company                 string `json:"company,omitempty"`
+		CreatedAt               string `json:"created_at,omitempty"`
+		Description             string `json:"description,omitempty"`
+		Email                   string `json:"email,omitempty"`
+		EventsUrl               string `json:"events_url,omitempty"`
+		Followers               int64  `json:"followers,omitempty"`
+		Following               int64  `json:"following,omitempty"`
+		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
+		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
+		HooksUrl                string `json:"hooks_url,omitempty"`
+		HtmlUrl                 string `json:"html_url,omitempty"`
+		Id                      int64  `json:"id,omitempty"`
+		IsVerified              bool   `json:"is_verified,omitempty"`
+		IssuesUrl               string `json:"issues_url,omitempty"`
+		Location                string `json:"location,omitempty"`
+		Login                   string `json:"login,omitempty"`
+		MembersUrl              string `json:"members_url,omitempty"`
+		Name                    string `json:"name,omitempty"`
+		NodeId                  string `json:"node_id,omitempty"`
+		PublicGists             int64  `json:"public_gists,omitempty"`
+		PublicMembersUrl        string `json:"public_members_url,omitempty"`
+		PublicRepos             int64  `json:"public_repos,omitempty"`
+		ReposUrl                string `json:"repos_url,omitempty"`
+		Type                    string `json:"type,omitempty"`
+		Url                     string `json:"url,omitempty"`
+	} `json:"organization,omitempty"`
+	Parent          string `json:"parent,omitempty"`
+	Permission      string `json:"permission,omitempty"`
+	Privacy         string `json:"privacy,omitempty"`
+	ReposCount      int64  `json:"repos_count,omitempty"`
+	RepositoriesUrl string `json:"repositories_url,omitempty"`
+	Slug            string `json:"slug,omitempty"`
+	UpdatedAt       string `json:"updated_at,omitempty"`
+	Url             string `json:"url,omitempty"`
+}
+
+/*
+TeamsListIdPGroupsForOrgReq builds requests for "teams/list-id-p-groups-for-org"
+
+List IdP groups in an organization.
+
+  GET /orgs/{org}/team-sync/groups
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+*/
+type TeamsListIdPGroupsForOrgReq struct {
+	Org string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListIdPGroupsForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/team-sync/groups", r.Org)
+}
+
+func (r TeamsListIdPGroupsForOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListIdPGroupsForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListIdPGroupsForOrgResponseBody200 is a response body for teams/list-id-p-groups-for-org
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+*/
+type TeamsListIdPGroupsForOrgResponseBody200 struct {
+	Groups []struct {
+		GroupDescription string `json:"group_description"`
+		GroupId          string `json:"group_id"`
+		GroupName        string `json:"group_name"`
+	} `json:"groups,omitempty"`
+}
+
+/*
+TeamsListPendingInvitationsLegacyReq builds requests for "teams/list-pending-invitations-legacy"
+
+List pending team invitations (Legacy).
+
+  GET /teams/{team_id}/invitations
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+type TeamsListPendingInvitationsLegacyReq struct {
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListPendingInvitationsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/invitations", r.TeamId)
+}
+
+func (r TeamsListPendingInvitationsLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListPendingInvitationsLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListPendingInvitationsLegacyResponseBody200 is a response body for teams/list-pending-invitations-legacy
+
+API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+type TeamsListPendingInvitationsLegacyResponseBody200 []struct {
+	CreatedAt         string `json:"created_at,omitempty"`
+	Email             string `json:"email,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
+	Inviter           struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"inviter,omitempty"`
+	Login     string `json:"login,omitempty"`
+	Role      string `json:"role,omitempty"`
+	TeamCount int64  `json:"team_count,omitempty"`
+}
+
+/*
+TeamsListMembersLegacyReq builds requests for "teams/list-members-legacy"
+
+List team members (Legacy).
+
+  GET /teams/{team_id}/members
+
+https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+type TeamsListMembersLegacyReq struct {
+	TeamId int64
+
+	/*
+	Filters members returned by their role in the team. Can be one of:
+	\* `member` - normal members of the team.
+	\* `maintainer` - team maintainers.
+	\* `all` - all members of the team.
+	*/
+	Role *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListMembersLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/members", r.TeamId)
+}
+
+func (r TeamsListMembersLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListMembersLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Role != nil {
+		query.Set("role", *r.Role)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListMembersLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListMembersLegacyResponseBody200 is a response body for teams/list-members-legacy
+
+API documentation: https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+type TeamsListMembersLegacyResponseBody200 []struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+/*
+TeamsRemoveRepoLegacyReq builds requests for "teams/remove-repo-legacy"
+
+Remove team repository (Legacy).
+
+  DELETE /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#remove-team-repository-legacy
+*/
+type TeamsRemoveRepoLegacyReq struct {
+	TeamId int64
+	Owner  string
+	Repo   string
+}
+
+func (r TeamsRemoveRepoLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
+}
+
+func (r TeamsRemoveRepoLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r TeamsRemoveRepoLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsRemoveRepoLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsCheckManagesRepoLegacyReq builds requests for "teams/check-manages-repo-legacy"
+
+Check if a team manages a repository (Legacy).
+
+  GET /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository-legacy
+*/
+type TeamsCheckManagesRepoLegacyReq struct {
+	TeamId int64
+	Owner  string
+	Repo   string
+}
+
+func (r TeamsCheckManagesRepoLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
+}
+
+func (r TeamsCheckManagesRepoLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsCheckManagesRepoLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCheckManagesRepoLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCheckManagesRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsAddOrUpdateRepoLegacyReq builds requests for "teams/add-or-update-repo-legacy"
+
+Add or update team repository (Legacy).
+
+  PUT /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository-legacy
+*/
+type TeamsAddOrUpdateRepoLegacyReq struct {
+	TeamId      int64
+	Owner       string
+	Repo        string
+	RequestBody TeamsAddOrUpdateRepoLegacyReqBody
+}
+
+func (r TeamsAddOrUpdateRepoLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
+}
+
+func (r TeamsAddOrUpdateRepoLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r TeamsAddOrUpdateRepoLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsAddOrUpdateRepoLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsAddOrUpdateRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsAddOrUpdateRepoLegacyReqBody is a request body for teams/add-or-update-repo-legacy
+
+API documentation: https://developer.github.com/v3/teams/#add-or-update-team-repository-legacy
+*/
+type TeamsAddOrUpdateRepoLegacyReqBody struct {
+
+	/*
+	   The permission to grant the team on this repository. Can be one of:
+	   \* `pull` - team members can pull, but not push to or administer this
+	   repository.
+	   \* `push` - team members can pull and push, but not administer this repository.
+	   \* `admin` - team members can pull, push and administer this repository.
+
+	   If no permission is specified, the team's `permission` attribute will be used to
+	   determine what permission to grant the team on this repository.
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+TeamsListForAuthenticatedUserReq builds requests for "teams/list-for-authenticated-user"
+
+List user teams.
+
+  GET /user/teams
+
+https://developer.github.com/v3/teams/#list-user-teams
+*/
+type TeamsListForAuthenticatedUserReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r TeamsListForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/teams")
+}
+
+func (r TeamsListForAuthenticatedUserReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListForAuthenticatedUserResponseBody200 is a response body for teams/list-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/teams/#list-user-teams
+*/
+type TeamsListForAuthenticatedUserResponseBody200 []struct {
+	CreatedAt    string `json:"created_at,omitempty"`
+	Description  string `json:"description,omitempty"`
+	HtmlUrl      string `json:"html_url,omitempty"`
+	Id           int64  `json:"id,omitempty"`
+	MembersCount int64  `json:"members_count,omitempty"`
+	MembersUrl   string `json:"members_url,omitempty"`
+	Name         string `json:"name,omitempty"`
+	NodeId       string `json:"node_id,omitempty"`
+	Organization struct {
+		AvatarUrl               string `json:"avatar_url,omitempty"`
+		Blog                    string `json:"blog,omitempty"`
+		Company                 string `json:"company,omitempty"`
+		CreatedAt               string `json:"created_at,omitempty"`
+		Description             string `json:"description,omitempty"`
+		Email                   string `json:"email,omitempty"`
+		EventsUrl               string `json:"events_url,omitempty"`
+		Followers               int64  `json:"followers,omitempty"`
+		Following               int64  `json:"following,omitempty"`
+		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
+		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
+		HooksUrl                string `json:"hooks_url,omitempty"`
+		HtmlUrl                 string `json:"html_url,omitempty"`
+		Id                      int64  `json:"id,omitempty"`
+		IsVerified              bool   `json:"is_verified,omitempty"`
+		IssuesUrl               string `json:"issues_url,omitempty"`
+		Location                string `json:"location,omitempty"`
+		Login                   string `json:"login,omitempty"`
+		MembersUrl              string `json:"members_url,omitempty"`
+		Name                    string `json:"name,omitempty"`
+		NodeId                  string `json:"node_id,omitempty"`
+		PublicGists             int64  `json:"public_gists,omitempty"`
+		PublicMembersUrl        string `json:"public_members_url,omitempty"`
+		PublicRepos             int64  `json:"public_repos,omitempty"`
+		ReposUrl                string `json:"repos_url,omitempty"`
+		Type                    string `json:"type,omitempty"`
+		Url                     string `json:"url,omitempty"`
+	} `json:"organization,omitempty"`
+	Parent          string `json:"parent,omitempty"`
+	Permission      string `json:"permission,omitempty"`
+	Privacy         string `json:"privacy,omitempty"`
+	ReposCount      int64  `json:"repos_count,omitempty"`
+	RepositoriesUrl string `json:"repositories_url,omitempty"`
+	Slug            string `json:"slug,omitempty"`
+	UpdatedAt       string `json:"updated_at,omitempty"`
+	Url             string `json:"url,omitempty"`
 }
 
 /*
@@ -3086,1578 +4446,6 @@ type TeamsUpdateDiscussionInOrgResponseBody200 struct {
 	Title         string           `json:"title,omitempty"`
 	UpdatedAt     string           `json:"updated_at,omitempty"`
 	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsListPendingInvitationsInOrgReq builds requests for "teams/list-pending-invitations-in-org"
-
-List pending team invitations.
-
-  GET /orgs/{org}/teams/{team_slug}/invitations
-
-https://developer.github.com/v3/teams/members/#list-pending-team-invitations
-*/
-type TeamsListPendingInvitationsInOrgReq struct {
-	Org      string
-	TeamSlug string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListPendingInvitationsInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/invitations", r.Org, r.TeamSlug)
-}
-
-func (r TeamsListPendingInvitationsInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListPendingInvitationsInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListPendingInvitationsInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListPendingInvitationsInOrgResponseBody200 is a response body for teams/list-pending-invitations-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations
-*/
-type TeamsListPendingInvitationsInOrgResponseBody200 []struct {
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
-	Inviter           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Login     string `json:"login,omitempty"`
-	Role      string `json:"role,omitempty"`
-	TeamCount int64  `json:"team_count,omitempty"`
-}
-
-/*
-TeamsRemoveRepoInOrgReq builds requests for "teams/remove-repo-in-org"
-
-Remove team repository.
-
-  DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#remove-team-repository
-*/
-type TeamsRemoveRepoInOrgReq struct {
-	Org      string
-	TeamSlug string
-	Owner    string
-	Repo     string
-}
-
-func (r TeamsRemoveRepoInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
-}
-
-func (r TeamsRemoveRepoInOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r TeamsRemoveRepoInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsRemoveRepoInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsCheckManagesRepoInOrgReq builds requests for "teams/check-manages-repo-in-org"
-
-Check if a team manages a repository.
-
-  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
-*/
-type TeamsCheckManagesRepoInOrgReq struct {
-	Org      string
-	TeamSlug string
-	Owner    string
-	Repo     string
-}
-
-func (r TeamsCheckManagesRepoInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
-}
-
-func (r TeamsCheckManagesRepoInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsCheckManagesRepoInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCheckManagesRepoInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsAddOrUpdateRepoInOrgReq builds requests for "teams/add-or-update-repo-in-org"
-
-Add or update team repository.
-
-  PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#add-or-update-team-repository
-*/
-type TeamsAddOrUpdateRepoInOrgReq struct {
-	Org         string
-	TeamSlug    string
-	Owner       string
-	Repo        string
-	RequestBody TeamsAddOrUpdateRepoInOrgReqBody
-}
-
-func (r TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
-}
-
-func (r TeamsAddOrUpdateRepoInOrgReq) method() string {
-	return "PUT"
-}
-
-func (r TeamsAddOrUpdateRepoInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsAddOrUpdateRepoInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsAddOrUpdateRepoInOrgReqBody is a request body for teams/add-or-update-repo-in-org
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-repository
-*/
-type TeamsAddOrUpdateRepoInOrgReqBody struct {
-
-	/*
-	   The permission to grant the team on this repository. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer this
-	   repository.
-	   \* `push` - team members can pull and push, but not administer this repository.
-	   \* `admin` - team members can pull, push and administer this repository.
-	   \* `maintain` - team members can manage the repository without access to
-	   sensitive or destructive actions. Recommended for project managers. Only applies
-	   to repositories owned by organizations.
-	   \* `triage` - team members can proactively manage issues and pull requests
-	   without write access. Recommended for contributors who triage a repository. Only
-	   applies to repositories owned by organizations.
-
-	   If no permission is specified, the team's `permission` attribute will be used to
-	   determine what permission to grant the team on this repository.
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsListChildLegacyReq builds requests for "teams/list-child-legacy"
-
-List child teams (Legacy).
-
-  GET /teams/{team_id}/teams
-
-https://developer.github.com/v3/teams/#list-child-teams-legacy
-*/
-type TeamsListChildLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListChildLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/teams", r.TeamId)
-}
-
-func (r TeamsListChildLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListChildLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListChildLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListChildLegacyResponseBody200 is a response body for teams/list-child-legacy
-
-API documentation: https://developer.github.com/v3/teams/#list-child-teams-legacy
-*/
-type TeamsListChildLegacyResponseBody200 []struct {
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	MembersUrl  string `json:"members_url,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Parent      struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
-}
-
-/*
-TeamsRemoveProjectLegacyReq builds requests for "teams/remove-project-legacy"
-
-Remove team project (Legacy).
-
-  DELETE /teams/{team_id}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#remove-team-project-legacy
-*/
-type TeamsRemoveProjectLegacyReq struct {
-	TeamId    int64
-	ProjectId int64
-}
-
-func (r TeamsRemoveProjectLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
-}
-
-func (r TeamsRemoveProjectLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r TeamsRemoveProjectLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsRemoveProjectLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsReviewProjectLegacyReq builds requests for "teams/review-project-legacy"
-
-Review a team project (Legacy).
-
-  GET /teams/{team_id}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#review-a-team-project-legacy
-*/
-type TeamsReviewProjectLegacyReq struct {
-	TeamId    int64
-	ProjectId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r TeamsReviewProjectLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
-}
-
-func (r TeamsReviewProjectLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsReviewProjectLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsReviewProjectLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsReviewProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsReviewProjectLegacyResponseBody200 is a response body for teams/review-project-legacy
-
-API documentation: https://developer.github.com/v3/teams/#review-a-team-project-legacy
-*/
-type TeamsReviewProjectLegacyResponseBody200 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateProjectLegacyReq builds requests for "teams/add-or-update-project-legacy"
-
-Add or update team project (Legacy).
-
-  PUT /teams/{team_id}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
-*/
-type TeamsAddOrUpdateProjectLegacyReq struct {
-	TeamId      int64
-	ProjectId   int64
-	RequestBody TeamsAddOrUpdateProjectLegacyReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r TeamsAddOrUpdateProjectLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
-}
-
-func (r TeamsAddOrUpdateProjectLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r TeamsAddOrUpdateProjectLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsAddOrUpdateProjectLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsAddOrUpdateProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsAddOrUpdateProjectLegacyReqBody is a request body for teams/add-or-update-project-legacy
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
-*/
-type TeamsAddOrUpdateProjectLegacyReqBody struct {
-
-	/*
-	   The permission to grant to the team for this project. Can be one of:
-	   \* `read` - team members can read, but not write to or administer this project.
-	   \* `write` - team members can read and write, but not administer this project.
-	   \* `admin` - team members can read, write and administer this project.
-	   Default: the team's `permission` attribute will be used to determine what
-	   permission to grant the team on this project. Note that, if you choose not to
-	   pass any parameters, you'll need to set `Content-Length` to zero when calling
-	   out to this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)."
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateProjectLegacyResponseBody403 is a response body for teams/add-or-update-project-legacy
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
-*/
-type TeamsAddOrUpdateProjectLegacyResponseBody403 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
-TeamsRemoveRepoLegacyReq builds requests for "teams/remove-repo-legacy"
-
-Remove team repository (Legacy).
-
-  DELETE /teams/{team_id}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#remove-team-repository-legacy
-*/
-type TeamsRemoveRepoLegacyReq struct {
-	TeamId int64
-	Owner  string
-	Repo   string
-}
-
-func (r TeamsRemoveRepoLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
-}
-
-func (r TeamsRemoveRepoLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r TeamsRemoveRepoLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsRemoveRepoLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsCheckManagesRepoLegacyReq builds requests for "teams/check-manages-repo-legacy"
-
-Check if a team manages a repository (Legacy).
-
-  GET /teams/{team_id}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository-legacy
-*/
-type TeamsCheckManagesRepoLegacyReq struct {
-	TeamId int64
-	Owner  string
-	Repo   string
-}
-
-func (r TeamsCheckManagesRepoLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
-}
-
-func (r TeamsCheckManagesRepoLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsCheckManagesRepoLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCheckManagesRepoLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCheckManagesRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsAddOrUpdateRepoLegacyReq builds requests for "teams/add-or-update-repo-legacy"
-
-Add or update team repository (Legacy).
-
-  PUT /teams/{team_id}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#add-or-update-team-repository-legacy
-*/
-type TeamsAddOrUpdateRepoLegacyReq struct {
-	TeamId      int64
-	Owner       string
-	Repo        string
-	RequestBody TeamsAddOrUpdateRepoLegacyReqBody
-}
-
-func (r TeamsAddOrUpdateRepoLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
-}
-
-func (r TeamsAddOrUpdateRepoLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r TeamsAddOrUpdateRepoLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsAddOrUpdateRepoLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsAddOrUpdateRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsAddOrUpdateRepoLegacyReqBody is a request body for teams/add-or-update-repo-legacy
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-repository-legacy
-*/
-type TeamsAddOrUpdateRepoLegacyReqBody struct {
-
-	/*
-	   The permission to grant the team on this repository. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer this
-	   repository.
-	   \* `push` - team members can pull and push, but not administer this repository.
-	   \* `admin` - team members can pull, push and administer this repository.
-
-	   If no permission is specified, the team's `permission` attribute will be used to
-	   determine what permission to grant the team on this repository.
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsListMembersLegacyReq builds requests for "teams/list-members-legacy"
-
-List team members (Legacy).
-
-  GET /teams/{team_id}/members
-
-https://developer.github.com/v3/teams/members/#list-team-members-legacy
-*/
-type TeamsListMembersLegacyReq struct {
-	TeamId int64
-
-	/*
-	Filters members returned by their role in the team. Can be one of:
-	\* `member` - normal members of the team.
-	\* `maintainer` - team maintainers.
-	\* `all` - all members of the team.
-	*/
-	Role *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListMembersLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/members", r.TeamId)
-}
-
-func (r TeamsListMembersLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListMembersLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Role != nil {
-		query.Set("role", *r.Role)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListMembersLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListMembersLegacyResponseBody200 is a response body for teams/list-members-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#list-team-members-legacy
-*/
-type TeamsListMembersLegacyResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
-}
-
-/*
-TeamsListPendingInvitationsLegacyReq builds requests for "teams/list-pending-invitations-legacy"
-
-List pending team invitations (Legacy).
-
-  GET /teams/{team_id}/invitations
-
-https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
-*/
-type TeamsListPendingInvitationsLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListPendingInvitationsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/invitations", r.TeamId)
-}
-
-func (r TeamsListPendingInvitationsLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListPendingInvitationsLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListPendingInvitationsLegacyResponseBody200 is a response body for teams/list-pending-invitations-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
-*/
-type TeamsListPendingInvitationsLegacyResponseBody200 []struct {
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
-	Inviter           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Login     string `json:"login,omitempty"`
-	Role      string `json:"role,omitempty"`
-	TeamCount int64  `json:"team_count,omitempty"`
-}
-
-/*
-TeamsListReposLegacyReq builds requests for "teams/list-repos-legacy"
-
-List team repos (Legacy).
-
-  GET /teams/{team_id}/repos
-
-https://developer.github.com/v3/teams/#list-team-repos-legacy
-*/
-type TeamsListReposLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListReposLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos", r.TeamId)
-}
-
-func (r TeamsListReposLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListReposLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListReposLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListReposLegacyResponseBody200 is a response body for teams/list-repos-legacy
-
-API documentation: https://developer.github.com/v3/teams/#list-team-repos-legacy
-*/
-type TeamsListReposLegacyResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	License          struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
-}
-
-/*
-TeamsListIdPGroupsForOrgReq builds requests for "teams/list-id-p-groups-for-org"
-
-List IdP groups in an organization.
-
-  GET /orgs/{org}/team-sync/groups
-
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
-*/
-type TeamsListIdPGroupsForOrgReq struct {
-	Org string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r TeamsListIdPGroupsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/team-sync/groups", r.Org)
-}
-
-func (r TeamsListIdPGroupsForOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r TeamsListIdPGroupsForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListIdPGroupsForOrgResponseBody200 is a response body for teams/list-id-p-groups-for-org
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
-*/
-type TeamsListIdPGroupsForOrgResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description"`
-		GroupId          string `json:"group_id"`
-		GroupName        string `json:"group_name"`
-	} `json:"groups,omitempty"`
-}
-
-/*
-TeamsUpdateDiscussionLegacyReq builds requests for "teams/update-discussion-legacy"
-
-Edit a discussion (Legacy).
-
-  PATCH /teams/{team_id}/discussions/{discussion_number}
-
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
-*/
-type TeamsUpdateDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	RequestBody      TeamsUpdateDiscussionLegacyReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r TeamsUpdateDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
-}
-
-func (r TeamsUpdateDiscussionLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsUpdateDiscussionLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsUpdateDiscussionLegacyReqBody is a request body for teams/update-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
-*/
-type TeamsUpdateDiscussionLegacyReqBody struct {
-
-	// The discussion post's body text.
-	Body *string `json:"body,omitempty"`
-
-	// The discussion post's title.
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-TeamsUpdateDiscussionLegacyResponseBody200 is a response body for teams/update-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
-*/
-type TeamsUpdateDiscussionLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsDeleteDiscussionLegacyReq builds requests for "teams/delete-discussion-legacy"
-
-Delete a discussion (Legacy).
-
-  DELETE /teams/{team_id}/discussions/{discussion_number}
-
-https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
-*/
-type TeamsDeleteDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-}
-
-func (r TeamsDeleteDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
-}
-
-func (r TeamsDeleteDiscussionLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r TeamsDeleteDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsDeleteDiscussionLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsGetDiscussionLegacyReq builds requests for "teams/get-discussion-legacy"
-
-Get a single discussion (Legacy).
-
-  GET /teams/{team_id}/discussions/{discussion_number}
-
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
-*/
-type TeamsGetDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r TeamsGetDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
-}
-
-func (r TeamsGetDiscussionLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsGetDiscussionLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsGetDiscussionLegacyResponseBody200 is a response body for teams/get-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
-*/
-type TeamsGetDiscussionLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsGetMembershipInOrgReq builds requests for "teams/get-membership-in-org"
-
-Get team membership.
-
-  GET /orgs/{org}/teams/{team_slug}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#get-team-membership
-*/
-type TeamsGetMembershipInOrgReq struct {
-	Org      string
-	TeamSlug string
-	Username string
-}
-
-func (r TeamsGetMembershipInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
-}
-
-func (r TeamsGetMembershipInOrgReq) method() string {
-	return "GET"
-}
-
-func (r TeamsGetMembershipInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsGetMembershipInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsGetMembershipInOrgResponseBody200 is a response body for teams/get-membership-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#get-team-membership
-*/
-type TeamsGetMembershipInOrgResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipInOrgReq builds requests for "teams/add-or-update-membership-in-org"
-
-Add or update team membership.
-
-  PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
-*/
-type TeamsAddOrUpdateMembershipInOrgReq struct {
-	Org         string
-	TeamSlug    string
-	Username    string
-	RequestBody TeamsAddOrUpdateMembershipInOrgReqBody
-}
-
-func (r TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
-}
-
-func (r TeamsAddOrUpdateMembershipInOrgReq) method() string {
-	return "PUT"
-}
-
-func (r TeamsAddOrUpdateMembershipInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsAddOrUpdateMembershipInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsAddOrUpdateMembershipInOrgReqBody is a request body for teams/add-or-update-membership-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
-*/
-type TeamsAddOrUpdateMembershipInOrgReqBody struct {
-
-	/*
-	   The role that this user should have in the team. Can be one of:
-	   \* `member` - a normal member of the team.
-	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
-	   promote other team members to team maintainer, and edit the team's name and
-	   description.
-	*/
-	Role *string `json:"role,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipInOrgResponseBody200 is a response body for teams/add-or-update-membership-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
-*/
-type TeamsAddOrUpdateMembershipInOrgResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipInOrgResponseBody422 is a response body for teams/add-or-update-membership-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
-*/
-type TeamsAddOrUpdateMembershipInOrgResponseBody422 struct {
-	Errors []struct {
-		Code     string `json:"code,omitempty"`
-		Field    string `json:"field,omitempty"`
-		Resource string `json:"resource,omitempty"`
-	} `json:"errors,omitempty"`
-	Message string `json:"message,omitempty"`
-}
-
-/*
-TeamsRemoveMembershipInOrgReq builds requests for "teams/remove-membership-in-org"
-
-Remove team membership.
-
-  DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#remove-team-membership
-*/
-type TeamsRemoveMembershipInOrgReq struct {
-	Org      string
-	TeamSlug string
-	Username string
-}
-
-func (r TeamsRemoveMembershipInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
-}
-
-func (r TeamsRemoveMembershipInOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r TeamsRemoveMembershipInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsRemoveMembershipInOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListIdPGroupsForLegacyReq builds requests for "teams/list-id-p-groups-for-legacy"
-
-List IdP groups for a team (Legacy).
-
-  GET /teams/{team_id}/team-sync/group-mappings
-
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
-*/
-type TeamsListIdPGroupsForLegacyReq struct {
-	TeamId int64
-}
-
-func (r TeamsListIdPGroupsForLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
-}
-
-func (r TeamsListIdPGroupsForLegacyReq) method() string {
-	return "GET"
-}
-
-func (r TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsListIdPGroupsForLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-TeamsListIdPGroupsForLegacyResponseBody200 is a response body for teams/list-id-p-groups-for-legacy
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
-*/
-type TeamsListIdPGroupsForLegacyResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description"`
-		GroupId          string `json:"group_id"`
-		GroupName        string `json:"group_name"`
-	} `json:"groups,omitempty"`
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq builds requests for "teams/create-or-update-id-p-group-connections-legacy"
-
-Create or update IdP group connections (Legacy).
-
-  PATCH /teams/{team_id}/team-sync/group-mappings
-
-https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq struct {
-	TeamId      int64
-	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-id-p-group-connections-legacy
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody struct {
-
-	/*
-	   The IdP groups you want to connect to a GitHub team. When updating, the new
-	   `groups` object will replace the original one. You must include any existing
-	   groups that you don't want to remove.
-	*/
-	Groups []struct {
-
-		// Description of the IdP group.
-		GroupDescription *string `json:"group_description"`
-
-		// ID of the IdP group.
-		GroupId *string `json:"group_id"`
-
-		// Name of the IdP group.
-		GroupName *string `json:"group_name"`
-	} `json:"groups"`
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 is a response body for teams/create-or-update-id-p-group-connections-legacy
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description,omitempty"`
-		GroupId          string `json:"group_id,omitempty"`
-		GroupName        string `json:"group_name,omitempty"`
-	} `json:"groups,omitempty"`
 }
 
 /*
@@ -4920,200 +4708,100 @@ type TeamsUpdateInOrgResponseBody201 struct {
 }
 
 /*
-TeamsUpdateDiscussionCommentLegacyReq builds requests for "teams/update-discussion-comment-legacy"
+TeamsRemoveProjectInOrgReq builds requests for "teams/remove-project-in-org"
 
-Edit a comment (Legacy).
+Remove team project.
 
-  PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+  DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
+https://developer.github.com/v3/teams/#remove-team-project
 */
-type TeamsUpdateDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      TeamsUpdateDiscussionCommentLegacyReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
+type TeamsRemoveProjectInOrgReq struct {
+	Org       string
+	TeamSlug  string
+	ProjectId int64
 }
 
-func (r TeamsUpdateDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+func (r TeamsRemoveProjectInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r TeamsUpdateDiscussionCommentLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r TeamsUpdateDiscussionCommentLegacyReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-TeamsUpdateDiscussionCommentLegacyReqBody is a request body for teams/update-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
-*/
-type TeamsUpdateDiscussionCommentLegacyReqBody struct {
-
-	// The discussion comment's body text.
-	Body *string `json:"body"`
-}
-
-/*
-TeamsUpdateDiscussionCommentLegacyResponseBody200 is a response body for teams/update-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
-*/
-type TeamsUpdateDiscussionCommentLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
-}
-
-/*
-TeamsDeleteDiscussionCommentLegacyReq builds requests for "teams/delete-discussion-comment-legacy"
-
-Delete a comment (Legacy).
-
-  DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
-
-https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment-legacy
-*/
-type TeamsDeleteDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-}
-
-func (r TeamsDeleteDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r TeamsDeleteDiscussionCommentLegacyReq) method() string {
+func (r TeamsRemoveProjectInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r TeamsRemoveProjectInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) header() http.Header {
+func (r TeamsRemoveProjectInOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-TeamsGetDiscussionCommentLegacyReq builds requests for "teams/get-discussion-comment-legacy"
+TeamsReviewProjectInOrgReq builds requests for "teams/review-project-in-org"
 
-Get a single comment (Legacy).
+Review a team project.
 
-  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
+https://developer.github.com/v3/teams/#review-a-team-project
 */
-type TeamsGetDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
+type TeamsReviewProjectInOrgReq struct {
+	Org       string
+	TeamSlug  string
+	ProjectId int64
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
 	*/
-	SquirrelGirlPreview bool
+	InertiaPreview bool
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+func (r TeamsReviewProjectInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) method() string {
+func (r TeamsReviewProjectInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r TeamsReviewProjectInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) header() http.Header {
+func (r TeamsReviewProjectInOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-TeamsGetDiscussionCommentLegacyResponseBody200 is a response body for teams/get-discussion-comment-legacy
+TeamsReviewProjectInOrgResponseBody200 is a response body for teams/review-project-in-org
 
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
+API documentation: https://developer.github.com/v3/teams/#review-a-team-project
 */
-type TeamsGetDiscussionCommentLegacyResponseBody200 struct {
-	Author struct {
+type TeamsReviewProjectInOrgResponseBody200 struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -5132,17 +4820,329 @@ type TeamsGetDiscussionCommentLegacyResponseBody200 struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl                string `json:"html_url,omitempty"`
+	Id                     int64  `json:"id,omitempty"`
+	Name                   string `json:"name,omitempty"`
+	NodeId                 string `json:"node_id,omitempty"`
+	Number                 int64  `json:"number,omitempty"`
+	OrganizationPermission string `json:"organization_permission,omitempty"`
+	OwnerUrl               string `json:"owner_url,omitempty"`
+	Permissions            struct {
+		Admin bool `json:"admin,omitempty"`
+		Read  bool `json:"read,omitempty"`
+		Write bool `json:"write,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private   bool   `json:"private,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateProjectInOrgReq builds requests for "teams/add-or-update-project-in-org"
+
+Add or update team project.
+
+  PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#add-or-update-team-project
+*/
+type TeamsAddOrUpdateProjectInOrgReq struct {
+	Org         string
+	TeamSlug    string
+	ProjectId   int64
+	RequestBody TeamsAddOrUpdateProjectInOrgReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
+}
+
+func (r TeamsAddOrUpdateProjectInOrgReq) method() string {
+	return "PUT"
+}
+
+func (r TeamsAddOrUpdateProjectInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsAddOrUpdateProjectInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsAddOrUpdateProjectInOrgReqBody is a request body for teams/add-or-update-project-in-org
+
+API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project
+*/
+type TeamsAddOrUpdateProjectInOrgReqBody struct {
+
+	/*
+	   The permission to grant to the team for this project. Can be one of:
+	   \* `read` - team members can read, but not write to or administer this project.
+	   \* `write` - team members can read and write, but not administer this project.
+	   \* `admin` - team members can read, write and administer this project.
+	   Default: the team's `permission` attribute will be used to determine what
+	   permission to grant the team on this project. Note that, if you choose not to
+	   pass any parameters, you'll need to set `Content-Length` to zero when calling
+	   out to this endpoint. For more information, see "[HTTP
+	   verbs](https://developer.github.com/v3/#http-verbs)."
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateProjectInOrgResponseBody403 is a response body for teams/add-or-update-project-in-org
+
+API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project
+*/
+type TeamsAddOrUpdateProjectInOrgResponseBody403 struct {
+	DocumentationUrl string `json:"documentation_url,omitempty"`
+	Message          string `json:"message,omitempty"`
+}
+
+/*
+TeamsListProjectsInOrgReq builds requests for "teams/list-projects-in-org"
+
+List team projects.
+
+  GET /orgs/{org}/teams/{team_slug}/projects
+
+https://developer.github.com/v3/teams/#list-team-projects
+*/
+type TeamsListProjectsInOrgReq struct {
+	Org      string
+	TeamSlug string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r TeamsListProjectsInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/projects", r.Org, r.TeamSlug)
+}
+
+func (r TeamsListProjectsInOrgReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListProjectsInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r TeamsListProjectsInOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListProjectsInOrgResponseBody200 is a response body for teams/list-projects-in-org
+
+API documentation: https://developer.github.com/v3/teams/#list-team-projects
+*/
+type TeamsListProjectsInOrgResponseBody200 []struct {
+	Body       string `json:"body,omitempty"`
+	ColumnsUrl string `json:"columns_url,omitempty"`
+	CreatedAt  string `json:"created_at,omitempty"`
+	Creator    struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"creator,omitempty"`
+	HtmlUrl                string `json:"html_url,omitempty"`
+	Id                     int64  `json:"id,omitempty"`
+	Name                   string `json:"name,omitempty"`
+	NodeId                 string `json:"node_id,omitempty"`
+	Number                 int64  `json:"number,omitempty"`
+	OrganizationPermission string `json:"organization_permission,omitempty"`
+	OwnerUrl               string `json:"owner_url,omitempty"`
+	Permissions            struct {
+		Admin bool `json:"admin,omitempty"`
+		Read  bool `json:"read,omitempty"`
+		Write bool `json:"write,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private   bool   `json:"private,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+}
+
+/*
+TeamsListIdPGroupsForLegacyReq builds requests for "teams/list-id-p-groups-for-legacy"
+
+List IdP groups for a team (Legacy).
+
+  GET /teams/{team_id}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+type TeamsListIdPGroupsForLegacyReq struct {
+	TeamId int64
+}
+
+func (r TeamsListIdPGroupsForLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
+}
+
+func (r TeamsListIdPGroupsForLegacyReq) method() string {
+	return "GET"
+}
+
+func (r TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsListIdPGroupsForLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+TeamsListIdPGroupsForLegacyResponseBody200 is a response body for teams/list-id-p-groups-for-legacy
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+type TeamsListIdPGroupsForLegacyResponseBody200 struct {
+	Groups []struct {
+		GroupDescription string `json:"group_description"`
+		GroupId          string `json:"group_id"`
+		GroupName        string `json:"group_name"`
+	} `json:"groups,omitempty"`
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq builds requests for "teams/create-or-update-id-p-group-connections-legacy"
+
+Create or update IdP group connections (Legacy).
+
+  PATCH /teams/{team_id}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq struct {
+	TeamId      int64
+	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-id-p-group-connections-legacy
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody struct {
+
+	/*
+	   The IdP groups you want to connect to a GitHub team. When updating, the new
+	   `groups` object will replace the original one. You must include any existing
+	   groups that you don't want to remove.
+	*/
+	Groups []struct {
+
+		// Description of the IdP group.
+		GroupDescription *string `json:"group_description"`
+
+		// ID of the IdP group.
+		GroupId *string `json:"group_id"`
+
+		// Name of the IdP group.
+		GroupName *string `json:"group_name"`
+	} `json:"groups"`
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 is a response body for teams/create-or-update-id-p-group-connections-legacy
+
+API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 struct {
+	Groups []struct {
+		GroupDescription string `json:"group_description,omitempty"`
+		GroupId          string `json:"group_id,omitempty"`
+		GroupName        string `json:"group_name,omitempty"`
+	} `json:"groups,omitempty"`
 }

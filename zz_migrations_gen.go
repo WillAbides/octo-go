@@ -12,572 +12,152 @@ import (
 )
 
 /*
-MigrationsGetCommitAuthorsReq builds requests for "migrations/get-commit-authors"
+MigrationsDeleteArchiveForAuthenticatedUserReq builds requests for "migrations/delete-archive-for-authenticated-user"
 
-Get commit authors.
+Delete a user migration archive.
 
-  GET /repos/{owner}/{repo}/import/authors
+  DELETE /user/migrations/{migration_id}/archive
 
-https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
+https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
-type MigrationsGetCommitAuthorsReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	Only authors found after this id are returned. Provide the highest author ID
-	you've seen so far. New authors may be added to the list at any point while the
-	importer is performing the `raw` step.
-	*/
-	Since *string
-}
-
-func (r MigrationsGetCommitAuthorsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo)
-}
-
-func (r MigrationsGetCommitAuthorsReq) method() string {
-	return "GET"
-}
-
-func (r MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	return query
-}
-
-func (r MigrationsGetCommitAuthorsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsGetCommitAuthorsResponseBody200 is a response body for migrations/get-commit-authors
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
-*/
-type MigrationsGetCommitAuthorsResponseBody200 []struct {
-	Email      string `json:"email,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	ImportUrl  string `json:"import_url,omitempty"`
-	Name       string `json:"name,omitempty"`
-	RemoteId   string `json:"remote_id,omitempty"`
-	RemoteName string `json:"remote_name,omitempty"`
-	Url        string `json:"url,omitempty"`
-}
-
-/*
-MigrationsGetLargeFilesReq builds requests for "migrations/get-large-files"
-
-Get large files.
-
-  GET /repos/{owner}/{repo}/import/large_files
-
-https://developer.github.com/v3/migrations/source_imports/#get-large-files
-*/
-type MigrationsGetLargeFilesReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r MigrationsGetLargeFilesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo)
-}
-
-func (r MigrationsGetLargeFilesReq) method() string {
-	return "GET"
-}
-
-func (r MigrationsGetLargeFilesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsGetLargeFilesReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsGetLargeFilesResponseBody200 is a response body for migrations/get-large-files
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#get-large-files
-*/
-type MigrationsGetLargeFilesResponseBody200 []struct {
-	Oid     string      `json:"oid,omitempty"`
-	Path    string      `json:"path,omitempty"`
-	RefName string      `json:"ref_name,omitempty"`
-	Size    json.Number `json:"size,omitempty"`
-}
-
-/*
-MigrationsStartForAuthenticatedUserReq builds requests for "migrations/start-for-authenticated-user"
-
-Start a user migration.
-
-  POST /user/migrations
-
-https://developer.github.com/v3/migrations/users/#start-a-user-migration
-*/
-type MigrationsStartForAuthenticatedUserReq struct {
-	RequestBody MigrationsStartForAuthenticatedUserReqBody
-}
-
-func (r MigrationsStartForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations")
-}
-
-func (r MigrationsStartForAuthenticatedUserReq) method() string {
-	return "POST"
-}
-
-func (r MigrationsStartForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsStartForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-MigrationsStartForAuthenticatedUserReqBody is a request body for migrations/start-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/migrations/users/#start-a-user-migration
-*/
-type MigrationsStartForAuthenticatedUserReqBody struct {
-
-	/*
-	   Does not include attachments uploaded to GitHub.com in the migration data when
-	   set to `true`. Excluding attachments will reduce the migration archive file
-	   size.
-	*/
-	ExcludeAttachments *bool `json:"exclude_attachments,omitempty"`
-
-	/*
-	   Locks the `repositories` to prevent changes during the migration when set to
-	   `true`.
-	*/
-	LockRepositories *bool `json:"lock_repositories,omitempty"`
-
-	// An array of repositories to include in the migration.
-	Repositories []string `json:"repositories"`
-}
-
-/*
-MigrationsStartForAuthenticatedUserResponseBody201 is a response body for migrations/start-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/migrations/users/#start-a-user-migration
-*/
-type MigrationsStartForAuthenticatedUserResponseBody201 struct {
-	CreatedAt          string `json:"created_at,omitempty"`
-	ExcludeAttachments bool   `json:"exclude_attachments,omitempty"`
-	Guid               string `json:"guid,omitempty"`
-	Id                 int64  `json:"id,omitempty"`
-	LockRepositories   bool   `json:"lock_repositories,omitempty"`
-	Owner              struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Repositories []struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
-	} `json:"repositories,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-MigrationsListForAuthenticatedUserReq builds requests for "migrations/list-for-authenticated-user"
-
-List user migrations.
-
-  GET /user/migrations
-
-https://developer.github.com/v3/migrations/users/#list-user-migrations
-*/
-type MigrationsListForAuthenticatedUserReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	// To access the Migrations API, you must set this to true.
-	WyandottePreview bool
-}
-
-func (r MigrationsListForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations")
-}
-
-func (r MigrationsListForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r MigrationsListForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsListForAuthenticatedUserResponseBody200 is a response body for migrations/list-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/migrations/users/#list-user-migrations
-*/
-type MigrationsListForAuthenticatedUserResponseBody200 []struct {
-	CreatedAt          string `json:"created_at,omitempty"`
-	ExcludeAttachments bool   `json:"exclude_attachments,omitempty"`
-	Guid               string `json:"guid,omitempty"`
-	Id                 int64  `json:"id,omitempty"`
-	LockRepositories   bool   `json:"lock_repositories,omitempty"`
-	Owner              struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Repositories []struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
-	} `json:"repositories,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-}
-
-/*
-MigrationsGetStatusForOrgReq builds requests for "migrations/get-status-for-org"
-
-Get the status of an organization migration.
-
-  GET /orgs/{org}/migrations/{migration_id}
-
-https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
-*/
-type MigrationsGetStatusForOrgReq struct {
-	Org         string
+type MigrationsDeleteArchiveForAuthenticatedUserReq struct {
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
 }
 
-func (r MigrationsGetStatusForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId)
+func (r MigrationsDeleteArchiveForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
 }
 
-func (r MigrationsGetStatusForOrgReq) method() string {
-	return "GET"
+func (r MigrationsDeleteArchiveForAuthenticatedUserReq) method() string {
+	return "DELETE"
 }
 
-func (r MigrationsGetStatusForOrgReq) urlQuery() url.Values {
+func (r MigrationsDeleteArchiveForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetStatusForOrgReq) header() http.Header {
+func (r MigrationsDeleteArchiveForAuthenticatedUserReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-MigrationsGetStatusForOrgResponseBody200 is a response body for migrations/get-status-for-org
+MigrationsGetArchiveForAuthenticatedUserReq builds requests for "migrations/get-archive-for-authenticated-user"
 
-API documentation: https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+Download a user migration archive.
+
+  GET /user/migrations/{migration_id}/archive
+
+https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
-type MigrationsGetStatusForOrgResponseBody200 struct {
+type MigrationsGetArchiveForAuthenticatedUserReq struct {
+	MigrationId int64
+
+	// To access the Migrations API, you must set this to true.
+	WyandottePreview bool
+}
+
+func (r MigrationsGetArchiveForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
+}
+
+func (r MigrationsGetArchiveForAuthenticatedUserReq) method() string {
+	return "GET"
+}
+
+func (r MigrationsGetArchiveForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsGetArchiveForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetStatusForAuthenticatedUserReq builds requests for "migrations/get-status-for-authenticated-user"
+
+Get the status of a user migration.
+
+  GET /user/migrations/{migration_id}
+
+https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+*/
+type MigrationsGetStatusForAuthenticatedUserReq struct {
+	MigrationId int64
+
+	// To access the Migrations API, you must set this to true.
+	WyandottePreview bool
+}
+
+func (r MigrationsGetStatusForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/migrations/%v", r.MigrationId)
+}
+
+func (r MigrationsGetStatusForAuthenticatedUserReq) method() string {
+	return "GET"
+}
+
+func (r MigrationsGetStatusForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsGetStatusForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetStatusForAuthenticatedUserResponseBody200 is a response body for migrations/get-status-for-authenticated-user
+
+API documentation: https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+*/
+type MigrationsGetStatusForAuthenticatedUserResponseBody200 struct {
 	CreatedAt          string `json:"created_at,omitempty"`
 	ExcludeAttachments bool   `json:"exclude_attachments,omitempty"`
 	Guid               string `json:"guid,omitempty"`
 	Id                 int64  `json:"id,omitempty"`
 	LockRepositories   bool   `json:"lock_repositories,omitempty"`
 	Owner              struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
 	Repositories []struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
@@ -763,74 +343,321 @@ type MigrationsSetLfsPreferenceResponseBody200 struct {
 }
 
 /*
-MigrationsGetStatusForAuthenticatedUserReq builds requests for "migrations/get-status-for-authenticated-user"
+MigrationsCancelImportReq builds requests for "migrations/cancel-import"
 
-Get the status of a user migration.
+Cancel an import.
 
-  GET /user/migrations/{migration_id}
+  DELETE /repos/{owner}/{repo}/import
 
-https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
-type MigrationsGetStatusForAuthenticatedUserReq struct {
+type MigrationsCancelImportReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r MigrationsCancelImportReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
+}
+
+func (r MigrationsCancelImportReq) method() string {
+	return "DELETE"
+}
+
+func (r MigrationsCancelImportReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsCancelImportReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetImportProgressReq builds requests for "migrations/get-import-progress"
+
+Get import progress.
+
+  GET /repos/{owner}/{repo}/import
+
+https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+*/
+type MigrationsGetImportProgressReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r MigrationsGetImportProgressReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
+}
+
+func (r MigrationsGetImportProgressReq) method() string {
+	return "GET"
+}
+
+func (r MigrationsGetImportProgressReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsGetImportProgressReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetImportProgressResponseBody200 is a response body for migrations/get-import-progress
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+*/
+type MigrationsGetImportProgressResponseBody200 struct {
+	AuthorsCount    int64       `json:"authors_count,omitempty"`
+	AuthorsUrl      string      `json:"authors_url,omitempty"`
+	HasLargeFiles   bool        `json:"has_large_files,omitempty"`
+	HtmlUrl         string      `json:"html_url,omitempty"`
+	LargeFilesCount int64       `json:"large_files_count,omitempty"`
+	LargeFilesSize  json.Number `json:"large_files_size,omitempty"`
+	RepositoryUrl   string      `json:"repository_url,omitempty"`
+	Status          string      `json:"status,omitempty"`
+	StatusText      string      `json:"status_text,omitempty"`
+	Url             string      `json:"url,omitempty"`
+	UseLfs          string      `json:"use_lfs,omitempty"`
+	Vcs             string      `json:"vcs,omitempty"`
+	VcsUrl          string      `json:"vcs_url,omitempty"`
+}
+
+/*
+MigrationsUpdateImportReq builds requests for "migrations/update-import"
+
+Update existing import.
+
+  PATCH /repos/{owner}/{repo}/import
+
+https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+*/
+type MigrationsUpdateImportReq struct {
+	Owner       string
+	Repo        string
+	RequestBody MigrationsUpdateImportReqBody
+}
+
+func (r MigrationsUpdateImportReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
+}
+
+func (r MigrationsUpdateImportReq) method() string {
+	return "PATCH"
+}
+
+func (r MigrationsUpdateImportReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsUpdateImportReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+MigrationsUpdateImportReqBody is a request body for migrations/update-import
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+*/
+type MigrationsUpdateImportReqBody struct {
+
+	// The password to provide to the originating repository.
+	VcsPassword *string `json:"vcs_password,omitempty"`
+
+	// The username to provide to the originating repository.
+	VcsUsername *string `json:"vcs_username,omitempty"`
+}
+
+/*
+MigrationsUpdateImportResponseBody200 is a response body for migrations/update-import
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+*/
+type MigrationsUpdateImportResponseBody200 struct {
+	AuthorsUrl    string `json:"authors_url,omitempty"`
+	HtmlUrl       string `json:"html_url,omitempty"`
+	RepositoryUrl string `json:"repository_url,omitempty"`
+	Status        string `json:"status,omitempty"`
+	Url           string `json:"url,omitempty"`
+	UseLfs        string `json:"use_lfs,omitempty"`
+	Vcs           string `json:"vcs,omitempty"`
+	VcsUrl        string `json:"vcs_url,omitempty"`
+}
+
+/*
+MigrationsStartImportReq builds requests for "migrations/start-import"
+
+Start an import.
+
+  PUT /repos/{owner}/{repo}/import
+
+https://developer.github.com/v3/migrations/source_imports/#start-an-import
+*/
+type MigrationsStartImportReq struct {
+	Owner       string
+	Repo        string
+	RequestBody MigrationsStartImportReqBody
+}
+
+func (r MigrationsStartImportReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
+}
+
+func (r MigrationsStartImportReq) method() string {
+	return "PUT"
+}
+
+func (r MigrationsStartImportReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsStartImportReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+MigrationsStartImportReqBody is a request body for migrations/start-import
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#start-an-import
+*/
+type MigrationsStartImportReqBody struct {
+
+	// For a tfvc import, the name of the project that is being imported.
+	TfvcProject *string `json:"tfvc_project,omitempty"`
+
+	/*
+	   The originating VCS type. Can be one of `subversion`, `git`, `mercurial`, or
+	   `tfvc`. Please be aware that without this parameter, the import job will take
+	   additional time to detect the VCS type before beginning the import. This
+	   detection step will be reflected in the response.
+	*/
+	Vcs *string `json:"vcs,omitempty"`
+
+	// If authentication is required, the password to provide to `vcs_url`.
+	VcsPassword *string `json:"vcs_password,omitempty"`
+
+	// The URL of the originating repository.
+	VcsUrl *string `json:"vcs_url"`
+
+	// If authentication is required, the username to provide to `vcs_url`.
+	VcsUsername *string `json:"vcs_username,omitempty"`
+}
+
+/*
+MigrationsStartImportResponseBody201 is a response body for migrations/start-import
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#start-an-import
+*/
+type MigrationsStartImportResponseBody201 struct {
+	AuthorsCount    int64       `json:"authors_count,omitempty"`
+	AuthorsUrl      string      `json:"authors_url,omitempty"`
+	CommitCount     int64       `json:"commit_count,omitempty"`
+	HasLargeFiles   bool        `json:"has_large_files,omitempty"`
+	HtmlUrl         string      `json:"html_url,omitempty"`
+	LargeFilesCount int64       `json:"large_files_count,omitempty"`
+	LargeFilesSize  json.Number `json:"large_files_size,omitempty"`
+	Percent         json.Number `json:"percent,omitempty"`
+	RepositoryUrl   string      `json:"repository_url,omitempty"`
+	Status          string      `json:"status,omitempty"`
+	StatusText      string      `json:"status_text,omitempty"`
+	Url             string      `json:"url,omitempty"`
+	UseLfs          string      `json:"use_lfs,omitempty"`
+	Vcs             string      `json:"vcs,omitempty"`
+	VcsUrl          string      `json:"vcs_url,omitempty"`
+}
+
+/*
+MigrationsGetStatusForOrgReq builds requests for "migrations/get-status-for-org"
+
+Get the status of an organization migration.
+
+  GET /orgs/{org}/migrations/{migration_id}
+
+https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+*/
+type MigrationsGetStatusForOrgReq struct {
+	Org         string
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v", r.MigrationId)
+func (r MigrationsGetStatusForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId)
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) method() string {
+func (r MigrationsGetStatusForOrgReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) urlQuery() url.Values {
+func (r MigrationsGetStatusForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) header() http.Header {
+func (r MigrationsGetStatusForOrgReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-MigrationsGetStatusForAuthenticatedUserResponseBody200 is a response body for migrations/get-status-for-authenticated-user
+MigrationsGetStatusForOrgResponseBody200 is a response body for migrations/get-status-for-org
 
-API documentation: https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+API documentation: https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
 */
-type MigrationsGetStatusForAuthenticatedUserResponseBody200 struct {
+type MigrationsGetStatusForOrgResponseBody200 struct {
 	CreatedAt          string `json:"created_at,omitempty"`
 	ExcludeAttachments bool   `json:"exclude_attachments,omitempty"`
 	Guid               string `json:"guid,omitempty"`
 	Id                 int64  `json:"id,omitempty"`
 	LockRepositories   bool   `json:"lock_repositories,omitempty"`
 	Owner              struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
+		AvatarUrl        string `json:"avatar_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		Login            string `json:"login,omitempty"`
+		MembersUrl       string `json:"members_url,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		PublicMembersUrl string `json:"public_members_url,omitempty"`
+		ReposUrl         string `json:"repos_url,omitempty"`
+		Url              string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
 	Repositories []struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
@@ -943,191 +770,169 @@ type MigrationsGetStatusForAuthenticatedUserResponseBody200 struct {
 }
 
 /*
-MigrationsUnlockRepoForAuthenticatedUserReq builds requests for "migrations/unlock-repo-for-authenticated-user"
+MigrationsListReposForUserReq builds requests for "migrations/list-repos-for-user"
 
-Unlock a user repository.
+List repositories for a user migration.
 
-  DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock
+  GET /user/{migration_id}/repositories
 
-https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
+https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-type MigrationsUnlockRepoForAuthenticatedUserReq struct {
+type MigrationsListReposForUserReq struct {
 	MigrationId int64
-	RepoName    string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
 }
 
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName)
+func (r MigrationsListReposForUserReq) urlPath() string {
+	return fmt.Sprintf("/user/%v/repositories", r.MigrationId)
 }
 
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) method() string {
-	return "DELETE"
-}
-
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsMapCommitAuthorReq builds requests for "migrations/map-commit-author"
-
-Map a commit author.
-
-  PATCH /repos/{owner}/{repo}/import/authors/{author_id}
-
-https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
-*/
-type MigrationsMapCommitAuthorReq struct {
-	Owner       string
-	Repo        string
-	AuthorId    int64
-	RequestBody MigrationsMapCommitAuthorReqBody
-}
-
-func (r MigrationsMapCommitAuthorReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId)
-}
-
-func (r MigrationsMapCommitAuthorReq) method() string {
-	return "PATCH"
-}
-
-func (r MigrationsMapCommitAuthorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsMapCommitAuthorReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-MigrationsMapCommitAuthorReqBody is a request body for migrations/map-commit-author
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
-*/
-type MigrationsMapCommitAuthorReqBody struct {
-
-	// The new Git author email.
-	Email *string `json:"email,omitempty"`
-
-	// The new Git author name.
-	Name *string `json:"name,omitempty"`
-}
-
-/*
-MigrationsMapCommitAuthorResponseBody200 is a response body for migrations/map-commit-author
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
-*/
-type MigrationsMapCommitAuthorResponseBody200 struct {
-	Email      string `json:"email,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	ImportUrl  string `json:"import_url,omitempty"`
-	Name       string `json:"name,omitempty"`
-	RemoteId   string `json:"remote_id,omitempty"`
-	RemoteName string `json:"remote_name,omitempty"`
-	Url        string `json:"url,omitempty"`
-}
-
-/*
-MigrationsDeleteArchiveForOrgReq builds requests for "migrations/delete-archive-for-org"
-
-Delete an organization migration archive.
-
-  DELETE /orgs/{org}/migrations/{migration_id}/archive
-
-https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
-*/
-type MigrationsDeleteArchiveForOrgReq struct {
-	Org         string
-	MigrationId int64
-
-	// To access the Migrations API, you must set this to true.
-	WyandottePreview bool
-}
-
-func (r MigrationsDeleteArchiveForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
-}
-
-func (r MigrationsDeleteArchiveForOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r MigrationsDeleteArchiveForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsDeleteArchiveForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsDownloadArchiveForOrgReq builds requests for "migrations/download-archive-for-org"
-
-Download an organization migration archive.
-
-  GET /orgs/{org}/migrations/{migration_id}/archive
-
-https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
-*/
-type MigrationsDownloadArchiveForOrgReq struct {
-	Org         string
-	MigrationId int64
-
-	// To access the Migrations API, you must set this to true.
-	WyandottePreview bool
-}
-
-func (r MigrationsDownloadArchiveForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
-}
-
-func (r MigrationsDownloadArchiveForOrgReq) method() string {
+func (r MigrationsListReposForUserReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) urlQuery() url.Values {
+func (r MigrationsListReposForUserReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) header() http.Header {
+func (r MigrationsListReposForUserReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsListReposForUserResponseBody200 is a response body for migrations/list-repos-for-user
+
+API documentation: https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
+*/
+type MigrationsListReposForUserResponseBody200 []struct {
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+	CommentsUrl      string `json:"comments_url,omitempty"`
+	CommitsUrl       string `json:"commits_url,omitempty"`
+	CompareUrl       string `json:"compare_url,omitempty"`
+	ContentsUrl      string `json:"contents_url,omitempty"`
+	ContributorsUrl  string `json:"contributors_url,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	DefaultBranch    string `json:"default_branch,omitempty"`
+	DeploymentsUrl   string `json:"deployments_url,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Disabled         bool   `json:"disabled,omitempty"`
+	DownloadsUrl     string `json:"downloads_url,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Fork             bool   `json:"fork,omitempty"`
+	ForksCount       int64  `json:"forks_count,omitempty"`
+	ForksUrl         string `json:"forks_url,omitempty"`
+	FullName         string `json:"full_name,omitempty"`
+	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+	GitRefsUrl       string `json:"git_refs_url,omitempty"`
+	GitTagsUrl       string `json:"git_tags_url,omitempty"`
+	GitUrl           string `json:"git_url,omitempty"`
+	HasDownloads     bool   `json:"has_downloads,omitempty"`
+	HasIssues        bool   `json:"has_issues,omitempty"`
+	HasPages         bool   `json:"has_pages,omitempty"`
+	HasProjects      bool   `json:"has_projects,omitempty"`
+	HasWiki          bool   `json:"has_wiki,omitempty"`
+	Homepage         string `json:"homepage,omitempty"`
+	HooksUrl         string `json:"hooks_url,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	IsTemplate       bool   `json:"is_template,omitempty"`
+	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+	IssuesUrl        string `json:"issues_url,omitempty"`
+	KeysUrl          string `json:"keys_url,omitempty"`
+	LabelsUrl        string `json:"labels_url,omitempty"`
+	Language         string `json:"language,omitempty"`
+	LanguagesUrl     string `json:"languages_url,omitempty"`
+	License          struct {
+		Key    string `json:"key,omitempty"`
+		Name   string `json:"name,omitempty"`
+		NodeId string `json:"node_id,omitempty"`
+		SpdxId string `json:"spdx_id,omitempty"`
+		Url    string `json:"url,omitempty"`
+	} `json:"license,omitempty"`
+	MergesUrl        string `json:"merges_url,omitempty"`
+	MilestonesUrl    string `json:"milestones_url,omitempty"`
+	MirrorUrl        string `json:"mirror_url,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NetworkCount     int64  `json:"network_count,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	NotificationsUrl string `json:"notifications_url,omitempty"`
+	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+	Owner            struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Permissions struct {
+		Admin bool `json:"admin,omitempty"`
+		Pull  bool `json:"pull,omitempty"`
+		Push  bool `json:"push,omitempty"`
+	} `json:"permissions,omitempty"`
+	Private            bool        `json:"private,omitempty"`
+	PullsUrl           string      `json:"pulls_url,omitempty"`
+	PushedAt           string      `json:"pushed_at,omitempty"`
+	ReleasesUrl        string      `json:"releases_url,omitempty"`
+	Size               json.Number `json:"size,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository string      `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
 }
 
 /*
@@ -1512,125 +1317,6 @@ type MigrationsStartForOrgResponseBody201 struct {
 }
 
 /*
-MigrationsDeleteArchiveForAuthenticatedUserReq builds requests for "migrations/delete-archive-for-authenticated-user"
-
-Delete a user migration archive.
-
-  DELETE /user/migrations/{migration_id}/archive
-
-https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
-*/
-type MigrationsDeleteArchiveForAuthenticatedUserReq struct {
-	MigrationId int64
-
-	// To access the Migrations API, you must set this to true.
-	WyandottePreview bool
-}
-
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
-}
-
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) method() string {
-	return "DELETE"
-}
-
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsGetArchiveForAuthenticatedUserReq builds requests for "migrations/get-archive-for-authenticated-user"
-
-Download a user migration archive.
-
-  GET /user/migrations/{migration_id}/archive
-
-https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
-*/
-type MigrationsGetArchiveForAuthenticatedUserReq struct {
-	MigrationId int64
-
-	// To access the Migrations API, you must set this to true.
-	WyandottePreview bool
-}
-
-func (r MigrationsGetArchiveForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
-}
-
-func (r MigrationsGetArchiveForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r MigrationsGetArchiveForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsGetArchiveForAuthenticatedUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsUnlockRepoForOrgReq builds requests for "migrations/unlock-repo-for-org"
-
-Unlock an organization repository.
-
-  DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock
-
-https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
-*/
-type MigrationsUnlockRepoForOrgReq struct {
-	Org         string
-	MigrationId int64
-	RepoName    string
-
-	// To access the Migrations API, you must set this to true.
-	WyandottePreview bool
-}
-
-func (r MigrationsUnlockRepoForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName)
-}
-
-func (r MigrationsUnlockRepoForOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r MigrationsUnlockRepoForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsUnlockRepoForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
 MigrationsListReposForOrgReq builds requests for "migrations/list-repos-for-org"
 
 List repositories in an organization migration.
@@ -1798,16 +1484,355 @@ type MigrationsListReposForOrgResponseBody200 []struct {
 }
 
 /*
-MigrationsListReposForUserReq builds requests for "migrations/list-repos-for-user"
+MigrationsMapCommitAuthorReq builds requests for "migrations/map-commit-author"
 
-List repositories for a user migration.
+Map a commit author.
 
-  GET /user/{migration_id}/repositories
+  PATCH /repos/{owner}/{repo}/import/authors/{author_id}
 
-https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
+https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-type MigrationsListReposForUserReq struct {
+type MigrationsMapCommitAuthorReq struct {
+	Owner       string
+	Repo        string
+	AuthorId    int64
+	RequestBody MigrationsMapCommitAuthorReqBody
+}
+
+func (r MigrationsMapCommitAuthorReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId)
+}
+
+func (r MigrationsMapCommitAuthorReq) method() string {
+	return "PATCH"
+}
+
+func (r MigrationsMapCommitAuthorReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsMapCommitAuthorReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+MigrationsMapCommitAuthorReqBody is a request body for migrations/map-commit-author
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
+*/
+type MigrationsMapCommitAuthorReqBody struct {
+
+	// The new Git author email.
+	Email *string `json:"email,omitempty"`
+
+	// The new Git author name.
+	Name *string `json:"name,omitempty"`
+}
+
+/*
+MigrationsMapCommitAuthorResponseBody200 is a response body for migrations/map-commit-author
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
+*/
+type MigrationsMapCommitAuthorResponseBody200 struct {
+	Email      string `json:"email,omitempty"`
+	Id         int64  `json:"id,omitempty"`
+	ImportUrl  string `json:"import_url,omitempty"`
+	Name       string `json:"name,omitempty"`
+	RemoteId   string `json:"remote_id,omitempty"`
+	RemoteName string `json:"remote_name,omitempty"`
+	Url        string `json:"url,omitempty"`
+}
+
+/*
+MigrationsDeleteArchiveForOrgReq builds requests for "migrations/delete-archive-for-org"
+
+Delete an organization migration archive.
+
+  DELETE /orgs/{org}/migrations/{migration_id}/archive
+
+https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
+*/
+type MigrationsDeleteArchiveForOrgReq struct {
+	Org         string
 	MigrationId int64
+
+	// To access the Migrations API, you must set this to true.
+	WyandottePreview bool
+}
+
+func (r MigrationsDeleteArchiveForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
+}
+
+func (r MigrationsDeleteArchiveForOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r MigrationsDeleteArchiveForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsDeleteArchiveForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsDownloadArchiveForOrgReq builds requests for "migrations/download-archive-for-org"
+
+Download an organization migration archive.
+
+  GET /orgs/{org}/migrations/{migration_id}/archive
+
+https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
+*/
+type MigrationsDownloadArchiveForOrgReq struct {
+	Org         string
+	MigrationId int64
+
+	// To access the Migrations API, you must set this to true.
+	WyandottePreview bool
+}
+
+func (r MigrationsDownloadArchiveForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
+}
+
+func (r MigrationsDownloadArchiveForOrgReq) method() string {
+	return "GET"
+}
+
+func (r MigrationsDownloadArchiveForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsDownloadArchiveForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsUnlockRepoForOrgReq builds requests for "migrations/unlock-repo-for-org"
+
+Unlock an organization repository.
+
+  DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock
+
+https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
+*/
+type MigrationsUnlockRepoForOrgReq struct {
+	Org         string
+	MigrationId int64
+	RepoName    string
+
+	// To access the Migrations API, you must set this to true.
+	WyandottePreview bool
+}
+
+func (r MigrationsUnlockRepoForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName)
+}
+
+func (r MigrationsUnlockRepoForOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r MigrationsUnlockRepoForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsUnlockRepoForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsUnlockRepoForAuthenticatedUserReq builds requests for "migrations/unlock-repo-for-authenticated-user"
+
+Unlock a user repository.
+
+  DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock
+
+https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
+*/
+type MigrationsUnlockRepoForAuthenticatedUserReq struct {
+	MigrationId int64
+	RepoName    string
+
+	// To access the Migrations API, you must set this to true.
+	WyandottePreview bool
+}
+
+func (r MigrationsUnlockRepoForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName)
+}
+
+func (r MigrationsUnlockRepoForAuthenticatedUserReq) method() string {
+	return "DELETE"
+}
+
+func (r MigrationsUnlockRepoForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsUnlockRepoForAuthenticatedUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetCommitAuthorsReq builds requests for "migrations/get-commit-authors"
+
+Get commit authors.
+
+  GET /repos/{owner}/{repo}/import/authors
+
+https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
+*/
+type MigrationsGetCommitAuthorsReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	Only authors found after this id are returned. Provide the highest author ID
+	you've seen so far. New authors may be added to the list at any point while the
+	importer is performing the `raw` step.
+	*/
+	Since *string
+}
+
+func (r MigrationsGetCommitAuthorsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo)
+}
+
+func (r MigrationsGetCommitAuthorsReq) method() string {
+	return "GET"
+}
+
+func (r MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	return query
+}
+
+func (r MigrationsGetCommitAuthorsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetCommitAuthorsResponseBody200 is a response body for migrations/get-commit-authors
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
+*/
+type MigrationsGetCommitAuthorsResponseBody200 []struct {
+	Email      string `json:"email,omitempty"`
+	Id         int64  `json:"id,omitempty"`
+	ImportUrl  string `json:"import_url,omitempty"`
+	Name       string `json:"name,omitempty"`
+	RemoteId   string `json:"remote_id,omitempty"`
+	RemoteName string `json:"remote_name,omitempty"`
+	Url        string `json:"url,omitempty"`
+}
+
+/*
+MigrationsGetLargeFilesReq builds requests for "migrations/get-large-files"
+
+Get large files.
+
+  GET /repos/{owner}/{repo}/import/large_files
+
+https://developer.github.com/v3/migrations/source_imports/#get-large-files
+*/
+type MigrationsGetLargeFilesReq struct {
+	Owner string
+	Repo  string
+}
+
+func (r MigrationsGetLargeFilesReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo)
+}
+
+func (r MigrationsGetLargeFilesReq) method() string {
+	return "GET"
+}
+
+func (r MigrationsGetLargeFilesReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r MigrationsGetLargeFilesReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+MigrationsGetLargeFilesResponseBody200 is a response body for migrations/get-large-files
+
+API documentation: https://developer.github.com/v3/migrations/source_imports/#get-large-files
+*/
+type MigrationsGetLargeFilesResponseBody200 []struct {
+	Oid     string      `json:"oid,omitempty"`
+	Path    string      `json:"path,omitempty"`
+	RefName string      `json:"ref_name,omitempty"`
+	Size    json.Number `json:"size,omitempty"`
+}
+
+/*
+MigrationsListForAuthenticatedUserReq builds requests for "migrations/list-for-authenticated-user"
+
+List user migrations.
+
+  GET /user/migrations
+
+https://developer.github.com/v3/migrations/users/#list-user-migrations
+*/
+type MigrationsListForAuthenticatedUserReq struct {
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1819,15 +1844,15 @@ type MigrationsListReposForUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsListReposForUserReq) urlPath() string {
-	return fmt.Sprintf("/user/%v/repositories", r.MigrationId)
+func (r MigrationsListForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/migrations")
 }
 
-func (r MigrationsListReposForUserReq) method() string {
+func (r MigrationsListForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsListReposForUserReq) urlQuery() url.Values {
+func (r MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1838,82 +1863,28 @@ func (r MigrationsListReposForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r MigrationsListReposForUserReq) header() http.Header {
+func (r MigrationsListForAuthenticatedUserReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-MigrationsListReposForUserResponseBody200 is a response body for migrations/list-repos-for-user
+MigrationsListForAuthenticatedUserResponseBody200 is a response body for migrations/list-for-authenticated-user
 
-API documentation: https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
+API documentation: https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-type MigrationsListReposForUserResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	License          struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
+type MigrationsListForAuthenticatedUserResponseBody200 []struct {
+	CreatedAt          string `json:"created_at,omitempty"`
+	ExcludeAttachments bool   `json:"exclude_attachments,omitempty"`
+	Guid               string `json:"guid,omitempty"`
+	Id                 int64  `json:"id,omitempty"`
+	LockRepositories   bool   `json:"lock_repositories,omitempty"`
+	Owner              struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -1933,284 +1904,313 @@ type MigrationsListReposForUserResponseBody200 []struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
+	Repositories []struct {
+		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		Archived         bool   `json:"archived,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CloneUrl         string `json:"clone_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		CreatedAt        string `json:"created_at,omitempty"`
+		DefaultBranch    string `json:"default_branch,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		Disabled         bool   `json:"disabled,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksCount       int64  `json:"forks_count,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HasDownloads     bool   `json:"has_downloads,omitempty"`
+		HasIssues        bool   `json:"has_issues,omitempty"`
+		HasPages         bool   `json:"has_pages,omitempty"`
+		HasProjects      bool   `json:"has_projects,omitempty"`
+		HasWiki          bool   `json:"has_wiki,omitempty"`
+		Homepage         string `json:"homepage,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IsTemplate       bool   `json:"is_template,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		Language         string `json:"language,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		MirrorUrl        string `json:"mirror_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NetworkCount     int64  `json:"network_count,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Permissions struct {
+			Admin bool `json:"admin,omitempty"`
+			Pull  bool `json:"pull,omitempty"`
+			Push  bool `json:"push,omitempty"`
+		} `json:"permissions,omitempty"`
+		Private            bool        `json:"private,omitempty"`
+		PullsUrl           string      `json:"pulls_url,omitempty"`
+		PushedAt           string      `json:"pushed_at,omitempty"`
+		ReleasesUrl        string      `json:"releases_url,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		SshUrl             string      `json:"ssh_url,omitempty"`
+		StargazersCount    int64       `json:"stargazers_count,omitempty"`
+		StargazersUrl      string      `json:"stargazers_url,omitempty"`
+		StatusesUrl        string      `json:"statuses_url,omitempty"`
+		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+		SvnUrl             string      `json:"svn_url,omitempty"`
+		TagsUrl            string      `json:"tags_url,omitempty"`
+		TeamsUrl           string      `json:"teams_url,omitempty"`
+		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+		TemplateRepository string      `json:"template_repository,omitempty"`
+		Topics             []string    `json:"topics,omitempty"`
+		TreesUrl           string      `json:"trees_url,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Url                string      `json:"url,omitempty"`
+		Visibility         string      `json:"visibility,omitempty"`
+		WatchersCount      int64       `json:"watchers_count,omitempty"`
+	} `json:"repositories,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
 }
 
 /*
-MigrationsCancelImportReq builds requests for "migrations/cancel-import"
+MigrationsStartForAuthenticatedUserReq builds requests for "migrations/start-for-authenticated-user"
 
-Cancel an import.
+Start a user migration.
 
-  DELETE /repos/{owner}/{repo}/import
+  POST /user/migrations
 
-https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
+https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-type MigrationsCancelImportReq struct {
-	Owner string
-	Repo  string
+type MigrationsStartForAuthenticatedUserReq struct {
+	RequestBody MigrationsStartForAuthenticatedUserReqBody
 }
 
-func (r MigrationsCancelImportReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
+func (r MigrationsStartForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/migrations")
 }
 
-func (r MigrationsCancelImportReq) method() string {
-	return "DELETE"
+func (r MigrationsStartForAuthenticatedUserReq) method() string {
+	return "POST"
 }
 
-func (r MigrationsCancelImportReq) urlQuery() url.Values {
+func (r MigrationsStartForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsCancelImportReq) header() http.Header {
+func (r MigrationsStartForAuthenticatedUserReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsGetImportProgressReq builds requests for "migrations/get-import-progress"
-
-Get import progress.
-
-  GET /repos/{owner}/{repo}/import
-
-https://developer.github.com/v3/migrations/source_imports/#get-import-progress
-*/
-type MigrationsGetImportProgressReq struct {
-	Owner string
-	Repo  string
-}
-
-func (r MigrationsGetImportProgressReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r MigrationsGetImportProgressReq) method() string {
-	return "GET"
-}
-
-func (r MigrationsGetImportProgressReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsGetImportProgressReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-MigrationsGetImportProgressResponseBody200 is a response body for migrations/get-import-progress
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#get-import-progress
-*/
-type MigrationsGetImportProgressResponseBody200 struct {
-	AuthorsCount    int64       `json:"authors_count,omitempty"`
-	AuthorsUrl      string      `json:"authors_url,omitempty"`
-	HasLargeFiles   bool        `json:"has_large_files,omitempty"`
-	HtmlUrl         string      `json:"html_url,omitempty"`
-	LargeFilesCount int64       `json:"large_files_count,omitempty"`
-	LargeFilesSize  json.Number `json:"large_files_size,omitempty"`
-	RepositoryUrl   string      `json:"repository_url,omitempty"`
-	Status          string      `json:"status,omitempty"`
-	StatusText      string      `json:"status_text,omitempty"`
-	Url             string      `json:"url,omitempty"`
-	UseLfs          string      `json:"use_lfs,omitempty"`
-	Vcs             string      `json:"vcs,omitempty"`
-	VcsUrl          string      `json:"vcs_url,omitempty"`
-}
-
-/*
-MigrationsUpdateImportReq builds requests for "migrations/update-import"
-
-Update existing import.
-
-  PATCH /repos/{owner}/{repo}/import
-
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
-*/
-type MigrationsUpdateImportReq struct {
-	Owner       string
-	Repo        string
-	RequestBody MigrationsUpdateImportReqBody
-}
-
-func (r MigrationsUpdateImportReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r MigrationsUpdateImportReq) method() string {
-	return "PATCH"
-}
-
-func (r MigrationsUpdateImportReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsUpdateImportReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-MigrationsUpdateImportReqBody is a request body for migrations/update-import
+MigrationsStartForAuthenticatedUserReqBody is a request body for migrations/start-for-authenticated-user
 
-API documentation: https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+API documentation: https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-type MigrationsUpdateImportReqBody struct {
-
-	// The password to provide to the originating repository.
-	VcsPassword *string `json:"vcs_password,omitempty"`
-
-	// The username to provide to the originating repository.
-	VcsUsername *string `json:"vcs_username,omitempty"`
-}
-
-/*
-MigrationsUpdateImportResponseBody200 is a response body for migrations/update-import
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#update-existing-import
-*/
-type MigrationsUpdateImportResponseBody200 struct {
-	AuthorsUrl    string `json:"authors_url,omitempty"`
-	HtmlUrl       string `json:"html_url,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	Status        string `json:"status,omitempty"`
-	Url           string `json:"url,omitempty"`
-	UseLfs        string `json:"use_lfs,omitempty"`
-	Vcs           string `json:"vcs,omitempty"`
-	VcsUrl        string `json:"vcs_url,omitempty"`
-}
-
-/*
-MigrationsStartImportReq builds requests for "migrations/start-import"
-
-Start an import.
-
-  PUT /repos/{owner}/{repo}/import
-
-https://developer.github.com/v3/migrations/source_imports/#start-an-import
-*/
-type MigrationsStartImportReq struct {
-	Owner       string
-	Repo        string
-	RequestBody MigrationsStartImportReqBody
-}
-
-func (r MigrationsStartImportReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r MigrationsStartImportReq) method() string {
-	return "PUT"
-}
-
-func (r MigrationsStartImportReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r MigrationsStartImportReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-MigrationsStartImportReqBody is a request body for migrations/start-import
-
-API documentation: https://developer.github.com/v3/migrations/source_imports/#start-an-import
-*/
-type MigrationsStartImportReqBody struct {
-
-	// For a tfvc import, the name of the project that is being imported.
-	TfvcProject *string `json:"tfvc_project,omitempty"`
+type MigrationsStartForAuthenticatedUserReqBody struct {
 
 	/*
-	   The originating VCS type. Can be one of `subversion`, `git`, `mercurial`, or
-	   `tfvc`. Please be aware that without this parameter, the import job will take
-	   additional time to detect the VCS type before beginning the import. This
-	   detection step will be reflected in the response.
+	   Does not include attachments uploaded to GitHub.com in the migration data when
+	   set to `true`. Excluding attachments will reduce the migration archive file
+	   size.
 	*/
-	Vcs *string `json:"vcs,omitempty"`
+	ExcludeAttachments *bool `json:"exclude_attachments,omitempty"`
 
-	// If authentication is required, the password to provide to `vcs_url`.
-	VcsPassword *string `json:"vcs_password,omitempty"`
+	/*
+	   Locks the `repositories` to prevent changes during the migration when set to
+	   `true`.
+	*/
+	LockRepositories *bool `json:"lock_repositories,omitempty"`
 
-	// The URL of the originating repository.
-	VcsUrl *string `json:"vcs_url"`
-
-	// If authentication is required, the username to provide to `vcs_url`.
-	VcsUsername *string `json:"vcs_username,omitempty"`
+	// An array of repositories to include in the migration.
+	Repositories []string `json:"repositories"`
 }
 
 /*
-MigrationsStartImportResponseBody201 is a response body for migrations/start-import
+MigrationsStartForAuthenticatedUserResponseBody201 is a response body for migrations/start-for-authenticated-user
 
-API documentation: https://developer.github.com/v3/migrations/source_imports/#start-an-import
+API documentation: https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-type MigrationsStartImportResponseBody201 struct {
-	AuthorsCount    int64       `json:"authors_count,omitempty"`
-	AuthorsUrl      string      `json:"authors_url,omitempty"`
-	CommitCount     int64       `json:"commit_count,omitempty"`
-	HasLargeFiles   bool        `json:"has_large_files,omitempty"`
-	HtmlUrl         string      `json:"html_url,omitempty"`
-	LargeFilesCount int64       `json:"large_files_count,omitempty"`
-	LargeFilesSize  json.Number `json:"large_files_size,omitempty"`
-	Percent         json.Number `json:"percent,omitempty"`
-	RepositoryUrl   string      `json:"repository_url,omitempty"`
-	Status          string      `json:"status,omitempty"`
-	StatusText      string      `json:"status_text,omitempty"`
-	Url             string      `json:"url,omitempty"`
-	UseLfs          string      `json:"use_lfs,omitempty"`
-	Vcs             string      `json:"vcs,omitempty"`
-	VcsUrl          string      `json:"vcs_url,omitempty"`
+type MigrationsStartForAuthenticatedUserResponseBody201 struct {
+	CreatedAt          string `json:"created_at,omitempty"`
+	ExcludeAttachments bool   `json:"exclude_attachments,omitempty"`
+	Guid               string `json:"guid,omitempty"`
+	Id                 int64  `json:"id,omitempty"`
+	LockRepositories   bool   `json:"lock_repositories,omitempty"`
+	Owner              struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Repositories []struct {
+		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+		ArchiveUrl       string `json:"archive_url,omitempty"`
+		Archived         bool   `json:"archived,omitempty"`
+		AssigneesUrl     string `json:"assignees_url,omitempty"`
+		BlobsUrl         string `json:"blobs_url,omitempty"`
+		BranchesUrl      string `json:"branches_url,omitempty"`
+		CloneUrl         string `json:"clone_url,omitempty"`
+		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
+		CommentsUrl      string `json:"comments_url,omitempty"`
+		CommitsUrl       string `json:"commits_url,omitempty"`
+		CompareUrl       string `json:"compare_url,omitempty"`
+		ContentsUrl      string `json:"contents_url,omitempty"`
+		ContributorsUrl  string `json:"contributors_url,omitempty"`
+		CreatedAt        string `json:"created_at,omitempty"`
+		DefaultBranch    string `json:"default_branch,omitempty"`
+		DeploymentsUrl   string `json:"deployments_url,omitempty"`
+		Description      string `json:"description,omitempty"`
+		Disabled         bool   `json:"disabled,omitempty"`
+		DownloadsUrl     string `json:"downloads_url,omitempty"`
+		EventsUrl        string `json:"events_url,omitempty"`
+		Fork             bool   `json:"fork,omitempty"`
+		ForksCount       int64  `json:"forks_count,omitempty"`
+		ForksUrl         string `json:"forks_url,omitempty"`
+		FullName         string `json:"full_name,omitempty"`
+		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
+		GitRefsUrl       string `json:"git_refs_url,omitempty"`
+		GitTagsUrl       string `json:"git_tags_url,omitempty"`
+		GitUrl           string `json:"git_url,omitempty"`
+		HasDownloads     bool   `json:"has_downloads,omitempty"`
+		HasIssues        bool   `json:"has_issues,omitempty"`
+		HasPages         bool   `json:"has_pages,omitempty"`
+		HasProjects      bool   `json:"has_projects,omitempty"`
+		HasWiki          bool   `json:"has_wiki,omitempty"`
+		Homepage         string `json:"homepage,omitempty"`
+		HooksUrl         string `json:"hooks_url,omitempty"`
+		HtmlUrl          string `json:"html_url,omitempty"`
+		Id               int64  `json:"id,omitempty"`
+		IsTemplate       bool   `json:"is_template,omitempty"`
+		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
+		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
+		IssuesUrl        string `json:"issues_url,omitempty"`
+		KeysUrl          string `json:"keys_url,omitempty"`
+		LabelsUrl        string `json:"labels_url,omitempty"`
+		Language         string `json:"language,omitempty"`
+		LanguagesUrl     string `json:"languages_url,omitempty"`
+		MergesUrl        string `json:"merges_url,omitempty"`
+		MilestonesUrl    string `json:"milestones_url,omitempty"`
+		MirrorUrl        string `json:"mirror_url,omitempty"`
+		Name             string `json:"name,omitempty"`
+		NetworkCount     int64  `json:"network_count,omitempty"`
+		NodeId           string `json:"node_id,omitempty"`
+		NotificationsUrl string `json:"notifications_url,omitempty"`
+		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
+		Owner            struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"owner,omitempty"`
+		Permissions struct {
+			Admin bool `json:"admin,omitempty"`
+			Pull  bool `json:"pull,omitempty"`
+			Push  bool `json:"push,omitempty"`
+		} `json:"permissions,omitempty"`
+		Private            bool        `json:"private,omitempty"`
+		PullsUrl           string      `json:"pulls_url,omitempty"`
+		PushedAt           string      `json:"pushed_at,omitempty"`
+		ReleasesUrl        string      `json:"releases_url,omitempty"`
+		Size               json.Number `json:"size,omitempty"`
+		SshUrl             string      `json:"ssh_url,omitempty"`
+		StargazersCount    int64       `json:"stargazers_count,omitempty"`
+		StargazersUrl      string      `json:"stargazers_url,omitempty"`
+		StatusesUrl        string      `json:"statuses_url,omitempty"`
+		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+		SvnUrl             string      `json:"svn_url,omitempty"`
+		TagsUrl            string      `json:"tags_url,omitempty"`
+		TeamsUrl           string      `json:"teams_url,omitempty"`
+		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+		TemplateRepository string      `json:"template_repository,omitempty"`
+		Topics             []string    `json:"topics,omitempty"`
+		TreesUrl           string      `json:"trees_url,omitempty"`
+		UpdatedAt          string      `json:"updated_at,omitempty"`
+		Url                string      `json:"url,omitempty"`
+		Visibility         string      `json:"visibility,omitempty"`
+		WatchersCount      int64       `json:"watchers_count,omitempty"`
+	} `json:"repositories,omitempty"`
+	State     string `json:"state,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
 }

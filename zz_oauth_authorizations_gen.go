@@ -11,51 +11,143 @@ import (
 )
 
 /*
-OauthAuthorizationsUpdateAuthorizationReq builds requests for "oauth-authorizations/update-authorization"
+OauthAuthorizationsDeleteGrantReq builds requests for "oauth-authorizations/delete-grant"
 
-Update an existing authorization.
+Delete a grant.
 
-  PATCH /authorizations/{authorization_id}
+  DELETE /applications/grants/{grant_id}
 
-https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
-type OauthAuthorizationsUpdateAuthorizationReq struct {
-	AuthorizationId int64
-	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
+type OauthAuthorizationsDeleteGrantReq struct {
+	GrantId int64
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
+func (r OauthAuthorizationsDeleteGrantReq) urlPath() string {
+	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) method() string {
-	return "PATCH"
+func (r OauthAuthorizationsDeleteGrantReq) method() string {
+	return "DELETE"
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) urlQuery() url.Values {
+func (r OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) header() http.Header {
+func (r OauthAuthorizationsDeleteGrantReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsGetGrantReq builds requests for "oauth-authorizations/get-grant"
+
+Get a single grant.
+
+  GET /applications/grants/{grant_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+type OauthAuthorizationsGetGrantReq struct {
+	GrantId int64
+}
+
+func (r OauthAuthorizationsGetGrantReq) urlPath() string {
+	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
+}
+
+func (r OauthAuthorizationsGetGrantReq) method() string {
+	return "GET"
+}
+
+func (r OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsGetGrantReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsGetGrantResponseBody200 is a response body for oauth-authorizations/get-grant
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+type OauthAuthorizationsGetGrantResponseBody200 struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt string   `json:"created_at,omitempty"`
+	Id        int64    `json:"id,omitempty"`
+	Scopes    []string `json:"scopes,omitempty"`
+	UpdatedAt string   `json:"updated_at,omitempty"`
+	Url       string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsCreateAuthorizationReq builds requests for "oauth-authorizations/create-authorization"
+
+Create a new authorization.
+
+  POST /authorizations
+
+https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+*/
+type OauthAuthorizationsCreateAuthorizationReq struct {
+	RequestBody OauthAuthorizationsCreateAuthorizationReqBody
+}
+
+func (r OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/authorizations")
+}
+
+func (r OauthAuthorizationsCreateAuthorizationReq) method() string {
+	return "POST"
+}
+
+func (r OauthAuthorizationsCreateAuthorizationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r OauthAuthorizationsCreateAuthorizationReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-OauthAuthorizationsUpdateAuthorizationReqBody is a request body for oauth-authorizations/update-authorization
+OauthAuthorizationsCreateAuthorizationReqBody is a request body for oauth-authorizations/create-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-type OauthAuthorizationsUpdateAuthorizationReqBody struct {
+type OauthAuthorizationsCreateAuthorizationReqBody struct {
 
-	// A list of scopes to add to this authorization.
-	AddScopes []string `json:"add_scopes,omitempty"`
+	// The 20 character OAuth app client key for which to create the token.
+	ClientId *string `json:"client_id,omitempty"`
+
+	// The 40 character OAuth app client secret for which to create the token.
+	ClientSecret *string `json:"client_secret,omitempty"`
 
 	/*
 	   A unique string to distinguish an authorization from others created for the same
@@ -68,24 +160,21 @@ type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 	   specific OAuth application (i.e. personal access tokens) must have a unique
 	   note.
 	*/
-	Note *string `json:"note,omitempty"`
+	Note *string `json:"note"`
 
 	// A URL to remind you what app the OAuth token is for.
 	NoteUrl *string `json:"note_url,omitempty"`
 
-	// A list of scopes to remove from this authorization.
-	RemoveScopes []string `json:"remove_scopes,omitempty"`
-
-	// Replaces the authorization scopes with these.
+	// A list of scopes that this authorization is in.
 	Scopes []string `json:"scopes,omitempty"`
 }
 
 /*
-OauthAuthorizationsUpdateAuthorizationResponseBody200 is a response body for oauth-authorizations/update-authorization
+OauthAuthorizationsCreateAuthorizationResponseBody201 is a response body for oauth-authorizations/create-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-type OauthAuthorizationsUpdateAuthorizationResponseBody200 struct {
+type OauthAuthorizationsCreateAuthorizationResponseBody201 struct {
 	App struct {
 		ClientId string `json:"client_id,omitempty"`
 		Name     string `json:"name,omitempty"`
@@ -105,83 +194,58 @@ type OauthAuthorizationsUpdateAuthorizationResponseBody200 struct {
 }
 
 /*
-OauthAuthorizationsDeleteAuthorizationReq builds requests for "oauth-authorizations/delete-authorization"
+OauthAuthorizationsListAuthorizationsReq builds requests for "oauth-authorizations/list-authorizations"
 
-Delete an authorization.
+List your authorizations.
 
-  DELETE /authorizations/{authorization_id}
+  GET /authorizations
 
-https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-type OauthAuthorizationsDeleteAuthorizationReq struct {
-	AuthorizationId int64
+type OauthAuthorizationsListAuthorizationsReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
+func (r OauthAuthorizationsListAuthorizationsReq) urlPath() string {
+	return fmt.Sprintf("/authorizations")
 }
 
-func (r OauthAuthorizationsDeleteAuthorizationReq) method() string {
-	return "DELETE"
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsGetAuthorizationReq builds requests for "oauth-authorizations/get-authorization"
-
-Get a single authorization.
-
-  GET /authorizations/{authorization_id}
-
-https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
-*/
-type OauthAuthorizationsGetAuthorizationReq struct {
-	AuthorizationId int64
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
-}
-
-func (r OauthAuthorizationsGetAuthorizationReq) method() string {
+func (r OauthAuthorizationsListAuthorizationsReq) method() string {
 	return "GET"
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
+func (r OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) header() http.Header {
+func (r OauthAuthorizationsListAuthorizationsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-OauthAuthorizationsGetAuthorizationResponseBody200 is a response body for oauth-authorizations/get-authorization
+OauthAuthorizationsListAuthorizationsResponseBody200 is a response body for oauth-authorizations/list-authorizations
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
+type OauthAuthorizationsListAuthorizationsResponseBody200 []struct {
 	App struct {
 		ClientId string `json:"client_id,omitempty"`
 		Name     string `json:"name,omitempty"`
@@ -198,6 +262,71 @@ type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
 	TokenLastEight string   `json:"token_last_eight,omitempty"`
 	UpdatedAt      string   `json:"updated_at,omitempty"`
 	Url            string   `json:"url,omitempty"`
+}
+
+/*
+OauthAuthorizationsListGrantsReq builds requests for "oauth-authorizations/list-grants"
+
+List your grants.
+
+  GET /applications/grants
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+*/
+type OauthAuthorizationsListGrantsReq struct {
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r OauthAuthorizationsListGrantsReq) urlPath() string {
+	return fmt.Sprintf("/applications/grants")
+}
+
+func (r OauthAuthorizationsListGrantsReq) method() string {
+	return "GET"
+}
+
+func (r OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r OauthAuthorizationsListGrantsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+OauthAuthorizationsListGrantsResponseBody200 is a response body for oauth-authorizations/list-grants
+
+API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+*/
+type OauthAuthorizationsListGrantsResponseBody200 []struct {
+	App struct {
+		ClientId string `json:"client_id,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Url      string `json:"url,omitempty"`
+	} `json:"app,omitempty"`
+	CreatedAt string   `json:"created_at,omitempty"`
+	Id        int64    `json:"id,omitempty"`
+	Scopes    []string `json:"scopes,omitempty"`
+	UpdatedAt string   `json:"updated_at,omitempty"`
+	Url       string   `json:"url,omitempty"`
 }
 
 /*
@@ -317,148 +446,83 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 struct {
 }
 
 /*
-OauthAuthorizationsDeleteGrantReq builds requests for "oauth-authorizations/delete-grant"
+OauthAuthorizationsDeleteAuthorizationReq builds requests for "oauth-authorizations/delete-authorization"
 
-Delete a grant.
+Delete an authorization.
 
-  DELETE /applications/grants/{grant_id}
+  DELETE /authorizations/{authorization_id}
 
-https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
-type OauthAuthorizationsDeleteGrantReq struct {
-	GrantId int64
+type OauthAuthorizationsDeleteAuthorizationReq struct {
+	AuthorizationId int64
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
+func (r OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) method() string {
+func (r OauthAuthorizationsDeleteAuthorizationReq) method() string {
 	return "DELETE"
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
+func (r OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) header() http.Header {
+func (r OauthAuthorizationsDeleteAuthorizationReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-OauthAuthorizationsGetGrantReq builds requests for "oauth-authorizations/get-grant"
+OauthAuthorizationsGetAuthorizationReq builds requests for "oauth-authorizations/get-authorization"
 
-Get a single grant.
+Get a single authorization.
 
-  GET /applications/grants/{grant_id}
+  GET /authorizations/{authorization_id}
 
-https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-type OauthAuthorizationsGetGrantReq struct {
-	GrantId int64
+type OauthAuthorizationsGetAuthorizationReq struct {
+	AuthorizationId int64
 }
 
-func (r OauthAuthorizationsGetGrantReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
+func (r OauthAuthorizationsGetAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
 }
 
-func (r OauthAuthorizationsGetGrantReq) method() string {
+func (r OauthAuthorizationsGetAuthorizationReq) method() string {
 	return "GET"
 }
 
-func (r OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
+func (r OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsGetGrantReq) header() http.Header {
+func (r OauthAuthorizationsGetAuthorizationReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-OauthAuthorizationsGetGrantResponseBody200 is a response body for oauth-authorizations/get-grant
+OauthAuthorizationsGetAuthorizationResponseBody200 is a response body for oauth-authorizations/get-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-type OauthAuthorizationsGetGrantResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Scopes    []string `json:"scopes,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
-}
-
-/*
-OauthAuthorizationsListAuthorizationsReq builds requests for "oauth-authorizations/list-authorizations"
-
-List your authorizations.
-
-  GET /authorizations
-
-https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
-*/
-type OauthAuthorizationsListAuthorizationsReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r OauthAuthorizationsListAuthorizationsReq) urlPath() string {
-	return fmt.Sprintf("/authorizations")
-}
-
-func (r OauthAuthorizationsListAuthorizationsReq) method() string {
-	return "GET"
-}
-
-func (r OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r OauthAuthorizationsListAuthorizationsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsListAuthorizationsResponseBody200 is a response body for oauth-authorizations/list-authorizations
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
-*/
-type OauthAuthorizationsListAuthorizationsResponseBody200 []struct {
+type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
 	App struct {
 		ClientId string `json:"client_id,omitempty"`
 		Name     string `json:"name,omitempty"`
@@ -478,53 +542,51 @@ type OauthAuthorizationsListAuthorizationsResponseBody200 []struct {
 }
 
 /*
-OauthAuthorizationsCreateAuthorizationReq builds requests for "oauth-authorizations/create-authorization"
+OauthAuthorizationsUpdateAuthorizationReq builds requests for "oauth-authorizations/update-authorization"
 
-Create a new authorization.
+Update an existing authorization.
 
-  POST /authorizations
+  PATCH /authorizations/{authorization_id}
 
-https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-type OauthAuthorizationsCreateAuthorizationReq struct {
-	RequestBody OauthAuthorizationsCreateAuthorizationReqBody
+type OauthAuthorizationsUpdateAuthorizationReq struct {
+	AuthorizationId int64
+	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations")
+func (r OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) method() string {
-	return "POST"
+func (r OauthAuthorizationsUpdateAuthorizationReq) method() string {
+	return "PATCH"
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) urlQuery() url.Values {
+func (r OauthAuthorizationsUpdateAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) header() http.Header {
+func (r OauthAuthorizationsUpdateAuthorizationReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-OauthAuthorizationsCreateAuthorizationReqBody is a request body for oauth-authorizations/create-authorization
+OauthAuthorizationsUpdateAuthorizationReqBody is a request body for oauth-authorizations/update-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-type OauthAuthorizationsCreateAuthorizationReqBody struct {
+type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 
-	// The 20 character OAuth app client key for which to create the token.
-	ClientId *string `json:"client_id,omitempty"`
-
-	// The 40 character OAuth app client secret for which to create the token.
-	ClientSecret *string `json:"client_secret,omitempty"`
+	// A list of scopes to add to this authorization.
+	AddScopes []string `json:"add_scopes,omitempty"`
 
 	/*
 	   A unique string to distinguish an authorization from others created for the same
@@ -537,21 +599,24 @@ type OauthAuthorizationsCreateAuthorizationReqBody struct {
 	   specific OAuth application (i.e. personal access tokens) must have a unique
 	   note.
 	*/
-	Note *string `json:"note"`
+	Note *string `json:"note,omitempty"`
 
 	// A URL to remind you what app the OAuth token is for.
 	NoteUrl *string `json:"note_url,omitempty"`
 
-	// A list of scopes that this authorization is in.
+	// A list of scopes to remove from this authorization.
+	RemoveScopes []string `json:"remove_scopes,omitempty"`
+
+	// Replaces the authorization scopes with these.
 	Scopes []string `json:"scopes,omitempty"`
 }
 
 /*
-OauthAuthorizationsCreateAuthorizationResponseBody201 is a response body for oauth-authorizations/create-authorization
+OauthAuthorizationsUpdateAuthorizationResponseBody200 is a response body for oauth-authorizations/update-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-type OauthAuthorizationsCreateAuthorizationResponseBody201 struct {
+type OauthAuthorizationsUpdateAuthorizationResponseBody200 struct {
 	App struct {
 		ClientId string `json:"client_id,omitempty"`
 		Name     string `json:"name,omitempty"`
@@ -677,69 +742,4 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody
 	TokenLastEight string   `json:"token_last_eight,omitempty"`
 	UpdatedAt      string   `json:"updated_at,omitempty"`
 	Url            string   `json:"url,omitempty"`
-}
-
-/*
-OauthAuthorizationsListGrantsReq builds requests for "oauth-authorizations/list-grants"
-
-List your grants.
-
-  GET /applications/grants
-
-https://developer.github.com/v3/oauth_authorizations/#list-your-grants
-*/
-type OauthAuthorizationsListGrantsReq struct {
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r OauthAuthorizationsListGrantsReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants")
-}
-
-func (r OauthAuthorizationsListGrantsReq) method() string {
-	return "GET"
-}
-
-func (r OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r OauthAuthorizationsListGrantsReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OauthAuthorizationsListGrantsResponseBody200 is a response body for oauth-authorizations/list-grants
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-grants
-*/
-type OauthAuthorizationsListGrantsResponseBody200 []struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Scopes    []string `json:"scopes,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
 }

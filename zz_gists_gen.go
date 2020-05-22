@@ -12,6 +12,606 @@ import (
 )
 
 /*
+GistsListStarredReq builds requests for "gists/list-starred"
+
+List starred gists.
+
+  GET /gists/starred
+
+https://developer.github.com/v3/gists/#list-starred-gists
+*/
+type GistsListStarredReq struct {
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r GistsListStarredReq) urlPath() string {
+	return fmt.Sprintf("/gists/starred")
+}
+
+func (r GistsListStarredReq) method() string {
+	return "GET"
+}
+
+func (r GistsListStarredReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r GistsListStarredReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GistsListStarredResponseBody200 is a response body for gists/list-starred
+
+API documentation: https://developer.github.com/v3/gists/#list-starred-gists
+*/
+type GistsListStarredResponseBody200 []struct {
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CommitsUrl  string `json:"commits_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	Description string `json:"description,omitempty"`
+	Files       map[string]struct {
+		Filename string      `json:"filename,omitempty"`
+		Language string      `json:"language,omitempty"`
+		RawUrl   string      `json:"raw_url,omitempty"`
+		Size     json.Number `json:"size,omitempty"`
+		Type     string      `json:"type,omitempty"`
+	} `json:"files,omitempty"`
+	ForksUrl   string `json:"forks_url,omitempty"`
+	GitPullUrl string `json:"git_pull_url,omitempty"`
+	GitPushUrl string `json:"git_push_url,omitempty"`
+	HtmlUrl    string `json:"html_url,omitempty"`
+	Id         string `json:"id,omitempty"`
+	NodeId     string `json:"node_id,omitempty"`
+	Owner      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Public    bool   `json:"public,omitempty"`
+	Truncated bool   `json:"truncated,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      string `json:"user,omitempty"`
+}
+
+/*
+GistsDeleteCommentReq builds requests for "gists/delete-comment"
+
+Delete a comment.
+
+  DELETE /gists/{gist_id}/comments/{comment_id}
+
+https://developer.github.com/v3/gists/comments/#delete-a-comment
+*/
+type GistsDeleteCommentReq struct {
+	GistId    string
+	CommentId int64
+}
+
+func (r GistsDeleteCommentReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
+}
+
+func (r GistsDeleteCommentReq) method() string {
+	return "DELETE"
+}
+
+func (r GistsDeleteCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GistsDeleteCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GistsGetCommentReq builds requests for "gists/get-comment"
+
+Get a single comment.
+
+  GET /gists/{gist_id}/comments/{comment_id}
+
+https://developer.github.com/v3/gists/comments/#get-a-single-comment
+*/
+type GistsGetCommentReq struct {
+	GistId    string
+	CommentId int64
+}
+
+func (r GistsGetCommentReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
+}
+
+func (r GistsGetCommentReq) method() string {
+	return "GET"
+}
+
+func (r GistsGetCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GistsGetCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GistsGetCommentResponseBody200 is a response body for gists/get-comment
+
+API documentation: https://developer.github.com/v3/gists/comments/#get-a-single-comment
+*/
+type GistsGetCommentResponseBody200 struct {
+	Body      string `json:"body,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+GistsUpdateCommentReq builds requests for "gists/update-comment"
+
+Edit a comment.
+
+  PATCH /gists/{gist_id}/comments/{comment_id}
+
+https://developer.github.com/v3/gists/comments/#edit-a-comment
+*/
+type GistsUpdateCommentReq struct {
+	GistId      string
+	CommentId   int64
+	RequestBody GistsUpdateCommentReqBody
+}
+
+func (r GistsUpdateCommentReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
+}
+
+func (r GistsUpdateCommentReq) method() string {
+	return "PATCH"
+}
+
+func (r GistsUpdateCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r GistsUpdateCommentReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+/*
+GistsUpdateCommentReqBody is a request body for gists/update-comment
+
+API documentation: https://developer.github.com/v3/gists/comments/#edit-a-comment
+*/
+type GistsUpdateCommentReqBody struct {
+
+	// The comment text.
+	Body *string `json:"body"`
+}
+
+/*
+GistsUpdateCommentResponseBody200 is a response body for gists/update-comment
+
+API documentation: https://developer.github.com/v3/gists/comments/#edit-a-comment
+*/
+type GistsUpdateCommentResponseBody200 struct {
+	Body      string `json:"body,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
+
+/*
+GistsListForUserReq builds requests for "gists/list-for-user"
+
+List gists for a user.
+
+  GET /users/{username}/gists
+
+https://developer.github.com/v3/gists/#list-gists-for-a-user
+*/
+type GistsListForUserReq struct {
+	Username string
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r GistsListForUserReq) urlPath() string {
+	return fmt.Sprintf("/users/%v/gists", r.Username)
+}
+
+func (r GistsListForUserReq) method() string {
+	return "GET"
+}
+
+func (r GistsListForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r GistsListForUserReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GistsListForUserResponseBody200 is a response body for gists/list-for-user
+
+API documentation: https://developer.github.com/v3/gists/#list-gists-for-a-user
+*/
+type GistsListForUserResponseBody200 []struct {
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CommitsUrl  string `json:"commits_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	Description string `json:"description,omitempty"`
+	Files       map[string]struct {
+		Filename string      `json:"filename,omitempty"`
+		Language string      `json:"language,omitempty"`
+		RawUrl   string      `json:"raw_url,omitempty"`
+		Size     json.Number `json:"size,omitempty"`
+		Type     string      `json:"type,omitempty"`
+	} `json:"files,omitempty"`
+	ForksUrl   string `json:"forks_url,omitempty"`
+	GitPullUrl string `json:"git_pull_url,omitempty"`
+	GitPushUrl string `json:"git_push_url,omitempty"`
+	HtmlUrl    string `json:"html_url,omitempty"`
+	Id         string `json:"id,omitempty"`
+	NodeId     string `json:"node_id,omitempty"`
+	Owner      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Public    bool   `json:"public,omitempty"`
+	Truncated bool   `json:"truncated,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      string `json:"user,omitempty"`
+}
+
+/*
+GistsListCommitsReq builds requests for "gists/list-commits"
+
+List gist commits.
+
+  GET /gists/{gist_id}/commits
+
+https://developer.github.com/v3/gists/#list-gist-commits
+*/
+type GistsListCommitsReq struct {
+	GistId string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r GistsListCommitsReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/commits", r.GistId)
+}
+
+func (r GistsListCommitsReq) method() string {
+	return "GET"
+}
+
+func (r GistsListCommitsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r GistsListCommitsReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GistsListCommitsResponseBody200 is a response body for gists/list-commits
+
+API documentation: https://developer.github.com/v3/gists/#list-gist-commits
+*/
+type GistsListCommitsResponseBody200 []struct {
+	ChangeStatus struct {
+		Additions int64 `json:"additions,omitempty"`
+		Deletions int64 `json:"deletions,omitempty"`
+		Total     int64 `json:"total,omitempty"`
+	} `json:"change_status,omitempty"`
+	CommittedAt string `json:"committed_at,omitempty"`
+	Url         string `json:"url,omitempty"`
+	User        struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+	Version string `json:"version,omitempty"`
+}
+
+/*
+GistsListPublicReq builds requests for "gists/list-public"
+
+List public gists.
+
+  GET /gists/public
+
+https://developer.github.com/v3/gists/#list-public-gists
+*/
+type GistsListPublicReq struct {
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r GistsListPublicReq) urlPath() string {
+	return fmt.Sprintf("/gists/public")
+}
+
+func (r GistsListPublicReq) method() string {
+	return "GET"
+}
+
+func (r GistsListPublicReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r GistsListPublicReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
+GistsListPublicResponseBody200 is a response body for gists/list-public
+
+API documentation: https://developer.github.com/v3/gists/#list-public-gists
+*/
+type GistsListPublicResponseBody200 []struct {
+	Comments    int64  `json:"comments,omitempty"`
+	CommentsUrl string `json:"comments_url,omitempty"`
+	CommitsUrl  string `json:"commits_url,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
+	Description string `json:"description,omitempty"`
+	Files       map[string]struct {
+		Filename string      `json:"filename,omitempty"`
+		Language string      `json:"language,omitempty"`
+		RawUrl   string      `json:"raw_url,omitempty"`
+		Size     json.Number `json:"size,omitempty"`
+		Type     string      `json:"type,omitempty"`
+	} `json:"files,omitempty"`
+	ForksUrl   string `json:"forks_url,omitempty"`
+	GitPullUrl string `json:"git_pull_url,omitempty"`
+	GitPushUrl string `json:"git_push_url,omitempty"`
+	HtmlUrl    string `json:"html_url,omitempty"`
+	Id         string `json:"id,omitempty"`
+	NodeId     string `json:"node_id,omitempty"`
+	Owner      struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Public    bool   `json:"public,omitempty"`
+	Truncated bool   `json:"truncated,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      string `json:"user,omitempty"`
+}
+
+/*
 GistsDeleteReq builds requests for "gists/delete"
 
 Delete a gist.
@@ -363,252 +963,125 @@ type GistsUpdateResponseBody200 struct {
 }
 
 /*
-GistsListCommentsReq builds requests for "gists/list-comments"
+GistsGetRevisionReq builds requests for "gists/get-revision"
 
-List comments on a gist.
+Get a specific revision of a gist.
 
-  GET /gists/{gist_id}/comments
+  GET /gists/{gist_id}/{sha}
 
-https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
-type GistsListCommentsReq struct {
+type GistsGetRevisionReq struct {
 	GistId string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+	Sha    string
 }
 
-func (r GistsListCommentsReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments", r.GistId)
+func (r GistsGetRevisionReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha)
 }
 
-func (r GistsListCommentsReq) method() string {
+func (r GistsGetRevisionReq) method() string {
 	return "GET"
 }
 
-func (r GistsListCommentsReq) urlQuery() url.Values {
+func (r GistsGetRevisionReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r GistsListCommentsReq) header() http.Header {
+func (r GistsGetRevisionReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsListCommentsResponseBody200 is a response body for gists/list-comments
+GistsGetRevisionResponseBody200 is a response body for gists/get-revision
 
-API documentation: https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+API documentation: https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
-type GistsListCommentsResponseBody200 []struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-GistsCreateCommentReq builds requests for "gists/create-comment"
-
-Create a comment.
-
-  POST /gists/{gist_id}/comments
-
-https://developer.github.com/v3/gists/comments/#create-a-comment
-*/
-type GistsCreateCommentReq struct {
-	GistId      string
-	RequestBody GistsCreateCommentReqBody
-}
-
-func (r GistsCreateCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments", r.GistId)
-}
-
-func (r GistsCreateCommentReq) method() string {
-	return "POST"
-}
-
-func (r GistsCreateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GistsCreateCommentReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
-}
-
-/*
-GistsCreateCommentReqBody is a request body for gists/create-comment
-
-API documentation: https://developer.github.com/v3/gists/comments/#create-a-comment
-*/
-type GistsCreateCommentReqBody struct {
-
-	// The comment text.
-	Body *string `json:"body"`
-}
-
-/*
-GistsCreateCommentResponseBody201 is a response body for gists/create-comment
-
-API documentation: https://developer.github.com/v3/gists/comments/#create-a-comment
-*/
-type GistsCreateCommentResponseBody201 struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-GistsListForUserReq builds requests for "gists/list-for-user"
-
-List gists for a user.
-
-  GET /users/{username}/gists
-
-https://developer.github.com/v3/gists/#list-gists-for-a-user
-*/
-type GistsListForUserReq struct {
-	Username string
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r GistsListForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/gists", r.Username)
-}
-
-func (r GistsListForUserReq) method() string {
-	return "GET"
-}
-
-func (r GistsListForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r GistsListForUserReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GistsListForUserResponseBody200 is a response body for gists/list-for-user
-
-API documentation: https://developer.github.com/v3/gists/#list-gists-for-a-user
-*/
-type GistsListForUserResponseBody200 []struct {
+type GistsGetRevisionResponseBody200 struct {
 	Comments    int64  `json:"comments,omitempty"`
 	CommentsUrl string `json:"comments_url,omitempty"`
 	CommitsUrl  string `json:"commits_url,omitempty"`
 	CreatedAt   string `json:"created_at,omitempty"`
 	Description string `json:"description,omitempty"`
 	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
+		Content   string      `json:"content,omitempty"`
+		Filename  string      `json:"filename,omitempty"`
+		Language  string      `json:"language,omitempty"`
+		RawUrl    string      `json:"raw_url,omitempty"`
+		Size      json.Number `json:"size,omitempty"`
+		Truncated bool        `json:"truncated,omitempty"`
+		Type      string      `json:"type,omitempty"`
 	} `json:"files,omitempty"`
+	Forks []struct {
+		CreatedAt string `json:"created_at,omitempty"`
+		Id        string `json:"id,omitempty"`
+		UpdatedAt string `json:"updated_at,omitempty"`
+		Url       string `json:"url,omitempty"`
+		User      struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+	} `json:"forks,omitempty"`
 	ForksUrl   string `json:"forks_url,omitempty"`
 	GitPullUrl string `json:"git_pull_url,omitempty"`
 	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
+	History    []struct {
+		ChangeStatus struct {
+			Additions int64 `json:"additions,omitempty"`
+			Deletions int64 `json:"deletions,omitempty"`
+			Total     int64 `json:"total,omitempty"`
+		} `json:"change_status,omitempty"`
+		CommittedAt string `json:"committed_at,omitempty"`
+		Url         string `json:"url,omitempty"`
+		User        struct {
+			AvatarUrl         string `json:"avatar_url,omitempty"`
+			EventsUrl         string `json:"events_url,omitempty"`
+			FollowersUrl      string `json:"followers_url,omitempty"`
+			FollowingUrl      string `json:"following_url,omitempty"`
+			GistsUrl          string `json:"gists_url,omitempty"`
+			GravatarId        string `json:"gravatar_id,omitempty"`
+			HtmlUrl           string `json:"html_url,omitempty"`
+			Id                int64  `json:"id,omitempty"`
+			Login             string `json:"login,omitempty"`
+			NodeId            string `json:"node_id,omitempty"`
+			OrganizationsUrl  string `json:"organizations_url,omitempty"`
+			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+			ReposUrl          string `json:"repos_url,omitempty"`
+			SiteAdmin         bool   `json:"site_admin,omitempty"`
+			StarredUrl        string `json:"starred_url,omitempty"`
+			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+			Type              string `json:"type,omitempty"`
+			Url               string `json:"url,omitempty"`
+		} `json:"user,omitempty"`
+		Version string `json:"version,omitempty"`
+	} `json:"history,omitempty"`
+	HtmlUrl string `json:"html_url,omitempty"`
+	Id      string `json:"id,omitempty"`
+	NodeId  string `json:"node_id,omitempty"`
+	Owner   struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -636,206 +1109,123 @@ type GistsListForUserResponseBody200 []struct {
 }
 
 /*
-GistsDeleteCommentReq builds requests for "gists/delete-comment"
+GistsUnstarReq builds requests for "gists/unstar"
 
-Delete a comment.
+Unstar a gist.
 
-  DELETE /gists/{gist_id}/comments/{comment_id}
+  DELETE /gists/{gist_id}/star
 
-https://developer.github.com/v3/gists/comments/#delete-a-comment
+https://developer.github.com/v3/gists/#unstar-a-gist
 */
-type GistsDeleteCommentReq struct {
-	GistId    string
-	CommentId int64
+type GistsUnstarReq struct {
+	GistId string
 }
 
-func (r GistsDeleteCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
+func (r GistsUnstarReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/star", r.GistId)
 }
 
-func (r GistsDeleteCommentReq) method() string {
+func (r GistsUnstarReq) method() string {
 	return "DELETE"
 }
 
-func (r GistsDeleteCommentReq) urlQuery() url.Values {
+func (r GistsUnstarReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsDeleteCommentReq) header() http.Header {
+func (r GistsUnstarReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsGetCommentReq builds requests for "gists/get-comment"
+GistsCheckIsStarredReq builds requests for "gists/check-is-starred"
 
-Get a single comment.
+Check if a gist is starred.
 
-  GET /gists/{gist_id}/comments/{comment_id}
+  GET /gists/{gist_id}/star
 
-https://developer.github.com/v3/gists/comments/#get-a-single-comment
+https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
-type GistsGetCommentReq struct {
-	GistId    string
-	CommentId int64
+type GistsCheckIsStarredReq struct {
+	GistId string
 }
 
-func (r GistsGetCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
+func (r GistsCheckIsStarredReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/star", r.GistId)
 }
 
-func (r GistsGetCommentReq) method() string {
+func (r GistsCheckIsStarredReq) method() string {
 	return "GET"
 }
 
-func (r GistsGetCommentReq) urlQuery() url.Values {
+func (r GistsCheckIsStarredReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsGetCommentReq) header() http.Header {
+func (r GistsCheckIsStarredReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsGetCommentResponseBody200 is a response body for gists/get-comment
+GistsStarReq builds requests for "gists/star"
 
-API documentation: https://developer.github.com/v3/gists/comments/#get-a-single-comment
+Star a gist.
+
+  PUT /gists/{gist_id}/star
+
+https://developer.github.com/v3/gists/#star-a-gist
 */
-type GistsGetCommentResponseBody200 struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+type GistsStarReq struct {
+	GistId string
 }
 
-/*
-GistsUpdateCommentReq builds requests for "gists/update-comment"
-
-Edit a comment.
-
-  PATCH /gists/{gist_id}/comments/{comment_id}
-
-https://developer.github.com/v3/gists/comments/#edit-a-comment
-*/
-type GistsUpdateCommentReq struct {
-	GistId      string
-	CommentId   int64
-	RequestBody GistsUpdateCommentReqBody
+func (r GistsStarReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/star", r.GistId)
 }
 
-func (r GistsUpdateCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
+func (r GistsStarReq) method() string {
+	return "PUT"
 }
 
-func (r GistsUpdateCommentReq) method() string {
-	return "PATCH"
-}
-
-func (r GistsUpdateCommentReq) urlQuery() url.Values {
+func (r GistsStarReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsUpdateCommentReq) header() http.Header {
+func (r GistsStarReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsUpdateCommentReqBody is a request body for gists/update-comment
+GistsListForksReq builds requests for "gists/list-forks"
 
-API documentation: https://developer.github.com/v3/gists/comments/#edit-a-comment
+List gist forks.
+
+  GET /gists/{gist_id}/forks
+
+https://developer.github.com/v3/gists/#list-gist-forks
 */
-type GistsUpdateCommentReqBody struct {
-
-	// The comment text.
-	Body *string `json:"body"`
-}
-
-/*
-GistsUpdateCommentResponseBody200 is a response body for gists/update-comment
-
-API documentation: https://developer.github.com/v3/gists/comments/#edit-a-comment
-*/
-type GistsUpdateCommentResponseBody200 struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
-GistsListCommitsReq builds requests for "gists/list-commits"
-
-List gist commits.
-
-  GET /gists/{gist_id}/commits
-
-https://developer.github.com/v3/gists/#list-gist-commits
-*/
-type GistsListCommitsReq struct {
+type GistsListForksReq struct {
 	GistId string
 
 	// Results per page (max 100)
@@ -845,15 +1235,15 @@ type GistsListCommitsReq struct {
 	Page *int64
 }
 
-func (r GistsListCommitsReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/commits", r.GistId)
+func (r GistsListForksReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/forks", r.GistId)
 }
 
-func (r GistsListCommitsReq) method() string {
+func (r GistsListForksReq) method() string {
 	return "GET"
 }
 
-func (r GistsListCommitsReq) urlQuery() url.Values {
+func (r GistsListForksReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -864,30 +1254,27 @@ func (r GistsListCommitsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListCommitsReq) header() http.Header {
+func (r GistsListForksReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r GistsListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsListCommitsResponseBody200 is a response body for gists/list-commits
+GistsListForksResponseBody200 is a response body for gists/list-forks
 
-API documentation: https://developer.github.com/v3/gists/#list-gist-commits
+API documentation: https://developer.github.com/v3/gists/#list-gist-forks
 */
-type GistsListCommitsResponseBody200 []struct {
-	ChangeStatus struct {
-		Additions int64 `json:"additions,omitempty"`
-		Deletions int64 `json:"deletions,omitempty"`
-		Total     int64 `json:"total,omitempty"`
-	} `json:"change_status,omitempty"`
-	CommittedAt string `json:"committed_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-	User        struct {
+type GistsListForksResponseBody200 []struct {
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        string `json:"id,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -907,180 +1294,50 @@ type GistsListCommitsResponseBody200 []struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"user,omitempty"`
-	Version string `json:"version,omitempty"`
 }
 
 /*
-GistsListStarredReq builds requests for "gists/list-starred"
+GistsForkReq builds requests for "gists/fork"
 
-List starred gists.
+Fork a gist.
 
-  GET /gists/starred
+  POST /gists/{gist_id}/forks
 
-https://developer.github.com/v3/gists/#list-starred-gists
+https://developer.github.com/v3/gists/#fork-a-gist
 */
-type GistsListStarredReq struct {
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+type GistsForkReq struct {
+	GistId string
 }
 
-func (r GistsListStarredReq) urlPath() string {
-	return fmt.Sprintf("/gists/starred")
+func (r GistsForkReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/forks", r.GistId)
 }
 
-func (r GistsListStarredReq) method() string {
-	return "GET"
+func (r GistsForkReq) method() string {
+	return "POST"
 }
 
-func (r GistsListStarredReq) urlQuery() url.Values {
+func (r GistsForkReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r GistsListStarredReq) header() http.Header {
+func (r GistsForkReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r GistsForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsListStarredResponseBody200 is a response body for gists/list-starred
+GistsForkResponseBody201 is a response body for gists/fork
 
-API documentation: https://developer.github.com/v3/gists/#list-starred-gists
+API documentation: https://developer.github.com/v3/gists/#fork-a-gist
 */
-type GistsListStarredResponseBody200 []struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
-}
-
-/*
-GistsListPublicReq builds requests for "gists/list-public"
-
-List public gists.
-
-  GET /gists/public
-
-https://developer.github.com/v3/gists/#list-public-gists
-*/
-type GistsListPublicReq struct {
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r GistsListPublicReq) urlPath() string {
-	return fmt.Sprintf("/gists/public")
-}
-
-func (r GistsListPublicReq) method() string {
-	return "GET"
-}
-
-func (r GistsListPublicReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r GistsListPublicReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GistsListPublicResponseBody200 is a response body for gists/list-public
-
-API documentation: https://developer.github.com/v3/gists/#list-public-gists
-*/
-type GistsListPublicResponseBody200 []struct {
+type GistsForkResponseBody201 struct {
 	Comments    int64  `json:"comments,omitempty"`
 	CommentsUrl string `json:"comments_url,omitempty"`
 	CommitsUrl  string `json:"commits_url,omitempty"`
@@ -1404,15 +1661,15 @@ type GistsListResponseBody200 []struct {
 }
 
 /*
-GistsListForksReq builds requests for "gists/list-forks"
+GistsListCommentsReq builds requests for "gists/list-comments"
 
-List gist forks.
+List comments on a gist.
 
-  GET /gists/{gist_id}/forks
+  GET /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/#list-gist-forks
+https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
-type GistsListForksReq struct {
+type GistsListCommentsReq struct {
 	GistId string
 
 	// Results per page (max 100)
@@ -1422,15 +1679,15 @@ type GistsListForksReq struct {
 	Page *int64
 }
 
-func (r GistsListForksReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/forks", r.GistId)
+func (r GistsListCommentsReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/comments", r.GistId)
 }
 
-func (r GistsListForksReq) method() string {
+func (r GistsListCommentsReq) method() string {
 	return "GET"
 }
 
-func (r GistsListForksReq) urlQuery() url.Values {
+func (r GistsListCommentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1441,24 +1698,26 @@ func (r GistsListForksReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListForksReq) header() http.Header {
+func (r GistsListCommentsReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
 
 /*
-GistsListForksResponseBody200 is a response body for gists/list-forks
+GistsListCommentsResponseBody200 is a response body for gists/list-comments
 
-API documentation: https://developer.github.com/v3/gists/#list-gist-forks
+API documentation: https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
-type GistsListForksResponseBody200 []struct {
+type GistsListCommentsResponseBody200 []struct {
+	Body      string `json:"body,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
-	Id        string `json:"id,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
 	Url       string `json:"url,omitempty"`
 	User      struct {
@@ -1484,66 +1743,66 @@ type GistsListForksResponseBody200 []struct {
 }
 
 /*
-GistsForkReq builds requests for "gists/fork"
+GistsCreateCommentReq builds requests for "gists/create-comment"
 
-Fork a gist.
+Create a comment.
 
-  POST /gists/{gist_id}/forks
+  POST /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/#fork-a-gist
+https://developer.github.com/v3/gists/comments/#create-a-comment
 */
-type GistsForkReq struct {
-	GistId string
+type GistsCreateCommentReq struct {
+	GistId      string
+	RequestBody GistsCreateCommentReqBody
 }
 
-func (r GistsForkReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/forks", r.GistId)
+func (r GistsCreateCommentReq) urlPath() string {
+	return fmt.Sprintf("/gists/%v/comments", r.GistId)
 }
 
-func (r GistsForkReq) method() string {
+func (r GistsCreateCommentReq) method() string {
 	return "POST"
 }
 
-func (r GistsForkReq) urlQuery() url.Values {
+func (r GistsCreateCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsForkReq) header() http.Header {
+func (r GistsCreateCommentReq) header() http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r GistsForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
 
 /*
-GistsForkResponseBody201 is a response body for gists/fork
+GistsCreateCommentReqBody is a request body for gists/create-comment
 
-API documentation: https://developer.github.com/v3/gists/#fork-a-gist
+API documentation: https://developer.github.com/v3/gists/comments/#create-a-comment
 */
-type GistsForkResponseBody201 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
+type GistsCreateCommentReqBody struct {
+
+	// The comment text.
+	Body *string `json:"body"`
+}
+
+/*
+GistsCreateCommentResponseBody201 is a response body for gists/create-comment
+
+API documentation: https://developer.github.com/v3/gists/comments/#create-a-comment
+*/
+type GistsCreateCommentResponseBody201 struct {
+	Body      string `json:"body,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	Id        int64  `json:"id,omitempty"`
+	NodeId    string `json:"node_id,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
+	User      struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
 		EventsUrl         string `json:"events_url,omitempty"`
 		FollowersUrl      string `json:"followers_url,omitempty"`
@@ -1562,264 +1821,5 @@ type GistsForkResponseBody201 struct {
 		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
-}
-
-/*
-GistsGetRevisionReq builds requests for "gists/get-revision"
-
-Get a specific revision of a gist.
-
-  GET /gists/{gist_id}/{sha}
-
-https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
-*/
-type GistsGetRevisionReq struct {
-	GistId string
-	Sha    string
-}
-
-func (r GistsGetRevisionReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha)
-}
-
-func (r GistsGetRevisionReq) method() string {
-	return "GET"
-}
-
-func (r GistsGetRevisionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GistsGetRevisionReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GistsGetRevisionResponseBody200 is a response body for gists/get-revision
-
-API documentation: https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
-*/
-type GistsGetRevisionResponseBody200 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string      `json:"content,omitempty"`
-		Filename  string      `json:"filename,omitempty"`
-		Language  string      `json:"language,omitempty"`
-		RawUrl    string      `json:"raw_url,omitempty"`
-		Size      json.Number `json:"size,omitempty"`
-		Truncated bool        `json:"truncated,omitempty"`
-		Type      string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	Forks []struct {
-		CreatedAt string `json:"created_at,omitempty"`
-		Id        string `json:"id,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-		Url       string `json:"url,omitempty"`
-		User      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"forks,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	History    []struct {
-		ChangeStatus struct {
-			Additions int64 `json:"additions,omitempty"`
-			Deletions int64 `json:"deletions,omitempty"`
-			Total     int64 `json:"total,omitempty"`
-		} `json:"change_status,omitempty"`
-		CommittedAt string `json:"committed_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		User        struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-		Version string `json:"version,omitempty"`
-	} `json:"history,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	Id      string `json:"id,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Owner   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
-}
-
-/*
-GistsUnstarReq builds requests for "gists/unstar"
-
-Unstar a gist.
-
-  DELETE /gists/{gist_id}/star
-
-https://developer.github.com/v3/gists/#unstar-a-gist
-*/
-type GistsUnstarReq struct {
-	GistId string
-}
-
-func (r GistsUnstarReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/star", r.GistId)
-}
-
-func (r GistsUnstarReq) method() string {
-	return "DELETE"
-}
-
-func (r GistsUnstarReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GistsUnstarReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GistsCheckIsStarredReq builds requests for "gists/check-is-starred"
-
-Check if a gist is starred.
-
-  GET /gists/{gist_id}/star
-
-https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
-*/
-type GistsCheckIsStarredReq struct {
-	GistId string
-}
-
-func (r GistsCheckIsStarredReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/star", r.GistId)
-}
-
-func (r GistsCheckIsStarredReq) method() string {
-	return "GET"
-}
-
-func (r GistsCheckIsStarredReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GistsCheckIsStarredReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-GistsStarReq builds requests for "gists/star"
-
-Star a gist.
-
-  PUT /gists/{gist_id}/star
-
-https://developer.github.com/v3/gists/#star-a-gist
-*/
-type GistsStarReq struct {
-	GistId string
-}
-
-func (r GistsStarReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/star", r.GistId)
-}
-
-func (r GistsStarReq) method() string {
-	return "PUT"
-}
-
-func (r GistsStarReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r GistsStarReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+	} `json:"user,omitempty"`
 }

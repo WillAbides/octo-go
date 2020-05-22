@@ -10,6 +10,51 @@ import (
 )
 
 /*
+InteractionsRemoveRestrictionsForRepoReq builds requests for "interactions/remove-restrictions-for-repo"
+
+Remove interaction restrictions for a repository.
+
+  DELETE /repos/{owner}/{repo}/interaction-limits
+
+https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
+*/
+type InteractionsRemoveRestrictionsForRepoReq struct {
+	Owner string
+	Repo  string
+
+	/*
+	The Interactions API is currently in public preview. See the [blog
+	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
+	preview for more details. To access the API during the preview period, you must
+	set this to true.
+	*/
+	SombraPreview bool
+}
+
+func (r InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
+}
+
+func (r InteractionsRemoveRestrictionsForRepoReq) method() string {
+	return "DELETE"
+}
+
+func (r InteractionsRemoveRestrictionsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r InteractionsRemoveRestrictionsForRepoReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+}
+
+/*
 InteractionsGetRestrictionsForRepoReq builds requests for "interactions/get-restrictions-for-repo"
 
 Get interaction restrictions for a repository.
@@ -138,95 +183,6 @@ type InteractionsAddOrUpdateRestrictionsForRepoResponseBody200 struct {
 }
 
 /*
-InteractionsRemoveRestrictionsForRepoReq builds requests for "interactions/remove-restrictions-for-repo"
-
-Remove interaction restrictions for a repository.
-
-  DELETE /repos/{owner}/{repo}/interaction-limits
-
-https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
-*/
-type InteractionsRemoveRestrictionsForRepoReq struct {
-	Owner string
-	Repo  string
-
-	/*
-	The Interactions API is currently in public preview. See the [blog
-	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
-	preview for more details. To access the API during the preview period, you must
-	set this to true.
-	*/
-	SombraPreview bool
-}
-
-func (r InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
-}
-
-func (r InteractionsRemoveRestrictionsForRepoReq) method() string {
-	return "DELETE"
-}
-
-func (r InteractionsRemoveRestrictionsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r InteractionsRemoveRestrictionsForRepoReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-InteractionsRemoveRestrictionsForOrgReq builds requests for "interactions/remove-restrictions-for-org"
-
-Remove interaction restrictions for an organization.
-
-  DELETE /orgs/{org}/interaction-limits
-
-https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
-*/
-type InteractionsRemoveRestrictionsForOrgReq struct {
-	Org string
-
-	/*
-	The Interactions API is currently in public preview. See the [blog
-	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
-	preview for more details. To access the API during the preview period, you must
-	set this to true.
-	*/
-	SombraPreview bool
-}
-
-func (r InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
-}
-
-func (r InteractionsRemoveRestrictionsForOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r InteractionsRemoveRestrictionsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r InteractionsRemoveRestrictionsForOrgReq) header() http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
 InteractionsGetRestrictionsForOrgReq builds requests for "interactions/get-restrictions-for-org"
 
 Get interaction restrictions for an organization.
@@ -350,4 +306,48 @@ type InteractionsAddOrUpdateRestrictionsForOrgResponseBody200 struct {
 	ExpiresAt string `json:"expires_at,omitempty"`
 	Limit     string `json:"limit,omitempty"`
 	Origin    string `json:"origin,omitempty"`
+}
+
+/*
+InteractionsRemoveRestrictionsForOrgReq builds requests for "interactions/remove-restrictions-for-org"
+
+Remove interaction restrictions for an organization.
+
+  DELETE /orgs/{org}/interaction-limits
+
+https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
+*/
+type InteractionsRemoveRestrictionsForOrgReq struct {
+	Org string
+
+	/*
+	The Interactions API is currently in public preview. See the [blog
+	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
+	preview for more details. To access the API during the preview period, you must
+	set this to true.
+	*/
+	SombraPreview bool
+}
+
+func (r InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
+}
+
+func (r InteractionsRemoveRestrictionsForOrgReq) method() string {
+	return "DELETE"
+}
+
+func (r InteractionsRemoveRestrictionsForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r InteractionsRemoveRestrictionsForOrgReq) header() http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
