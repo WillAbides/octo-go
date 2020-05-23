@@ -42,6 +42,7 @@ func (r OauthAuthorizationsCreateAuthorizationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -135,6 +136,7 @@ func (r OauthAuthorizationsDeleteAuthorizationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -171,6 +173,7 @@ func (r OauthAuthorizationsDeleteGrantReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -207,6 +210,7 @@ func (r OauthAuthorizationsGetAuthorizationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -267,6 +271,7 @@ func (r OauthAuthorizationsGetGrantReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -322,6 +327,7 @@ func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header() http.Head
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -439,6 +445,7 @@ func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) head
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -557,6 +564,7 @@ func (r OauthAuthorizationsListAuthorizationsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -628,6 +636,7 @@ func (r OauthAuthorizationsListGrantsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -683,6 +692,7 @@ func (r OauthAuthorizationsUpdateAuthorizationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }

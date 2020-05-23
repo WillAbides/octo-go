@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strconv"
@@ -26,13 +27,20 @@ func main() {
 	flag.StringVar(&pkgPath, "pkgpath", "", "path for output package")
 	flag.StringVar(&pkgName, "pkg", "", "name for output package")
 	flag.Parse()
-	schemaFile, err := os.Open(schemaPath) //nolint:gosec
+	err := run(schemaPath, outputPath, pkgPath, pkgName)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func run(schemaPath, outputPath, pkgPath, pkgName string) error {
+	schemaFile, err := os.Open(schemaPath)
+	if err != nil {
+		return err
+	}
 	endpoints, err := openapi.EndpointsFromSchema(schemaFile)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	sort.Slice(endpoints, func(i, j int) bool {
@@ -55,19 +63,21 @@ func main() {
 
 	for concern, concernFile := range concernFiles {
 		name := fmt.Sprintf("zz_%s_gen.go", strings.ReplaceAll(concern, "-", "_"))
-		f, err := os.Create(name)
+		f, err := os.Create(filepath.Join(outputPath, name))
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		err = concernFile.Render(f)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
+	return nil
 }
 
-func reqBodyStructName(endpoint model.Endpoint) string {
-	return toArgName(fmt.Sprintf("%s-%s-req-body", endpoint.Concern, endpoint.Name))
+func reqBodyStructName(endpointID string) string {
+	endpointID = strings.ReplaceAll(endpointID, "/", "-")
+	return toArgName(fmt.Sprintf("%s-req-body", endpointID))
 }
 
 func reqStructName(endpoint model.Endpoint) string {
@@ -80,7 +90,7 @@ func respStructName(endpoint model.Endpoint, code int) string {
 
 func toArgName(in string) string {
 	out := in
-	for _, separator := range []string{"_", "-", "."} {
+	for _, separator := range []string{"_", "-", ".", "/"} {
 		words := strings.Split(out, separator)
 		for i, word := range words {
 			words[i] = strings.Title(word)
@@ -105,16 +115,16 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toArgName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, false))
+			group.Id(toArgName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, false, false))
 		}
 		for _, param := range endpoint.QueryParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toArgName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true))
+			group.Id(toArgName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false))
 		}
 		if endpoint.JSONBodySchema != nil {
-			group.Id("RequestBody").Id(reqBodyStructName(endpoint))
+			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
 		}
 		for _, param := range endpoint.Headers {
 			if param.Name == "accept" {
@@ -123,7 +133,7 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toArgName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true))
+			group.Id(toArgName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false))
 		}
 		for _, preview := range endpoint.Previews {
 			if preview.Note != "" {
@@ -149,10 +159,12 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		file.Add(headerFunc)
 		file.Line()
 	}
-	file.Add(endpointHTTPRequestFunc(endpoint))
+	for _, stmt := range endpointHTTPRequestFunc(endpoint) {
+		file.Add(stmt)
+	}
 }
 
-func endpointHTTPRequestFunc(endpoint model.Endpoint) *jen.Statement {
+func endpointHTTPRequestFunc(endpoint model.Endpoint) []*jen.Statement {
 	structName := reqStructName(endpoint)
 	stmt := jen.Func().Params(jen.Id("r").Id(structName)).Id("HTTPRequest").Params(
 		jen.Id("ctx").Qual("context", "Context"),
@@ -166,7 +178,7 @@ func endpointHTTPRequestFunc(endpoint model.Endpoint) *jen.Statement {
 			funcBlock.Return(jen.Id(`httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)`))
 		}
 	})
-	return stmt
+	return []*jen.Statement{jen.Comment("HTTPRequest creates an http request"), stmt}
 }
 
 func endpointHeadersFunc(endpoint model.Endpoint) *jen.Statement {
@@ -246,9 +258,9 @@ func endpointURLQueryFunc(endpoint model.Endpoint) *jen.Statement {
 
 var bracesExp = regexp.MustCompile(`{[^}]+}`)
 
-func addResponseBodies(file *jen.File, endpoint model.Endpoint) int {
+func addResponseBodies(file *jen.File, endpoint model.Endpoint) {
 	if len(endpoint.Responses) == 0 {
-		return 0
+		return
 	}
 	sortedCodes := make([]int, 0, len(endpoint.Responses))
 	for code := range endpoint.Responses {
@@ -257,7 +269,7 @@ func addResponseBodies(file *jen.File, endpoint model.Endpoint) int {
 	sort.Ints(sortedCodes)
 	for _, respCode := range sortedCodes {
 		schema := endpoint.Responses[respCode]
-		tp := paramSchemaFieldType(schema, []string{endpoint.ID, "responseBody", strconv.Itoa(respCode)}, false)
+		tp := paramSchemaFieldType(schema, []string{endpoint.ID, "responseBody", strconv.Itoa(respCode)}, false, false)
 		if tp == nil {
 			continue
 		}
@@ -269,35 +281,84 @@ func addResponseBodies(file *jen.File, endpoint model.Endpoint) int {
 		)
 		file.Type().Id(respStructName(endpoint, respCode)).Add(tp)
 	}
-	return len(sortedCodes)
 }
 
-func addRequestBody(file *jen.File, endpoint model.Endpoint) int {
+func addRequestBodyHelpers(file *jen.File, endpoint model.Endpoint) {
 	if endpoint.JSONBodySchema == nil {
-		return 0
+		return
 	}
-	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "requestBody"}, true)
+	stmts := reqBodyHelperStructs([]string{endpoint.ID, "reqBody"}, endpoint.JSONBodySchema)
+	for _, stmt := range stmts {
+		file.Add(stmt)
+	}
+}
+
+func removeValFromStringSlice(sl []string, val string) []string {
+	result := make([]string, 0, len(sl))
+	for _, s := range sl {
+		if s != val {
+			result = append(result, s)
+		}
+	}
+	return result
+}
+
+func reqBodyHelperStructs(schemaPath []string, schema *model.ParamSchema) []*jen.Statement {
+	var result []*jen.Statement
+	helperName := reqBodyHelperStructName(schemaPath, schema)
+	if helperName != "" {
+		tp := paramSchemaFieldType(schema, schemaPath, true, true)
+		sp := removeValFromStringSlice(schemaPath, "ITEM_SCHEMA")
+		parentStructName := toArgName(strings.Join(sp[:len(sp)-1], "-"))
+		parentValueName := toArgName(sp[len(sp)-1])
+		comment := fmt.Sprintf("%s is a value for %s's %s field", helperName, parentStructName, parentValueName)
+		result = append(result, jen.Comment(comment))
+		result = append(result, jen.Type().Id(helperName).Add(tp))
+	}
+	if schema.ItemSchema != nil {
+		result = append(result, reqBodyHelperStructs(append(schemaPath, "ITEM_SCHEMA"), schema.ItemSchema)...)
+	}
+	for _, param := range schema.ObjectParams {
+		nr := reqBodyHelperStructs(append(schemaPath, param.Name), param.Schema)
+		result = append(result, nr...)
+	}
+	return result
+}
+
+func reqBodyHelperStructName(schemaPath []string, schema *model.ParamSchema) string {
+	//We don't want ITEM_SCHEMA in the name, and removing it doesn't cause duplicate struct names
+	sp := removeValFromStringSlice(schemaPath, "ITEM_SCHEMA")
+
+	if len(sp) < 3 {
+		return ""
+	}
+	if schemaPath[1] != "reqBody" {
+		return ""
+	}
+	if len(schema.ObjectParams) == 0 {
+		return ""
+	}
+	suffix := toArgName(strings.Join(sp[2:], "-"))
+	return reqBodyStructName(sp[0]) + suffix
+}
+
+func addRequestBody(file *jen.File, endpoint model.Endpoint) {
+	addRequestBodyHelpers(file, endpoint)
+	if endpoint.JSONBodySchema == nil {
+		return
+	}
+	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "reqBody"}, true, false)
 	if tp == nil {
-		return 0
+		return
 	}
 
-	structName := reqBodyStructName(endpoint)
+	structName := reqBodyStructName(endpoint.ID)
 	file.Commentf("%s is a request body for %s\n\nAPI documentation: %s",
 		structName,
 		endpoint.ID,
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).Add(tp)
-	return 1
-}
-
-func massageName(name string) string {
-	name = strings.ReplaceAll(name, "+", "Plus")
-	name = strings.ReplaceAll(name, "1", "One")
-	if strings.HasPrefix(name, "-") {
-		name = strings.Replace(name, "-", "Minus", 1)
-	}
-	return name
 }
 
 func schemaPathString(schemaPath []string) string {
@@ -415,8 +476,14 @@ func overrideParamSchema(schemaPath []string, schema *model.ParamSchema) {
 	}
 }
 
-func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, usePointers bool) *jen.Statement {
+func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, usePointers, noHelper bool) *jen.Statement {
 	overrideParamSchema(schemaPath, schema)
+
+	helperStruct := reqBodyHelperStructName(schemaPath, schema)
+	if !noHelper && helperStruct != "" {
+		return jen.Id(helperStruct)
+	}
+
 	if schema == nil {
 		return nil
 	}
@@ -432,7 +499,7 @@ func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, usePoi
 	case model.ParamTypeInterface:
 		return jen.Interface()
 	case model.ParamTypeArray:
-		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), usePointers))
+		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), usePointers, false))
 	case model.ParamTypeObject:
 		return paramSchemaObjectFieldType(schema, schemaPath, usePointers)
 	}
@@ -446,8 +513,8 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 				if param.HelpText != "" {
 					group.Line()
 				}
-				gStmt := jen.Id(toArgName(massageName(param.Name)))
-				pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), usePointers)
+				gStmt := jen.Id(toArgName(param.Name))
+				pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), usePointers, false)
 				if usePointers && needsPointer(param.Schema) {
 					gStmt.Op("*")
 				}
@@ -469,7 +536,7 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 		if usePointers && needsPointer(schema.ItemSchema) {
 			stmt.Op("*")
 		}
-		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), usePointers))
+		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), usePointers, false))
 	}
 	return jen.Interface()
 }

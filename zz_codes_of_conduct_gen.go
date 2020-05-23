@@ -47,6 +47,7 @@ func (r CodesOfConductGetAllCodesOfConductReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -101,6 +102,7 @@ func (r CodesOfConductGetConductCodeReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -157,6 +159,7 @@ func (r CodesOfConductGetForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }

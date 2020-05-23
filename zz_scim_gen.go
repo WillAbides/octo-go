@@ -43,6 +43,7 @@ func (r ScimGetProvisioningDetailsForUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ScimGetProvisioningDetailsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -130,6 +131,7 @@ func (r ScimListProvisionedIdentitiesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -200,6 +202,7 @@ func (r ScimProvisionAndInviteUsersReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ScimProvisionAndInviteUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -265,6 +268,7 @@ func (r ScimRemoveUserFromOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ScimRemoveUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -302,6 +306,7 @@ func (r ScimReplaceProvisionedUserInformationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ScimReplaceProvisionedUserInformationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -367,6 +372,7 @@ func (r ScimUpdateUserAttributeReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ScimUpdateUserAttributeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }

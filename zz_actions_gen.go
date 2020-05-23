@@ -44,6 +44,7 @@ func (r ActionsAddSelectedRepoToOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -82,6 +83,7 @@ func (r ActionsCancelWorkflowRunReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -120,6 +122,7 @@ func (r ActionsCreateOrUpdateOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -202,6 +205,7 @@ func (r ActionsCreateOrUpdateRepoSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -258,6 +262,7 @@ func (r ActionsCreateRegistrationTokenForOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -305,6 +310,7 @@ func (r ActionsCreateRegistrationTokenForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -351,6 +357,7 @@ func (r ActionsCreateRemoveTokenForOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -398,6 +405,7 @@ func (r ActionsCreateRemoveTokenForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -446,6 +454,7 @@ func (r ActionsDeleteArtifactReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -483,6 +492,7 @@ func (r ActionsDeleteOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -521,6 +531,7 @@ func (r ActionsDeleteRepoSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -558,6 +569,7 @@ func (r ActionsDeleteSelfHostedRunnerFromOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -596,6 +608,7 @@ func (r ActionsDeleteSelfHostedRunnerFromRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -634,6 +647,7 @@ func (r ActionsDeleteWorkflowRunLogsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -673,6 +687,7 @@ func (r ActionsDownloadArtifactReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -711,6 +726,7 @@ func (r ActionsDownloadWorkflowJobLogsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -749,6 +765,7 @@ func (r ActionsDownloadWorkflowRunLogsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -787,6 +804,7 @@ func (r ActionsGetArtifactReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -840,6 +858,7 @@ func (r ActionsGetOrgPublicKeyReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -887,6 +906,7 @@ func (r ActionsGetOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -937,6 +957,7 @@ func (r ActionsGetRepoPublicKeyReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -985,6 +1006,7 @@ func (r ActionsGetRepoSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1033,6 +1055,7 @@ func (r ActionsGetSelfHostedRunnerForOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1083,6 +1106,7 @@ func (r ActionsGetSelfHostedRunnerForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1133,6 +1157,7 @@ func (r ActionsGetWorkflowReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1189,6 +1214,7 @@ func (r ActionsGetWorkflowJobReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1256,6 +1282,7 @@ func (r ActionsGetWorkflowRunReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1471,6 +1498,7 @@ func (r ActionsGetWorkflowRunUsageReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1532,6 +1560,7 @@ func (r ActionsGetWorkflowUsageReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1600,6 +1629,7 @@ func (r ActionsListArtifactsForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1681,6 +1711,7 @@ func (r ActionsListJobsForWorkflowRunReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1761,6 +1792,7 @@ func (r ActionsListOrgSecretsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1826,6 +1858,7 @@ func (r ActionsListRepoSecretsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1930,6 +1963,7 @@ func (r ActionsListRepoWorkflowRunsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2159,6 +2193,7 @@ func (r ActionsListRepoWorkflowsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2216,6 +2251,7 @@ func (r ActionsListRunnerApplicationsForOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2265,6 +2301,7 @@ func (r ActionsListRunnerApplicationsForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2314,6 +2351,7 @@ func (r ActionsListSelectedReposForOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2439,6 +2477,7 @@ func (r ActionsListSelfHostedRunnersForOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2503,6 +2542,7 @@ func (r ActionsListSelfHostedRunnersForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2568,6 +2608,7 @@ func (r ActionsListWorkflowRunArtifactsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2679,6 +2720,7 @@ func (r ActionsListWorkflowRunsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2897,6 +2939,7 @@ func (r ActionsReRunWorkflowReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2935,6 +2978,7 @@ func (r ActionsRemoveSelectedRepoFromOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2973,6 +3017,7 @@ func (r ActionsSetSelectedReposForOrgSecretReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }

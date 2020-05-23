@@ -44,6 +44,7 @@ func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -81,6 +82,7 @@ func (r ActivityDeleteRepoSubscriptionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -117,6 +119,7 @@ func (r ActivityDeleteThreadSubscriptionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -151,6 +154,7 @@ func (r ActivityGetFeedsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -238,6 +242,7 @@ func (r ActivityGetRepoSubscriptionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -288,6 +293,7 @@ func (r ActivityGetThreadReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -412,6 +418,7 @@ func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) header() http.Head
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -474,6 +481,7 @@ func (r ActivityListEventsForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -556,6 +564,7 @@ func (r ActivityListNotificationsForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -693,6 +702,7 @@ func (r ActivityListOrgEventsForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -740,6 +750,7 @@ func (r ActivityListPublicEventsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -789,6 +800,7 @@ func (r ActivityListPublicEventsForRepoNetworkReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -837,6 +849,7 @@ func (r ActivityListPublicEventsForUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -885,6 +898,7 @@ func (r ActivityListPublicOrgEventsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -933,6 +947,7 @@ func (r ActivityListReceivedEventsForUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -981,6 +996,7 @@ func (r ActivityListReceivedPublicEventsForUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1030,6 +1046,7 @@ func (r ActivityListRepoEventsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1114,6 +1131,7 @@ func (r ActivityListRepoNotificationsForAuthenticatedUserReq) header() http.Head
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1264,6 +1282,7 @@ func (r ActivityListReposStarredByAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1438,6 +1457,7 @@ func (r ActivityListReposStarredByUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1597,6 +1617,7 @@ func (r ActivityListReposWatchedByUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1761,6 +1782,7 @@ func (r ActivityListStargazersForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1834,6 +1856,7 @@ func (r ActivityListWatchedReposForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1998,6 +2021,7 @@ func (r ActivityListWatchersForRepoReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2060,6 +2084,7 @@ func (r ActivityMarkNotificationsAsReadReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2115,6 +2140,7 @@ func (r ActivityMarkRepoNotificationsAsReadReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2168,6 +2194,7 @@ func (r ActivityMarkThreadAsReadReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2206,6 +2233,7 @@ func (r ActivitySetRepoSubscriptionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2271,6 +2299,7 @@ func (r ActivitySetThreadSubscriptionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2336,6 +2365,7 @@ func (r ActivityStarRepoForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2373,6 +2403,7 @@ func (r ActivityUnstarRepoForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }

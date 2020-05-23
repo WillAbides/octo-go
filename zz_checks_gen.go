@@ -54,8 +54,126 @@ func (r ChecksCreateReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ChecksCreateReqBodyActions is a value for ChecksCreateReqBody's Actions field
+type ChecksCreateReqBodyActions struct {
+
+	/*
+	   A short explanation of what this action would do. The maximum size is 40
+	   characters.
+	*/
+	Description *string `json:"description"`
+
+	/*
+	   A reference for the action on the integrator's system. The maximum size is 20
+	   characters.
+	*/
+	Identifier *string `json:"identifier"`
+
+	/*
+	   The text to be displayed on a button in the web UI. The maximum size is 20
+	   characters.
+	*/
+	Label *string `json:"label"`
+}
+
+// ChecksCreateReqBodyOutput is a value for ChecksCreateReqBody's Output field
+type ChecksCreateReqBodyOutput struct {
+
+	/*
+	   Adds information from your analysis to specific lines of code. Annotations are
+	   visible on GitHub in the **Checks** and **Files changed** tab of the pull
+	   request. The Checks API limits the number of annotations to a maximum of 50 per
+	   API request. To create more than 50 annotations, you have to make multiple
+	   requests to the [Update a check
+	   run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
+	   Each time you update the check run, annotations are appended to the list of
+	   annotations that already exist for the check run. For details about how you can
+	   view annotations on GitHub, see "[About status
+	   checks](https://help.github.com/articles/about-status-checks#checks)". See the
+	   [`annotations`
+	   object](https://developer.github.com/v3/checks/runs/#annotations-object)
+	   description for details about how to use this parameter.
+	*/
+	Annotations []ChecksCreateReqBodyOutputAnnotations `json:"annotations,omitempty"`
+
+	/*
+	   Adds images to the output displayed in the GitHub pull request UI. See the
+	   [`images` object](https://developer.github.com/v3/checks/runs/#images-object)
+	   description for details.
+	*/
+	Images []ChecksCreateReqBodyOutputImages `json:"images,omitempty"`
+
+	// The summary of the check run. This parameter supports Markdown.
+	Summary *string `json:"summary"`
+
+	// The details of the check run. This parameter supports Markdown.
+	Text *string `json:"text,omitempty"`
+
+	// The title of the check run.
+	Title *string `json:"title"`
+}
+
+// ChecksCreateReqBodyOutputAnnotations is a value for ChecksCreateReqBodyOutput's Annotations field
+type ChecksCreateReqBodyOutputAnnotations struct {
+
+	// The level of the annotation. Can be one of `notice`, `warning`, or `failure`.
+	AnnotationLevel *string `json:"annotation_level"`
+
+	/*
+	   The end column of the annotation. Annotations only support `start_column` and
+	   `end_column` on the same line. Omit this parameter if `start_line` and
+	   `end_line` have different values.
+	*/
+	EndColumn *int64 `json:"end_column,omitempty"`
+
+	// The end line of the annotation.
+	EndLine *int64 `json:"end_line"`
+
+	/*
+	   A short description of the feedback for these lines of code. The maximum size is
+	   64 KB.
+	*/
+	Message *string `json:"message"`
+
+	/*
+	   The path of the file to add an annotation to. For example,
+	   `assets/css/main.css`.
+	*/
+	Path *string `json:"path"`
+
+	// Details about this annotation. The maximum size is 64 KB.
+	RawDetails *string `json:"raw_details,omitempty"`
+
+	/*
+	   The start column of the annotation. Annotations only support `start_column` and
+	   `end_column` on the same line. Omit this parameter if `start_line` and
+	   `end_line` have different values.
+	*/
+	StartColumn *int64 `json:"start_column,omitempty"`
+
+	// The start line of the annotation.
+	StartLine *int64 `json:"start_line"`
+
+	// The title that represents the annotation. The maximum size is 255 characters.
+	Title *string `json:"title,omitempty"`
+}
+
+// ChecksCreateReqBodyOutputImages is a value for ChecksCreateReqBodyOutput's Images field
+type ChecksCreateReqBodyOutputImages struct {
+
+	// The alternative text for the image.
+	Alt *string `json:"alt"`
+
+	// A short image description.
+	Caption *string `json:"caption,omitempty"`
+
+	// The full URL of the image.
+	ImageUrl *string `json:"image_url"`
 }
 
 /*
@@ -82,26 +200,7 @@ type ChecksCreateReqBody struct {
 	   requested
 	   actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
 	*/
-	Actions []struct {
-
-		/*
-		   A short explanation of what this action would do. The maximum size is 40
-		   characters.
-		*/
-		Description *string `json:"description"`
-
-		/*
-		   A reference for the action on the integrator's system. The maximum size is 20
-		   characters.
-		*/
-		Identifier *string `json:"identifier"`
-
-		/*
-		   The text to be displayed on a button in the web UI. The maximum size is 20
-		   characters.
-		*/
-		Label *string `json:"label"`
-	} `json:"actions,omitempty"`
+	Actions []ChecksCreateReqBodyActions `json:"actions,omitempty"`
 
 	/*
 	   The time the check completed. This is a timestamp in [ISO
@@ -141,93 +240,7 @@ type ChecksCreateReqBody struct {
 	   run. See the [`output`
 	   object](https://developer.github.com/v3/checks/runs/#output-object) description.
 	*/
-	Output *struct {
-
-		/*
-		   Adds information from your analysis to specific lines of code. Annotations are
-		   visible on GitHub in the **Checks** and **Files changed** tab of the pull
-		   request. The Checks API limits the number of annotations to a maximum of 50 per
-		   API request. To create more than 50 annotations, you have to make multiple
-		   requests to the [Update a check
-		   run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
-		   Each time you update the check run, annotations are appended to the list of
-		   annotations that already exist for the check run. For details about how you can
-		   view annotations on GitHub, see "[About status
-		   checks](https://help.github.com/articles/about-status-checks#checks)". See the
-		   [`annotations`
-		   object](https://developer.github.com/v3/checks/runs/#annotations-object)
-		   description for details about how to use this parameter.
-		*/
-		Annotations []struct {
-
-			// The level of the annotation. Can be one of `notice`, `warning`, or `failure`.
-			AnnotationLevel *string `json:"annotation_level"`
-
-			/*
-			   The end column of the annotation. Annotations only support `start_column` and
-			   `end_column` on the same line. Omit this parameter if `start_line` and
-			   `end_line` have different values.
-			*/
-			EndColumn *int64 `json:"end_column,omitempty"`
-
-			// The end line of the annotation.
-			EndLine *int64 `json:"end_line"`
-
-			/*
-			   A short description of the feedback for these lines of code. The maximum size is
-			   64 KB.
-			*/
-			Message *string `json:"message"`
-
-			/*
-			   The path of the file to add an annotation to. For example,
-			   `assets/css/main.css`.
-			*/
-			Path *string `json:"path"`
-
-			// Details about this annotation. The maximum size is 64 KB.
-			RawDetails *string `json:"raw_details,omitempty"`
-
-			/*
-			   The start column of the annotation. Annotations only support `start_column` and
-			   `end_column` on the same line. Omit this parameter if `start_line` and
-			   `end_line` have different values.
-			*/
-			StartColumn *int64 `json:"start_column,omitempty"`
-
-			// The start line of the annotation.
-			StartLine *int64 `json:"start_line"`
-
-			// The title that represents the annotation. The maximum size is 255 characters.
-			Title *string `json:"title,omitempty"`
-		} `json:"annotations,omitempty"`
-
-		/*
-		   Adds images to the output displayed in the GitHub pull request UI. See the
-		   [`images` object](https://developer.github.com/v3/checks/runs/#images-object)
-		   description for details.
-		*/
-		Images []struct {
-
-			// The alternative text for the image.
-			Alt *string `json:"alt"`
-
-			// A short image description.
-			Caption *string `json:"caption,omitempty"`
-
-			// The full URL of the image.
-			ImageUrl *string `json:"image_url"`
-		} `json:"images,omitempty"`
-
-		// The summary of the check run. This parameter supports Markdown.
-		Summary *string `json:"summary"`
-
-		// The details of the check run. This parameter supports Markdown.
-		Text *string `json:"text,omitempty"`
-
-		// The title of the check run.
-		Title *string `json:"title"`
-	} `json:"output,omitempty"`
+	Output *ChecksCreateReqBodyOutput `json:"output,omitempty"`
 
 	/*
 	   The time that the check run began. This is a timestamp in [ISO
@@ -365,6 +378,7 @@ func (r ChecksCreateSuiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -578,6 +592,7 @@ func (r ChecksGetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -710,6 +725,7 @@ func (r ChecksGetSuiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -924,6 +940,7 @@ func (r ChecksListAnnotationsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1024,6 +1041,7 @@ func (r ChecksListForRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1195,6 +1213,7 @@ func (r ChecksListForSuiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1357,6 +1376,7 @@ func (r ChecksListSuitesForRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1562,6 +1582,7 @@ func (r ChecksRerequestSuiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1609,8 +1630,22 @@ func (r ChecksSetSuitesPreferencesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks is a value for ChecksSetSuitesPreferencesReqBody's AutoTriggerChecks field
+type ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks struct {
+
+	// The `id` of the GitHub App.
+	AppId *int64 `json:"app_id"`
+
+	/*
+	   Set to `true` to enable automatic creation of CheckSuite events upon pushes to
+	   the repository, or `false` to disable them.
+	*/
+	Setting *bool `json:"setting"`
 }
 
 /*
@@ -1626,17 +1661,7 @@ type ChecksSetSuitesPreferencesReqBody struct {
 	   object](https://developer.github.com/v3/checks/suites/#auto_trigger_checks-object)
 	   description for details.
 	*/
-	AutoTriggerChecks []struct {
-
-		// The `id` of the GitHub App.
-		AppId *int64 `json:"app_id"`
-
-		/*
-		   Set to `true` to enable automatic creation of CheckSuite events upon pushes to
-		   the repository, or `false` to disable them.
-		*/
-		Setting *bool `json:"setting"`
-	} `json:"auto_trigger_checks,omitempty"`
+	AutoTriggerChecks []ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks `json:"auto_trigger_checks,omitempty"`
 }
 
 /*
@@ -1802,8 +1827,127 @@ func (r ChecksUpdateReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ChecksUpdateReqBodyActions is a value for ChecksUpdateReqBody's Actions field
+type ChecksUpdateReqBodyActions struct {
+
+	/*
+	   A short explanation of what this action would do. The maximum size is 40
+	   characters.
+	*/
+	Description *string `json:"description"`
+
+	/*
+	   A reference for the action on the integrator's system. The maximum size is 20
+	   characters.
+	*/
+	Identifier *string `json:"identifier"`
+
+	/*
+	   The text to be displayed on a button in the web UI. The maximum size is 20
+	   characters.
+	*/
+	Label *string `json:"label"`
+}
+
+// ChecksUpdateReqBodyOutput is a value for ChecksUpdateReqBody's Output field
+type ChecksUpdateReqBodyOutput struct {
+
+	/*
+	   Adds information from your analysis to specific lines of code. Annotations are
+	   visible in GitHub's pull request UI. Annotations are visible in GitHub's pull
+	   request UI. The Checks API limits the number of annotations to a maximum of 50
+	   per API request. To create more than 50 annotations, you have to make multiple
+	   requests to the [Update a check
+	   run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
+	   Each time you update the check run, annotations are appended to the list of
+	   annotations that already exist for the check run. For details about annotations
+	   in the UI, see "[About status
+	   checks](https://help.github.com/articles/about-status-checks#checks)". See the
+	   [`annotations`
+	   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
+	   description for details.
+	*/
+	Annotations []ChecksUpdateReqBodyOutputAnnotations `json:"annotations,omitempty"`
+
+	/*
+	   Adds images to the output displayed in the GitHub pull request UI. See the
+	   [`images`
+	   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
+	   description for details.
+	*/
+	Images []ChecksUpdateReqBodyOutputImages `json:"images,omitempty"`
+
+	// Can contain Markdown.
+	Summary *string `json:"summary"`
+
+	// Can contain Markdown.
+	Text *string `json:"text,omitempty"`
+
+	// **Required**.
+	Title *string `json:"title,omitempty"`
+}
+
+// ChecksUpdateReqBodyOutputAnnotations is a value for ChecksUpdateReqBodyOutput's Annotations field
+type ChecksUpdateReqBodyOutputAnnotations struct {
+
+	// The level of the annotation. Can be one of `notice`, `warning`, or `failure`.
+	AnnotationLevel *string `json:"annotation_level"`
+
+	/*
+	   The end column of the annotation. Annotations only support `start_column` and
+	   `end_column` on the same line. Omit this parameter if `start_line` and
+	   `end_line` have different values.
+	*/
+	EndColumn *int64 `json:"end_column,omitempty"`
+
+	// The end line of the annotation.
+	EndLine *int64 `json:"end_line"`
+
+	/*
+	   A short description of the feedback for these lines of code. The maximum size is
+	   64 KB.
+	*/
+	Message *string `json:"message"`
+
+	/*
+	   The path of the file to add an annotation to. For example,
+	   `assets/css/main.css`.
+	*/
+	Path *string `json:"path"`
+
+	// Details about this annotation. The maximum size is 64 KB.
+	RawDetails *string `json:"raw_details,omitempty"`
+
+	/*
+	   The start column of the annotation. Annotations only support `start_column` and
+	   `end_column` on the same line. Omit this parameter if `start_line` and
+	   `end_line` have different values.
+	*/
+	StartColumn *int64 `json:"start_column,omitempty"`
+
+	// The start line of the annotation.
+	StartLine *int64 `json:"start_line"`
+
+	// The title that represents the annotation. The maximum size is 255 characters.
+	Title *string `json:"title,omitempty"`
+}
+
+// ChecksUpdateReqBodyOutputImages is a value for ChecksUpdateReqBodyOutput's Images field
+type ChecksUpdateReqBodyOutputImages struct {
+
+	// The alternative text for the image.
+	Alt *string `json:"alt"`
+
+	// A short image description.
+	Caption *string `json:"caption,omitempty"`
+
+	// The full URL of the image.
+	ImageUrl *string `json:"image_url"`
 }
 
 /*
@@ -1822,26 +1966,7 @@ type ChecksUpdateReqBody struct {
 	   runs and requested
 	   actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
 	*/
-	Actions []struct {
-
-		/*
-		   A short explanation of what this action would do. The maximum size is 40
-		   characters.
-		*/
-		Description *string `json:"description"`
-
-		/*
-		   A reference for the action on the integrator's system. The maximum size is 20
-		   characters.
-		*/
-		Identifier *string `json:"identifier"`
-
-		/*
-		   The text to be displayed on a button in the web UI. The maximum size is 20
-		   characters.
-		*/
-		Label *string `json:"label"`
-	} `json:"actions,omitempty"`
+	Actions []ChecksUpdateReqBodyActions `json:"actions,omitempty"`
 
 	/*
 	   The time the check completed. This is a timestamp in [ISO
@@ -1874,94 +1999,7 @@ type ChecksUpdateReqBody struct {
 	   object](https://developer.github.com/v3/checks/runs/#output-object-1)
 	   description.
 	*/
-	Output *struct {
-
-		/*
-		   Adds information from your analysis to specific lines of code. Annotations are
-		   visible in GitHub's pull request UI. Annotations are visible in GitHub's pull
-		   request UI. The Checks API limits the number of annotations to a maximum of 50
-		   per API request. To create more than 50 annotations, you have to make multiple
-		   requests to the [Update a check
-		   run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
-		   Each time you update the check run, annotations are appended to the list of
-		   annotations that already exist for the check run. For details about annotations
-		   in the UI, see "[About status
-		   checks](https://help.github.com/articles/about-status-checks#checks)". See the
-		   [`annotations`
-		   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
-		   description for details.
-		*/
-		Annotations []struct {
-
-			// The level of the annotation. Can be one of `notice`, `warning`, or `failure`.
-			AnnotationLevel *string `json:"annotation_level"`
-
-			/*
-			   The end column of the annotation. Annotations only support `start_column` and
-			   `end_column` on the same line. Omit this parameter if `start_line` and
-			   `end_line` have different values.
-			*/
-			EndColumn *int64 `json:"end_column,omitempty"`
-
-			// The end line of the annotation.
-			EndLine *int64 `json:"end_line"`
-
-			/*
-			   A short description of the feedback for these lines of code. The maximum size is
-			   64 KB.
-			*/
-			Message *string `json:"message"`
-
-			/*
-			   The path of the file to add an annotation to. For example,
-			   `assets/css/main.css`.
-			*/
-			Path *string `json:"path"`
-
-			// Details about this annotation. The maximum size is 64 KB.
-			RawDetails *string `json:"raw_details,omitempty"`
-
-			/*
-			   The start column of the annotation. Annotations only support `start_column` and
-			   `end_column` on the same line. Omit this parameter if `start_line` and
-			   `end_line` have different values.
-			*/
-			StartColumn *int64 `json:"start_column,omitempty"`
-
-			// The start line of the annotation.
-			StartLine *int64 `json:"start_line"`
-
-			// The title that represents the annotation. The maximum size is 255 characters.
-			Title *string `json:"title,omitempty"`
-		} `json:"annotations,omitempty"`
-
-		/*
-		   Adds images to the output displayed in the GitHub pull request UI. See the
-		   [`images`
-		   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
-		   description for details.
-		*/
-		Images []struct {
-
-			// The alternative text for the image.
-			Alt *string `json:"alt"`
-
-			// A short image description.
-			Caption *string `json:"caption,omitempty"`
-
-			// The full URL of the image.
-			ImageUrl *string `json:"image_url"`
-		} `json:"images,omitempty"`
-
-		// Can contain Markdown.
-		Summary *string `json:"summary"`
-
-		// Can contain Markdown.
-		Text *string `json:"text,omitempty"`
-
-		// **Required**.
-		Title *string `json:"title,omitempty"`
-	} `json:"output,omitempty"`
+	Output *ChecksUpdateReqBodyOutput `json:"output,omitempty"`
 
 	/*
 	   This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

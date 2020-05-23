@@ -43,6 +43,7 @@ func (r ReposAcceptInvitationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -82,6 +83,7 @@ func (r ReposAddCollaboratorReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -262,6 +264,7 @@ func (r ReposAddDeployKeyReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -342,6 +345,7 @@ func (r ReposAddProtectedBranchAdminEnforcementReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -391,6 +395,7 @@ func (r ReposAddProtectedBranchAppRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -483,6 +488,7 @@ func (r ReposAddProtectedBranchRequiredSignaturesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -532,6 +538,7 @@ func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) header() http.He
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -585,6 +592,7 @@ func (r ReposAddProtectedBranchTeamRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -651,6 +659,7 @@ func (r ReposAddProtectedBranchUserRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -722,6 +731,7 @@ func (r ReposCheckCollaboratorReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -766,6 +776,7 @@ func (r ReposCheckVulnerabilityAlertsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -805,6 +816,7 @@ func (r ReposCompareCommitsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCompareCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1101,6 +1113,7 @@ func (r ReposCreateCommitCommentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -1212,6 +1225,7 @@ func (r ReposCreateDeploymentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -1401,6 +1415,7 @@ func (r ReposCreateDeploymentStatusReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -1561,6 +1576,7 @@ func (r ReposCreateDispatchEventReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -1638,6 +1654,7 @@ func (r ReposCreateForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -1887,6 +1904,7 @@ func (r ReposCreateForkReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2050,8 +2068,39 @@ func (r ReposCreateHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposCreateHookReqBodyConfig is a value for ReposCreateHookReqBody's Config field
+type ReposCreateHookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
 }
 
 /*
@@ -2071,34 +2120,7 @@ type ReposCreateHookReqBody struct {
 	   Key/value pairs to provide settings for this webhook. [These are defined
 	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
 	*/
-	Config *struct {
-
-		/*
-		   The media type used to serialize the payloads. Supported values include `json`
-		   and `form`. The default is `form`.
-		*/
-		ContentType *string `json:"content_type,omitempty"`
-
-		/*
-		   Determines whether the SSL certificate of the host for `url` will be verified
-		   when delivering payloads. Supported values include `0` (verification is
-		   performed) and `1` (verification is not performed). The default is `0`. **We
-		   strongly recommend not setting this to `1` as you are subject to
-		   man-in-the-middle and other attacks.**
-		*/
-		InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-		/*
-		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-		   digest value in the
-		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-		   header.
-		*/
-		Secret *string `json:"secret,omitempty"`
-
-		// The URL to which the payloads will be delivered.
-		Url *string `json:"url"`
-	} `json:"config"`
+	Config *ReposCreateHookReqBodyConfig `json:"config"`
 
 	/*
 	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
@@ -2198,6 +2220,7 @@ func (r ReposCreateInOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2448,8 +2471,41 @@ func (r ReposCreateOrUpdateFileReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposCreateOrUpdateFileReqBodyAuthor is a value for ReposCreateOrUpdateFileReqBody's Author field
+type ReposCreateOrUpdateFileReqBodyAuthor struct {
+
+	/*
+	   The email of the author or committer of the commit. You'll receive a `422`
+	   status code if `email` is omitted.
+	*/
+	Email *string `json:"email"`
+
+	/*
+	   The name of the author or committer of the commit. You'll receive a `422` status
+	   code if `name` is omitted.
+	*/
+	Name *string `json:"name"`
+}
+
+// ReposCreateOrUpdateFileReqBodyCommitter is a value for ReposCreateOrUpdateFileReqBody's Committer field
+type ReposCreateOrUpdateFileReqBodyCommitter struct {
+
+	/*
+	   The email of the author or committer of the commit. You'll receive a `422`
+	   status code if `email` is omitted.
+	*/
+	Email *string `json:"email"`
+
+	/*
+	   The name of the author or committer of the commit. You'll receive a `422` status
+	   code if `name` is omitted.
+	*/
+	Name *string `json:"name"`
 }
 
 /*
@@ -2463,39 +2519,13 @@ type ReposCreateOrUpdateFileReqBody struct {
 	   The author of the file. Default: The `committer` or the authenticated user if
 	   you omit `committer`.
 	*/
-	Author *struct {
-
-		/*
-		   The email of the author or committer of the commit. You'll receive a `422`
-		   status code if `email` is omitted.
-		*/
-		Email *string `json:"email"`
-
-		/*
-		   The name of the author or committer of the commit. You'll receive a `422` status
-		   code if `name` is omitted.
-		*/
-		Name *string `json:"name"`
-	} `json:"author,omitempty"`
+	Author *ReposCreateOrUpdateFileReqBodyAuthor `json:"author,omitempty"`
 
 	// The branch name. Default: the repository’s default branch (usually `master`)
 	Branch *string `json:"branch,omitempty"`
 
 	// The person that committed the file. Default: the authenticated user.
-	Committer *struct {
-
-		/*
-		   The email of the author or committer of the commit. You'll receive a `422`
-		   status code if `email` is omitted.
-		*/
-		Email *string `json:"email"`
-
-		/*
-		   The name of the author or committer of the commit. You'll receive a `422` status
-		   code if `name` is omitted.
-		*/
-		Name *string `json:"name"`
-	} `json:"committer,omitempty"`
+	Committer *ReposCreateOrUpdateFileReqBodyCommitter `json:"committer,omitempty"`
 
 	// The new file content, using Base64 encoding.
 	Content *string `json:"content"`
@@ -2656,6 +2686,7 @@ func (r ReposCreateReleaseReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2776,6 +2807,7 @@ func (r ReposCreateStatusReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2888,6 +2920,7 @@ func (r ReposCreateUsingTemplateReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -3166,6 +3199,7 @@ func (r ReposDeclineInvitationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3203,6 +3237,7 @@ func (r ReposDeleteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3251,6 +3286,7 @@ func (r ReposDeleteCommitCommentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3289,6 +3325,7 @@ func (r ReposDeleteDeploymentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3327,6 +3364,7 @@ func (r ReposDeleteDownloadReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3366,8 +3404,29 @@ func (r ReposDeleteFileReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposDeleteFileReqBodyAuthor is a value for ReposDeleteFileReqBody's Author field
+type ReposDeleteFileReqBodyAuthor struct {
+
+	// The email of the author (or committer) of the commit
+	Email *string `json:"email,omitempty"`
+
+	// The name of the author (or committer) of the commit
+	Name *string `json:"name,omitempty"`
+}
+
+// ReposDeleteFileReqBodyCommitter is a value for ReposDeleteFileReqBody's Committer field
+type ReposDeleteFileReqBodyCommitter struct {
+
+	// The email of the author (or committer) of the commit
+	Email *string `json:"email,omitempty"`
+
+	// The name of the author (or committer) of the commit
+	Name *string `json:"name,omitempty"`
 }
 
 /*
@@ -3378,27 +3437,13 @@ API documentation: https://developer.github.com/v3/repos/contents/#delete-a-file
 type ReposDeleteFileReqBody struct {
 
 	// object containing information about the author.
-	Author *struct {
-
-		// The email of the author (or committer) of the commit
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author (or committer) of the commit
-		Name *string `json:"name,omitempty"`
-	} `json:"author,omitempty"`
+	Author *ReposDeleteFileReqBodyAuthor `json:"author,omitempty"`
 
 	// The branch name. Default: the repository’s default branch (usually `master`)
 	Branch *string `json:"branch,omitempty"`
 
 	// object containing information about the committer.
-	Committer *struct {
-
-		// The email of the author (or committer) of the commit
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author (or committer) of the commit
-		Name *string `json:"name,omitempty"`
-	} `json:"committer,omitempty"`
+	Committer *ReposDeleteFileReqBodyCommitter `json:"committer,omitempty"`
 
 	// The commit message.
 	Message *string `json:"message"`
@@ -3482,6 +3527,7 @@ func (r ReposDeleteHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3520,6 +3566,7 @@ func (r ReposDeleteInvitationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3558,6 +3605,7 @@ func (r ReposDeleteReleaseReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3596,6 +3644,7 @@ func (r ReposDeleteReleaseAssetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3640,6 +3689,7 @@ func (r ReposDisableAutomatedSecurityFixesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3686,6 +3736,7 @@ func (r ReposDisablePagesSiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDisablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3730,6 +3781,7 @@ func (r ReposDisableVulnerabilityAlertsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3774,6 +3826,7 @@ func (r ReposEnableAutomatedSecurityFixesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3821,8 +3874,27 @@ func (r ReposEnablePagesSiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposEnablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposEnablePagesSiteReqBodySource is a value for ReposEnablePagesSiteReqBody's Source field
+type ReposEnablePagesSiteReqBodySource struct {
+
+	/*
+	   The repository branch used to publish your [site's source
+	   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
+	   Can be either `master` or `gh-pages`.
+	*/
+	Branch *string `json:"branch,omitempty"`
+
+	/*
+	   The repository directory that includes the source files for the Pages site. When
+	   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
+	   `gh-pages`, you are unable to specify a `path` other than `/`.
+	*/
+	Path *string `json:"path,omitempty"`
 }
 
 /*
@@ -3831,22 +3903,7 @@ ReposEnablePagesSiteReqBody is a request body for repos/enable-pages-site
 API documentation: https://developer.github.com/v3/repos/pages/#enable-a-pages-site
 */
 type ReposEnablePagesSiteReqBody struct {
-	Source *struct {
-
-		/*
-		   The repository branch used to publish your [site's source
-		   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
-		   Can be either `master` or `gh-pages`.
-		*/
-		Branch *string `json:"branch,omitempty"`
-
-		/*
-		   The repository directory that includes the source files for the Pages site. When
-		   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
-		   `gh-pages`, you are unable to specify a `path` other than `/`.
-		*/
-		Path *string `json:"path,omitempty"`
-	} `json:"source,omitempty"`
+	Source *ReposEnablePagesSiteReqBodySource `json:"source,omitempty"`
 }
 
 /*
@@ -3906,6 +3963,7 @@ func (r ReposEnableVulnerabilityAlertsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposEnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -3968,6 +4026,7 @@ func (r ReposGetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4362,6 +4421,7 @@ func (r ReposGetAllTopicsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4409,6 +4469,7 @@ func (r ReposGetAppsWithAccessToProtectedBranchReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4486,6 +4547,7 @@ func (r ReposGetArchiveLinkReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetArchiveLinkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4524,6 +4586,7 @@ func (r ReposGetBranchReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4641,6 +4704,7 @@ func (r ReposGetBranchProtectionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4829,6 +4893,7 @@ func (r ReposGetClonesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetClonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4881,6 +4946,7 @@ func (r ReposGetCodeFrequencyStatsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4926,6 +4992,7 @@ func (r ReposGetCollaboratorPermissionLevelReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -4993,6 +5060,7 @@ func (r ReposGetCombinedStatusForRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5124,6 +5192,7 @@ func (r ReposGetCommitReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5258,6 +5327,7 @@ func (r ReposGetCommitActivityStatsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5318,6 +5388,7 @@ func (r ReposGetCommitCommentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5404,6 +5475,7 @@ func (r ReposGetContentsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5465,6 +5537,7 @@ func (r ReposGetContributorsStatsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5538,6 +5611,7 @@ func (r ReposGetDeployKeyReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5616,6 +5690,7 @@ func (r ReposGetDeploymentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5739,6 +5814,7 @@ func (r ReposGetDeploymentStatusReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5818,6 +5894,7 @@ func (r ReposGetDownloadReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5872,6 +5949,7 @@ func (r ReposGetHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -5937,6 +6015,7 @@ func (r ReposGetLatestPagesBuildReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6011,6 +6090,7 @@ func (r ReposGetLatestReleaseReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6126,6 +6206,7 @@ func (r ReposGetPagesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetPagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6181,6 +6262,7 @@ func (r ReposGetPagesBuildReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6255,6 +6337,7 @@ func (r ReposGetParticipationStatsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6303,6 +6386,7 @@ func (r ReposGetProtectedBranchAdminEnforcementReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6361,6 +6445,7 @@ func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) header() http.He
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6408,6 +6493,7 @@ func (r ReposGetProtectedBranchRequiredSignaturesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6456,6 +6542,7 @@ func (r ReposGetProtectedBranchRequiredStatusChecksReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6506,6 +6593,7 @@ func (r ReposGetProtectedBranchRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6621,6 +6709,7 @@ func (r ReposGetPunchCardStatsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6674,6 +6763,7 @@ func (r ReposGetReadmeReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6736,6 +6826,7 @@ func (r ReposGetReleaseReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6852,6 +6943,7 @@ func (r ReposGetReleaseAssetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -6930,6 +7022,7 @@ func (r ReposGetReleaseByTagReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7046,6 +7139,7 @@ func (r ReposGetTeamsWithAccessToProtectedBranchReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7103,6 +7197,7 @@ func (r ReposGetTopPathsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7152,6 +7247,7 @@ func (r ReposGetTopReferrersReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7201,6 +7297,7 @@ func (r ReposGetUsersWithAccessToProtectedBranchReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7270,6 +7367,7 @@ func (r ReposGetViewsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7335,6 +7433,7 @@ func (r ReposListAssetsForReleaseReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7433,6 +7532,7 @@ func (r ReposListBranchesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7502,6 +7602,7 @@ func (r ReposListBranchesForHeadCommitReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7577,6 +7678,7 @@ func (r ReposListCollaboratorsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7669,6 +7771,7 @@ func (r ReposListCommentsForCommitReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7768,6 +7871,7 @@ func (r ReposListCommitCommentsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -7895,6 +7999,7 @@ func (r ReposListCommitsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8032,6 +8137,7 @@ func (r ReposListContributorsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListContributorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8108,6 +8214,7 @@ func (r ReposListDeployKeysReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8199,6 +8306,7 @@ func (r ReposListDeploymentStatusesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8327,6 +8435,7 @@ func (r ReposListDeploymentsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8422,6 +8531,7 @@ func (r ReposListDownloadsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListDownloadsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8532,6 +8642,7 @@ func (r ReposListForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8631,6 +8742,7 @@ func (r ReposListForOrgReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8827,6 +8939,7 @@ func (r ReposListForUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -8882,6 +8995,7 @@ func (r ReposListForksReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9046,6 +9160,7 @@ func (r ReposListHooksReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9123,6 +9238,7 @@ func (r ReposListInvitationsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9291,6 +9407,7 @@ func (r ReposListInvitationsForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9449,6 +9566,7 @@ func (r ReposListLanguagesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListLanguagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9505,6 +9623,7 @@ func (r ReposListPagesBuildsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9580,6 +9699,7 @@ func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) header() http.H
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9628,6 +9748,7 @@ func (r ReposListPublicReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -9761,6 +9882,7 @@ func (r ReposListPullRequestsAssociatedWithCommitReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10269,6 +10391,7 @@ func (r ReposListReleasesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListReleasesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10397,6 +10520,7 @@ func (r ReposListStatusesForRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10484,6 +10608,7 @@ func (r ReposListTagsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10548,6 +10673,7 @@ func (r ReposListTeamsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposListTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10606,6 +10732,7 @@ func (r ReposMergeReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -10764,6 +10891,7 @@ func (r ReposPingHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10802,6 +10930,7 @@ func (r ReposRemoveBranchProtectionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10840,6 +10969,7 @@ func (r ReposRemoveCollaboratorReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10878,6 +11008,7 @@ func (r ReposRemoveDeployKeyReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10916,6 +11047,7 @@ func (r ReposRemoveProtectedBranchAdminEnforcementReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -10955,6 +11087,7 @@ func (r ReposRemoveProtectedBranchAppRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11038,6 +11171,7 @@ func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) header() http
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11085,6 +11219,7 @@ func (r ReposRemoveProtectedBranchRequiredSignaturesReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11123,6 +11258,7 @@ func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) header() http.Header 
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11162,6 +11298,7 @@ func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) header() http
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11214,6 +11351,7 @@ func (r ReposRemoveProtectedBranchRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11253,6 +11391,7 @@ func (r ReposRemoveProtectedBranchTeamRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11319,6 +11458,7 @@ func (r ReposRemoveProtectedBranchUserRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11396,6 +11536,7 @@ func (r ReposReplaceAllTopicsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11460,6 +11601,7 @@ func (r ReposReplaceProtectedBranchAppRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposReplaceProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11544,6 +11686,7 @@ func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) header() htt
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11597,6 +11740,7 @@ func (r ReposReplaceProtectedBranchTeamRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposReplaceProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11663,6 +11807,7 @@ func (r ReposReplaceProtectedBranchUserRestrictionsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposReplaceProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -11733,6 +11878,7 @@ func (r ReposRequestPageBuildReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11780,6 +11926,7 @@ func (r ReposRetrieveCommunityProfileMetricsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11861,6 +12008,7 @@ func (r ReposTestPushHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -11899,6 +12047,7 @@ func (r ReposTransferReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposTransferReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -12092,6 +12241,7 @@ func (r ReposUpdateReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -12577,8 +12727,72 @@ func (r ReposUpdateBranchProtectionReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews is a value for ReposUpdateBranchProtectionReqBody's RequiredPullRequestReviews field
+type ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews struct {
+
+	/*
+	   Set to `true` if you want to automatically dismiss approving reviews when
+	   someone pushes a new commit.
+	*/
+	DismissStaleReviews *bool `json:"dismiss_stale_reviews,omitempty"`
+
+	/*
+	   Specify which users and teams can dismiss pull request reviews. Pass an empty
+	   `dismissal_restrictions` object to disable. User and team
+	   `dismissal_restrictions` are only available for organization-owned repositories.
+	   Omit this parameter for personal repositories.
+	*/
+	DismissalRestrictions *ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviewsDismissalRestrictions `json:"dismissal_restrictions,omitempty"`
+
+	/*
+	   Blocks merging pull requests until [code
+	   owners](https://help.github.com/articles/about-code-owners/) review them.
+	*/
+	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
+
+	/*
+	   Specify the number of reviewers required to approve pull requests. Use a number
+	   between 1 and 6.
+	*/
+	RequiredApprovingReviewCount *int64 `json:"required_approving_review_count,omitempty"`
+}
+
+// ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviewsDismissalRestrictions is a value for ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews's DismissalRestrictions field
+type ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviewsDismissalRestrictions struct {
+
+	// The list of team `slug`s with dismissal access
+	Teams []string `json:"teams,omitempty"`
+
+	// The list of user `login`s with dismissal access
+	Users []string `json:"users,omitempty"`
+}
+
+// ReposUpdateBranchProtectionReqBodyRequiredStatusChecks is a value for ReposUpdateBranchProtectionReqBody's RequiredStatusChecks field
+type ReposUpdateBranchProtectionReqBodyRequiredStatusChecks struct {
+
+	// The list of status checks to require in order to merge into this branch
+	Contexts []string `json:"contexts"`
+
+	// Require branches to be up to date before merging.
+	Strict *bool `json:"strict"`
+}
+
+// ReposUpdateBranchProtectionReqBodyRestrictions is a value for ReposUpdateBranchProtectionReqBody's Restrictions field
+type ReposUpdateBranchProtectionReqBodyRestrictions struct {
+
+	// The list of app `slug`s with push access
+	Apps []string `json:"apps,omitempty"`
+
+	// The list of team `slug`s with push access
+	Teams []string `json:"teams"`
+
+	// The list of user `login`s with push access
+	Users []string `json:"users"`
 }
 
 /*
@@ -12628,68 +12842,17 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   Require at least one approving review on a pull request, before merging. Set to
 	   `null` to disable.
 	*/
-	RequiredPullRequestReviews *struct {
-
-		/*
-		   Set to `true` if you want to automatically dismiss approving reviews when
-		   someone pushes a new commit.
-		*/
-		DismissStaleReviews *bool `json:"dismiss_stale_reviews,omitempty"`
-
-		/*
-		   Specify which users and teams can dismiss pull request reviews. Pass an empty
-		   `dismissal_restrictions` object to disable. User and team
-		   `dismissal_restrictions` are only available for organization-owned repositories.
-		   Omit this parameter for personal repositories.
-		*/
-		DismissalRestrictions *struct {
-
-			// The list of team `slug`s with dismissal access
-			Teams []string `json:"teams,omitempty"`
-
-			// The list of user `login`s with dismissal access
-			Users []string `json:"users,omitempty"`
-		} `json:"dismissal_restrictions,omitempty"`
-
-		/*
-		   Blocks merging pull requests until [code
-		   owners](https://help.github.com/articles/about-code-owners/) review them.
-		*/
-		RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
-
-		/*
-		   Specify the number of reviewers required to approve pull requests. Use a number
-		   between 1 and 6.
-		*/
-		RequiredApprovingReviewCount *int64 `json:"required_approving_review_count,omitempty"`
-	} `json:"required_pull_request_reviews"`
+	RequiredPullRequestReviews *ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews `json:"required_pull_request_reviews"`
 
 	// Require status checks to pass before merging. Set to `null` to disable.
-	RequiredStatusChecks *struct {
-
-		// The list of status checks to require in order to merge into this branch
-		Contexts []string `json:"contexts"`
-
-		// Require branches to be up to date before merging.
-		Strict *bool `json:"strict"`
-	} `json:"required_status_checks"`
+	RequiredStatusChecks *ReposUpdateBranchProtectionReqBodyRequiredStatusChecks `json:"required_status_checks"`
 
 	/*
 	   Restrict who can push to the protected branch. User, app, and team
 	   `restrictions` are only available for organization-owned repositories. Set to
 	   `null` to disable.
 	*/
-	Restrictions *struct {
-
-		// The list of app `slug`s with push access
-		Apps []string `json:"apps,omitempty"`
-
-		// The list of team `slug`s with push access
-		Teams []string `json:"teams"`
-
-		// The list of user `login`s with push access
-		Users []string `json:"users"`
-	} `json:"restrictions"`
+	Restrictions *ReposUpdateBranchProtectionReqBodyRestrictions `json:"restrictions"`
 }
 
 /*
@@ -12872,6 +13035,7 @@ func (r ReposUpdateCommitCommentReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -12961,8 +13125,39 @@ func (r ReposUpdateHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposUpdateHookReqBodyConfig is a value for ReposUpdateHookReqBody's Config field
+type ReposUpdateHookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
 }
 
 /*
@@ -12988,34 +13183,7 @@ type ReposUpdateHookReqBody struct {
 	   Key/value pairs to provide settings for this webhook. [These are defined
 	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
 	*/
-	Config *struct {
-
-		/*
-		   The media type used to serialize the payloads. Supported values include `json`
-		   and `form`. The default is `form`.
-		*/
-		ContentType *string `json:"content_type,omitempty"`
-
-		/*
-		   Determines whether the SSL certificate of the host for `url` will be verified
-		   when delivering payloads. Supported values include `0` (verification is
-		   performed) and `1` (verification is not performed). The default is `0`. **We
-		   strongly recommend not setting this to `1` as you are subject to
-		   man-in-the-middle and other attacks.**
-		*/
-		InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-		/*
-		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-		   digest value in the
-		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-		   header.
-		*/
-		Secret *string `json:"secret,omitempty"`
-
-		// The URL to which the payloads will be delivered.
-		Url *string `json:"url"`
-	} `json:"config,omitempty"`
+	Config *ReposUpdateHookReqBodyConfig `json:"config,omitempty"`
 
 	/*
 	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
@@ -13092,6 +13260,7 @@ func (r ReposUpdateInformationAboutPagesSiteReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -13154,6 +13323,7 @@ func (r ReposUpdateInvitationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -13338,8 +13508,19 @@ func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header() http
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions is a value for ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody's DismissalRestrictions field
+type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions struct {
+
+	// The list of team `slug`s with dismissal access
+	Teams []string `json:"teams,omitempty"`
+
+	// The list of user `login`s with dismissal access
+	Users []string `json:"users,omitempty"`
 }
 
 /*
@@ -13361,14 +13542,7 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody struct {
 	   `dismissal_restrictions` are only available for organization-owned repositories.
 	   Omit this parameter for personal repositories.
 	*/
-	DismissalRestrictions *struct {
-
-		// The list of team `slug`s with dismissal access
-		Teams []string `json:"teams,omitempty"`
-
-		// The list of user `login`s with dismissal access
-		Users []string `json:"users,omitempty"`
-	} `json:"dismissal_restrictions,omitempty"`
+	DismissalRestrictions *ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions `json:"dismissal_restrictions,omitempty"`
 
 	/*
 	   Blocks merging pull requests until [code
@@ -13469,6 +13643,7 @@ func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) header() http.Header 
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -13534,6 +13709,7 @@ func (r ReposUpdateReleaseReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -13684,6 +13860,7 @@ func (r ReposUpdateReleaseAssetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -13809,6 +13986,7 @@ func (r ReposUploadReleaseAssetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r ReposUploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
