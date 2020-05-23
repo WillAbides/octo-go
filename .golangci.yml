@@ -1,8 +1,15 @@
 # configure golangci-lint
 # see https://github.com/golangci/golangci-lint/blob/master/.golangci.example.yml
 issues:
-  exclude-use-default: true
+  exclude:
+    - "(const|func|method|struct field|type|var) .* should be "
+  exclude-use-default: false
   exclude-rules:
+    - linters: [gosec]
+      text: G304
+    - path: generator/internal/model
+      linters: [golint]
+      test: should have comment or be unexported
     - path: _test\.go
       linters:
         - dupl

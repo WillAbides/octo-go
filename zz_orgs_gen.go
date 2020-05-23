@@ -45,6 +45,7 @@ func (r OrgsAddOrUpdateMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsAddOrUpdateMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -143,6 +144,7 @@ func (r OrgsBlockUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsBlockUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -180,6 +182,7 @@ func (r OrgsCheckBlockedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsCheckBlockedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -217,6 +220,7 @@ func (r OrgsCheckMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsCheckMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -254,6 +258,7 @@ func (r OrgsCheckPublicMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsCheckPublicMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -291,6 +296,7 @@ func (r OrgsConcealMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsConcealMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -328,6 +334,7 @@ func (r OrgsConvertMemberToOutsideCollaboratorReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsConvertMemberToOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -375,8 +382,39 @@ func (r OrgsCreateHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// OrgsCreateHookReqBodyConfig is a value for OrgsCreateHookReqBody's Config field
+type OrgsCreateHookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
 }
 
 /*
@@ -396,34 +434,7 @@ type OrgsCreateHookReqBody struct {
 	   Key/value pairs to provide settings for this webhook. [These are defined
 	   below](https://developer.github.com/v3/orgs/hooks/#create-hook-config-params).
 	*/
-	Config *struct {
-
-		/*
-		   The media type used to serialize the payloads. Supported values include `json`
-		   and `form`. The default is `form`.
-		*/
-		ContentType *string `json:"content_type,omitempty"`
-
-		/*
-		   Determines whether the SSL certificate of the host for `url` will be verified
-		   when delivering payloads. Supported values include `0` (verification is
-		   performed) and `1` (verification is not performed). The default is `0`. **We
-		   strongly recommend not setting this to `1` as you are subject to
-		   man-in-the-middle and other attacks.**
-		*/
-		InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-		/*
-		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-		   digest value in the
-		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-		   header.
-		*/
-		Secret *string `json:"secret,omitempty"`
-
-		// The URL to which the payloads will be delivered.
-		Url *string `json:"url"`
-	} `json:"config"`
+	Config *OrgsCreateHookReqBodyConfig `json:"config"`
 
 	/*
 	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
@@ -488,6 +499,7 @@ func (r OrgsCreateInvitationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsCreateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -594,6 +606,7 @@ func (r OrgsDeleteHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -645,6 +658,7 @@ func (r OrgsGetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -735,6 +749,7 @@ func (r OrgsGetHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -792,6 +807,7 @@ func (r OrgsGetMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsGetMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -874,6 +890,7 @@ func (r OrgsGetMembershipForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsGetMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -961,6 +978,7 @@ func (r OrgsListReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1017,6 +1035,7 @@ func (r OrgsListBlockedUsersReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListBlockedUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1079,6 +1098,7 @@ func (r OrgsListCredentialAuthorizationsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListCredentialAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1140,6 +1160,7 @@ func (r OrgsListForAuthenticatedUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1208,6 +1229,7 @@ func (r OrgsListForUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1276,6 +1298,7 @@ func (r OrgsListHooksReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1350,6 +1373,7 @@ func (r OrgsListInstallationsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1448,6 +1472,7 @@ func (r OrgsListInvitationTeamsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListInvitationTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1539,6 +1564,7 @@ func (r OrgsListMembersReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListMembersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1622,6 +1648,7 @@ func (r OrgsListMembershipsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListMembershipsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1727,6 +1754,7 @@ func (r OrgsListOutsideCollaboratorsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListOutsideCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1801,6 +1829,7 @@ func (r OrgsListPendingInvitationsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListPendingInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1884,6 +1913,7 @@ func (r OrgsListPublicMembersReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsListPublicMembersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1947,6 +1977,7 @@ func (r OrgsPingHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -1984,6 +2015,7 @@ func (r OrgsPublicizeMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsPublicizeMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2021,6 +2053,7 @@ func (r OrgsRemoveCredentialAuthorizationReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsRemoveCredentialAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2058,6 +2091,7 @@ func (r OrgsRemoveMemberReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsRemoveMemberReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2095,6 +2129,7 @@ func (r OrgsRemoveMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsRemoveMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2132,6 +2167,7 @@ func (r OrgsRemoveOutsideCollaboratorReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsRemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2179,6 +2215,7 @@ func (r OrgsUnblockUserReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsUnblockUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -2231,6 +2268,7 @@ func (r OrgsUpdateReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -2433,8 +2471,39 @@ func (r OrgsUpdateHookReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// OrgsUpdateHookReqBodyConfig is a value for OrgsUpdateHookReqBody's Config field
+type OrgsUpdateHookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
 }
 
 /*
@@ -2454,34 +2523,7 @@ type OrgsUpdateHookReqBody struct {
 	   Key/value pairs to provide settings for this webhook. [These are defined
 	   below](https://developer.github.com/v3/orgs/hooks/#update-hook-config-params).
 	*/
-	Config *struct {
-
-		/*
-		   The media type used to serialize the payloads. Supported values include `json`
-		   and `form`. The default is `form`.
-		*/
-		ContentType *string `json:"content_type,omitempty"`
-
-		/*
-		   Determines whether the SSL certificate of the host for `url` will be verified
-		   when delivering payloads. Supported values include `0` (verification is
-		   performed) and `1` (verification is not performed). The default is `0`. **We
-		   strongly recommend not setting this to `1` as you are subject to
-		   man-in-the-middle and other attacks.**
-		*/
-		InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-		/*
-		   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-		   digest value in the
-		   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-		   header.
-		*/
-		Secret *string `json:"secret,omitempty"`
-
-		// The URL to which the payloads will be delivered.
-		Url *string `json:"url"`
-	} `json:"config,omitempty"`
+	Config *OrgsUpdateHookReqBodyConfig `json:"config,omitempty"`
 
 	/*
 	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
@@ -2543,6 +2585,7 @@ func (r OrgsUpdateMembershipReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r OrgsUpdateMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }

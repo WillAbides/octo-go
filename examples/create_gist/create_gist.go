@@ -22,9 +22,7 @@ func main() {
 		RequestBody: octo.GistsCreateReqBody{
 			Description: octo.String("test gist, pls delete"),
 			Public:      octo.Bool(false),
-			Files: map[string]*struct {
-				Content *string `json:"content,omitempty"`
-			}{
+			Files: map[string]*octo.GistsCreateReqBodyFiles{
 				"foo.md": {
 					Content: octo.String(`# my header
 

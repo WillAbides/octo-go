@@ -45,6 +45,7 @@ func (r GitCreateBlobReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -110,8 +111,43 @@ func (r GitCreateCommitReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitCreateCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// GitCreateCommitReqBodyAuthor is a value for GitCreateCommitReqBody's Author field
+type GitCreateCommitReqBodyAuthor struct {
+
+	/*
+	   Indicates when this commit was authored (or committed). This is a timestamp in
+	   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	   `YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Date *string `json:"date,omitempty"`
+
+	// The email of the author (or committer) of the commit
+	Email *string `json:"email,omitempty"`
+
+	// The name of the author (or committer) of the commit
+	Name *string `json:"name,omitempty"`
+}
+
+// GitCreateCommitReqBodyCommitter is a value for GitCreateCommitReqBody's Committer field
+type GitCreateCommitReqBodyCommitter struct {
+
+	/*
+	   Indicates when this commit was authored (or committed). This is a timestamp in
+	   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	   `YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Date *string `json:"date,omitempty"`
+
+	// The email of the author (or committer) of the commit
+	Email *string `json:"email,omitempty"`
+
+	// The name of the author (or committer) of the commit
+	Name *string `json:"name,omitempty"`
 }
 
 /*
@@ -126,42 +162,14 @@ type GitCreateCommitReqBody struct {
 	   authenticated user and the current date. See the `author` and `committer` object
 	   below for details.
 	*/
-	Author *struct {
-
-		/*
-		   Indicates when this commit was authored (or committed). This is a timestamp in
-		   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-		   `YYYY-MM-DDTHH:MM:SSZ`.
-		*/
-		Date *string `json:"date,omitempty"`
-
-		// The email of the author (or committer) of the commit
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author (or committer) of the commit
-		Name *string `json:"name,omitempty"`
-	} `json:"author,omitempty"`
+	Author *GitCreateCommitReqBodyAuthor `json:"author,omitempty"`
 
 	/*
 	   Information about the person who is making the commit. By default, `committer`
 	   will use the information set in `author`. See the `author` and `committer`
 	   object below for details.
 	*/
-	Committer *struct {
-
-		/*
-		   Indicates when this commit was authored (or committed). This is a timestamp in
-		   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-		   `YYYY-MM-DDTHH:MM:SSZ`.
-		*/
-		Date *string `json:"date,omitempty"`
-
-		// The email of the author (or committer) of the commit
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author (or committer) of the commit
-		Name *string `json:"name,omitempty"`
-	} `json:"committer,omitempty"`
+	Committer *GitCreateCommitReqBodyCommitter `json:"committer,omitempty"`
 
 	// The commit message
 	Message *string `json:"message"`
@@ -261,6 +269,7 @@ func (r GitCreateRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }
@@ -332,8 +341,25 @@ func (r GitCreateTagReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitCreateTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// GitCreateTagReqBodyTagger is a value for GitCreateTagReqBody's Tagger field
+type GitCreateTagReqBodyTagger struct {
+
+	/*
+	   When this object was tagged. This is a timestamp in [ISO
+	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Date *string `json:"date,omitempty"`
+
+	// The email of the author of the tag
+	Email *string `json:"email,omitempty"`
+
+	// The name of the author of the tag
+	Name *string `json:"name,omitempty"`
 }
 
 /*
@@ -353,20 +379,7 @@ type GitCreateTagReqBody struct {
 	Tag *string `json:"tag"`
 
 	// An object with information about the individual creating the tag.
-	Tagger *struct {
-
-		/*
-		   When this object was tagged. This is a timestamp in [ISO
-		   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
-		*/
-		Date *string `json:"date,omitempty"`
-
-		// The email of the author of the tag
-		Email *string `json:"email,omitempty"`
-
-		// The name of the author of the tag
-		Name *string `json:"name,omitempty"`
-	} `json:"tagger,omitempty"`
+	Tagger *GitCreateTagReqBodyTagger `json:"tagger,omitempty"`
 
 	/*
 	   The type of the object we're tagging. Normally this is a `commit` but it can
@@ -438,8 +451,44 @@ func (r GitCreateTreeReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+}
+
+// GitCreateTreeReqBodyTree is a value for GitCreateTreeReqBody's Tree field
+type GitCreateTreeReqBodyTree struct {
+
+	/*
+	   The content you want this file to have. GitHub will write this blob out and use
+	   that SHA for this entry. Use either this, or `tree.sha`.
+
+	   **Note:** Use either `tree.sha` or `content` to specify the contents of the
+	   entry. Using both `tree.sha` and `content` will return an error.
+	*/
+	Content *string `json:"content,omitempty"`
+
+	/*
+	   The file mode; one of `100644` for file (blob), `100755` for executable (blob),
+	   `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000`
+	   for a blob that specifies the path of a symlink.
+	*/
+	Mode *string `json:"mode,omitempty"`
+
+	// The file referenced in the tree.
+	Path *string `json:"path,omitempty"`
+
+	/*
+	   The SHA1 checksum ID of the object in the tree. Also called `tree.sha`. If the
+	   value is `null` then the file will be deleted.
+
+	   **Note:** Use either `tree.sha` or `content` to specify the contents of the
+	   entry. Using both `tree.sha` and `content` will return an error.
+	*/
+	Sha *string `json:"sha,omitempty"`
+
+	// Either `blob`, `tree`, or `commit`.
+	Type *string `json:"type,omitempty"`
 }
 
 /*
@@ -457,39 +506,7 @@ type GitCreateTreeReqBody struct {
 	BaseTree *string `json:"base_tree,omitempty"`
 
 	// Objects (of `path`, `mode`, `type`, and `sha`) specifying a tree structure.
-	Tree []struct {
-
-		/*
-		   The content you want this file to have. GitHub will write this blob out and use
-		   that SHA for this entry. Use either this, or `tree.sha`.
-
-		   **Note:** Use either `tree.sha` or `content` to specify the contents of the
-		   entry. Using both `tree.sha` and `content` will return an error.
-		*/
-		Content *string `json:"content,omitempty"`
-
-		/*
-		   The file mode; one of `100644` for file (blob), `100755` for executable (blob),
-		   `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000`
-		   for a blob that specifies the path of a symlink.
-		*/
-		Mode *string `json:"mode,omitempty"`
-
-		// The file referenced in the tree.
-		Path *string `json:"path,omitempty"`
-
-		/*
-		   The SHA1 checksum ID of the object in the tree. Also called `tree.sha`. If the
-		   value is `null` then the file will be deleted.
-
-		   **Note:** Use either `tree.sha` or `content` to specify the contents of the
-		   entry. Using both `tree.sha` and `content` will return an error.
-		*/
-		Sha *string `json:"sha,omitempty"`
-
-		// Either `blob`, `tree`, or `commit`.
-		Type *string `json:"type,omitempty"`
-	} `json:"tree"`
+	Tree []GitCreateTreeReqBodyTree `json:"tree"`
 }
 
 /*
@@ -544,6 +561,7 @@ func (r GitDeleteRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -582,6 +600,7 @@ func (r GitGetBlobReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitGetBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -633,6 +652,7 @@ func (r GitGetCommitReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -706,6 +726,7 @@ func (r GitGetRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitGetRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -760,6 +781,7 @@ func (r GitGetTagReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitGetTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -839,6 +861,7 @@ func (r GitGetTreeReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -908,6 +931,7 @@ func (r GitListMatchingRefsReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
 }
@@ -963,6 +987,7 @@ func (r GitUpdateRefReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+// HTTPRequest creates an http request
 func (r GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
 }

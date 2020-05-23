@@ -4,14 +4,17 @@ import (
 	"net/url"
 )
 
+//RequestOption is an option for building an http request
 type RequestOption func(opts *requestOpts)
 
+//RequestHTTPScheme set the http schema to use. Default is https.
 func RequestHTTPScheme(scheme string) RequestOption {
 	return func(opts *requestOpts) {
 		opts.BaseURL.Scheme = scheme
 	}
 }
 
+//RequestBaseURL set the baseURL to use. Default is https://api.github.com
 func RequestBaseURL(baseURL url.URL) RequestOption {
 	return func(opts *requestOpts) {
 		opts.BaseURL = baseURL
