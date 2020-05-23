@@ -1346,15 +1346,6 @@ type ReposCreateDeploymentResponseBody202 struct {
 }
 
 /*
-ReposCreateDeploymentResponseBody409 is a response body for repos/create-deployment
-
-API documentation: https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentResponseBody409 struct {
-	Message string `json:"message,omitempty"`
-}
-
-/*
 ReposCreateDeploymentStatusReq builds requests for "repos/create-deployment-status"
 
 Create a deployment status.
@@ -3240,16 +3231,6 @@ func (r ReposDeleteReq) header() http.Header {
 // HTTPRequest creates an http request
 func (r ReposDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-ReposDeleteResponseBody403 is a response body for repos/delete
-
-API documentation: https://developer.github.com/v3/repos/#delete-a-repository
-*/
-type ReposDeleteResponseBody403 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
 }
 
 /*
@@ -10837,24 +10818,6 @@ type ReposMergeResponseBody201 struct {
 	} `json:"parents,omitempty"`
 	Sha string `json:"sha,omitempty"`
 	Url string `json:"url,omitempty"`
-}
-
-/*
-ReposMergeResponseBody404 is a response body for repos/merge
-
-API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
-*/
-type ReposMergeResponseBody404 struct {
-	Message string `json:"message,omitempty"`
-}
-
-/*
-ReposMergeResponseBody409 is a response body for repos/merge
-
-API documentation: https://developer.github.com/v3/repos/merging/#perform-a-merge
-*/
-type ReposMergeResponseBody409 struct {
-	Message string `json:"message,omitempty"`
 }
 
 /*

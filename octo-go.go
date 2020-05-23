@@ -141,7 +141,17 @@ func Int64(i int64) *int64 {
 	return &i
 }
 
-//Int returns a pointer to i
-func Int(i int) *int {
-	return &i
+//ErrorResponse all 40x response bodies should unmarshal to this
+type ErrorResponse struct {
+	DocumentationUrl string               `json:"documentation_url,omitempty"`
+	Message          string               `json:"message,omitempty"`
+	Errors           []ErrorResponseError `json:"errors,omitempty"`
+}
+
+//ErrorResponseError an Error field in ErrorResponse
+type ErrorResponseError struct {
+	Code     string `json:"code,omitempty"`
+	Field    string `json:"field,omitempty"`
+	Message  string `json:"message,omitempty"`
+	Resource string `json:"resource,omitempty"`
 }

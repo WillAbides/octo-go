@@ -4025,26 +4025,6 @@ type PullsMergeResponseBody200 struct {
 }
 
 /*
-PullsMergeResponseBody405 is a response body for pulls/merge
-
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
-*/
-type PullsMergeResponseBody405 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
-PullsMergeResponseBody409 is a response body for pulls/merge
-
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
-*/
-type PullsMergeResponseBody409 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
 PullsSubmitReviewReq builds requests for "pulls/submit-review"
 
 Submit a pull request review.

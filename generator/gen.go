@@ -264,7 +264,9 @@ func addResponseBodies(file *jen.File, endpoint model.Endpoint) {
 	}
 	sortedCodes := make([]int, 0, len(endpoint.Responses))
 	for code := range endpoint.Responses {
-		sortedCodes = append(sortedCodes, code)
+		if code < 300 {
+			sortedCodes = append(sortedCodes, code)
+		}
 	}
 	sort.Ints(sortedCodes)
 	for _, respCode := range sortedCodes {

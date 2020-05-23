@@ -50,20 +50,6 @@ func (r TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...Request
 }
 
 /*
-TeamsAddMemberLegacyResponseBody422 is a response body for teams/add-member-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-team-member-legacy
-*/
-type TeamsAddMemberLegacyResponseBody422 struct {
-	Errors []struct {
-		Code     string `json:"code,omitempty"`
-		Field    string `json:"field,omitempty"`
-		Resource string `json:"resource,omitempty"`
-	} `json:"errors,omitempty"`
-	Message string `json:"message,omitempty"`
-}
-
-/*
 TeamsAddOrUpdateMembershipInOrgReq builds requests for "teams/add-or-update-membership-in-org"
 
 Add or update team membership.
@@ -132,20 +118,6 @@ type TeamsAddOrUpdateMembershipInOrgResponseBody200 struct {
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrgResponseBody422 is a response body for teams/add-or-update-membership-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
-*/
-type TeamsAddOrUpdateMembershipInOrgResponseBody422 struct {
-	Errors []struct {
-		Code     string `json:"code,omitempty"`
-		Field    string `json:"field,omitempty"`
-		Resource string `json:"resource,omitempty"`
-	} `json:"errors,omitempty"`
-	Message string `json:"message,omitempty"`
-}
-
-/*
 TeamsAddOrUpdateMembershipLegacyReq builds requests for "teams/add-or-update-membership-legacy"
 
 Add or update team membership (Legacy).
@@ -210,20 +182,6 @@ type TeamsAddOrUpdateMembershipLegacyResponseBody200 struct {
 	Role  string `json:"role,omitempty"`
 	State string `json:"state,omitempty"`
 	Url   string `json:"url,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipLegacyResponseBody422 is a response body for teams/add-or-update-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyResponseBody422 struct {
-	Errors []struct {
-		Code     string `json:"code,omitempty"`
-		Field    string `json:"field,omitempty"`
-		Resource string `json:"resource,omitempty"`
-	} `json:"errors,omitempty"`
-	Message string `json:"message,omitempty"`
 }
 
 /*
@@ -297,16 +255,6 @@ type TeamsAddOrUpdateProjectInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateProjectInOrgResponseBody403 is a response body for teams/add-or-update-project-in-org
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project
-*/
-type TeamsAddOrUpdateProjectInOrgResponseBody403 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
 TeamsAddOrUpdateProjectLegacyReq builds requests for "teams/add-or-update-project-legacy"
 
 Add or update team project (Legacy).
@@ -373,16 +321,6 @@ type TeamsAddOrUpdateProjectLegacyReqBody struct {
 	   verbs](https://developer.github.com/v3/#http-verbs)."
 	*/
 	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateProjectLegacyResponseBody403 is a response body for teams/add-or-update-project-legacy
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
-*/
-type TeamsAddOrUpdateProjectLegacyResponseBody403 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
 }
 
 /*
