@@ -340,16 +340,6 @@ func (r OrgsConvertMemberToOutsideCollaboratorReq) HTTPRequest(ctx context.Conte
 }
 
 /*
-OrgsConvertMemberToOutsideCollaboratorResponseBody403 is a response body for orgs/convert-member-to-outside-collaborator
-
-API documentation: https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
-*/
-type OrgsConvertMemberToOutsideCollaboratorResponseBody403 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
 OrgsCreateHookReq builds requests for "orgs/create-hook"
 
 Create a hook.
@@ -2170,16 +2160,6 @@ func (r OrgsRemoveOutsideCollaboratorReq) header() http.Header {
 // HTTPRequest creates an http request
 func (r OrgsRemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
-}
-
-/*
-OrgsRemoveOutsideCollaboratorResponseBody422 is a response body for orgs/remove-outside-collaborator
-
-API documentation: https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
-*/
-type OrgsRemoveOutsideCollaboratorResponseBody422 struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
 }
 
 /*
