@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -75,44 +75,7 @@ OrgsAddOrUpdateMembershipResponseBody200 is a response body for orgs/add-or-upda
 API documentation: https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
 */
 type OrgsAddOrUpdateMembershipResponseBody200 struct {
-	Organization struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	OrganizationUrl string `json:"organization_url,omitempty"`
-	Role            string `json:"role,omitempty"`
-	State           string `json:"state,omitempty"`
-	Url             string `json:"url,omitempty"`
-	User            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.OrgMembership
 }
 
 /*
@@ -474,18 +437,7 @@ OrgsCreateHookResponseBody201 is a response body for orgs/create-hook
 API documentation: https://developer.github.com/v3/orgs/hooks/#create-a-hook
 */
 type OrgsCreateHookResponseBody201 struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Events    []string `json:"events,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Name      string   `json:"name,omitempty"`
-	PingUrl   string   `json:"ping_url,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
+	components.OrgHook
 }
 
 /*
@@ -570,33 +522,7 @@ OrgsCreateInvitationResponseBody201 is a response body for orgs/create-invitatio
 API documentation: https://developer.github.com/v3/orgs/members/#create-organization-invitation
 */
 type OrgsCreateInvitationResponseBody201 struct {
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
-	Inviter           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Login     string `json:"login,omitempty"`
-	Role      string `json:"role,omitempty"`
-	TeamCount int64  `json:"team_count,omitempty"`
+	components.OrganizationInvitation
 }
 
 /*
@@ -706,51 +632,7 @@ OrgsGetResponseBody200 is a response body for orgs/get
 API documentation: https://developer.github.com/v3/orgs/#get-an-organization
 */
 type OrgsGetResponseBody200 struct {
-	AvatarUrl                            string      `json:"avatar_url,omitempty"`
-	BillingEmail                         string      `json:"billing_email,omitempty"`
-	Blog                                 string      `json:"blog,omitempty"`
-	Collaborators                        int64       `json:"collaborators,omitempty"`
-	Company                              string      `json:"company,omitempty"`
-	CreatedAt                            string      `json:"created_at,omitempty"`
-	DefaultRepositoryPermission          string      `json:"default_repository_permission,omitempty"`
-	Description                          string      `json:"description,omitempty"`
-	DiskUsage                            json.Number `json:"disk_usage,omitempty"`
-	Email                                string      `json:"email,omitempty"`
-	EventsUrl                            string      `json:"events_url,omitempty"`
-	Followers                            int64       `json:"followers,omitempty"`
-	Following                            int64       `json:"following,omitempty"`
-	HasOrganizationProjects              bool        `json:"has_organization_projects,omitempty"`
-	HasRepositoryProjects                bool        `json:"has_repository_projects,omitempty"`
-	HooksUrl                             string      `json:"hooks_url,omitempty"`
-	HtmlUrl                              string      `json:"html_url,omitempty"`
-	Id                                   int64       `json:"id,omitempty"`
-	IsVerified                           bool        `json:"is_verified,omitempty"`
-	IssuesUrl                            string      `json:"issues_url,omitempty"`
-	Location                             string      `json:"location,omitempty"`
-	Login                                string      `json:"login,omitempty"`
-	MembersAllowedRepositoryCreationType string      `json:"members_allowed_repository_creation_type,omitempty"`
-	MembersCanCreateInternalRepositories bool        `json:"members_can_create_internal_repositories,omitempty"`
-	MembersCanCreatePrivateRepositories  bool        `json:"members_can_create_private_repositories,omitempty"`
-	MembersCanCreatePublicRepositories   bool        `json:"members_can_create_public_repositories,omitempty"`
-	MembersCanCreateRepositories         bool        `json:"members_can_create_repositories,omitempty"`
-	MembersUrl                           string      `json:"members_url,omitempty"`
-	Name                                 string      `json:"name,omitempty"`
-	NodeId                               string      `json:"node_id,omitempty"`
-	OwnedPrivateRepos                    int64       `json:"owned_private_repos,omitempty"`
-	Plan                                 struct {
-		Name         string      `json:"name,omitempty"`
-		PrivateRepos int64       `json:"private_repos,omitempty"`
-		Space        json.Number `json:"space,omitempty"`
-	} `json:"plan,omitempty"`
-	PrivateGists                int64  `json:"private_gists,omitempty"`
-	PublicGists                 int64  `json:"public_gists,omitempty"`
-	PublicMembersUrl            string `json:"public_members_url,omitempty"`
-	PublicRepos                 int64  `json:"public_repos,omitempty"`
-	ReposUrl                    string `json:"repos_url,omitempty"`
-	TotalPrivateRepos           int64  `json:"total_private_repos,omitempty"`
-	TwoFactorRequirementEnabled bool   `json:"two_factor_requirement_enabled,omitempty"`
-	Type                        string `json:"type,omitempty"`
-	Url                         string `json:"url,omitempty"`
+	components.OrganizationFull
 }
 
 /*
@@ -801,18 +683,7 @@ OrgsGetHookResponseBody200 is a response body for orgs/get-hook
 API documentation: https://developer.github.com/v3/orgs/hooks/#get-single-hook
 */
 type OrgsGetHookResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Events    []string `json:"events,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Name      string   `json:"name,omitempty"`
-	PingUrl   string   `json:"ping_url,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
+	components.OrgHook
 }
 
 /*
@@ -863,44 +734,7 @@ OrgsGetMembershipResponseBody200 is a response body for orgs/get-membership
 API documentation: https://developer.github.com/v3/orgs/members/#get-organization-membership
 */
 type OrgsGetMembershipResponseBody200 struct {
-	Organization struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	OrganizationUrl string `json:"organization_url,omitempty"`
-	Role            string `json:"role,omitempty"`
-	State           string `json:"state,omitempty"`
-	Url             string `json:"url,omitempty"`
-	User            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.OrgMembership
 }
 
 /*
@@ -950,44 +784,7 @@ OrgsGetMembershipForAuthenticatedUserResponseBody200 is a response body for orgs
 API documentation: https://developer.github.com/v3/orgs/members/#get-your-organization-membership
 */
 type OrgsGetMembershipForAuthenticatedUserResponseBody200 struct {
-	Organization struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	OrganizationUrl string `json:"organization_url,omitempty"`
-	Role            string `json:"role,omitempty"`
-	State           string `json:"state,omitempty"`
-	Url             string `json:"url,omitempty"`
-	User            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.OrgMembership
 }
 
 /*
@@ -1042,18 +839,7 @@ OrgsListResponseBody200 is a response body for orgs/list
 API documentation: https://developer.github.com/v3/orgs/#list-all-organizations
 */
 type OrgsListResponseBody200 []struct {
-	AvatarUrl        string `json:"avatar_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	Login            string `json:"login,omitempty"`
-	MembersUrl       string `json:"members_url,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	PublicMembersUrl string `json:"public_members_url,omitempty"`
-	ReposUrl         string `json:"repos_url,omitempty"`
-	Url              string `json:"url,omitempty"`
+	components.OrganizationSimple
 }
 
 /*
@@ -1103,24 +889,7 @@ OrgsListBlockedUsersResponseBody200 is a response body for orgs/list-blocked-use
 API documentation: https://developer.github.com/v3/orgs/blocking/#list-blocked-users
 */
 type OrgsListBlockedUsersResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1170,12 +939,7 @@ OrgsListCredentialAuthorizationsResponseBody200 is a response body for orgs/list
 API documentation: https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
 */
 type OrgsListCredentialAuthorizationsResponseBody200 []struct {
-	CredentialAuthorizedAt string   `json:"credential_authorized_at,omitempty"`
-	CredentialId           string   `json:"credential_id,omitempty"`
-	CredentialType         string   `json:"credential_type,omitempty"`
-	Login                  string   `json:"login,omitempty"`
-	Scopes                 []string `json:"scopes,omitempty"`
-	TokenLastEight         string   `json:"token_last_eight,omitempty"`
+	components.CredentialAuthorization
 }
 
 /*
@@ -1236,18 +1000,7 @@ OrgsListForAuthenticatedUserResponseBody200 is a response body for orgs/list-for
 API documentation: https://developer.github.com/v3/orgs/#list-your-organizations
 */
 type OrgsListForAuthenticatedUserResponseBody200 []struct {
-	AvatarUrl        string `json:"avatar_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	Login            string `json:"login,omitempty"`
-	MembersUrl       string `json:"members_url,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	PublicMembersUrl string `json:"public_members_url,omitempty"`
-	ReposUrl         string `json:"repos_url,omitempty"`
-	Url              string `json:"url,omitempty"`
+	components.OrganizationSimple
 }
 
 /*
@@ -1309,18 +1062,7 @@ OrgsListForUserResponseBody200 is a response body for orgs/list-for-user
 API documentation: https://developer.github.com/v3/orgs/#list-user-organizations
 */
 type OrgsListForUserResponseBody200 []struct {
-	AvatarUrl        string `json:"avatar_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	Login            string `json:"login,omitempty"`
-	MembersUrl       string `json:"members_url,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	PublicMembersUrl string `json:"public_members_url,omitempty"`
-	ReposUrl         string `json:"repos_url,omitempty"`
-	Url              string `json:"url,omitempty"`
+	components.OrganizationSimple
 }
 
 /*
@@ -1382,18 +1124,7 @@ OrgsListHooksResponseBody200 is a response body for orgs/list-hooks
 API documentation: https://developer.github.com/v3/orgs/hooks/#list-hooks
 */
 type OrgsListHooksResponseBody200 []struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Events    []string `json:"events,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Name      string   `json:"name,omitempty"`
-	PingUrl   string   `json:"ping_url,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
+	components.OrgHook
 }
 
 /*
@@ -1468,44 +1199,7 @@ API documentation: https://developer.github.com/v3/orgs/#list-installations-for-
 */
 type OrgsListInstallationsResponseBody200 struct {
 	Installations []struct {
-		AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-		Account         struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"account,omitempty"`
-		AppId       int64    `json:"app_id,omitempty"`
-		CreatedAt   string   `json:"created_at,omitempty"`
-		Events      []string `json:"events,omitempty"`
-		HtmlUrl     string   `json:"html_url,omitempty"`
-		Id          int64    `json:"id,omitempty"`
-		Permissions struct {
-			Deployments  string `json:"deployments,omitempty"`
-			Metadata     string `json:"metadata,omitempty"`
-			PullRequests string `json:"pull_requests,omitempty"`
-			Statuses     string `json:"statuses,omitempty"`
-		} `json:"permissions,omitempty"`
-		RepositoriesUrl     string `json:"repositories_url,omitempty"`
-		RepositorySelection string `json:"repository_selection,omitempty"`
-		SingleFileName      string `json:"single_file_name,omitempty"`
-		TargetId            int64  `json:"target_id,omitempty"`
-		TargetType          string `json:"target_type,omitempty"`
-		UpdatedAt           string `json:"updated_at,omitempty"`
+		components.Installation3
 	} `json:"installations,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }
@@ -1570,18 +1264,7 @@ OrgsListInvitationTeamsResponseBody200 is a response body for orgs/list-invitati
 API documentation: https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type OrgsListInvitationTeamsResponseBody200 []struct {
-	Description     string `json:"description,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	MembersUrl      string `json:"members_url,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.Team
 }
 
 /*
@@ -1666,24 +1349,7 @@ OrgsListMembersResponseBody200 is a response body for orgs/list-members
 API documentation: https://developer.github.com/v3/orgs/members/#members-list
 */
 type OrgsListMembersResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1754,44 +1420,7 @@ OrgsListMembershipsResponseBody200 is a response body for orgs/list-memberships
 API documentation: https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
 type OrgsListMembershipsResponseBody200 []struct {
-	Organization struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	OrganizationUrl string `json:"organization_url,omitempty"`
-	Role            string `json:"role,omitempty"`
-	State           string `json:"state,omitempty"`
-	Url             string `json:"url,omitempty"`
-	User            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.OrgMembership
 }
 
 /*
@@ -1864,24 +1493,7 @@ OrgsListOutsideCollaboratorsResponseBody200 is a response body for orgs/list-out
 API documentation: https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
 */
 type OrgsListOutsideCollaboratorsResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1943,33 +1555,7 @@ OrgsListPendingInvitationsResponseBody200 is a response body for orgs/list-pendi
 API documentation: https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
 type OrgsListPendingInvitationsResponseBody200 []struct {
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
-	Inviter           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Login     string `json:"login,omitempty"`
-	Role      string `json:"role,omitempty"`
-	TeamCount int64  `json:"team_count,omitempty"`
+	components.OrganizationInvitation
 }
 
 /*
@@ -2031,24 +1617,7 @@ OrgsListPublicMembersResponseBody200 is a response body for orgs/list-public-mem
 API documentation: https://developer.github.com/v3/orgs/members/#public-members-list
 */
 type OrgsListPublicMembersResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -2522,51 +2091,7 @@ OrgsUpdateResponseBody200 is a response body for orgs/update
 API documentation: https://developer.github.com/v3/orgs/#edit-an-organization
 */
 type OrgsUpdateResponseBody200 struct {
-	AvatarUrl                            string      `json:"avatar_url,omitempty"`
-	BillingEmail                         string      `json:"billing_email,omitempty"`
-	Blog                                 string      `json:"blog,omitempty"`
-	Collaborators                        int64       `json:"collaborators,omitempty"`
-	Company                              string      `json:"company,omitempty"`
-	CreatedAt                            string      `json:"created_at,omitempty"`
-	DefaultRepositoryPermission          string      `json:"default_repository_permission,omitempty"`
-	Description                          string      `json:"description,omitempty"`
-	DiskUsage                            json.Number `json:"disk_usage,omitempty"`
-	Email                                string      `json:"email,omitempty"`
-	EventsUrl                            string      `json:"events_url,omitempty"`
-	Followers                            int64       `json:"followers,omitempty"`
-	Following                            int64       `json:"following,omitempty"`
-	HasOrganizationProjects              bool        `json:"has_organization_projects,omitempty"`
-	HasRepositoryProjects                bool        `json:"has_repository_projects,omitempty"`
-	HooksUrl                             string      `json:"hooks_url,omitempty"`
-	HtmlUrl                              string      `json:"html_url,omitempty"`
-	Id                                   int64       `json:"id,omitempty"`
-	IsVerified                           bool        `json:"is_verified,omitempty"`
-	IssuesUrl                            string      `json:"issues_url,omitempty"`
-	Location                             string      `json:"location,omitempty"`
-	Login                                string      `json:"login,omitempty"`
-	MembersAllowedRepositoryCreationType string      `json:"members_allowed_repository_creation_type,omitempty"`
-	MembersCanCreateInternalRepositories bool        `json:"members_can_create_internal_repositories,omitempty"`
-	MembersCanCreatePrivateRepositories  bool        `json:"members_can_create_private_repositories,omitempty"`
-	MembersCanCreatePublicRepositories   bool        `json:"members_can_create_public_repositories,omitempty"`
-	MembersCanCreateRepositories         bool        `json:"members_can_create_repositories,omitempty"`
-	MembersUrl                           string      `json:"members_url,omitempty"`
-	Name                                 string      `json:"name,omitempty"`
-	NodeId                               string      `json:"node_id,omitempty"`
-	OwnedPrivateRepos                    int64       `json:"owned_private_repos,omitempty"`
-	Plan                                 struct {
-		Name         string      `json:"name,omitempty"`
-		PrivateRepos int64       `json:"private_repos,omitempty"`
-		Space        json.Number `json:"space,omitempty"`
-	} `json:"plan,omitempty"`
-	PrivateGists                int64  `json:"private_gists,omitempty"`
-	PublicGists                 int64  `json:"public_gists,omitempty"`
-	PublicMembersUrl            string `json:"public_members_url,omitempty"`
-	PublicRepos                 int64  `json:"public_repos,omitempty"`
-	ReposUrl                    string `json:"repos_url,omitempty"`
-	TotalPrivateRepos           int64  `json:"total_private_repos,omitempty"`
-	TwoFactorRequirementEnabled bool   `json:"two_factor_requirement_enabled,omitempty"`
-	Type                        string `json:"type,omitempty"`
-	Url                         string `json:"url,omitempty"`
+	components.OrganizationFull
 }
 
 /*
@@ -2674,18 +2199,7 @@ OrgsUpdateHookResponseBody200 is a response body for orgs/update-hook
 API documentation: https://developer.github.com/v3/orgs/hooks/#edit-a-hook
 */
 type OrgsUpdateHookResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Config struct {
-		ContentType string `json:"content_type,omitempty"`
-		Url         string `json:"url,omitempty"`
-	} `json:"config,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Events    []string `json:"events,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Name      string   `json:"name,omitempty"`
-	PingUrl   string   `json:"ping_url,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
+	components.OrgHook
 }
 
 /*
@@ -2747,42 +2261,5 @@ OrgsUpdateMembershipResponseBody200 is a response body for orgs/update-membershi
 API documentation: https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
 */
 type OrgsUpdateMembershipResponseBody200 struct {
-	Organization struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	OrganizationUrl string `json:"organization_url,omitempty"`
-	Role            string `json:"role,omitempty"`
-	State           string `json:"state,omitempty"`
-	Url             string `json:"url,omitempty"`
-	User            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.OrgMembership
 }

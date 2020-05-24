@@ -2,10 +2,19 @@ package main
 
 import (
 	"sort"
+	"strings"
 
 	"github.com/dave/jennifer/jen"
 	"github.com/willabides/octo-go/generator/internal/model"
 )
+
+func componentRefStmt(schema *model.ParamSchema) *jen.Statement {
+	if ! strings.HasPrefix(schema.Ref, "#/components/schemas/") {
+		return nil
+	}
+	nm := strings.TrimPrefix(schema.Ref, "#/components/schemas/")
+	return jen.Struct(jen.Qual("github.com/willabides/octo-go/components", toExportedName(nm)))
+}
 
 func addComponentSchemas(file *jen.File, schemas map[string]*model.ParamSchema) {
 

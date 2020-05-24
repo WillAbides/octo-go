@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -56,8 +57,7 @@ GitignoreGetTemplateResponseBody200 is a response body for gitignore/get-templat
 API documentation: https://developer.github.com/v3/gitignore/#get-a-single-template
 */
 type GitignoreGetTemplateResponseBody200 struct {
-	Name   string `json:"name,omitempty"`
-	Source string `json:"source,omitempty"`
+	components.GitignoreTemplate
 }
 
 /*

@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -74,10 +74,7 @@ UsersAddEmailsResponseBody201 is a response body for users/add-emails
 API documentation: https://developer.github.com/v3/users/emails/#add-email-addresses
 */
 type UsersAddEmailsResponseBody201 []struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
+	components.Email
 }
 
 /*
@@ -307,34 +304,7 @@ UsersCreateGpgKeyResponseBody201 is a response body for users/create-gpg-key
 API documentation: https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
 type UsersCreateGpgKeyResponseBody201 struct {
-	CanCertify        bool   `json:"can_certify,omitempty"`
-	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
-	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
-	CanSign           bool   `json:"can_sign,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Emails            []struct {
-		Email    string `json:"email,omitempty"`
-		Verified bool   `json:"verified,omitempty"`
-	} `json:"emails,omitempty"`
-	ExpiresAt    string `json:"expires_at,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	KeyId        string `json:"key_id,omitempty"`
-	PrimaryKeyId string `json:"primary_key_id,omitempty"`
-	PublicKey    string `json:"public_key,omitempty"`
-	Subkeys      []struct {
-		CanCertify        bool          `json:"can_certify,omitempty"`
-		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
-		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
-		CanSign           bool          `json:"can_sign,omitempty"`
-		CreatedAt         string        `json:"created_at,omitempty"`
-		Emails            []interface{} `json:"emails,omitempty"`
-		ExpiresAt         string        `json:"expires_at,omitempty"`
-		Id                int64         `json:"id,omitempty"`
-		KeyId             string        `json:"key_id,omitempty"`
-		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
-		PublicKey         string        `json:"public_key,omitempty"`
-		Subkeys           []interface{} `json:"subkeys,omitempty"`
-	} `json:"subkeys,omitempty"`
+	components.GpgKey
 }
 
 /*
@@ -406,8 +376,7 @@ UsersCreatePublicKeyResponseBody201 is a response body for users/create-public-k
 API documentation: https://developer.github.com/v3/users/keys/#create-a-public-key
 */
 type UsersCreatePublicKeyResponseBody201 struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
+	components.ActionsPublicKey
 }
 
 /*
@@ -635,49 +604,7 @@ UsersGetAuthenticatedResponseBody200 is a response body for users/get-authentica
 API documentation: https://developer.github.com/v3/users/#get-the-authenticated-user
 */
 type UsersGetAuthenticatedResponseBody200 struct {
-	AvatarUrl         string      `json:"avatar_url,omitempty"`
-	Bio               string      `json:"bio,omitempty"`
-	Blog              string      `json:"blog,omitempty"`
-	Collaborators     int64       `json:"collaborators,omitempty"`
-	Company           string      `json:"company,omitempty"`
-	CreatedAt         string      `json:"created_at,omitempty"`
-	DiskUsage         json.Number `json:"disk_usage,omitempty"`
-	Email             string      `json:"email,omitempty"`
-	EventsUrl         string      `json:"events_url,omitempty"`
-	Followers         int64       `json:"followers,omitempty"`
-	FollowersUrl      string      `json:"followers_url,omitempty"`
-	Following         int64       `json:"following,omitempty"`
-	FollowingUrl      string      `json:"following_url,omitempty"`
-	GistsUrl          string      `json:"gists_url,omitempty"`
-	GravatarId        string      `json:"gravatar_id,omitempty"`
-	Hireable          bool        `json:"hireable,omitempty"`
-	HtmlUrl           string      `json:"html_url,omitempty"`
-	Id                int64       `json:"id,omitempty"`
-	Location          string      `json:"location,omitempty"`
-	Login             string      `json:"login,omitempty"`
-	Name              string      `json:"name,omitempty"`
-	NodeId            string      `json:"node_id,omitempty"`
-	OrganizationsUrl  string      `json:"organizations_url,omitempty"`
-	OwnedPrivateRepos int64       `json:"owned_private_repos,omitempty"`
-	Plan              struct {
-		Collaborators int64       `json:"collaborators,omitempty"`
-		Name          string      `json:"name,omitempty"`
-		PrivateRepos  int64       `json:"private_repos,omitempty"`
-		Space         json.Number `json:"space,omitempty"`
-	} `json:"plan,omitempty"`
-	PrivateGists            int64  `json:"private_gists,omitempty"`
-	PublicGists             int64  `json:"public_gists,omitempty"`
-	PublicRepos             int64  `json:"public_repos,omitempty"`
-	ReceivedEventsUrl       string `json:"received_events_url,omitempty"`
-	ReposUrl                string `json:"repos_url,omitempty"`
-	SiteAdmin               bool   `json:"site_admin,omitempty"`
-	StarredUrl              string `json:"starred_url,omitempty"`
-	SubscriptionsUrl        string `json:"subscriptions_url,omitempty"`
-	TotalPrivateRepos       int64  `json:"total_private_repos,omitempty"`
-	TwoFactorAuthentication bool   `json:"two_factor_authentication,omitempty"`
-	Type                    string `json:"type,omitempty"`
-	UpdatedAt               string `json:"updated_at,omitempty"`
-	Url                     string `json:"url,omitempty"`
+	components.PrivateUser
 }
 
 /*
@@ -727,37 +654,7 @@ UsersGetByUsernameResponseBody200 is a response body for users/get-by-username
 API documentation: https://developer.github.com/v3/users/#get-a-single-user
 */
 type UsersGetByUsernameResponseBody200 struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	Bio               string `json:"bio,omitempty"`
-	Blog              string `json:"blog,omitempty"`
-	Company           string `json:"company,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	Followers         int64  `json:"followers,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	Following         int64  `json:"following,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	Hireable          bool   `json:"hireable,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Location          string `json:"location,omitempty"`
-	Login             string `json:"login,omitempty"`
-	Name              string `json:"name,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	PublicGists       int64  `json:"public_gists,omitempty"`
-	PublicRepos       int64  `json:"public_repos,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	UpdatedAt         string `json:"updated_at,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.PublicUser
 }
 
 /*
@@ -826,10 +723,7 @@ UsersGetContextForUserResponseBody200 is a response body for users/get-context-f
 API documentation: https://developer.github.com/v3/users/#get-contextual-information-about-a-user
 */
 type UsersGetContextForUserResponseBody200 struct {
-	Contexts []struct {
-		Message string `json:"message,omitempty"`
-		Octicon string `json:"octicon,omitempty"`
-	} `json:"contexts,omitempty"`
+	components.Hovercard
 }
 
 /*
@@ -879,34 +773,7 @@ UsersGetGpgKeyResponseBody200 is a response body for users/get-gpg-key
 API documentation: https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
 type UsersGetGpgKeyResponseBody200 struct {
-	CanCertify        bool   `json:"can_certify,omitempty"`
-	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
-	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
-	CanSign           bool   `json:"can_sign,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Emails            []struct {
-		Email    string `json:"email,omitempty"`
-		Verified bool   `json:"verified,omitempty"`
-	} `json:"emails,omitempty"`
-	ExpiresAt    string `json:"expires_at,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	KeyId        string `json:"key_id,omitempty"`
-	PrimaryKeyId string `json:"primary_key_id,omitempty"`
-	PublicKey    string `json:"public_key,omitempty"`
-	Subkeys      []struct {
-		CanCertify        bool          `json:"can_certify,omitempty"`
-		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
-		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
-		CanSign           bool          `json:"can_sign,omitempty"`
-		CreatedAt         string        `json:"created_at,omitempty"`
-		Emails            []interface{} `json:"emails,omitempty"`
-		ExpiresAt         string        `json:"expires_at,omitempty"`
-		Id                int64         `json:"id,omitempty"`
-		KeyId             string        `json:"key_id,omitempty"`
-		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
-		PublicKey         string        `json:"public_key,omitempty"`
-		Subkeys           []interface{} `json:"subkeys,omitempty"`
-	} `json:"subkeys,omitempty"`
+	components.GpgKey
 }
 
 /*
@@ -956,8 +823,7 @@ UsersGetPublicKeyResponseBody200 is a response body for users/get-public-key
 API documentation: https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
 type UsersGetPublicKeyResponseBody200 struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
+	components.ActionsPublicKey
 }
 
 /*
@@ -1012,24 +878,7 @@ UsersListResponseBody200 is a response body for users/list
 API documentation: https://developer.github.com/v3/users/#get-all-users
 */
 type UsersListResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1077,24 +926,7 @@ UsersListBlockedResponseBody200 is a response body for users/list-blocked
 API documentation: https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
 type UsersListBlockedResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1155,10 +987,7 @@ UsersListEmailsResponseBody200 is a response body for users/list-emails
 API documentation: https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
 type UsersListEmailsResponseBody200 []struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
+	components.Email
 }
 
 /*
@@ -1219,24 +1048,7 @@ UsersListFollowedByAuthenticatedResponseBody200 is a response body for users/lis
 API documentation: https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
 */
 type UsersListFollowedByAuthenticatedResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1297,24 +1109,7 @@ UsersListFollowersForAuthenticatedUserResponseBody200 is a response body for use
 API documentation: https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
 type UsersListFollowersForAuthenticatedUserResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1376,24 +1171,7 @@ UsersListFollowersForUserResponseBody200 is a response body for users/list-follo
 API documentation: https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type UsersListFollowersForUserResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1455,24 +1233,7 @@ UsersListFollowingForUserResponseBody200 is a response body for users/list-follo
 API documentation: https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
 type UsersListFollowingForUserResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1533,34 +1294,7 @@ UsersListGpgKeysResponseBody200 is a response body for users/list-gpg-keys
 API documentation: https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
 type UsersListGpgKeysResponseBody200 []struct {
-	CanCertify        bool   `json:"can_certify,omitempty"`
-	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
-	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
-	CanSign           bool   `json:"can_sign,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Emails            []struct {
-		Email    string `json:"email,omitempty"`
-		Verified bool   `json:"verified,omitempty"`
-	} `json:"emails,omitempty"`
-	ExpiresAt    string `json:"expires_at,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	KeyId        string `json:"key_id,omitempty"`
-	PrimaryKeyId string `json:"primary_key_id,omitempty"`
-	PublicKey    string `json:"public_key,omitempty"`
-	Subkeys      []struct {
-		CanCertify        bool          `json:"can_certify,omitempty"`
-		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
-		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
-		CanSign           bool          `json:"can_sign,omitempty"`
-		CreatedAt         string        `json:"created_at,omitempty"`
-		Emails            []interface{} `json:"emails,omitempty"`
-		ExpiresAt         string        `json:"expires_at,omitempty"`
-		Id                int64         `json:"id,omitempty"`
-		KeyId             string        `json:"key_id,omitempty"`
-		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
-		PublicKey         string        `json:"public_key,omitempty"`
-		Subkeys           []interface{} `json:"subkeys,omitempty"`
-	} `json:"subkeys,omitempty"`
+	components.GpgKey
 }
 
 /*
@@ -1622,34 +1356,7 @@ UsersListGpgKeysForUserResponseBody200 is a response body for users/list-gpg-key
 API documentation: https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 type UsersListGpgKeysForUserResponseBody200 []struct {
-	CanCertify        bool   `json:"can_certify,omitempty"`
-	CanEncryptComms   bool   `json:"can_encrypt_comms,omitempty"`
-	CanEncryptStorage bool   `json:"can_encrypt_storage,omitempty"`
-	CanSign           bool   `json:"can_sign,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Emails            []struct {
-		Email    string `json:"email,omitempty"`
-		Verified bool   `json:"verified,omitempty"`
-	} `json:"emails,omitempty"`
-	ExpiresAt    string `json:"expires_at,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	KeyId        string `json:"key_id,omitempty"`
-	PrimaryKeyId string `json:"primary_key_id,omitempty"`
-	PublicKey    string `json:"public_key,omitempty"`
-	Subkeys      []struct {
-		CanCertify        bool          `json:"can_certify,omitempty"`
-		CanEncryptComms   bool          `json:"can_encrypt_comms,omitempty"`
-		CanEncryptStorage bool          `json:"can_encrypt_storage,omitempty"`
-		CanSign           bool          `json:"can_sign,omitempty"`
-		CreatedAt         string        `json:"created_at,omitempty"`
-		Emails            []interface{} `json:"emails,omitempty"`
-		ExpiresAt         string        `json:"expires_at,omitempty"`
-		Id                int64         `json:"id,omitempty"`
-		KeyId             string        `json:"key_id,omitempty"`
-		PrimaryKeyId      int64         `json:"primary_key_id,omitempty"`
-		PublicKey         string        `json:"public_key,omitempty"`
-		Subkeys           []interface{} `json:"subkeys,omitempty"`
-	} `json:"subkeys,omitempty"`
+	components.GpgKey
 }
 
 /*
@@ -1710,10 +1417,7 @@ UsersListPublicEmailsResponseBody200 is a response body for users/list-public-em
 API documentation: https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
 type UsersListPublicEmailsResponseBody200 []struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
+	components.Email
 }
 
 /*
@@ -1774,8 +1478,7 @@ UsersListPublicKeysResponseBody200 is a response body for users/list-public-keys
 API documentation: https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
 type UsersListPublicKeysResponseBody200 []struct {
-	Key   string `json:"key,omitempty"`
-	KeyId string `json:"key_id,omitempty"`
+	components.ActionsPublicKey
 }
 
 /*
@@ -1837,8 +1540,7 @@ UsersListPublicKeysForUserResponseBody200 is a response body for users/list-publ
 API documentation: https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 type UsersListPublicKeysForUserResponseBody200 []struct {
-	Id  int64  `json:"id,omitempty"`
-	Key string `json:"key,omitempty"`
+	components.KeySimple
 }
 
 /*
@@ -1905,10 +1607,7 @@ UsersTogglePrimaryEmailVisibilityResponseBody200 is a response body for users/to
 API documentation: https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
 type UsersTogglePrimaryEmailVisibilityResponseBody200 []struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
+	components.Email
 }
 
 /*
@@ -2069,47 +1768,5 @@ UsersUpdateAuthenticatedResponseBody200 is a response body for users/update-auth
 API documentation: https://developer.github.com/v3/users/#update-the-authenticated-user
 */
 type UsersUpdateAuthenticatedResponseBody200 struct {
-	AvatarUrl         string      `json:"avatar_url,omitempty"`
-	Bio               string      `json:"bio,omitempty"`
-	Blog              string      `json:"blog,omitempty"`
-	Collaborators     int64       `json:"collaborators,omitempty"`
-	Company           string      `json:"company,omitempty"`
-	CreatedAt         string      `json:"created_at,omitempty"`
-	DiskUsage         json.Number `json:"disk_usage,omitempty"`
-	Email             string      `json:"email,omitempty"`
-	EventsUrl         string      `json:"events_url,omitempty"`
-	Followers         int64       `json:"followers,omitempty"`
-	FollowersUrl      string      `json:"followers_url,omitempty"`
-	Following         int64       `json:"following,omitempty"`
-	FollowingUrl      string      `json:"following_url,omitempty"`
-	GistsUrl          string      `json:"gists_url,omitempty"`
-	GravatarId        string      `json:"gravatar_id,omitempty"`
-	Hireable          bool        `json:"hireable,omitempty"`
-	HtmlUrl           string      `json:"html_url,omitempty"`
-	Id                int64       `json:"id,omitempty"`
-	Location          string      `json:"location,omitempty"`
-	Login             string      `json:"login,omitempty"`
-	Name              string      `json:"name,omitempty"`
-	NodeId            string      `json:"node_id,omitempty"`
-	OrganizationsUrl  string      `json:"organizations_url,omitempty"`
-	OwnedPrivateRepos int64       `json:"owned_private_repos,omitempty"`
-	Plan              struct {
-		Collaborators int64       `json:"collaborators,omitempty"`
-		Name          string      `json:"name,omitempty"`
-		PrivateRepos  int64       `json:"private_repos,omitempty"`
-		Space         json.Number `json:"space,omitempty"`
-	} `json:"plan,omitempty"`
-	PrivateGists            int64  `json:"private_gists,omitempty"`
-	PublicGists             int64  `json:"public_gists,omitempty"`
-	PublicRepos             int64  `json:"public_repos,omitempty"`
-	ReceivedEventsUrl       string `json:"received_events_url,omitempty"`
-	ReposUrl                string `json:"repos_url,omitempty"`
-	SiteAdmin               bool   `json:"site_admin,omitempty"`
-	StarredUrl              string `json:"starred_url,omitempty"`
-	SubscriptionsUrl        string `json:"subscriptions_url,omitempty"`
-	TotalPrivateRepos       int64  `json:"total_private_repos,omitempty"`
-	TwoFactorAuthentication bool   `json:"two_factor_authentication,omitempty"`
-	Type                    string `json:"type,omitempty"`
-	UpdatedAt               string `json:"updated_at,omitempty"`
-	Url                     string `json:"url,omitempty"`
+	components.PrivateUser
 }

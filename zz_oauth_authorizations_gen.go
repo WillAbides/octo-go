@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -90,22 +91,7 @@ OauthAuthorizationsCreateAuthorizationResponseBody201 is a response body for oau
 API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationResponseBody201 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -237,22 +223,7 @@ OauthAuthorizationsGetAuthorizationResponseBody200 is a response body for oauth-
 API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -302,16 +273,7 @@ OauthAuthorizationsGetGrantResponseBody200 is a response body for oauth-authoriz
 API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type OauthAuthorizationsGetGrantResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Scopes    []string `json:"scopes,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
+	components.ApplicationGrant
 }
 
 /*
@@ -393,22 +355,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 is a response b
 API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -417,22 +364,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 is a response b
 API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -507,22 +439,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 i
 API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -531,22 +448,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 i
 API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -607,22 +509,7 @@ OauthAuthorizationsListAuthorizationsResponseBody200 is a response body for oaut
 API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 type OauthAuthorizationsListAuthorizationsResponseBody200 []struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }
 
 /*
@@ -683,16 +570,7 @@ OauthAuthorizationsListGrantsResponseBody200 is a response body for oauth-author
 API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 type OauthAuthorizationsListGrantsResponseBody200 []struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt string   `json:"created_at,omitempty"`
-	Id        int64    `json:"id,omitempty"`
-	Scopes    []string `json:"scopes,omitempty"`
-	UpdatedAt string   `json:"updated_at,omitempty"`
-	Url       string   `json:"url,omitempty"`
+	components.ApplicationGrant
 }
 
 /*
@@ -776,20 +654,5 @@ OauthAuthorizationsUpdateAuthorizationResponseBody200 is a response body for oau
 API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.Authorization
 }

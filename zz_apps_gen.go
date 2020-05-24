@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -113,42 +113,7 @@ AppsCheckAuthorizationResponseBody200 is a response body for apps/check-authoriz
 API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type AppsCheckAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.AuthorizationWithUser
 }
 
 /*
@@ -210,42 +175,7 @@ AppsCheckTokenResponseBody200 is a response body for apps/check-token
 API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.AuthorizationWithUser
 }
 
 /*
@@ -328,9 +258,7 @@ AppsCreateContentAttachmentResponseBody200 is a response body for apps/create-co
 API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentResponseBody200 struct {
-	Body  string `json:"body,omitempty"`
-	Id    int64  `json:"id,omitempty"`
-	Title string `json:"title,omitempty"`
+	components.ContentReferenceAttachment
 }
 
 /*
@@ -380,38 +308,7 @@ AppsCreateFromManifestResponseBody200 is a response body for apps/create-from-ma
 API documentation: https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type AppsCreateFromManifestResponseBody200 struct {
-	ClientId     string `json:"client_id,omitempty"`
-	ClientSecret string `json:"client_secret,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	ExternalUrl  string `json:"external_url,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Owner        struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Pem           string `json:"pem,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
-	WebhookSecret string `json:"webhook_secret,omitempty"`
+	components.IntegrationFromManifest
 }
 
 /*
@@ -501,117 +398,7 @@ AppsCreateInstallationTokenResponseBody201 is a response body for apps/create-in
 API documentation: https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 type AppsCreateInstallationTokenResponseBody201 struct {
-	ExpiresAt   string `json:"expires_at,omitempty"`
-	Permissions struct {
-		Contents string `json:"contents,omitempty"`
-		Issues   string `json:"issues,omitempty"`
-	} `json:"permissions,omitempty"`
-	Repositories []struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
-	} `json:"repositories,omitempty"`
-	Token string `json:"token,omitempty"`
+	components.InstallationToken
 }
 
 /*
@@ -831,37 +618,7 @@ AppsGetAuthenticatedResponseBody200 is a response body for apps/get-authenticate
 API documentation: https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
 type AppsGetAuthenticatedResponseBody200 struct {
-	CreatedAt          string   `json:"created_at,omitempty"`
-	Description        string   `json:"description,omitempty"`
-	Events             []string `json:"events,omitempty"`
-	ExternalUrl        string   `json:"external_url,omitempty"`
-	HtmlUrl            string   `json:"html_url,omitempty"`
-	Id                 int64    `json:"id,omitempty"`
-	InstallationsCount int64    `json:"installations_count,omitempty"`
-	Name               string   `json:"name,omitempty"`
-	NodeId             string   `json:"node_id,omitempty"`
-	Owner              struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+	components.Integration
 }
 
 /*
@@ -923,36 +680,7 @@ AppsGetBySlugResponseBody200 is a response body for apps/get-by-slug
 API documentation: https://developer.github.com/v3/apps/#get-a-single-github-app
 */
 type AppsGetBySlugResponseBody200 struct {
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	ExternalUrl string   `json:"external_url,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	NodeId      string   `json:"node_id,omitempty"`
-	Owner       struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+	components.Integration2
 }
 
 /*
@@ -1014,36 +742,7 @@ AppsGetInstallationResponseBody200 is a response body for apps/get-installation
 API documentation: https://developer.github.com/v3/apps/#get-an-installation
 */
 type AppsGetInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
+	components.BaseInstallation
 }
 
 /*
@@ -1105,42 +804,7 @@ AppsGetOrgInstallationResponseBody200 is a response body for apps/get-org-instal
 API documentation: https://developer.github.com/v3/apps/#get-an-organization-installation
 */
 type AppsGetOrgInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
+	components.Installation
 }
 
 /*
@@ -1203,42 +867,7 @@ AppsGetRepoInstallationResponseBody200 is a response body for apps/get-repo-inst
 API documentation: https://developer.github.com/v3/apps/#get-a-repository-installation
 */
 type AppsGetRepoInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
+	components.Installation
 }
 
 /*
@@ -1288,55 +917,7 @@ AppsGetSubscriptionPlanForAccountResponseBody200 is a response body for apps/get
 API documentation: https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type AppsGetSubscriptionPlanForAccountResponseBody200 struct {
-	Email                    string `json:"email,omitempty"`
-	Id                       int64  `json:"id,omitempty"`
-	Login                    string `json:"login,omitempty"`
-	MarketplacePendingChange struct {
-		EffectiveDate string `json:"effective_date,omitempty"`
-		Id            int64  `json:"id,omitempty"`
-		Plan          struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-	} `json:"marketplace_pending_change,omitempty"`
-	MarketplacePurchase struct {
-		BillingCycle    string `json:"billing_cycle,omitempty"`
-		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-		NextBillingDate string `json:"next_billing_date,omitempty"`
-		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-		Plan            struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"marketplace_purchase,omitempty"`
-	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-	Type                     string `json:"type,omitempty"`
-	Url                      string `json:"url,omitempty"`
+	components.MarketplacePurchase
 }
 
 /*
@@ -1386,55 +967,7 @@ AppsGetSubscriptionPlanForAccountStubbedResponseBody200 is a response body for a
 API documentation: https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type AppsGetSubscriptionPlanForAccountStubbedResponseBody200 struct {
-	Email                    string `json:"email,omitempty"`
-	Id                       int64  `json:"id,omitempty"`
-	Login                    string `json:"login,omitempty"`
-	MarketplacePendingChange struct {
-		EffectiveDate string `json:"effective_date,omitempty"`
-		Id            int64  `json:"id,omitempty"`
-		Plan          struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-	} `json:"marketplace_pending_change,omitempty"`
-	MarketplacePurchase struct {
-		BillingCycle    string `json:"billing_cycle,omitempty"`
-		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-		NextBillingDate string `json:"next_billing_date,omitempty"`
-		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-		Plan            struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"marketplace_purchase,omitempty"`
-	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-	Type                     string `json:"type,omitempty"`
-	Url                      string `json:"url,omitempty"`
+	components.MarketplacePurchase
 }
 
 /*
@@ -1496,43 +1029,7 @@ AppsGetUserInstallationResponseBody200 is a response body for apps/get-user-inst
 API documentation: https://developer.github.com/v3/apps/#get-a-user-installation
 */
 type AppsGetUserInstallationResponseBody200 struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
+	components.Installation2
 }
 
 /*
@@ -1612,55 +1109,7 @@ AppsListAccountsForPlanResponseBody200 is a response body for apps/list-accounts
 API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type AppsListAccountsForPlanResponseBody200 []struct {
-	Email                    string `json:"email,omitempty"`
-	Id                       int64  `json:"id,omitempty"`
-	Login                    string `json:"login,omitempty"`
-	MarketplacePendingChange struct {
-		EffectiveDate string `json:"effective_date,omitempty"`
-		Id            int64  `json:"id,omitempty"`
-		Plan          struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-	} `json:"marketplace_pending_change,omitempty"`
-	MarketplacePurchase struct {
-		BillingCycle    string `json:"billing_cycle,omitempty"`
-		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-		NextBillingDate string `json:"next_billing_date,omitempty"`
-		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-		Plan            struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"marketplace_purchase,omitempty"`
-	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-	Type                     string `json:"type,omitempty"`
-	Url                      string `json:"url,omitempty"`
+	components.MarketplacePurchase
 }
 
 /*
@@ -1740,55 +1189,7 @@ AppsListAccountsForPlanStubbedResponseBody200 is a response body for apps/list-a
 API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type AppsListAccountsForPlanStubbedResponseBody200 []struct {
-	Email                    string `json:"email,omitempty"`
-	Id                       int64  `json:"id,omitempty"`
-	Login                    string `json:"login,omitempty"`
-	MarketplacePendingChange struct {
-		EffectiveDate string `json:"effective_date,omitempty"`
-		Id            int64  `json:"id,omitempty"`
-		Plan          struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-	} `json:"marketplace_pending_change,omitempty"`
-	MarketplacePurchase struct {
-		BillingCycle    string `json:"billing_cycle,omitempty"`
-		FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-		NextBillingDate string `json:"next_billing_date,omitempty"`
-		OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-		Plan            struct {
-			AccountsUrl         string   `json:"accounts_url,omitempty"`
-			Bullets             []string `json:"bullets,omitempty"`
-			Description         string   `json:"description,omitempty"`
-			HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-			Id                  int64    `json:"id,omitempty"`
-			MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-			Name                string   `json:"name,omitempty"`
-			Number              int64    `json:"number,omitempty"`
-			PriceModel          string   `json:"price_model,omitempty"`
-			State               string   `json:"state,omitempty"`
-			UnitName            string   `json:"unit_name,omitempty"`
-			Url                 string   `json:"url,omitempty"`
-			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-	} `json:"marketplace_purchase,omitempty"`
-	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-	Type                     string `json:"type,omitempty"`
-	Url                      string `json:"url,omitempty"`
+	components.MarketplacePurchase
 }
 
 /*
@@ -1874,109 +1275,7 @@ API documentation: https://developer.github.com/v3/apps/installations/#list-repo
 */
 type AppsListInstallationReposForAuthenticatedUserResponseBody200 struct {
 	Repositories []struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		components.Repository
 	} `json:"repositories,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }
@@ -2051,36 +1350,7 @@ AppsListInstallationsResponseBody200 is a response body for apps/list-installati
 API documentation: https://developer.github.com/v3/apps/#list-installations
 */
 type AppsListInstallationsResponseBody200 []struct {
-	AccessTokensUrl string `json:"access_tokens_url,omitempty"`
-	Account         struct {
-		AvatarUrl        string `json:"avatar_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		Login            string `json:"login,omitempty"`
-		MembersUrl       string `json:"members_url,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		PublicMembersUrl string `json:"public_members_url,omitempty"`
-		ReposUrl         string `json:"repos_url,omitempty"`
-		Url              string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
+	components.BaseInstallation
 }
 
 /*
@@ -2154,46 +1424,7 @@ API documentation: https://developer.github.com/v3/apps/installations/#list-inst
 */
 type AppsListInstallationsForAuthenticatedUserResponseBody200 struct {
 	Installations []struct {
-		AccessTokensUrl string `json:"access_tokens_url"`
-		Account         struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			Description       string `json:"description,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HooksUrl          string `json:"hooks_url,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			IssuesUrl         string `json:"issues_url,omitempty"`
-			Login             string `json:"login,omitempty"`
-			MembersUrl        string `json:"members_url,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			PublicMembersUrl  string `json:"public_members_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"account"`
-		AppId       int64    `json:"app_id"`
-		Events      []string `json:"events"`
-		HtmlUrl     string   `json:"html_url"`
-		Id          int64    `json:"id"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions"`
-		RepositoriesUrl string `json:"repositories_url"`
-		SingleFileName  string `json:"single_file_name"`
-		TargetId        int64  `json:"target_id"`
-		TargetType      string `json:"target_type"`
+		components.BaseInstallationForAuthUser
 	} `json:"installations,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }
@@ -2256,19 +1487,7 @@ AppsListPlansResponseBody200 is a response body for apps/list-plans
 API documentation: https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 type AppsListPlansResponseBody200 []struct {
-	AccountsUrl         string   `json:"accounts_url,omitempty"`
-	Bullets             []string `json:"bullets,omitempty"`
-	Description         string   `json:"description,omitempty"`
-	HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-	Id                  int64    `json:"id,omitempty"`
-	MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-	Name                string   `json:"name,omitempty"`
-	Number              int64    `json:"number,omitempty"`
-	PriceModel          string   `json:"price_model,omitempty"`
-	State               string   `json:"state,omitempty"`
-	UnitName            string   `json:"unit_name,omitempty"`
-	Url                 string   `json:"url,omitempty"`
-	YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+	components.MarketplaceListingPlan
 }
 
 /*
@@ -2329,19 +1548,7 @@ AppsListPlansStubbedResponseBody200 is a response body for apps/list-plans-stubb
 API documentation: https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 type AppsListPlansStubbedResponseBody200 []struct {
-	AccountsUrl         string   `json:"accounts_url,omitempty"`
-	Bullets             []string `json:"bullets,omitempty"`
-	Description         string   `json:"description,omitempty"`
-	HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-	Id                  int64    `json:"id,omitempty"`
-	MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-	Name                string   `json:"name,omitempty"`
-	Number              int64    `json:"number,omitempty"`
-	PriceModel          string   `json:"price_model,omitempty"`
-	State               string   `json:"state,omitempty"`
-	UnitName            string   `json:"unit_name,omitempty"`
-	Url                 string   `json:"url,omitempty"`
-	YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
+	components.MarketplaceListingPlan
 }
 
 /*
@@ -2426,104 +1633,7 @@ API documentation: https://developer.github.com/v3/apps/installations/#list-repo
 */
 type AppsListReposResponseBody200 struct {
 	Repositories []struct {
-		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
-		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
-		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
-		ArchiveUrl       string `json:"archive_url,omitempty"`
-		Archived         bool   `json:"archived,omitempty"`
-		AssigneesUrl     string `json:"assignees_url,omitempty"`
-		BlobsUrl         string `json:"blobs_url,omitempty"`
-		BranchesUrl      string `json:"branches_url,omitempty"`
-		CloneUrl         string `json:"clone_url,omitempty"`
-		CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-		CommentsUrl      string `json:"comments_url,omitempty"`
-		CommitsUrl       string `json:"commits_url,omitempty"`
-		CompareUrl       string `json:"compare_url,omitempty"`
-		ContentsUrl      string `json:"contents_url,omitempty"`
-		ContributorsUrl  string `json:"contributors_url,omitempty"`
-		CreatedAt        string `json:"created_at,omitempty"`
-		DefaultBranch    string `json:"default_branch,omitempty"`
-		DeploymentsUrl   string `json:"deployments_url,omitempty"`
-		Description      string `json:"description,omitempty"`
-		Disabled         bool   `json:"disabled,omitempty"`
-		DownloadsUrl     string `json:"downloads_url,omitempty"`
-		EventsUrl        string `json:"events_url,omitempty"`
-		Fork             bool   `json:"fork,omitempty"`
-		ForksCount       int64  `json:"forks_count,omitempty"`
-		ForksUrl         string `json:"forks_url,omitempty"`
-		FullName         string `json:"full_name,omitempty"`
-		GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-		GitRefsUrl       string `json:"git_refs_url,omitempty"`
-		GitTagsUrl       string `json:"git_tags_url,omitempty"`
-		GitUrl           string `json:"git_url,omitempty"`
-		HasDownloads     bool   `json:"has_downloads,omitempty"`
-		HasIssues        bool   `json:"has_issues,omitempty"`
-		HasPages         bool   `json:"has_pages,omitempty"`
-		HasProjects      bool   `json:"has_projects,omitempty"`
-		HasWiki          bool   `json:"has_wiki,omitempty"`
-		Homepage         string `json:"homepage,omitempty"`
-		HooksUrl         string `json:"hooks_url,omitempty"`
-		HtmlUrl          string `json:"html_url,omitempty"`
-		Id               int64  `json:"id,omitempty"`
-		IsTemplate       bool   `json:"is_template,omitempty"`
-		IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-		IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-		IssuesUrl        string `json:"issues_url,omitempty"`
-		KeysUrl          string `json:"keys_url,omitempty"`
-		LabelsUrl        string `json:"labels_url,omitempty"`
-		Language         string `json:"language,omitempty"`
-		LanguagesUrl     string `json:"languages_url,omitempty"`
-		MergesUrl        string `json:"merges_url,omitempty"`
-		MilestonesUrl    string `json:"milestones_url,omitempty"`
-		MirrorUrl        string `json:"mirror_url,omitempty"`
-		Name             string `json:"name,omitempty"`
-		NetworkCount     int64  `json:"network_count,omitempty"`
-		NodeId           string `json:"node_id,omitempty"`
-		NotificationsUrl string `json:"notifications_url,omitempty"`
-		OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-		Owner            struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"owner,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		components.Repository2
 	} `json:"repositories,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
 }
@@ -2586,35 +1696,7 @@ AppsListSubscriptionsForAuthenticatedUserResponseBody200 is a response body for 
 API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 type AppsListSubscriptionsForAuthenticatedUserResponseBody200 []struct {
-	Account struct {
-		Email                    string `json:"email,omitempty"`
-		Id                       int64  `json:"id,omitempty"`
-		Login                    string `json:"login,omitempty"`
-		OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-		Type                     string `json:"type,omitempty"`
-		Url                      string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	BillingCycle    string `json:"billing_cycle,omitempty"`
-	FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-	NextBillingDate string `json:"next_billing_date,omitempty"`
-	OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-	Plan            struct {
-		AccountsUrl         string   `json:"accounts_url,omitempty"`
-		Bullets             []string `json:"bullets,omitempty"`
-		Description         string   `json:"description,omitempty"`
-		HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-		Id                  int64    `json:"id,omitempty"`
-		MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-		Name                string   `json:"name,omitempty"`
-		Number              int64    `json:"number,omitempty"`
-		PriceModel          string   `json:"price_model,omitempty"`
-		State               string   `json:"state,omitempty"`
-		UnitName            string   `json:"unit_name,omitempty"`
-		Url                 string   `json:"url,omitempty"`
-		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-	} `json:"plan,omitempty"`
-	UnitCount string `json:"unit_count,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+	components.UserMarketplacePurchase
 }
 
 /*
@@ -2675,35 +1757,7 @@ AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 is a response bo
 API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 []struct {
-	Account struct {
-		Email                    string `json:"email,omitempty"`
-		Id                       int64  `json:"id,omitempty"`
-		Login                    string `json:"login,omitempty"`
-		OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
-		Type                     string `json:"type,omitempty"`
-		Url                      string `json:"url,omitempty"`
-	} `json:"account,omitempty"`
-	BillingCycle    string `json:"billing_cycle,omitempty"`
-	FreeTrialEndsOn string `json:"free_trial_ends_on,omitempty"`
-	NextBillingDate string `json:"next_billing_date,omitempty"`
-	OnFreeTrial     bool   `json:"on_free_trial,omitempty"`
-	Plan            struct {
-		AccountsUrl         string   `json:"accounts_url,omitempty"`
-		Bullets             []string `json:"bullets,omitempty"`
-		Description         string   `json:"description,omitempty"`
-		HasFreeTrial        bool     `json:"has_free_trial,omitempty"`
-		Id                  int64    `json:"id,omitempty"`
-		MonthlyPriceInCents int64    `json:"monthly_price_in_cents,omitempty"`
-		Name                string   `json:"name,omitempty"`
-		Number              int64    `json:"number,omitempty"`
-		PriceModel          string   `json:"price_model,omitempty"`
-		State               string   `json:"state,omitempty"`
-		UnitName            string   `json:"unit_name,omitempty"`
-		Url                 string   `json:"url,omitempty"`
-		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
-	} `json:"plan,omitempty"`
-	UnitCount string `json:"unit_count,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+	components.UserMarketplacePurchase
 }
 
 /*
@@ -2808,42 +1862,7 @@ AppsResetAuthorizationResponseBody200 is a response body for apps/reset-authoriz
 API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type AppsResetAuthorizationResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.AuthorizationWithUser
 }
 
 /*
@@ -2905,42 +1924,7 @@ AppsResetTokenResponseBody200 is a response body for apps/reset-token
 API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenResponseBody200 struct {
-	App struct {
-		ClientId string `json:"client_id,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Url      string `json:"url,omitempty"`
-	} `json:"app,omitempty"`
-	CreatedAt      string   `json:"created_at,omitempty"`
-	Fingerprint    string   `json:"fingerprint,omitempty"`
-	HashedToken    string   `json:"hashed_token,omitempty"`
-	Id             int64    `json:"id,omitempty"`
-	Note           string   `json:"note,omitempty"`
-	NoteUrl        string   `json:"note_url,omitempty"`
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.AuthorizationWithUser
 }
 
 /*

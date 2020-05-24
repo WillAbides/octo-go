@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -89,30 +90,7 @@ ReactionsCreateForCommitCommentResponseBody201 is a response body for reactions/
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -194,30 +172,7 @@ ReactionsCreateForIssueResponseBody201 is a response body for reactions/create-f
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -299,30 +254,7 @@ ReactionsCreateForIssueCommentResponseBody201 is a response body for reactions/c
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -404,30 +336,7 @@ ReactionsCreateForPullRequestReviewCommentResponseBody201 is a response body for
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -510,30 +419,7 @@ ReactionsCreateForTeamDiscussionCommentInOrgResponseBody201 is a response body f
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -615,30 +501,7 @@ ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 is a response body 
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
 type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -720,30 +583,7 @@ ReactionsCreateForTeamDiscussionInOrgResponseBody201 is a response body for reac
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -824,30 +664,7 @@ ReactionsCreateForTeamDiscussionLegacyResponseBody201 is a response body for rea
 API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type ReactionsCreateForTeamDiscussionLegacyResponseBody201 struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -1347,30 +1164,7 @@ ReactionsListForCommitCommentResponseBody200 is a response body for reactions/li
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ReactionsListForCommitCommentResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -1459,30 +1253,7 @@ ReactionsListForIssueResponseBody200 is a response body for reactions/list-for-i
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ReactionsListForIssueResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -1571,30 +1342,7 @@ ReactionsListForIssueCommentResponseBody200 is a response body for reactions/lis
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ReactionsListForIssueCommentResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -1683,30 +1431,7 @@ ReactionsListForPullRequestReviewCommentResponseBody200 is a response body for r
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ReactionsListForPullRequestReviewCommentResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -1796,30 +1521,7 @@ ReactionsListForTeamDiscussionCommentInOrgResponseBody200 is a response body for
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 type ReactionsListForTeamDiscussionCommentInOrgResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -1908,30 +1610,7 @@ ReactionsListForTeamDiscussionCommentLegacyResponseBody200 is a response body fo
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ReactionsListForTeamDiscussionCommentLegacyResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -2020,30 +1699,7 @@ ReactionsListForTeamDiscussionInOrgResponseBody200 is a response body for reacti
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ReactionsListForTeamDiscussionInOrgResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }
 
 /*
@@ -2131,28 +1787,5 @@ ReactionsListForTeamDiscussionLegacyResponseBody200 is a response body for react
 API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
 type ReactionsListForTeamDiscussionLegacyResponseBody200 []struct {
-	Content   string `json:"content,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.Reaction
 }

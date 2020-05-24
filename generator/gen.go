@@ -33,6 +33,11 @@ func removeValFromStringSlice(sl []string, val string) []string {
 func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, usePointers, noHelper, noHelperRecursive bool) *jen.Statement {
 	overrideParamSchema(schemaPath, schema)
 
+	componentRef := componentRefStmt(schema)
+	if componentRef != nil {
+		return componentRef
+	}
+
 	helperStruct := reqBodyNestedStructName(schemaPath, schema)
 	if noHelperRecursive {
 		noHelper = true

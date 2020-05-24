@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -120,9 +120,7 @@ TeamsAddOrUpdateMembershipInOrgResponseBody200 is a response body for teams/add-
 API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
 type TeamsAddOrUpdateMembershipInOrgResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
+	components.TeamMembership
 }
 
 /*
@@ -191,9 +189,7 @@ TeamsAddOrUpdateMembershipLegacyResponseBody200 is a response body for teams/add
 API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
 */
 type TeamsAddOrUpdateMembershipLegacyResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
+	components.TeamMembership
 }
 
 /*
@@ -675,51 +671,7 @@ TeamsCreateResponseBody201 is a response body for teams/create
 API documentation: https://developer.github.com/v3/teams/#create-team
 */
 type TeamsCreateResponseBody201 struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.TeamFull
 }
 
 /*
@@ -797,38 +749,7 @@ TeamsCreateDiscussionCommentInOrgResponseBody201 is a response body for teams/cr
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
 type TeamsCreateDiscussionCommentInOrgResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -905,38 +826,7 @@ TeamsCreateDiscussionCommentLegacyResponseBody201 is a response body for teams/c
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment-legacy
 */
 type TeamsCreateDiscussionCommentLegacyResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -1023,43 +913,7 @@ TeamsCreateDiscussionInOrgResponseBody201 is a response body for teams/create-di
 API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type TeamsCreateDiscussionInOrgResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -1145,43 +999,7 @@ TeamsCreateDiscussionLegacyResponseBody201 is a response body for teams/create-d
 API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 type TeamsCreateDiscussionLegacyResponseBody201 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -1261,11 +1079,7 @@ TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 is a response body fo
 API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 struct {
-	Groups struct {
-		GroupDescription string `json:"group_description,omitempty"`
-		GroupId          string `json:"group_id,omitempty"`
-		GroupName        string `json:"group_name,omitempty"`
-	} `json:"groups,omitempty"`
+	components.GroupMapping
 }
 
 /*
@@ -1344,11 +1158,7 @@ TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 is a response body f
 API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
 type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description,omitempty"`
-		GroupId          string `json:"group_id,omitempty"`
-		GroupName        string `json:"group_name,omitempty"`
-	} `json:"groups,omitempty"`
+	components.GroupMapping2
 }
 
 /*
@@ -1654,51 +1464,7 @@ TeamsGetByNameResponseBody200 is a response body for teams/get-by-name
 API documentation: https://developer.github.com/v3/teams/#get-team-by-name
 */
 type TeamsGetByNameResponseBody200 struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.TeamFull
 }
 
 /*
@@ -1765,38 +1531,7 @@ TeamsGetDiscussionCommentInOrgResponseBody200 is a response body for teams/get-d
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
 */
 type TeamsGetDiscussionCommentInOrgResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -1862,38 +1597,7 @@ TeamsGetDiscussionCommentLegacyResponseBody200 is a response body for teams/get-
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
 */
 type TeamsGetDiscussionCommentLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -1959,43 +1663,7 @@ TeamsGetDiscussionInOrgResponseBody200 is a response body for teams/get-discussi
 API documentation: https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
 type TeamsGetDiscussionInOrgResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -2060,43 +1728,7 @@ TeamsGetDiscussionLegacyResponseBody200 is a response body for teams/get-discuss
 API documentation: https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
 */
 type TeamsGetDiscussionLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -2146,51 +1778,7 @@ TeamsGetLegacyResponseBody200 is a response body for teams/get-legacy
 API documentation: https://developer.github.com/v3/teams/#get-team-legacy
 */
 type TeamsGetLegacyResponseBody200 struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.TeamFull
 }
 
 /*
@@ -2284,9 +1872,7 @@ TeamsGetMembershipInOrgResponseBody200 is a response body for teams/get-membersh
 API documentation: https://developer.github.com/v3/teams/members/#get-team-membership
 */
 type TeamsGetMembershipInOrgResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
+	components.TeamMembership
 }
 
 /*
@@ -2337,9 +1923,7 @@ TeamsGetMembershipLegacyResponseBody200 is a response body for teams/get-members
 API documentation: https://developer.github.com/v3/teams/members/#get-team-membership-legacy
 */
 type TeamsGetMembershipLegacyResponseBody200 struct {
-	Role  string `json:"role,omitempty"`
-	State string `json:"state,omitempty"`
-	Url   string `json:"url,omitempty"`
+	components.TeamMembership
 }
 
 /*
@@ -2401,18 +1985,7 @@ TeamsListResponseBody200 is a response body for teams/list
 API documentation: https://developer.github.com/v3/teams/#list-teams
 */
 type TeamsListResponseBody200 []struct {
-	Description     string `json:"description,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	MembersUrl      string `json:"members_url,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.Team
 }
 
 /*
@@ -2475,29 +2048,7 @@ TeamsListChildInOrgResponseBody200 is a response body for teams/list-child-in-or
 API documentation: https://developer.github.com/v3/teams/#list-child-teams
 */
 type TeamsListChildInOrgResponseBody200 []struct {
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	MembersUrl  string `json:"members_url,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Parent      struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.Team2
 }
 
 /*
@@ -2559,29 +2110,7 @@ TeamsListChildLegacyResponseBody200 is a response body for teams/list-child-lega
 API documentation: https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 type TeamsListChildLegacyResponseBody200 []struct {
-	Description string `json:"description,omitempty"`
-	Id          int64  `json:"id,omitempty"`
-	MembersUrl  string `json:"members_url,omitempty"`
-	Name        string `json:"name,omitempty"`
-	NodeId      string `json:"node_id,omitempty"`
-	Parent      struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
-	} `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.Team2
 }
 
 /*
@@ -2668,38 +2197,7 @@ TeamsListDiscussionCommentsInOrgResponseBody200 is a response body for teams/lis
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
 type TeamsListDiscussionCommentsInOrgResponseBody200 []struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -2785,38 +2283,7 @@ TeamsListDiscussionCommentsLegacyResponseBody200 is a response body for teams/li
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#list-comments-legacy
 */
 type TeamsListDiscussionCommentsLegacyResponseBody200 []struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -2902,43 +2369,7 @@ TeamsListDiscussionsInOrgResponseBody200 is a response body for teams/list-discu
 API documentation: https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type TeamsListDiscussionsInOrgResponseBody200 []struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -3023,43 +2454,7 @@ TeamsListDiscussionsLegacyResponseBody200 is a response body for teams/list-disc
 API documentation: https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 type TeamsListDiscussionsLegacyResponseBody200 []struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -3120,51 +2515,7 @@ TeamsListForAuthenticatedUserResponseBody200 is a response body for teams/list-f
 API documentation: https://developer.github.com/v3/teams/#list-user-teams
 */
 type TeamsListForAuthenticatedUserResponseBody200 []struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.TeamFull
 }
 
 /*
@@ -3214,11 +2565,7 @@ TeamsListIdPGroupsForLegacyResponseBody200 is a response body for teams/list-id-
 API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
 type TeamsListIdPGroupsForLegacyResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description"`
-		GroupId          string `json:"group_id"`
-		GroupName        string `json:"group_name"`
-	} `json:"groups,omitempty"`
+	components.GroupMapping3
 }
 
 /*
@@ -3280,11 +2627,7 @@ TeamsListIdPGroupsForOrgResponseBody200 is a response body for teams/list-id-p-g
 API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
 */
 type TeamsListIdPGroupsForOrgResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description"`
-		GroupId          string `json:"group_id"`
-		GroupName        string `json:"group_name"`
-	} `json:"groups,omitempty"`
+	components.GroupMapping3
 }
 
 /*
@@ -3335,11 +2678,7 @@ TeamsListIdPGroupsInOrgResponseBody200 is a response body for teams/list-id-p-gr
 API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 type TeamsListIdPGroupsInOrgResponseBody200 struct {
-	Groups []struct {
-		GroupDescription string `json:"group_description"`
-		GroupId          string `json:"group_id"`
-		GroupName        string `json:"group_name"`
-	} `json:"groups,omitempty"`
+	components.GroupMapping3
 }
 
 /*
@@ -3413,24 +2752,7 @@ TeamsListMembersInOrgResponseBody200 is a response body for teams/list-members-i
 API documentation: https://developer.github.com/v3/teams/members/#list-team-members
 */
 type TeamsListMembersInOrgResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -3503,24 +2825,7 @@ TeamsListMembersLegacyResponseBody200 is a response body for teams/list-members-
 API documentation: https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 type TeamsListMembersLegacyResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -3583,33 +2888,7 @@ TeamsListPendingInvitationsInOrgResponseBody200 is a response body for teams/lis
 API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type TeamsListPendingInvitationsInOrgResponseBody200 []struct {
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
-	Inviter           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Login     string `json:"login,omitempty"`
-	Role      string `json:"role,omitempty"`
-	TeamCount int64  `json:"team_count,omitempty"`
+	components.OrganizationInvitation
 }
 
 /*
@@ -3671,33 +2950,7 @@ TeamsListPendingInvitationsLegacyResponseBody200 is a response body for teams/li
 API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 type TeamsListPendingInvitationsLegacyResponseBody200 []struct {
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	InvitationTeamUrl string `json:"invitation_team_url,omitempty"`
-	Inviter           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"inviter,omitempty"`
-	Login     string `json:"login,omitempty"`
-	Role      string `json:"role,omitempty"`
-	TeamCount int64  `json:"team_count,omitempty"`
+	components.OrganizationInvitation
 }
 
 /*
@@ -3775,45 +3028,7 @@ TeamsListProjectsInOrgResponseBody200 is a response body for teams/list-projects
 API documentation: https://developer.github.com/v3/teams/#list-team-projects
 */
 type TeamsListProjectsInOrgResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.TeamProject
 }
 
 /*
@@ -3890,45 +3105,7 @@ TeamsListProjectsLegacyResponseBody200 is a response body for teams/list-project
 API documentation: https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 type TeamsListProjectsLegacyResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.TeamProject
 }
 
 /*
@@ -3991,113 +3168,7 @@ TeamsListReposInOrgResponseBody200 is a response body for teams/list-repos-in-or
 API documentation: https://developer.github.com/v3/teams/#list-team-repos
 */
 type TeamsListReposInOrgResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	License          struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
+	components.MinimalRepository
 }
 
 /*
@@ -4159,113 +3230,7 @@ TeamsListReposLegacyResponseBody200 is a response body for teams/list-repos-lega
 API documentation: https://developer.github.com/v3/teams/#list-team-repos-legacy
 */
 type TeamsListReposLegacyResponseBody200 []struct {
-	ArchiveUrl       string `json:"archive_url,omitempty"`
-	Archived         bool   `json:"archived,omitempty"`
-	AssigneesUrl     string `json:"assignees_url,omitempty"`
-	BlobsUrl         string `json:"blobs_url,omitempty"`
-	BranchesUrl      string `json:"branches_url,omitempty"`
-	CloneUrl         string `json:"clone_url,omitempty"`
-	CollaboratorsUrl string `json:"collaborators_url,omitempty"`
-	CommentsUrl      string `json:"comments_url,omitempty"`
-	CommitsUrl       string `json:"commits_url,omitempty"`
-	CompareUrl       string `json:"compare_url,omitempty"`
-	ContentsUrl      string `json:"contents_url,omitempty"`
-	ContributorsUrl  string `json:"contributors_url,omitempty"`
-	CreatedAt        string `json:"created_at,omitempty"`
-	DefaultBranch    string `json:"default_branch,omitempty"`
-	DeploymentsUrl   string `json:"deployments_url,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Disabled         bool   `json:"disabled,omitempty"`
-	DownloadsUrl     string `json:"downloads_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	Fork             bool   `json:"fork,omitempty"`
-	ForksCount       int64  `json:"forks_count,omitempty"`
-	ForksUrl         string `json:"forks_url,omitempty"`
-	FullName         string `json:"full_name,omitempty"`
-	GitCommitsUrl    string `json:"git_commits_url,omitempty"`
-	GitRefsUrl       string `json:"git_refs_url,omitempty"`
-	GitTagsUrl       string `json:"git_tags_url,omitempty"`
-	GitUrl           string `json:"git_url,omitempty"`
-	HasDownloads     bool   `json:"has_downloads,omitempty"`
-	HasIssues        bool   `json:"has_issues,omitempty"`
-	HasPages         bool   `json:"has_pages,omitempty"`
-	HasProjects      bool   `json:"has_projects,omitempty"`
-	HasWiki          bool   `json:"has_wiki,omitempty"`
-	Homepage         string `json:"homepage,omitempty"`
-	HooksUrl         string `json:"hooks_url,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	IsTemplate       bool   `json:"is_template,omitempty"`
-	IssueCommentUrl  string `json:"issue_comment_url,omitempty"`
-	IssueEventsUrl   string `json:"issue_events_url,omitempty"`
-	IssuesUrl        string `json:"issues_url,omitempty"`
-	KeysUrl          string `json:"keys_url,omitempty"`
-	LabelsUrl        string `json:"labels_url,omitempty"`
-	Language         string `json:"language,omitempty"`
-	LanguagesUrl     string `json:"languages_url,omitempty"`
-	License          struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	MergesUrl        string `json:"merges_url,omitempty"`
-	MilestonesUrl    string `json:"milestones_url,omitempty"`
-	MirrorUrl        string `json:"mirror_url,omitempty"`
-	Name             string `json:"name,omitempty"`
-	NetworkCount     int64  `json:"network_count,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	NotificationsUrl string `json:"notifications_url,omitempty"`
-	OpenIssuesCount  int64  `json:"open_issues_count,omitempty"`
-	Owner            struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
+	components.MinimalRepository
 }
 
 /*
@@ -4631,45 +3596,7 @@ TeamsReviewProjectInOrgResponseBody200 is a response body for teams/review-proje
 API documentation: https://developer.github.com/v3/teams/#review-a-team-project
 */
 type TeamsReviewProjectInOrgResponseBody200 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.TeamProject
 }
 
 /*
@@ -4735,45 +3662,7 @@ TeamsReviewProjectLegacyResponseBody200 is a response body for teams/review-proj
 API documentation: https://developer.github.com/v3/teams/#review-a-team-project-legacy
 */
 type TeamsReviewProjectLegacyResponseBody200 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.TeamProject
 }
 
 /*
@@ -4852,38 +3741,7 @@ TeamsUpdateDiscussionCommentInOrgResponseBody200 is a response body for teams/up
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
 type TeamsUpdateDiscussionCommentInOrgResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -4961,38 +3819,7 @@ TeamsUpdateDiscussionCommentLegacyResponseBody200 is a response body for teams/u
 API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
 */
 type TeamsUpdateDiscussionCommentLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussionComment
 }
 
 /*
@@ -5073,43 +3900,7 @@ TeamsUpdateDiscussionInOrgResponseBody200 is a response body for teams/update-di
 API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
 type TeamsUpdateDiscussionInOrgResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -5189,43 +3980,7 @@ TeamsUpdateDiscussionLegacyResponseBody200 is a response body for teams/update-d
 API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
 */
 type TeamsUpdateDiscussionLegacyResponseBody200 struct {
-	Author struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	components.TeamDiscussion
 }
 
 /*
@@ -5318,51 +4073,7 @@ TeamsUpdateInOrgResponseBody201 is a response body for teams/update-in-org
 API documentation: https://developer.github.com/v3/teams/#edit-team
 */
 type TeamsUpdateInOrgResponseBody201 struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.TeamFull
 }
 
 /*
@@ -5453,49 +4164,5 @@ TeamsUpdateLegacyResponseBody201 is a response body for teams/update-legacy
 API documentation: https://developer.github.com/v3/teams/#edit-team-legacy
 */
 type TeamsUpdateLegacyResponseBody201 struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	HtmlUrl      string `json:"html_url,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	MembersCount int64  `json:"members_count,omitempty"`
-	MembersUrl   string `json:"members_url,omitempty"`
-	Name         string `json:"name,omitempty"`
-	NodeId       string `json:"node_id,omitempty"`
-	Organization struct {
-		AvatarUrl               string `json:"avatar_url,omitempty"`
-		Blog                    string `json:"blog,omitempty"`
-		Company                 string `json:"company,omitempty"`
-		CreatedAt               string `json:"created_at,omitempty"`
-		Description             string `json:"description,omitempty"`
-		Email                   string `json:"email,omitempty"`
-		EventsUrl               string `json:"events_url,omitempty"`
-		Followers               int64  `json:"followers,omitempty"`
-		Following               int64  `json:"following,omitempty"`
-		HasOrganizationProjects bool   `json:"has_organization_projects,omitempty"`
-		HasRepositoryProjects   bool   `json:"has_repository_projects,omitempty"`
-		HooksUrl                string `json:"hooks_url,omitempty"`
-		HtmlUrl                 string `json:"html_url,omitempty"`
-		Id                      int64  `json:"id,omitempty"`
-		IsVerified              bool   `json:"is_verified,omitempty"`
-		IssuesUrl               string `json:"issues_url,omitempty"`
-		Location                string `json:"location,omitempty"`
-		Login                   string `json:"login,omitempty"`
-		MembersUrl              string `json:"members_url,omitempty"`
-		Name                    string `json:"name,omitempty"`
-		NodeId                  string `json:"node_id,omitempty"`
-		PublicGists             int64  `json:"public_gists,omitempty"`
-		PublicMembersUrl        string `json:"public_members_url,omitempty"`
-		PublicRepos             int64  `json:"public_repos,omitempty"`
-		ReposUrl                string `json:"repos_url,omitempty"`
-		Type                    string `json:"type,omitempty"`
-		Url                     string `json:"url,omitempty"`
-	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.TeamFull
 }
