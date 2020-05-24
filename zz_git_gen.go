@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -77,8 +77,7 @@ GitCreateBlobResponseBody201 is a response body for git/create-blob
 API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type GitCreateBlobResponseBody201 struct {
-	Sha string `json:"sha,omitempty"`
-	Url string `json:"url,omitempty"`
+	components.ShortBlob
 }
 
 /*
@@ -213,34 +212,7 @@ GitCreateCommitResponseBody201 is a response body for git/create-commit
 API documentation: https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type GitCreateCommitResponseBody201 struct {
-	Author struct {
-		Date  string `json:"date,omitempty"`
-		Email string `json:"email,omitempty"`
-		Name  string `json:"name,omitempty"`
-	} `json:"author,omitempty"`
-	Committer struct {
-		Date  string `json:"date,omitempty"`
-		Email string `json:"email,omitempty"`
-		Name  string `json:"name,omitempty"`
-	} `json:"committer,omitempty"`
-	Message string `json:"message,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Parents []struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"parents,omitempty"`
-	Sha  string `json:"sha,omitempty"`
-	Tree struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"tree,omitempty"`
-	Url          string `json:"url,omitempty"`
-	Verification struct {
-		Payload   string `json:"payload,omitempty"`
-		Reason    string `json:"reason,omitempty"`
-		Signature string `json:"signature,omitempty"`
-		Verified  bool   `json:"verified,omitempty"`
-	} `json:"verification,omitempty"`
+	components.GitCommit
 }
 
 /*
@@ -309,14 +281,7 @@ GitCreateRefResponseBody201 is a response body for git/create-ref
 API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefResponseBody201 struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
+	components.GitRef
 }
 
 /*
@@ -410,27 +375,7 @@ GitCreateTagResponseBody201 is a response body for git/create-tag
 API documentation: https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type GitCreateTagResponseBody201 struct {
-	Message string `json:"message,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Object  struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Sha    string `json:"sha,omitempty"`
-	Tag    string `json:"tag,omitempty"`
-	Tagger struct {
-		Date  string `json:"date,omitempty"`
-		Email string `json:"email,omitempty"`
-		Name  string `json:"name,omitempty"`
-	} `json:"tagger,omitempty"`
-	Url          string `json:"url,omitempty"`
-	Verification struct {
-		Payload   string `json:"payload,omitempty"`
-		Reason    string `json:"reason,omitempty"`
-		Signature string `json:"signature,omitempty"`
-		Verified  bool   `json:"verified,omitempty"`
-	} `json:"verification,omitempty"`
+	components.GitTag
 }
 
 /*
@@ -535,16 +480,7 @@ GitCreateTreeResponseBody201 is a response body for git/create-tree
 API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type GitCreateTreeResponseBody201 struct {
-	Sha  string `json:"sha,omitempty"`
-	Tree []struct {
-		Mode string      `json:"mode,omitempty"`
-		Path string      `json:"path,omitempty"`
-		Sha  string      `json:"sha,omitempty"`
-		Size json.Number `json:"size,omitempty"`
-		Type string      `json:"type,omitempty"`
-		Url  string      `json:"url,omitempty"`
-	} `json:"tree,omitempty"`
-	Url string `json:"url,omitempty"`
+	components.GitTree
 }
 
 /*
@@ -639,11 +575,7 @@ GitGetBlobResponseBody200 is a response body for git/get-blob
 API documentation: https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GitGetBlobResponseBody200 struct {
-	Content  string      `json:"content,omitempty"`
-	Encoding string      `json:"encoding,omitempty"`
-	Sha      string      `json:"sha,omitempty"`
-	Size     json.Number `json:"size,omitempty"`
-	Url      string      `json:"url,omitempty"`
+	components.Blob
 }
 
 /*
@@ -695,33 +627,7 @@ GitGetCommitResponseBody200 is a response body for git/get-commit
 API documentation: https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GitGetCommitResponseBody200 struct {
-	Author struct {
-		Date  string `json:"date,omitempty"`
-		Email string `json:"email,omitempty"`
-		Name  string `json:"name,omitempty"`
-	} `json:"author,omitempty"`
-	Committer struct {
-		Date  string `json:"date,omitempty"`
-		Email string `json:"email,omitempty"`
-		Name  string `json:"name,omitempty"`
-	} `json:"committer,omitempty"`
-	Message string `json:"message,omitempty"`
-	Parents []struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"parents,omitempty"`
-	Sha  string `json:"sha,omitempty"`
-	Tree struct {
-		Sha string `json:"sha,omitempty"`
-		Url string `json:"url,omitempty"`
-	} `json:"tree,omitempty"`
-	Url          string `json:"url,omitempty"`
-	Verification struct {
-		Payload   string `json:"payload,omitempty"`
-		Reason    string `json:"reason,omitempty"`
-		Signature string `json:"signature,omitempty"`
-		Verified  bool   `json:"verified,omitempty"`
-	} `json:"verification,omitempty"`
+	components.GitCommit2
 }
 
 /*
@@ -773,14 +679,7 @@ GitGetRefResponseBody200 is a response body for git/get-ref
 API documentation: https://developer.github.com/v3/git/refs/#get-a-single-reference
 */
 type GitGetRefResponseBody200 struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
+	components.GitRef
 }
 
 /*
@@ -832,27 +731,7 @@ GitGetTagResponseBody200 is a response body for git/get-tag
 API documentation: https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GitGetTagResponseBody200 struct {
-	Message string `json:"message,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Object  struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Sha    string `json:"sha,omitempty"`
-	Tag    string `json:"tag,omitempty"`
-	Tagger struct {
-		Date  string `json:"date,omitempty"`
-		Email string `json:"email,omitempty"`
-		Name  string `json:"name,omitempty"`
-	} `json:"tagger,omitempty"`
-	Url          string `json:"url,omitempty"`
-	Verification struct {
-		Payload   string `json:"payload,omitempty"`
-		Reason    string `json:"reason,omitempty"`
-		Signature string `json:"signature,omitempty"`
-		Verified  bool   `json:"verified,omitempty"`
-	} `json:"verification,omitempty"`
+	components.GitTag
 }
 
 /*
@@ -916,17 +795,7 @@ GitGetTreeResponseBody200 is a response body for git/get-tree
 API documentation: https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GitGetTreeResponseBody200 struct {
-	Sha  string `json:"sha,omitempty"`
-	Tree []struct {
-		Mode string      `json:"mode"`
-		Path string      `json:"path"`
-		Sha  string      `json:"sha"`
-		Size json.Number `json:"size"`
-		Type string      `json:"type"`
-		Url  string      `json:"url"`
-	} `json:"tree,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.GitTree2
 }
 
 /*
@@ -990,14 +859,7 @@ GitListMatchingRefsResponseBody200 is a response body for git/list-matching-refs
 API documentation: https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type GitListMatchingRefsResponseBody200 []struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
+	components.GitRef
 }
 
 /*
@@ -1068,12 +930,5 @@ GitUpdateRefResponseBody200 is a response body for git/update-ref
 API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type GitUpdateRefResponseBody200 struct {
-	NodeId string `json:"node_id,omitempty"`
-	Object struct {
-		Sha  string `json:"sha,omitempty"`
-		Type string `json:"type,omitempty"`
-		Url  string `json:"url,omitempty"`
-	} `json:"object,omitempty"`
-	Ref string `json:"ref,omitempty"`
-	Url string `json:"url,omitempty"`
+	components.GitRef
 }

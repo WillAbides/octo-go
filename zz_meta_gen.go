@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -54,17 +55,5 @@ MetaGetResponseBody200 is a response body for meta/get
 API documentation: https://developer.github.com/v3/meta/#meta
 */
 type MetaGetResponseBody200 struct {
-	Api                []string `json:"api,omitempty"`
-	Git                []string `json:"git,omitempty"`
-	Hooks              []string `json:"hooks,omitempty"`
-	Importer           []string `json:"importer,omitempty"`
-	Pages              []string `json:"pages,omitempty"`
-	SshKeyFingerprints struct {
-		MD5DSA    string `json:"MD5_DSA,omitempty"`
-		MD5RSA    string `json:"MD5_RSA,omitempty"`
-		SHA256DSA string `json:"SHA256_DSA,omitempty"`
-		SHA256RSA string `json:"SHA256_RSA,omitempty"`
-	} `json:"ssh_key_fingerprints,omitempty"`
-	VerifiablePasswordAuthentication bool     `json:"verifiable_password_authentication,omitempty"`
-	Web                              []string `json:"web,omitempty"`
+	components.ApiOverview
 }

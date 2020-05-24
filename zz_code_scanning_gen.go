@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -58,16 +59,7 @@ CodeScanningGetAlertResponseBody200 is a response body for code-scanning/get-ale
 API documentation: https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type CodeScanningGetAlertResponseBody200 struct {
-	ClosedAt        string `json:"closed_at,omitempty"`
-	ClosedBy        string `json:"closed_by,omitempty"`
-	CreatedAt       string `json:"created_at,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Open            bool   `json:"open,omitempty"`
-	RuleDescription string `json:"rule_description,omitempty"`
-	RuleId          string `json:"rule_id,omitempty"`
-	RuleSeverity    string `json:"rule_severity,omitempty"`
-	Tool            string `json:"tool,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.CodeScanningAlert
 }
 
 /*
@@ -133,14 +125,5 @@ CodeScanningListAlertsForRepoResponseBody200 is a response body for code-scannin
 API documentation: https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type CodeScanningListAlertsForRepoResponseBody200 []struct {
-	ClosedAt        string `json:"closed_at,omitempty"`
-	ClosedBy        string `json:"closed_by,omitempty"`
-	CreatedAt       string `json:"created_at,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Open            bool   `json:"open,omitempty"`
-	RuleDescription string `json:"rule_description,omitempty"`
-	RuleId          string `json:"rule_id,omitempty"`
-	RuleSeverity    string `json:"rule_severity,omitempty"`
-	Tool            string `json:"tool,omitempty"`
-	Url             string `json:"url,omitempty"`
+	components.CodeScanningAlert
 }

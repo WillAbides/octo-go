@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -182,36 +183,7 @@ ProjectsCreateCardResponseBody201 is a response body for projects/create-card
 API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardResponseBody201 struct {
-	Archived   bool   `json:"archived,omitempty"`
-	ColumnUrl  string `json:"column_url,omitempty"`
-	ContentUrl string `json:"content_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Note       string `json:"note,omitempty"`
-	ProjectUrl string `json:"project_url,omitempty"`
-	UpdatedAt  string `json:"updated_at,omitempty"`
-	Url        string `json:"url,omitempty"`
+	components.ProjectCard
 }
 
 /*
@@ -358,38 +330,7 @@ ProjectsCreateForAuthenticatedUserResponseBody201 is a response body for project
 API documentation: https://developer.github.com/v3/projects/#create-a-user-project
 */
 type ProjectsCreateForAuthenticatedUserResponseBody201 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -469,38 +410,7 @@ ProjectsCreateForOrgResponseBody201 is a response body for projects/create-for-o
 API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgResponseBody201 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -581,38 +491,7 @@ ProjectsCreateForRepoResponseBody201 is a response body for projects/create-for-
 API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoResponseBody201 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -845,38 +724,7 @@ ProjectsGetResponseBody200 is a response body for projects/get
 API documentation: https://developer.github.com/v3/projects/#get-a-project
 */
 type ProjectsGetResponseBody200 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -1074,36 +922,7 @@ ProjectsListCardsResponseBody200 is a response body for projects/list-cards
 API documentation: https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 type ProjectsListCardsResponseBody200 []struct {
-	Archived   bool   `json:"archived,omitempty"`
-	ColumnUrl  string `json:"column_url,omitempty"`
-	ContentUrl string `json:"content_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Note       string `json:"note,omitempty"`
-	ProjectUrl string `json:"project_url,omitempty"`
-	UpdatedAt  string `json:"updated_at,omitempty"`
-	Url        string `json:"url,omitempty"`
+	components.ProjectCard
 }
 
 /*
@@ -1193,24 +1012,7 @@ ProjectsListCollaboratorsResponseBody200 is a response body for projects/list-co
 API documentation: https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
 type ProjectsListCollaboratorsResponseBody200 []struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	components.SimpleUser
 }
 
 /*
@@ -1287,14 +1089,7 @@ ProjectsListColumnsResponseBody200 is a response body for projects/list-columns
 API documentation: https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ProjectsListColumnsResponseBody200 []struct {
-	CardsUrl   string `json:"cards_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Id         int64  `json:"id,omitempty"`
-	Name       string `json:"name,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	ProjectUrl string `json:"project_url,omitempty"`
-	UpdatedAt  string `json:"updated_at,omitempty"`
-	Url        string `json:"url,omitempty"`
+	components.ProjectColumn
 }
 
 /*
@@ -1380,38 +1175,7 @@ ProjectsListForOrgResponseBody200 is a response body for projects/list-for-org
 API documentation: https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ProjectsListForOrgResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -1498,38 +1262,7 @@ ProjectsListForRepoResponseBody200 is a response body for projects/list-for-repo
 API documentation: https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ProjectsListForRepoResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -1615,38 +1348,7 @@ ProjectsListForUserResponseBody200 is a response body for projects/list-for-user
 API documentation: https://developer.github.com/v3/projects/#list-user-projects
 */
 type ProjectsListForUserResponseBody200 []struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*
@@ -1915,27 +1617,7 @@ ProjectsReviewUserPermissionLevelResponseBody200 is a response body for projects
 API documentation: https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
 type ProjectsReviewUserPermissionLevelResponseBody200 struct {
-	Permission string `json:"permission,omitempty"`
-	User       struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.RepositoryCollaboratorPermission
 }
 
 /*
@@ -2056,38 +1738,7 @@ ProjectsUpdateResponseBody200 is a response body for projects/update
 API documentation: https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateResponseBody200 struct {
-	Body       string `json:"body,omitempty"`
-	ColumnsUrl string `json:"columns_url,omitempty"`
-	CreatedAt  string `json:"created_at,omitempty"`
-	Creator    struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"creator,omitempty"`
-	HtmlUrl   string `json:"html_url,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	Name      string `json:"name,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	OwnerUrl  string `json:"owner_url,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	components.Project
 }
 
 /*

@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -54,31 +55,5 @@ RateLimitGetResponseBody200 is a response body for rate-limit/get
 API documentation: https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
 type RateLimitGetResponseBody200 struct {
-	Rate struct {
-		Limit     int64 `json:"limit,omitempty"`
-		Remaining int64 `json:"remaining,omitempty"`
-		Reset     int64 `json:"reset,omitempty"`
-	} `json:"rate,omitempty"`
-	Resources struct {
-		Core struct {
-			Limit     int64 `json:"limit,omitempty"`
-			Remaining int64 `json:"remaining,omitempty"`
-			Reset     int64 `json:"reset,omitempty"`
-		} `json:"core,omitempty"`
-		Graphql struct {
-			Limit     int64 `json:"limit,omitempty"`
-			Remaining int64 `json:"remaining,omitempty"`
-			Reset     int64 `json:"reset,omitempty"`
-		} `json:"graphql,omitempty"`
-		IntegrationManifest struct {
-			Limit     int64 `json:"limit,omitempty"`
-			Remaining int64 `json:"remaining,omitempty"`
-			Reset     int64 `json:"reset,omitempty"`
-		} `json:"integration_manifest,omitempty"`
-		Search struct {
-			Limit     int64 `json:"limit,omitempty"`
-			Remaining int64 `json:"remaining,omitempty"`
-			Reset     int64 `json:"reset,omitempty"`
-		} `json:"search,omitempty"`
-	} `json:"resources,omitempty"`
+	components.RateLimitOverview
 }

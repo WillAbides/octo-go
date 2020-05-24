@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -57,19 +57,7 @@ LicensesGetResponseBody200 is a response body for licenses/get
 API documentation: https://developer.github.com/v3/licenses/#get-an-individual-license
 */
 type LicensesGetResponseBody200 struct {
-	Body           string   `json:"body,omitempty"`
-	Conditions     []string `json:"conditions,omitempty"`
-	Description    string   `json:"description,omitempty"`
-	Featured       bool     `json:"featured,omitempty"`
-	HtmlUrl        string   `json:"html_url,omitempty"`
-	Implementation string   `json:"implementation,omitempty"`
-	Key            string   `json:"key,omitempty"`
-	Limitations    []string `json:"limitations,omitempty"`
-	Name           string   `json:"name,omitempty"`
-	NodeId         string   `json:"node_id,omitempty"`
-	Permissions    []string `json:"permissions,omitempty"`
-	SpdxId         string   `json:"spdx_id,omitempty"`
-	Url            string   `json:"url,omitempty"`
+	components.License
 }
 
 /*
@@ -120,29 +108,7 @@ LicensesGetForRepoResponseBody200 is a response body for licenses/get-for-repo
 API documentation: https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
 */
 type LicensesGetForRepoResponseBody200 struct {
-	Links struct {
-		Git  string `json:"git,omitempty"`
-		Html string `json:"html,omitempty"`
-		Self string `json:"self,omitempty"`
-	} `json:"_links,omitempty"`
-	Content     string `json:"content,omitempty"`
-	DownloadUrl string `json:"download_url,omitempty"`
-	Encoding    string `json:"encoding,omitempty"`
-	GitUrl      string `json:"git_url,omitempty"`
-	HtmlUrl     string `json:"html_url,omitempty"`
-	License     struct {
-		Key    string `json:"key,omitempty"`
-		Name   string `json:"name,omitempty"`
-		NodeId string `json:"node_id,omitempty"`
-		SpdxId string `json:"spdx_id,omitempty"`
-		Url    string `json:"url,omitempty"`
-	} `json:"license,omitempty"`
-	Name string      `json:"name,omitempty"`
-	Path string      `json:"path,omitempty"`
-	Sha  string      `json:"sha,omitempty"`
-	Size json.Number `json:"size,omitempty"`
-	Type string      `json:"type,omitempty"`
-	Url  string      `json:"url,omitempty"`
+	components.LicenseContent
 }
 
 /*
@@ -190,9 +156,5 @@ LicensesListCommonlyUsedResponseBody200 is a response body for licenses/list-com
 API documentation: https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
 type LicensesListCommonlyUsedResponseBody200 []struct {
-	Key    string `json:"key,omitempty"`
-	Name   string `json:"name,omitempty"`
-	NodeId string `json:"node_id,omitempty"`
-	SpdxId string `json:"spdx_id,omitempty"`
-	Url    string `json:"url,omitempty"`
+	components.LicenseSimple
 }

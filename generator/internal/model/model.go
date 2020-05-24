@@ -41,6 +41,7 @@ const (
 )
 
 type ParamSchema struct {
+	Ref          string
 	Type         ParamType
 	ItemSchema   *ParamSchema
 	ObjectParams []Param
@@ -49,6 +50,7 @@ type ParamSchema struct {
 func (p *ParamSchema) Clone() *ParamSchema {
 	result := ParamSchema{
 		Type: p.Type,
+		Ref:  p.Ref,
 	}
 	if p.ObjectParams != nil {
 		result.ObjectParams = make([]Param, len(p.ObjectParams))

@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -68,9 +69,7 @@ CodesOfConductGetAllCodesOfConductResponseBody200 is a response body for codes-o
 API documentation: https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductResponseBody200 []struct {
-	Key  string `json:"key,omitempty"`
-	Name string `json:"name,omitempty"`
-	Url  string `json:"url,omitempty"`
+	components.CodeOfConductSimple
 }
 
 /*
@@ -133,10 +132,7 @@ CodesOfConductGetConductCodeResponseBody200 is a response body for codes-of-cond
 API documentation: https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
 type CodesOfConductGetConductCodeResponseBody200 struct {
-	Body string `json:"body,omitempty"`
-	Key  string `json:"key,omitempty"`
-	Name string `json:"name,omitempty"`
-	Url  string `json:"url,omitempty"`
+	components.CodeOfConduct
 }
 
 /*
@@ -200,8 +196,5 @@ CodesOfConductGetForRepoResponseBody200 is a response body for codes-of-conduct/
 API documentation: https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
 type CodesOfConductGetForRepoResponseBody200 struct {
-	Body string `json:"body,omitempty"`
-	Key  string `json:"key,omitempty"`
-	Name string `json:"name,omitempty"`
-	Url  string `json:"url,omitempty"`
+	components.CodeOfConduct
 }

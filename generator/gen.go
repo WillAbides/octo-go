@@ -8,7 +8,7 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func toArgName(in string) string {
+func toExportedName(in string) string {
 	out := in
 	for _, separator := range []string{"_", "-", ".", "/"} {
 		words := strings.Split(out, separator)
@@ -30,11 +30,26 @@ func removeValFromStringSlice(sl []string, val string) []string {
 	return result
 }
 
-func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, usePointers, noHelper bool) *jen.Statement {
+type paramSchemaFieldTypeOptions struct {
+	usePointers, noHelper, noHelperRecursive bool
+}
+
+func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+	if opts == nil {
+		opts = new(paramSchemaFieldTypeOptions)
+	}
 	overrideParamSchema(schemaPath, schema)
 
+	componentRef := componentRefStmt(schema)
+	if componentRef != nil {
+		return componentRef
+	}
+
 	helperStruct := reqBodyNestedStructName(schemaPath, schema)
-	if !noHelper && helperStruct != "" {
+	if opts.noHelperRecursive {
+		opts.noHelper = true
+	}
+	if !opts.noHelper && helperStruct != "" {
 		return jen.Id(helperStruct)
 	}
 
@@ -53,23 +68,29 @@ func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, usePoi
 	case model.ParamTypeInterface:
 		return jen.Interface()
 	case model.ParamTypeArray:
-		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), usePointers, false))
+		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), opts))
 	case model.ParamTypeObject:
-		return paramSchemaObjectFieldType(schema, schemaPath, usePointers)
+		return paramSchemaObjectFieldType(schema, schemaPath, opts)
 	}
 	return nil
 }
 
-func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, usePointers bool) *jen.Statement {
+func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+	if opts == nil {
+		opts = new(paramSchemaFieldTypeOptions)
+	}
+	if !opts.noHelperRecursive {
+		opts.noHelper = false
+	}
 	if len(schema.ObjectParams) > 0 {
 		return jen.StructFunc(func(group *jen.Group) {
 			for _, param := range schema.ObjectParams {
 				if param.HelpText != "" {
 					group.Line()
 				}
-				gStmt := jen.Id(toArgName(param.Name))
-				pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), usePointers, false)
-				if usePointers && needsPointer(param.Schema) {
+				gStmt := jen.Id(toExportedName(param.Name))
+				pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts)
+				if opts.usePointers && needsPointer(param.Schema) {
 					gStmt.Op("*")
 				}
 				jsonTag := param.Name
@@ -87,10 +108,10 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 	}
 	if schema.ItemSchema != nil {
 		stmt := jen.Map(jen.String())
-		if usePointers && needsPointer(schema.ItemSchema) {
+		if opts.usePointers && needsPointer(schema.ItemSchema) {
 			stmt.Op("*")
 		}
-		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), usePointers, false))
+		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), opts))
 	}
 	return jen.Interface()
 }

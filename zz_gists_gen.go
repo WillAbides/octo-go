@@ -4,8 +4,8 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -126,107 +126,7 @@ GistsCreateResponseBody201 is a response body for gists/create
 API documentation: https://developer.github.com/v3/gists/#create-a-gist
 */
 type GistsCreateResponseBody201 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string      `json:"content,omitempty"`
-		Filename  string      `json:"filename,omitempty"`
-		Language  string      `json:"language,omitempty"`
-		RawUrl    string      `json:"raw_url,omitempty"`
-		Size      json.Number `json:"size,omitempty"`
-		Truncated bool        `json:"truncated,omitempty"`
-		Type      string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	Forks []struct {
-		CreatedAt string `json:"created_at,omitempty"`
-		Id        string `json:"id,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-		Url       string `json:"url,omitempty"`
-		User      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"forks,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	History    []struct {
-		ChangeStatus struct {
-			Additions int64 `json:"additions,omitempty"`
-			Deletions int64 `json:"deletions,omitempty"`
-			Total     int64 `json:"total,omitempty"`
-		} `json:"change_status,omitempty"`
-		CommittedAt string `json:"committed_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		User        struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-		Version string `json:"version,omitempty"`
-	} `json:"history,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	Id      string `json:"id,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Owner   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.Gist
 }
 
 /*
@@ -288,32 +188,7 @@ GistsCreateCommentResponseBody201 is a response body for gists/create-comment
 API documentation: https://developer.github.com/v3/gists/comments/#create-a-comment
 */
 type GistsCreateCommentResponseBody201 struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.GistComment
 }
 
 /*
@@ -446,49 +321,7 @@ GistsForkResponseBody201 is a response body for gists/fork
 API documentation: https://developer.github.com/v3/gists/#fork-a-gist
 */
 type GistsForkResponseBody201 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.BaseGist
 }
 
 /*
@@ -538,107 +371,7 @@ GistsGetResponseBody200 is a response body for gists/get
 API documentation: https://developer.github.com/v3/gists/#get-a-gist
 */
 type GistsGetResponseBody200 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string      `json:"content,omitempty"`
-		Filename  string      `json:"filename,omitempty"`
-		Language  string      `json:"language,omitempty"`
-		RawUrl    string      `json:"raw_url,omitempty"`
-		Size      json.Number `json:"size,omitempty"`
-		Truncated bool        `json:"truncated,omitempty"`
-		Type      string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	Forks []struct {
-		CreatedAt string `json:"created_at,omitempty"`
-		Id        string `json:"id,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-		Url       string `json:"url,omitempty"`
-		User      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"forks,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	History    []struct {
-		ChangeStatus struct {
-			Additions int64 `json:"additions,omitempty"`
-			Deletions int64 `json:"deletions,omitempty"`
-			Total     int64 `json:"total,omitempty"`
-		} `json:"change_status,omitempty"`
-		CommittedAt string `json:"committed_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		User        struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-		Version string `json:"version,omitempty"`
-	} `json:"history,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	Id      string `json:"id,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Owner   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.Gist
 }
 
 /*
@@ -689,32 +422,7 @@ GistsGetCommentResponseBody200 is a response body for gists/get-comment
 API documentation: https://developer.github.com/v3/gists/comments/#get-a-single-comment
 */
 type GistsGetCommentResponseBody200 struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.GistComment
 }
 
 /*
@@ -765,107 +473,7 @@ GistsGetRevisionResponseBody200 is a response body for gists/get-revision
 API documentation: https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
 type GistsGetRevisionResponseBody200 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string      `json:"content,omitempty"`
-		Filename  string      `json:"filename,omitempty"`
-		Language  string      `json:"language,omitempty"`
-		RawUrl    string      `json:"raw_url,omitempty"`
-		Size      json.Number `json:"size,omitempty"`
-		Truncated bool        `json:"truncated,omitempty"`
-		Type      string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	Forks []struct {
-		CreatedAt string `json:"created_at,omitempty"`
-		Id        string `json:"id,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-		Url       string `json:"url,omitempty"`
-		User      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"forks,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	History    []struct {
-		ChangeStatus struct {
-			Additions int64 `json:"additions,omitempty"`
-			Deletions int64 `json:"deletions,omitempty"`
-			Total     int64 `json:"total,omitempty"`
-		} `json:"change_status,omitempty"`
-		CommittedAt string `json:"committed_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		User        struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-		Version string `json:"version,omitempty"`
-	} `json:"history,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	Id      string `json:"id,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Owner   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.Gist
 }
 
 /*
@@ -936,49 +544,7 @@ GistsListResponseBody200 is a response body for gists/list
 API documentation: https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 type GistsListResponseBody200 []struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.BaseGist
 }
 
 /*
@@ -1040,32 +606,7 @@ GistsListCommentsResponseBody200 is a response body for gists/list-comments
 API documentation: https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
 type GistsListCommentsResponseBody200 []struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.GistComment
 }
 
 /*
@@ -1127,34 +668,7 @@ GistsListCommitsResponseBody200 is a response body for gists/list-commits
 API documentation: https://developer.github.com/v3/gists/#list-gist-commits
 */
 type GistsListCommitsResponseBody200 []struct {
-	ChangeStatus struct {
-		Additions int64 `json:"additions,omitempty"`
-		Deletions int64 `json:"deletions,omitempty"`
-		Total     int64 `json:"total,omitempty"`
-	} `json:"change_status,omitempty"`
-	CommittedAt string `json:"committed_at,omitempty"`
-	Url         string `json:"url,omitempty"`
-	User        struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-	Version string `json:"version,omitempty"`
+	components.GistCommit
 }
 
 /*
@@ -1226,49 +740,7 @@ GistsListForUserResponseBody200 is a response body for gists/list-for-user
 API documentation: https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type GistsListForUserResponseBody200 []struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.BaseGist
 }
 
 /*
@@ -1330,30 +802,7 @@ GistsListForksResponseBody200 is a response body for gists/list-forks
 API documentation: https://developer.github.com/v3/gists/#list-gist-forks
 */
 type GistsListForksResponseBody200 []struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        string `json:"id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.GistFork
 }
 
 /*
@@ -1424,49 +873,7 @@ GistsListPublicResponseBody200 is a response body for gists/list-public
 API documentation: https://developer.github.com/v3/gists/#list-public-gists
 */
 type GistsListPublicResponseBody200 []struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.BaseGist
 }
 
 /*
@@ -1537,49 +944,7 @@ GistsListStarredResponseBody200 is a response body for gists/list-starred
 API documentation: https://developer.github.com/v3/gists/#list-starred-gists
 */
 type GistsListStarredResponseBody200 []struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Filename string      `json:"filename,omitempty"`
-		Language string      `json:"language,omitempty"`
-		RawUrl   string      `json:"raw_url,omitempty"`
-		Size     json.Number `json:"size,omitempty"`
-		Type     string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	HtmlUrl    string `json:"html_url,omitempty"`
-	Id         string `json:"id,omitempty"`
-	NodeId     string `json:"node_id,omitempty"`
-	Owner      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.BaseGist
 }
 
 /*
@@ -1739,107 +1104,7 @@ GistsUpdateResponseBody200 is a response body for gists/update
 API documentation: https://developer.github.com/v3/gists/#update-a-gist
 */
 type GistsUpdateResponseBody200 struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string      `json:"content,omitempty"`
-		Filename  string      `json:"filename,omitempty"`
-		Language  string      `json:"language,omitempty"`
-		RawUrl    string      `json:"raw_url,omitempty"`
-		Size      json.Number `json:"size,omitempty"`
-		Truncated bool        `json:"truncated,omitempty"`
-		Type      string      `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	Forks []struct {
-		CreatedAt string `json:"created_at,omitempty"`
-		Id        string `json:"id,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-		Url       string `json:"url,omitempty"`
-		User      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"forks,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	History    []struct {
-		ChangeStatus struct {
-			Additions int64 `json:"additions,omitempty"`
-			Deletions int64 `json:"deletions,omitempty"`
-			Total     int64 `json:"total,omitempty"`
-		} `json:"change_status,omitempty"`
-		CommittedAt string `json:"committed_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		User        struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-		Version string `json:"version,omitempty"`
-	} `json:"history,omitempty"`
-	HtmlUrl string `json:"html_url,omitempty"`
-	Id      string `json:"id,omitempty"`
-	NodeId  string `json:"node_id,omitempty"`
-	Owner   struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Public    bool   `json:"public,omitempty"`
-	Truncated bool   `json:"truncated,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      string `json:"user,omitempty"`
+	components.Gist
 }
 
 /*
@@ -1902,30 +1167,5 @@ GistsUpdateCommentResponseBody200 is a response body for gists/update-comment
 API documentation: https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
 type GistsUpdateCommentResponseBody200 struct {
-	Body      string `json:"body,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	Id        int64  `json:"id,omitempty"`
-	NodeId    string `json:"node_id,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
-	User      struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
+	components.GistComment
 }

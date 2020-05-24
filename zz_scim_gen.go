@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -58,26 +59,7 @@ ScimGetProvisioningDetailsForUserResponseBody200 is a response body for scim/get
 API documentation: https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
 type ScimGetProvisioningDetailsForUserResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Emails []struct {
-		Primary bool   `json:"primary,omitempty"`
-		Type    string `json:"type,omitempty"`
-		Value   string `json:"value,omitempty"`
-	} `json:"emails,omitempty"`
-	ExternalId string `json:"externalId,omitempty"`
-	Id         string `json:"id,omitempty"`
-	Meta       struct {
-		Created      string `json:"created,omitempty"`
-		LastModified string `json:"lastModified,omitempty"`
-		Location     string `json:"location,omitempty"`
-		ResourceType string `json:"resourceType,omitempty"`
-	} `json:"meta,omitempty"`
-	Name struct {
-		FamilyName string `json:"familyName,omitempty"`
-		GivenName  string `json:"givenName,omitempty"`
-	} `json:"name,omitempty"`
-	Schemas  []string `json:"schemas,omitempty"`
-	UserName string   `json:"userName,omitempty"`
+	components.ScimUser
 }
 
 /*
@@ -150,32 +132,7 @@ ScimListProvisionedIdentitiesResponseBody200 is a response body for scim/list-pr
 API documentation: https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
 type ScimListProvisionedIdentitiesResponseBody200 struct {
-	Resources []struct {
-		Active bool `json:"active,omitempty"`
-		Emails []struct {
-			Primary bool   `json:"primary,omitempty"`
-			Type    string `json:"type,omitempty"`
-			Value   string `json:"value,omitempty"`
-		} `json:"emails,omitempty"`
-		ExternalId string `json:"externalId,omitempty"`
-		Id         string `json:"id,omitempty"`
-		Meta       struct {
-			Created      string `json:"created,omitempty"`
-			LastModified string `json:"lastModified,omitempty"`
-			Location     string `json:"location,omitempty"`
-			ResourceType string `json:"resourceType,omitempty"`
-		} `json:"meta,omitempty"`
-		Name struct {
-			FamilyName string `json:"familyName,omitempty"`
-			GivenName  string `json:"givenName,omitempty"`
-		} `json:"name,omitempty"`
-		Schemas  []string `json:"schemas,omitempty"`
-		UserName string   `json:"userName,omitempty"`
-	} `json:"Resources,omitempty"`
-	ItemsPerPage int64    `json:"itemsPerPage,omitempty"`
-	Schemas      []string `json:"schemas,omitempty"`
-	StartIndex   int64    `json:"startIndex,omitempty"`
-	TotalResults int64    `json:"totalResults,omitempty"`
+	components.ScimUserList
 }
 
 /*
@@ -225,26 +182,7 @@ ScimProvisionAndInviteUsersResponseBody201 is a response body for scim/provision
 API documentation: https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 type ScimProvisionAndInviteUsersResponseBody201 struct {
-	Active bool `json:"active,omitempty"`
-	Emails []struct {
-		Primary bool   `json:"primary,omitempty"`
-		Type    string `json:"type,omitempty"`
-		Value   string `json:"value,omitempty"`
-	} `json:"emails,omitempty"`
-	ExternalId string `json:"externalId,omitempty"`
-	Id         string `json:"id,omitempty"`
-	Meta       struct {
-		Created      string `json:"created,omitempty"`
-		LastModified string `json:"lastModified,omitempty"`
-		Location     string `json:"location,omitempty"`
-		ResourceType string `json:"resourceType,omitempty"`
-	} `json:"meta,omitempty"`
-	Name struct {
-		FamilyName string `json:"familyName,omitempty"`
-		GivenName  string `json:"givenName,omitempty"`
-	} `json:"name,omitempty"`
-	Schemas  []string `json:"schemas,omitempty"`
-	UserName string   `json:"userName,omitempty"`
+	components.ScimUser
 }
 
 /*
@@ -337,26 +275,7 @@ ScimReplaceProvisionedUserInformationResponseBody200 is a response body for scim
 API documentation: https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 type ScimReplaceProvisionedUserInformationResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Emails []struct {
-		Primary bool   `json:"primary,omitempty"`
-		Type    string `json:"type,omitempty"`
-		Value   string `json:"value,omitempty"`
-	} `json:"emails,omitempty"`
-	ExternalId string `json:"externalId,omitempty"`
-	Id         string `json:"id,omitempty"`
-	Meta       struct {
-		Created      string `json:"created,omitempty"`
-		LastModified string `json:"lastModified,omitempty"`
-		Location     string `json:"location,omitempty"`
-		ResourceType string `json:"resourceType,omitempty"`
-	} `json:"meta,omitempty"`
-	Name struct {
-		FamilyName string `json:"familyName,omitempty"`
-		GivenName  string `json:"givenName,omitempty"`
-	} `json:"name,omitempty"`
-	Schemas  []string `json:"schemas,omitempty"`
-	UserName string   `json:"userName,omitempty"`
+	components.ScimUser
 }
 
 /*
@@ -407,24 +326,5 @@ ScimUpdateUserAttributeResponseBody200 is a response body for scim/update-user-a
 API documentation: https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 type ScimUpdateUserAttributeResponseBody200 struct {
-	Active bool `json:"active,omitempty"`
-	Emails []struct {
-		Primary bool   `json:"primary,omitempty"`
-		Type    string `json:"type"`
-		Value   string `json:"value"`
-	} `json:"emails,omitempty"`
-	ExternalId string `json:"externalId,omitempty"`
-	Id         string `json:"id,omitempty"`
-	Meta       struct {
-		Created      string `json:"created,omitempty"`
-		LastModified string `json:"lastModified,omitempty"`
-		Location     string `json:"location,omitempty"`
-		ResourceType string `json:"resourceType,omitempty"`
-	} `json:"meta,omitempty"`
-	Name struct {
-		FamilyName string `json:"familyName,omitempty"`
-		GivenName  string `json:"givenName,omitempty"`
-	} `json:"name,omitempty"`
-	Schemas  []string `json:"schemas,omitempty"`
-	UserName string   `json:"userName,omitempty"`
+	components.ScimUser2
 }

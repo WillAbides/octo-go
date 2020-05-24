@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
 )
@@ -86,9 +87,7 @@ InteractionsAddOrUpdateRestrictionsForOrgResponseBody200 is a response body for 
 API documentation: https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
 type InteractionsAddOrUpdateRestrictionsForOrgResponseBody200 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Limit     string `json:"limit,omitempty"`
-	Origin    string `json:"origin,omitempty"`
+	components.InteractionLimit
 }
 
 /*
@@ -169,9 +168,7 @@ InteractionsAddOrUpdateRestrictionsForRepoResponseBody200 is a response body for
 API documentation: https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
 type InteractionsAddOrUpdateRestrictionsForRepoResponseBody200 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Limit     string `json:"limit,omitempty"`
-	Origin    string `json:"origin,omitempty"`
+	components.InteractionLimit
 }
 
 /*
@@ -235,9 +232,7 @@ InteractionsGetRestrictionsForOrgResponseBody200 is a response body for interact
 API documentation: https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 type InteractionsGetRestrictionsForOrgResponseBody200 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Limit     string `json:"limit,omitempty"`
-	Origin    string `json:"origin,omitempty"`
+	components.InteractionLimit
 }
 
 /*
@@ -302,9 +297,7 @@ InteractionsGetRestrictionsForRepoResponseBody200 is a response body for interac
 API documentation: https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type InteractionsGetRestrictionsForRepoResponseBody200 struct {
-	ExpiresAt string `json:"expires_at,omitempty"`
-	Limit     string `json:"limit,omitempty"`
-	Origin    string `json:"origin,omitempty"`
+	components.InteractionLimit
 }
 
 /*
