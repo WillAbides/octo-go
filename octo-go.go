@@ -98,9 +98,18 @@ func requestHeaders(headers map[string]*string, previews map[string]bool) http.H
 	return header
 }
 
-func httpRequest(ctx context.Context, urlPath, method string, urlQuery url.Values, header http.Header, body interface{}, opts []RequestOption) (*http.Request, error) {
+type requestBuilder interface {
+	urlPath() string
+	method() string
+	urlQuery() url.Values
+	header(requiredPreviews, allPreviews bool) http.Header
+	body() interface{}
+}
+
+func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []RequestOption) (*http.Request, error) {
 	options := buildRequestOptions(opts)
 	var bodyReader io.ReadCloser
+	body := builder.body()
 	if body != nil {
 		var buf bytes.Buffer
 		err := json.NewEncoder(&buf).Encode(&body)
@@ -109,15 +118,19 @@ func httpRequest(ctx context.Context, urlPath, method string, urlQuery url.Value
 		}
 		bodyReader = ioutil.NopCloser(&buf)
 	}
-	u := options.BaseURL
-	u.Path = path.Join(u.Path, urlPath)
-	u.RawQuery = urlQuery.Encode()
-	req, err := http.NewRequestWithContext(ctx, method, u.String(), bodyReader)
+	u := options.baseURL
+	u.Path = path.Join(u.Path, builder.urlPath())
+	urlQuery := builder.urlQuery()
+	if urlQuery != nil {
+		u.RawQuery = urlQuery.Encode()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, builder.method(), u.String(), bodyReader)
 	if err != nil {
 		return nil, err
 	}
-	req.Header = header
-	req.Header.Set("User-Agent", options.UserAgent)
+	req.Header = builder.header(options.requiredPreviews, options.allPreviews)
+	req.Header.Set("User-Agent", options.userAgent)
 	return req, nil
 }
 

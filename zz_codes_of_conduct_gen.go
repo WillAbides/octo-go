@@ -28,28 +28,38 @@ type CodesOfConductGetAllCodesOfConductReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r CodesOfConductGetAllCodesOfConductReq) urlPath() string {
+func (r *CodesOfConductGetAllCodesOfConductReq) urlPath() string {
 	return fmt.Sprintf("/codes_of_conduct")
 }
 
-func (r CodesOfConductGetAllCodesOfConductReq) method() string {
+func (r *CodesOfConductGetAllCodesOfConductReq) method() string {
 	return "GET"
 }
 
-func (r CodesOfConductGetAllCodesOfConductReq) urlQuery() url.Values {
+func (r *CodesOfConductGetAllCodesOfConductReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r CodesOfConductGetAllCodesOfConductReq) header() http.Header {
+func (r *CodesOfConductGetAllCodesOfConductReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
+	if requiredPreviews {
+		previewVals["scarlet-witch"] = true
+	}
+	if allPreviews {
+		previewVals["scarlet-witch"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *CodesOfConductGetAllCodesOfConductReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -83,28 +93,38 @@ type CodesOfConductGetConductCodeReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r CodesOfConductGetConductCodeReq) urlPath() string {
+func (r *CodesOfConductGetConductCodeReq) urlPath() string {
 	return fmt.Sprintf("/codes_of_conduct/%v", r.Key)
 }
 
-func (r CodesOfConductGetConductCodeReq) method() string {
+func (r *CodesOfConductGetConductCodeReq) method() string {
 	return "GET"
 }
 
-func (r CodesOfConductGetConductCodeReq) urlQuery() url.Values {
+func (r *CodesOfConductGetConductCodeReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r CodesOfConductGetConductCodeReq) header() http.Header {
+func (r *CodesOfConductGetConductCodeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
+	if requiredPreviews {
+		previewVals["scarlet-witch"] = true
+	}
+	if allPreviews {
+		previewVals["scarlet-witch"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *CodesOfConductGetConductCodeReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -140,28 +160,38 @@ type CodesOfConductGetForRepoReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r CodesOfConductGetForRepoReq) urlPath() string {
+func (r *CodesOfConductGetForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo)
 }
 
-func (r CodesOfConductGetForRepoReq) method() string {
+func (r *CodesOfConductGetForRepoReq) method() string {
 	return "GET"
 }
 
-func (r CodesOfConductGetForRepoReq) urlQuery() url.Values {
+func (r *CodesOfConductGetForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r CodesOfConductGetForRepoReq) header() http.Header {
+func (r *CodesOfConductGetForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
+	if requiredPreviews {
+		previewVals["scarlet-witch"] = true
+	}
+	if allPreviews {
+		previewVals["scarlet-witch"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *CodesOfConductGetForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

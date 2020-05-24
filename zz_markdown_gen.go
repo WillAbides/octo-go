@@ -22,28 +22,32 @@ type MarkdownRenderReq struct {
 	RequestBody MarkdownRenderReqBody
 }
 
-func (r MarkdownRenderReq) urlPath() string {
+func (r *MarkdownRenderReq) urlPath() string {
 	return fmt.Sprintf("/markdown")
 }
 
-func (r MarkdownRenderReq) method() string {
+func (r *MarkdownRenderReq) method() string {
 	return "POST"
 }
 
-func (r MarkdownRenderReq) urlQuery() url.Values {
+func (r *MarkdownRenderReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MarkdownRenderReq) header() http.Header {
+func (r *MarkdownRenderReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MarkdownRenderReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -89,28 +93,32 @@ type MarkdownRenderRawReq struct {
 	ContentTypeHeader *string
 }
 
-func (r MarkdownRenderRawReq) urlPath() string {
+func (r *MarkdownRenderRawReq) urlPath() string {
 	return fmt.Sprintf("/markdown/raw")
 }
 
-func (r MarkdownRenderRawReq) method() string {
+func (r *MarkdownRenderRawReq) method() string {
 	return "POST"
 }
 
-func (r MarkdownRenderRawReq) urlQuery() url.Values {
+func (r *MarkdownRenderRawReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MarkdownRenderRawReq) header() http.Header {
+func (r *MarkdownRenderRawReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{"content-type": r.ContentTypeHeader}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MarkdownRenderRawReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

@@ -17,11 +17,13 @@ func main() {
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	))
 
-	req, err := octo.IssuesGetReq{
+	reqBuilder := octo.IssuesGetReq{
 		Owner:               "golang",
 		Repo:                "go",
 		IssueNumber:         1,
-	}.HTTPRequest(ctx)
+	}
+
+	req, err := reqBuilder.HTTPRequest(ctx)
 
 	if err != nil {
 		log.Fatal(err)

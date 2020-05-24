@@ -24,28 +24,32 @@ type CodeScanningGetAlertReq struct {
 	AlertId int64
 }
 
-func (r CodeScanningGetAlertReq) urlPath() string {
+func (r *CodeScanningGetAlertReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/code-scanning/alerts/%v", r.Owner, r.Repo, r.AlertId)
 }
 
-func (r CodeScanningGetAlertReq) method() string {
+func (r *CodeScanningGetAlertReq) method() string {
 	return "GET"
 }
 
-func (r CodeScanningGetAlertReq) urlQuery() url.Values {
+func (r *CodeScanningGetAlertReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r CodeScanningGetAlertReq) header() http.Header {
+func (r *CodeScanningGetAlertReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *CodeScanningGetAlertReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -89,15 +93,15 @@ type CodeScanningListAlertsForRepoReq struct {
 	Ref *string
 }
 
-func (r CodeScanningListAlertsForRepoReq) urlPath() string {
+func (r *CodeScanningListAlertsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/code-scanning/alerts", r.Owner, r.Repo)
 }
 
-func (r CodeScanningListAlertsForRepoReq) method() string {
+func (r *CodeScanningListAlertsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r CodeScanningListAlertsForRepoReq) urlQuery() url.Values {
+func (r *CodeScanningListAlertsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -108,15 +112,19 @@ func (r CodeScanningListAlertsForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r CodeScanningListAlertsForRepoReq) header() http.Header {
+func (r *CodeScanningListAlertsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *CodeScanningListAlertsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r CodeScanningListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *CodeScanningListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

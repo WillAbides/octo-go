@@ -24,28 +24,32 @@ type ScimGetProvisioningDetailsForUserReq struct {
 	ScimUserId int64
 }
 
-func (r ScimGetProvisioningDetailsForUserReq) urlPath() string {
+func (r *ScimGetProvisioningDetailsForUserReq) urlPath() string {
 	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
 }
 
-func (r ScimGetProvisioningDetailsForUserReq) method() string {
+func (r *ScimGetProvisioningDetailsForUserReq) method() string {
 	return "GET"
 }
 
-func (r ScimGetProvisioningDetailsForUserReq) urlQuery() url.Values {
+func (r *ScimGetProvisioningDetailsForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ScimGetProvisioningDetailsForUserReq) header() http.Header {
+func (r *ScimGetProvisioningDetailsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ScimGetProvisioningDetailsForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ScimGetProvisioningDetailsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ScimGetProvisioningDetailsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -103,15 +107,15 @@ type ScimListProvisionedIdentitiesReq struct {
 	Filter *string
 }
 
-func (r ScimListProvisionedIdentitiesReq) urlPath() string {
+func (r *ScimListProvisionedIdentitiesReq) urlPath() string {
 	return fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org)
 }
 
-func (r ScimListProvisionedIdentitiesReq) method() string {
+func (r *ScimListProvisionedIdentitiesReq) method() string {
 	return "GET"
 }
 
-func (r ScimListProvisionedIdentitiesReq) urlQuery() url.Values {
+func (r *ScimListProvisionedIdentitiesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.StartIndex != nil {
 		query.Set("startIndex", strconv.FormatInt(*r.StartIndex, 10))
@@ -125,15 +129,19 @@ func (r ScimListProvisionedIdentitiesReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ScimListProvisionedIdentitiesReq) header() http.Header {
+func (r *ScimListProvisionedIdentitiesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ScimListProvisionedIdentitiesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -183,28 +191,32 @@ type ScimProvisionAndInviteUsersReq struct {
 	Org string
 }
 
-func (r ScimProvisionAndInviteUsersReq) urlPath() string {
+func (r *ScimProvisionAndInviteUsersReq) urlPath() string {
 	return fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org)
 }
 
-func (r ScimProvisionAndInviteUsersReq) method() string {
+func (r *ScimProvisionAndInviteUsersReq) method() string {
 	return "POST"
 }
 
-func (r ScimProvisionAndInviteUsersReq) urlQuery() url.Values {
+func (r *ScimProvisionAndInviteUsersReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ScimProvisionAndInviteUsersReq) header() http.Header {
+func (r *ScimProvisionAndInviteUsersReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ScimProvisionAndInviteUsersReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ScimProvisionAndInviteUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ScimProvisionAndInviteUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -249,28 +261,32 @@ type ScimRemoveUserFromOrgReq struct {
 	ScimUserId int64
 }
 
-func (r ScimRemoveUserFromOrgReq) urlPath() string {
+func (r *ScimRemoveUserFromOrgReq) urlPath() string {
 	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
 }
 
-func (r ScimRemoveUserFromOrgReq) method() string {
+func (r *ScimRemoveUserFromOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r ScimRemoveUserFromOrgReq) urlQuery() url.Values {
+func (r *ScimRemoveUserFromOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ScimRemoveUserFromOrgReq) header() http.Header {
+func (r *ScimRemoveUserFromOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ScimRemoveUserFromOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ScimRemoveUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ScimRemoveUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -287,28 +303,32 @@ type ScimReplaceProvisionedUserInformationReq struct {
 	ScimUserId int64
 }
 
-func (r ScimReplaceProvisionedUserInformationReq) urlPath() string {
+func (r *ScimReplaceProvisionedUserInformationReq) urlPath() string {
 	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
 }
 
-func (r ScimReplaceProvisionedUserInformationReq) method() string {
+func (r *ScimReplaceProvisionedUserInformationReq) method() string {
 	return "PUT"
 }
 
-func (r ScimReplaceProvisionedUserInformationReq) urlQuery() url.Values {
+func (r *ScimReplaceProvisionedUserInformationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ScimReplaceProvisionedUserInformationReq) header() http.Header {
+func (r *ScimReplaceProvisionedUserInformationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ScimReplaceProvisionedUserInformationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ScimReplaceProvisionedUserInformationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ScimReplaceProvisionedUserInformationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -353,28 +373,32 @@ type ScimUpdateUserAttributeReq struct {
 	ScimUserId int64
 }
 
-func (r ScimUpdateUserAttributeReq) urlPath() string {
+func (r *ScimUpdateUserAttributeReq) urlPath() string {
 	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
 }
 
-func (r ScimUpdateUserAttributeReq) method() string {
+func (r *ScimUpdateUserAttributeReq) method() string {
 	return "PATCH"
 }
 
-func (r ScimUpdateUserAttributeReq) urlQuery() url.Values {
+func (r *ScimUpdateUserAttributeReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ScimUpdateUserAttributeReq) header() http.Header {
+func (r *ScimUpdateUserAttributeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ScimUpdateUserAttributeReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ScimUpdateUserAttributeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ScimUpdateUserAttributeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

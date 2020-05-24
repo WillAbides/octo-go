@@ -25,28 +25,32 @@ type MigrationsCancelImportReq struct {
 	Repo  string
 }
 
-func (r MigrationsCancelImportReq) urlPath() string {
+func (r *MigrationsCancelImportReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
 }
 
-func (r MigrationsCancelImportReq) method() string {
+func (r *MigrationsCancelImportReq) method() string {
 	return "DELETE"
 }
 
-func (r MigrationsCancelImportReq) urlQuery() url.Values {
+func (r *MigrationsCancelImportReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsCancelImportReq) header() http.Header {
+func (r *MigrationsCancelImportReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsCancelImportReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -65,28 +69,38 @@ type MigrationsDeleteArchiveForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) urlPath() string {
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
 }
 
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) method() string {
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) method() string {
 	return "DELETE"
 }
 
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) header() http.Header {
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -106,28 +120,38 @@ type MigrationsDeleteArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsDeleteArchiveForOrgReq) urlPath() string {
+func (r *MigrationsDeleteArchiveForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
 }
 
-func (r MigrationsDeleteArchiveForOrgReq) method() string {
+func (r *MigrationsDeleteArchiveForOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r MigrationsDeleteArchiveForOrgReq) urlQuery() url.Values {
+func (r *MigrationsDeleteArchiveForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsDeleteArchiveForOrgReq) header() http.Header {
+func (r *MigrationsDeleteArchiveForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsDeleteArchiveForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -147,28 +171,38 @@ type MigrationsDownloadArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) urlPath() string {
+func (r *MigrationsDownloadArchiveForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) method() string {
+func (r *MigrationsDownloadArchiveForOrgReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) urlQuery() url.Values {
+func (r *MigrationsDownloadArchiveForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsDownloadArchiveForOrgReq) header() http.Header {
+func (r *MigrationsDownloadArchiveForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsDownloadArchiveForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -187,28 +221,38 @@ type MigrationsGetArchiveForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsGetArchiveForAuthenticatedUserReq) urlPath() string {
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
 }
 
-func (r MigrationsGetArchiveForAuthenticatedUserReq) method() string {
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetArchiveForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetArchiveForAuthenticatedUserReq) header() http.Header {
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -232,15 +276,15 @@ type MigrationsGetCommitAuthorsReq struct {
 	Since *string
 }
 
-func (r MigrationsGetCommitAuthorsReq) urlPath() string {
+func (r *MigrationsGetCommitAuthorsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo)
 }
 
-func (r MigrationsGetCommitAuthorsReq) method() string {
+func (r *MigrationsGetCommitAuthorsReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
+func (r *MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -248,15 +292,19 @@ func (r MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r MigrationsGetCommitAuthorsReq) header() http.Header {
+func (r *MigrationsGetCommitAuthorsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsGetCommitAuthorsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -288,28 +336,32 @@ type MigrationsGetImportProgressReq struct {
 	Repo  string
 }
 
-func (r MigrationsGetImportProgressReq) urlPath() string {
+func (r *MigrationsGetImportProgressReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
 }
 
-func (r MigrationsGetImportProgressReq) method() string {
+func (r *MigrationsGetImportProgressReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetImportProgressReq) urlQuery() url.Values {
+func (r *MigrationsGetImportProgressReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetImportProgressReq) header() http.Header {
+func (r *MigrationsGetImportProgressReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsGetImportProgressReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -347,28 +399,32 @@ type MigrationsGetLargeFilesReq struct {
 	Repo  string
 }
 
-func (r MigrationsGetLargeFilesReq) urlPath() string {
+func (r *MigrationsGetLargeFilesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo)
 }
 
-func (r MigrationsGetLargeFilesReq) method() string {
+func (r *MigrationsGetLargeFilesReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetLargeFilesReq) urlQuery() url.Values {
+func (r *MigrationsGetLargeFilesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetLargeFilesReq) header() http.Header {
+func (r *MigrationsGetLargeFilesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsGetLargeFilesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -399,28 +455,38 @@ type MigrationsGetStatusForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) urlPath() string {
+func (r *MigrationsGetStatusForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/migrations/%v", r.MigrationId)
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) method() string {
+func (r *MigrationsGetStatusForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsGetStatusForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetStatusForAuthenticatedUserReq) header() http.Header {
+func (r *MigrationsGetStatusForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsGetStatusForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -581,28 +647,38 @@ type MigrationsGetStatusForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsGetStatusForOrgReq) urlPath() string {
+func (r *MigrationsGetStatusForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId)
 }
 
-func (r MigrationsGetStatusForOrgReq) method() string {
+func (r *MigrationsGetStatusForOrgReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsGetStatusForOrgReq) urlQuery() url.Values {
+func (r *MigrationsGetStatusForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsGetStatusForOrgReq) header() http.Header {
+func (r *MigrationsGetStatusForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsGetStatusForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -761,15 +837,15 @@ type MigrationsListForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsListForAuthenticatedUserReq) urlPath() string {
+func (r *MigrationsListForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/migrations")
 }
 
-func (r MigrationsListForAuthenticatedUserReq) method() string {
+func (r *MigrationsListForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -780,15 +856,25 @@ func (r MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r MigrationsListForAuthenticatedUserReq) header() http.Header {
+func (r *MigrationsListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsListForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -954,15 +1040,15 @@ type MigrationsListForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsListForOrgReq) urlPath() string {
+func (r *MigrationsListForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations", r.Org)
 }
 
-func (r MigrationsListForOrgReq) method() string {
+func (r *MigrationsListForOrgReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsListForOrgReq) urlQuery() url.Values {
+func (r *MigrationsListForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -973,15 +1059,25 @@ func (r MigrationsListForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r MigrationsListForOrgReq) header() http.Header {
+func (r *MigrationsListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsListForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1142,15 +1238,15 @@ type MigrationsListReposForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsListReposForOrgReq) urlPath() string {
+func (r *MigrationsListReposForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId)
 }
 
-func (r MigrationsListReposForOrgReq) method() string {
+func (r *MigrationsListReposForOrgReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsListReposForOrgReq) urlQuery() url.Values {
+func (r *MigrationsListReposForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1161,15 +1257,25 @@ func (r MigrationsListReposForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r MigrationsListReposForOrgReq) header() http.Header {
+func (r *MigrationsListReposForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsListReposForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1309,15 +1415,15 @@ type MigrationsListReposForUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsListReposForUserReq) urlPath() string {
+func (r *MigrationsListReposForUserReq) urlPath() string {
 	return fmt.Sprintf("/user/%v/repositories", r.MigrationId)
 }
 
-func (r MigrationsListReposForUserReq) method() string {
+func (r *MigrationsListReposForUserReq) method() string {
 	return "GET"
 }
 
-func (r MigrationsListReposForUserReq) urlQuery() url.Values {
+func (r *MigrationsListReposForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1328,15 +1434,25 @@ func (r MigrationsListReposForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r MigrationsListReposForUserReq) header() http.Header {
+func (r *MigrationsListReposForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsListReposForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1470,28 +1586,32 @@ type MigrationsMapCommitAuthorReq struct {
 	RequestBody MigrationsMapCommitAuthorReqBody
 }
 
-func (r MigrationsMapCommitAuthorReq) urlPath() string {
+func (r *MigrationsMapCommitAuthorReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId)
 }
 
-func (r MigrationsMapCommitAuthorReq) method() string {
+func (r *MigrationsMapCommitAuthorReq) method() string {
 	return "PATCH"
 }
 
-func (r MigrationsMapCommitAuthorReq) urlQuery() url.Values {
+func (r *MigrationsMapCommitAuthorReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsMapCommitAuthorReq) header() http.Header {
+func (r *MigrationsMapCommitAuthorReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsMapCommitAuthorReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1538,28 +1658,32 @@ type MigrationsSetLfsPreferenceReq struct {
 	RequestBody MigrationsSetLfsPreferenceReqBody
 }
 
-func (r MigrationsSetLfsPreferenceReq) urlPath() string {
+func (r *MigrationsSetLfsPreferenceReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo)
 }
 
-func (r MigrationsSetLfsPreferenceReq) method() string {
+func (r *MigrationsSetLfsPreferenceReq) method() string {
 	return "PATCH"
 }
 
-func (r MigrationsSetLfsPreferenceReq) urlQuery() url.Values {
+func (r *MigrationsSetLfsPreferenceReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsSetLfsPreferenceReq) header() http.Header {
+func (r *MigrationsSetLfsPreferenceReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsSetLfsPreferenceReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1610,28 +1734,32 @@ type MigrationsStartForAuthenticatedUserReq struct {
 	RequestBody MigrationsStartForAuthenticatedUserReqBody
 }
 
-func (r MigrationsStartForAuthenticatedUserReq) urlPath() string {
+func (r *MigrationsStartForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/migrations")
 }
 
-func (r MigrationsStartForAuthenticatedUserReq) method() string {
+func (r *MigrationsStartForAuthenticatedUserReq) method() string {
 	return "POST"
 }
 
-func (r MigrationsStartForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsStartForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsStartForAuthenticatedUserReq) header() http.Header {
+func (r *MigrationsStartForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsStartForAuthenticatedUserReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1813,28 +1941,32 @@ type MigrationsStartForOrgReq struct {
 	RequestBody MigrationsStartForOrgReqBody
 }
 
-func (r MigrationsStartForOrgReq) urlPath() string {
+func (r *MigrationsStartForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations", r.Org)
 }
 
-func (r MigrationsStartForOrgReq) method() string {
+func (r *MigrationsStartForOrgReq) method() string {
 	return "POST"
 }
 
-func (r MigrationsStartForOrgReq) urlQuery() url.Values {
+func (r *MigrationsStartForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsStartForOrgReq) header() http.Header {
+func (r *MigrationsStartForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsStartForOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2010,28 +2142,32 @@ type MigrationsStartImportReq struct {
 	RequestBody MigrationsStartImportReqBody
 }
 
-func (r MigrationsStartImportReq) urlPath() string {
+func (r *MigrationsStartImportReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
 }
 
-func (r MigrationsStartImportReq) method() string {
+func (r *MigrationsStartImportReq) method() string {
 	return "PUT"
 }
 
-func (r MigrationsStartImportReq) urlQuery() url.Values {
+func (r *MigrationsStartImportReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsStartImportReq) header() http.Header {
+func (r *MigrationsStartImportReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsStartImportReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2102,28 +2238,38 @@ type MigrationsUnlockRepoForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) urlPath() string {
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName)
 }
 
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) method() string {
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) method() string {
 	return "DELETE"
 }
 
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) header() http.Header {
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2144,28 +2290,38 @@ type MigrationsUnlockRepoForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r MigrationsUnlockRepoForOrgReq) urlPath() string {
+func (r *MigrationsUnlockRepoForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName)
 }
 
-func (r MigrationsUnlockRepoForOrgReq) method() string {
+func (r *MigrationsUnlockRepoForOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r MigrationsUnlockRepoForOrgReq) urlQuery() url.Values {
+func (r *MigrationsUnlockRepoForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsUnlockRepoForOrgReq) header() http.Header {
+func (r *MigrationsUnlockRepoForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
+	if requiredPreviews {
+		previewVals["wyandotte"] = true
+	}
+	if allPreviews {
+		previewVals["wyandotte"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsUnlockRepoForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2183,28 +2339,32 @@ type MigrationsUpdateImportReq struct {
 	RequestBody MigrationsUpdateImportReqBody
 }
 
-func (r MigrationsUpdateImportReq) urlPath() string {
+func (r *MigrationsUpdateImportReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
 }
 
-func (r MigrationsUpdateImportReq) method() string {
+func (r *MigrationsUpdateImportReq) method() string {
 	return "PATCH"
 }
 
-func (r MigrationsUpdateImportReq) urlQuery() url.Values {
+func (r *MigrationsUpdateImportReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MigrationsUpdateImportReq) header() http.Header {
+func (r *MigrationsUpdateImportReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MigrationsUpdateImportReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

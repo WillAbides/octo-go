@@ -54,15 +54,15 @@ type SearchCodeReq struct {
 	Page *int64
 }
 
-func (r SearchCodeReq) urlPath() string {
+func (r *SearchCodeReq) urlPath() string {
 	return fmt.Sprintf("/search/code")
 }
 
-func (r SearchCodeReq) method() string {
+func (r *SearchCodeReq) method() string {
 	return "GET"
 }
 
-func (r SearchCodeReq) urlQuery() url.Values {
+func (r *SearchCodeReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -82,15 +82,19 @@ func (r SearchCodeReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchCodeReq) header() http.Header {
+func (r *SearchCodeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchCodeReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -229,15 +233,15 @@ type SearchCommitsReq struct {
 	CloakPreview bool
 }
 
-func (r SearchCommitsReq) urlPath() string {
+func (r *SearchCommitsReq) urlPath() string {
 	return fmt.Sprintf("/search/commits")
 }
 
-func (r SearchCommitsReq) method() string {
+func (r *SearchCommitsReq) method() string {
 	return "GET"
 }
 
-func (r SearchCommitsReq) urlQuery() url.Values {
+func (r *SearchCommitsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -257,15 +261,25 @@ func (r SearchCommitsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchCommitsReq) header() http.Header {
+func (r *SearchCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"cloak": r.CloakPreview}
+	if requiredPreviews {
+		previewVals["cloak"] = true
+	}
+	if allPreviews {
+		previewVals["cloak"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchCommitsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -462,15 +476,15 @@ type SearchIssuesAndPullRequestsReq struct {
 	Page *int64
 }
 
-func (r SearchIssuesAndPullRequestsReq) urlPath() string {
+func (r *SearchIssuesAndPullRequestsReq) urlPath() string {
 	return fmt.Sprintf("/search/issues")
 }
 
-func (r SearchIssuesAndPullRequestsReq) method() string {
+func (r *SearchIssuesAndPullRequestsReq) method() string {
 	return "GET"
 }
 
-func (r SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
+func (r *SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -490,15 +504,19 @@ func (r SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchIssuesAndPullRequestsReq) header() http.Header {
+func (r *SearchIssuesAndPullRequestsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchIssuesAndPullRequestsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -599,15 +617,15 @@ type SearchLabelsReq struct {
 	Order *string
 }
 
-func (r SearchLabelsReq) urlPath() string {
+func (r *SearchLabelsReq) urlPath() string {
 	return fmt.Sprintf("/search/labels")
 }
 
-func (r SearchLabelsReq) method() string {
+func (r *SearchLabelsReq) method() string {
 	return "GET"
 }
 
-func (r SearchLabelsReq) urlQuery() url.Values {
+func (r *SearchLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.RepositoryId != nil {
 		query.Set("repository_id", strconv.FormatInt(*r.RepositoryId, 10))
@@ -624,15 +642,19 @@ func (r SearchLabelsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchLabelsReq) header() http.Header {
+func (r *SearchLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchLabelsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -706,15 +728,15 @@ type SearchReposReq struct {
 	MercyPreview bool
 }
 
-func (r SearchReposReq) urlPath() string {
+func (r *SearchReposReq) urlPath() string {
 	return fmt.Sprintf("/search/repositories")
 }
 
-func (r SearchReposReq) method() string {
+func (r *SearchReposReq) method() string {
 	return "GET"
 }
 
-func (r SearchReposReq) urlQuery() url.Values {
+func (r *SearchReposReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -734,15 +756,22 @@ func (r SearchReposReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchReposReq) header() http.Header {
+func (r *SearchReposReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	if allPreviews {
+		previewVals["mercy"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchReposReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -817,15 +846,15 @@ type SearchTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r SearchTopicsReq) urlPath() string {
+func (r *SearchTopicsReq) urlPath() string {
 	return fmt.Sprintf("/search/topics")
 }
 
-func (r SearchTopicsReq) method() string {
+func (r *SearchTopicsReq) method() string {
 	return "GET"
 }
 
-func (r SearchTopicsReq) urlQuery() url.Values {
+func (r *SearchTopicsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -833,15 +862,22 @@ func (r SearchTopicsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchTopicsReq) header() http.Header {
+func (r *SearchTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	if allPreviews {
+		previewVals["mercy"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchTopicsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -910,15 +946,15 @@ type SearchUsersReq struct {
 	Page *int64
 }
 
-func (r SearchUsersReq) urlPath() string {
+func (r *SearchUsersReq) urlPath() string {
 	return fmt.Sprintf("/search/users")
 }
 
-func (r SearchUsersReq) method() string {
+func (r *SearchUsersReq) method() string {
 	return "GET"
 }
 
-func (r SearchUsersReq) urlQuery() url.Values {
+func (r *SearchUsersReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -938,15 +974,19 @@ func (r SearchUsersReq) urlQuery() url.Values {
 	return query
 }
 
-func (r SearchUsersReq) header() http.Header {
+func (r *SearchUsersReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *SearchUsersReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

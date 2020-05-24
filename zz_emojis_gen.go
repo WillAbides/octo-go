@@ -20,26 +20,30 @@ https://developer.github.com/v3/emojis/#emojis
 */
 type EmojisGetReq struct{}
 
-func (r EmojisGetReq) urlPath() string {
+func (r *EmojisGetReq) urlPath() string {
 	return fmt.Sprintf("/emojis")
 }
 
-func (r EmojisGetReq) method() string {
+func (r *EmojisGetReq) method() string {
 	return "GET"
 }
 
-func (r EmojisGetReq) urlQuery() url.Values {
+func (r *EmojisGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r EmojisGetReq) header() http.Header {
+func (r *EmojisGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *EmojisGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r EmojisGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *EmojisGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }

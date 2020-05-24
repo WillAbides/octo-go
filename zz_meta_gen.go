@@ -20,28 +20,32 @@ https://developer.github.com/v3/meta/#meta
 */
 type MetaGetReq struct{}
 
-func (r MetaGetReq) urlPath() string {
+func (r *MetaGetReq) urlPath() string {
 	return fmt.Sprintf("/meta")
 }
 
-func (r MetaGetReq) method() string {
+func (r *MetaGetReq) method() string {
 	return "GET"
 }
 
-func (r MetaGetReq) urlQuery() url.Values {
+func (r *MetaGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r MetaGetReq) header() http.Header {
+func (r *MetaGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *MetaGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

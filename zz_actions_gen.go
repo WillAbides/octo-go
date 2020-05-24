@@ -25,28 +25,32 @@ type ActionsAddSelectedRepoToOrgSecretReq struct {
 	RepositoryId int64
 }
 
-func (r ActionsAddSelectedRepoToOrgSecretReq) urlPath() string {
+func (r *ActionsAddSelectedRepoToOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
 }
 
-func (r ActionsAddSelectedRepoToOrgSecretReq) method() string {
+func (r *ActionsAddSelectedRepoToOrgSecretReq) method() string {
 	return "PUT"
 }
 
-func (r ActionsAddSelectedRepoToOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsAddSelectedRepoToOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsAddSelectedRepoToOrgSecretReq) header() http.Header {
+func (r *ActionsAddSelectedRepoToOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsAddSelectedRepoToOrgSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -64,28 +68,32 @@ type ActionsCancelWorkflowRunReq struct {
 	RunId int64
 }
 
-func (r ActionsCancelWorkflowRunReq) urlPath() string {
+func (r *ActionsCancelWorkflowRunReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsCancelWorkflowRunReq) method() string {
+func (r *ActionsCancelWorkflowRunReq) method() string {
 	return "POST"
 }
 
-func (r ActionsCancelWorkflowRunReq) urlQuery() url.Values {
+func (r *ActionsCancelWorkflowRunReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCancelWorkflowRunReq) header() http.Header {
+func (r *ActionsCancelWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCancelWorkflowRunReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -103,28 +111,32 @@ type ActionsCreateOrUpdateOrgSecretReq struct {
 	RequestBody ActionsCreateOrUpdateOrgSecretReqBody
 }
 
-func (r ActionsCreateOrUpdateOrgSecretReq) urlPath() string {
+func (r *ActionsCreateOrUpdateOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
 }
 
-func (r ActionsCreateOrUpdateOrgSecretReq) method() string {
+func (r *ActionsCreateOrUpdateOrgSecretReq) method() string {
 	return "PUT"
 }
 
-func (r ActionsCreateOrUpdateOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsCreateOrUpdateOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCreateOrUpdateOrgSecretReq) header() http.Header {
+func (r *ActionsCreateOrUpdateOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCreateOrUpdateOrgSecretReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -186,28 +198,32 @@ type ActionsCreateOrUpdateRepoSecretReq struct {
 	RequestBody ActionsCreateOrUpdateRepoSecretReqBody
 }
 
-func (r ActionsCreateOrUpdateRepoSecretReq) urlPath() string {
+func (r *ActionsCreateOrUpdateRepoSecretReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
 }
 
-func (r ActionsCreateOrUpdateRepoSecretReq) method() string {
+func (r *ActionsCreateOrUpdateRepoSecretReq) method() string {
 	return "PUT"
 }
 
-func (r ActionsCreateOrUpdateRepoSecretReq) urlQuery() url.Values {
+func (r *ActionsCreateOrUpdateRepoSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCreateOrUpdateRepoSecretReq) header() http.Header {
+func (r *ActionsCreateOrUpdateRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCreateOrUpdateRepoSecretReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -243,28 +259,32 @@ type ActionsCreateRegistrationTokenForOrgReq struct {
 	Org string
 }
 
-func (r ActionsCreateRegistrationTokenForOrgReq) urlPath() string {
+func (r *ActionsCreateRegistrationTokenForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org)
 }
 
-func (r ActionsCreateRegistrationTokenForOrgReq) method() string {
+func (r *ActionsCreateRegistrationTokenForOrgReq) method() string {
 	return "POST"
 }
 
-func (r ActionsCreateRegistrationTokenForOrgReq) urlQuery() url.Values {
+func (r *ActionsCreateRegistrationTokenForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCreateRegistrationTokenForOrgReq) header() http.Header {
+func (r *ActionsCreateRegistrationTokenForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCreateRegistrationTokenForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -291,28 +311,32 @@ type ActionsCreateRegistrationTokenForRepoReq struct {
 	Repo  string
 }
 
-func (r ActionsCreateRegistrationTokenForRepoReq) urlPath() string {
+func (r *ActionsCreateRegistrationTokenForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo)
 }
 
-func (r ActionsCreateRegistrationTokenForRepoReq) method() string {
+func (r *ActionsCreateRegistrationTokenForRepoReq) method() string {
 	return "POST"
 }
 
-func (r ActionsCreateRegistrationTokenForRepoReq) urlQuery() url.Values {
+func (r *ActionsCreateRegistrationTokenForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCreateRegistrationTokenForRepoReq) header() http.Header {
+func (r *ActionsCreateRegistrationTokenForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCreateRegistrationTokenForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -338,28 +362,32 @@ type ActionsCreateRemoveTokenForOrgReq struct {
 	Org string
 }
 
-func (r ActionsCreateRemoveTokenForOrgReq) urlPath() string {
+func (r *ActionsCreateRemoveTokenForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org)
 }
 
-func (r ActionsCreateRemoveTokenForOrgReq) method() string {
+func (r *ActionsCreateRemoveTokenForOrgReq) method() string {
 	return "POST"
 }
 
-func (r ActionsCreateRemoveTokenForOrgReq) urlQuery() url.Values {
+func (r *ActionsCreateRemoveTokenForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCreateRemoveTokenForOrgReq) header() http.Header {
+func (r *ActionsCreateRemoveTokenForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCreateRemoveTokenForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -386,28 +414,32 @@ type ActionsCreateRemoveTokenForRepoReq struct {
 	Repo  string
 }
 
-func (r ActionsCreateRemoveTokenForRepoReq) urlPath() string {
+func (r *ActionsCreateRemoveTokenForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo)
 }
 
-func (r ActionsCreateRemoveTokenForRepoReq) method() string {
+func (r *ActionsCreateRemoveTokenForRepoReq) method() string {
 	return "POST"
 }
 
-func (r ActionsCreateRemoveTokenForRepoReq) urlQuery() url.Values {
+func (r *ActionsCreateRemoveTokenForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsCreateRemoveTokenForRepoReq) header() http.Header {
+func (r *ActionsCreateRemoveTokenForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsCreateRemoveTokenForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -435,28 +467,32 @@ type ActionsDeleteArtifactReq struct {
 	ArtifactId int64
 }
 
-func (r ActionsDeleteArtifactReq) urlPath() string {
+func (r *ActionsDeleteArtifactReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
 }
 
-func (r ActionsDeleteArtifactReq) method() string {
+func (r *ActionsDeleteArtifactReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsDeleteArtifactReq) urlQuery() url.Values {
+func (r *ActionsDeleteArtifactReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDeleteArtifactReq) header() http.Header {
+func (r *ActionsDeleteArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDeleteArtifactReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -473,28 +509,32 @@ type ActionsDeleteOrgSecretReq struct {
 	SecretName string
 }
 
-func (r ActionsDeleteOrgSecretReq) urlPath() string {
+func (r *ActionsDeleteOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
 }
 
-func (r ActionsDeleteOrgSecretReq) method() string {
+func (r *ActionsDeleteOrgSecretReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsDeleteOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsDeleteOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDeleteOrgSecretReq) header() http.Header {
+func (r *ActionsDeleteOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDeleteOrgSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -512,28 +552,32 @@ type ActionsDeleteRepoSecretReq struct {
 	SecretName string
 }
 
-func (r ActionsDeleteRepoSecretReq) urlPath() string {
+func (r *ActionsDeleteRepoSecretReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
 }
 
-func (r ActionsDeleteRepoSecretReq) method() string {
+func (r *ActionsDeleteRepoSecretReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsDeleteRepoSecretReq) urlQuery() url.Values {
+func (r *ActionsDeleteRepoSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDeleteRepoSecretReq) header() http.Header {
+func (r *ActionsDeleteRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDeleteRepoSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -550,28 +594,32 @@ type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
 	RunnerId int64
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) urlPath() string {
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) method() string {
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) urlQuery() url.Values {
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) header() http.Header {
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -589,28 +637,32 @@ type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
 	RunnerId int64
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) urlPath() string {
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) method() string {
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) urlQuery() url.Values {
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) header() http.Header {
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -628,28 +680,32 @@ type ActionsDeleteWorkflowRunLogsReq struct {
 	RunId int64
 }
 
-func (r ActionsDeleteWorkflowRunLogsReq) urlPath() string {
+func (r *ActionsDeleteWorkflowRunLogsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsDeleteWorkflowRunLogsReq) method() string {
+func (r *ActionsDeleteWorkflowRunLogsReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsDeleteWorkflowRunLogsReq) urlQuery() url.Values {
+func (r *ActionsDeleteWorkflowRunLogsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDeleteWorkflowRunLogsReq) header() http.Header {
+func (r *ActionsDeleteWorkflowRunLogsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDeleteWorkflowRunLogsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -668,28 +724,32 @@ type ActionsDownloadArtifactReq struct {
 	ArchiveFormat string
 }
 
-func (r ActionsDownloadArtifactReq) urlPath() string {
+func (r *ActionsDownloadArtifactReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat)
 }
 
-func (r ActionsDownloadArtifactReq) method() string {
+func (r *ActionsDownloadArtifactReq) method() string {
 	return "GET"
 }
 
-func (r ActionsDownloadArtifactReq) urlQuery() url.Values {
+func (r *ActionsDownloadArtifactReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDownloadArtifactReq) header() http.Header {
+func (r *ActionsDownloadArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDownloadArtifactReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -707,28 +767,32 @@ type ActionsDownloadWorkflowJobLogsReq struct {
 	JobId int64
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) urlPath() string {
+func (r *ActionsDownloadWorkflowJobLogsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId)
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) method() string {
+func (r *ActionsDownloadWorkflowJobLogsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) urlQuery() url.Values {
+func (r *ActionsDownloadWorkflowJobLogsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDownloadWorkflowJobLogsReq) header() http.Header {
+func (r *ActionsDownloadWorkflowJobLogsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDownloadWorkflowJobLogsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -746,28 +810,32 @@ type ActionsDownloadWorkflowRunLogsReq struct {
 	RunId int64
 }
 
-func (r ActionsDownloadWorkflowRunLogsReq) urlPath() string {
+func (r *ActionsDownloadWorkflowRunLogsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsDownloadWorkflowRunLogsReq) method() string {
+func (r *ActionsDownloadWorkflowRunLogsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsDownloadWorkflowRunLogsReq) urlQuery() url.Values {
+func (r *ActionsDownloadWorkflowRunLogsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsDownloadWorkflowRunLogsReq) header() http.Header {
+func (r *ActionsDownloadWorkflowRunLogsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsDownloadWorkflowRunLogsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -785,28 +853,32 @@ type ActionsGetArtifactReq struct {
 	ArtifactId int64
 }
 
-func (r ActionsGetArtifactReq) urlPath() string {
+func (r *ActionsGetArtifactReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
 }
 
-func (r ActionsGetArtifactReq) method() string {
+func (r *ActionsGetArtifactReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetArtifactReq) urlQuery() url.Values {
+func (r *ActionsGetArtifactReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetArtifactReq) header() http.Header {
+func (r *ActionsGetArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetArtifactReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -839,28 +911,32 @@ type ActionsGetOrgPublicKeyReq struct {
 	Org string
 }
 
-func (r ActionsGetOrgPublicKeyReq) urlPath() string {
+func (r *ActionsGetOrgPublicKeyReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org)
 }
 
-func (r ActionsGetOrgPublicKeyReq) method() string {
+func (r *ActionsGetOrgPublicKeyReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetOrgPublicKeyReq) urlQuery() url.Values {
+func (r *ActionsGetOrgPublicKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetOrgPublicKeyReq) header() http.Header {
+func (r *ActionsGetOrgPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetOrgPublicKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -887,28 +963,32 @@ type ActionsGetOrgSecretReq struct {
 	SecretName string
 }
 
-func (r ActionsGetOrgSecretReq) urlPath() string {
+func (r *ActionsGetOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
 }
 
-func (r ActionsGetOrgSecretReq) method() string {
+func (r *ActionsGetOrgSecretReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsGetOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetOrgSecretReq) header() http.Header {
+func (r *ActionsGetOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetOrgSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -938,28 +1018,32 @@ type ActionsGetRepoPublicKeyReq struct {
 	Repo  string
 }
 
-func (r ActionsGetRepoPublicKeyReq) urlPath() string {
+func (r *ActionsGetRepoPublicKeyReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/secrets/public-key", r.Owner, r.Repo)
 }
 
-func (r ActionsGetRepoPublicKeyReq) method() string {
+func (r *ActionsGetRepoPublicKeyReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetRepoPublicKeyReq) urlQuery() url.Values {
+func (r *ActionsGetRepoPublicKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetRepoPublicKeyReq) header() http.Header {
+func (r *ActionsGetRepoPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetRepoPublicKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -987,28 +1071,32 @@ type ActionsGetRepoSecretReq struct {
 	SecretName string
 }
 
-func (r ActionsGetRepoSecretReq) urlPath() string {
+func (r *ActionsGetRepoSecretReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
 }
 
-func (r ActionsGetRepoSecretReq) method() string {
+func (r *ActionsGetRepoSecretReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetRepoSecretReq) urlQuery() url.Values {
+func (r *ActionsGetRepoSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetRepoSecretReq) header() http.Header {
+func (r *ActionsGetRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetRepoSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1036,28 +1124,32 @@ type ActionsGetSelfHostedRunnerForOrgReq struct {
 	RunnerId int64
 }
 
-func (r ActionsGetSelfHostedRunnerForOrgReq) urlPath() string {
+func (r *ActionsGetSelfHostedRunnerForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
 }
 
-func (r ActionsGetSelfHostedRunnerForOrgReq) method() string {
+func (r *ActionsGetSelfHostedRunnerForOrgReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetSelfHostedRunnerForOrgReq) urlQuery() url.Values {
+func (r *ActionsGetSelfHostedRunnerForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetSelfHostedRunnerForOrgReq) header() http.Header {
+func (r *ActionsGetSelfHostedRunnerForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetSelfHostedRunnerForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1087,28 +1179,32 @@ type ActionsGetSelfHostedRunnerForRepoReq struct {
 	RunnerId int64
 }
 
-func (r ActionsGetSelfHostedRunnerForRepoReq) urlPath() string {
+func (r *ActionsGetSelfHostedRunnerForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
 }
 
-func (r ActionsGetSelfHostedRunnerForRepoReq) method() string {
+func (r *ActionsGetSelfHostedRunnerForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetSelfHostedRunnerForRepoReq) urlQuery() url.Values {
+func (r *ActionsGetSelfHostedRunnerForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetSelfHostedRunnerForRepoReq) header() http.Header {
+func (r *ActionsGetSelfHostedRunnerForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetSelfHostedRunnerForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1138,28 +1234,32 @@ type ActionsGetWorkflowReq struct {
 	WorkflowId int64
 }
 
-func (r ActionsGetWorkflowReq) urlPath() string {
+func (r *ActionsGetWorkflowReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v", r.Owner, r.Repo, r.WorkflowId)
 }
 
-func (r ActionsGetWorkflowReq) method() string {
+func (r *ActionsGetWorkflowReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetWorkflowReq) urlQuery() url.Values {
+func (r *ActionsGetWorkflowReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetWorkflowReq) header() http.Header {
+func (r *ActionsGetWorkflowReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetWorkflowReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1195,28 +1295,32 @@ type ActionsGetWorkflowJobReq struct {
 	JobId int64
 }
 
-func (r ActionsGetWorkflowJobReq) urlPath() string {
+func (r *ActionsGetWorkflowJobReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId)
 }
 
-func (r ActionsGetWorkflowJobReq) method() string {
+func (r *ActionsGetWorkflowJobReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetWorkflowJobReq) urlQuery() url.Values {
+func (r *ActionsGetWorkflowJobReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetWorkflowJobReq) header() http.Header {
+func (r *ActionsGetWorkflowJobReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetWorkflowJobReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1263,28 +1367,32 @@ type ActionsGetWorkflowRunReq struct {
 	RunId int64
 }
 
-func (r ActionsGetWorkflowRunReq) urlPath() string {
+func (r *ActionsGetWorkflowRunReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsGetWorkflowRunReq) method() string {
+func (r *ActionsGetWorkflowRunReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetWorkflowRunReq) urlQuery() url.Values {
+func (r *ActionsGetWorkflowRunReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetWorkflowRunReq) header() http.Header {
+func (r *ActionsGetWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetWorkflowRunReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1479,28 +1587,32 @@ type ActionsGetWorkflowRunUsageReq struct {
 	RunId int64
 }
 
-func (r ActionsGetWorkflowRunUsageReq) urlPath() string {
+func (r *ActionsGetWorkflowRunUsageReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsGetWorkflowRunUsageReq) method() string {
+func (r *ActionsGetWorkflowRunUsageReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetWorkflowRunUsageReq) urlQuery() url.Values {
+func (r *ActionsGetWorkflowRunUsageReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetWorkflowRunUsageReq) header() http.Header {
+func (r *ActionsGetWorkflowRunUsageReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetWorkflowRunUsageReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1541,28 +1653,32 @@ type ActionsGetWorkflowUsageReq struct {
 	WorkflowId int64
 }
 
-func (r ActionsGetWorkflowUsageReq) urlPath() string {
+func (r *ActionsGetWorkflowUsageReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId)
 }
 
-func (r ActionsGetWorkflowUsageReq) method() string {
+func (r *ActionsGetWorkflowUsageReq) method() string {
 	return "GET"
 }
 
-func (r ActionsGetWorkflowUsageReq) urlQuery() url.Values {
+func (r *ActionsGetWorkflowUsageReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsGetWorkflowUsageReq) header() http.Header {
+func (r *ActionsGetWorkflowUsageReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsGetWorkflowUsageReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1604,15 +1720,15 @@ type ActionsListArtifactsForRepoReq struct {
 	Page *int64
 }
 
-func (r ActionsListArtifactsForRepoReq) urlPath() string {
+func (r *ActionsListArtifactsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo)
 }
 
-func (r ActionsListArtifactsForRepoReq) method() string {
+func (r *ActionsListArtifactsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListArtifactsForRepoReq) urlQuery() url.Values {
+func (r *ActionsListArtifactsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1623,15 +1739,19 @@ func (r ActionsListArtifactsForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListArtifactsForRepoReq) header() http.Header {
+func (r *ActionsListArtifactsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListArtifactsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1683,15 +1803,15 @@ type ActionsListJobsForWorkflowRunReq struct {
 	Page *int64
 }
 
-func (r ActionsListJobsForWorkflowRunReq) urlPath() string {
+func (r *ActionsListJobsForWorkflowRunReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/jobs", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsListJobsForWorkflowRunReq) method() string {
+func (r *ActionsListJobsForWorkflowRunReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListJobsForWorkflowRunReq) urlQuery() url.Values {
+func (r *ActionsListJobsForWorkflowRunReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -1705,15 +1825,19 @@ func (r ActionsListJobsForWorkflowRunReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListJobsForWorkflowRunReq) header() http.Header {
+func (r *ActionsListJobsForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListJobsForWorkflowRunReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1767,15 +1891,15 @@ type ActionsListOrgSecretsReq struct {
 	Page *int64
 }
 
-func (r ActionsListOrgSecretsReq) urlPath() string {
+func (r *ActionsListOrgSecretsReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets", r.Org)
 }
 
-func (r ActionsListOrgSecretsReq) method() string {
+func (r *ActionsListOrgSecretsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListOrgSecretsReq) urlQuery() url.Values {
+func (r *ActionsListOrgSecretsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1786,15 +1910,19 @@ func (r ActionsListOrgSecretsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListOrgSecretsReq) header() http.Header {
+func (r *ActionsListOrgSecretsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListOrgSecretsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1833,15 +1961,15 @@ type ActionsListRepoSecretsReq struct {
 	Page *int64
 }
 
-func (r ActionsListRepoSecretsReq) urlPath() string {
+func (r *ActionsListRepoSecretsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/secrets", r.Owner, r.Repo)
 }
 
-func (r ActionsListRepoSecretsReq) method() string {
+func (r *ActionsListRepoSecretsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListRepoSecretsReq) urlQuery() url.Values {
+func (r *ActionsListRepoSecretsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1852,15 +1980,19 @@ func (r ActionsListRepoSecretsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListRepoSecretsReq) header() http.Header {
+func (r *ActionsListRepoSecretsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListRepoSecretsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1926,15 +2058,15 @@ type ActionsListRepoWorkflowRunsReq struct {
 	Page *int64
 }
 
-func (r ActionsListRepoWorkflowRunsReq) urlPath() string {
+func (r *ActionsListRepoWorkflowRunsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo)
 }
 
-func (r ActionsListRepoWorkflowRunsReq) method() string {
+func (r *ActionsListRepoWorkflowRunsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListRepoWorkflowRunsReq) urlQuery() url.Values {
+func (r *ActionsListRepoWorkflowRunsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Actor != nil {
 		query.Set("actor", *r.Actor)
@@ -1957,15 +2089,19 @@ func (r ActionsListRepoWorkflowRunsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListRepoWorkflowRunsReq) header() http.Header {
+func (r *ActionsListRepoWorkflowRunsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListRepoWorkflowRunsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2168,15 +2304,15 @@ type ActionsListRepoWorkflowsReq struct {
 	Page *int64
 }
 
-func (r ActionsListRepoWorkflowsReq) urlPath() string {
+func (r *ActionsListRepoWorkflowsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo)
 }
 
-func (r ActionsListRepoWorkflowsReq) method() string {
+func (r *ActionsListRepoWorkflowsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListRepoWorkflowsReq) urlQuery() url.Values {
+func (r *ActionsListRepoWorkflowsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2187,15 +2323,19 @@ func (r ActionsListRepoWorkflowsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListRepoWorkflowsReq) header() http.Header {
+func (r *ActionsListRepoWorkflowsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListRepoWorkflowsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2232,28 +2372,32 @@ type ActionsListRunnerApplicationsForOrgReq struct {
 	Org string
 }
 
-func (r ActionsListRunnerApplicationsForOrgReq) urlPath() string {
+func (r *ActionsListRunnerApplicationsForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org)
 }
 
-func (r ActionsListRunnerApplicationsForOrgReq) method() string {
+func (r *ActionsListRunnerApplicationsForOrgReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListRunnerApplicationsForOrgReq) urlQuery() url.Values {
+func (r *ActionsListRunnerApplicationsForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsListRunnerApplicationsForOrgReq) header() http.Header {
+func (r *ActionsListRunnerApplicationsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListRunnerApplicationsForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2282,28 +2426,32 @@ type ActionsListRunnerApplicationsForRepoReq struct {
 	Repo  string
 }
 
-func (r ActionsListRunnerApplicationsForRepoReq) urlPath() string {
+func (r *ActionsListRunnerApplicationsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo)
 }
 
-func (r ActionsListRunnerApplicationsForRepoReq) method() string {
+func (r *ActionsListRunnerApplicationsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListRunnerApplicationsForRepoReq) urlQuery() url.Values {
+func (r *ActionsListRunnerApplicationsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsListRunnerApplicationsForRepoReq) header() http.Header {
+func (r *ActionsListRunnerApplicationsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListRunnerApplicationsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2332,28 +2480,32 @@ type ActionsListSelectedReposForOrgSecretReq struct {
 	SecretName string
 }
 
-func (r ActionsListSelectedReposForOrgSecretReq) urlPath() string {
+func (r *ActionsListSelectedReposForOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
 }
 
-func (r ActionsListSelectedReposForOrgSecretReq) method() string {
+func (r *ActionsListSelectedReposForOrgSecretReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListSelectedReposForOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsListSelectedReposForOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsListSelectedReposForOrgSecretReq) header() http.Header {
+func (r *ActionsListSelectedReposForOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListSelectedReposForOrgSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2452,15 +2604,15 @@ type ActionsListSelfHostedRunnersForOrgReq struct {
 	Page *int64
 }
 
-func (r ActionsListSelfHostedRunnersForOrgReq) urlPath() string {
+func (r *ActionsListSelfHostedRunnersForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/runners", r.Org)
 }
 
-func (r ActionsListSelfHostedRunnersForOrgReq) method() string {
+func (r *ActionsListSelfHostedRunnersForOrgReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
+func (r *ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2471,15 +2623,19 @@ func (r ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListSelfHostedRunnersForOrgReq) header() http.Header {
+func (r *ActionsListSelfHostedRunnersForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListSelfHostedRunnersForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2517,15 +2673,15 @@ type ActionsListSelfHostedRunnersForRepoReq struct {
 	Page *int64
 }
 
-func (r ActionsListSelfHostedRunnersForRepoReq) urlPath() string {
+func (r *ActionsListSelfHostedRunnersForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo)
 }
 
-func (r ActionsListSelfHostedRunnersForRepoReq) method() string {
+func (r *ActionsListSelfHostedRunnersForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
+func (r *ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2536,15 +2692,19 @@ func (r ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListSelfHostedRunnersForRepoReq) header() http.Header {
+func (r *ActionsListSelfHostedRunnersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListSelfHostedRunnersForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2583,15 +2743,15 @@ type ActionsListWorkflowRunArtifactsReq struct {
 	Page *int64
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) urlPath() string {
+func (r *ActionsListWorkflowRunArtifactsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) method() string {
+func (r *ActionsListWorkflowRunArtifactsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
+func (r *ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2602,15 +2762,19 @@ func (r ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListWorkflowRunArtifactsReq) header() http.Header {
+func (r *ActionsListWorkflowRunArtifactsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListWorkflowRunArtifactsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2683,15 +2847,15 @@ type ActionsListWorkflowRunsReq struct {
 	Page *int64
 }
 
-func (r ActionsListWorkflowRunsReq) urlPath() string {
+func (r *ActionsListWorkflowRunsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/runs", r.Owner, r.Repo, r.WorkflowId)
 }
 
-func (r ActionsListWorkflowRunsReq) method() string {
+func (r *ActionsListWorkflowRunsReq) method() string {
 	return "GET"
 }
 
-func (r ActionsListWorkflowRunsReq) urlQuery() url.Values {
+func (r *ActionsListWorkflowRunsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Actor != nil {
 		query.Set("actor", *r.Actor)
@@ -2714,15 +2878,19 @@ func (r ActionsListWorkflowRunsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActionsListWorkflowRunsReq) header() http.Header {
+func (r *ActionsListWorkflowRunsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsListWorkflowRunsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2920,28 +3088,32 @@ type ActionsReRunWorkflowReq struct {
 	RunId int64
 }
 
-func (r ActionsReRunWorkflowReq) urlPath() string {
+func (r *ActionsReRunWorkflowReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId)
 }
 
-func (r ActionsReRunWorkflowReq) method() string {
+func (r *ActionsReRunWorkflowReq) method() string {
 	return "POST"
 }
 
-func (r ActionsReRunWorkflowReq) urlQuery() url.Values {
+func (r *ActionsReRunWorkflowReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsReRunWorkflowReq) header() http.Header {
+func (r *ActionsReRunWorkflowReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsReRunWorkflowReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2959,28 +3131,32 @@ type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
 	RepositoryId int64
 }
 
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) urlPath() string {
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
 }
 
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) method() string {
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) method() string {
 	return "DELETE"
 }
 
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) header() http.Header {
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2998,28 +3174,32 @@ type ActionsSetSelectedReposForOrgSecretReq struct {
 	RequestBody ActionsSetSelectedReposForOrgSecretReqBody
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) urlPath() string {
+func (r *ActionsSetSelectedReposForOrgSecretReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) method() string {
+func (r *ActionsSetSelectedReposForOrgSecretReq) method() string {
 	return "PUT"
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) urlQuery() url.Values {
+func (r *ActionsSetSelectedReposForOrgSecretReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActionsSetSelectedReposForOrgSecretReq) header() http.Header {
+func (r *ActionsSetSelectedReposForOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActionsSetSelectedReposForOrgSecretReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

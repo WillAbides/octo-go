@@ -10,14 +10,14 @@ type RequestOption func(opts *requestOpts)
 //RequestHTTPScheme set the http schema to use. Default is https.
 func RequestHTTPScheme(scheme string) RequestOption {
 	return func(opts *requestOpts) {
-		opts.BaseURL.Scheme = scheme
+		opts.baseURL.Scheme = scheme
 	}
 }
 
 //RequestBaseURL set the baseURL to use. Default is https://api.github.com
 func RequestBaseURL(baseURL url.URL) RequestOption {
 	return func(opts *requestOpts) {
-		opts.BaseURL = baseURL
+		opts.baseURL = baseURL
 	}
 }
 
@@ -30,17 +30,33 @@ func RequestOptions(option ...RequestOption) RequestOption {
 	}
 }
 
+//RequestEnableRequirePreviews enables any previews that are required for your request
+func RequestEnableRequirePreviews() RequestOption {
+	return func(opts *requestOpts) {
+		opts.requiredPreviews = true
+	}
+}
+
+//RequestEnableAllPreviews enables all previews that are available for your request
+func RequestEnableAllPreviews() RequestOption {
+	return func(opts *requestOpts) {
+		opts.allPreviews = true
+	}
+}
+
 type requestOpts struct {
-	BaseURL   url.URL
-	UserAgent string
+	baseURL          url.URL
+	userAgent        string
+	requiredPreviews bool
+	allPreviews      bool
 }
 
 var defaultRequestOpts = requestOpts{
-	BaseURL: url.URL{
+	baseURL: url.URL{
 		Host:   "api.github.com",
 		Scheme: "https",
 	},
-	UserAgent: "octo-go",
+	userAgent: "octo-go",
 }
 
 func buildRequestOptions(opts []RequestOption) requestOpts {
