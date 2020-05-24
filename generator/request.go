@@ -12,11 +12,11 @@ import (
 
 func reqBodyStructName(endpointID string) string {
 	endpointID = strings.ReplaceAll(endpointID, "/", "-")
-	return toArgName(fmt.Sprintf("%s-req-body", endpointID))
+	return toExportedName(fmt.Sprintf("%s-req-body", endpointID))
 }
 
 func reqStructName(endpoint model.Endpoint) string {
-	return toArgName(fmt.Sprintf("%s-%s-req", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-%s-req", endpoint.Concern, endpoint.Name))
 }
 
 func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
@@ -34,13 +34,13 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toArgName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, false, false))
+			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, false, false, false))
 		}
 		for _, param := range endpoint.QueryParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toArgName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false))
+			group.Id(toExportedName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false, false))
 		}
 		if endpoint.JSONBodySchema != nil {
 			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
@@ -52,13 +52,13 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toArgName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false))
+			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false, false))
 		}
 		for _, preview := range endpoint.Previews {
 			if preview.Note != "" {
 				group.Line().Comment(wordwrap.WrapString(fixPreviewNote(preview.Note), 80))
 			}
-			group.Id(toArgName(preview.Name + "-preview")).Bool()
+			group.Id(toExportedName(preview.Name + "-preview")).Bool()
 		}
 	})
 
@@ -126,14 +126,14 @@ func reqHeaderFunc(file *jen.File, endpoint model.Endpoint) {
 					if header.Name == "accept" {
 						continue
 					}
-					dict[jen.Lit(header.Name)] = jen.Id("r").Dot(toArgName(header.Name + "-header"))
+					dict[jen.Lit(header.Name)] = jen.Id("r").Dot(toExportedName(header.Name + "-header"))
 				}
 			}),
 		)
 		fnBlock.Id("previewVals").Op(":=").Map(jen.String()).Bool().Values(
 			jen.DictFunc(func(dict jen.Dict) {
 				for _, preview := range endpoint.Previews {
-					dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toArgName(preview.Name + "-preview"))
+					dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
 				}
 			}),
 		)
@@ -174,7 +174,7 @@ func reqURLPathFunc(file *jen.File, endpoint model.Endpoint) {
 			group.Return(jen.Qual("fmt", "Sprintf").ParamsFunc(func(group *jen.Group) {
 				group.Lit(pth)
 				for _, param := range endpoint.PathParams {
-					group.Id("r").Dot(toArgName(param.Name))
+					group.Id("r").Dot(toExportedName(param.Name))
 				}
 			}))
 		})
@@ -188,7 +188,7 @@ func reqURLQueryFunc(file *jen.File, endpoint model.Endpoint) {
 		group.Id("query").Op(":=").Qual("net/url", "Values").Block()
 
 		for _, param := range endpoint.QueryParams {
-			paramArg := jen.Id("r").Dot(toArgName(param.Name))
+			paramArg := jen.Id("r").Dot(toExportedName(param.Name))
 			group.If(paramArg.Clone().Op("!=").Nil()).BlockFunc(func(ifGroup *jen.Group) {
 				var valStmt *jen.Statement
 				switch param.Schema.Type {

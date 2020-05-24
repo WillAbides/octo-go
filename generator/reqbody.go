@@ -21,7 +21,7 @@ func reqBodyNestedStructName(schemaPath []string, schema *model.ParamSchema) str
 	if len(schema.ObjectParams) == 0 {
 		return ""
 	}
-	suffix := toArgName(strings.Join(sp[2:], "-"))
+	suffix := toExportedName(strings.Join(sp[2:], "-"))
 	return reqBodyStructName(sp[0]) + suffix
 }
 
@@ -30,7 +30,7 @@ func addRequestBody(file *jen.File, endpoint model.Endpoint) {
 	if endpoint.JSONBodySchema == nil {
 		return
 	}
-	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "reqBody"}, true, false)
+	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "reqBody"}, true, false, false)
 	if tp == nil {
 		return
 	}
@@ -48,10 +48,10 @@ func reqBodyNestedStructs(schemaPath []string, schema *model.ParamSchema) []*jen
 	var result []*jen.Statement
 	helperName := reqBodyNestedStructName(schemaPath, schema)
 	if helperName != "" {
-		tp := paramSchemaFieldType(schema, schemaPath, true, true)
+		tp := paramSchemaFieldType(schema, schemaPath, true, true, false)
 		sp := removeValFromStringSlice(schemaPath, "ITEM_SCHEMA")
-		parentStructName := toArgName(strings.Join(sp[:len(sp)-1], "-"))
-		parentValueName := toArgName(sp[len(sp)-1])
+		parentStructName := toExportedName(strings.Join(sp[:len(sp)-1], "-"))
+		parentValueName := toExportedName(sp[len(sp)-1])
 		comment := fmt.Sprintf("%s is a value for %s's %s field", helperName, parentStructName, parentValueName)
 		result = append(result, jen.Comment(comment))
 		result = append(result, jen.Type().Id(helperName).Add(tp))

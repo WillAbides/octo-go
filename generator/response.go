@@ -10,7 +10,7 @@ import (
 )
 
 func respStructName(endpoint model.Endpoint, code int) string {
-	return toArgName(fmt.Sprintf("%s-%s-response-body%d", endpoint.Concern, endpoint.Name, code))
+	return toExportedName(fmt.Sprintf("%s-%s-response-body%d", endpoint.Concern, endpoint.Name, code))
 }
 
 func addResponseBodies(file *jen.File, endpoint model.Endpoint) {
@@ -26,7 +26,7 @@ func addResponseBodies(file *jen.File, endpoint model.Endpoint) {
 	sort.Ints(sortedCodes)
 	for _, respCode := range sortedCodes {
 		schema := endpoint.Responses[respCode]
-		tp := paramSchemaFieldType(schema, []string{endpoint.ID, "responseBody", strconv.Itoa(respCode)}, false, false)
+		tp := paramSchemaFieldType(schema, []string{endpoint.ID, "responseBody", strconv.Itoa(respCode)}, false, false, false)
 		if tp == nil {
 			continue
 		}
