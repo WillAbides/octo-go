@@ -26,7 +26,7 @@ func addResponseBodies(file *jen.File, endpoint model.Endpoint) {
 	sort.Ints(sortedCodes)
 	for _, respCode := range sortedCodes {
 		schema := endpoint.Responses[respCode]
-		tp := paramSchemaFieldType(schema, []string{endpoint.ID, "responseBody", strconv.Itoa(respCode)}, false, false, false)
+		tp := paramSchemaFieldType(schema, []string{endpoint.ID, "responseBody", strconv.Itoa(respCode)}, nil)
 		if tp == nil {
 			continue
 		}

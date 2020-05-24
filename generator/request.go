@@ -34,13 +34,15 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, false, false, false))
+			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, nil))
 		}
 		for _, param := range endpoint.QueryParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false, false))
+			group.Id(toExportedName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, &paramSchemaFieldTypeOptions{
+				usePointers: true,
+			}))
 		}
 		if endpoint.JSONBodySchema != nil {
 			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
@@ -52,7 +54,9 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, true, false, false))
+			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"},  &paramSchemaFieldTypeOptions{
+				usePointers: true,
+			}))
 		}
 		for _, preview := range endpoint.Previews {
 			if preview.Note != "" {

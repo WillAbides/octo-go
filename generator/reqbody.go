@@ -30,7 +30,9 @@ func addRequestBody(file *jen.File, endpoint model.Endpoint) {
 	if endpoint.JSONBodySchema == nil {
 		return
 	}
-	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "reqBody"}, true, false, false)
+	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "reqBody"}, &paramSchemaFieldTypeOptions{
+		usePointers: true,
+	})
 	if tp == nil {
 		return
 	}
@@ -48,7 +50,10 @@ func reqBodyNestedStructs(schemaPath []string, schema *model.ParamSchema) []*jen
 	var result []*jen.Statement
 	helperName := reqBodyNestedStructName(schemaPath, schema)
 	if helperName != "" {
-		tp := paramSchemaFieldType(schema, schemaPath, true, true, false)
+		tp := paramSchemaFieldType(schema, schemaPath, &paramSchemaFieldTypeOptions{
+			usePointers: true,
+			noHelper:    true,
+		})
 		sp := removeValFromStringSlice(schemaPath, "ITEM_SCHEMA")
 		parentStructName := toExportedName(strings.Join(sp[:len(sp)-1], "-"))
 		parentValueName := toExportedName(sp[len(sp)-1])
