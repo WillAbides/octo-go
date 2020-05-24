@@ -35,28 +35,38 @@ type ReactionsCreateForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForCommitCommentReq) urlPath() string {
+func (r *ReactionsCreateForCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsCreateForCommitCommentReq) method() string {
+func (r *ReactionsCreateForCommitCommentReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForCommitCommentReq) urlQuery() url.Values {
+func (r *ReactionsCreateForCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForCommitCommentReq) header() http.Header {
+func (r *ReactionsCreateForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForCommitCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -130,28 +140,38 @@ type ReactionsCreateForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForIssueReq) urlPath() string {
+func (r *ReactionsCreateForIssueReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r ReactionsCreateForIssueReq) method() string {
+func (r *ReactionsCreateForIssueReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForIssueReq) urlQuery() url.Values {
+func (r *ReactionsCreateForIssueReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForIssueReq) header() http.Header {
+func (r *ReactionsCreateForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForIssueReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -225,28 +245,38 @@ type ReactionsCreateForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForIssueCommentReq) urlPath() string {
+func (r *ReactionsCreateForIssueCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsCreateForIssueCommentReq) method() string {
+func (r *ReactionsCreateForIssueCommentReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForIssueCommentReq) urlQuery() url.Values {
+func (r *ReactionsCreateForIssueCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForIssueCommentReq) header() http.Header {
+func (r *ReactionsCreateForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForIssueCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -320,28 +350,38 @@ type ReactionsCreateForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
+func (r *ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) method() string {
+func (r *ReactionsCreateForPullRequestReviewCommentReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) urlQuery() url.Values {
+func (r *ReactionsCreateForPullRequestReviewCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForPullRequestReviewCommentReq) header() http.Header {
+func (r *ReactionsCreateForPullRequestReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForPullRequestReviewCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -416,28 +456,38 @@ type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentInOrgReq) urlPath() string {
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentInOrgReq) method() string {
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentInOrgReq) header() http.Header {
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -511,28 +561,38 @@ type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) header() http.Header {
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -606,28 +666,38 @@ type ReactionsCreateForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r ReactionsCreateForTeamDiscussionInOrgReq) method() string {
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForTeamDiscussionInOrgReq) urlQuery() url.Values {
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForTeamDiscussionInOrgReq) header() http.Header {
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -700,28 +770,38 @@ type ReactionsCreateForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsCreateForTeamDiscussionLegacyReq) urlPath() string {
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
 }
 
-func (r ReactionsCreateForTeamDiscussionLegacyReq) method() string {
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) method() string {
 	return "POST"
 }
 
-func (r ReactionsCreateForTeamDiscussionLegacyReq) urlQuery() url.Values {
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsCreateForTeamDiscussionLegacyReq) header() http.Header {
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -795,28 +875,38 @@ type ReactionsDeleteForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForCommitCommentReq) urlPath() string {
+func (r *ReactionsDeleteForCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
 }
 
-func (r ReactionsDeleteForCommitCommentReq) method() string {
+func (r *ReactionsDeleteForCommitCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteForCommitCommentReq) urlQuery() url.Values {
+func (r *ReactionsDeleteForCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteForCommitCommentReq) header() http.Header {
+func (r *ReactionsDeleteForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteForCommitCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -844,28 +934,38 @@ type ReactionsDeleteForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForIssueReq) urlPath() string {
+func (r *ReactionsDeleteForIssueReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId)
 }
 
-func (r ReactionsDeleteForIssueReq) method() string {
+func (r *ReactionsDeleteForIssueReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteForIssueReq) urlQuery() url.Values {
+func (r *ReactionsDeleteForIssueReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteForIssueReq) header() http.Header {
+func (r *ReactionsDeleteForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteForIssueReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -893,28 +993,38 @@ type ReactionsDeleteForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForIssueCommentReq) urlPath() string {
+func (r *ReactionsDeleteForIssueCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
 }
 
-func (r ReactionsDeleteForIssueCommentReq) method() string {
+func (r *ReactionsDeleteForIssueCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteForIssueCommentReq) urlQuery() url.Values {
+func (r *ReactionsDeleteForIssueCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteForIssueCommentReq) header() http.Header {
+func (r *ReactionsDeleteForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteForIssueCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -942,28 +1052,38 @@ type ReactionsDeleteForPullRequestCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForPullRequestCommentReq) urlPath() string {
+func (r *ReactionsDeleteForPullRequestCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
 }
 
-func (r ReactionsDeleteForPullRequestCommentReq) method() string {
+func (r *ReactionsDeleteForPullRequestCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteForPullRequestCommentReq) urlQuery() url.Values {
+func (r *ReactionsDeleteForPullRequestCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteForPullRequestCommentReq) header() http.Header {
+func (r *ReactionsDeleteForPullRequestCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteForPullRequestCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -991,28 +1111,38 @@ type ReactionsDeleteForTeamDiscussionReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForTeamDiscussionReq) urlPath() string {
+func (r *ReactionsDeleteForTeamDiscussionReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId)
 }
 
-func (r ReactionsDeleteForTeamDiscussionReq) method() string {
+func (r *ReactionsDeleteForTeamDiscussionReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteForTeamDiscussionReq) urlQuery() url.Values {
+func (r *ReactionsDeleteForTeamDiscussionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteForTeamDiscussionReq) header() http.Header {
+func (r *ReactionsDeleteForTeamDiscussionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteForTeamDiscussionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1041,28 +1171,38 @@ type ReactionsDeleteForTeamDiscussionCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId)
 }
 
-func (r ReactionsDeleteForTeamDiscussionCommentReq) method() string {
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteForTeamDiscussionCommentReq) urlQuery() url.Values {
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteForTeamDiscussionCommentReq) header() http.Header {
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1087,28 +1227,38 @@ type ReactionsDeleteLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsDeleteLegacyReq) urlPath() string {
+func (r *ReactionsDeleteLegacyReq) urlPath() string {
 	return fmt.Sprintf("/reactions/%v", r.ReactionId)
 }
 
-func (r ReactionsDeleteLegacyReq) method() string {
+func (r *ReactionsDeleteLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r ReactionsDeleteLegacyReq) urlQuery() url.Values {
+func (r *ReactionsDeleteLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReactionsDeleteLegacyReq) header() http.Header {
+func (r *ReactionsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsDeleteLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1148,15 +1298,15 @@ type ReactionsListForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForCommitCommentReq) urlPath() string {
+func (r *ReactionsListForCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsListForCommitCommentReq) method() string {
+func (r *ReactionsListForCommitCommentReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForCommitCommentReq) urlQuery() url.Values {
+func (r *ReactionsListForCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1170,15 +1320,25 @@ func (r ReactionsListForCommitCommentReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForCommitCommentReq) header() http.Header {
+func (r *ReactionsListForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForCommitCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1250,15 +1410,15 @@ type ReactionsListForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForIssueReq) urlPath() string {
+func (r *ReactionsListForIssueReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r ReactionsListForIssueReq) method() string {
+func (r *ReactionsListForIssueReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForIssueReq) urlQuery() url.Values {
+func (r *ReactionsListForIssueReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1272,15 +1432,25 @@ func (r ReactionsListForIssueReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForIssueReq) header() http.Header {
+func (r *ReactionsListForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForIssueReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1352,15 +1522,15 @@ type ReactionsListForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForIssueCommentReq) urlPath() string {
+func (r *ReactionsListForIssueCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsListForIssueCommentReq) method() string {
+func (r *ReactionsListForIssueCommentReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForIssueCommentReq) urlQuery() url.Values {
+func (r *ReactionsListForIssueCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1374,15 +1544,25 @@ func (r ReactionsListForIssueCommentReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForIssueCommentReq) header() http.Header {
+func (r *ReactionsListForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForIssueCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1454,15 +1634,15 @@ type ReactionsListForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForPullRequestReviewCommentReq) urlPath() string {
+func (r *ReactionsListForPullRequestReviewCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReactionsListForPullRequestReviewCommentReq) method() string {
+func (r *ReactionsListForPullRequestReviewCommentReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
+func (r *ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1476,15 +1656,25 @@ func (r ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForPullRequestReviewCommentReq) header() http.Header {
+func (r *ReactionsListForPullRequestReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForPullRequestReviewCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1557,15 +1747,15 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) method() string {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1579,15 +1769,25 @@ func (r ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) header() http.Header {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1659,15 +1859,15 @@ type ReactionsListForTeamDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForTeamDiscussionCommentLegacyReq) urlPath() string {
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r ReactionsListForTeamDiscussionCommentLegacyReq) method() string {
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1681,15 +1881,25 @@ func (r ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForTeamDiscussionCommentLegacyReq) header() http.Header {
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1761,15 +1971,15 @@ type ReactionsListForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForTeamDiscussionInOrgReq) urlPath() string {
+func (r *ReactionsListForTeamDiscussionInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r ReactionsListForTeamDiscussionInOrgReq) method() string {
+func (r *ReactionsListForTeamDiscussionInOrgReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForTeamDiscussionInOrgReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1783,15 +1993,25 @@ func (r ReactionsListForTeamDiscussionInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForTeamDiscussionInOrgReq) header() http.Header {
+func (r *ReactionsListForTeamDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForTeamDiscussionInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1862,15 +2082,15 @@ type ReactionsListForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
+func (r *ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) method() string {
+func (r *ReactionsListForTeamDiscussionLegacyReq) method() string {
 	return "GET"
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -1884,15 +2104,25 @@ func (r ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReactionsListForTeamDiscussionLegacyReq) header() http.Header {
+func (r *ReactionsListForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReactionsListForTeamDiscussionLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

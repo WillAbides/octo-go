@@ -25,28 +25,32 @@ type TeamsAddMemberLegacyReq struct {
 	Username string
 }
 
-func (r TeamsAddMemberLegacyReq) urlPath() string {
+func (r *TeamsAddMemberLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsAddMemberLegacyReq) method() string {
+func (r *TeamsAddMemberLegacyReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddMemberLegacyReq) urlQuery() url.Values {
+func (r *TeamsAddMemberLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddMemberLegacyReq) header() http.Header {
+func (r *TeamsAddMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddMemberLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -65,28 +69,32 @@ type TeamsAddOrUpdateMembershipInOrgReq struct {
 	RequestBody TeamsAddOrUpdateMembershipInOrgReqBody
 }
 
-func (r TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
+func (r *TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
 }
 
-func (r TeamsAddOrUpdateMembershipInOrgReq) method() string {
+func (r *TeamsAddOrUpdateMembershipInOrgReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddOrUpdateMembershipInOrgReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateMembershipInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddOrUpdateMembershipInOrgReq) header() http.Header {
+func (r *TeamsAddOrUpdateMembershipInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddOrUpdateMembershipInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -132,28 +140,32 @@ type TeamsAddOrUpdateMembershipLegacyReq struct {
 	RequestBody TeamsAddOrUpdateMembershipLegacyReqBody
 }
 
-func (r TeamsAddOrUpdateMembershipLegacyReq) urlPath() string {
+func (r *TeamsAddOrUpdateMembershipLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsAddOrUpdateMembershipLegacyReq) method() string {
+func (r *TeamsAddOrUpdateMembershipLegacyReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddOrUpdateMembershipLegacyReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateMembershipLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddOrUpdateMembershipLegacyReq) header() http.Header {
+func (r *TeamsAddOrUpdateMembershipLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddOrUpdateMembershipLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddOrUpdateMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsAddOrUpdateMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -209,28 +221,38 @@ type TeamsAddOrUpdateProjectInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
+func (r *TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r TeamsAddOrUpdateProjectInOrgReq) method() string {
+func (r *TeamsAddOrUpdateProjectInOrgReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddOrUpdateProjectInOrgReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateProjectInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddOrUpdateProjectInOrgReq) header() http.Header {
+func (r *TeamsAddOrUpdateProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddOrUpdateProjectInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -278,28 +300,38 @@ type TeamsAddOrUpdateProjectLegacyReq struct {
 	InertiaPreview bool
 }
 
-func (r TeamsAddOrUpdateProjectLegacyReq) urlPath() string {
+func (r *TeamsAddOrUpdateProjectLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
 }
 
-func (r TeamsAddOrUpdateProjectLegacyReq) method() string {
+func (r *TeamsAddOrUpdateProjectLegacyReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddOrUpdateProjectLegacyReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateProjectLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddOrUpdateProjectLegacyReq) header() http.Header {
+func (r *TeamsAddOrUpdateProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddOrUpdateProjectLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddOrUpdateProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsAddOrUpdateProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -340,28 +372,32 @@ type TeamsAddOrUpdateRepoInOrgReq struct {
 	RequestBody TeamsAddOrUpdateRepoInOrgReqBody
 }
 
-func (r TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
+func (r *TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
 }
 
-func (r TeamsAddOrUpdateRepoInOrgReq) method() string {
+func (r *TeamsAddOrUpdateRepoInOrgReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddOrUpdateRepoInOrgReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateRepoInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddOrUpdateRepoInOrgReq) header() http.Header {
+func (r *TeamsAddOrUpdateRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddOrUpdateRepoInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -406,28 +442,32 @@ type TeamsAddOrUpdateRepoLegacyReq struct {
 	RequestBody TeamsAddOrUpdateRepoLegacyReqBody
 }
 
-func (r TeamsAddOrUpdateRepoLegacyReq) urlPath() string {
+func (r *TeamsAddOrUpdateRepoLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
 }
 
-func (r TeamsAddOrUpdateRepoLegacyReq) method() string {
+func (r *TeamsAddOrUpdateRepoLegacyReq) method() string {
 	return "PUT"
 }
 
-func (r TeamsAddOrUpdateRepoLegacyReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateRepoLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsAddOrUpdateRepoLegacyReq) header() http.Header {
+func (r *TeamsAddOrUpdateRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsAddOrUpdateRepoLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsAddOrUpdateRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsAddOrUpdateRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -466,28 +506,32 @@ type TeamsCheckManagesRepoInOrgReq struct {
 	Repo     string
 }
 
-func (r TeamsCheckManagesRepoInOrgReq) urlPath() string {
+func (r *TeamsCheckManagesRepoInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
 }
 
-func (r TeamsCheckManagesRepoInOrgReq) method() string {
+func (r *TeamsCheckManagesRepoInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsCheckManagesRepoInOrgReq) urlQuery() url.Values {
+func (r *TeamsCheckManagesRepoInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCheckManagesRepoInOrgReq) header() http.Header {
+func (r *TeamsCheckManagesRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCheckManagesRepoInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -505,28 +549,32 @@ type TeamsCheckManagesRepoLegacyReq struct {
 	Repo   string
 }
 
-func (r TeamsCheckManagesRepoLegacyReq) urlPath() string {
+func (r *TeamsCheckManagesRepoLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
 }
 
-func (r TeamsCheckManagesRepoLegacyReq) method() string {
+func (r *TeamsCheckManagesRepoLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsCheckManagesRepoLegacyReq) urlQuery() url.Values {
+func (r *TeamsCheckManagesRepoLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCheckManagesRepoLegacyReq) header() http.Header {
+func (r *TeamsCheckManagesRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCheckManagesRepoLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCheckManagesRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsCheckManagesRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -543,28 +591,32 @@ type TeamsCreateReq struct {
 	RequestBody TeamsCreateReqBody
 }
 
-func (r TeamsCreateReq) urlPath() string {
+func (r *TeamsCreateReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams", r.Org)
 }
 
-func (r TeamsCreateReq) method() string {
+func (r *TeamsCreateReq) method() string {
 	return "POST"
 }
 
-func (r TeamsCreateReq) urlQuery() url.Values {
+func (r *TeamsCreateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateReq) header() http.Header {
+func (r *TeamsCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -697,28 +749,35 @@ type TeamsCreateDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsCreateDiscussionCommentInOrgReq) urlPath() string {
+func (r *TeamsCreateDiscussionCommentInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r TeamsCreateDiscussionCommentInOrgReq) method() string {
+func (r *TeamsCreateDiscussionCommentInOrgReq) method() string {
 	return "POST"
 }
 
-func (r TeamsCreateDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *TeamsCreateDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateDiscussionCommentInOrgReq) header() http.Header {
+func (r *TeamsCreateDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateDiscussionCommentInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -798,28 +857,35 @@ type TeamsCreateDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsCreateDiscussionCommentLegacyReq) urlPath() string {
+func (r *TeamsCreateDiscussionCommentLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber)
 }
 
-func (r TeamsCreateDiscussionCommentLegacyReq) method() string {
+func (r *TeamsCreateDiscussionCommentLegacyReq) method() string {
 	return "POST"
 }
 
-func (r TeamsCreateDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *TeamsCreateDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateDiscussionCommentLegacyReq) header() http.Header {
+func (r *TeamsCreateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateDiscussionCommentLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -899,28 +965,35 @@ type TeamsCreateDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsCreateDiscussionInOrgReq) urlPath() string {
+func (r *TeamsCreateDiscussionInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug)
 }
 
-func (r TeamsCreateDiscussionInOrgReq) method() string {
+func (r *TeamsCreateDiscussionInOrgReq) method() string {
 	return "POST"
 }
 
-func (r TeamsCreateDiscussionInOrgReq) urlQuery() url.Values {
+func (r *TeamsCreateDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateDiscussionInOrgReq) header() http.Header {
+func (r *TeamsCreateDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateDiscussionInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1014,28 +1087,35 @@ type TeamsCreateDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsCreateDiscussionLegacyReq) urlPath() string {
+func (r *TeamsCreateDiscussionLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions", r.TeamId)
 }
 
-func (r TeamsCreateDiscussionLegacyReq) method() string {
+func (r *TeamsCreateDiscussionLegacyReq) method() string {
 	return "POST"
 }
 
-func (r TeamsCreateDiscussionLegacyReq) urlQuery() url.Values {
+func (r *TeamsCreateDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateDiscussionLegacyReq) header() http.Header {
+func (r *TeamsCreateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateDiscussionLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1119,28 +1199,32 @@ type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq struct {
 	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) method() string {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlQuery() url.Values {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) header() http.Header {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody's Groups field
@@ -1198,28 +1282,32 @@ type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq struct {
 	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header() http.Header {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody's Groups field
@@ -1279,28 +1367,32 @@ type TeamsDeleteDiscussionCommentInOrgReq struct {
 	CommentNumber    int64
 }
 
-func (r TeamsDeleteDiscussionCommentInOrgReq) urlPath() string {
+func (r *TeamsDeleteDiscussionCommentInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r TeamsDeleteDiscussionCommentInOrgReq) method() string {
+func (r *TeamsDeleteDiscussionCommentInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *TeamsDeleteDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteDiscussionCommentInOrgReq) header() http.Header {
+func (r *TeamsDeleteDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsDeleteDiscussionCommentInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsDeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsDeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1318,28 +1410,32 @@ type TeamsDeleteDiscussionCommentLegacyReq struct {
 	CommentNumber    int64
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) urlPath() string {
+func (r *TeamsDeleteDiscussionCommentLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) method() string {
+func (r *TeamsDeleteDiscussionCommentLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *TeamsDeleteDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteDiscussionCommentLegacyReq) header() http.Header {
+func (r *TeamsDeleteDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsDeleteDiscussionCommentLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1357,28 +1453,32 @@ type TeamsDeleteDiscussionInOrgReq struct {
 	DiscussionNumber int64
 }
 
-func (r TeamsDeleteDiscussionInOrgReq) urlPath() string {
+func (r *TeamsDeleteDiscussionInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r TeamsDeleteDiscussionInOrgReq) method() string {
+func (r *TeamsDeleteDiscussionInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteDiscussionInOrgReq) urlQuery() url.Values {
+func (r *TeamsDeleteDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteDiscussionInOrgReq) header() http.Header {
+func (r *TeamsDeleteDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsDeleteDiscussionInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsDeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsDeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1395,28 +1495,32 @@ type TeamsDeleteDiscussionLegacyReq struct {
 	DiscussionNumber int64
 }
 
-func (r TeamsDeleteDiscussionLegacyReq) urlPath() string {
+func (r *TeamsDeleteDiscussionLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
 }
 
-func (r TeamsDeleteDiscussionLegacyReq) method() string {
+func (r *TeamsDeleteDiscussionLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteDiscussionLegacyReq) urlQuery() url.Values {
+func (r *TeamsDeleteDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteDiscussionLegacyReq) header() http.Header {
+func (r *TeamsDeleteDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsDeleteDiscussionLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1433,28 +1537,32 @@ type TeamsDeleteInOrgReq struct {
 	TeamSlug string
 }
 
-func (r TeamsDeleteInOrgReq) urlPath() string {
+func (r *TeamsDeleteInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug)
 }
 
-func (r TeamsDeleteInOrgReq) method() string {
+func (r *TeamsDeleteInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteInOrgReq) urlQuery() url.Values {
+func (r *TeamsDeleteInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteInOrgReq) header() http.Header {
+func (r *TeamsDeleteInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsDeleteInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsDeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsDeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1470,28 +1578,32 @@ type TeamsDeleteLegacyReq struct {
 	TeamId int64
 }
 
-func (r TeamsDeleteLegacyReq) urlPath() string {
+func (r *TeamsDeleteLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v", r.TeamId)
 }
 
-func (r TeamsDeleteLegacyReq) method() string {
+func (r *TeamsDeleteLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsDeleteLegacyReq) urlQuery() url.Values {
+func (r *TeamsDeleteLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsDeleteLegacyReq) header() http.Header {
+func (r *TeamsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsDeleteLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1508,28 +1620,32 @@ type TeamsGetByNameReq struct {
 	TeamSlug string
 }
 
-func (r TeamsGetByNameReq) urlPath() string {
+func (r *TeamsGetByNameReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug)
 }
 
-func (r TeamsGetByNameReq) method() string {
+func (r *TeamsGetByNameReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetByNameReq) urlQuery() url.Values {
+func (r *TeamsGetByNameReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetByNameReq) header() http.Header {
+func (r *TeamsGetByNameReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetByNameReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetByNameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetByNameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1612,28 +1728,35 @@ type TeamsGetDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsGetDiscussionCommentInOrgReq) urlPath() string {
+func (r *TeamsGetDiscussionCommentInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r TeamsGetDiscussionCommentInOrgReq) method() string {
+func (r *TeamsGetDiscussionCommentInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *TeamsGetDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetDiscussionCommentInOrgReq) header() http.Header {
+func (r *TeamsGetDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetDiscussionCommentInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1702,28 +1825,35 @@ type TeamsGetDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) urlPath() string {
+func (r *TeamsGetDiscussionCommentLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) method() string {
+func (r *TeamsGetDiscussionCommentLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetDiscussionCommentLegacyReq) header() http.Header {
+func (r *TeamsGetDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetDiscussionCommentLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1792,28 +1922,35 @@ type TeamsGetDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsGetDiscussionInOrgReq) urlPath() string {
+func (r *TeamsGetDiscussionInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r TeamsGetDiscussionInOrgReq) method() string {
+func (r *TeamsGetDiscussionInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetDiscussionInOrgReq) urlQuery() url.Values {
+func (r *TeamsGetDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetDiscussionInOrgReq) header() http.Header {
+func (r *TeamsGetDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetDiscussionInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1886,28 +2023,35 @@ type TeamsGetDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsGetDiscussionLegacyReq) urlPath() string {
+func (r *TeamsGetDiscussionLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
 }
 
-func (r TeamsGetDiscussionLegacyReq) method() string {
+func (r *TeamsGetDiscussionLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
+func (r *TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetDiscussionLegacyReq) header() http.Header {
+func (r *TeamsGetDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetDiscussionLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1968,28 +2112,32 @@ type TeamsGetLegacyReq struct {
 	TeamId int64
 }
 
-func (r TeamsGetLegacyReq) urlPath() string {
+func (r *TeamsGetLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v", r.TeamId)
 }
 
-func (r TeamsGetLegacyReq) method() string {
+func (r *TeamsGetLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetLegacyReq) urlQuery() url.Values {
+func (r *TeamsGetLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetLegacyReq) header() http.Header {
+func (r *TeamsGetLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2059,28 +2207,32 @@ type TeamsGetMemberLegacyReq struct {
 	Username string
 }
 
-func (r TeamsGetMemberLegacyReq) urlPath() string {
+func (r *TeamsGetMemberLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsGetMemberLegacyReq) method() string {
+func (r *TeamsGetMemberLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetMemberLegacyReq) urlQuery() url.Values {
+func (r *TeamsGetMemberLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetMemberLegacyReq) header() http.Header {
+func (r *TeamsGetMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetMemberLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2098,28 +2250,32 @@ type TeamsGetMembershipInOrgReq struct {
 	Username string
 }
 
-func (r TeamsGetMembershipInOrgReq) urlPath() string {
+func (r *TeamsGetMembershipInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
 }
 
-func (r TeamsGetMembershipInOrgReq) method() string {
+func (r *TeamsGetMembershipInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetMembershipInOrgReq) urlQuery() url.Values {
+func (r *TeamsGetMembershipInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetMembershipInOrgReq) header() http.Header {
+func (r *TeamsGetMembershipInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetMembershipInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2147,28 +2303,32 @@ type TeamsGetMembershipLegacyReq struct {
 	Username string
 }
 
-func (r TeamsGetMembershipLegacyReq) urlPath() string {
+func (r *TeamsGetMembershipLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsGetMembershipLegacyReq) method() string {
+func (r *TeamsGetMembershipLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsGetMembershipLegacyReq) urlQuery() url.Values {
+func (r *TeamsGetMembershipLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsGetMembershipLegacyReq) header() http.Header {
+func (r *TeamsGetMembershipLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsGetMembershipLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsGetMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsGetMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2201,15 +2361,15 @@ type TeamsListReq struct {
 	Page *int64
 }
 
-func (r TeamsListReq) urlPath() string {
+func (r *TeamsListReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams", r.Org)
 }
 
-func (r TeamsListReq) method() string {
+func (r *TeamsListReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListReq) urlQuery() url.Values {
+func (r *TeamsListReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2220,15 +2380,19 @@ func (r TeamsListReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListReq) header() http.Header {
+func (r *TeamsListReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2271,15 +2435,15 @@ type TeamsListChildInOrgReq struct {
 	Page *int64
 }
 
-func (r TeamsListChildInOrgReq) urlPath() string {
+func (r *TeamsListChildInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/teams", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListChildInOrgReq) method() string {
+func (r *TeamsListChildInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListChildInOrgReq) urlQuery() url.Values {
+func (r *TeamsListChildInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2290,15 +2454,19 @@ func (r TeamsListChildInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListChildInOrgReq) header() http.Header {
+func (r *TeamsListChildInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListChildInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2351,15 +2519,15 @@ type TeamsListChildLegacyReq struct {
 	Page *int64
 }
 
-func (r TeamsListChildLegacyReq) urlPath() string {
+func (r *TeamsListChildLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/teams", r.TeamId)
 }
 
-func (r TeamsListChildLegacyReq) method() string {
+func (r *TeamsListChildLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListChildLegacyReq) urlQuery() url.Values {
+func (r *TeamsListChildLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2370,15 +2538,19 @@ func (r TeamsListChildLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListChildLegacyReq) header() http.Header {
+func (r *TeamsListChildLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListChildLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2450,15 +2622,15 @@ type TeamsListDiscussionCommentsInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsListDiscussionCommentsInOrgReq) urlPath() string {
+func (r *TeamsListDiscussionCommentsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r TeamsListDiscussionCommentsInOrgReq) method() string {
+func (r *TeamsListDiscussionCommentsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListDiscussionCommentsInOrgReq) urlQuery() url.Values {
+func (r *TeamsListDiscussionCommentsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -2472,15 +2644,22 @@ func (r TeamsListDiscussionCommentsInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListDiscussionCommentsInOrgReq) header() http.Header {
+func (r *TeamsListDiscussionCommentsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListDiscussionCommentsInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2560,15 +2739,15 @@ type TeamsListDiscussionCommentsLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsListDiscussionCommentsLegacyReq) urlPath() string {
+func (r *TeamsListDiscussionCommentsLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber)
 }
 
-func (r TeamsListDiscussionCommentsLegacyReq) method() string {
+func (r *TeamsListDiscussionCommentsLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListDiscussionCommentsLegacyReq) urlQuery() url.Values {
+func (r *TeamsListDiscussionCommentsLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -2582,15 +2761,22 @@ func (r TeamsListDiscussionCommentsLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListDiscussionCommentsLegacyReq) header() http.Header {
+func (r *TeamsListDiscussionCommentsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListDiscussionCommentsLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2670,15 +2856,15 @@ type TeamsListDiscussionsInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsListDiscussionsInOrgReq) urlPath() string {
+func (r *TeamsListDiscussionsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListDiscussionsInOrgReq) method() string {
+func (r *TeamsListDiscussionsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListDiscussionsInOrgReq) urlQuery() url.Values {
+func (r *TeamsListDiscussionsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -2692,15 +2878,22 @@ func (r TeamsListDiscussionsInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListDiscussionsInOrgReq) header() http.Header {
+func (r *TeamsListDiscussionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListDiscussionsInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2784,15 +2977,15 @@ type TeamsListDiscussionsLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsListDiscussionsLegacyReq) urlPath() string {
+func (r *TeamsListDiscussionsLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions", r.TeamId)
 }
 
-func (r TeamsListDiscussionsLegacyReq) method() string {
+func (r *TeamsListDiscussionsLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListDiscussionsLegacyReq) urlQuery() url.Values {
+func (r *TeamsListDiscussionsLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -2806,15 +2999,22 @@ func (r TeamsListDiscussionsLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListDiscussionsLegacyReq) header() http.Header {
+func (r *TeamsListDiscussionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListDiscussionsLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2880,15 +3080,15 @@ type TeamsListForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r TeamsListForAuthenticatedUserReq) urlPath() string {
+func (r *TeamsListForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/teams")
 }
 
-func (r TeamsListForAuthenticatedUserReq) method() string {
+func (r *TeamsListForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *TeamsListForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2899,15 +3099,19 @@ func (r TeamsListForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListForAuthenticatedUserReq) header() http.Header {
+func (r *TeamsListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2976,28 +3180,32 @@ type TeamsListIdPGroupsForLegacyReq struct {
 	TeamId int64
 }
 
-func (r TeamsListIdPGroupsForLegacyReq) urlPath() string {
+func (r *TeamsListIdPGroupsForLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
 }
 
-func (r TeamsListIdPGroupsForLegacyReq) method() string {
+func (r *TeamsListIdPGroupsForLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
+func (r *TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsListIdPGroupsForLegacyReq) header() http.Header {
+func (r *TeamsListIdPGroupsForLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListIdPGroupsForLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3032,15 +3240,15 @@ type TeamsListIdPGroupsForOrgReq struct {
 	Page *int64
 }
 
-func (r TeamsListIdPGroupsForOrgReq) urlPath() string {
+func (r *TeamsListIdPGroupsForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/team-sync/groups", r.Org)
 }
 
-func (r TeamsListIdPGroupsForOrgReq) method() string {
+func (r *TeamsListIdPGroupsForOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
+func (r *TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3051,15 +3259,19 @@ func (r TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListIdPGroupsForOrgReq) header() http.Header {
+func (r *TeamsListIdPGroupsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListIdPGroupsForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3089,28 +3301,32 @@ type TeamsListIdPGroupsInOrgReq struct {
 	TeamSlug string
 }
 
-func (r TeamsListIdPGroupsInOrgReq) urlPath() string {
+func (r *TeamsListIdPGroupsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListIdPGroupsInOrgReq) method() string {
+func (r *TeamsListIdPGroupsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListIdPGroupsInOrgReq) urlQuery() url.Values {
+func (r *TeamsListIdPGroupsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsListIdPGroupsInOrgReq) header() http.Header {
+func (r *TeamsListIdPGroupsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListIdPGroupsInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3154,15 +3370,15 @@ type TeamsListMembersInOrgReq struct {
 	Page *int64
 }
 
-func (r TeamsListMembersInOrgReq) urlPath() string {
+func (r *TeamsListMembersInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/members", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListMembersInOrgReq) method() string {
+func (r *TeamsListMembersInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListMembersInOrgReq) urlQuery() url.Values {
+func (r *TeamsListMembersInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Role != nil {
 		query.Set("role", *r.Role)
@@ -3176,15 +3392,19 @@ func (r TeamsListMembersInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListMembersInOrgReq) header() http.Header {
+func (r *TeamsListMembersInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListMembersInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3240,15 +3460,15 @@ type TeamsListMembersLegacyReq struct {
 	Page *int64
 }
 
-func (r TeamsListMembersLegacyReq) urlPath() string {
+func (r *TeamsListMembersLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/members", r.TeamId)
 }
 
-func (r TeamsListMembersLegacyReq) method() string {
+func (r *TeamsListMembersLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListMembersLegacyReq) urlQuery() url.Values {
+func (r *TeamsListMembersLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Role != nil {
 		query.Set("role", *r.Role)
@@ -3262,15 +3482,19 @@ func (r TeamsListMembersLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListMembersLegacyReq) header() http.Header {
+func (r *TeamsListMembersLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListMembersLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3319,15 +3543,15 @@ type TeamsListPendingInvitationsInOrgReq struct {
 	Page *int64
 }
 
-func (r TeamsListPendingInvitationsInOrgReq) urlPath() string {
+func (r *TeamsListPendingInvitationsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/invitations", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListPendingInvitationsInOrgReq) method() string {
+func (r *TeamsListPendingInvitationsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListPendingInvitationsInOrgReq) urlQuery() url.Values {
+func (r *TeamsListPendingInvitationsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3338,15 +3562,19 @@ func (r TeamsListPendingInvitationsInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListPendingInvitationsInOrgReq) header() http.Header {
+func (r *TeamsListPendingInvitationsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListPendingInvitationsInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3403,15 +3631,15 @@ type TeamsListPendingInvitationsLegacyReq struct {
 	Page *int64
 }
 
-func (r TeamsListPendingInvitationsLegacyReq) urlPath() string {
+func (r *TeamsListPendingInvitationsLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/invitations", r.TeamId)
 }
 
-func (r TeamsListPendingInvitationsLegacyReq) method() string {
+func (r *TeamsListPendingInvitationsLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
+func (r *TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3422,15 +3650,19 @@ func (r TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListPendingInvitationsLegacyReq) header() http.Header {
+func (r *TeamsListPendingInvitationsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListPendingInvitationsLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3497,15 +3729,15 @@ type TeamsListProjectsInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r TeamsListProjectsInOrgReq) urlPath() string {
+func (r *TeamsListProjectsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/projects", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListProjectsInOrgReq) method() string {
+func (r *TeamsListProjectsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListProjectsInOrgReq) urlQuery() url.Values {
+func (r *TeamsListProjectsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3516,15 +3748,25 @@ func (r TeamsListProjectsInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListProjectsInOrgReq) header() http.Header {
+func (r *TeamsListProjectsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListProjectsInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3602,15 +3844,15 @@ type TeamsListProjectsLegacyReq struct {
 	InertiaPreview bool
 }
 
-func (r TeamsListProjectsLegacyReq) urlPath() string {
+func (r *TeamsListProjectsLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/projects", r.TeamId)
 }
 
-func (r TeamsListProjectsLegacyReq) method() string {
+func (r *TeamsListProjectsLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListProjectsLegacyReq) urlQuery() url.Values {
+func (r *TeamsListProjectsLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3621,15 +3863,25 @@ func (r TeamsListProjectsLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListProjectsLegacyReq) header() http.Header {
+func (r *TeamsListProjectsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListProjectsLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3699,15 +3951,15 @@ type TeamsListReposInOrgReq struct {
 	Page *int64
 }
 
-func (r TeamsListReposInOrgReq) urlPath() string {
+func (r *TeamsListReposInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/repos", r.Org, r.TeamSlug)
 }
 
-func (r TeamsListReposInOrgReq) method() string {
+func (r *TeamsListReposInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListReposInOrgReq) urlQuery() url.Values {
+func (r *TeamsListReposInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3718,15 +3970,19 @@ func (r TeamsListReposInOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListReposInOrgReq) header() http.Header {
+func (r *TeamsListReposInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListReposInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3863,15 +4119,15 @@ type TeamsListReposLegacyReq struct {
 	Page *int64
 }
 
-func (r TeamsListReposLegacyReq) urlPath() string {
+func (r *TeamsListReposLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/repos", r.TeamId)
 }
 
-func (r TeamsListReposLegacyReq) method() string {
+func (r *TeamsListReposLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsListReposLegacyReq) urlQuery() url.Values {
+func (r *TeamsListReposLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3882,15 +4138,19 @@ func (r TeamsListReposLegacyReq) urlQuery() url.Values {
 	return query
 }
 
-func (r TeamsListReposLegacyReq) header() http.Header {
+func (r *TeamsListReposLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsListReposLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4022,28 +4282,32 @@ type TeamsRemoveMemberLegacyReq struct {
 	Username string
 }
 
-func (r TeamsRemoveMemberLegacyReq) urlPath() string {
+func (r *TeamsRemoveMemberLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsRemoveMemberLegacyReq) method() string {
+func (r *TeamsRemoveMemberLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveMemberLegacyReq) urlQuery() url.Values {
+func (r *TeamsRemoveMemberLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveMemberLegacyReq) header() http.Header {
+func (r *TeamsRemoveMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveMemberLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4061,28 +4325,32 @@ type TeamsRemoveMembershipInOrgReq struct {
 	Username string
 }
 
-func (r TeamsRemoveMembershipInOrgReq) urlPath() string {
+func (r *TeamsRemoveMembershipInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
 }
 
-func (r TeamsRemoveMembershipInOrgReq) method() string {
+func (r *TeamsRemoveMembershipInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveMembershipInOrgReq) urlQuery() url.Values {
+func (r *TeamsRemoveMembershipInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveMembershipInOrgReq) header() http.Header {
+func (r *TeamsRemoveMembershipInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveMembershipInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4099,28 +4367,32 @@ type TeamsRemoveMembershipLegacyReq struct {
 	Username string
 }
 
-func (r TeamsRemoveMembershipLegacyReq) urlPath() string {
+func (r *TeamsRemoveMembershipLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
 }
 
-func (r TeamsRemoveMembershipLegacyReq) method() string {
+func (r *TeamsRemoveMembershipLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveMembershipLegacyReq) urlQuery() url.Values {
+func (r *TeamsRemoveMembershipLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveMembershipLegacyReq) header() http.Header {
+func (r *TeamsRemoveMembershipLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveMembershipLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4138,28 +4410,32 @@ type TeamsRemoveProjectInOrgReq struct {
 	ProjectId int64
 }
 
-func (r TeamsRemoveProjectInOrgReq) urlPath() string {
+func (r *TeamsRemoveProjectInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r TeamsRemoveProjectInOrgReq) method() string {
+func (r *TeamsRemoveProjectInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveProjectInOrgReq) urlQuery() url.Values {
+func (r *TeamsRemoveProjectInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveProjectInOrgReq) header() http.Header {
+func (r *TeamsRemoveProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveProjectInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4176,28 +4452,32 @@ type TeamsRemoveProjectLegacyReq struct {
 	ProjectId int64
 }
 
-func (r TeamsRemoveProjectLegacyReq) urlPath() string {
+func (r *TeamsRemoveProjectLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
 }
 
-func (r TeamsRemoveProjectLegacyReq) method() string {
+func (r *TeamsRemoveProjectLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveProjectLegacyReq) urlQuery() url.Values {
+func (r *TeamsRemoveProjectLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveProjectLegacyReq) header() http.Header {
+func (r *TeamsRemoveProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveProjectLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4216,28 +4496,32 @@ type TeamsRemoveRepoInOrgReq struct {
 	Repo     string
 }
 
-func (r TeamsRemoveRepoInOrgReq) urlPath() string {
+func (r *TeamsRemoveRepoInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
 }
 
-func (r TeamsRemoveRepoInOrgReq) method() string {
+func (r *TeamsRemoveRepoInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveRepoInOrgReq) urlQuery() url.Values {
+func (r *TeamsRemoveRepoInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveRepoInOrgReq) header() http.Header {
+func (r *TeamsRemoveRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveRepoInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4255,28 +4539,32 @@ type TeamsRemoveRepoLegacyReq struct {
 	Repo   string
 }
 
-func (r TeamsRemoveRepoLegacyReq) urlPath() string {
+func (r *TeamsRemoveRepoLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
 }
 
-func (r TeamsRemoveRepoLegacyReq) method() string {
+func (r *TeamsRemoveRepoLegacyReq) method() string {
 	return "DELETE"
 }
 
-func (r TeamsRemoveRepoLegacyReq) urlQuery() url.Values {
+func (r *TeamsRemoveRepoLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsRemoveRepoLegacyReq) header() http.Header {
+func (r *TeamsRemoveRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsRemoveRepoLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4303,28 +4591,38 @@ type TeamsReviewProjectInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r TeamsReviewProjectInOrgReq) urlPath() string {
+func (r *TeamsReviewProjectInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r TeamsReviewProjectInOrgReq) method() string {
+func (r *TeamsReviewProjectInOrgReq) method() string {
 	return "GET"
 }
 
-func (r TeamsReviewProjectInOrgReq) urlQuery() url.Values {
+func (r *TeamsReviewProjectInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsReviewProjectInOrgReq) header() http.Header {
+func (r *TeamsReviewProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsReviewProjectInOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4397,28 +4695,38 @@ type TeamsReviewProjectLegacyReq struct {
 	InertiaPreview bool
 }
 
-func (r TeamsReviewProjectLegacyReq) urlPath() string {
+func (r *TeamsReviewProjectLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
 }
 
-func (r TeamsReviewProjectLegacyReq) method() string {
+func (r *TeamsReviewProjectLegacyReq) method() string {
 	return "GET"
 }
 
-func (r TeamsReviewProjectLegacyReq) urlQuery() url.Values {
+func (r *TeamsReviewProjectLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsReviewProjectLegacyReq) header() http.Header {
+func (r *TeamsReviewProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsReviewProjectLegacyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r TeamsReviewProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *TeamsReviewProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4496,28 +4804,35 @@ type TeamsUpdateDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsUpdateDiscussionCommentInOrgReq) urlPath() string {
+func (r *TeamsUpdateDiscussionCommentInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r TeamsUpdateDiscussionCommentInOrgReq) method() string {
+func (r *TeamsUpdateDiscussionCommentInOrgReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsUpdateDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *TeamsUpdateDiscussionCommentInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsUpdateDiscussionCommentInOrgReq) header() http.Header {
+func (r *TeamsUpdateDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsUpdateDiscussionCommentInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsUpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsUpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4598,28 +4913,35 @@ type TeamsUpdateDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsUpdateDiscussionCommentLegacyReq) urlPath() string {
+func (r *TeamsUpdateDiscussionCommentLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
 }
 
-func (r TeamsUpdateDiscussionCommentLegacyReq) method() string {
+func (r *TeamsUpdateDiscussionCommentLegacyReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsUpdateDiscussionCommentLegacyReq) header() http.Header {
+func (r *TeamsUpdateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsUpdateDiscussionCommentLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4700,28 +5022,35 @@ type TeamsUpdateDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsUpdateDiscussionInOrgReq) urlPath() string {
+func (r *TeamsUpdateDiscussionInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber)
 }
 
-func (r TeamsUpdateDiscussionInOrgReq) method() string {
+func (r *TeamsUpdateDiscussionInOrgReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsUpdateDiscussionInOrgReq) urlQuery() url.Values {
+func (r *TeamsUpdateDiscussionInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsUpdateDiscussionInOrgReq) header() http.Header {
+func (r *TeamsUpdateDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsUpdateDiscussionInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsUpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsUpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4809,28 +5138,35 @@ type TeamsUpdateDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r TeamsUpdateDiscussionLegacyReq) urlPath() string {
+func (r *TeamsUpdateDiscussionLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
 }
 
-func (r TeamsUpdateDiscussionLegacyReq) method() string {
+func (r *TeamsUpdateDiscussionLegacyReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
+func (r *TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsUpdateDiscussionLegacyReq) header() http.Header {
+func (r *TeamsUpdateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsUpdateDiscussionLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4907,28 +5243,32 @@ type TeamsUpdateInOrgReq struct {
 	RequestBody TeamsUpdateInOrgReqBody
 }
 
-func (r TeamsUpdateInOrgReq) urlPath() string {
+func (r *TeamsUpdateInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug)
 }
 
-func (r TeamsUpdateInOrgReq) method() string {
+func (r *TeamsUpdateInOrgReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsUpdateInOrgReq) urlQuery() url.Values {
+func (r *TeamsUpdateInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsUpdateInOrgReq) header() http.Header {
+func (r *TeamsUpdateInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsUpdateInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsUpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsUpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5039,28 +5379,32 @@ type TeamsUpdateLegacyReq struct {
 	RequestBody TeamsUpdateLegacyReqBody
 }
 
-func (r TeamsUpdateLegacyReq) urlPath() string {
+func (r *TeamsUpdateLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v", r.TeamId)
 }
 
-func (r TeamsUpdateLegacyReq) method() string {
+func (r *TeamsUpdateLegacyReq) method() string {
 	return "PATCH"
 }
 
-func (r TeamsUpdateLegacyReq) urlQuery() url.Values {
+func (r *TeamsUpdateLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r TeamsUpdateLegacyReq) header() http.Header {
+func (r *TeamsUpdateLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *TeamsUpdateLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r TeamsUpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *TeamsUpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

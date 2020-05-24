@@ -25,28 +25,32 @@ type ActivityCheckRepoIsStarredByAuthenticatedUserReq struct {
 	Repo  string
 }
 
-func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlPath() string {
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo)
 }
 
-func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) method() string {
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) header() http.Header {
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -63,28 +67,32 @@ type ActivityDeleteRepoSubscriptionReq struct {
 	Repo  string
 }
 
-func (r ActivityDeleteRepoSubscriptionReq) urlPath() string {
+func (r *ActivityDeleteRepoSubscriptionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo)
 }
 
-func (r ActivityDeleteRepoSubscriptionReq) method() string {
+func (r *ActivityDeleteRepoSubscriptionReq) method() string {
 	return "DELETE"
 }
 
-func (r ActivityDeleteRepoSubscriptionReq) urlQuery() url.Values {
+func (r *ActivityDeleteRepoSubscriptionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityDeleteRepoSubscriptionReq) header() http.Header {
+func (r *ActivityDeleteRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityDeleteRepoSubscriptionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -100,28 +108,32 @@ type ActivityDeleteThreadSubscriptionReq struct {
 	ThreadId int64
 }
 
-func (r ActivityDeleteThreadSubscriptionReq) urlPath() string {
+func (r *ActivityDeleteThreadSubscriptionReq) urlPath() string {
 	return fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId)
 }
 
-func (r ActivityDeleteThreadSubscriptionReq) method() string {
+func (r *ActivityDeleteThreadSubscriptionReq) method() string {
 	return "DELETE"
 }
 
-func (r ActivityDeleteThreadSubscriptionReq) urlQuery() url.Values {
+func (r *ActivityDeleteThreadSubscriptionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityDeleteThreadSubscriptionReq) header() http.Header {
+func (r *ActivityDeleteThreadSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityDeleteThreadSubscriptionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -135,28 +147,32 @@ https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 type ActivityGetFeedsReq struct{}
 
-func (r ActivityGetFeedsReq) urlPath() string {
+func (r *ActivityGetFeedsReq) urlPath() string {
 	return fmt.Sprintf("/feeds")
 }
 
-func (r ActivityGetFeedsReq) method() string {
+func (r *ActivityGetFeedsReq) method() string {
 	return "GET"
 }
 
-func (r ActivityGetFeedsReq) urlQuery() url.Values {
+func (r *ActivityGetFeedsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityGetFeedsReq) header() http.Header {
+func (r *ActivityGetFeedsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityGetFeedsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -223,28 +239,32 @@ type ActivityGetRepoSubscriptionReq struct {
 	Repo  string
 }
 
-func (r ActivityGetRepoSubscriptionReq) urlPath() string {
+func (r *ActivityGetRepoSubscriptionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo)
 }
 
-func (r ActivityGetRepoSubscriptionReq) method() string {
+func (r *ActivityGetRepoSubscriptionReq) method() string {
 	return "GET"
 }
 
-func (r ActivityGetRepoSubscriptionReq) urlQuery() url.Values {
+func (r *ActivityGetRepoSubscriptionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityGetRepoSubscriptionReq) header() http.Header {
+func (r *ActivityGetRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityGetRepoSubscriptionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -274,28 +294,32 @@ type ActivityGetThreadReq struct {
 	ThreadId int64
 }
 
-func (r ActivityGetThreadReq) urlPath() string {
+func (r *ActivityGetThreadReq) urlPath() string {
 	return fmt.Sprintf("/notifications/threads/%v", r.ThreadId)
 }
 
-func (r ActivityGetThreadReq) method() string {
+func (r *ActivityGetThreadReq) method() string {
 	return "GET"
 }
 
-func (r ActivityGetThreadReq) urlQuery() url.Values {
+func (r *ActivityGetThreadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityGetThreadReq) header() http.Header {
+func (r *ActivityGetThreadReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityGetThreadReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -399,28 +423,32 @@ type ActivityGetThreadSubscriptionForAuthenticatedUserReq struct {
 	ThreadId int64
 }
 
-func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId)
 }
 
-func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) method() string {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -456,15 +484,15 @@ type ActivityListEventsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListEventsForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityListEventsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/events", r.Username)
 }
 
-func (r ActivityListEventsForAuthenticatedUserReq) method() string {
+func (r *ActivityListEventsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListEventsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListEventsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -475,15 +503,19 @@ func (r ActivityListEventsForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListEventsForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityListEventsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListEventsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -527,15 +559,15 @@ type ActivityListNotificationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListNotificationsForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/notifications")
 }
 
-func (r ActivityListNotificationsForAuthenticatedUserReq) method() string {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListNotificationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.All != nil {
 		query.Set("all", strconv.FormatBool(*r.All))
@@ -558,15 +590,19 @@ func (r ActivityListNotificationsForAuthenticatedUserReq) urlQuery() url.Values 
 	return query
 }
 
-func (r ActivityListNotificationsForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListNotificationsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -677,15 +713,15 @@ type ActivityListOrgEventsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListOrgEventsForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/events/orgs/%v", r.Username, r.Org)
 }
 
-func (r ActivityListOrgEventsForAuthenticatedUserReq) method() string {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListOrgEventsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -696,15 +732,19 @@ func (r ActivityListOrgEventsForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListOrgEventsForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -725,15 +765,15 @@ type ActivityListPublicEventsReq struct {
 	Page *int64
 }
 
-func (r ActivityListPublicEventsReq) urlPath() string {
+func (r *ActivityListPublicEventsReq) urlPath() string {
 	return fmt.Sprintf("/events")
 }
 
-func (r ActivityListPublicEventsReq) method() string {
+func (r *ActivityListPublicEventsReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListPublicEventsReq) urlQuery() url.Values {
+func (r *ActivityListPublicEventsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -744,15 +784,19 @@ func (r ActivityListPublicEventsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListPublicEventsReq) header() http.Header {
+func (r *ActivityListPublicEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListPublicEventsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -775,15 +819,15 @@ type ActivityListPublicEventsForRepoNetworkReq struct {
 	Page *int64
 }
 
-func (r ActivityListPublicEventsForRepoNetworkReq) urlPath() string {
+func (r *ActivityListPublicEventsForRepoNetworkReq) urlPath() string {
 	return fmt.Sprintf("/networks/%v/%v/events", r.Owner, r.Repo)
 }
 
-func (r ActivityListPublicEventsForRepoNetworkReq) method() string {
+func (r *ActivityListPublicEventsForRepoNetworkReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListPublicEventsForRepoNetworkReq) urlQuery() url.Values {
+func (r *ActivityListPublicEventsForRepoNetworkReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -794,15 +838,19 @@ func (r ActivityListPublicEventsForRepoNetworkReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListPublicEventsForRepoNetworkReq) header() http.Header {
+func (r *ActivityListPublicEventsForRepoNetworkReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListPublicEventsForRepoNetworkReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -824,15 +872,15 @@ type ActivityListPublicEventsForUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListPublicEventsForUserReq) urlPath() string {
+func (r *ActivityListPublicEventsForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/events/public", r.Username)
 }
 
-func (r ActivityListPublicEventsForUserReq) method() string {
+func (r *ActivityListPublicEventsForUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListPublicEventsForUserReq) urlQuery() url.Values {
+func (r *ActivityListPublicEventsForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -843,15 +891,19 @@ func (r ActivityListPublicEventsForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListPublicEventsForUserReq) header() http.Header {
+func (r *ActivityListPublicEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListPublicEventsForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -873,15 +925,15 @@ type ActivityListPublicOrgEventsReq struct {
 	Page *int64
 }
 
-func (r ActivityListPublicOrgEventsReq) urlPath() string {
+func (r *ActivityListPublicOrgEventsReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/events", r.Org)
 }
 
-func (r ActivityListPublicOrgEventsReq) method() string {
+func (r *ActivityListPublicOrgEventsReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListPublicOrgEventsReq) urlQuery() url.Values {
+func (r *ActivityListPublicOrgEventsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -892,15 +944,19 @@ func (r ActivityListPublicOrgEventsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListPublicOrgEventsReq) header() http.Header {
+func (r *ActivityListPublicOrgEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListPublicOrgEventsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -922,15 +978,15 @@ type ActivityListReceivedEventsForUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListReceivedEventsForUserReq) urlPath() string {
+func (r *ActivityListReceivedEventsForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/received_events", r.Username)
 }
 
-func (r ActivityListReceivedEventsForUserReq) method() string {
+func (r *ActivityListReceivedEventsForUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListReceivedEventsForUserReq) urlQuery() url.Values {
+func (r *ActivityListReceivedEventsForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -941,15 +997,19 @@ func (r ActivityListReceivedEventsForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListReceivedEventsForUserReq) header() http.Header {
+func (r *ActivityListReceivedEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListReceivedEventsForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -971,15 +1031,15 @@ type ActivityListReceivedPublicEventsForUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListReceivedPublicEventsForUserReq) urlPath() string {
+func (r *ActivityListReceivedPublicEventsForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/received_events/public", r.Username)
 }
 
-func (r ActivityListReceivedPublicEventsForUserReq) method() string {
+func (r *ActivityListReceivedPublicEventsForUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListReceivedPublicEventsForUserReq) urlQuery() url.Values {
+func (r *ActivityListReceivedPublicEventsForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -990,15 +1050,19 @@ func (r ActivityListReceivedPublicEventsForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListReceivedPublicEventsForUserReq) header() http.Header {
+func (r *ActivityListReceivedPublicEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListReceivedPublicEventsForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1021,15 +1085,15 @@ type ActivityListRepoEventsReq struct {
 	Page *int64
 }
 
-func (r ActivityListRepoEventsReq) urlPath() string {
+func (r *ActivityListRepoEventsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/events", r.Owner, r.Repo)
 }
 
-func (r ActivityListRepoEventsReq) method() string {
+func (r *ActivityListRepoEventsReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListRepoEventsReq) urlQuery() url.Values {
+func (r *ActivityListRepoEventsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1040,15 +1104,19 @@ func (r ActivityListRepoEventsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListRepoEventsReq) header() http.Header {
+func (r *ActivityListRepoEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListRepoEventsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1094,15 +1162,15 @@ type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListRepoNotificationsForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo)
 }
 
-func (r ActivityListRepoNotificationsForAuthenticatedUserReq) method() string {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListRepoNotificationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.All != nil {
 		query.Set("all", strconv.FormatBool(*r.All))
@@ -1125,15 +1193,19 @@ func (r ActivityListRepoNotificationsForAuthenticatedUserReq) urlQuery() url.Val
 	return query
 }
 
-func (r ActivityListRepoNotificationsForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1251,15 +1323,15 @@ type ActivityListReposStarredByAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListReposStarredByAuthenticatedUserReq) urlPath() string {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/starred")
 }
 
-func (r ActivityListReposStarredByAuthenticatedUserReq) method() string {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListReposStarredByAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -1276,15 +1348,19 @@ func (r ActivityListReposStarredByAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListReposStarredByAuthenticatedUserReq) header() http.Header {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListReposStarredByAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1426,15 +1502,15 @@ type ActivityListReposStarredByUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListReposStarredByUserReq) urlPath() string {
+func (r *ActivityListReposStarredByUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/starred", r.Username)
 }
 
-func (r ActivityListReposStarredByUserReq) method() string {
+func (r *ActivityListReposStarredByUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListReposStarredByUserReq) urlQuery() url.Values {
+func (r *ActivityListReposStarredByUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -1451,15 +1527,19 @@ func (r ActivityListReposStarredByUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListReposStarredByUserReq) header() http.Header {
+func (r *ActivityListReposStarredByUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListReposStarredByUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1592,15 +1672,15 @@ type ActivityListReposWatchedByUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListReposWatchedByUserReq) urlPath() string {
+func (r *ActivityListReposWatchedByUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/subscriptions", r.Username)
 }
 
-func (r ActivityListReposWatchedByUserReq) method() string {
+func (r *ActivityListReposWatchedByUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListReposWatchedByUserReq) urlQuery() url.Values {
+func (r *ActivityListReposWatchedByUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1611,15 +1691,19 @@ func (r ActivityListReposWatchedByUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListReposWatchedByUserReq) header() http.Header {
+func (r *ActivityListReposWatchedByUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListReposWatchedByUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1757,15 +1841,15 @@ type ActivityListStargazersForRepoReq struct {
 	Page *int64
 }
 
-func (r ActivityListStargazersForRepoReq) urlPath() string {
+func (r *ActivityListStargazersForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/stargazers", r.Owner, r.Repo)
 }
 
-func (r ActivityListStargazersForRepoReq) method() string {
+func (r *ActivityListStargazersForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListStargazersForRepoReq) urlQuery() url.Values {
+func (r *ActivityListStargazersForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1776,15 +1860,19 @@ func (r ActivityListStargazersForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListStargazersForRepoReq) header() http.Header {
+func (r *ActivityListStargazersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListStargazersForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1831,15 +1919,15 @@ type ActivityListWatchedReposForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ActivityListWatchedReposForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/subscriptions")
 }
 
-func (r ActivityListWatchedReposForAuthenticatedUserReq) method() string {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListWatchedReposForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1850,15 +1938,19 @@ func (r ActivityListWatchedReposForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListWatchedReposForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1996,15 +2088,15 @@ type ActivityListWatchersForRepoReq struct {
 	Page *int64
 }
 
-func (r ActivityListWatchersForRepoReq) urlPath() string {
+func (r *ActivityListWatchersForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/subscribers", r.Owner, r.Repo)
 }
 
-func (r ActivityListWatchersForRepoReq) method() string {
+func (r *ActivityListWatchersForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ActivityListWatchersForRepoReq) urlQuery() url.Values {
+func (r *ActivityListWatchersForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2015,15 +2107,19 @@ func (r ActivityListWatchersForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ActivityListWatchersForRepoReq) header() http.Header {
+func (r *ActivityListWatchersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityListWatchersForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2065,28 +2161,32 @@ type ActivityMarkNotificationsAsReadReq struct {
 	RequestBody ActivityMarkNotificationsAsReadReqBody
 }
 
-func (r ActivityMarkNotificationsAsReadReq) urlPath() string {
+func (r *ActivityMarkNotificationsAsReadReq) urlPath() string {
 	return fmt.Sprintf("/notifications")
 }
 
-func (r ActivityMarkNotificationsAsReadReq) method() string {
+func (r *ActivityMarkNotificationsAsReadReq) method() string {
 	return "PUT"
 }
 
-func (r ActivityMarkNotificationsAsReadReq) urlQuery() url.Values {
+func (r *ActivityMarkNotificationsAsReadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityMarkNotificationsAsReadReq) header() http.Header {
+func (r *ActivityMarkNotificationsAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityMarkNotificationsAsReadReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2121,28 +2221,32 @@ type ActivityMarkRepoNotificationsAsReadReq struct {
 	RequestBody ActivityMarkRepoNotificationsAsReadReqBody
 }
 
-func (r ActivityMarkRepoNotificationsAsReadReq) urlPath() string {
+func (r *ActivityMarkRepoNotificationsAsReadReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo)
 }
 
-func (r ActivityMarkRepoNotificationsAsReadReq) method() string {
+func (r *ActivityMarkRepoNotificationsAsReadReq) method() string {
 	return "PUT"
 }
 
-func (r ActivityMarkRepoNotificationsAsReadReq) urlQuery() url.Values {
+func (r *ActivityMarkRepoNotificationsAsReadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityMarkRepoNotificationsAsReadReq) header() http.Header {
+func (r *ActivityMarkRepoNotificationsAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityMarkRepoNotificationsAsReadReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2175,28 +2279,32 @@ type ActivityMarkThreadAsReadReq struct {
 	ThreadId int64
 }
 
-func (r ActivityMarkThreadAsReadReq) urlPath() string {
+func (r *ActivityMarkThreadAsReadReq) urlPath() string {
 	return fmt.Sprintf("/notifications/threads/%v", r.ThreadId)
 }
 
-func (r ActivityMarkThreadAsReadReq) method() string {
+func (r *ActivityMarkThreadAsReadReq) method() string {
 	return "PATCH"
 }
 
-func (r ActivityMarkThreadAsReadReq) urlQuery() url.Values {
+func (r *ActivityMarkThreadAsReadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityMarkThreadAsReadReq) header() http.Header {
+func (r *ActivityMarkThreadAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityMarkThreadAsReadReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2214,28 +2322,32 @@ type ActivitySetRepoSubscriptionReq struct {
 	RequestBody ActivitySetRepoSubscriptionReqBody
 }
 
-func (r ActivitySetRepoSubscriptionReq) urlPath() string {
+func (r *ActivitySetRepoSubscriptionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo)
 }
 
-func (r ActivitySetRepoSubscriptionReq) method() string {
+func (r *ActivitySetRepoSubscriptionReq) method() string {
 	return "PUT"
 }
 
-func (r ActivitySetRepoSubscriptionReq) urlQuery() url.Values {
+func (r *ActivitySetRepoSubscriptionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivitySetRepoSubscriptionReq) header() http.Header {
+func (r *ActivitySetRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivitySetRepoSubscriptionReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2280,28 +2392,32 @@ type ActivitySetThreadSubscriptionReq struct {
 	RequestBody ActivitySetThreadSubscriptionReqBody
 }
 
-func (r ActivitySetThreadSubscriptionReq) urlPath() string {
+func (r *ActivitySetThreadSubscriptionReq) urlPath() string {
 	return fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId)
 }
 
-func (r ActivitySetThreadSubscriptionReq) method() string {
+func (r *ActivitySetThreadSubscriptionReq) method() string {
 	return "PUT"
 }
 
-func (r ActivitySetThreadSubscriptionReq) urlQuery() url.Values {
+func (r *ActivitySetThreadSubscriptionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivitySetThreadSubscriptionReq) header() http.Header {
+func (r *ActivitySetThreadSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivitySetThreadSubscriptionReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2346,28 +2462,32 @@ type ActivityStarRepoForAuthenticatedUserReq struct {
 	Repo  string
 }
 
-func (r ActivityStarRepoForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityStarRepoForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo)
 }
 
-func (r ActivityStarRepoForAuthenticatedUserReq) method() string {
+func (r *ActivityStarRepoForAuthenticatedUserReq) method() string {
 	return "PUT"
 }
 
-func (r ActivityStarRepoForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityStarRepoForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityStarRepoForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityStarRepoForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityStarRepoForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2384,26 +2504,30 @@ type ActivityUnstarRepoForAuthenticatedUserReq struct {
 	Repo  string
 }
 
-func (r ActivityUnstarRepoForAuthenticatedUserReq) urlPath() string {
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo)
 }
 
-func (r ActivityUnstarRepoForAuthenticatedUserReq) method() string {
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) method() string {
 	return "DELETE"
 }
 
-func (r ActivityUnstarRepoForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ActivityUnstarRepoForAuthenticatedUserReq) header() http.Header {
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }

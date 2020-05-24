@@ -24,28 +24,32 @@ type ReposAcceptInvitationReq struct {
 	InvitationId int64
 }
 
-func (r ReposAcceptInvitationReq) urlPath() string {
+func (r *ReposAcceptInvitationReq) urlPath() string {
 	return fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId)
 }
 
-func (r ReposAcceptInvitationReq) method() string {
+func (r *ReposAcceptInvitationReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposAcceptInvitationReq) urlQuery() url.Values {
+func (r *ReposAcceptInvitationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAcceptInvitationReq) header() http.Header {
+func (r *ReposAcceptInvitationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAcceptInvitationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -64,28 +68,32 @@ type ReposAddCollaboratorReq struct {
 	RequestBody ReposAddCollaboratorReqBody
 }
 
-func (r ReposAddCollaboratorReq) urlPath() string {
+func (r *ReposAddCollaboratorReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
 }
 
-func (r ReposAddCollaboratorReq) method() string {
+func (r *ReposAddCollaboratorReq) method() string {
 	return "PUT"
 }
 
-func (r ReposAddCollaboratorReq) urlQuery() url.Values {
+func (r *ReposAddCollaboratorReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddCollaboratorReq) header() http.Header {
+func (r *ReposAddCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddCollaboratorReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -245,28 +253,32 @@ type ReposAddDeployKeyReq struct {
 	RequestBody ReposAddDeployKeyReqBody
 }
 
-func (r ReposAddDeployKeyReq) urlPath() string {
+func (r *ReposAddDeployKeyReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
 }
 
-func (r ReposAddDeployKeyReq) method() string {
+func (r *ReposAddDeployKeyReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddDeployKeyReq) urlQuery() url.Values {
+func (r *ReposAddDeployKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddDeployKeyReq) header() http.Header {
+func (r *ReposAddDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddDeployKeyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposAddDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -326,28 +338,32 @@ type ReposAddProtectedBranchAdminEnforcementReq struct {
 	Branch string
 }
 
-func (r ReposAddProtectedBranchAdminEnforcementReq) urlPath() string {
+func (r *ReposAddProtectedBranchAdminEnforcementReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposAddProtectedBranchAdminEnforcementReq) method() string {
+func (r *ReposAddProtectedBranchAdminEnforcementReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
+func (r *ReposAddProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddProtectedBranchAdminEnforcementReq) header() http.Header {
+func (r *ReposAddProtectedBranchAdminEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddProtectedBranchAdminEnforcementReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposAddProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -376,28 +392,32 @@ type ReposAddProtectedBranchAppRestrictionsReq struct {
 	RequestBody ReposAddProtectedBranchAppRestrictionsReqBody
 }
 
-func (r ReposAddProtectedBranchAppRestrictionsReq) urlPath() string {
+func (r *ReposAddProtectedBranchAppRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposAddProtectedBranchAppRestrictionsReq) method() string {
+func (r *ReposAddProtectedBranchAppRestrictionsReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
+func (r *ReposAddProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddProtectedBranchAppRestrictionsReq) header() http.Header {
+func (r *ReposAddProtectedBranchAppRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddProtectedBranchAppRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposAddProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -469,28 +489,38 @@ type ReposAddProtectedBranchRequiredSignaturesReq struct {
 	ZzzaxPreview bool
 }
 
-func (r ReposAddProtectedBranchRequiredSignaturesReq) urlPath() string {
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposAddProtectedBranchRequiredSignaturesReq) method() string {
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddProtectedBranchRequiredSignaturesReq) header() http.Header {
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	if requiredPreviews {
+		previewVals["zzzax"] = true
+	}
+	if allPreviews {
+		previewVals["zzzax"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -519,28 +549,32 @@ type ReposAddProtectedBranchRequiredStatusChecksContextsReq struct {
 	RequestBody ReposAddProtectedBranchRequiredStatusChecksContextsReqBody
 }
 
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) method() string {
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -573,28 +607,32 @@ type ReposAddProtectedBranchTeamRestrictionsReq struct {
 	RequestBody ReposAddProtectedBranchTeamRestrictionsReqBody
 }
 
-func (r ReposAddProtectedBranchTeamRestrictionsReq) urlPath() string {
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposAddProtectedBranchTeamRestrictionsReq) method() string {
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddProtectedBranchTeamRestrictionsReq) header() http.Header {
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -640,28 +678,32 @@ type ReposAddProtectedBranchUserRestrictionsReq struct {
 	RequestBody ReposAddProtectedBranchUserRestrictionsReqBody
 }
 
-func (r ReposAddProtectedBranchUserRestrictionsReq) urlPath() string {
+func (r *ReposAddProtectedBranchUserRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposAddProtectedBranchUserRestrictionsReq) method() string {
+func (r *ReposAddProtectedBranchUserRestrictionsReq) method() string {
 	return "POST"
 }
 
-func (r ReposAddProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+func (r *ReposAddProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposAddProtectedBranchUserRestrictionsReq) header() http.Header {
+func (r *ReposAddProtectedBranchUserRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposAddProtectedBranchUserRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -712,28 +754,32 @@ type ReposCheckCollaboratorReq struct {
 	Username string
 }
 
-func (r ReposCheckCollaboratorReq) urlPath() string {
+func (r *ReposCheckCollaboratorReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
 }
 
-func (r ReposCheckCollaboratorReq) method() string {
+func (r *ReposCheckCollaboratorReq) method() string {
 	return "GET"
 }
 
-func (r ReposCheckCollaboratorReq) urlQuery() url.Values {
+func (r *ReposCheckCollaboratorReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCheckCollaboratorReq) header() http.Header {
+func (r *ReposCheckCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCheckCollaboratorReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposCheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposCheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -757,28 +803,38 @@ type ReposCheckVulnerabilityAlertsReq struct {
 	DorianPreview bool
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) urlPath() string {
+func (r *ReposCheckVulnerabilityAlertsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) method() string {
+func (r *ReposCheckVulnerabilityAlertsReq) method() string {
 	return "GET"
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) urlQuery() url.Values {
+func (r *ReposCheckVulnerabilityAlertsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCheckVulnerabilityAlertsReq) header() http.Header {
+func (r *ReposCheckVulnerabilityAlertsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	if requiredPreviews {
+		previewVals["dorian"] = true
+	}
+	if allPreviews {
+		previewVals["dorian"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCheckVulnerabilityAlertsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -797,28 +853,32 @@ type ReposCompareCommitsReq struct {
 	Head  string
 }
 
-func (r ReposCompareCommitsReq) urlPath() string {
+func (r *ReposCompareCommitsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/compare/%v...%v", r.Owner, r.Repo, r.Base, r.Head)
 }
 
-func (r ReposCompareCommitsReq) method() string {
+func (r *ReposCompareCommitsReq) method() string {
 	return "GET"
 }
 
-func (r ReposCompareCommitsReq) urlQuery() url.Values {
+func (r *ReposCompareCommitsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCompareCommitsReq) header() http.Header {
+func (r *ReposCompareCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCompareCommitsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposCompareCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposCompareCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1094,28 +1154,32 @@ type ReposCreateCommitCommentReq struct {
 	RequestBody ReposCreateCommitCommentReqBody
 }
 
-func (r ReposCreateCommitCommentReq) urlPath() string {
+func (r *ReposCreateCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/comments", r.Owner, r.Repo, r.CommitSha)
 }
 
-func (r ReposCreateCommitCommentReq) method() string {
+func (r *ReposCreateCommitCommentReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateCommitCommentReq) urlQuery() url.Values {
+func (r *ReposCreateCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateCommitCommentReq) header() http.Header {
+func (r *ReposCreateCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateCommitCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1206,28 +1270,35 @@ type ReposCreateDeploymentReq struct {
 	AntManPreview bool
 }
 
-func (r ReposCreateDeploymentReq) urlPath() string {
+func (r *ReposCreateDeploymentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments", r.Owner, r.Repo)
 }
 
-func (r ReposCreateDeploymentReq) method() string {
+func (r *ReposCreateDeploymentReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateDeploymentReq) urlQuery() url.Values {
+func (r *ReposCreateDeploymentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateDeploymentReq) header() http.Header {
+func (r *ReposCreateDeploymentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"ant-man": r.AntManPreview}
+	if allPreviews {
+		previewVals["ant-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateDeploymentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1384,31 +1455,39 @@ type ReposCreateDeploymentStatusReq struct {
 	AntManPreview bool
 }
 
-func (r ReposCreateDeploymentStatusReq) urlPath() string {
+func (r *ReposCreateDeploymentStatusReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses", r.Owner, r.Repo, r.DeploymentId)
 }
 
-func (r ReposCreateDeploymentStatusReq) method() string {
+func (r *ReposCreateDeploymentStatusReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateDeploymentStatusReq) urlQuery() url.Values {
+func (r *ReposCreateDeploymentStatusReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateDeploymentStatusReq) header() http.Header {
+func (r *ReposCreateDeploymentStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"ant-man": r.AntManPreview,
 		"flash":   r.FlashPreview,
 	}
+	if allPreviews {
+		previewVals["flash"] = true
+		previewVals["ant-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateDeploymentStatusReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1548,28 +1627,32 @@ type ReposCreateDispatchEventReq struct {
 	RequestBody ReposCreateDispatchEventReqBody
 }
 
-func (r ReposCreateDispatchEventReq) urlPath() string {
+func (r *ReposCreateDispatchEventReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/dispatches", r.Owner, r.Repo)
 }
 
-func (r ReposCreateDispatchEventReq) method() string {
+func (r *ReposCreateDispatchEventReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateDispatchEventReq) urlQuery() url.Values {
+func (r *ReposCreateDispatchEventReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateDispatchEventReq) header() http.Header {
+func (r *ReposCreateDispatchEventReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateDispatchEventReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1623,31 +1706,39 @@ type ReposCreateForAuthenticatedUserReq struct {
 	BaptistePreview bool
 }
 
-func (r ReposCreateForAuthenticatedUserReq) urlPath() string {
+func (r *ReposCreateForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/repos")
 }
 
-func (r ReposCreateForAuthenticatedUserReq) method() string {
+func (r *ReposCreateForAuthenticatedUserReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ReposCreateForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateForAuthenticatedUserReq) header() http.Header {
+func (r *ReposCreateForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
 	}
+	if allPreviews {
+		previewVals["nebula"] = true
+		previewVals["baptiste"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateForAuthenticatedUserReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1876,28 +1967,32 @@ type ReposCreateForkReq struct {
 	RequestBody ReposCreateForkReqBody
 }
 
-func (r ReposCreateForkReq) urlPath() string {
+func (r *ReposCreateForkReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo)
 }
 
-func (r ReposCreateForkReq) method() string {
+func (r *ReposCreateForkReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateForkReq) urlQuery() url.Values {
+func (r *ReposCreateForkReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateForkReq) header() http.Header {
+func (r *ReposCreateForkReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateForkReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2040,28 +2135,32 @@ type ReposCreateHookReq struct {
 	RequestBody ReposCreateHookReqBody
 }
 
-func (r ReposCreateHookReq) urlPath() string {
+func (r *ReposCreateHookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
 }
 
-func (r ReposCreateHookReq) method() string {
+func (r *ReposCreateHookReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateHookReq) urlQuery() url.Values {
+func (r *ReposCreateHookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateHookReq) header() http.Header {
+func (r *ReposCreateHookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateHookReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposCreateHookReqBodyConfig is a value for ReposCreateHookReqBody's Config field
@@ -2189,31 +2288,39 @@ type ReposCreateInOrgReq struct {
 	BaptistePreview bool
 }
 
-func (r ReposCreateInOrgReq) urlPath() string {
+func (r *ReposCreateInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/repos", r.Org)
 }
 
-func (r ReposCreateInOrgReq) method() string {
+func (r *ReposCreateInOrgReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateInOrgReq) urlQuery() url.Values {
+func (r *ReposCreateInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateInOrgReq) header() http.Header {
+func (r *ReposCreateInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
 	}
+	if allPreviews {
+		previewVals["nebula"] = true
+		previewVals["baptiste"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateInOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2443,28 +2550,32 @@ type ReposCreateOrUpdateFileReq struct {
 	RequestBody ReposCreateOrUpdateFileReqBody
 }
 
-func (r ReposCreateOrUpdateFileReq) urlPath() string {
+func (r *ReposCreateOrUpdateFileReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
 }
 
-func (r ReposCreateOrUpdateFileReq) method() string {
+func (r *ReposCreateOrUpdateFileReq) method() string {
 	return "PUT"
 }
 
-func (r ReposCreateOrUpdateFileReq) urlQuery() url.Values {
+func (r *ReposCreateOrUpdateFileReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateOrUpdateFileReq) header() http.Header {
+func (r *ReposCreateOrUpdateFileReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateOrUpdateFileReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposCreateOrUpdateFileReqBodyAuthor is a value for ReposCreateOrUpdateFileReqBody's Author field
@@ -2658,28 +2769,32 @@ type ReposCreateReleaseReq struct {
 	RequestBody ReposCreateReleaseReqBody
 }
 
-func (r ReposCreateReleaseReq) urlPath() string {
+func (r *ReposCreateReleaseReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases", r.Owner, r.Repo)
 }
 
-func (r ReposCreateReleaseReq) method() string {
+func (r *ReposCreateReleaseReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateReleaseReq) urlQuery() url.Values {
+func (r *ReposCreateReleaseReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateReleaseReq) header() http.Header {
+func (r *ReposCreateReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateReleaseReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2779,28 +2894,32 @@ type ReposCreateStatusReq struct {
 	RequestBody ReposCreateStatusReqBody
 }
 
-func (r ReposCreateStatusReq) urlPath() string {
+func (r *ReposCreateStatusReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/statuses/%v", r.Owner, r.Repo, r.Sha)
 }
 
-func (r ReposCreateStatusReq) method() string {
+func (r *ReposCreateStatusReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateStatusReq) urlQuery() url.Values {
+func (r *ReposCreateStatusReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateStatusReq) header() http.Header {
+func (r *ReposCreateStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateStatusReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2892,28 +3011,38 @@ type ReposCreateUsingTemplateReq struct {
 	BaptistePreview bool
 }
 
-func (r ReposCreateUsingTemplateReq) urlPath() string {
+func (r *ReposCreateUsingTemplateReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/generate", r.TemplateOwner, r.TemplateRepo)
 }
 
-func (r ReposCreateUsingTemplateReq) method() string {
+func (r *ReposCreateUsingTemplateReq) method() string {
 	return "POST"
 }
 
-func (r ReposCreateUsingTemplateReq) urlQuery() url.Values {
+func (r *ReposCreateUsingTemplateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposCreateUsingTemplateReq) header() http.Header {
+func (r *ReposCreateUsingTemplateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"baptiste": r.BaptistePreview}
+	if requiredPreviews {
+		previewVals["baptiste"] = true
+	}
+	if allPreviews {
+		previewVals["baptiste"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposCreateUsingTemplateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3171,28 +3300,32 @@ type ReposDeclineInvitationReq struct {
 	InvitationId int64
 }
 
-func (r ReposDeclineInvitationReq) urlPath() string {
+func (r *ReposDeclineInvitationReq) urlPath() string {
 	return fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId)
 }
 
-func (r ReposDeclineInvitationReq) method() string {
+func (r *ReposDeclineInvitationReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeclineInvitationReq) urlQuery() url.Values {
+func (r *ReposDeclineInvitationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeclineInvitationReq) header() http.Header {
+func (r *ReposDeclineInvitationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeclineInvitationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3209,28 +3342,32 @@ type ReposDeleteReq struct {
 	Repo  string
 }
 
-func (r ReposDeleteReq) urlPath() string {
+func (r *ReposDeleteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v", r.Owner, r.Repo)
 }
 
-func (r ReposDeleteReq) method() string {
+func (r *ReposDeleteReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteReq) urlQuery() url.Values {
+func (r *ReposDeleteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteReq) header() http.Header {
+func (r *ReposDeleteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3248,28 +3385,32 @@ type ReposDeleteCommitCommentReq struct {
 	CommentId int64
 }
 
-func (r ReposDeleteCommitCommentReq) urlPath() string {
+func (r *ReposDeleteCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReposDeleteCommitCommentReq) method() string {
+func (r *ReposDeleteCommitCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteCommitCommentReq) urlQuery() url.Values {
+func (r *ReposDeleteCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteCommitCommentReq) header() http.Header {
+func (r *ReposDeleteCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteCommitCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3287,28 +3428,32 @@ type ReposDeleteDeploymentReq struct {
 	DeploymentId int64
 }
 
-func (r ReposDeleteDeploymentReq) urlPath() string {
+func (r *ReposDeleteDeploymentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId)
 }
 
-func (r ReposDeleteDeploymentReq) method() string {
+func (r *ReposDeleteDeploymentReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteDeploymentReq) urlQuery() url.Values {
+func (r *ReposDeleteDeploymentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteDeploymentReq) header() http.Header {
+func (r *ReposDeleteDeploymentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteDeploymentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3326,28 +3471,32 @@ type ReposDeleteDownloadReq struct {
 	DownloadId int64
 }
 
-func (r ReposDeleteDownloadReq) urlPath() string {
+func (r *ReposDeleteDownloadReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
 }
 
-func (r ReposDeleteDownloadReq) method() string {
+func (r *ReposDeleteDownloadReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteDownloadReq) urlQuery() url.Values {
+func (r *ReposDeleteDownloadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteDownloadReq) header() http.Header {
+func (r *ReposDeleteDownloadReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteDownloadReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3366,28 +3515,32 @@ type ReposDeleteFileReq struct {
 	RequestBody ReposDeleteFileReqBody
 }
 
-func (r ReposDeleteFileReq) urlPath() string {
+func (r *ReposDeleteFileReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
 }
 
-func (r ReposDeleteFileReq) method() string {
+func (r *ReposDeleteFileReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteFileReq) urlQuery() url.Values {
+func (r *ReposDeleteFileReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteFileReq) header() http.Header {
+func (r *ReposDeleteFileReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteFileReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposDeleteFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposDeleteFileReqBodyAuthor is a value for ReposDeleteFileReqBody's Author field
@@ -3489,28 +3642,32 @@ type ReposDeleteHookReq struct {
 	HookId int64
 }
 
-func (r ReposDeleteHookReq) urlPath() string {
+func (r *ReposDeleteHookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
 }
 
-func (r ReposDeleteHookReq) method() string {
+func (r *ReposDeleteHookReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteHookReq) urlQuery() url.Values {
+func (r *ReposDeleteHookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteHookReq) header() http.Header {
+func (r *ReposDeleteHookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteHookReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3528,28 +3685,32 @@ type ReposDeleteInvitationReq struct {
 	InvitationId int64
 }
 
-func (r ReposDeleteInvitationReq) urlPath() string {
+func (r *ReposDeleteInvitationReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId)
 }
 
-func (r ReposDeleteInvitationReq) method() string {
+func (r *ReposDeleteInvitationReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteInvitationReq) urlQuery() url.Values {
+func (r *ReposDeleteInvitationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteInvitationReq) header() http.Header {
+func (r *ReposDeleteInvitationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteInvitationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3567,28 +3728,32 @@ type ReposDeleteReleaseReq struct {
 	ReleaseId int64
 }
 
-func (r ReposDeleteReleaseReq) urlPath() string {
+func (r *ReposDeleteReleaseReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/%v", r.Owner, r.Repo, r.ReleaseId)
 }
 
-func (r ReposDeleteReleaseReq) method() string {
+func (r *ReposDeleteReleaseReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteReleaseReq) urlQuery() url.Values {
+func (r *ReposDeleteReleaseReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteReleaseReq) header() http.Header {
+func (r *ReposDeleteReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteReleaseReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3606,28 +3771,32 @@ type ReposDeleteReleaseAssetReq struct {
 	AssetId int64
 }
 
-func (r ReposDeleteReleaseAssetReq) urlPath() string {
+func (r *ReposDeleteReleaseAssetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
 }
 
-func (r ReposDeleteReleaseAssetReq) method() string {
+func (r *ReposDeleteReleaseAssetReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDeleteReleaseAssetReq) urlQuery() url.Values {
+func (r *ReposDeleteReleaseAssetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDeleteReleaseAssetReq) header() http.Header {
+func (r *ReposDeleteReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDeleteReleaseAssetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3651,28 +3820,38 @@ type ReposDisableAutomatedSecurityFixesReq struct {
 	LondonPreview bool
 }
 
-func (r ReposDisableAutomatedSecurityFixesReq) urlPath() string {
+func (r *ReposDisableAutomatedSecurityFixesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/automated-security-fixes", r.Owner, r.Repo)
 }
 
-func (r ReposDisableAutomatedSecurityFixesReq) method() string {
+func (r *ReposDisableAutomatedSecurityFixesReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDisableAutomatedSecurityFixesReq) urlQuery() url.Values {
+func (r *ReposDisableAutomatedSecurityFixesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDisableAutomatedSecurityFixesReq) header() http.Header {
+func (r *ReposDisableAutomatedSecurityFixesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"london": r.LondonPreview}
+	if requiredPreviews {
+		previewVals["london"] = true
+	}
+	if allPreviews {
+		previewVals["london"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDisableAutomatedSecurityFixesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3698,28 +3877,38 @@ type ReposDisablePagesSiteReq struct {
 	SwitcherooPreview bool
 }
 
-func (r ReposDisablePagesSiteReq) urlPath() string {
+func (r *ReposDisablePagesSiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
 }
 
-func (r ReposDisablePagesSiteReq) method() string {
+func (r *ReposDisablePagesSiteReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDisablePagesSiteReq) urlQuery() url.Values {
+func (r *ReposDisablePagesSiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDisablePagesSiteReq) header() http.Header {
+func (r *ReposDisablePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
+	if requiredPreviews {
+		previewVals["switcheroo"] = true
+	}
+	if allPreviews {
+		previewVals["switcheroo"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDisablePagesSiteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDisablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDisablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3743,28 +3932,38 @@ type ReposDisableVulnerabilityAlertsReq struct {
 	DorianPreview bool
 }
 
-func (r ReposDisableVulnerabilityAlertsReq) urlPath() string {
+func (r *ReposDisableVulnerabilityAlertsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
 }
 
-func (r ReposDisableVulnerabilityAlertsReq) method() string {
+func (r *ReposDisableVulnerabilityAlertsReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposDisableVulnerabilityAlertsReq) urlQuery() url.Values {
+func (r *ReposDisableVulnerabilityAlertsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposDisableVulnerabilityAlertsReq) header() http.Header {
+func (r *ReposDisableVulnerabilityAlertsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	if requiredPreviews {
+		previewVals["dorian"] = true
+	}
+	if allPreviews {
+		previewVals["dorian"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposDisableVulnerabilityAlertsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3788,28 +3987,38 @@ type ReposEnableAutomatedSecurityFixesReq struct {
 	LondonPreview bool
 }
 
-func (r ReposEnableAutomatedSecurityFixesReq) urlPath() string {
+func (r *ReposEnableAutomatedSecurityFixesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/automated-security-fixes", r.Owner, r.Repo)
 }
 
-func (r ReposEnableAutomatedSecurityFixesReq) method() string {
+func (r *ReposEnableAutomatedSecurityFixesReq) method() string {
 	return "PUT"
 }
 
-func (r ReposEnableAutomatedSecurityFixesReq) urlQuery() url.Values {
+func (r *ReposEnableAutomatedSecurityFixesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposEnableAutomatedSecurityFixesReq) header() http.Header {
+func (r *ReposEnableAutomatedSecurityFixesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"london": r.LondonPreview}
+	if requiredPreviews {
+		previewVals["london"] = true
+	}
+	if allPreviews {
+		previewVals["london"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposEnableAutomatedSecurityFixesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3836,28 +4045,38 @@ type ReposEnablePagesSiteReq struct {
 	SwitcherooPreview bool
 }
 
-func (r ReposEnablePagesSiteReq) urlPath() string {
+func (r *ReposEnablePagesSiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
 }
 
-func (r ReposEnablePagesSiteReq) method() string {
+func (r *ReposEnablePagesSiteReq) method() string {
 	return "POST"
 }
 
-func (r ReposEnablePagesSiteReq) urlQuery() url.Values {
+func (r *ReposEnablePagesSiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposEnablePagesSiteReq) header() http.Header {
+func (r *ReposEnablePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
+	if requiredPreviews {
+		previewVals["switcheroo"] = true
+	}
+	if allPreviews {
+		previewVals["switcheroo"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposEnablePagesSiteReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposEnablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposEnablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposEnablePagesSiteReqBodySource is a value for ReposEnablePagesSiteReqBody's Source field
@@ -3925,28 +4144,38 @@ type ReposEnableVulnerabilityAlertsReq struct {
 	DorianPreview bool
 }
 
-func (r ReposEnableVulnerabilityAlertsReq) urlPath() string {
+func (r *ReposEnableVulnerabilityAlertsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/vulnerability-alerts", r.Owner, r.Repo)
 }
 
-func (r ReposEnableVulnerabilityAlertsReq) method() string {
+func (r *ReposEnableVulnerabilityAlertsReq) method() string {
 	return "PUT"
 }
 
-func (r ReposEnableVulnerabilityAlertsReq) urlQuery() url.Values {
+func (r *ReposEnableVulnerabilityAlertsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposEnableVulnerabilityAlertsReq) header() http.Header {
+func (r *ReposEnableVulnerabilityAlertsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"dorian": r.DorianPreview}
+	if requiredPreviews {
+		previewVals["dorian"] = true
+	}
+	if allPreviews {
+		previewVals["dorian"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposEnableVulnerabilityAlertsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposEnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposEnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3985,31 +4214,39 @@ type ReposGetReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r ReposGetReq) urlPath() string {
+func (r *ReposGetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v", r.Owner, r.Repo)
 }
 
-func (r ReposGetReq) method() string {
+func (r *ReposGetReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetReq) urlQuery() url.Values {
+func (r *ReposGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetReq) header() http.Header {
+func (r *ReposGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"nebula":        r.NebulaPreview,
 		"scarlet-witch": r.ScarletWitchPreview,
 	}
+	if allPreviews {
+		previewVals["nebula"] = true
+		previewVals["scarlet-witch"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4383,28 +4620,38 @@ type ReposGetAllTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r ReposGetAllTopicsReq) urlPath() string {
+func (r *ReposGetAllTopicsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/topics", r.Owner, r.Repo)
 }
 
-func (r ReposGetAllTopicsReq) method() string {
+func (r *ReposGetAllTopicsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetAllTopicsReq) urlQuery() url.Values {
+func (r *ReposGetAllTopicsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetAllTopicsReq) header() http.Header {
+func (r *ReposGetAllTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	if requiredPreviews {
+		previewVals["mercy"] = true
+	}
+	if allPreviews {
+		previewVals["mercy"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetAllTopicsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4431,28 +4678,32 @@ type ReposGetAppsWithAccessToProtectedBranchReq struct {
 	Branch string
 }
 
-func (r ReposGetAppsWithAccessToProtectedBranchReq) urlPath() string {
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetAppsWithAccessToProtectedBranchReq) method() string {
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetAppsWithAccessToProtectedBranchReq) urlQuery() url.Values {
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetAppsWithAccessToProtectedBranchReq) header() http.Header {
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4509,28 +4760,32 @@ type ReposGetArchiveLinkReq struct {
 	Ref           string
 }
 
-func (r ReposGetArchiveLinkReq) urlPath() string {
+func (r *ReposGetArchiveLinkReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/%v/%v", r.Owner, r.Repo, r.ArchiveFormat, r.Ref)
 }
 
-func (r ReposGetArchiveLinkReq) method() string {
+func (r *ReposGetArchiveLinkReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetArchiveLinkReq) urlQuery() url.Values {
+func (r *ReposGetArchiveLinkReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetArchiveLinkReq) header() http.Header {
+func (r *ReposGetArchiveLinkReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetArchiveLinkReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetArchiveLinkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetArchiveLinkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4548,28 +4803,32 @@ type ReposGetBranchReq struct {
 	Branch string
 }
 
-func (r ReposGetBranchReq) urlPath() string {
+func (r *ReposGetBranchReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetBranchReq) method() string {
+func (r *ReposGetBranchReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetBranchReq) urlQuery() url.Values {
+func (r *ReposGetBranchReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetBranchReq) header() http.Header {
+func (r *ReposGetBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetBranchReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4666,28 +4925,35 @@ type ReposGetBranchProtectionReq struct {
 	LukeCagePreview bool
 }
 
-func (r ReposGetBranchProtectionReq) urlPath() string {
+func (r *ReposGetBranchProtectionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetBranchProtectionReq) method() string {
+func (r *ReposGetBranchProtectionReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetBranchProtectionReq) urlQuery() url.Values {
+func (r *ReposGetBranchProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetBranchProtectionReq) header() http.Header {
+func (r *ReposGetBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	if allPreviews {
+		previewVals["luke-cage"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetBranchProtectionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4852,15 +5118,15 @@ type ReposGetClonesReq struct {
 	Per *string
 }
 
-func (r ReposGetClonesReq) urlPath() string {
+func (r *ReposGetClonesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/traffic/clones", r.Owner, r.Repo)
 }
 
-func (r ReposGetClonesReq) method() string {
+func (r *ReposGetClonesReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetClonesReq) urlQuery() url.Values {
+func (r *ReposGetClonesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Per != nil {
 		query.Set("per", *r.Per)
@@ -4868,15 +5134,19 @@ func (r ReposGetClonesReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposGetClonesReq) header() http.Header {
+func (r *ReposGetClonesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetClonesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetClonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetClonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4908,28 +5178,32 @@ type ReposGetCodeFrequencyStatsReq struct {
 	Repo  string
 }
 
-func (r ReposGetCodeFrequencyStatsReq) urlPath() string {
+func (r *ReposGetCodeFrequencyStatsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/stats/code_frequency", r.Owner, r.Repo)
 }
 
-func (r ReposGetCodeFrequencyStatsReq) method() string {
+func (r *ReposGetCodeFrequencyStatsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetCodeFrequencyStatsReq) urlQuery() url.Values {
+func (r *ReposGetCodeFrequencyStatsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCodeFrequencyStatsReq) header() http.Header {
+func (r *ReposGetCodeFrequencyStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetCodeFrequencyStatsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4954,28 +5228,32 @@ type ReposGetCollaboratorPermissionLevelReq struct {
 	Username string
 }
 
-func (r ReposGetCollaboratorPermissionLevelReq) urlPath() string {
+func (r *ReposGetCollaboratorPermissionLevelReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/collaborators/%v/permission", r.Owner, r.Repo, r.Username)
 }
 
-func (r ReposGetCollaboratorPermissionLevelReq) method() string {
+func (r *ReposGetCollaboratorPermissionLevelReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetCollaboratorPermissionLevelReq) urlQuery() url.Values {
+func (r *ReposGetCollaboratorPermissionLevelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCollaboratorPermissionLevelReq) header() http.Header {
+func (r *ReposGetCollaboratorPermissionLevelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetCollaboratorPermissionLevelReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5022,28 +5300,32 @@ type ReposGetCombinedStatusForRefReq struct {
 	Ref   string
 }
 
-func (r ReposGetCombinedStatusForRefReq) urlPath() string {
+func (r *ReposGetCombinedStatusForRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/status", r.Owner, r.Repo, r.Ref)
 }
 
-func (r ReposGetCombinedStatusForRefReq) method() string {
+func (r *ReposGetCombinedStatusForRefReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetCombinedStatusForRefReq) urlQuery() url.Values {
+func (r *ReposGetCombinedStatusForRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCombinedStatusForRefReq) header() http.Header {
+func (r *ReposGetCombinedStatusForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetCombinedStatusForRefReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5154,28 +5436,32 @@ type ReposGetCommitReq struct {
 	Ref   string
 }
 
-func (r ReposGetCommitReq) urlPath() string {
+func (r *ReposGetCommitReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v", r.Owner, r.Repo, r.Ref)
 }
 
-func (r ReposGetCommitReq) method() string {
+func (r *ReposGetCommitReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetCommitReq) urlQuery() url.Values {
+func (r *ReposGetCommitReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCommitReq) header() http.Header {
+func (r *ReposGetCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetCommitReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5289,28 +5575,32 @@ type ReposGetCommitActivityStatsReq struct {
 	Repo  string
 }
 
-func (r ReposGetCommitActivityStatsReq) urlPath() string {
+func (r *ReposGetCommitActivityStatsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/stats/commit_activity", r.Owner, r.Repo)
 }
 
-func (r ReposGetCommitActivityStatsReq) method() string {
+func (r *ReposGetCommitActivityStatsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetCommitActivityStatsReq) urlQuery() url.Values {
+func (r *ReposGetCommitActivityStatsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCommitActivityStatsReq) header() http.Header {
+func (r *ReposGetCommitActivityStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetCommitActivityStatsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5350,28 +5640,35 @@ type ReposGetCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReposGetCommitCommentReq) urlPath() string {
+func (r *ReposGetCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReposGetCommitCommentReq) method() string {
+func (r *ReposGetCommitCommentReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetCommitCommentReq) urlQuery() url.Values {
+func (r *ReposGetCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetCommitCommentReq) header() http.Header {
+func (r *ReposGetCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetCommitCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5434,15 +5731,15 @@ type ReposGetContentsReq struct {
 	Ref *string
 }
 
-func (r ReposGetContentsReq) urlPath() string {
+func (r *ReposGetContentsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
 }
 
-func (r ReposGetContentsReq) method() string {
+func (r *ReposGetContentsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetContentsReq) urlQuery() url.Values {
+func (r *ReposGetContentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Ref != nil {
 		query.Set("ref", *r.Ref)
@@ -5450,15 +5747,19 @@ func (r ReposGetContentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposGetContentsReq) header() http.Header {
+func (r *ReposGetContentsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetContentsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5499,28 +5800,32 @@ type ReposGetContributorsStatsReq struct {
 	Repo  string
 }
 
-func (r ReposGetContributorsStatsReq) urlPath() string {
+func (r *ReposGetContributorsStatsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/stats/contributors", r.Owner, r.Repo)
 }
 
-func (r ReposGetContributorsStatsReq) method() string {
+func (r *ReposGetContributorsStatsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetContributorsStatsReq) urlQuery() url.Values {
+func (r *ReposGetContributorsStatsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetContributorsStatsReq) header() http.Header {
+func (r *ReposGetContributorsStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetContributorsStatsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5573,28 +5878,32 @@ type ReposGetDeployKeyReq struct {
 	KeyId int64
 }
 
-func (r ReposGetDeployKeyReq) urlPath() string {
+func (r *ReposGetDeployKeyReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
 }
 
-func (r ReposGetDeployKeyReq) method() string {
+func (r *ReposGetDeployKeyReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetDeployKeyReq) urlQuery() url.Values {
+func (r *ReposGetDeployKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetDeployKeyReq) header() http.Header {
+func (r *ReposGetDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetDeployKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5649,31 +5958,39 @@ type ReposGetDeploymentReq struct {
 	AntManPreview bool
 }
 
-func (r ReposGetDeploymentReq) urlPath() string {
+func (r *ReposGetDeploymentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId)
 }
 
-func (r ReposGetDeploymentReq) method() string {
+func (r *ReposGetDeploymentReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetDeploymentReq) urlQuery() url.Values {
+func (r *ReposGetDeploymentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetDeploymentReq) header() http.Header {
+func (r *ReposGetDeploymentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"ant-man":     r.AntManPreview,
 		"machine-man": r.MachineManPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["ant-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetDeploymentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5772,32 +6089,41 @@ type ReposGetDeploymentStatusReq struct {
 	AntManPreview bool
 }
 
-func (r ReposGetDeploymentStatusReq) urlPath() string {
+func (r *ReposGetDeploymentStatusReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses/%v", r.Owner, r.Repo, r.DeploymentId, r.StatusId)
 }
 
-func (r ReposGetDeploymentStatusReq) method() string {
+func (r *ReposGetDeploymentStatusReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetDeploymentStatusReq) urlQuery() url.Values {
+func (r *ReposGetDeploymentStatusReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetDeploymentStatusReq) header() http.Header {
+func (r *ReposGetDeploymentStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"ant-man":     r.AntManPreview,
 		"flash":       r.FlashPreview,
 		"machine-man": r.MachineManPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["flash"] = true
+		previewVals["ant-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetDeploymentStatusReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5856,28 +6182,32 @@ type ReposGetDownloadReq struct {
 	DownloadId int64
 }
 
-func (r ReposGetDownloadReq) urlPath() string {
+func (r *ReposGetDownloadReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
 }
 
-func (r ReposGetDownloadReq) method() string {
+func (r *ReposGetDownloadReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetDownloadReq) urlQuery() url.Values {
+func (r *ReposGetDownloadReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetDownloadReq) header() http.Header {
+func (r *ReposGetDownloadReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetDownloadReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5911,28 +6241,32 @@ type ReposGetHookReq struct {
 	HookId int64
 }
 
-func (r ReposGetHookReq) urlPath() string {
+func (r *ReposGetHookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
 }
 
-func (r ReposGetHookReq) method() string {
+func (r *ReposGetHookReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetHookReq) urlQuery() url.Values {
+func (r *ReposGetHookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetHookReq) header() http.Header {
+func (r *ReposGetHookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetHookReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -5977,28 +6311,32 @@ type ReposGetLatestPagesBuildReq struct {
 	Repo  string
 }
 
-func (r ReposGetLatestPagesBuildReq) urlPath() string {
+func (r *ReposGetLatestPagesBuildReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages/builds/latest", r.Owner, r.Repo)
 }
 
-func (r ReposGetLatestPagesBuildReq) method() string {
+func (r *ReposGetLatestPagesBuildReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetLatestPagesBuildReq) urlQuery() url.Values {
+func (r *ReposGetLatestPagesBuildReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetLatestPagesBuildReq) header() http.Header {
+func (r *ReposGetLatestPagesBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetLatestPagesBuildReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6052,28 +6390,32 @@ type ReposGetLatestReleaseReq struct {
 	Repo  string
 }
 
-func (r ReposGetLatestReleaseReq) urlPath() string {
+func (r *ReposGetLatestReleaseReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/latest", r.Owner, r.Repo)
 }
 
-func (r ReposGetLatestReleaseReq) method() string {
+func (r *ReposGetLatestReleaseReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetLatestReleaseReq) urlQuery() url.Values {
+func (r *ReposGetLatestReleaseReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetLatestReleaseReq) header() http.Header {
+func (r *ReposGetLatestReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetLatestReleaseReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6168,28 +6510,32 @@ type ReposGetPagesReq struct {
 	Repo  string
 }
 
-func (r ReposGetPagesReq) urlPath() string {
+func (r *ReposGetPagesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
 }
 
-func (r ReposGetPagesReq) method() string {
+func (r *ReposGetPagesReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetPagesReq) urlQuery() url.Values {
+func (r *ReposGetPagesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetPagesReq) header() http.Header {
+func (r *ReposGetPagesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetPagesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetPagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetPagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6224,28 +6570,32 @@ type ReposGetPagesBuildReq struct {
 	BuildId int64
 }
 
-func (r ReposGetPagesBuildReq) urlPath() string {
+func (r *ReposGetPagesBuildReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages/builds/%v", r.Owner, r.Repo, r.BuildId)
 }
 
-func (r ReposGetPagesBuildReq) method() string {
+func (r *ReposGetPagesBuildReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetPagesBuildReq) urlQuery() url.Values {
+func (r *ReposGetPagesBuildReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetPagesBuildReq) header() http.Header {
+func (r *ReposGetPagesBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetPagesBuildReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6299,28 +6649,32 @@ type ReposGetParticipationStatsReq struct {
 	Repo  string
 }
 
-func (r ReposGetParticipationStatsReq) urlPath() string {
+func (r *ReposGetParticipationStatsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/stats/participation", r.Owner, r.Repo)
 }
 
-func (r ReposGetParticipationStatsReq) method() string {
+func (r *ReposGetParticipationStatsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetParticipationStatsReq) urlQuery() url.Values {
+func (r *ReposGetParticipationStatsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetParticipationStatsReq) header() http.Header {
+func (r *ReposGetParticipationStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetParticipationStatsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6348,28 +6702,32 @@ type ReposGetProtectedBranchAdminEnforcementReq struct {
 	Branch string
 }
 
-func (r ReposGetProtectedBranchAdminEnforcementReq) urlPath() string {
+func (r *ReposGetProtectedBranchAdminEnforcementReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetProtectedBranchAdminEnforcementReq) method() string {
+func (r *ReposGetProtectedBranchAdminEnforcementReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
+func (r *ReposGetProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetProtectedBranchAdminEnforcementReq) header() http.Header {
+func (r *ReposGetProtectedBranchAdminEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetProtectedBranchAdminEnforcementReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6407,28 +6765,35 @@ type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
 	LukeCagePreview bool
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	if allPreviews {
+		previewVals["luke-cage"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6455,28 +6820,38 @@ type ReposGetProtectedBranchRequiredSignaturesReq struct {
 	ZzzaxPreview bool
 }
 
-func (r ReposGetProtectedBranchRequiredSignaturesReq) urlPath() string {
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetProtectedBranchRequiredSignaturesReq) method() string {
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetProtectedBranchRequiredSignaturesReq) header() http.Header {
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	if requiredPreviews {
+		previewVals["zzzax"] = true
+	}
+	if allPreviews {
+		previewVals["zzzax"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6504,28 +6879,32 @@ type ReposGetProtectedBranchRequiredStatusChecksReq struct {
 	Branch string
 }
 
-func (r ReposGetProtectedBranchRequiredStatusChecksReq) urlPath() string {
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetProtectedBranchRequiredStatusChecksReq) method() string {
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetProtectedBranchRequiredStatusChecksReq) header() http.Header {
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6555,28 +6934,32 @@ type ReposGetProtectedBranchRestrictionsReq struct {
 	Branch string
 }
 
-func (r ReposGetProtectedBranchRestrictionsReq) urlPath() string {
+func (r *ReposGetProtectedBranchRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetProtectedBranchRestrictionsReq) method() string {
+func (r *ReposGetProtectedBranchRestrictionsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetProtectedBranchRestrictionsReq) urlQuery() url.Values {
+func (r *ReposGetProtectedBranchRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetProtectedBranchRestrictionsReq) header() http.Header {
+func (r *ReposGetProtectedBranchRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetProtectedBranchRestrictionsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6671,28 +7054,32 @@ type ReposGetPunchCardStatsReq struct {
 	Repo  string
 }
 
-func (r ReposGetPunchCardStatsReq) urlPath() string {
+func (r *ReposGetPunchCardStatsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/stats/punch_card", r.Owner, r.Repo)
 }
 
-func (r ReposGetPunchCardStatsReq) method() string {
+func (r *ReposGetPunchCardStatsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetPunchCardStatsReq) urlQuery() url.Values {
+func (r *ReposGetPunchCardStatsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetPunchCardStatsReq) header() http.Header {
+func (r *ReposGetPunchCardStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetPunchCardStatsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6722,15 +7109,15 @@ type ReposGetReadmeReq struct {
 	Ref *string
 }
 
-func (r ReposGetReadmeReq) urlPath() string {
+func (r *ReposGetReadmeReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/readme", r.Owner, r.Repo)
 }
 
-func (r ReposGetReadmeReq) method() string {
+func (r *ReposGetReadmeReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetReadmeReq) urlQuery() url.Values {
+func (r *ReposGetReadmeReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Ref != nil {
 		query.Set("ref", *r.Ref)
@@ -6738,15 +7125,19 @@ func (r ReposGetReadmeReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposGetReadmeReq) header() http.Header {
+func (r *ReposGetReadmeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetReadmeReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6788,28 +7179,32 @@ type ReposGetReleaseReq struct {
 	ReleaseId int64
 }
 
-func (r ReposGetReleaseReq) urlPath() string {
+func (r *ReposGetReleaseReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/%v", r.Owner, r.Repo, r.ReleaseId)
 }
 
-func (r ReposGetReleaseReq) method() string {
+func (r *ReposGetReleaseReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetReleaseReq) urlQuery() url.Values {
+func (r *ReposGetReleaseReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetReleaseReq) header() http.Header {
+func (r *ReposGetReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetReleaseReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6905,28 +7300,32 @@ type ReposGetReleaseAssetReq struct {
 	AssetId int64
 }
 
-func (r ReposGetReleaseAssetReq) urlPath() string {
+func (r *ReposGetReleaseAssetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
 }
 
-func (r ReposGetReleaseAssetReq) method() string {
+func (r *ReposGetReleaseAssetReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetReleaseAssetReq) urlQuery() url.Values {
+func (r *ReposGetReleaseAssetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetReleaseAssetReq) header() http.Header {
+func (r *ReposGetReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetReleaseAssetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -6984,28 +7383,32 @@ type ReposGetReleaseByTagReq struct {
 	Tag   string
 }
 
-func (r ReposGetReleaseByTagReq) urlPath() string {
+func (r *ReposGetReleaseByTagReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/tags/%v", r.Owner, r.Repo, r.Tag)
 }
 
-func (r ReposGetReleaseByTagReq) method() string {
+func (r *ReposGetReleaseByTagReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetReleaseByTagReq) urlQuery() url.Values {
+func (r *ReposGetReleaseByTagReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetReleaseByTagReq) header() http.Header {
+func (r *ReposGetReleaseByTagReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetReleaseByTagReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7101,28 +7504,32 @@ type ReposGetTeamsWithAccessToProtectedBranchReq struct {
 	Branch string
 }
 
-func (r ReposGetTeamsWithAccessToProtectedBranchReq) urlPath() string {
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetTeamsWithAccessToProtectedBranchReq) method() string {
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetTeamsWithAccessToProtectedBranchReq) urlQuery() url.Values {
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetTeamsWithAccessToProtectedBranchReq) header() http.Header {
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7159,28 +7566,32 @@ type ReposGetTopPathsReq struct {
 	Repo  string
 }
 
-func (r ReposGetTopPathsReq) urlPath() string {
+func (r *ReposGetTopPathsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/traffic/popular/paths", r.Owner, r.Repo)
 }
 
-func (r ReposGetTopPathsReq) method() string {
+func (r *ReposGetTopPathsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetTopPathsReq) urlQuery() url.Values {
+func (r *ReposGetTopPathsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetTopPathsReq) header() http.Header {
+func (r *ReposGetTopPathsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetTopPathsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7209,28 +7620,32 @@ type ReposGetTopReferrersReq struct {
 	Repo  string
 }
 
-func (r ReposGetTopReferrersReq) urlPath() string {
+func (r *ReposGetTopReferrersReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/traffic/popular/referrers", r.Owner, r.Repo)
 }
 
-func (r ReposGetTopReferrersReq) method() string {
+func (r *ReposGetTopReferrersReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetTopReferrersReq) urlQuery() url.Values {
+func (r *ReposGetTopReferrersReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetTopReferrersReq) header() http.Header {
+func (r *ReposGetTopReferrersReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetTopReferrersReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7259,28 +7674,32 @@ type ReposGetUsersWithAccessToProtectedBranchReq struct {
 	Branch string
 }
 
-func (r ReposGetUsersWithAccessToProtectedBranchReq) urlPath() string {
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposGetUsersWithAccessToProtectedBranchReq) method() string {
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetUsersWithAccessToProtectedBranchReq) urlQuery() url.Values {
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposGetUsersWithAccessToProtectedBranchReq) header() http.Header {
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7326,15 +7745,15 @@ type ReposGetViewsReq struct {
 	Per *string
 }
 
-func (r ReposGetViewsReq) urlPath() string {
+func (r *ReposGetViewsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/traffic/views", r.Owner, r.Repo)
 }
 
-func (r ReposGetViewsReq) method() string {
+func (r *ReposGetViewsReq) method() string {
 	return "GET"
 }
 
-func (r ReposGetViewsReq) urlQuery() url.Values {
+func (r *ReposGetViewsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Per != nil {
 		query.Set("per", *r.Per)
@@ -7342,15 +7761,19 @@ func (r ReposGetViewsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposGetViewsReq) header() http.Header {
+func (r *ReposGetViewsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposGetViewsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7389,15 +7812,15 @@ type ReposListAssetsForReleaseReq struct {
 	Page *int64
 }
 
-func (r ReposListAssetsForReleaseReq) urlPath() string {
+func (r *ReposListAssetsForReleaseReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
 }
 
-func (r ReposListAssetsForReleaseReq) method() string {
+func (r *ReposListAssetsForReleaseReq) method() string {
 	return "GET"
 }
 
-func (r ReposListAssetsForReleaseReq) urlQuery() url.Values {
+func (r *ReposListAssetsForReleaseReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7408,15 +7831,19 @@ func (r ReposListAssetsForReleaseReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListAssetsForReleaseReq) header() http.Header {
+func (r *ReposListAssetsForReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListAssetsForReleaseReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7485,15 +7912,15 @@ type ReposListBranchesReq struct {
 	Page *int64
 }
 
-func (r ReposListBranchesReq) urlPath() string {
+func (r *ReposListBranchesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches", r.Owner, r.Repo)
 }
 
-func (r ReposListBranchesReq) method() string {
+func (r *ReposListBranchesReq) method() string {
 	return "GET"
 }
 
-func (r ReposListBranchesReq) urlQuery() url.Values {
+func (r *ReposListBranchesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Protected != nil {
 		query.Set("protected", strconv.FormatBool(*r.Protected))
@@ -7507,15 +7934,19 @@ func (r ReposListBranchesReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListBranchesReq) header() http.Header {
+func (r *ReposListBranchesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListBranchesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7564,28 +7995,38 @@ type ReposListBranchesForHeadCommitReq struct {
 	GrootPreview bool
 }
 
-func (r ReposListBranchesForHeadCommitReq) urlPath() string {
+func (r *ReposListBranchesForHeadCommitReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/branches-where-head", r.Owner, r.Repo, r.CommitSha)
 }
 
-func (r ReposListBranchesForHeadCommitReq) method() string {
+func (r *ReposListBranchesForHeadCommitReq) method() string {
 	return "GET"
 }
 
-func (r ReposListBranchesForHeadCommitReq) urlQuery() url.Values {
+func (r *ReposListBranchesForHeadCommitReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposListBranchesForHeadCommitReq) header() http.Header {
+func (r *ReposListBranchesForHeadCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"groot": r.GrootPreview}
+	if requiredPreviews {
+		previewVals["groot"] = true
+	}
+	if allPreviews {
+		previewVals["groot"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListBranchesForHeadCommitReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7631,15 +8072,15 @@ type ReposListCollaboratorsReq struct {
 	Page *int64
 }
 
-func (r ReposListCollaboratorsReq) urlPath() string {
+func (r *ReposListCollaboratorsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/collaborators", r.Owner, r.Repo)
 }
 
-func (r ReposListCollaboratorsReq) method() string {
+func (r *ReposListCollaboratorsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListCollaboratorsReq) urlQuery() url.Values {
+func (r *ReposListCollaboratorsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Affiliation != nil {
 		query.Set("affiliation", *r.Affiliation)
@@ -7653,15 +8094,19 @@ func (r ReposListCollaboratorsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListCollaboratorsReq) header() http.Header {
+func (r *ReposListCollaboratorsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListCollaboratorsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7727,15 +8172,15 @@ type ReposListCommentsForCommitReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReposListCommentsForCommitReq) urlPath() string {
+func (r *ReposListCommentsForCommitReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/comments", r.Owner, r.Repo, r.CommitSha)
 }
 
-func (r ReposListCommentsForCommitReq) method() string {
+func (r *ReposListCommentsForCommitReq) method() string {
 	return "GET"
 }
 
-func (r ReposListCommentsForCommitReq) urlQuery() url.Values {
+func (r *ReposListCommentsForCommitReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7746,15 +8191,22 @@ func (r ReposListCommentsForCommitReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListCommentsForCommitReq) header() http.Header {
+func (r *ReposListCommentsForCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListCommentsForCommitReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7827,15 +8279,15 @@ type ReposListCommitCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r ReposListCommitCommentsReq) urlPath() string {
+func (r *ReposListCommitCommentsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments", r.Owner, r.Repo)
 }
 
-func (r ReposListCommitCommentsReq) method() string {
+func (r *ReposListCommitCommentsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListCommitCommentsReq) urlQuery() url.Values {
+func (r *ReposListCommitCommentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7846,15 +8298,22 @@ func (r ReposListCommitCommentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListCommitCommentsReq) header() http.Header {
+func (r *ReposListCommitCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListCommitCommentsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -7940,15 +8399,15 @@ type ReposListCommitsReq struct {
 	Page *int64
 }
 
-func (r ReposListCommitsReq) urlPath() string {
+func (r *ReposListCommitsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits", r.Owner, r.Repo)
 }
 
-func (r ReposListCommitsReq) method() string {
+func (r *ReposListCommitsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListCommitsReq) urlQuery() url.Values {
+func (r *ReposListCommitsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sha != nil {
 		query.Set("sha", *r.Sha)
@@ -7974,15 +8433,19 @@ func (r ReposListCommitsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListCommitsReq) header() http.Header {
+func (r *ReposListCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListCommitsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8090,15 +8553,15 @@ type ReposListContributorsReq struct {
 	Page *int64
 }
 
-func (r ReposListContributorsReq) urlPath() string {
+func (r *ReposListContributorsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/contributors", r.Owner, r.Repo)
 }
 
-func (r ReposListContributorsReq) method() string {
+func (r *ReposListContributorsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListContributorsReq) urlQuery() url.Values {
+func (r *ReposListContributorsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Anon != nil {
 		query.Set("anon", *r.Anon)
@@ -8112,15 +8575,19 @@ func (r ReposListContributorsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListContributorsReq) header() http.Header {
+func (r *ReposListContributorsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListContributorsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListContributorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListContributorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8170,15 +8637,15 @@ type ReposListDeployKeysReq struct {
 	Page *int64
 }
 
-func (r ReposListDeployKeysReq) urlPath() string {
+func (r *ReposListDeployKeysReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
 }
 
-func (r ReposListDeployKeysReq) method() string {
+func (r *ReposListDeployKeysReq) method() string {
 	return "GET"
 }
 
-func (r ReposListDeployKeysReq) urlQuery() url.Values {
+func (r *ReposListDeployKeysReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -8189,15 +8656,19 @@ func (r ReposListDeployKeysReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListDeployKeysReq) header() http.Header {
+func (r *ReposListDeployKeysReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListDeployKeysReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8259,15 +8730,15 @@ type ReposListDeploymentStatusesReq struct {
 	AntManPreview bool
 }
 
-func (r ReposListDeploymentStatusesReq) urlPath() string {
+func (r *ReposListDeploymentStatusesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments/%v/statuses", r.Owner, r.Repo, r.DeploymentId)
 }
 
-func (r ReposListDeploymentStatusesReq) method() string {
+func (r *ReposListDeploymentStatusesReq) method() string {
 	return "GET"
 }
 
-func (r ReposListDeploymentStatusesReq) urlQuery() url.Values {
+func (r *ReposListDeploymentStatusesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -8278,18 +8749,26 @@ func (r ReposListDeploymentStatusesReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListDeploymentStatusesReq) header() http.Header {
+func (r *ReposListDeploymentStatusesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"ant-man": r.AntManPreview,
 		"flash":   r.FlashPreview,
 	}
+	if allPreviews {
+		previewVals["flash"] = true
+		previewVals["ant-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListDeploymentStatusesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8379,15 +8858,15 @@ type ReposListDeploymentsReq struct {
 	AntManPreview bool
 }
 
-func (r ReposListDeploymentsReq) urlPath() string {
+func (r *ReposListDeploymentsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/deployments", r.Owner, r.Repo)
 }
 
-func (r ReposListDeploymentsReq) method() string {
+func (r *ReposListDeploymentsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListDeploymentsReq) urlQuery() url.Values {
+func (r *ReposListDeploymentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sha != nil {
 		query.Set("sha", *r.Sha)
@@ -8410,15 +8889,22 @@ func (r ReposListDeploymentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListDeploymentsReq) header() http.Header {
+func (r *ReposListDeploymentsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"ant-man": r.AntManPreview}
+	if allPreviews {
+		previewVals["ant-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListDeploymentsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8487,15 +8973,15 @@ type ReposListDownloadsReq struct {
 	Page *int64
 }
 
-func (r ReposListDownloadsReq) urlPath() string {
+func (r *ReposListDownloadsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/downloads", r.Owner, r.Repo)
 }
 
-func (r ReposListDownloadsReq) method() string {
+func (r *ReposListDownloadsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListDownloadsReq) urlQuery() url.Values {
+func (r *ReposListDownloadsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -8506,15 +8992,19 @@ func (r ReposListDownloadsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListDownloadsReq) header() http.Header {
+func (r *ReposListDownloadsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListDownloadsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListDownloadsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListDownloadsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8583,15 +9073,15 @@ type ReposListForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ReposListForAuthenticatedUserReq) urlPath() string {
+func (r *ReposListForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/repos")
 }
 
-func (r ReposListForAuthenticatedUserReq) method() string {
+func (r *ReposListForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ReposListForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ReposListForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Visibility != nil {
 		query.Set("visibility", *r.Visibility)
@@ -8617,15 +9107,19 @@ func (r ReposListForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListForAuthenticatedUserReq) header() http.Header {
+func (r *ReposListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8686,15 +9180,15 @@ type ReposListForOrgReq struct {
 	BaptistePreview bool
 }
 
-func (r ReposListForOrgReq) urlPath() string {
+func (r *ReposListForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/repos", r.Org)
 }
 
-func (r ReposListForOrgReq) method() string {
+func (r *ReposListForOrgReq) method() string {
 	return "GET"
 }
 
-func (r ReposListForOrgReq) urlQuery() url.Values {
+func (r *ReposListForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Type != nil {
 		query.Set("type", *r.Type)
@@ -8714,18 +9208,26 @@ func (r ReposListForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListForOrgReq) header() http.Header {
+func (r *ReposListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
 	}
+	if allPreviews {
+		previewVals["nebula"] = true
+		previewVals["baptiste"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8886,15 +9388,15 @@ type ReposListForUserReq struct {
 	NebulaPreview bool
 }
 
-func (r ReposListForUserReq) urlPath() string {
+func (r *ReposListForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/repos", r.Username)
 }
 
-func (r ReposListForUserReq) method() string {
+func (r *ReposListForUserReq) method() string {
 	return "GET"
 }
 
-func (r ReposListForUserReq) urlQuery() url.Values {
+func (r *ReposListForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Type != nil {
 		query.Set("type", *r.Type)
@@ -8914,15 +9416,22 @@ func (r ReposListForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListForUserReq) header() http.Header {
+func (r *ReposListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"nebula": r.NebulaPreview}
+	if allPreviews {
+		previewVals["nebula"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -8948,15 +9457,15 @@ type ReposListForksReq struct {
 	Page *int64
 }
 
-func (r ReposListForksReq) urlPath() string {
+func (r *ReposListForksReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo)
 }
 
-func (r ReposListForksReq) method() string {
+func (r *ReposListForksReq) method() string {
 	return "GET"
 }
 
-func (r ReposListForksReq) urlQuery() url.Values {
+func (r *ReposListForksReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -8970,15 +9479,19 @@ func (r ReposListForksReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListForksReq) header() http.Header {
+func (r *ReposListForksReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListForksReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9116,15 +9629,15 @@ type ReposListHooksReq struct {
 	Page *int64
 }
 
-func (r ReposListHooksReq) urlPath() string {
+func (r *ReposListHooksReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
 }
 
-func (r ReposListHooksReq) method() string {
+func (r *ReposListHooksReq) method() string {
 	return "GET"
 }
 
-func (r ReposListHooksReq) urlQuery() url.Values {
+func (r *ReposListHooksReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -9135,15 +9648,19 @@ func (r ReposListHooksReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListHooksReq) header() http.Header {
+func (r *ReposListHooksReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListHooksReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9194,15 +9711,15 @@ type ReposListInvitationsReq struct {
 	Page *int64
 }
 
-func (r ReposListInvitationsReq) urlPath() string {
+func (r *ReposListInvitationsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/invitations", r.Owner, r.Repo)
 }
 
-func (r ReposListInvitationsReq) method() string {
+func (r *ReposListInvitationsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListInvitationsReq) urlQuery() url.Values {
+func (r *ReposListInvitationsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -9213,15 +9730,19 @@ func (r ReposListInvitationsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListInvitationsReq) header() http.Header {
+func (r *ReposListInvitationsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListInvitationsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9363,15 +9884,15 @@ type ReposListInvitationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r ReposListInvitationsForAuthenticatedUserReq) urlPath() string {
+func (r *ReposListInvitationsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/repository_invitations")
 }
 
-func (r ReposListInvitationsForAuthenticatedUserReq) method() string {
+func (r *ReposListInvitationsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r ReposListInvitationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ReposListInvitationsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -9382,15 +9903,19 @@ func (r ReposListInvitationsForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListInvitationsForAuthenticatedUserReq) header() http.Header {
+func (r *ReposListInvitationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListInvitationsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9528,28 +10053,32 @@ type ReposListLanguagesReq struct {
 	Repo  string
 }
 
-func (r ReposListLanguagesReq) urlPath() string {
+func (r *ReposListLanguagesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/languages", r.Owner, r.Repo)
 }
 
-func (r ReposListLanguagesReq) method() string {
+func (r *ReposListLanguagesReq) method() string {
 	return "GET"
 }
 
-func (r ReposListLanguagesReq) urlQuery() url.Values {
+func (r *ReposListLanguagesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposListLanguagesReq) header() http.Header {
+func (r *ReposListLanguagesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListLanguagesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListLanguagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListLanguagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9579,15 +10108,15 @@ type ReposListPagesBuildsReq struct {
 	Page *int64
 }
 
-func (r ReposListPagesBuildsReq) urlPath() string {
+func (r *ReposListPagesBuildsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
 }
 
-func (r ReposListPagesBuildsReq) method() string {
+func (r *ReposListPagesBuildsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListPagesBuildsReq) urlQuery() url.Values {
+func (r *ReposListPagesBuildsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -9598,15 +10127,19 @@ func (r ReposListPagesBuildsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListPagesBuildsReq) header() http.Header {
+func (r *ReposListPagesBuildsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListPagesBuildsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9661,28 +10194,32 @@ type ReposListProtectedBranchRequiredStatusChecksContextsReq struct {
 	Branch string
 }
 
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) method() string {
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9707,15 +10244,15 @@ type ReposListPublicReq struct {
 	Since *int64
 }
 
-func (r ReposListPublicReq) urlPath() string {
+func (r *ReposListPublicReq) urlPath() string {
 	return fmt.Sprintf("/repositories")
 }
 
-func (r ReposListPublicReq) method() string {
+func (r *ReposListPublicReq) method() string {
 	return "GET"
 }
 
-func (r ReposListPublicReq) urlQuery() url.Values {
+func (r *ReposListPublicReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", strconv.FormatInt(*r.Since, 10))
@@ -9723,15 +10260,19 @@ func (r ReposListPublicReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListPublicReq) header() http.Header {
+func (r *ReposListPublicReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListPublicReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -9838,15 +10379,15 @@ type ReposListPullRequestsAssociatedWithCommitReq struct {
 	GrootPreview bool
 }
 
-func (r ReposListPullRequestsAssociatedWithCommitReq) urlPath() string {
+func (r *ReposListPullRequestsAssociatedWithCommitReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/pulls", r.Owner, r.Repo, r.CommitSha)
 }
 
-func (r ReposListPullRequestsAssociatedWithCommitReq) method() string {
+func (r *ReposListPullRequestsAssociatedWithCommitReq) method() string {
 	return "GET"
 }
 
-func (r ReposListPullRequestsAssociatedWithCommitReq) urlQuery() url.Values {
+func (r *ReposListPullRequestsAssociatedWithCommitReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -9857,15 +10398,25 @@ func (r ReposListPullRequestsAssociatedWithCommitReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListPullRequestsAssociatedWithCommitReq) header() http.Header {
+func (r *ReposListPullRequestsAssociatedWithCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"groot": r.GrootPreview}
+	if requiredPreviews {
+		previewVals["groot"] = true
+	}
+	if allPreviews {
+		previewVals["groot"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListPullRequestsAssociatedWithCommitReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10347,15 +10898,15 @@ type ReposListReleasesReq struct {
 	Page *int64
 }
 
-func (r ReposListReleasesReq) urlPath() string {
+func (r *ReposListReleasesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases", r.Owner, r.Repo)
 }
 
-func (r ReposListReleasesReq) method() string {
+func (r *ReposListReleasesReq) method() string {
 	return "GET"
 }
 
-func (r ReposListReleasesReq) urlQuery() url.Values {
+func (r *ReposListReleasesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -10366,15 +10917,19 @@ func (r ReposListReleasesReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListReleasesReq) header() http.Header {
+func (r *ReposListReleasesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListReleasesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListReleasesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListReleasesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10476,15 +11031,15 @@ type ReposListStatusesForRefReq struct {
 	Page *int64
 }
 
-func (r ReposListStatusesForRefReq) urlPath() string {
+func (r *ReposListStatusesForRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/statuses", r.Owner, r.Repo, r.Ref)
 }
 
-func (r ReposListStatusesForRefReq) method() string {
+func (r *ReposListStatusesForRefReq) method() string {
 	return "GET"
 }
 
-func (r ReposListStatusesForRefReq) urlQuery() url.Values {
+func (r *ReposListStatusesForRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -10495,15 +11050,19 @@ func (r ReposListStatusesForRefReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListStatusesForRefReq) header() http.Header {
+func (r *ReposListStatusesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListStatusesForRefReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10564,15 +11123,15 @@ type ReposListTagsReq struct {
 	Page *int64
 }
 
-func (r ReposListTagsReq) urlPath() string {
+func (r *ReposListTagsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/tags", r.Owner, r.Repo)
 }
 
-func (r ReposListTagsReq) method() string {
+func (r *ReposListTagsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListTagsReq) urlQuery() url.Values {
+func (r *ReposListTagsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -10583,15 +11142,19 @@ func (r ReposListTagsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListTagsReq) header() http.Header {
+func (r *ReposListTagsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListTagsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10629,15 +11192,15 @@ type ReposListTeamsReq struct {
 	Page *int64
 }
 
-func (r ReposListTeamsReq) urlPath() string {
+func (r *ReposListTeamsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/teams", r.Owner, r.Repo)
 }
 
-func (r ReposListTeamsReq) method() string {
+func (r *ReposListTeamsReq) method() string {
 	return "GET"
 }
 
-func (r ReposListTeamsReq) urlQuery() url.Values {
+func (r *ReposListTeamsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -10648,15 +11211,19 @@ func (r ReposListTeamsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposListTeamsReq) header() http.Header {
+func (r *ReposListTeamsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposListTeamsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposListTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposListTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10694,28 +11261,32 @@ type ReposMergeReq struct {
 	RequestBody ReposMergeReqBody
 }
 
-func (r ReposMergeReq) urlPath() string {
+func (r *ReposMergeReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/merges", r.Owner, r.Repo)
 }
 
-func (r ReposMergeReq) method() string {
+func (r *ReposMergeReq) method() string {
 	return "POST"
 }
 
-func (r ReposMergeReq) urlQuery() url.Values {
+func (r *ReposMergeReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposMergeReq) header() http.Header {
+func (r *ReposMergeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposMergeReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10835,28 +11406,32 @@ type ReposPingHookReq struct {
 	HookId int64
 }
 
-func (r ReposPingHookReq) urlPath() string {
+func (r *ReposPingHookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v/pings", r.Owner, r.Repo, r.HookId)
 }
 
-func (r ReposPingHookReq) method() string {
+func (r *ReposPingHookReq) method() string {
 	return "POST"
 }
 
-func (r ReposPingHookReq) urlQuery() url.Values {
+func (r *ReposPingHookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposPingHookReq) header() http.Header {
+func (r *ReposPingHookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposPingHookReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10874,28 +11449,32 @@ type ReposRemoveBranchProtectionReq struct {
 	Branch string
 }
 
-func (r ReposRemoveBranchProtectionReq) urlPath() string {
+func (r *ReposRemoveBranchProtectionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveBranchProtectionReq) method() string {
+func (r *ReposRemoveBranchProtectionReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveBranchProtectionReq) urlQuery() url.Values {
+func (r *ReposRemoveBranchProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveBranchProtectionReq) header() http.Header {
+func (r *ReposRemoveBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveBranchProtectionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10913,28 +11492,32 @@ type ReposRemoveCollaboratorReq struct {
 	Username string
 }
 
-func (r ReposRemoveCollaboratorReq) urlPath() string {
+func (r *ReposRemoveCollaboratorReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username)
 }
 
-func (r ReposRemoveCollaboratorReq) method() string {
+func (r *ReposRemoveCollaboratorReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveCollaboratorReq) urlQuery() url.Values {
+func (r *ReposRemoveCollaboratorReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveCollaboratorReq) header() http.Header {
+func (r *ReposRemoveCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveCollaboratorReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10952,28 +11535,32 @@ type ReposRemoveDeployKeyReq struct {
 	KeyId int64
 }
 
-func (r ReposRemoveDeployKeyReq) urlPath() string {
+func (r *ReposRemoveDeployKeyReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
 }
 
-func (r ReposRemoveDeployKeyReq) method() string {
+func (r *ReposRemoveDeployKeyReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveDeployKeyReq) urlQuery() url.Values {
+func (r *ReposRemoveDeployKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveDeployKeyReq) header() http.Header {
+func (r *ReposRemoveDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveDeployKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -10991,28 +11578,32 @@ type ReposRemoveProtectedBranchAdminEnforcementReq struct {
 	Branch string
 }
 
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) method() string {
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11031,28 +11622,32 @@ type ReposRemoveProtectedBranchAppRestrictionsReq struct {
 	RequestBody ReposRemoveProtectedBranchAppRestrictionsReqBody
 }
 
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) method() string {
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11115,28 +11710,32 @@ type ReposRemoveProtectedBranchPullRequestReviewEnforcementReq struct {
 	Branch string
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11163,28 +11762,38 @@ type ReposRemoveProtectedBranchRequiredSignaturesReq struct {
 	ZzzaxPreview bool
 }
 
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) method() string {
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	if requiredPreviews {
+		previewVals["zzzax"] = true
+	}
+	if allPreviews {
+		previewVals["zzzax"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11202,28 +11811,32 @@ type ReposRemoveProtectedBranchRequiredStatusChecksReq struct {
 	Branch string
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) method() string {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11242,28 +11855,32 @@ type ReposRemoveProtectedBranchRequiredStatusChecksContextsReq struct {
 	RequestBody ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) method() string {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11295,28 +11912,32 @@ type ReposRemoveProtectedBranchRestrictionsReq struct {
 	Branch string
 }
 
-func (r ReposRemoveProtectedBranchRestrictionsReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchRestrictionsReq) method() string {
+func (r *ReposRemoveProtectedBranchRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchRestrictionsReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchRestrictionsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11335,28 +11956,32 @@ type ReposRemoveProtectedBranchTeamRestrictionsReq struct {
 	RequestBody ReposRemoveProtectedBranchTeamRestrictionsReqBody
 }
 
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) method() string {
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11402,28 +12027,32 @@ type ReposRemoveProtectedBranchUserRestrictionsReq struct {
 	RequestBody ReposRemoveProtectedBranchUserRestrictionsReqBody
 }
 
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) urlPath() string {
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) method() string {
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) header() http.Header {
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11480,28 +12109,38 @@ type ReposReplaceAllTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r ReposReplaceAllTopicsReq) urlPath() string {
+func (r *ReposReplaceAllTopicsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/topics", r.Owner, r.Repo)
 }
 
-func (r ReposReplaceAllTopicsReq) method() string {
+func (r *ReposReplaceAllTopicsReq) method() string {
 	return "PUT"
 }
 
-func (r ReposReplaceAllTopicsReq) urlQuery() url.Values {
+func (r *ReposReplaceAllTopicsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposReplaceAllTopicsReq) header() http.Header {
+func (r *ReposReplaceAllTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	if requiredPreviews {
+		previewVals["mercy"] = true
+	}
+	if allPreviews {
+		previewVals["mercy"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposReplaceAllTopicsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11545,28 +12184,32 @@ type ReposReplaceProtectedBranchAppRestrictionsReq struct {
 	RequestBody ReposReplaceProtectedBranchAppRestrictionsReqBody
 }
 
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) urlPath() string {
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) method() string {
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) method() string {
 	return "PUT"
 }
 
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) header() http.Header {
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposReplaceProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11630,28 +12273,32 @@ type ReposReplaceProtectedBranchRequiredStatusChecksContextsReq struct {
 	RequestBody ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody
 }
 
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) method() string {
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) method() string {
 	return "PUT"
 }
 
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) header() http.Header {
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11684,28 +12331,32 @@ type ReposReplaceProtectedBranchTeamRestrictionsReq struct {
 	RequestBody ReposReplaceProtectedBranchTeamRestrictionsReqBody
 }
 
-func (r ReposReplaceProtectedBranchTeamRestrictionsReq) urlPath() string {
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposReplaceProtectedBranchTeamRestrictionsReq) method() string {
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) method() string {
 	return "PUT"
 }
 
-func (r ReposReplaceProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposReplaceProtectedBranchTeamRestrictionsReq) header() http.Header {
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposReplaceProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11751,28 +12402,32 @@ type ReposReplaceProtectedBranchUserRestrictionsReq struct {
 	RequestBody ReposReplaceProtectedBranchUserRestrictionsReqBody
 }
 
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) urlPath() string {
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) method() string {
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) method() string {
 	return "PUT"
 }
 
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) header() http.Header {
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposReplaceProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11822,28 +12477,32 @@ type ReposRequestPageBuildReq struct {
 	Repo  string
 }
 
-func (r ReposRequestPageBuildReq) urlPath() string {
+func (r *ReposRequestPageBuildReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
 }
 
-func (r ReposRequestPageBuildReq) method() string {
+func (r *ReposRequestPageBuildReq) method() string {
 	return "POST"
 }
 
-func (r ReposRequestPageBuildReq) urlQuery() url.Values {
+func (r *ReposRequestPageBuildReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRequestPageBuildReq) header() http.Header {
+func (r *ReposRequestPageBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRequestPageBuildReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11870,28 +12529,32 @@ type ReposRetrieveCommunityProfileMetricsReq struct {
 	Repo  string
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) urlPath() string {
+func (r *ReposRetrieveCommunityProfileMetricsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/community/profile", r.Owner, r.Repo)
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) method() string {
+func (r *ReposRetrieveCommunityProfileMetricsReq) method() string {
 	return "GET"
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) urlQuery() url.Values {
+func (r *ReposRetrieveCommunityProfileMetricsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposRetrieveCommunityProfileMetricsReq) header() http.Header {
+func (r *ReposRetrieveCommunityProfileMetricsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposRetrieveCommunityProfileMetricsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11952,28 +12615,32 @@ type ReposTestPushHookReq struct {
 	HookId int64
 }
 
-func (r ReposTestPushHookReq) urlPath() string {
+func (r *ReposTestPushHookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v/tests", r.Owner, r.Repo, r.HookId)
 }
 
-func (r ReposTestPushHookReq) method() string {
+func (r *ReposTestPushHookReq) method() string {
 	return "POST"
 }
 
-func (r ReposTestPushHookReq) urlQuery() url.Values {
+func (r *ReposTestPushHookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposTestPushHookReq) header() http.Header {
+func (r *ReposTestPushHookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposTestPushHookReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -11991,28 +12658,32 @@ type ReposTransferReq struct {
 	RequestBody ReposTransferReqBody
 }
 
-func (r ReposTransferReq) urlPath() string {
+func (r *ReposTransferReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/transfer", r.Owner, r.Repo)
 }
 
-func (r ReposTransferReq) method() string {
+func (r *ReposTransferReq) method() string {
 	return "POST"
 }
 
-func (r ReposTransferReq) urlQuery() url.Values {
+func (r *ReposTransferReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposTransferReq) header() http.Header {
+func (r *ReposTransferReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposTransferReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposTransferReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposTransferReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -12182,31 +12853,39 @@ type ReposUpdateReq struct {
 	BaptistePreview bool
 }
 
-func (r ReposUpdateReq) urlPath() string {
+func (r *ReposUpdateReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v", r.Owner, r.Repo)
 }
 
-func (r ReposUpdateReq) method() string {
+func (r *ReposUpdateReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateReq) urlQuery() url.Values {
+func (r *ReposUpdateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateReq) header() http.Header {
+func (r *ReposUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
 	}
+	if allPreviews {
+		previewVals["nebula"] = true
+		previewVals["baptiste"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -12671,28 +13350,35 @@ type ReposUpdateBranchProtectionReq struct {
 	LukeCagePreview bool
 }
 
-func (r ReposUpdateBranchProtectionReq) urlPath() string {
+func (r *ReposUpdateBranchProtectionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposUpdateBranchProtectionReq) method() string {
+func (r *ReposUpdateBranchProtectionReq) method() string {
 	return "PUT"
 }
 
-func (r ReposUpdateBranchProtectionReq) urlQuery() url.Values {
+func (r *ReposUpdateBranchProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateBranchProtectionReq) header() http.Header {
+func (r *ReposUpdateBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	if allPreviews {
+		previewVals["luke-cage"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateBranchProtectionReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews is a value for ReposUpdateBranchProtectionReqBody's RequiredPullRequestReviews field
@@ -12979,28 +13665,32 @@ type ReposUpdateCommitCommentReq struct {
 	RequestBody ReposUpdateCommitCommentReqBody
 }
 
-func (r ReposUpdateCommitCommentReq) urlPath() string {
+func (r *ReposUpdateCommitCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r ReposUpdateCommitCommentReq) method() string {
+func (r *ReposUpdateCommitCommentReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateCommitCommentReq) urlQuery() url.Values {
+func (r *ReposUpdateCommitCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateCommitCommentReq) header() http.Header {
+func (r *ReposUpdateCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateCommitCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -13069,28 +13759,32 @@ type ReposUpdateHookReq struct {
 	RequestBody ReposUpdateHookReqBody
 }
 
-func (r ReposUpdateHookReq) urlPath() string {
+func (r *ReposUpdateHookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
 }
 
-func (r ReposUpdateHookReq) method() string {
+func (r *ReposUpdateHookReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateHookReq) urlQuery() url.Values {
+func (r *ReposUpdateHookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateHookReq) header() http.Header {
+func (r *ReposUpdateHookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateHookReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposUpdateHookReqBodyConfig is a value for ReposUpdateHookReqBody's Config field
@@ -13204,28 +13898,32 @@ type ReposUpdateInformationAboutPagesSiteReq struct {
 	RequestBody ReposUpdateInformationAboutPagesSiteReqBody
 }
 
-func (r ReposUpdateInformationAboutPagesSiteReq) urlPath() string {
+func (r *ReposUpdateInformationAboutPagesSiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
 }
 
-func (r ReposUpdateInformationAboutPagesSiteReq) method() string {
+func (r *ReposUpdateInformationAboutPagesSiteReq) method() string {
 	return "PUT"
 }
 
-func (r ReposUpdateInformationAboutPagesSiteReq) urlQuery() url.Values {
+func (r *ReposUpdateInformationAboutPagesSiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateInformationAboutPagesSiteReq) header() http.Header {
+func (r *ReposUpdateInformationAboutPagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateInformationAboutPagesSiteReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -13267,28 +13965,32 @@ type ReposUpdateInvitationReq struct {
 	RequestBody  ReposUpdateInvitationReqBody
 }
 
-func (r ReposUpdateInvitationReq) urlPath() string {
+func (r *ReposUpdateInvitationReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId)
 }
 
-func (r ReposUpdateInvitationReq) method() string {
+func (r *ReposUpdateInvitationReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateInvitationReq) urlQuery() url.Values {
+func (r *ReposUpdateInvitationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateInvitationReq) header() http.Header {
+func (r *ReposUpdateInvitationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateInvitationReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -13452,28 +14154,35 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
 	LukeCagePreview bool
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header() http.Header {
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
+	if allPreviews {
+		previewVals["luke-cage"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions is a value for ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody's DismissalRestrictions field
@@ -13587,28 +14296,32 @@ type ReposUpdateProtectedBranchRequiredStatusChecksReq struct {
 	RequestBody ReposUpdateProtectedBranchRequiredStatusChecksReqBody
 }
 
-func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) urlPath() string {
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
 }
 
-func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) method() string {
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) header() http.Header {
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -13653,28 +14366,32 @@ type ReposUpdateReleaseReq struct {
 	RequestBody ReposUpdateReleaseReqBody
 }
 
-func (r ReposUpdateReleaseReq) urlPath() string {
+func (r *ReposUpdateReleaseReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/%v", r.Owner, r.Repo, r.ReleaseId)
 }
 
-func (r ReposUpdateReleaseReq) method() string {
+func (r *ReposUpdateReleaseReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateReleaseReq) urlQuery() url.Values {
+func (r *ReposUpdateReleaseReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateReleaseReq) header() http.Header {
+func (r *ReposUpdateReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateReleaseReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -13804,28 +14521,32 @@ type ReposUpdateReleaseAssetReq struct {
 	RequestBody ReposUpdateReleaseAssetReqBody
 }
 
-func (r ReposUpdateReleaseAssetReq) urlPath() string {
+func (r *ReposUpdateReleaseAssetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId)
 }
 
-func (r ReposUpdateReleaseAssetReq) method() string {
+func (r *ReposUpdateReleaseAssetReq) method() string {
 	return "PATCH"
 }
 
-func (r ReposUpdateReleaseAssetReq) urlQuery() url.Values {
+func (r *ReposUpdateReleaseAssetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ReposUpdateReleaseAssetReq) header() http.Header {
+func (r *ReposUpdateReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUpdateReleaseAssetReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -13921,15 +14642,15 @@ type ReposUploadReleaseAssetReq struct {
 	ContentTypeHeader *string
 }
 
-func (r ReposUploadReleaseAssetReq) urlPath() string {
+func (r *ReposUploadReleaseAssetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
 }
 
-func (r ReposUploadReleaseAssetReq) method() string {
+func (r *ReposUploadReleaseAssetReq) method() string {
 	return "POST"
 }
 
-func (r ReposUploadReleaseAssetReq) urlQuery() url.Values {
+func (r *ReposUploadReleaseAssetReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Name != nil {
 		query.Set("name", *r.Name)
@@ -13940,7 +14661,7 @@ func (r ReposUploadReleaseAssetReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ReposUploadReleaseAssetReq) header() http.Header {
+func (r *ReposUploadReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{
 		"content-length": r.ContentLengthHeader,
 		"content-type":   r.ContentTypeHeader,
@@ -13949,9 +14670,13 @@ func (r ReposUploadReleaseAssetReq) header() http.Header {
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ReposUploadReleaseAssetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ReposUploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ReposUploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

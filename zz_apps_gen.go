@@ -31,28 +31,38 @@ type AppsAddRepoToInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsAddRepoToInstallationReq) urlPath() string {
+func (r *AppsAddRepoToInstallationReq) urlPath() string {
 	return fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId)
 }
 
-func (r AppsAddRepoToInstallationReq) method() string {
+func (r *AppsAddRepoToInstallationReq) method() string {
 	return "PUT"
 }
 
-func (r AppsAddRepoToInstallationReq) urlQuery() url.Values {
+func (r *AppsAddRepoToInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsAddRepoToInstallationReq) header() http.Header {
+func (r *AppsAddRepoToInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsAddRepoToInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -69,28 +79,32 @@ type AppsCheckAuthorizationReq struct {
 	AccessToken string
 }
 
-func (r AppsCheckAuthorizationReq) urlPath() string {
+func (r *AppsCheckAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsCheckAuthorizationReq) method() string {
+func (r *AppsCheckAuthorizationReq) method() string {
 	return "GET"
 }
 
-func (r AppsCheckAuthorizationReq) urlQuery() url.Values {
+func (r *AppsCheckAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsCheckAuthorizationReq) header() http.Header {
+func (r *AppsCheckAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsCheckAuthorizationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -151,28 +165,32 @@ type AppsCheckTokenReq struct {
 	RequestBody AppsCheckTokenReqBody
 }
 
-func (r AppsCheckTokenReq) urlPath() string {
+func (r *AppsCheckTokenReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/token", r.ClientId)
 }
 
-func (r AppsCheckTokenReq) method() string {
+func (r *AppsCheckTokenReq) method() string {
 	return "POST"
 }
 
-func (r AppsCheckTokenReq) urlQuery() url.Values {
+func (r *AppsCheckTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsCheckTokenReq) header() http.Header {
+func (r *AppsCheckTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsCheckTokenReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -250,28 +268,38 @@ type AppsCreateContentAttachmentReq struct {
 	CorsairPreview bool
 }
 
-func (r AppsCreateContentAttachmentReq) urlPath() string {
+func (r *AppsCreateContentAttachmentReq) urlPath() string {
 	return fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId)
 }
 
-func (r AppsCreateContentAttachmentReq) method() string {
+func (r *AppsCreateContentAttachmentReq) method() string {
 	return "POST"
 }
 
-func (r AppsCreateContentAttachmentReq) urlQuery() url.Values {
+func (r *AppsCreateContentAttachmentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsCreateContentAttachmentReq) header() http.Header {
+func (r *AppsCreateContentAttachmentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"corsair": r.CorsairPreview}
+	if requiredPreviews {
+		previewVals["corsair"] = true
+	}
+	if allPreviews {
+		previewVals["corsair"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsCreateContentAttachmentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -318,28 +346,32 @@ type AppsCreateFromManifestReq struct {
 	Code string
 }
 
-func (r AppsCreateFromManifestReq) urlPath() string {
+func (r *AppsCreateFromManifestReq) urlPath() string {
 	return fmt.Sprintf("/app-manifests/%v/conversions", r.Code)
 }
 
-func (r AppsCreateFromManifestReq) method() string {
+func (r *AppsCreateFromManifestReq) method() string {
 	return "POST"
 }
 
-func (r AppsCreateFromManifestReq) urlQuery() url.Values {
+func (r *AppsCreateFromManifestReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsCreateFromManifestReq) header() http.Header {
+func (r *AppsCreateFromManifestReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsCreateFromManifestReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -402,28 +434,38 @@ type AppsCreateInstallationTokenReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsCreateInstallationTokenReq) urlPath() string {
+func (r *AppsCreateInstallationTokenReq) urlPath() string {
 	return fmt.Sprintf("/app/installations/%v/access_tokens", r.InstallationId)
 }
 
-func (r AppsCreateInstallationTokenReq) method() string {
+func (r *AppsCreateInstallationTokenReq) method() string {
 	return "POST"
 }
 
-func (r AppsCreateInstallationTokenReq) urlQuery() url.Values {
+func (r *AppsCreateInstallationTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsCreateInstallationTokenReq) header() http.Header {
+func (r *AppsCreateInstallationTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsCreateInstallationTokenReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r AppsCreateInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *AppsCreateInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -586,28 +628,32 @@ type AppsDeleteAuthorizationReq struct {
 	RequestBody AppsDeleteAuthorizationReqBody
 }
 
-func (r AppsDeleteAuthorizationReq) urlPath() string {
+func (r *AppsDeleteAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/grant", r.ClientId)
 }
 
-func (r AppsDeleteAuthorizationReq) method() string {
+func (r *AppsDeleteAuthorizationReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsDeleteAuthorizationReq) urlQuery() url.Values {
+func (r *AppsDeleteAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsDeleteAuthorizationReq) header() http.Header {
+func (r *AppsDeleteAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsDeleteAuthorizationReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -640,28 +686,38 @@ type AppsDeleteInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsDeleteInstallationReq) urlPath() string {
+func (r *AppsDeleteInstallationReq) urlPath() string {
 	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
 }
 
-func (r AppsDeleteInstallationReq) method() string {
+func (r *AppsDeleteInstallationReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsDeleteInstallationReq) urlQuery() url.Values {
+func (r *AppsDeleteInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsDeleteInstallationReq) header() http.Header {
+func (r *AppsDeleteInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsDeleteInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -678,28 +734,32 @@ type AppsDeleteTokenReq struct {
 	RequestBody AppsDeleteTokenReqBody
 }
 
-func (r AppsDeleteTokenReq) urlPath() string {
+func (r *AppsDeleteTokenReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/token", r.ClientId)
 }
 
-func (r AppsDeleteTokenReq) method() string {
+func (r *AppsDeleteTokenReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsDeleteTokenReq) urlQuery() url.Values {
+func (r *AppsDeleteTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsDeleteTokenReq) header() http.Header {
+func (r *AppsDeleteTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsDeleteTokenReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -731,28 +791,38 @@ type AppsGetAuthenticatedReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsGetAuthenticatedReq) urlPath() string {
+func (r *AppsGetAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/app")
 }
 
-func (r AppsGetAuthenticatedReq) method() string {
+func (r *AppsGetAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetAuthenticatedReq) urlQuery() url.Values {
+func (r *AppsGetAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetAuthenticatedReq) header() http.Header {
+func (r *AppsGetAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetAuthenticatedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -813,28 +883,38 @@ type AppsGetBySlugReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsGetBySlugReq) urlPath() string {
+func (r *AppsGetBySlugReq) urlPath() string {
 	return fmt.Sprintf("/apps/%v", r.AppSlug)
 }
 
-func (r AppsGetBySlugReq) method() string {
+func (r *AppsGetBySlugReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetBySlugReq) urlQuery() url.Values {
+func (r *AppsGetBySlugReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetBySlugReq) header() http.Header {
+func (r *AppsGetBySlugReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetBySlugReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -894,28 +974,38 @@ type AppsGetInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsGetInstallationReq) urlPath() string {
+func (r *AppsGetInstallationReq) urlPath() string {
 	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
 }
 
-func (r AppsGetInstallationReq) method() string {
+func (r *AppsGetInstallationReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetInstallationReq) urlQuery() url.Values {
+func (r *AppsGetInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetInstallationReq) header() http.Header {
+func (r *AppsGetInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -975,28 +1065,38 @@ type AppsGetOrgInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsGetOrgInstallationReq) urlPath() string {
+func (r *AppsGetOrgInstallationReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/installation", r.Org)
 }
 
-func (r AppsGetOrgInstallationReq) method() string {
+func (r *AppsGetOrgInstallationReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetOrgInstallationReq) urlQuery() url.Values {
+func (r *AppsGetOrgInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetOrgInstallationReq) header() http.Header {
+func (r *AppsGetOrgInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetOrgInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1063,28 +1163,38 @@ type AppsGetRepoInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsGetRepoInstallationReq) urlPath() string {
+func (r *AppsGetRepoInstallationReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo)
 }
 
-func (r AppsGetRepoInstallationReq) method() string {
+func (r *AppsGetRepoInstallationReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetRepoInstallationReq) urlQuery() url.Values {
+func (r *AppsGetRepoInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetRepoInstallationReq) header() http.Header {
+func (r *AppsGetRepoInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetRepoInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1144,28 +1254,32 @@ type AppsGetSubscriptionPlanForAccountReq struct {
 	AccountId int64
 }
 
-func (r AppsGetSubscriptionPlanForAccountReq) urlPath() string {
+func (r *AppsGetSubscriptionPlanForAccountReq) urlPath() string {
 	return fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId)
 }
 
-func (r AppsGetSubscriptionPlanForAccountReq) method() string {
+func (r *AppsGetSubscriptionPlanForAccountReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetSubscriptionPlanForAccountReq) urlQuery() url.Values {
+func (r *AppsGetSubscriptionPlanForAccountReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetSubscriptionPlanForAccountReq) header() http.Header {
+func (r *AppsGetSubscriptionPlanForAccountReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetSubscriptionPlanForAccountReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1238,28 +1352,32 @@ type AppsGetSubscriptionPlanForAccountStubbedReq struct {
 	AccountId int64
 }
 
-func (r AppsGetSubscriptionPlanForAccountStubbedReq) urlPath() string {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlPath() string {
 	return fmt.Sprintf("/marketplace_listing/stubbed/accounts/%v", r.AccountId)
 }
 
-func (r AppsGetSubscriptionPlanForAccountStubbedReq) method() string {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetSubscriptionPlanForAccountStubbedReq) urlQuery() url.Values {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetSubscriptionPlanForAccountStubbedReq) header() http.Header {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1338,28 +1456,38 @@ type AppsGetUserInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsGetUserInstallationReq) urlPath() string {
+func (r *AppsGetUserInstallationReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/installation", r.Username)
 }
 
-func (r AppsGetUserInstallationReq) method() string {
+func (r *AppsGetUserInstallationReq) method() string {
 	return "GET"
 }
 
-func (r AppsGetUserInstallationReq) urlQuery() url.Values {
+func (r *AppsGetUserInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsGetUserInstallationReq) header() http.Header {
+func (r *AppsGetUserInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsGetUserInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsGetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsGetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1438,15 +1566,15 @@ type AppsListAccountsForPlanReq struct {
 	Page *int64
 }
 
-func (r AppsListAccountsForPlanReq) urlPath() string {
+func (r *AppsListAccountsForPlanReq) urlPath() string {
 	return fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId)
 }
 
-func (r AppsListAccountsForPlanReq) method() string {
+func (r *AppsListAccountsForPlanReq) method() string {
 	return "GET"
 }
 
-func (r AppsListAccountsForPlanReq) urlQuery() url.Values {
+func (r *AppsListAccountsForPlanReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -1463,15 +1591,19 @@ func (r AppsListAccountsForPlanReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListAccountsForPlanReq) header() http.Header {
+func (r *AppsListAccountsForPlanReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListAccountsForPlanReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1562,15 +1694,15 @@ type AppsListAccountsForPlanStubbedReq struct {
 	Page *int64
 }
 
-func (r AppsListAccountsForPlanStubbedReq) urlPath() string {
+func (r *AppsListAccountsForPlanStubbedReq) urlPath() string {
 	return fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId)
 }
 
-func (r AppsListAccountsForPlanStubbedReq) method() string {
+func (r *AppsListAccountsForPlanStubbedReq) method() string {
 	return "GET"
 }
 
-func (r AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
+func (r *AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -1587,15 +1719,19 @@ func (r AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListAccountsForPlanStubbedReq) header() http.Header {
+func (r *AppsListAccountsForPlanStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListAccountsForPlanStubbedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1687,15 +1823,15 @@ type AppsListInstallationReposForAuthenticatedUserReq struct {
 	MercyPreview bool
 }
 
-func (r AppsListInstallationReposForAuthenticatedUserReq) urlPath() string {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/installations/%v/repositories", r.InstallationId)
 }
 
-func (r AppsListInstallationReposForAuthenticatedUserReq) method() string {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r AppsListInstallationReposForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1706,18 +1842,29 @@ func (r AppsListInstallationReposForAuthenticatedUserReq) urlQuery() url.Values 
 	return query
 }
 
-func (r AppsListInstallationReposForAuthenticatedUserReq) header() http.Header {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
 		"mercy":       r.MercyPreview,
 	}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["mercy"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListInstallationReposForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1858,15 +2005,15 @@ type AppsListInstallationsReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsListInstallationsReq) urlPath() string {
+func (r *AppsListInstallationsReq) urlPath() string {
 	return fmt.Sprintf("/app/installations")
 }
 
-func (r AppsListInstallationsReq) method() string {
+func (r *AppsListInstallationsReq) method() string {
 	return "GET"
 }
 
-func (r AppsListInstallationsReq) urlQuery() url.Values {
+func (r *AppsListInstallationsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1877,15 +2024,25 @@ func (r AppsListInstallationsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListInstallationsReq) header() http.Header {
+func (r *AppsListInstallationsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListInstallationsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1950,15 +2107,15 @@ type AppsListInstallationsForAuthenticatedUserReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
+func (r *AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/installations")
 }
 
-func (r AppsListInstallationsForAuthenticatedUserReq) method() string {
+func (r *AppsListInstallationsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1969,15 +2126,25 @@ func (r AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListInstallationsForAuthenticatedUserReq) header() http.Header {
+func (r *AppsListInstallationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListInstallationsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2049,15 +2216,15 @@ type AppsListPlansReq struct {
 	Page *int64
 }
 
-func (r AppsListPlansReq) urlPath() string {
+func (r *AppsListPlansReq) urlPath() string {
 	return fmt.Sprintf("/marketplace_listing/plans")
 }
 
-func (r AppsListPlansReq) method() string {
+func (r *AppsListPlansReq) method() string {
 	return "GET"
 }
 
-func (r AppsListPlansReq) urlQuery() url.Values {
+func (r *AppsListPlansReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2068,15 +2235,19 @@ func (r AppsListPlansReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListPlansReq) header() http.Header {
+func (r *AppsListPlansReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListPlansReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2118,15 +2289,15 @@ type AppsListPlansStubbedReq struct {
 	Page *int64
 }
 
-func (r AppsListPlansStubbedReq) urlPath() string {
+func (r *AppsListPlansStubbedReq) urlPath() string {
 	return fmt.Sprintf("/marketplace_listing/stubbed/plans")
 }
 
-func (r AppsListPlansStubbedReq) method() string {
+func (r *AppsListPlansStubbedReq) method() string {
 	return "GET"
 }
 
-func (r AppsListPlansStubbedReq) urlQuery() url.Values {
+func (r *AppsListPlansStubbedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2137,15 +2308,19 @@ func (r AppsListPlansStubbedReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListPlansStubbedReq) header() http.Header {
+func (r *AppsListPlansStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListPlansStubbedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2200,15 +2375,15 @@ type AppsListReposReq struct {
 	MercyPreview bool
 }
 
-func (r AppsListReposReq) urlPath() string {
+func (r *AppsListReposReq) urlPath() string {
 	return fmt.Sprintf("/installation/repositories")
 }
 
-func (r AppsListReposReq) method() string {
+func (r *AppsListReposReq) method() string {
 	return "GET"
 }
 
-func (r AppsListReposReq) urlQuery() url.Values {
+func (r *AppsListReposReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2219,18 +2394,29 @@ func (r AppsListReposReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListReposReq) header() http.Header {
+func (r *AppsListReposReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
 		"mercy":       r.MercyPreview,
 	}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["mercy"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListReposReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2360,15 +2546,15 @@ type AppsListSubscriptionsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/marketplace_purchases")
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) method() string {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2379,15 +2565,19 @@ func (r AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserReq) header() http.Header {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2445,15 +2635,15 @@ type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
 	Page *int64
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
 	return fmt.Sprintf("/user/marketplace_purchases/stubbed")
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) method() string {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) method() string {
 	return "GET"
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Values {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2464,15 +2654,19 @@ func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Valu
 	return query
 }
 
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) header() http.Header {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2532,28 +2726,38 @@ type AppsRemoveRepoFromInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r AppsRemoveRepoFromInstallationReq) urlPath() string {
+func (r *AppsRemoveRepoFromInstallationReq) urlPath() string {
 	return fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId)
 }
 
-func (r AppsRemoveRepoFromInstallationReq) method() string {
+func (r *AppsRemoveRepoFromInstallationReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsRemoveRepoFromInstallationReq) urlQuery() url.Values {
+func (r *AppsRemoveRepoFromInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsRemoveRepoFromInstallationReq) header() http.Header {
+func (r *AppsRemoveRepoFromInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsRemoveRepoFromInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2570,28 +2774,32 @@ type AppsResetAuthorizationReq struct {
 	AccessToken string
 }
 
-func (r AppsResetAuthorizationReq) urlPath() string {
+func (r *AppsResetAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsResetAuthorizationReq) method() string {
+func (r *AppsResetAuthorizationReq) method() string {
 	return "POST"
 }
 
-func (r AppsResetAuthorizationReq) urlQuery() url.Values {
+func (r *AppsResetAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsResetAuthorizationReq) header() http.Header {
+func (r *AppsResetAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsResetAuthorizationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2652,28 +2860,32 @@ type AppsResetTokenReq struct {
 	RequestBody AppsResetTokenReqBody
 }
 
-func (r AppsResetTokenReq) urlPath() string {
+func (r *AppsResetTokenReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/token", r.ClientId)
 }
 
-func (r AppsResetTokenReq) method() string {
+func (r *AppsResetTokenReq) method() string {
 	return "PATCH"
 }
 
-func (r AppsResetTokenReq) urlQuery() url.Values {
+func (r *AppsResetTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsResetTokenReq) header() http.Header {
+func (r *AppsResetTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsResetTokenReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2745,28 +2957,32 @@ type AppsRevokeAuthorizationForApplicationReq struct {
 	AccessToken string
 }
 
-func (r AppsRevokeAuthorizationForApplicationReq) urlPath() string {
+func (r *AppsRevokeAuthorizationForApplicationReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsRevokeAuthorizationForApplicationReq) method() string {
+func (r *AppsRevokeAuthorizationForApplicationReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsRevokeAuthorizationForApplicationReq) urlQuery() url.Values {
+func (r *AppsRevokeAuthorizationForApplicationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsRevokeAuthorizationForApplicationReq) header() http.Header {
+func (r *AppsRevokeAuthorizationForApplicationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsRevokeAuthorizationForApplicationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2783,28 +2999,32 @@ type AppsRevokeGrantForApplicationReq struct {
 	AccessToken string
 }
 
-func (r AppsRevokeGrantForApplicationReq) urlPath() string {
+func (r *AppsRevokeGrantForApplicationReq) urlPath() string {
 	return fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken)
 }
 
-func (r AppsRevokeGrantForApplicationReq) method() string {
+func (r *AppsRevokeGrantForApplicationReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsRevokeGrantForApplicationReq) urlQuery() url.Values {
+func (r *AppsRevokeGrantForApplicationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsRevokeGrantForApplicationReq) header() http.Header {
+func (r *AppsRevokeGrantForApplicationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsRevokeGrantForApplicationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2818,28 +3038,32 @@ https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
 */
 type AppsRevokeInstallationTokenReq struct{}
 
-func (r AppsRevokeInstallationTokenReq) urlPath() string {
+func (r *AppsRevokeInstallationTokenReq) urlPath() string {
 	return fmt.Sprintf("/installation/token")
 }
 
-func (r AppsRevokeInstallationTokenReq) method() string {
+func (r *AppsRevokeInstallationTokenReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsRevokeInstallationTokenReq) urlQuery() url.Values {
+func (r *AppsRevokeInstallationTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsRevokeInstallationTokenReq) header() http.Header {
+func (r *AppsRevokeInstallationTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsRevokeInstallationTokenReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2855,28 +3079,32 @@ type AppsSuspendInstallationReq struct {
 	InstallationId int64
 }
 
-func (r AppsSuspendInstallationReq) urlPath() string {
+func (r *AppsSuspendInstallationReq) urlPath() string {
 	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
 }
 
-func (r AppsSuspendInstallationReq) method() string {
+func (r *AppsSuspendInstallationReq) method() string {
 	return "PUT"
 }
 
-func (r AppsSuspendInstallationReq) urlQuery() url.Values {
+func (r *AppsSuspendInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsSuspendInstallationReq) header() http.Header {
+func (r *AppsSuspendInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsSuspendInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2892,26 +3120,30 @@ type AppsUnsuspendInstallationReq struct {
 	InstallationId int64
 }
 
-func (r AppsUnsuspendInstallationReq) urlPath() string {
+func (r *AppsUnsuspendInstallationReq) urlPath() string {
 	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
 }
 
-func (r AppsUnsuspendInstallationReq) method() string {
+func (r *AppsUnsuspendInstallationReq) method() string {
 	return "DELETE"
 }
 
-func (r AppsUnsuspendInstallationReq) urlQuery() url.Values {
+func (r *AppsUnsuspendInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r AppsUnsuspendInstallationReq) header() http.Header {
+func (r *AppsUnsuspendInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *AppsUnsuspendInstallationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }

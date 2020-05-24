@@ -18,7 +18,7 @@ func main() {
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	))
 
-	req, err := octo.GistsCreateReq{
+	reqbuilder := octo.GistsCreateReq{
 		RequestBody: octo.GistsCreateReqBody{
 			Description: octo.String("test gist, pls delete"),
 			Public:      octo.Bool(false),
@@ -31,7 +31,8 @@ my body
 				},
 			},
 		},
-	}.HTTPRequest(ctx)
+	}
+	req, err := reqbuilder.HTTPRequest(ctx)
 
 	if err != nil {
 		log.Fatal(err)
@@ -51,9 +52,10 @@ my body
 	fmt.Printf("don't forget to delete your new gist at %s\n", gistInfo.HtmlUrl)
 	fmt.Println("on second thought...I'll just delete it for you")
 
-	req, err = octo.GistsDeleteReq{
+	deleteReq := octo.GistsDeleteReq{
 		GistId: gistInfo.Id,
-	}.HTTPRequest(ctx)
+	}
+	req, err = deleteReq.HTTPRequest(ctx)
 
 	if err != nil {
 		log.Fatal(err)

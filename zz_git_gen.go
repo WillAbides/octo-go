@@ -26,28 +26,32 @@ type GitCreateBlobReq struct {
 	RequestBody GitCreateBlobReqBody
 }
 
-func (r GitCreateBlobReq) urlPath() string {
+func (r *GitCreateBlobReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo)
 }
 
-func (r GitCreateBlobReq) method() string {
+func (r *GitCreateBlobReq) method() string {
 	return "POST"
 }
 
-func (r GitCreateBlobReq) urlQuery() url.Values {
+func (r *GitCreateBlobReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitCreateBlobReq) header() http.Header {
+func (r *GitCreateBlobReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitCreateBlobReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -92,28 +96,32 @@ type GitCreateCommitReq struct {
 	RequestBody GitCreateCommitReqBody
 }
 
-func (r GitCreateCommitReq) urlPath() string {
+func (r *GitCreateCommitReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo)
 }
 
-func (r GitCreateCommitReq) method() string {
+func (r *GitCreateCommitReq) method() string {
 	return "POST"
 }
 
-func (r GitCreateCommitReq) urlQuery() url.Values {
+func (r *GitCreateCommitReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitCreateCommitReq) header() http.Header {
+func (r *GitCreateCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitCreateCommitReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GitCreateCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GitCreateCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // GitCreateCommitReqBodyAuthor is a value for GitCreateCommitReqBody's Author field
@@ -250,28 +258,32 @@ type GitCreateRefReq struct {
 	RequestBody GitCreateRefReqBody
 }
 
-func (r GitCreateRefReq) urlPath() string {
+func (r *GitCreateRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo)
 }
 
-func (r GitCreateRefReq) method() string {
+func (r *GitCreateRefReq) method() string {
 	return "POST"
 }
 
-func (r GitCreateRefReq) urlQuery() url.Values {
+func (r *GitCreateRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitCreateRefReq) header() http.Header {
+func (r *GitCreateRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitCreateRefReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -322,28 +334,32 @@ type GitCreateTagReq struct {
 	RequestBody GitCreateTagReqBody
 }
 
-func (r GitCreateTagReq) urlPath() string {
+func (r *GitCreateTagReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo)
 }
 
-func (r GitCreateTagReq) method() string {
+func (r *GitCreateTagReq) method() string {
 	return "POST"
 }
 
-func (r GitCreateTagReq) urlQuery() url.Values {
+func (r *GitCreateTagReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitCreateTagReq) header() http.Header {
+func (r *GitCreateTagReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitCreateTagReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GitCreateTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GitCreateTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // GitCreateTagReqBodyTagger is a value for GitCreateTagReqBody's Tagger field
@@ -432,28 +448,32 @@ type GitCreateTreeReq struct {
 	RequestBody GitCreateTreeReqBody
 }
 
-func (r GitCreateTreeReq) urlPath() string {
+func (r *GitCreateTreeReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo)
 }
 
-func (r GitCreateTreeReq) method() string {
+func (r *GitCreateTreeReq) method() string {
 	return "POST"
 }
 
-func (r GitCreateTreeReq) urlQuery() url.Values {
+func (r *GitCreateTreeReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitCreateTreeReq) header() http.Header {
+func (r *GitCreateTreeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitCreateTreeReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // GitCreateTreeReqBodyTree is a value for GitCreateTreeReqBody's Tree field
@@ -542,28 +562,32 @@ type GitDeleteRefReq struct {
 	Ref   string
 }
 
-func (r GitDeleteRefReq) urlPath() string {
+func (r *GitDeleteRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref)
 }
 
-func (r GitDeleteRefReq) method() string {
+func (r *GitDeleteRefReq) method() string {
 	return "DELETE"
 }
 
-func (r GitDeleteRefReq) urlQuery() url.Values {
+func (r *GitDeleteRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitDeleteRefReq) header() http.Header {
+func (r *GitDeleteRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitDeleteRefReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -581,28 +605,32 @@ type GitGetBlobReq struct {
 	FileSha string
 }
 
-func (r GitGetBlobReq) urlPath() string {
+func (r *GitGetBlobReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/blobs/%v", r.Owner, r.Repo, r.FileSha)
 }
 
-func (r GitGetBlobReq) method() string {
+func (r *GitGetBlobReq) method() string {
 	return "GET"
 }
 
-func (r GitGetBlobReq) urlQuery() url.Values {
+func (r *GitGetBlobReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitGetBlobReq) header() http.Header {
+func (r *GitGetBlobReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitGetBlobReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitGetBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitGetBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -633,28 +661,32 @@ type GitGetCommitReq struct {
 	CommitSha string
 }
 
-func (r GitGetCommitReq) urlPath() string {
+func (r *GitGetCommitReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/commits/%v", r.Owner, r.Repo, r.CommitSha)
 }
 
-func (r GitGetCommitReq) method() string {
+func (r *GitGetCommitReq) method() string {
 	return "GET"
 }
 
-func (r GitGetCommitReq) urlQuery() url.Values {
+func (r *GitGetCommitReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitGetCommitReq) header() http.Header {
+func (r *GitGetCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitGetCommitReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -707,28 +739,32 @@ type GitGetRefReq struct {
 	Ref   string
 }
 
-func (r GitGetRefReq) urlPath() string {
+func (r *GitGetRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/ref/%v", r.Owner, r.Repo, r.Ref)
 }
 
-func (r GitGetRefReq) method() string {
+func (r *GitGetRefReq) method() string {
 	return "GET"
 }
 
-func (r GitGetRefReq) urlQuery() url.Values {
+func (r *GitGetRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitGetRefReq) header() http.Header {
+func (r *GitGetRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitGetRefReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitGetRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitGetRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -762,28 +798,32 @@ type GitGetTagReq struct {
 	TagSha string
 }
 
-func (r GitGetTagReq) urlPath() string {
+func (r *GitGetTagReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/tags/%v", r.Owner, r.Repo, r.TagSha)
 }
 
-func (r GitGetTagReq) method() string {
+func (r *GitGetTagReq) method() string {
 	return "GET"
 }
 
-func (r GitGetTagReq) urlQuery() url.Values {
+func (r *GitGetTagReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitGetTagReq) header() http.Header {
+func (r *GitGetTagReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitGetTagReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitGetTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitGetTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -839,15 +879,15 @@ type GitGetTreeReq struct {
 	Recursive *int64
 }
 
-func (r GitGetTreeReq) urlPath() string {
+func (r *GitGetTreeReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha)
 }
 
-func (r GitGetTreeReq) method() string {
+func (r *GitGetTreeReq) method() string {
 	return "GET"
 }
 
-func (r GitGetTreeReq) urlQuery() url.Values {
+func (r *GitGetTreeReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Recursive != nil {
 		query.Set("recursive", strconv.FormatInt(*r.Recursive, 10))
@@ -855,15 +895,19 @@ func (r GitGetTreeReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GitGetTreeReq) header() http.Header {
+func (r *GitGetTreeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitGetTreeReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -906,15 +950,15 @@ type GitListMatchingRefsReq struct {
 	Page *int64
 }
 
-func (r GitListMatchingRefsReq) urlPath() string {
+func (r *GitListMatchingRefsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref)
 }
 
-func (r GitListMatchingRefsReq) method() string {
+func (r *GitListMatchingRefsReq) method() string {
 	return "GET"
 }
 
-func (r GitListMatchingRefsReq) urlQuery() url.Values {
+func (r *GitListMatchingRefsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -925,15 +969,19 @@ func (r GitListMatchingRefsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GitListMatchingRefsReq) header() http.Header {
+func (r *GitListMatchingRefsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitListMatchingRefsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -968,28 +1016,32 @@ type GitUpdateRefReq struct {
 	RequestBody GitUpdateRefReqBody
 }
 
-func (r GitUpdateRefReq) urlPath() string {
+func (r *GitUpdateRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref)
 }
 
-func (r GitUpdateRefReq) method() string {
+func (r *GitUpdateRefReq) method() string {
 	return "PATCH"
 }
 
-func (r GitUpdateRefReq) urlQuery() url.Values {
+func (r *GitUpdateRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitUpdateRefReq) header() http.Header {
+func (r *GitUpdateRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitUpdateRefReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

@@ -24,28 +24,32 @@ type GistsCheckIsStarredReq struct {
 	GistId string
 }
 
-func (r GistsCheckIsStarredReq) urlPath() string {
+func (r *GistsCheckIsStarredReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/star", r.GistId)
 }
 
-func (r GistsCheckIsStarredReq) method() string {
+func (r *GistsCheckIsStarredReq) method() string {
 	return "GET"
 }
 
-func (r GistsCheckIsStarredReq) urlQuery() url.Values {
+func (r *GistsCheckIsStarredReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsCheckIsStarredReq) header() http.Header {
+func (r *GistsCheckIsStarredReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsCheckIsStarredReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -61,28 +65,32 @@ type GistsCreateReq struct {
 	RequestBody GistsCreateReqBody
 }
 
-func (r GistsCreateReq) urlPath() string {
+func (r *GistsCreateReq) urlPath() string {
 	return fmt.Sprintf("/gists")
 }
 
-func (r GistsCreateReq) method() string {
+func (r *GistsCreateReq) method() string {
 	return "POST"
 }
 
-func (r GistsCreateReq) urlQuery() url.Values {
+func (r *GistsCreateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsCreateReq) header() http.Header {
+func (r *GistsCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsCreateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GistsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GistsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // GistsCreateReqBodyFiles is a value for GistsCreateReqBody's Files field
@@ -235,28 +243,32 @@ type GistsCreateCommentReq struct {
 	RequestBody GistsCreateCommentReqBody
 }
 
-func (r GistsCreateCommentReq) urlPath() string {
+func (r *GistsCreateCommentReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/comments", r.GistId)
 }
 
-func (r GistsCreateCommentReq) method() string {
+func (r *GistsCreateCommentReq) method() string {
 	return "POST"
 }
 
-func (r GistsCreateCommentReq) urlQuery() url.Values {
+func (r *GistsCreateCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsCreateCommentReq) header() http.Header {
+func (r *GistsCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsCreateCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -317,28 +329,32 @@ type GistsDeleteReq struct {
 	GistId string
 }
 
-func (r GistsDeleteReq) urlPath() string {
+func (r *GistsDeleteReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v", r.GistId)
 }
 
-func (r GistsDeleteReq) method() string {
+func (r *GistsDeleteReq) method() string {
 	return "DELETE"
 }
 
-func (r GistsDeleteReq) urlQuery() url.Values {
+func (r *GistsDeleteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsDeleteReq) header() http.Header {
+func (r *GistsDeleteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsDeleteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -355,28 +371,32 @@ type GistsDeleteCommentReq struct {
 	CommentId int64
 }
 
-func (r GistsDeleteCommentReq) urlPath() string {
+func (r *GistsDeleteCommentReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
 }
 
-func (r GistsDeleteCommentReq) method() string {
+func (r *GistsDeleteCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r GistsDeleteCommentReq) urlQuery() url.Values {
+func (r *GistsDeleteCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsDeleteCommentReq) header() http.Header {
+func (r *GistsDeleteCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsDeleteCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -392,28 +412,32 @@ type GistsForkReq struct {
 	GistId string
 }
 
-func (r GistsForkReq) urlPath() string {
+func (r *GistsForkReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/forks", r.GistId)
 }
 
-func (r GistsForkReq) method() string {
+func (r *GistsForkReq) method() string {
 	return "POST"
 }
 
-func (r GistsForkReq) urlQuery() url.Values {
+func (r *GistsForkReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsForkReq) header() http.Header {
+func (r *GistsForkReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsForkReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -480,28 +504,32 @@ type GistsGetReq struct {
 	GistId string
 }
 
-func (r GistsGetReq) urlPath() string {
+func (r *GistsGetReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v", r.GistId)
 }
 
-func (r GistsGetReq) method() string {
+func (r *GistsGetReq) method() string {
 	return "GET"
 }
 
-func (r GistsGetReq) urlQuery() url.Values {
+func (r *GistsGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsGetReq) header() http.Header {
+func (r *GistsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -627,28 +655,32 @@ type GistsGetCommentReq struct {
 	CommentId int64
 }
 
-func (r GistsGetCommentReq) urlPath() string {
+func (r *GistsGetCommentReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
 }
 
-func (r GistsGetCommentReq) method() string {
+func (r *GistsGetCommentReq) method() string {
 	return "GET"
 }
 
-func (r GistsGetCommentReq) urlQuery() url.Values {
+func (r *GistsGetCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsGetCommentReq) header() http.Header {
+func (r *GistsGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsGetCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -699,28 +731,32 @@ type GistsGetRevisionReq struct {
 	Sha    string
 }
 
-func (r GistsGetRevisionReq) urlPath() string {
+func (r *GistsGetRevisionReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha)
 }
 
-func (r GistsGetRevisionReq) method() string {
+func (r *GistsGetRevisionReq) method() string {
 	return "GET"
 }
 
-func (r GistsGetRevisionReq) urlQuery() url.Values {
+func (r *GistsGetRevisionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsGetRevisionReq) header() http.Header {
+func (r *GistsGetRevisionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsGetRevisionReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -857,15 +893,15 @@ type GistsListReq struct {
 	Page *int64
 }
 
-func (r GistsListReq) urlPath() string {
+func (r *GistsListReq) urlPath() string {
 	return fmt.Sprintf("/gists")
 }
 
-func (r GistsListReq) method() string {
+func (r *GistsListReq) method() string {
 	return "GET"
 }
 
-func (r GistsListReq) urlQuery() url.Values {
+func (r *GistsListReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -879,15 +915,19 @@ func (r GistsListReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListReq) header() http.Header {
+func (r *GistsListReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -960,15 +1000,15 @@ type GistsListCommentsReq struct {
 	Page *int64
 }
 
-func (r GistsListCommentsReq) urlPath() string {
+func (r *GistsListCommentsReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/comments", r.GistId)
 }
 
-func (r GistsListCommentsReq) method() string {
+func (r *GistsListCommentsReq) method() string {
 	return "GET"
 }
 
-func (r GistsListCommentsReq) urlQuery() url.Values {
+func (r *GistsListCommentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -979,15 +1019,19 @@ func (r GistsListCommentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListCommentsReq) header() http.Header {
+func (r *GistsListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListCommentsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1043,15 +1087,15 @@ type GistsListCommitsReq struct {
 	Page *int64
 }
 
-func (r GistsListCommitsReq) urlPath() string {
+func (r *GistsListCommitsReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/commits", r.GistId)
 }
 
-func (r GistsListCommitsReq) method() string {
+func (r *GistsListCommitsReq) method() string {
 	return "GET"
 }
 
-func (r GistsListCommitsReq) urlQuery() url.Values {
+func (r *GistsListCommitsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1062,15 +1106,19 @@ func (r GistsListCommitsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListCommitsReq) header() http.Header {
+func (r *GistsListCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListCommitsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1135,15 +1183,15 @@ type GistsListForUserReq struct {
 	Page *int64
 }
 
-func (r GistsListForUserReq) urlPath() string {
+func (r *GistsListForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/gists", r.Username)
 }
 
-func (r GistsListForUserReq) method() string {
+func (r *GistsListForUserReq) method() string {
 	return "GET"
 }
 
-func (r GistsListForUserReq) urlQuery() url.Values {
+func (r *GistsListForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1157,15 +1205,19 @@ func (r GistsListForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListForUserReq) header() http.Header {
+func (r *GistsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1238,15 +1290,15 @@ type GistsListForksReq struct {
 	Page *int64
 }
 
-func (r GistsListForksReq) urlPath() string {
+func (r *GistsListForksReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/forks", r.GistId)
 }
 
-func (r GistsListForksReq) method() string {
+func (r *GistsListForksReq) method() string {
 	return "GET"
 }
 
-func (r GistsListForksReq) urlQuery() url.Values {
+func (r *GistsListForksReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1257,15 +1309,19 @@ func (r GistsListForksReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListForksReq) header() http.Header {
+func (r *GistsListForksReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListForksReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1325,15 +1381,15 @@ type GistsListPublicReq struct {
 	Page *int64
 }
 
-func (r GistsListPublicReq) urlPath() string {
+func (r *GistsListPublicReq) urlPath() string {
 	return fmt.Sprintf("/gists/public")
 }
 
-func (r GistsListPublicReq) method() string {
+func (r *GistsListPublicReq) method() string {
 	return "GET"
 }
 
-func (r GistsListPublicReq) urlQuery() url.Values {
+func (r *GistsListPublicReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1347,15 +1403,19 @@ func (r GistsListPublicReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListPublicReq) header() http.Header {
+func (r *GistsListPublicReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListPublicReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1434,15 +1494,15 @@ type GistsListStarredReq struct {
 	Page *int64
 }
 
-func (r GistsListStarredReq) urlPath() string {
+func (r *GistsListStarredReq) urlPath() string {
 	return fmt.Sprintf("/gists/starred")
 }
 
-func (r GistsListStarredReq) method() string {
+func (r *GistsListStarredReq) method() string {
 	return "GET"
 }
 
-func (r GistsListStarredReq) urlQuery() url.Values {
+func (r *GistsListStarredReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1456,15 +1516,19 @@ func (r GistsListStarredReq) urlQuery() url.Values {
 	return query
 }
 
-func (r GistsListStarredReq) header() http.Header {
+func (r *GistsListStarredReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsListStarredReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1531,28 +1595,32 @@ type GistsStarReq struct {
 	GistId string
 }
 
-func (r GistsStarReq) urlPath() string {
+func (r *GistsStarReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/star", r.GistId)
 }
 
-func (r GistsStarReq) method() string {
+func (r *GistsStarReq) method() string {
 	return "PUT"
 }
 
-func (r GistsStarReq) urlQuery() url.Values {
+func (r *GistsStarReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsStarReq) header() http.Header {
+func (r *GistsStarReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsStarReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1568,28 +1636,32 @@ type GistsUnstarReq struct {
 	GistId string
 }
 
-func (r GistsUnstarReq) urlPath() string {
+func (r *GistsUnstarReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/star", r.GistId)
 }
 
-func (r GistsUnstarReq) method() string {
+func (r *GistsUnstarReq) method() string {
 	return "DELETE"
 }
 
-func (r GistsUnstarReq) urlQuery() url.Values {
+func (r *GistsUnstarReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsUnstarReq) header() http.Header {
+func (r *GistsUnstarReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsUnstarReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1606,28 +1678,32 @@ type GistsUpdateReq struct {
 	RequestBody GistsUpdateReqBody
 }
 
-func (r GistsUpdateReq) urlPath() string {
+func (r *GistsUpdateReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v", r.GistId)
 }
 
-func (r GistsUpdateReq) method() string {
+func (r *GistsUpdateReq) method() string {
 	return "PATCH"
 }
 
-func (r GistsUpdateReq) urlQuery() url.Values {
+func (r *GistsUpdateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsUpdateReq) header() http.Header {
+func (r *GistsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsUpdateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GistsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GistsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // GistsUpdateReqBodyFiles is a value for GistsUpdateReqBody's Files field
@@ -1781,28 +1857,32 @@ type GistsUpdateCommentReq struct {
 	RequestBody GistsUpdateCommentReqBody
 }
 
-func (r GistsUpdateCommentReq) urlPath() string {
+func (r *GistsUpdateCommentReq) urlPath() string {
 	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
 }
 
-func (r GistsUpdateCommentReq) method() string {
+func (r *GistsUpdateCommentReq) method() string {
 	return "PATCH"
 }
 
-func (r GistsUpdateCommentReq) urlQuery() url.Values {
+func (r *GistsUpdateCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GistsUpdateCommentReq) header() http.Header {
+func (r *GistsUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GistsUpdateCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

@@ -22,28 +22,32 @@ type GitignoreGetTemplateReq struct {
 	Name string
 }
 
-func (r GitignoreGetTemplateReq) urlPath() string {
+func (r *GitignoreGetTemplateReq) urlPath() string {
 	return fmt.Sprintf("/gitignore/templates/%v", r.Name)
 }
 
-func (r GitignoreGetTemplateReq) method() string {
+func (r *GitignoreGetTemplateReq) method() string {
 	return "GET"
 }
 
-func (r GitignoreGetTemplateReq) urlQuery() url.Values {
+func (r *GitignoreGetTemplateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitignoreGetTemplateReq) header() http.Header {
+func (r *GitignoreGetTemplateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitignoreGetTemplateReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitignoreGetTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitignoreGetTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -67,28 +71,32 @@ https://developer.github.com/v3/gitignore/#listing-available-templates
 */
 type GitignoreListTemplatesReq struct{}
 
-func (r GitignoreListTemplatesReq) urlPath() string {
+func (r *GitignoreListTemplatesReq) urlPath() string {
 	return fmt.Sprintf("/gitignore/templates")
 }
 
-func (r GitignoreListTemplatesReq) method() string {
+func (r *GitignoreListTemplatesReq) method() string {
 	return "GET"
 }
 
-func (r GitignoreListTemplatesReq) urlQuery() url.Values {
+func (r *GitignoreListTemplatesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r GitignoreListTemplatesReq) header() http.Header {
+func (r *GitignoreListTemplatesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *GitignoreListTemplatesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r GitignoreListTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *GitignoreListTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

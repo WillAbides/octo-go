@@ -27,28 +27,32 @@ type IssuesAddAssigneesReq struct {
 	RequestBody IssuesAddAssigneesReqBody
 }
 
-func (r IssuesAddAssigneesReq) urlPath() string {
+func (r *IssuesAddAssigneesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesAddAssigneesReq) method() string {
+func (r *IssuesAddAssigneesReq) method() string {
 	return "POST"
 }
 
-func (r IssuesAddAssigneesReq) urlQuery() url.Values {
+func (r *IssuesAddAssigneesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesAddAssigneesReq) header() http.Header {
+func (r *IssuesAddAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesAddAssigneesReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -219,28 +223,32 @@ type IssuesAddLabelsReq struct {
 	RequestBody IssuesAddLabelsReqBody
 }
 
-func (r IssuesAddLabelsReq) urlPath() string {
+func (r *IssuesAddLabelsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesAddLabelsReq) method() string {
+func (r *IssuesAddLabelsReq) method() string {
 	return "POST"
 }
 
-func (r IssuesAddLabelsReq) urlQuery() url.Values {
+func (r *IssuesAddLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesAddLabelsReq) header() http.Header {
+func (r *IssuesAddLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesAddLabelsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -289,28 +297,32 @@ type IssuesCheckAssigneeReq struct {
 	Assignee string
 }
 
-func (r IssuesCheckAssigneeReq) urlPath() string {
+func (r *IssuesCheckAssigneeReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee)
 }
 
-func (r IssuesCheckAssigneeReq) method() string {
+func (r *IssuesCheckAssigneeReq) method() string {
 	return "GET"
 }
 
-func (r IssuesCheckAssigneeReq) urlQuery() url.Values {
+func (r *IssuesCheckAssigneeReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesCheckAssigneeReq) header() http.Header {
+func (r *IssuesCheckAssigneeReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesCheckAssigneeReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesCheckAssigneeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesCheckAssigneeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -328,28 +340,32 @@ type IssuesCreateReq struct {
 	RequestBody IssuesCreateReqBody
 }
 
-func (r IssuesCreateReq) urlPath() string {
+func (r *IssuesCreateReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
 }
 
-func (r IssuesCreateReq) method() string {
+func (r *IssuesCreateReq) method() string {
 	return "POST"
 }
 
-func (r IssuesCreateReq) urlQuery() url.Values {
+func (r *IssuesCreateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesCreateReq) header() http.Header {
+func (r *IssuesCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesCreateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -566,28 +582,32 @@ type IssuesCreateCommentReq struct {
 	RequestBody IssuesCreateCommentReqBody
 }
 
-func (r IssuesCreateCommentReq) urlPath() string {
+func (r *IssuesCreateCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesCreateCommentReq) method() string {
+func (r *IssuesCreateCommentReq) method() string {
 	return "POST"
 }
 
-func (r IssuesCreateCommentReq) urlQuery() url.Values {
+func (r *IssuesCreateCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesCreateCommentReq) header() http.Header {
+func (r *IssuesCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesCreateCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -651,28 +671,32 @@ type IssuesCreateLabelReq struct {
 	RequestBody IssuesCreateLabelReqBody
 }
 
-func (r IssuesCreateLabelReq) urlPath() string {
+func (r *IssuesCreateLabelReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
 }
 
-func (r IssuesCreateLabelReq) method() string {
+func (r *IssuesCreateLabelReq) method() string {
 	return "POST"
 }
 
-func (r IssuesCreateLabelReq) urlQuery() url.Values {
+func (r *IssuesCreateLabelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesCreateLabelReq) header() http.Header {
+func (r *IssuesCreateLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesCreateLabelReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -732,28 +756,32 @@ type IssuesCreateMilestoneReq struct {
 	RequestBody IssuesCreateMilestoneReqBody
 }
 
-func (r IssuesCreateMilestoneReq) urlPath() string {
+func (r *IssuesCreateMilestoneReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
 }
 
-func (r IssuesCreateMilestoneReq) method() string {
+func (r *IssuesCreateMilestoneReq) method() string {
 	return "POST"
 }
 
-func (r IssuesCreateMilestoneReq) urlQuery() url.Values {
+func (r *IssuesCreateMilestoneReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesCreateMilestoneReq) header() http.Header {
+func (r *IssuesCreateMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesCreateMilestoneReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -837,28 +865,32 @@ type IssuesDeleteCommentReq struct {
 	CommentId int64
 }
 
-func (r IssuesDeleteCommentReq) urlPath() string {
+func (r *IssuesDeleteCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r IssuesDeleteCommentReq) method() string {
+func (r *IssuesDeleteCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesDeleteCommentReq) urlQuery() url.Values {
+func (r *IssuesDeleteCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesDeleteCommentReq) header() http.Header {
+func (r *IssuesDeleteCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesDeleteCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -876,28 +908,32 @@ type IssuesDeleteLabelReq struct {
 	Name  string
 }
 
-func (r IssuesDeleteLabelReq) urlPath() string {
+func (r *IssuesDeleteLabelReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
 }
 
-func (r IssuesDeleteLabelReq) method() string {
+func (r *IssuesDeleteLabelReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesDeleteLabelReq) urlQuery() url.Values {
+func (r *IssuesDeleteLabelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesDeleteLabelReq) header() http.Header {
+func (r *IssuesDeleteLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesDeleteLabelReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -915,28 +951,32 @@ type IssuesDeleteMilestoneReq struct {
 	MilestoneNumber int64
 }
 
-func (r IssuesDeleteMilestoneReq) urlPath() string {
+func (r *IssuesDeleteMilestoneReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
 }
 
-func (r IssuesDeleteMilestoneReq) method() string {
+func (r *IssuesDeleteMilestoneReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesDeleteMilestoneReq) urlQuery() url.Values {
+func (r *IssuesDeleteMilestoneReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesDeleteMilestoneReq) header() http.Header {
+func (r *IssuesDeleteMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesDeleteMilestoneReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -965,28 +1005,35 @@ type IssuesGetReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesGetReq) urlPath() string {
+func (r *IssuesGetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesGetReq) method() string {
+func (r *IssuesGetReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetReq) urlQuery() url.Values {
+func (r *IssuesGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesGetReq) header() http.Header {
+func (r *IssuesGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1184,31 +1231,39 @@ type IssuesGetCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesGetCommentReq) urlPath() string {
+func (r *IssuesGetCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r IssuesGetCommentReq) method() string {
+func (r *IssuesGetCommentReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetCommentReq) urlQuery() url.Values {
+func (r *IssuesGetCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesGetCommentReq) header() http.Header {
+func (r *IssuesGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesGetCommentReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1294,32 +1349,41 @@ type IssuesGetEventReq struct {
 	SailorVPreview bool
 }
 
-func (r IssuesGetEventReq) urlPath() string {
+func (r *IssuesGetEventReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId)
 }
 
-func (r IssuesGetEventReq) method() string {
+func (r *IssuesGetEventReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetEventReq) urlQuery() url.Values {
+func (r *IssuesGetEventReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesGetEventReq) header() http.Header {
+func (r *IssuesGetEventReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
 		"sailor-v":    r.SailorVPreview,
 		"starfox":     r.StarfoxPreview,
 	}
+	if allPreviews {
+		previewVals["starfox"] = true
+		previewVals["machine-man"] = true
+		previewVals["sailor-v"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesGetEventReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1504,28 +1568,32 @@ type IssuesGetLabelReq struct {
 	Name  string
 }
 
-func (r IssuesGetLabelReq) urlPath() string {
+func (r *IssuesGetLabelReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
 }
 
-func (r IssuesGetLabelReq) method() string {
+func (r *IssuesGetLabelReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetLabelReq) urlQuery() url.Values {
+func (r *IssuesGetLabelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesGetLabelReq) header() http.Header {
+func (r *IssuesGetLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesGetLabelReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1558,28 +1626,32 @@ type IssuesGetMilestoneReq struct {
 	MilestoneNumber int64
 }
 
-func (r IssuesGetMilestoneReq) urlPath() string {
+func (r *IssuesGetMilestoneReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
 }
 
-func (r IssuesGetMilestoneReq) method() string {
+func (r *IssuesGetMilestoneReq) method() string {
 	return "GET"
 }
 
-func (r IssuesGetMilestoneReq) urlQuery() url.Values {
+func (r *IssuesGetMilestoneReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesGetMilestoneReq) header() http.Header {
+func (r *IssuesGetMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesGetMilestoneReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1698,15 +1770,15 @@ type IssuesListReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListReq) urlPath() string {
+func (r *IssuesListReq) urlPath() string {
 	return fmt.Sprintf("/issues")
 }
 
-func (r IssuesListReq) method() string {
+func (r *IssuesListReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListReq) urlQuery() url.Values {
+func (r *IssuesListReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -1735,18 +1807,26 @@ func (r IssuesListReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListReq) header() http.Header {
+func (r *IssuesListReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2012,15 +2092,15 @@ type IssuesListAssigneesReq struct {
 	Page *int64
 }
 
-func (r IssuesListAssigneesReq) urlPath() string {
+func (r *IssuesListAssigneesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo)
 }
 
-func (r IssuesListAssigneesReq) method() string {
+func (r *IssuesListAssigneesReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListAssigneesReq) urlQuery() url.Values {
+func (r *IssuesListAssigneesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2031,15 +2111,19 @@ func (r IssuesListAssigneesReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListAssigneesReq) header() http.Header {
+func (r *IssuesListAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListAssigneesReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2107,15 +2191,15 @@ type IssuesListCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListCommentsReq) urlPath() string {
+func (r *IssuesListCommentsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesListCommentsReq) method() string {
+func (r *IssuesListCommentsReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListCommentsReq) urlQuery() url.Values {
+func (r *IssuesListCommentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -2129,15 +2213,22 @@ func (r IssuesListCommentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListCommentsReq) header() http.Header {
+func (r *IssuesListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListCommentsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2219,15 +2310,15 @@ type IssuesListCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListCommentsForRepoReq) urlPath() string {
+func (r *IssuesListCommentsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo)
 }
 
-func (r IssuesListCommentsForRepoReq) method() string {
+func (r *IssuesListCommentsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListCommentsForRepoReq) urlQuery() url.Values {
+func (r *IssuesListCommentsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2247,15 +2338,22 @@ func (r IssuesListCommentsForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListCommentsForRepoReq) header() http.Header {
+func (r *IssuesListCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListCommentsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2336,15 +2434,15 @@ type IssuesListEventsReq struct {
 	SailorVPreview bool
 }
 
-func (r IssuesListEventsReq) urlPath() string {
+func (r *IssuesListEventsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesListEventsReq) method() string {
+func (r *IssuesListEventsReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListEventsReq) urlQuery() url.Values {
+func (r *IssuesListEventsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2355,18 +2453,26 @@ func (r IssuesListEventsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListEventsReq) header() http.Header {
+func (r *IssuesListEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"sailor-v": r.SailorVPreview,
 		"starfox":  r.StarfoxPreview,
 	}
+	if allPreviews {
+		previewVals["starfox"] = true
+		previewVals["sailor-v"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListEventsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2446,15 +2552,15 @@ type IssuesListEventsForRepoReq struct {
 	SailorVPreview bool
 }
 
-func (r IssuesListEventsForRepoReq) urlPath() string {
+func (r *IssuesListEventsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/events", r.Owner, r.Repo)
 }
 
-func (r IssuesListEventsForRepoReq) method() string {
+func (r *IssuesListEventsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListEventsForRepoReq) urlQuery() url.Values {
+func (r *IssuesListEventsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2465,18 +2571,26 @@ func (r IssuesListEventsForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListEventsForRepoReq) header() http.Header {
+func (r *IssuesListEventsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"sailor-v": r.SailorVPreview,
 		"starfox":  r.StarfoxPreview,
 	}
+	if allPreviews {
+		previewVals["starfox"] = true
+		previewVals["sailor-v"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListEventsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2688,15 +2802,15 @@ type IssuesListEventsForTimelineReq struct {
 	StarfoxPreview bool
 }
 
-func (r IssuesListEventsForTimelineReq) urlPath() string {
+func (r *IssuesListEventsForTimelineReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/timeline", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesListEventsForTimelineReq) method() string {
+func (r *IssuesListEventsForTimelineReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListEventsForTimelineReq) urlQuery() url.Values {
+func (r *IssuesListEventsForTimelineReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2707,18 +2821,29 @@ func (r IssuesListEventsForTimelineReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListEventsForTimelineReq) header() http.Header {
+func (r *IssuesListEventsForTimelineReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"mockingbird": r.MockingbirdPreview,
 		"starfox":     r.StarfoxPreview,
 	}
+	if requiredPreviews {
+		previewVals["mockingbird"] = true
+	}
+	if allPreviews {
+		previewVals["mockingbird"] = true
+		previewVals["starfox"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListEventsForTimelineReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -2829,15 +2954,15 @@ type IssuesListForAuthenticatedUserReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListForAuthenticatedUserReq) urlPath() string {
+func (r *IssuesListForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/issues")
 }
 
-func (r IssuesListForAuthenticatedUserReq) method() string {
+func (r *IssuesListForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *IssuesListForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -2866,18 +2991,26 @@ func (r IssuesListForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListForAuthenticatedUserReq) header() http.Header {
+func (r *IssuesListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3197,15 +3330,15 @@ type IssuesListForOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListForOrgReq) urlPath() string {
+func (r *IssuesListForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/issues", r.Org)
 }
 
-func (r IssuesListForOrgReq) method() string {
+func (r *IssuesListForOrgReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListForOrgReq) urlQuery() url.Values {
+func (r *IssuesListForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -3234,18 +3367,26 @@ func (r IssuesListForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListForOrgReq) header() http.Header {
+func (r *IssuesListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3574,15 +3715,15 @@ type IssuesListForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r IssuesListForRepoReq) urlPath() string {
+func (r *IssuesListForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
 }
 
-func (r IssuesListForRepoReq) method() string {
+func (r *IssuesListForRepoReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListForRepoReq) urlQuery() url.Values {
+func (r *IssuesListForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Milestone != nil {
 		query.Set("milestone", *r.Milestone)
@@ -3620,18 +3761,26 @@ func (r IssuesListForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListForRepoReq) header() http.Header {
+func (r *IssuesListForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
 	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+		previewVals["squirrel-girl"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3793,15 +3942,15 @@ type IssuesListLabelsForMilestoneReq struct {
 	Page *int64
 }
 
-func (r IssuesListLabelsForMilestoneReq) urlPath() string {
+func (r *IssuesListLabelsForMilestoneReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber)
 }
 
-func (r IssuesListLabelsForMilestoneReq) method() string {
+func (r *IssuesListLabelsForMilestoneReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
+func (r *IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3812,15 +3961,19 @@ func (r IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListLabelsForMilestoneReq) header() http.Header {
+func (r *IssuesListLabelsForMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListLabelsForMilestoneReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3858,15 +4011,15 @@ type IssuesListLabelsForRepoReq struct {
 	Page *int64
 }
 
-func (r IssuesListLabelsForRepoReq) urlPath() string {
+func (r *IssuesListLabelsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
 }
 
-func (r IssuesListLabelsForRepoReq) method() string {
+func (r *IssuesListLabelsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListLabelsForRepoReq) urlQuery() url.Values {
+func (r *IssuesListLabelsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3877,15 +4030,19 @@ func (r IssuesListLabelsForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListLabelsForRepoReq) header() http.Header {
+func (r *IssuesListLabelsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListLabelsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3924,15 +4081,15 @@ type IssuesListLabelsOnIssueReq struct {
 	Page *int64
 }
 
-func (r IssuesListLabelsOnIssueReq) urlPath() string {
+func (r *IssuesListLabelsOnIssueReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesListLabelsOnIssueReq) method() string {
+func (r *IssuesListLabelsOnIssueReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListLabelsOnIssueReq) urlQuery() url.Values {
+func (r *IssuesListLabelsOnIssueReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3943,15 +4100,19 @@ func (r IssuesListLabelsOnIssueReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListLabelsOnIssueReq) header() http.Header {
+func (r *IssuesListLabelsOnIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListLabelsOnIssueReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -3998,15 +4159,15 @@ type IssuesListMilestonesForRepoReq struct {
 	Page *int64
 }
 
-func (r IssuesListMilestonesForRepoReq) urlPath() string {
+func (r *IssuesListMilestonesForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
 }
 
-func (r IssuesListMilestonesForRepoReq) method() string {
+func (r *IssuesListMilestonesForRepoReq) method() string {
 	return "GET"
 }
 
-func (r IssuesListMilestonesForRepoReq) urlQuery() url.Values {
+func (r *IssuesListMilestonesForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -4026,15 +4187,19 @@ func (r IssuesListMilestonesForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r IssuesListMilestonesForRepoReq) header() http.Header {
+func (r *IssuesListMilestonesForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesListMilestonesForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4106,28 +4271,35 @@ type IssuesLockReq struct {
 	SailorVPreview bool
 }
 
-func (r IssuesLockReq) urlPath() string {
+func (r *IssuesLockReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesLockReq) method() string {
+func (r *IssuesLockReq) method() string {
 	return "PUT"
 }
 
-func (r IssuesLockReq) urlQuery() url.Values {
+func (r *IssuesLockReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesLockReq) header() http.Header {
+func (r *IssuesLockReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
+	if allPreviews {
+		previewVals["sailor-v"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesLockReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4163,28 +4335,32 @@ type IssuesRemoveAllLabelsReq struct {
 	IssueNumber int64
 }
 
-func (r IssuesRemoveAllLabelsReq) urlPath() string {
+func (r *IssuesRemoveAllLabelsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesRemoveAllLabelsReq) method() string {
+func (r *IssuesRemoveAllLabelsReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesRemoveAllLabelsReq) urlQuery() url.Values {
+func (r *IssuesRemoveAllLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesRemoveAllLabelsReq) header() http.Header {
+func (r *IssuesRemoveAllLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesRemoveAllLabelsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4203,28 +4379,32 @@ type IssuesRemoveAssigneesReq struct {
 	RequestBody IssuesRemoveAssigneesReqBody
 }
 
-func (r IssuesRemoveAssigneesReq) urlPath() string {
+func (r *IssuesRemoveAssigneesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesRemoveAssigneesReq) method() string {
+func (r *IssuesRemoveAssigneesReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesRemoveAssigneesReq) urlQuery() url.Values {
+func (r *IssuesRemoveAssigneesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesRemoveAssigneesReq) header() http.Header {
+func (r *IssuesRemoveAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesRemoveAssigneesReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesRemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesRemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4396,28 +4576,32 @@ type IssuesRemoveLabelReq struct {
 	Name        string
 }
 
-func (r IssuesRemoveLabelReq) urlPath() string {
+func (r *IssuesRemoveLabelReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name)
 }
 
-func (r IssuesRemoveLabelReq) method() string {
+func (r *IssuesRemoveLabelReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesRemoveLabelReq) urlQuery() url.Values {
+func (r *IssuesRemoveLabelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesRemoveLabelReq) header() http.Header {
+func (r *IssuesRemoveLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesRemoveLabelReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4451,28 +4635,32 @@ type IssuesReplaceAllLabelsReq struct {
 	RequestBody IssuesReplaceAllLabelsReqBody
 }
 
-func (r IssuesReplaceAllLabelsReq) urlPath() string {
+func (r *IssuesReplaceAllLabelsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesReplaceAllLabelsReq) method() string {
+func (r *IssuesReplaceAllLabelsReq) method() string {
 	return "PUT"
 }
 
-func (r IssuesReplaceAllLabelsReq) urlQuery() url.Values {
+func (r *IssuesReplaceAllLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesReplaceAllLabelsReq) header() http.Header {
+func (r *IssuesReplaceAllLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesReplaceAllLabelsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4521,28 +4709,32 @@ type IssuesUnlockReq struct {
 	IssueNumber int64
 }
 
-func (r IssuesUnlockReq) urlPath() string {
+func (r *IssuesUnlockReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesUnlockReq) method() string {
+func (r *IssuesUnlockReq) method() string {
 	return "DELETE"
 }
 
-func (r IssuesUnlockReq) urlQuery() url.Values {
+func (r *IssuesUnlockReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesUnlockReq) header() http.Header {
+func (r *IssuesUnlockReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesUnlockReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4561,28 +4753,32 @@ type IssuesUpdateReq struct {
 	RequestBody IssuesUpdateReqBody
 }
 
-func (r IssuesUpdateReq) urlPath() string {
+func (r *IssuesUpdateReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r IssuesUpdateReq) method() string {
+func (r *IssuesUpdateReq) method() string {
 	return "PATCH"
 }
 
-func (r IssuesUpdateReq) urlQuery() url.Values {
+func (r *IssuesUpdateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesUpdateReq) header() http.Header {
+func (r *IssuesUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesUpdateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4805,28 +5001,32 @@ type IssuesUpdateCommentReq struct {
 	RequestBody IssuesUpdateCommentReqBody
 }
 
-func (r IssuesUpdateCommentReq) urlPath() string {
+func (r *IssuesUpdateCommentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r IssuesUpdateCommentReq) method() string {
+func (r *IssuesUpdateCommentReq) method() string {
 	return "PATCH"
 }
 
-func (r IssuesUpdateCommentReq) urlQuery() url.Values {
+func (r *IssuesUpdateCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesUpdateCommentReq) header() http.Header {
+func (r *IssuesUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesUpdateCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4891,28 +5091,32 @@ type IssuesUpdateLabelReq struct {
 	RequestBody IssuesUpdateLabelReqBody
 }
 
-func (r IssuesUpdateLabelReq) urlPath() string {
+func (r *IssuesUpdateLabelReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
 }
 
-func (r IssuesUpdateLabelReq) method() string {
+func (r *IssuesUpdateLabelReq) method() string {
 	return "PATCH"
 }
 
-func (r IssuesUpdateLabelReq) urlQuery() url.Values {
+func (r *IssuesUpdateLabelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesUpdateLabelReq) header() http.Header {
+func (r *IssuesUpdateLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesUpdateLabelReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -4973,28 +5177,32 @@ type IssuesUpdateMilestoneReq struct {
 	RequestBody     IssuesUpdateMilestoneReqBody
 }
 
-func (r IssuesUpdateMilestoneReq) urlPath() string {
+func (r *IssuesUpdateMilestoneReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
 }
 
-func (r IssuesUpdateMilestoneReq) method() string {
+func (r *IssuesUpdateMilestoneReq) method() string {
 	return "PATCH"
 }
 
-func (r IssuesUpdateMilestoneReq) urlQuery() url.Values {
+func (r *IssuesUpdateMilestoneReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r IssuesUpdateMilestoneReq) header() http.Header {
+func (r *IssuesUpdateMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *IssuesUpdateMilestoneReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

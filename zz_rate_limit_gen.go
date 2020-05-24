@@ -20,28 +20,32 @@ https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
 type RateLimitGetReq struct{}
 
-func (r RateLimitGetReq) urlPath() string {
+func (r *RateLimitGetReq) urlPath() string {
 	return fmt.Sprintf("/rate_limit")
 }
 
-func (r RateLimitGetReq) method() string {
+func (r *RateLimitGetReq) method() string {
 	return "GET"
 }
 
-func (r RateLimitGetReq) urlQuery() url.Values {
+func (r *RateLimitGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r RateLimitGetReq) header() http.Header {
+func (r *RateLimitGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *RateLimitGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

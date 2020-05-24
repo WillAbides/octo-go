@@ -31,28 +31,38 @@ type InteractionsAddOrUpdateRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForOrgReq) urlPath() string {
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForOrgReq) method() string {
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) method() string {
 	return "PUT"
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForOrgReq) urlQuery() url.Values {
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForOrgReq) header() http.Header {
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r InteractionsAddOrUpdateRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -104,28 +114,38 @@ type InteractionsAddOrUpdateRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForRepoReq) urlPath() string {
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForRepoReq) method() string {
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) method() string {
 	return "PUT"
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForRepoReq) urlQuery() url.Values {
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r InteractionsAddOrUpdateRestrictionsForRepoReq) header() http.Header {
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r InteractionsAddOrUpdateRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -175,28 +195,38 @@ type InteractionsGetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r InteractionsGetRestrictionsForOrgReq) urlPath() string {
+func (r *InteractionsGetRestrictionsForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
 }
 
-func (r InteractionsGetRestrictionsForOrgReq) method() string {
+func (r *InteractionsGetRestrictionsForOrgReq) method() string {
 	return "GET"
 }
 
-func (r InteractionsGetRestrictionsForOrgReq) urlQuery() url.Values {
+func (r *InteractionsGetRestrictionsForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r InteractionsGetRestrictionsForOrgReq) header() http.Header {
+func (r *InteractionsGetRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *InteractionsGetRestrictionsForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -232,28 +262,38 @@ type InteractionsGetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r InteractionsGetRestrictionsForRepoReq) urlPath() string {
+func (r *InteractionsGetRestrictionsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
 }
 
-func (r InteractionsGetRestrictionsForRepoReq) method() string {
+func (r *InteractionsGetRestrictionsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r InteractionsGetRestrictionsForRepoReq) urlQuery() url.Values {
+func (r *InteractionsGetRestrictionsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r InteractionsGetRestrictionsForRepoReq) header() http.Header {
+func (r *InteractionsGetRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *InteractionsGetRestrictionsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -288,28 +328,38 @@ type InteractionsRemoveRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
+func (r *InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
 }
 
-func (r InteractionsRemoveRestrictionsForOrgReq) method() string {
+func (r *InteractionsRemoveRestrictionsForOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r InteractionsRemoveRestrictionsForOrgReq) urlQuery() url.Values {
+func (r *InteractionsRemoveRestrictionsForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r InteractionsRemoveRestrictionsForOrgReq) header() http.Header {
+func (r *InteractionsRemoveRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *InteractionsRemoveRestrictionsForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -334,26 +384,36 @@ type InteractionsRemoveRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
+func (r *InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
 }
 
-func (r InteractionsRemoveRestrictionsForRepoReq) method() string {
+func (r *InteractionsRemoveRestrictionsForRepoReq) method() string {
 	return "DELETE"
 }
 
-func (r InteractionsRemoveRestrictionsForRepoReq) urlQuery() url.Values {
+func (r *InteractionsRemoveRestrictionsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r InteractionsRemoveRestrictionsForRepoReq) header() http.Header {
+func (r *InteractionsRemoveRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *InteractionsRemoveRestrictionsForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }

@@ -35,28 +35,38 @@ type ChecksCreateReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksCreateReq) urlPath() string {
+func (r *ChecksCreateReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-runs", r.Owner, r.Repo)
 }
 
-func (r ChecksCreateReq) method() string {
+func (r *ChecksCreateReq) method() string {
 	return "POST"
 }
 
-func (r ChecksCreateReq) urlQuery() url.Values {
+func (r *ChecksCreateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksCreateReq) header() http.Header {
+func (r *ChecksCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksCreateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ChecksCreateReqBodyActions is a value for ChecksCreateReqBody's Actions field
@@ -359,28 +369,38 @@ type ChecksCreateSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksCreateSuiteReq) urlPath() string {
+func (r *ChecksCreateSuiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-suites", r.Owner, r.Repo)
 }
 
-func (r ChecksCreateSuiteReq) method() string {
+func (r *ChecksCreateSuiteReq) method() string {
 	return "POST"
 }
 
-func (r ChecksCreateSuiteReq) urlQuery() url.Values {
+func (r *ChecksCreateSuiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksCreateSuiteReq) header() http.Header {
+func (r *ChecksCreateSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksCreateSuiteReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -573,28 +593,38 @@ type ChecksGetReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksGetReq) urlPath() string {
+func (r *ChecksGetReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId)
 }
 
-func (r ChecksGetReq) method() string {
+func (r *ChecksGetReq) method() string {
 	return "GET"
 }
 
-func (r ChecksGetReq) urlQuery() url.Values {
+func (r *ChecksGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksGetReq) header() http.Header {
+func (r *ChecksGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -706,28 +736,38 @@ type ChecksGetSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksGetSuiteReq) urlPath() string {
+func (r *ChecksGetSuiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId)
 }
 
-func (r ChecksGetSuiteReq) method() string {
+func (r *ChecksGetSuiteReq) method() string {
 	return "GET"
 }
 
-func (r ChecksGetSuiteReq) urlQuery() url.Values {
+func (r *ChecksGetSuiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksGetSuiteReq) header() http.Header {
+func (r *ChecksGetSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksGetSuiteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -915,15 +955,15 @@ type ChecksListAnnotationsReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksListAnnotationsReq) urlPath() string {
+func (r *ChecksListAnnotationsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId)
 }
 
-func (r ChecksListAnnotationsReq) method() string {
+func (r *ChecksListAnnotationsReq) method() string {
 	return "GET"
 }
 
-func (r ChecksListAnnotationsReq) urlQuery() url.Values {
+func (r *ChecksListAnnotationsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -934,15 +974,25 @@ func (r ChecksListAnnotationsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ChecksListAnnotationsReq) header() http.Header {
+func (r *ChecksListAnnotationsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksListAnnotationsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1007,15 +1057,15 @@ type ChecksListForRefReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksListForRefReq) urlPath() string {
+func (r *ChecksListForRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref)
 }
 
-func (r ChecksListForRefReq) method() string {
+func (r *ChecksListForRefReq) method() string {
 	return "GET"
 }
 
-func (r ChecksListForRefReq) urlQuery() url.Values {
+func (r *ChecksListForRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.CheckName != nil {
 		query.Set("check_name", *r.CheckName)
@@ -1035,15 +1085,25 @@ func (r ChecksListForRefReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ChecksListForRefReq) header() http.Header {
+func (r *ChecksListForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksListForRefReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1179,15 +1239,15 @@ type ChecksListForSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksListForSuiteReq) urlPath() string {
+func (r *ChecksListForSuiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId)
 }
 
-func (r ChecksListForSuiteReq) method() string {
+func (r *ChecksListForSuiteReq) method() string {
 	return "GET"
 }
 
-func (r ChecksListForSuiteReq) urlQuery() url.Values {
+func (r *ChecksListForSuiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.CheckName != nil {
 		query.Set("check_name", *r.CheckName)
@@ -1207,15 +1267,25 @@ func (r ChecksListForSuiteReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ChecksListForSuiteReq) header() http.Header {
+func (r *ChecksListForSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksListForSuiteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1345,15 +1415,15 @@ type ChecksListSuitesForRefReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksListSuitesForRefReq) urlPath() string {
+func (r *ChecksListSuitesForRefReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref)
 }
 
-func (r ChecksListSuitesForRefReq) method() string {
+func (r *ChecksListSuitesForRefReq) method() string {
 	return "GET"
 }
 
-func (r ChecksListSuitesForRefReq) urlQuery() url.Values {
+func (r *ChecksListSuitesForRefReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.AppId != nil {
 		query.Set("app_id", strconv.FormatInt(*r.AppId, 10))
@@ -1370,15 +1440,25 @@ func (r ChecksListSuitesForRefReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ChecksListSuitesForRefReq) header() http.Header {
+func (r *ChecksListSuitesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksListSuitesForRefReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1563,28 +1643,38 @@ type ChecksRerequestSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksRerequestSuiteReq) urlPath() string {
+func (r *ChecksRerequestSuiteReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId)
 }
 
-func (r ChecksRerequestSuiteReq) method() string {
+func (r *ChecksRerequestSuiteReq) method() string {
 	return "POST"
 }
 
-func (r ChecksRerequestSuiteReq) urlQuery() url.Values {
+func (r *ChecksRerequestSuiteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksRerequestSuiteReq) header() http.Header {
+func (r *ChecksRerequestSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksRerequestSuiteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1611,28 +1701,38 @@ type ChecksSetSuitesPreferencesReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksSetSuitesPreferencesReq) urlPath() string {
+func (r *ChecksSetSuitesPreferencesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo)
 }
 
-func (r ChecksSetSuitesPreferencesReq) method() string {
+func (r *ChecksSetSuitesPreferencesReq) method() string {
 	return "PATCH"
 }
 
-func (r ChecksSetSuitesPreferencesReq) urlQuery() url.Values {
+func (r *ChecksSetSuitesPreferencesReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksSetSuitesPreferencesReq) header() http.Header {
+func (r *ChecksSetSuitesPreferencesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksSetSuitesPreferencesReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks is a value for ChecksSetSuitesPreferencesReqBody's AutoTriggerChecks field
@@ -1808,28 +1908,38 @@ type ChecksUpdateReq struct {
 	AntiopePreview bool
 }
 
-func (r ChecksUpdateReq) urlPath() string {
+func (r *ChecksUpdateReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId)
 }
 
-func (r ChecksUpdateReq) method() string {
+func (r *ChecksUpdateReq) method() string {
 	return "PATCH"
 }
 
-func (r ChecksUpdateReq) urlQuery() url.Values {
+func (r *ChecksUpdateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ChecksUpdateReq) header() http.Header {
+func (r *ChecksUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
+	if requiredPreviews {
+		previewVals["antiope"] = true
+	}
+	if allPreviews {
+		previewVals["antiope"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ChecksUpdateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 // ChecksUpdateReqBodyActions is a value for ChecksUpdateReqBody's Actions field

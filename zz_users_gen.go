@@ -24,28 +24,32 @@ type UsersAddEmailsReq struct {
 	RequestBody UsersAddEmailsReqBody
 }
 
-func (r UsersAddEmailsReq) urlPath() string {
+func (r *UsersAddEmailsReq) urlPath() string {
 	return fmt.Sprintf("/user/emails")
 }
 
-func (r UsersAddEmailsReq) method() string {
+func (r *UsersAddEmailsReq) method() string {
 	return "POST"
 }
 
-func (r UsersAddEmailsReq) urlQuery() url.Values {
+func (r *UsersAddEmailsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersAddEmailsReq) header() http.Header {
+func (r *UsersAddEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersAddEmailsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r UsersAddEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *UsersAddEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -89,28 +93,32 @@ type UsersBlockReq struct {
 	Username string
 }
 
-func (r UsersBlockReq) urlPath() string {
+func (r *UsersBlockReq) urlPath() string {
 	return fmt.Sprintf("/user/blocks/%v", r.Username)
 }
 
-func (r UsersBlockReq) method() string {
+func (r *UsersBlockReq) method() string {
 	return "PUT"
 }
 
-func (r UsersBlockReq) urlQuery() url.Values {
+func (r *UsersBlockReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersBlockReq) header() http.Header {
+func (r *UsersBlockReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersBlockReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersBlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersBlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -126,28 +134,32 @@ type UsersCheckBlockedReq struct {
 	Username string
 }
 
-func (r UsersCheckBlockedReq) urlPath() string {
+func (r *UsersCheckBlockedReq) urlPath() string {
 	return fmt.Sprintf("/user/blocks/%v", r.Username)
 }
 
-func (r UsersCheckBlockedReq) method() string {
+func (r *UsersCheckBlockedReq) method() string {
 	return "GET"
 }
 
-func (r UsersCheckBlockedReq) urlQuery() url.Values {
+func (r *UsersCheckBlockedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersCheckBlockedReq) header() http.Header {
+func (r *UsersCheckBlockedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersCheckBlockedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersCheckBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersCheckBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -163,28 +175,32 @@ type UsersCheckFollowingReq struct {
 	Username string
 }
 
-func (r UsersCheckFollowingReq) urlPath() string {
+func (r *UsersCheckFollowingReq) urlPath() string {
 	return fmt.Sprintf("/user/following/%v", r.Username)
 }
 
-func (r UsersCheckFollowingReq) method() string {
+func (r *UsersCheckFollowingReq) method() string {
 	return "GET"
 }
 
-func (r UsersCheckFollowingReq) urlQuery() url.Values {
+func (r *UsersCheckFollowingReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersCheckFollowingReq) header() http.Header {
+func (r *UsersCheckFollowingReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersCheckFollowingReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersCheckFollowingReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersCheckFollowingReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -201,28 +217,32 @@ type UsersCheckFollowingForUserReq struct {
 	TargetUser string
 }
 
-func (r UsersCheckFollowingForUserReq) urlPath() string {
+func (r *UsersCheckFollowingForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/following/%v", r.Username, r.TargetUser)
 }
 
-func (r UsersCheckFollowingForUserReq) method() string {
+func (r *UsersCheckFollowingForUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersCheckFollowingForUserReq) urlQuery() url.Values {
+func (r *UsersCheckFollowingForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersCheckFollowingForUserReq) header() http.Header {
+func (r *UsersCheckFollowingForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersCheckFollowingForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersCheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersCheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -238,28 +258,32 @@ type UsersCreateGpgKeyReq struct {
 	RequestBody UsersCreateGpgKeyReqBody
 }
 
-func (r UsersCreateGpgKeyReq) urlPath() string {
+func (r *UsersCreateGpgKeyReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys")
 }
 
-func (r UsersCreateGpgKeyReq) method() string {
+func (r *UsersCreateGpgKeyReq) method() string {
 	return "POST"
 }
 
-func (r UsersCreateGpgKeyReq) urlQuery() url.Values {
+func (r *UsersCreateGpgKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersCreateGpgKeyReq) header() http.Header {
+func (r *UsersCreateGpgKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersCreateGpgKeyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r UsersCreateGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *UsersCreateGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -326,28 +350,32 @@ type UsersCreatePublicKeyReq struct {
 	RequestBody UsersCreatePublicKeyReqBody
 }
 
-func (r UsersCreatePublicKeyReq) urlPath() string {
+func (r *UsersCreatePublicKeyReq) urlPath() string {
 	return fmt.Sprintf("/user/keys")
 }
 
-func (r UsersCreatePublicKeyReq) method() string {
+func (r *UsersCreatePublicKeyReq) method() string {
 	return "POST"
 }
 
-func (r UsersCreatePublicKeyReq) urlQuery() url.Values {
+func (r *UsersCreatePublicKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersCreatePublicKeyReq) header() http.Header {
+func (r *UsersCreatePublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersCreatePublicKeyReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r UsersCreatePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *UsersCreatePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -395,28 +423,32 @@ type UsersDeleteEmailsReq struct {
 	RequestBody UsersDeleteEmailsReqBody
 }
 
-func (r UsersDeleteEmailsReq) urlPath() string {
+func (r *UsersDeleteEmailsReq) urlPath() string {
 	return fmt.Sprintf("/user/emails")
 }
 
-func (r UsersDeleteEmailsReq) method() string {
+func (r *UsersDeleteEmailsReq) method() string {
 	return "DELETE"
 }
 
-func (r UsersDeleteEmailsReq) urlQuery() url.Values {
+func (r *UsersDeleteEmailsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersDeleteEmailsReq) header() http.Header {
+func (r *UsersDeleteEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersDeleteEmailsReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r UsersDeleteEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *UsersDeleteEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -448,28 +480,32 @@ type UsersDeleteGpgKeyReq struct {
 	GpgKeyId int64
 }
 
-func (r UsersDeleteGpgKeyReq) urlPath() string {
+func (r *UsersDeleteGpgKeyReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId)
 }
 
-func (r UsersDeleteGpgKeyReq) method() string {
+func (r *UsersDeleteGpgKeyReq) method() string {
 	return "DELETE"
 }
 
-func (r UsersDeleteGpgKeyReq) urlQuery() url.Values {
+func (r *UsersDeleteGpgKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersDeleteGpgKeyReq) header() http.Header {
+func (r *UsersDeleteGpgKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersDeleteGpgKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersDeleteGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersDeleteGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -485,28 +521,32 @@ type UsersDeletePublicKeyReq struct {
 	KeyId int64
 }
 
-func (r UsersDeletePublicKeyReq) urlPath() string {
+func (r *UsersDeletePublicKeyReq) urlPath() string {
 	return fmt.Sprintf("/user/keys/%v", r.KeyId)
 }
 
-func (r UsersDeletePublicKeyReq) method() string {
+func (r *UsersDeletePublicKeyReq) method() string {
 	return "DELETE"
 }
 
-func (r UsersDeletePublicKeyReq) urlQuery() url.Values {
+func (r *UsersDeletePublicKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersDeletePublicKeyReq) header() http.Header {
+func (r *UsersDeletePublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersDeletePublicKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersDeletePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersDeletePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -522,28 +562,32 @@ type UsersFollowReq struct {
 	Username string
 }
 
-func (r UsersFollowReq) urlPath() string {
+func (r *UsersFollowReq) urlPath() string {
 	return fmt.Sprintf("/user/following/%v", r.Username)
 }
 
-func (r UsersFollowReq) method() string {
+func (r *UsersFollowReq) method() string {
 	return "PUT"
 }
 
-func (r UsersFollowReq) urlQuery() url.Values {
+func (r *UsersFollowReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersFollowReq) header() http.Header {
+func (r *UsersFollowReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersFollowReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersFollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersFollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -557,28 +601,32 @@ https://developer.github.com/v3/users/#get-the-authenticated-user
 */
 type UsersGetAuthenticatedReq struct{}
 
-func (r UsersGetAuthenticatedReq) urlPath() string {
+func (r *UsersGetAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user")
 }
 
-func (r UsersGetAuthenticatedReq) method() string {
+func (r *UsersGetAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r UsersGetAuthenticatedReq) urlQuery() url.Values {
+func (r *UsersGetAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersGetAuthenticatedReq) header() http.Header {
+func (r *UsersGetAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersGetAuthenticatedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -645,28 +693,32 @@ type UsersGetByUsernameReq struct {
 	Username string
 }
 
-func (r UsersGetByUsernameReq) urlPath() string {
+func (r *UsersGetByUsernameReq) urlPath() string {
 	return fmt.Sprintf("/users/%v", r.Username)
 }
 
-func (r UsersGetByUsernameReq) method() string {
+func (r *UsersGetByUsernameReq) method() string {
 	return "GET"
 }
 
-func (r UsersGetByUsernameReq) urlQuery() url.Values {
+func (r *UsersGetByUsernameReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersGetByUsernameReq) header() http.Header {
+func (r *UsersGetByUsernameReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersGetByUsernameReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersGetByUsernameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersGetByUsernameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -734,15 +786,15 @@ type UsersGetContextForUserReq struct {
 	SubjectId *string
 }
 
-func (r UsersGetContextForUserReq) urlPath() string {
+func (r *UsersGetContextForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/hovercard", r.Username)
 }
 
-func (r UsersGetContextForUserReq) method() string {
+func (r *UsersGetContextForUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersGetContextForUserReq) urlQuery() url.Values {
+func (r *UsersGetContextForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.SubjectType != nil {
 		query.Set("subject_type", *r.SubjectType)
@@ -753,15 +805,19 @@ func (r UsersGetContextForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersGetContextForUserReq) header() http.Header {
+func (r *UsersGetContextForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersGetContextForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersGetContextForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersGetContextForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -789,28 +845,32 @@ type UsersGetGpgKeyReq struct {
 	GpgKeyId int64
 }
 
-func (r UsersGetGpgKeyReq) urlPath() string {
+func (r *UsersGetGpgKeyReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId)
 }
 
-func (r UsersGetGpgKeyReq) method() string {
+func (r *UsersGetGpgKeyReq) method() string {
 	return "GET"
 }
 
-func (r UsersGetGpgKeyReq) urlQuery() url.Values {
+func (r *UsersGetGpgKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersGetGpgKeyReq) header() http.Header {
+func (r *UsersGetGpgKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersGetGpgKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersGetGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersGetGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -862,28 +922,32 @@ type UsersGetPublicKeyReq struct {
 	KeyId int64
 }
 
-func (r UsersGetPublicKeyReq) urlPath() string {
+func (r *UsersGetPublicKeyReq) urlPath() string {
 	return fmt.Sprintf("/user/keys/%v", r.KeyId)
 }
 
-func (r UsersGetPublicKeyReq) method() string {
+func (r *UsersGetPublicKeyReq) method() string {
 	return "GET"
 }
 
-func (r UsersGetPublicKeyReq) urlQuery() url.Values {
+func (r *UsersGetPublicKeyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersGetPublicKeyReq) header() http.Header {
+func (r *UsersGetPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersGetPublicKeyReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersGetPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersGetPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -911,15 +975,15 @@ type UsersListReq struct {
 	Since *string
 }
 
-func (r UsersListReq) urlPath() string {
+func (r *UsersListReq) urlPath() string {
 	return fmt.Sprintf("/users")
 }
 
-func (r UsersListReq) method() string {
+func (r *UsersListReq) method() string {
 	return "GET"
 }
 
-func (r UsersListReq) urlQuery() url.Values {
+func (r *UsersListReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -927,15 +991,19 @@ func (r UsersListReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListReq) header() http.Header {
+func (r *UsersListReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -975,28 +1043,32 @@ https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
 type UsersListBlockedReq struct{}
 
-func (r UsersListBlockedReq) urlPath() string {
+func (r *UsersListBlockedReq) urlPath() string {
 	return fmt.Sprintf("/user/blocks")
 }
 
-func (r UsersListBlockedReq) method() string {
+func (r *UsersListBlockedReq) method() string {
 	return "GET"
 }
 
-func (r UsersListBlockedReq) urlQuery() url.Values {
+func (r *UsersListBlockedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersListBlockedReq) header() http.Header {
+func (r *UsersListBlockedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListBlockedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1043,15 +1115,15 @@ type UsersListEmailsReq struct {
 	Page *int64
 }
 
-func (r UsersListEmailsReq) urlPath() string {
+func (r *UsersListEmailsReq) urlPath() string {
 	return fmt.Sprintf("/user/emails")
 }
 
-func (r UsersListEmailsReq) method() string {
+func (r *UsersListEmailsReq) method() string {
 	return "GET"
 }
 
-func (r UsersListEmailsReq) urlQuery() url.Values {
+func (r *UsersListEmailsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1062,15 +1134,19 @@ func (r UsersListEmailsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListEmailsReq) header() http.Header {
+func (r *UsersListEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListEmailsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1103,15 +1179,15 @@ type UsersListFollowedByAuthenticatedReq struct {
 	Page *int64
 }
 
-func (r UsersListFollowedByAuthenticatedReq) urlPath() string {
+func (r *UsersListFollowedByAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/following")
 }
 
-func (r UsersListFollowedByAuthenticatedReq) method() string {
+func (r *UsersListFollowedByAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r UsersListFollowedByAuthenticatedReq) urlQuery() url.Values {
+func (r *UsersListFollowedByAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1122,15 +1198,19 @@ func (r UsersListFollowedByAuthenticatedReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListFollowedByAuthenticatedReq) header() http.Header {
+func (r *UsersListFollowedByAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListFollowedByAuthenticatedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1177,15 +1257,15 @@ type UsersListFollowersForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r UsersListFollowersForAuthenticatedUserReq) urlPath() string {
+func (r *UsersListFollowersForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/followers")
 }
 
-func (r UsersListFollowersForAuthenticatedUserReq) method() string {
+func (r *UsersListFollowersForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersListFollowersForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *UsersListFollowersForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1196,15 +1276,19 @@ func (r UsersListFollowersForAuthenticatedUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListFollowersForAuthenticatedUserReq) header() http.Header {
+func (r *UsersListFollowersForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListFollowersForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1252,15 +1336,15 @@ type UsersListFollowersForUserReq struct {
 	Page *int64
 }
 
-func (r UsersListFollowersForUserReq) urlPath() string {
+func (r *UsersListFollowersForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/followers", r.Username)
 }
 
-func (r UsersListFollowersForUserReq) method() string {
+func (r *UsersListFollowersForUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersListFollowersForUserReq) urlQuery() url.Values {
+func (r *UsersListFollowersForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1271,15 +1355,19 @@ func (r UsersListFollowersForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListFollowersForUserReq) header() http.Header {
+func (r *UsersListFollowersForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListFollowersForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1327,15 +1415,15 @@ type UsersListFollowingForUserReq struct {
 	Page *int64
 }
 
-func (r UsersListFollowingForUserReq) urlPath() string {
+func (r *UsersListFollowingForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/following", r.Username)
 }
 
-func (r UsersListFollowingForUserReq) method() string {
+func (r *UsersListFollowingForUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersListFollowingForUserReq) urlQuery() url.Values {
+func (r *UsersListFollowingForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1346,15 +1434,19 @@ func (r UsersListFollowingForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListFollowingForUserReq) header() http.Header {
+func (r *UsersListFollowingForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListFollowingForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1401,15 +1493,15 @@ type UsersListGpgKeysReq struct {
 	Page *int64
 }
 
-func (r UsersListGpgKeysReq) urlPath() string {
+func (r *UsersListGpgKeysReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys")
 }
 
-func (r UsersListGpgKeysReq) method() string {
+func (r *UsersListGpgKeysReq) method() string {
 	return "GET"
 }
 
-func (r UsersListGpgKeysReq) urlQuery() url.Values {
+func (r *UsersListGpgKeysReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1420,15 +1512,19 @@ func (r UsersListGpgKeysReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListGpgKeysReq) header() http.Header {
+func (r *UsersListGpgKeysReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListGpgKeysReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListGpgKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListGpgKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1486,15 +1582,15 @@ type UsersListGpgKeysForUserReq struct {
 	Page *int64
 }
 
-func (r UsersListGpgKeysForUserReq) urlPath() string {
+func (r *UsersListGpgKeysForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/gpg_keys", r.Username)
 }
 
-func (r UsersListGpgKeysForUserReq) method() string {
+func (r *UsersListGpgKeysForUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersListGpgKeysForUserReq) urlQuery() url.Values {
+func (r *UsersListGpgKeysForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1505,15 +1601,19 @@ func (r UsersListGpgKeysForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListGpgKeysForUserReq) header() http.Header {
+func (r *UsersListGpgKeysForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListGpgKeysForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListGpgKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListGpgKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1570,15 +1670,15 @@ type UsersListPublicEmailsReq struct {
 	Page *int64
 }
 
-func (r UsersListPublicEmailsReq) urlPath() string {
+func (r *UsersListPublicEmailsReq) urlPath() string {
 	return fmt.Sprintf("/user/public_emails")
 }
 
-func (r UsersListPublicEmailsReq) method() string {
+func (r *UsersListPublicEmailsReq) method() string {
 	return "GET"
 }
 
-func (r UsersListPublicEmailsReq) urlQuery() url.Values {
+func (r *UsersListPublicEmailsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1589,15 +1689,19 @@ func (r UsersListPublicEmailsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListPublicEmailsReq) header() http.Header {
+func (r *UsersListPublicEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListPublicEmailsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListPublicEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListPublicEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1630,15 +1734,15 @@ type UsersListPublicKeysReq struct {
 	Page *int64
 }
 
-func (r UsersListPublicKeysReq) urlPath() string {
+func (r *UsersListPublicKeysReq) urlPath() string {
 	return fmt.Sprintf("/user/keys")
 }
 
-func (r UsersListPublicKeysReq) method() string {
+func (r *UsersListPublicKeysReq) method() string {
 	return "GET"
 }
 
-func (r UsersListPublicKeysReq) urlQuery() url.Values {
+func (r *UsersListPublicKeysReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1649,15 +1753,19 @@ func (r UsersListPublicKeysReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListPublicKeysReq) header() http.Header {
+func (r *UsersListPublicKeysReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListPublicKeysReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListPublicKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListPublicKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1689,15 +1797,15 @@ type UsersListPublicKeysForUserReq struct {
 	Page *int64
 }
 
-func (r UsersListPublicKeysForUserReq) urlPath() string {
+func (r *UsersListPublicKeysForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/keys", r.Username)
 }
 
-func (r UsersListPublicKeysForUserReq) method() string {
+func (r *UsersListPublicKeysForUserReq) method() string {
 	return "GET"
 }
 
-func (r UsersListPublicKeysForUserReq) urlQuery() url.Values {
+func (r *UsersListPublicKeysForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1708,15 +1816,19 @@ func (r UsersListPublicKeysForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r UsersListPublicKeysForUserReq) header() http.Header {
+func (r *UsersListPublicKeysForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersListPublicKeysForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1742,28 +1854,32 @@ type UsersTogglePrimaryEmailVisibilityReq struct {
 	RequestBody UsersTogglePrimaryEmailVisibilityReqBody
 }
 
-func (r UsersTogglePrimaryEmailVisibilityReq) urlPath() string {
+func (r *UsersTogglePrimaryEmailVisibilityReq) urlPath() string {
 	return fmt.Sprintf("/user/email/visibility")
 }
 
-func (r UsersTogglePrimaryEmailVisibilityReq) method() string {
+func (r *UsersTogglePrimaryEmailVisibilityReq) method() string {
 	return "PATCH"
 }
 
-func (r UsersTogglePrimaryEmailVisibilityReq) urlQuery() url.Values {
+func (r *UsersTogglePrimaryEmailVisibilityReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersTogglePrimaryEmailVisibilityReq) header() http.Header {
+func (r *UsersTogglePrimaryEmailVisibilityReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersTogglePrimaryEmailVisibilityReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r UsersTogglePrimaryEmailVisibilityReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *UsersTogglePrimaryEmailVisibilityReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1808,28 +1924,32 @@ type UsersUnblockReq struct {
 	Username string
 }
 
-func (r UsersUnblockReq) urlPath() string {
+func (r *UsersUnblockReq) urlPath() string {
 	return fmt.Sprintf("/user/blocks/%v", r.Username)
 }
 
-func (r UsersUnblockReq) method() string {
+func (r *UsersUnblockReq) method() string {
 	return "DELETE"
 }
 
-func (r UsersUnblockReq) urlQuery() url.Values {
+func (r *UsersUnblockReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersUnblockReq) header() http.Header {
+func (r *UsersUnblockReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersUnblockReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersUnblockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersUnblockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1845,28 +1965,32 @@ type UsersUnfollowReq struct {
 	Username string
 }
 
-func (r UsersUnfollowReq) urlPath() string {
+func (r *UsersUnfollowReq) urlPath() string {
 	return fmt.Sprintf("/user/following/%v", r.Username)
 }
 
-func (r UsersUnfollowReq) method() string {
+func (r *UsersUnfollowReq) method() string {
 	return "DELETE"
 }
 
-func (r UsersUnfollowReq) urlQuery() url.Values {
+func (r *UsersUnfollowReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersUnfollowReq) header() http.Header {
+func (r *UsersUnfollowReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersUnfollowReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r UsersUnfollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *UsersUnfollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1882,28 +2006,32 @@ type UsersUpdateAuthenticatedReq struct {
 	RequestBody UsersUpdateAuthenticatedReqBody
 }
 
-func (r UsersUpdateAuthenticatedReq) urlPath() string {
+func (r *UsersUpdateAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user")
 }
 
-func (r UsersUpdateAuthenticatedReq) method() string {
+func (r *UsersUpdateAuthenticatedReq) method() string {
 	return "PATCH"
 }
 
-func (r UsersUpdateAuthenticatedReq) urlQuery() url.Values {
+func (r *UsersUpdateAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r UsersUpdateAuthenticatedReq) header() http.Header {
+func (r *UsersUpdateAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *UsersUpdateAuthenticatedReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r UsersUpdateAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *UsersUpdateAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

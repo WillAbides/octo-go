@@ -23,28 +23,32 @@ type OauthAuthorizationsCreateAuthorizationReq struct {
 	RequestBody OauthAuthorizationsCreateAuthorizationReqBody
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
+func (r *OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/authorizations")
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) method() string {
+func (r *OauthAuthorizationsCreateAuthorizationReq) method() string {
 	return "POST"
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsCreateAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsCreateAuthorizationReq) header() http.Header {
+func (r *OauthAuthorizationsCreateAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsCreateAuthorizationReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -117,28 +121,32 @@ type OauthAuthorizationsDeleteAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-func (r OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
+func (r *OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
 }
 
-func (r OauthAuthorizationsDeleteAuthorizationReq) method() string {
+func (r *OauthAuthorizationsDeleteAuthorizationReq) method() string {
 	return "DELETE"
 }
 
-func (r OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsDeleteAuthorizationReq) header() http.Header {
+func (r *OauthAuthorizationsDeleteAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsDeleteAuthorizationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -154,28 +162,32 @@ type OauthAuthorizationsDeleteGrantReq struct {
 	GrantId int64
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) urlPath() string {
+func (r *OauthAuthorizationsDeleteGrantReq) urlPath() string {
 	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) method() string {
+func (r *OauthAuthorizationsDeleteGrantReq) method() string {
 	return "DELETE"
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsDeleteGrantReq) header() http.Header {
+func (r *OauthAuthorizationsDeleteGrantReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsDeleteGrantReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -191,28 +203,32 @@ type OauthAuthorizationsGetAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) urlPath() string {
+func (r *OauthAuthorizationsGetAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) method() string {
+func (r *OauthAuthorizationsGetAuthorizationReq) method() string {
 	return "GET"
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsGetAuthorizationReq) header() http.Header {
+func (r *OauthAuthorizationsGetAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsGetAuthorizationReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -252,28 +268,32 @@ type OauthAuthorizationsGetGrantReq struct {
 	GrantId int64
 }
 
-func (r OauthAuthorizationsGetGrantReq) urlPath() string {
+func (r *OauthAuthorizationsGetGrantReq) urlPath() string {
 	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
 }
 
-func (r OauthAuthorizationsGetGrantReq) method() string {
+func (r *OauthAuthorizationsGetGrantReq) method() string {
 	return "GET"
 }
 
-func (r OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsGetGrantReq) header() http.Header {
+func (r *OauthAuthorizationsGetGrantReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsGetGrantReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -308,28 +328,32 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
 	return fmt.Sprintf("/authorizations/clients/%v", r.ClientId)
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) method() string {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) method() string {
 	return "PUT"
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header() http.Header {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -426,28 +450,32 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
 	return fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint)
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) method() string {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) method() string {
 	return "PUT"
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) header() http.Header {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -539,15 +567,15 @@ type OauthAuthorizationsListAuthorizationsReq struct {
 	Page *int64
 }
 
-func (r OauthAuthorizationsListAuthorizationsReq) urlPath() string {
+func (r *OauthAuthorizationsListAuthorizationsReq) urlPath() string {
 	return fmt.Sprintf("/authorizations")
 }
 
-func (r OauthAuthorizationsListAuthorizationsReq) method() string {
+func (r *OauthAuthorizationsListAuthorizationsReq) method() string {
 	return "GET"
 }
 
-func (r OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -558,15 +586,19 @@ func (r OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r OauthAuthorizationsListAuthorizationsReq) header() http.Header {
+func (r *OauthAuthorizationsListAuthorizationsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsListAuthorizationsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -611,15 +643,15 @@ type OauthAuthorizationsListGrantsReq struct {
 	Page *int64
 }
 
-func (r OauthAuthorizationsListGrantsReq) urlPath() string {
+func (r *OauthAuthorizationsListGrantsReq) urlPath() string {
 	return fmt.Sprintf("/applications/grants")
 }
 
-func (r OauthAuthorizationsListGrantsReq) method() string {
+func (r *OauthAuthorizationsListGrantsReq) method() string {
 	return "GET"
 }
 
-func (r OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -630,15 +662,19 @@ func (r OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r OauthAuthorizationsListGrantsReq) header() http.Header {
+func (r *OauthAuthorizationsListGrantsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsListGrantsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -673,28 +709,32 @@ type OauthAuthorizationsUpdateAuthorizationReq struct {
 	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
+func (r *OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
 	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) method() string {
+func (r *OauthAuthorizationsUpdateAuthorizationReq) method() string {
 	return "PATCH"
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsUpdateAuthorizationReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r OauthAuthorizationsUpdateAuthorizationReq) header() http.Header {
+func (r *OauthAuthorizationsUpdateAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *OauthAuthorizationsUpdateAuthorizationReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

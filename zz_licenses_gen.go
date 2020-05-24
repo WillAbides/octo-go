@@ -23,28 +23,32 @@ type LicensesGetReq struct {
 	License string
 }
 
-func (r LicensesGetReq) urlPath() string {
+func (r *LicensesGetReq) urlPath() string {
 	return fmt.Sprintf("/licenses/%v", r.License)
 }
 
-func (r LicensesGetReq) method() string {
+func (r *LicensesGetReq) method() string {
 	return "GET"
 }
 
-func (r LicensesGetReq) urlQuery() url.Values {
+func (r *LicensesGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r LicensesGetReq) header() http.Header {
+func (r *LicensesGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *LicensesGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -82,28 +86,32 @@ type LicensesGetForRepoReq struct {
 	Repo  string
 }
 
-func (r LicensesGetForRepoReq) urlPath() string {
+func (r *LicensesGetForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/license", r.Owner, r.Repo)
 }
 
-func (r LicensesGetForRepoReq) method() string {
+func (r *LicensesGetForRepoReq) method() string {
 	return "GET"
 }
 
-func (r LicensesGetForRepoReq) urlQuery() url.Values {
+func (r *LicensesGetForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r LicensesGetForRepoReq) header() http.Header {
+func (r *LicensesGetForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *LicensesGetForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r LicensesGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *LicensesGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -148,28 +156,32 @@ https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
 type LicensesListCommonlyUsedReq struct{}
 
-func (r LicensesListCommonlyUsedReq) urlPath() string {
+func (r *LicensesListCommonlyUsedReq) urlPath() string {
 	return fmt.Sprintf("/licenses")
 }
 
-func (r LicensesListCommonlyUsedReq) method() string {
+func (r *LicensesListCommonlyUsedReq) method() string {
 	return "GET"
 }
 
-func (r LicensesListCommonlyUsedReq) urlQuery() url.Values {
+func (r *LicensesListCommonlyUsedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r LicensesListCommonlyUsedReq) header() http.Header {
+func (r *LicensesListCommonlyUsedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *LicensesListCommonlyUsedReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r LicensesListCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *LicensesListCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*

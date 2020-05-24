@@ -34,28 +34,38 @@ type ProjectsAddCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsAddCollaboratorReq) urlPath() string {
+func (r *ProjectsAddCollaboratorReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
 }
 
-func (r ProjectsAddCollaboratorReq) method() string {
+func (r *ProjectsAddCollaboratorReq) method() string {
 	return "PUT"
 }
 
-func (r ProjectsAddCollaboratorReq) urlQuery() url.Values {
+func (r *ProjectsAddCollaboratorReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsAddCollaboratorReq) header() http.Header {
+func (r *ProjectsAddCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsAddCollaboratorReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -100,28 +110,38 @@ type ProjectsCreateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsCreateCardReq) urlPath() string {
+func (r *ProjectsCreateCardReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
 }
 
-func (r ProjectsCreateCardReq) method() string {
+func (r *ProjectsCreateCardReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsCreateCardReq) urlQuery() url.Values {
+func (r *ProjectsCreateCardReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsCreateCardReq) header() http.Header {
+func (r *ProjectsCreateCardReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsCreateCardReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -217,28 +237,38 @@ type ProjectsCreateColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsCreateColumnReq) urlPath() string {
+func (r *ProjectsCreateColumnReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
 }
 
-func (r ProjectsCreateColumnReq) method() string {
+func (r *ProjectsCreateColumnReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsCreateColumnReq) urlQuery() url.Values {
+func (r *ProjectsCreateColumnReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsCreateColumnReq) header() http.Header {
+func (r *ProjectsCreateColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsCreateColumnReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -274,28 +304,38 @@ type ProjectsCreateForAuthenticatedUserReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsCreateForAuthenticatedUserReq) urlPath() string {
+func (r *ProjectsCreateForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/projects")
 }
 
-func (r ProjectsCreateForAuthenticatedUserReq) method() string {
+func (r *ProjectsCreateForAuthenticatedUserReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsCreateForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ProjectsCreateForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsCreateForAuthenticatedUserReq) header() http.Header {
+func (r *ProjectsCreateForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsCreateForAuthenticatedUserReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -375,28 +415,38 @@ type ProjectsCreateForOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsCreateForOrgReq) urlPath() string {
+func (r *ProjectsCreateForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/projects", r.Org)
 }
 
-func (r ProjectsCreateForOrgReq) method() string {
+func (r *ProjectsCreateForOrgReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsCreateForOrgReq) urlQuery() url.Values {
+func (r *ProjectsCreateForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsCreateForOrgReq) header() http.Header {
+func (r *ProjectsCreateForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsCreateForOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -477,28 +527,38 @@ type ProjectsCreateForRepoReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsCreateForRepoReq) urlPath() string {
+func (r *ProjectsCreateForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
 }
 
-func (r ProjectsCreateForRepoReq) method() string {
+func (r *ProjectsCreateForRepoReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsCreateForRepoReq) urlQuery() url.Values {
+func (r *ProjectsCreateForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsCreateForRepoReq) header() http.Header {
+func (r *ProjectsCreateForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsCreateForRepoReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -577,28 +637,38 @@ type ProjectsDeleteReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsDeleteReq) urlPath() string {
+func (r *ProjectsDeleteReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v", r.ProjectId)
 }
 
-func (r ProjectsDeleteReq) method() string {
+func (r *ProjectsDeleteReq) method() string {
 	return "DELETE"
 }
 
-func (r ProjectsDeleteReq) urlQuery() url.Values {
+func (r *ProjectsDeleteReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsDeleteReq) header() http.Header {
+func (r *ProjectsDeleteReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsDeleteReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -623,28 +693,38 @@ type ProjectsDeleteCardReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsDeleteCardReq) urlPath() string {
+func (r *ProjectsDeleteCardReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
 }
 
-func (r ProjectsDeleteCardReq) method() string {
+func (r *ProjectsDeleteCardReq) method() string {
 	return "DELETE"
 }
 
-func (r ProjectsDeleteCardReq) urlQuery() url.Values {
+func (r *ProjectsDeleteCardReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsDeleteCardReq) header() http.Header {
+func (r *ProjectsDeleteCardReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsDeleteCardReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -669,28 +749,38 @@ type ProjectsDeleteColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsDeleteColumnReq) urlPath() string {
+func (r *ProjectsDeleteColumnReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
 }
 
-func (r ProjectsDeleteColumnReq) method() string {
+func (r *ProjectsDeleteColumnReq) method() string {
 	return "DELETE"
 }
 
-func (r ProjectsDeleteColumnReq) urlQuery() url.Values {
+func (r *ProjectsDeleteColumnReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsDeleteColumnReq) header() http.Header {
+func (r *ProjectsDeleteColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsDeleteColumnReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -715,28 +805,38 @@ type ProjectsGetReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsGetReq) urlPath() string {
+func (r *ProjectsGetReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v", r.ProjectId)
 }
 
-func (r ProjectsGetReq) method() string {
+func (r *ProjectsGetReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsGetReq) urlQuery() url.Values {
+func (r *ProjectsGetReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsGetReq) header() http.Header {
+func (r *ProjectsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsGetReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -801,28 +901,38 @@ type ProjectsGetCardReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsGetCardReq) urlPath() string {
+func (r *ProjectsGetCardReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
 }
 
-func (r ProjectsGetCardReq) method() string {
+func (r *ProjectsGetCardReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsGetCardReq) urlQuery() url.Values {
+func (r *ProjectsGetCardReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsGetCardReq) header() http.Header {
+func (r *ProjectsGetCardReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsGetCardReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -847,28 +957,38 @@ type ProjectsGetColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsGetColumnReq) urlPath() string {
+func (r *ProjectsGetColumnReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
 }
 
-func (r ProjectsGetColumnReq) method() string {
+func (r *ProjectsGetColumnReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsGetColumnReq) urlQuery() url.Values {
+func (r *ProjectsGetColumnReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsGetColumnReq) header() http.Header {
+func (r *ProjectsGetColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsGetColumnReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -905,15 +1025,15 @@ type ProjectsListCardsReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsListCardsReq) urlPath() string {
+func (r *ProjectsListCardsReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
 }
 
-func (r ProjectsListCardsReq) method() string {
+func (r *ProjectsListCardsReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsListCardsReq) urlQuery() url.Values {
+func (r *ProjectsListCardsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.ArchivedState != nil {
 		query.Set("archived_state", *r.ArchivedState)
@@ -927,15 +1047,25 @@ func (r ProjectsListCardsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ProjectsListCardsReq) header() http.Header {
+func (r *ProjectsListCardsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsListCardsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1014,15 +1144,15 @@ type ProjectsListCollaboratorsReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsListCollaboratorsReq) urlPath() string {
+func (r *ProjectsListCollaboratorsReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v/collaborators", r.ProjectId)
 }
 
-func (r ProjectsListCollaboratorsReq) method() string {
+func (r *ProjectsListCollaboratorsReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsListCollaboratorsReq) urlQuery() url.Values {
+func (r *ProjectsListCollaboratorsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Affiliation != nil {
 		query.Set("affiliation", *r.Affiliation)
@@ -1036,15 +1166,25 @@ func (r ProjectsListCollaboratorsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ProjectsListCollaboratorsReq) header() http.Header {
+func (r *ProjectsListCollaboratorsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsListCollaboratorsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1101,15 +1241,15 @@ type ProjectsListColumnsReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsListColumnsReq) urlPath() string {
+func (r *ProjectsListColumnsReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
 }
 
-func (r ProjectsListColumnsReq) method() string {
+func (r *ProjectsListColumnsReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsListColumnsReq) urlQuery() url.Values {
+func (r *ProjectsListColumnsReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1120,15 +1260,25 @@ func (r ProjectsListColumnsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ProjectsListColumnsReq) header() http.Header {
+func (r *ProjectsListColumnsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsListColumnsReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1181,15 +1331,15 @@ type ProjectsListForOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsListForOrgReq) urlPath() string {
+func (r *ProjectsListForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/projects", r.Org)
 }
 
-func (r ProjectsListForOrgReq) method() string {
+func (r *ProjectsListForOrgReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsListForOrgReq) urlQuery() url.Values {
+func (r *ProjectsListForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -1203,15 +1353,25 @@ func (r ProjectsListForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ProjectsListForOrgReq) header() http.Header {
+func (r *ProjectsListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsListForOrgReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1289,15 +1449,15 @@ type ProjectsListForRepoReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsListForRepoReq) urlPath() string {
+func (r *ProjectsListForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
 }
 
-func (r ProjectsListForRepoReq) method() string {
+func (r *ProjectsListForRepoReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsListForRepoReq) urlQuery() url.Values {
+func (r *ProjectsListForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -1311,15 +1471,25 @@ func (r ProjectsListForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ProjectsListForRepoReq) header() http.Header {
+func (r *ProjectsListForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsListForRepoReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1396,15 +1566,15 @@ type ProjectsListForUserReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsListForUserReq) urlPath() string {
+func (r *ProjectsListForUserReq) urlPath() string {
 	return fmt.Sprintf("/users/%v/projects", r.Username)
 }
 
-func (r ProjectsListForUserReq) method() string {
+func (r *ProjectsListForUserReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsListForUserReq) urlQuery() url.Values {
+func (r *ProjectsListForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -1418,15 +1588,25 @@ func (r ProjectsListForUserReq) urlQuery() url.Values {
 	return query
 }
 
-func (r ProjectsListForUserReq) header() http.Header {
+func (r *ProjectsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsListForUserReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1492,28 +1672,38 @@ type ProjectsMoveCardReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsMoveCardReq) urlPath() string {
+func (r *ProjectsMoveCardReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId)
 }
 
-func (r ProjectsMoveCardReq) method() string {
+func (r *ProjectsMoveCardReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsMoveCardReq) urlQuery() url.Values {
+func (r *ProjectsMoveCardReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsMoveCardReq) header() http.Header {
+func (r *ProjectsMoveCardReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsMoveCardReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1557,28 +1747,38 @@ type ProjectsMoveColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsMoveColumnReq) urlPath() string {
+func (r *ProjectsMoveColumnReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId)
 }
 
-func (r ProjectsMoveColumnReq) method() string {
+func (r *ProjectsMoveColumnReq) method() string {
 	return "POST"
 }
 
-func (r ProjectsMoveColumnReq) urlQuery() url.Values {
+func (r *ProjectsMoveColumnReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsMoveColumnReq) header() http.Header {
+func (r *ProjectsMoveColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsMoveColumnReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1618,28 +1818,38 @@ type ProjectsRemoveCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsRemoveCollaboratorReq) urlPath() string {
+func (r *ProjectsRemoveCollaboratorReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
 }
 
-func (r ProjectsRemoveCollaboratorReq) method() string {
+func (r *ProjectsRemoveCollaboratorReq) method() string {
 	return "DELETE"
 }
 
-func (r ProjectsRemoveCollaboratorReq) urlQuery() url.Values {
+func (r *ProjectsRemoveCollaboratorReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsRemoveCollaboratorReq) header() http.Header {
+func (r *ProjectsRemoveCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsRemoveCollaboratorReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1665,28 +1875,38 @@ type ProjectsReviewUserPermissionLevelReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsReviewUserPermissionLevelReq) urlPath() string {
+func (r *ProjectsReviewUserPermissionLevelReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username)
 }
 
-func (r ProjectsReviewUserPermissionLevelReq) method() string {
+func (r *ProjectsReviewUserPermissionLevelReq) method() string {
 	return "GET"
 }
 
-func (r ProjectsReviewUserPermissionLevelReq) urlQuery() url.Values {
+func (r *ProjectsReviewUserPermissionLevelReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsReviewUserPermissionLevelReq) header() http.Header {
+func (r *ProjectsReviewUserPermissionLevelReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsReviewUserPermissionLevelReq) body() interface{} {
+	return nil
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), nil, opt)
+func (r *ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1741,28 +1961,38 @@ type ProjectsUpdateReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsUpdateReq) urlPath() string {
+func (r *ProjectsUpdateReq) urlPath() string {
 	return fmt.Sprintf("/projects/%v", r.ProjectId)
 }
 
-func (r ProjectsUpdateReq) method() string {
+func (r *ProjectsUpdateReq) method() string {
 	return "PATCH"
 }
 
-func (r ProjectsUpdateReq) urlQuery() url.Values {
+func (r *ProjectsUpdateReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsUpdateReq) header() http.Header {
+func (r *ProjectsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsUpdateReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1883,28 +2113,38 @@ type ProjectsUpdateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsUpdateCardReq) urlPath() string {
+func (r *ProjectsUpdateCardReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
 }
 
-func (r ProjectsUpdateCardReq) method() string {
+func (r *ProjectsUpdateCardReq) method() string {
 	return "PATCH"
 }
 
-func (r ProjectsUpdateCardReq) urlQuery() url.Values {
+func (r *ProjectsUpdateCardReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsUpdateCardReq) header() http.Header {
+func (r *ProjectsUpdateCardReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsUpdateCardReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
@@ -1951,28 +2191,38 @@ type ProjectsUpdateColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r ProjectsUpdateColumnReq) urlPath() string {
+func (r *ProjectsUpdateColumnReq) urlPath() string {
 	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
 }
 
-func (r ProjectsUpdateColumnReq) method() string {
+func (r *ProjectsUpdateColumnReq) method() string {
 	return "PATCH"
 }
 
-func (r ProjectsUpdateColumnReq) urlQuery() url.Values {
+func (r *ProjectsUpdateColumnReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r ProjectsUpdateColumnReq) header() http.Header {
+func (r *ProjectsUpdateColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
+func (r *ProjectsUpdateColumnReq) body() interface{} {
+	return r.RequestBody
+}
+
 // HTTPRequest creates an http request
-func (r ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return httpRequest(ctx, r.urlPath(), r.method(), r.urlQuery(), r.header(), r.RequestBody, opt)
+func (r *ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
