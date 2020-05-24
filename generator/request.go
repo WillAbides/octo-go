@@ -54,7 +54,7 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"},  &paramSchemaFieldTypeOptions{
+			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, &paramSchemaFieldTypeOptions{
 				usePointers: true,
 			}))
 		}

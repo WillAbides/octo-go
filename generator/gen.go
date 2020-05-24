@@ -75,11 +75,11 @@ func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, opts *
 	return nil
 }
 
-func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions ) *jen.Statement {
+func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	if opts == nil {
 		opts = new(paramSchemaFieldTypeOptions)
 	}
-	if ! opts.noHelperRecursive {
+	if !opts.noHelperRecursive {
 		opts.noHelper = false
 	}
 	if len(schema.ObjectParams) > 0 {

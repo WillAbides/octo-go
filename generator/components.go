@@ -9,7 +9,7 @@ import (
 )
 
 func componentRefStmt(schema *model.ParamSchema) *jen.Statement {
-	if ! strings.HasPrefix(schema.Ref, "#/components/schemas/") {
+	if !strings.HasPrefix(schema.Ref, "#/components/schemas/") {
 		return nil
 	}
 	nm := strings.TrimPrefix(schema.Ref, "#/components/schemas/")
