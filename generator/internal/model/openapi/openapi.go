@@ -15,7 +15,12 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func EndpointsFromSchema(schemaSrc io.Reader) ([]model.Endpoint, error) {
+type Model struct {
+	Endpoints        []model.Endpoint
+	ComponentSchemas map[string]*model.ParamSchema
+}
+
+func Openapi2Model(schemaSrc io.Reader) (*Model, error) {
 	data, err := ioutil.ReadAll(schemaSrc)
 	if err != nil {
 		return nil, fmt.Errorf("could not read from schemaSrc")
@@ -24,7 +29,28 @@ func EndpointsFromSchema(schemaSrc io.Reader) ([]model.Endpoint, error) {
 	if err != nil {
 		return nil, fmt.Errorf("could not load openapiDef")
 	}
-	return buildEndpoints(swagger)
+	mdl := new(Model)
+	mdl.Endpoints, err = buildEndpoints(swagger)
+	if err != nil {
+		return nil, err
+	}
+	mdl.ComponentSchemas, err = buildComponentSchemas(swagger)
+	if err != nil {
+		return nil, err
+	}
+	return mdl, nil
+}
+
+func buildComponentSchemas(swagger *openapi3.Swagger) (map[string]*model.ParamSchema, error) {
+	result := make(map[string]*model.ParamSchema, len(swagger.Components.Schemas))
+	var err error
+	for name, ref := range swagger.Components.Schemas {
+		result[name], err = opParamSchema(ref)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return result, nil
 }
 
 func buildEndpoints(swagger *openapi3.Swagger) ([]model.Endpoint, error) {

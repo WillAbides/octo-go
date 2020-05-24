@@ -34,10 +34,11 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 	if err != nil {
 		return err
 	}
-	endpoints, err := openapi.EndpointsFromSchema(schemaFile)
+	mdl, err := openapi.Openapi2Model(schemaFile)
 	if err != nil {
 		return err
 	}
+	endpoints := mdl.Endpoints
 
 	sort.Slice(endpoints, func(i, j int) bool {
 		return endpoints[i].ID < endpoints[j].ID
