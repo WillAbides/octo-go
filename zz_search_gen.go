@@ -12,7 +12,7 @@ import (
 )
 
 /*
-SearchCodeReq builds requests for "search/code"
+SearchCode performs requests for "search/code"
 
 Search code.
 
@@ -20,7 +20,30 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
+func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchCodeResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchCodeResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchCodeReq is request data for Client.SearchCode
+
+https://developer.github.com/v3/search/#search-code
+*/
 type SearchCodeReq struct {
+	pgURL string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -52,6 +75,10 @@ type SearchCodeReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *SearchCodeReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchCodeReq) urlPath() string {
@@ -92,17 +119,42 @@ func (r *SearchCodeReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchCodeReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchCodeReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchCodeReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchCodeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchCodeResponseBody200 is a response body for search/code
-
-API documentation: https://developer.github.com/v3/search/#search-code
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchCodeResponseBody200 struct {
+func (r *SearchCodeReq) Rel(link RelName, resp *SearchCodeResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchCodeResponseBody is a response body for SearchCode
+
+https://developer.github.com/v3/search/#search-code
+*/
+type SearchCodeResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.CodeSearchResultItem
@@ -111,7 +163,18 @@ type SearchCodeResponseBody200 struct {
 }
 
 /*
-SearchCommitsReq builds requests for "search/commits"
+SearchCodeResponse is a response for SearchCode
+
+https://developer.github.com/v3/search/#search-code
+*/
+type SearchCodeResponse struct {
+	response
+	request *SearchCodeReq
+	Data    *SearchCodeResponseBody
+}
+
+/*
+SearchCommits performs requests for "search/commits"
 
 Search commits.
 
@@ -119,7 +182,30 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
+func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchCommitsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchCommitsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchCommitsReq is request data for Client.SearchCommits
+
+https://developer.github.com/v3/search/#search-commits
+*/
 type SearchCommitsReq struct {
+	pgURL string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -160,6 +246,10 @@ type SearchCommitsReq struct {
 	To access the API you must set this to true.
 	*/
 	CloakPreview bool
+}
+
+func (r *SearchCommitsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchCommitsReq) urlPath() string {
@@ -206,17 +296,42 @@ func (r *SearchCommitsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchCommitsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchCommitsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchCommitsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchCommitsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchCommitsResponseBody200 is a response body for search/commits
-
-API documentation: https://developer.github.com/v3/search/#search-commits
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchCommitsResponseBody200 struct {
+func (r *SearchCommitsReq) Rel(link RelName, resp *SearchCommitsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchCommitsResponseBody is a response body for SearchCommits
+
+https://developer.github.com/v3/search/#search-commits
+*/
+type SearchCommitsResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.CommitSearchResultItem
@@ -225,7 +340,18 @@ type SearchCommitsResponseBody200 struct {
 }
 
 /*
-SearchIssuesAndPullRequestsReq builds requests for "search/issues-and-pull-requests"
+SearchCommitsResponse is a response for SearchCommits
+
+https://developer.github.com/v3/search/#search-commits
+*/
+type SearchCommitsResponse struct {
+	response
+	request *SearchCommitsReq
+	Data    *SearchCommitsResponseBody
+}
+
+/*
+SearchIssuesAndPullRequests performs requests for "search/issues-and-pull-requests"
 
 Search issues and pull requests.
 
@@ -233,7 +359,30 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
+func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchIssuesAndPullRequestsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchIssuesAndPullRequestsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchIssuesAndPullRequestsReq is request data for Client.SearchIssuesAndPullRequests
+
+https://developer.github.com/v3/search/#search-issues-and-pull-requests
+*/
 type SearchIssuesAndPullRequestsReq struct {
+	pgURL string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -268,6 +417,10 @@ type SearchIssuesAndPullRequestsReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *SearchIssuesAndPullRequestsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchIssuesAndPullRequestsReq) urlPath() string {
@@ -308,17 +461,42 @@ func (r *SearchIssuesAndPullRequestsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchIssuesAndPullRequestsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchIssuesAndPullRequestsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchIssuesAndPullRequestsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchIssuesAndPullRequestsResponseBody200 is a response body for search/issues-and-pull-requests
-
-API documentation: https://developer.github.com/v3/search/#search-issues-and-pull-requests
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchIssuesAndPullRequestsResponseBody200 struct {
+func (r *SearchIssuesAndPullRequestsReq) Rel(link RelName, resp *SearchIssuesAndPullRequestsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchIssuesAndPullRequestsResponseBody is a response body for SearchIssuesAndPullRequests
+
+https://developer.github.com/v3/search/#search-issues-and-pull-requests
+*/
+type SearchIssuesAndPullRequestsResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.IssueSearchResultItem
@@ -327,7 +505,18 @@ type SearchIssuesAndPullRequestsResponseBody200 struct {
 }
 
 /*
-SearchLabelsReq builds requests for "search/labels"
+SearchIssuesAndPullRequestsResponse is a response for SearchIssuesAndPullRequests
+
+https://developer.github.com/v3/search/#search-issues-and-pull-requests
+*/
+type SearchIssuesAndPullRequestsResponse struct {
+	response
+	request *SearchIssuesAndPullRequestsReq
+	Data    *SearchIssuesAndPullRequestsResponseBody
+}
+
+/*
+SearchLabels performs requests for "search/labels"
 
 Search labels.
 
@@ -335,7 +524,30 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
+func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchLabelsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchLabelsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchLabelsReq is request data for Client.SearchLabels
+
+https://developer.github.com/v3/search/#search-labels
+*/
 type SearchLabelsReq struct {
+	pgURL string
 
 	// The id of the repository.
 	RepositoryId *int64
@@ -360,6 +572,10 @@ type SearchLabelsReq struct {
 	unless you provide `sort`.
 	*/
 	Order *string
+}
+
+func (r *SearchLabelsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchLabelsReq) urlPath() string {
@@ -397,17 +613,42 @@ func (r *SearchLabelsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchLabelsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchLabelsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchLabelsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchLabelsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchLabelsResponseBody200 is a response body for search/labels
-
-API documentation: https://developer.github.com/v3/search/#search-labels
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchLabelsResponseBody200 struct {
+func (r *SearchLabelsReq) Rel(link RelName, resp *SearchLabelsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchLabelsResponseBody is a response body for SearchLabels
+
+https://developer.github.com/v3/search/#search-labels
+*/
+type SearchLabelsResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.LabelSearchResultItem
@@ -416,7 +657,18 @@ type SearchLabelsResponseBody200 struct {
 }
 
 /*
-SearchReposReq builds requests for "search/repos"
+SearchLabelsResponse is a response for SearchLabels
+
+https://developer.github.com/v3/search/#search-labels
+*/
+type SearchLabelsResponse struct {
+	response
+	request *SearchLabelsReq
+	Data    *SearchLabelsResponseBody
+}
+
+/*
+SearchRepos performs requests for "search/repos"
 
 Search repositories.
 
@@ -424,7 +676,30 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
+func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchReposResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchReposResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchReposReq is request data for Client.SearchRepos
+
+https://developer.github.com/v3/search/#search-repositories
+*/
 type SearchReposReq struct {
+	pgURL string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -464,6 +739,10 @@ type SearchReposReq struct {
 	repository results, you must set this to true.
 	*/
 	MercyPreview bool
+}
+
+func (r *SearchReposReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchReposReq) urlPath() string {
@@ -507,17 +786,42 @@ func (r *SearchReposReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchReposReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchReposReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchReposReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchReposReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchReposResponseBody200 is a response body for search/repos
-
-API documentation: https://developer.github.com/v3/search/#search-repositories
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchReposResponseBody200 struct {
+func (r *SearchReposReq) Rel(link RelName, resp *SearchReposResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchReposResponseBody is a response body for SearchRepos
+
+https://developer.github.com/v3/search/#search-repositories
+*/
+type SearchReposResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.RepoSearchResultItem
@@ -526,7 +830,18 @@ type SearchReposResponseBody200 struct {
 }
 
 /*
-SearchTopicsReq builds requests for "search/topics"
+SearchReposResponse is a response for SearchRepos
+
+https://developer.github.com/v3/search/#search-repositories
+*/
+type SearchReposResponse struct {
+	response
+	request *SearchReposReq
+	Data    *SearchReposResponseBody
+}
+
+/*
+SearchTopics performs requests for "search/topics"
 
 Search topics.
 
@@ -534,7 +849,30 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
+func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchTopicsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchTopicsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchTopicsReq is request data for Client.SearchTopics
+
+https://developer.github.com/v3/search/#search-topics
+*/
 type SearchTopicsReq struct {
+	pgURL string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -551,6 +889,10 @@ type SearchTopicsReq struct {
 	repository results, you must set this to true.
 	*/
 	MercyPreview bool
+}
+
+func (r *SearchTopicsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchTopicsReq) urlPath() string {
@@ -582,17 +924,42 @@ func (r *SearchTopicsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchTopicsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchTopicsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchTopicsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchTopicsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchTopicsResponseBody200 is a response body for search/topics
-
-API documentation: https://developer.github.com/v3/search/#search-topics
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchTopicsResponseBody200 struct {
+func (r *SearchTopicsReq) Rel(link RelName, resp *SearchTopicsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchTopicsResponseBody is a response body for SearchTopics
+
+https://developer.github.com/v3/search/#search-topics
+*/
+type SearchTopicsResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.TopicSearchResultItem
@@ -601,7 +968,18 @@ type SearchTopicsResponseBody200 struct {
 }
 
 /*
-SearchUsersReq builds requests for "search/users"
+SearchTopicsResponse is a response for SearchTopics
+
+https://developer.github.com/v3/search/#search-topics
+*/
+type SearchTopicsResponse struct {
+	response
+	request *SearchTopicsReq
+	Data    *SearchTopicsResponseBody
+}
+
+/*
+SearchUsers performs requests for "search/users"
 
 Search users.
 
@@ -609,7 +987,30 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
+func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &SearchUsersResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(SearchUsersResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+SearchUsersReq is request data for Client.SearchUsers
+
+https://developer.github.com/v3/search/#search-users
+*/
 type SearchUsersReq struct {
+	pgURL string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -641,6 +1042,10 @@ type SearchUsersReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *SearchUsersReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *SearchUsersReq) urlPath() string {
@@ -681,20 +1086,56 @@ func (r *SearchUsersReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *SearchUsersReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchUsersReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *SearchUsersReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *SearchUsersReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-SearchUsersResponseBody200 is a response body for search/users
-
-API documentation: https://developer.github.com/v3/search/#search-users
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type SearchUsersResponseBody200 struct {
+func (r *SearchUsersReq) Rel(link RelName, resp *SearchUsersResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+SearchUsersResponseBody is a response body for SearchUsers
+
+https://developer.github.com/v3/search/#search-users
+*/
+type SearchUsersResponseBody struct {
 	IncompleteResults bool `json:"incomplete_results,omitempty"`
 	Items             []struct {
 		components.UserSearchResultItem
 	} `json:"items,omitempty"`
 	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+SearchUsersResponse is a response for SearchUsers
+
+https://developer.github.com/v3/search/#search-users
+*/
+type SearchUsersResponse struct {
+	response
+	request *SearchUsersReq
+	Data    *SearchUsersResponseBody
 }

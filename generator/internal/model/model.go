@@ -18,7 +18,12 @@ type Endpoint struct {
 	QueryParams     Params
 	Headers         Params
 	Previews        []Preview
-	Responses       map[int]*ParamSchema
+	Responses       map[int]Response
+}
+
+type Response struct {
+	Body    *ParamSchema
+	Headers []Header
 }
 
 type Preview struct {
@@ -62,6 +67,14 @@ func (p *ParamSchema) Clone() *ParamSchema {
 		result.ItemSchema = p.ItemSchema.Clone()
 	}
 	return &result
+}
+
+type Header struct {
+	Ref      string
+	Required bool
+	Name     string
+	HelpText string
+	Schema   *ParamSchema
 }
 
 type Param struct {

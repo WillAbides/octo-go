@@ -11,7 +11,7 @@ import (
 )
 
 /*
-InteractionsAddOrUpdateRestrictionsForOrgReq builds requests for "interactions/add-or-update-restrictions-for-org"
+InteractionsAddOrUpdateRestrictionsForOrg performs requests for "interactions/add-or-update-restrictions-for-org"
 
 Add or update interaction restrictions for an organization.
 
@@ -19,7 +19,30 @@ Add or update interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
+func (c *Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &InteractionsAddOrUpdateRestrictionsForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(InteractionsAddOrUpdateRestrictionsForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsAddOrUpdateRestrictionsForOrgReq is request data for Client.InteractionsAddOrUpdateRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
+*/
 type InteractionsAddOrUpdateRestrictionsForOrgReq struct {
+	pgURL       string
 	Org         string
 	RequestBody InteractionsAddOrUpdateRestrictionsForOrgReqBody
 
@@ -30,6 +53,10 @@ type InteractionsAddOrUpdateRestrictionsForOrgReq struct {
 	set this to true.
 	*/
 	SombraPreview bool
+}
+
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) urlPath() string {
@@ -61,15 +88,40 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsAddOrUpdateRestrictionsForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 InteractionsAddOrUpdateRestrictionsForOrgReqBody is a request body for interactions/add-or-update-restrictions-for-org
 
-API documentation: https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
+https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
 type InteractionsAddOrUpdateRestrictionsForOrgReqBody struct {
 
@@ -82,16 +134,27 @@ type InteractionsAddOrUpdateRestrictionsForOrgReqBody struct {
 }
 
 /*
-InteractionsAddOrUpdateRestrictionsForOrgResponseBody200 is a response body for interactions/add-or-update-restrictions-for-org
+InteractionsAddOrUpdateRestrictionsForOrgResponseBody is a response body for InteractionsAddOrUpdateRestrictionsForOrg
 
-API documentation: https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
+https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
-type InteractionsAddOrUpdateRestrictionsForOrgResponseBody200 struct {
+type InteractionsAddOrUpdateRestrictionsForOrgResponseBody struct {
 	components.InteractionLimit
 }
 
 /*
-InteractionsAddOrUpdateRestrictionsForRepoReq builds requests for "interactions/add-or-update-restrictions-for-repo"
+InteractionsAddOrUpdateRestrictionsForOrgResponse is a response for InteractionsAddOrUpdateRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
+*/
+type InteractionsAddOrUpdateRestrictionsForOrgResponse struct {
+	response
+	request *InteractionsAddOrUpdateRestrictionsForOrgReq
+	Data    *InteractionsAddOrUpdateRestrictionsForOrgResponseBody
+}
+
+/*
+InteractionsAddOrUpdateRestrictionsForRepo performs requests for "interactions/add-or-update-restrictions-for-repo"
 
 Add or update interaction restrictions for a repository.
 
@@ -99,7 +162,30 @@ Add or update interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
+func (c *Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &InteractionsAddOrUpdateRestrictionsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(InteractionsAddOrUpdateRestrictionsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsAddOrUpdateRestrictionsForRepoReq is request data for Client.InteractionsAddOrUpdateRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
+*/
 type InteractionsAddOrUpdateRestrictionsForRepoReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody InteractionsAddOrUpdateRestrictionsForRepoReqBody
@@ -111,6 +197,10 @@ type InteractionsAddOrUpdateRestrictionsForRepoReq struct {
 	set this to true.
 	*/
 	SombraPreview bool
+}
+
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) urlPath() string {
@@ -142,15 +232,40 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsAddOrUpdateRestrictionsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 InteractionsAddOrUpdateRestrictionsForRepoReqBody is a request body for interactions/add-or-update-restrictions-for-repo
 
-API documentation: https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
+https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
 type InteractionsAddOrUpdateRestrictionsForRepoReqBody struct {
 
@@ -163,16 +278,27 @@ type InteractionsAddOrUpdateRestrictionsForRepoReqBody struct {
 }
 
 /*
-InteractionsAddOrUpdateRestrictionsForRepoResponseBody200 is a response body for interactions/add-or-update-restrictions-for-repo
+InteractionsAddOrUpdateRestrictionsForRepoResponseBody is a response body for InteractionsAddOrUpdateRestrictionsForRepo
 
-API documentation: https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
+https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
-type InteractionsAddOrUpdateRestrictionsForRepoResponseBody200 struct {
+type InteractionsAddOrUpdateRestrictionsForRepoResponseBody struct {
 	components.InteractionLimit
 }
 
 /*
-InteractionsGetRestrictionsForOrgReq builds requests for "interactions/get-restrictions-for-org"
+InteractionsAddOrUpdateRestrictionsForRepoResponse is a response for InteractionsAddOrUpdateRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
+*/
+type InteractionsAddOrUpdateRestrictionsForRepoResponse struct {
+	response
+	request *InteractionsAddOrUpdateRestrictionsForRepoReq
+	Data    *InteractionsAddOrUpdateRestrictionsForRepoResponseBody
+}
+
+/*
+InteractionsGetRestrictionsForOrg performs requests for "interactions/get-restrictions-for-org"
 
 Get interaction restrictions for an organization.
 
@@ -180,8 +306,31 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
+func (c *Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &InteractionsGetRestrictionsForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(InteractionsGetRestrictionsForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsGetRestrictionsForOrgReq is request data for Client.InteractionsGetRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+*/
 type InteractionsGetRestrictionsForOrgReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -190,6 +339,10 @@ type InteractionsGetRestrictionsForOrgReq struct {
 	set this to true.
 	*/
 	SombraPreview bool
+}
+
+func (r *InteractionsGetRestrictionsForOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *InteractionsGetRestrictionsForOrgReq) urlPath() string {
@@ -221,22 +374,58 @@ func (r *InteractionsGetRestrictionsForOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *InteractionsGetRestrictionsForOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsGetRestrictionsForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *InteractionsGetRestrictionsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-InteractionsGetRestrictionsForOrgResponseBody200 is a response body for interactions/get-restrictions-for-org
-
-API documentation: https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type InteractionsGetRestrictionsForOrgResponseBody200 struct {
+func (r *InteractionsGetRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsGetRestrictionsForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+InteractionsGetRestrictionsForOrgResponseBody is a response body for InteractionsGetRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+*/
+type InteractionsGetRestrictionsForOrgResponseBody struct {
 	components.InteractionLimit
 }
 
 /*
-InteractionsGetRestrictionsForRepoReq builds requests for "interactions/get-restrictions-for-repo"
+InteractionsGetRestrictionsForOrgResponse is a response for InteractionsGetRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+*/
+type InteractionsGetRestrictionsForOrgResponse struct {
+	response
+	request *InteractionsGetRestrictionsForOrgReq
+	Data    *InteractionsGetRestrictionsForOrgResponseBody
+}
+
+/*
+InteractionsGetRestrictionsForRepo performs requests for "interactions/get-restrictions-for-repo"
 
 Get interaction restrictions for a repository.
 
@@ -244,7 +433,30 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
+func (c *Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &InteractionsGetRestrictionsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(InteractionsGetRestrictionsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsGetRestrictionsForRepoReq is request data for Client.InteractionsGetRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+*/
 type InteractionsGetRestrictionsForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -255,6 +467,10 @@ type InteractionsGetRestrictionsForRepoReq struct {
 	set this to true.
 	*/
 	SombraPreview bool
+}
+
+func (r *InteractionsGetRestrictionsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *InteractionsGetRestrictionsForRepoReq) urlPath() string {
@@ -286,22 +502,58 @@ func (r *InteractionsGetRestrictionsForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *InteractionsGetRestrictionsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsGetRestrictionsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *InteractionsGetRestrictionsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-InteractionsGetRestrictionsForRepoResponseBody200 is a response body for interactions/get-restrictions-for-repo
-
-API documentation: https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type InteractionsGetRestrictionsForRepoResponseBody200 struct {
+func (r *InteractionsGetRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsGetRestrictionsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+InteractionsGetRestrictionsForRepoResponseBody is a response body for InteractionsGetRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+*/
+type InteractionsGetRestrictionsForRepoResponseBody struct {
 	components.InteractionLimit
 }
 
 /*
-InteractionsRemoveRestrictionsForOrgReq builds requests for "interactions/remove-restrictions-for-org"
+InteractionsGetRestrictionsForRepoResponse is a response for InteractionsGetRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+*/
+type InteractionsGetRestrictionsForRepoResponse struct {
+	response
+	request *InteractionsGetRestrictionsForRepoReq
+	Data    *InteractionsGetRestrictionsForRepoResponseBody
+}
+
+/*
+InteractionsRemoveRestrictionsForOrg performs requests for "interactions/remove-restrictions-for-org"
 
 Remove interaction restrictions for an organization.
 
@@ -309,8 +561,30 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
+func (c *Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &InteractionsRemoveRestrictionsForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsRemoveRestrictionsForOrgReq is request data for Client.InteractionsRemoveRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
+*/
 type InteractionsRemoveRestrictionsForOrgReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -319,6 +593,10 @@ type InteractionsRemoveRestrictionsForOrgReq struct {
 	set this to true.
 	*/
 	SombraPreview bool
+}
+
+func (r *InteractionsRemoveRestrictionsForOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
@@ -350,13 +628,48 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *InteractionsRemoveRestrictionsForOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *InteractionsRemoveRestrictionsForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *InteractionsRemoveRestrictionsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-InteractionsRemoveRestrictionsForRepoReq builds requests for "interactions/remove-restrictions-for-repo"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *InteractionsRemoveRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsRemoveRestrictionsForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+InteractionsRemoveRestrictionsForOrgResponse is a response for InteractionsRemoveRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
+*/
+type InteractionsRemoveRestrictionsForOrgResponse struct {
+	response
+	request *InteractionsRemoveRestrictionsForOrgReq
+}
+
+/*
+InteractionsRemoveRestrictionsForRepo performs requests for "interactions/remove-restrictions-for-repo"
 
 Remove interaction restrictions for a repository.
 
@@ -364,7 +677,29 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
+func (c *Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &InteractionsRemoveRestrictionsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsRemoveRestrictionsForRepoReq is request data for Client.InteractionsRemoveRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
+*/
 type InteractionsRemoveRestrictionsForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -375,6 +710,10 @@ type InteractionsRemoveRestrictionsForRepoReq struct {
 	set this to true.
 	*/
 	SombraPreview bool
+}
+
+func (r *InteractionsRemoveRestrictionsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
@@ -406,7 +745,42 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *InteractionsRemoveRestrictionsForRepoReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *InteractionsRemoveRestrictionsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *InteractionsRemoveRestrictionsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *InteractionsRemoveRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsRemoveRestrictionsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+InteractionsRemoveRestrictionsForRepoResponse is a response for InteractionsRemoveRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
+*/
+type InteractionsRemoveRestrictionsForRepoResponse struct {
+	response
+	request *InteractionsRemoveRestrictionsForRepoReq
 }

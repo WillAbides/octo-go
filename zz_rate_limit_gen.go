@@ -11,7 +11,7 @@ import (
 )
 
 /*
-RateLimitGetReq builds requests for "rate-limit/get"
+RateLimitGet performs requests for "rate-limit/get"
 
 Get your current rate limit status.
 
@@ -19,7 +19,35 @@ Get your current rate limit status.
 
 https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
-type RateLimitGetReq struct{}
+func (c *Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &RateLimitGetResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(RateLimitGetResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+RateLimitGetReq is request data for Client.RateLimitGet
+
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+*/
+type RateLimitGetReq struct {
+	pgURL string
+}
+
+func (r *RateLimitGetReq) pagingURL() string {
+	return r.pgURL
+}
 
 func (r *RateLimitGetReq) urlPath() string {
 	return fmt.Sprintf("/rate_limit")
@@ -44,16 +72,52 @@ func (r *RateLimitGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *RateLimitGetReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *RateLimitGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *RateLimitGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *RateLimitGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-RateLimitGetResponseBody200 is a response body for rate-limit/get
-
-API documentation: https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type RateLimitGetResponseBody200 struct {
+func (r *RateLimitGetReq) Rel(link RelName, resp *RateLimitGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+RateLimitGetResponseBody is a response body for RateLimitGet
+
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+*/
+type RateLimitGetResponseBody struct {
 	components.RateLimitOverview
+}
+
+/*
+RateLimitGetResponse is a response for RateLimitGet
+
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+*/
+type RateLimitGetResponse struct {
+	response
+	request *RateLimitGetReq
+	Data    *RateLimitGetResponseBody
 }

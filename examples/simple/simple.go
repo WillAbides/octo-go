@@ -13,36 +13,20 @@ import (
 func main() {
 	ctx := context.Background()
 
-	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
+	oauthClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	))
 
-	reqBuilder := octo.IssuesGetReq{
-		Owner:               "golang",
-		Repo:                "go",
-		IssueNumber:         1,
-	}
+	client := octo.NewClient(oauthClient)
 
-	req, err := reqBuilder.HTTPRequest(ctx)
-
+	issue, err := client.IssuesGet(ctx, &octo.IssuesGetReq{
+		Owner:       "golang",
+		Repo:        "go",
+		IssueNumber: 1,
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	resp, err := httpClient.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if resp.StatusCode != 200 {
-		log.Fatal("unexpected status code")
-	}
-
-	var issue octo.IssuesGetResponseBody200
-	err = octo.UnmarshalResponseBody(resp, &issue)
-	if err != nil {
-		log.Fatal("unexpected status code")
-	}
-
-	fmt.Printf("golang/go's first issue is titled %q and has %d comments\n", issue.Title, issue.Comments)
+	fmt.Printf("golang/go's first issue is titled %q and has received %d comments\n", issue.Data.Title, issue.Data.Comments)
 }

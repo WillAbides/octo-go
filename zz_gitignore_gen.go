@@ -11,7 +11,7 @@ import (
 )
 
 /*
-GitignoreGetTemplateReq builds requests for "gitignore/get-template"
+GitignoreGetTemplate performs requests for "gitignore/get-template"
 
 Get a single template.
 
@@ -19,8 +19,35 @@ Get a single template.
 
 https://developer.github.com/v3/gitignore/#get-a-single-template
 */
+func (c *Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitignoreGetTemplateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitignoreGetTemplateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitignoreGetTemplateReq is request data for Client.GitignoreGetTemplate
+
+https://developer.github.com/v3/gitignore/#get-a-single-template
+*/
 type GitignoreGetTemplateReq struct {
-	Name string
+	pgURL string
+	Name  string
+}
+
+func (r *GitignoreGetTemplateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitignoreGetTemplateReq) urlPath() string {
@@ -46,22 +73,58 @@ func (r *GitignoreGetTemplateReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitignoreGetTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitignoreGetTemplateReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitignoreGetTemplateReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitignoreGetTemplateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitignoreGetTemplateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitignoreGetTemplateResponseBody200 is a response body for gitignore/get-template
-
-API documentation: https://developer.github.com/v3/gitignore/#get-a-single-template
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitignoreGetTemplateResponseBody200 struct {
+func (r *GitignoreGetTemplateReq) Rel(link RelName, resp *GitignoreGetTemplateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitignoreGetTemplateResponseBody is a response body for GitignoreGetTemplate
+
+https://developer.github.com/v3/gitignore/#get-a-single-template
+*/
+type GitignoreGetTemplateResponseBody struct {
 	components.GitignoreTemplate
 }
 
 /*
-GitignoreListTemplatesReq builds requests for "gitignore/list-templates"
+GitignoreGetTemplateResponse is a response for GitignoreGetTemplate
+
+https://developer.github.com/v3/gitignore/#get-a-single-template
+*/
+type GitignoreGetTemplateResponse struct {
+	response
+	request *GitignoreGetTemplateReq
+	Data    *GitignoreGetTemplateResponseBody
+}
+
+/*
+GitignoreListTemplates performs requests for "gitignore/list-templates"
 
 Listing available templates.
 
@@ -69,7 +132,35 @@ Listing available templates.
 
 https://developer.github.com/v3/gitignore/#listing-available-templates
 */
-type GitignoreListTemplatesReq struct{}
+func (c *Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitignoreListTemplatesResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitignoreListTemplatesResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitignoreListTemplatesReq is request data for Client.GitignoreListTemplates
+
+https://developer.github.com/v3/gitignore/#listing-available-templates
+*/
+type GitignoreListTemplatesReq struct {
+	pgURL string
+}
+
+func (r *GitignoreListTemplatesReq) pagingURL() string {
+	return r.pgURL
+}
 
 func (r *GitignoreListTemplatesReq) urlPath() string {
 	return fmt.Sprintf("/gitignore/templates")
@@ -94,14 +185,50 @@ func (r *GitignoreListTemplatesReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitignoreListTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitignoreListTemplatesReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitignoreListTemplatesReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitignoreListTemplatesReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitignoreListTemplatesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitignoreListTemplatesResponseBody200 is a response body for gitignore/list-templates
-
-API documentation: https://developer.github.com/v3/gitignore/#listing-available-templates
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitignoreListTemplatesResponseBody200 []string
+func (r *GitignoreListTemplatesReq) Rel(link RelName, resp *GitignoreListTemplatesResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitignoreListTemplatesResponseBody is a response body for GitignoreListTemplates
+
+https://developer.github.com/v3/gitignore/#listing-available-templates
+*/
+type GitignoreListTemplatesResponseBody []string
+
+/*
+GitignoreListTemplatesResponse is a response for GitignoreListTemplates
+
+https://developer.github.com/v3/gitignore/#listing-available-templates
+*/
+type GitignoreListTemplatesResponse struct {
+	response
+	request *GitignoreListTemplatesReq
+	Data    *GitignoreListTemplatesResponseBody
+}

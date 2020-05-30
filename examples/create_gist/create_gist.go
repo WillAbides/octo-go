@@ -14,11 +14,13 @@ import (
 func main() {
 	ctx := context.Background()
 
-	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
+	oauthClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	))
 
-	reqbuilder := octo.GistsCreateReq{
+	client := octo.NewClient(oauthClient)
+
+	createResp, err := client.GistsCreate(ctx, &octo.GistsCreateReq{
 		RequestBody: octo.GistsCreateReqBody{
 			Description: octo.String("test gist, pls delete"),
 			Public:      octo.Bool(false),
@@ -31,42 +33,24 @@ my body
 				},
 			},
 		},
-	}
-	req, err := reqbuilder.HTTPRequest(ctx)
+	})
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	resp, err := httpClient.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var gistInfo octo.GistsCreateResponseBody201
-	err = octo.UnmarshalResponseBody(resp, &gistInfo)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("don't forget to delete your new gist at %s\n", gistInfo.HtmlUrl)
+	fmt.Printf("don't forget to delete your new gist at %s\n", createResp.Data.HtmlUrl)
 	fmt.Println("on second thought...I'll just delete it for you")
 
-	deleteReq := octo.GistsDeleteReq{
-		GistId: gistInfo.Id,
-	}
-	req, err = deleteReq.HTTPRequest(ctx)
+	deleteResp, err := client.GistsDelete(ctx, &octo.GistsDeleteReq{
+		GistId: createResp.Data.Id,
+	})
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	resp, err = httpClient.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if resp.StatusCode != http.StatusNoContent {
+	if deleteResp.HTTPResponse().StatusCode != http.StatusNoContent {
 		fmt.Println("something went wrong...you better delete it yourself.")
 	}
 

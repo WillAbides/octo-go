@@ -12,49 +12,7 @@ import (
 )
 
 /*
-TeamsAddMemberLegacyReq builds requests for "teams/add-member-legacy"
-
-Add team member (Legacy).
-
-  PUT /teams/{team_id}/members/{username}
-
-https://developer.github.com/v3/teams/members/#add-team-member-legacy
-*/
-type TeamsAddMemberLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r *TeamsAddMemberLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
-}
-
-func (r *TeamsAddMemberLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r *TeamsAddMemberLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsAddMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsAddMemberLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-TeamsAddOrUpdateMembershipInOrgReq builds requests for "teams/add-or-update-membership-in-org"
+TeamsAddOrUpdateMembershipInOrg performs requests for "teams/add-or-update-membership-in-org"
 
 Add or update team membership.
 
@@ -62,11 +20,38 @@ Add or update team membership.
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
+func (c *Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsAddOrUpdateMembershipInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsAddOrUpdateMembershipInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateMembershipInOrgReq is request data for Client.TeamsAddOrUpdateMembershipInOrg
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+*/
 type TeamsAddOrUpdateMembershipInOrgReq struct {
+	pgURL       string
 	Org         string
 	TeamSlug    string
 	Username    string
 	RequestBody TeamsAddOrUpdateMembershipInOrgReqBody
+}
+
+func (r *TeamsAddOrUpdateMembershipInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
@@ -92,15 +77,40 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsAddOrUpdateMembershipInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsAddOrUpdateMembershipInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsAddOrUpdateMembershipInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddOrUpdateMembershipInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateMembershipInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsAddOrUpdateMembershipInOrgReqBody is a request body for teams/add-or-update-membership-in-org
 
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
 type TeamsAddOrUpdateMembershipInOrgReqBody struct {
 
@@ -115,85 +125,27 @@ type TeamsAddOrUpdateMembershipInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrgResponseBody200 is a response body for teams/add-or-update-membership-in-org
+TeamsAddOrUpdateMembershipInOrgResponseBody is a response body for TeamsAddOrUpdateMembershipInOrg
 
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
-type TeamsAddOrUpdateMembershipInOrgResponseBody200 struct {
+type TeamsAddOrUpdateMembershipInOrgResponseBody struct {
 	components.TeamMembership
 }
 
 /*
-TeamsAddOrUpdateMembershipLegacyReq builds requests for "teams/add-or-update-membership-legacy"
+TeamsAddOrUpdateMembershipInOrgResponse is a response for TeamsAddOrUpdateMembershipInOrg
 
-Add or update team membership (Legacy).
-
-  PUT /teams/{team_id}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
-type TeamsAddOrUpdateMembershipLegacyReq struct {
-	TeamId      int64
-	Username    string
-	RequestBody TeamsAddOrUpdateMembershipLegacyReqBody
-}
-
-func (r *TeamsAddOrUpdateMembershipLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
-}
-
-func (r *TeamsAddOrUpdateMembershipLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r *TeamsAddOrUpdateMembershipLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsAddOrUpdateMembershipLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsAddOrUpdateMembershipLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsAddOrUpdateMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsAddOrUpdateMembershipInOrgResponse struct {
+	response
+	request *TeamsAddOrUpdateMembershipInOrgReq
+	Data    *TeamsAddOrUpdateMembershipInOrgResponseBody
 }
 
 /*
-TeamsAddOrUpdateMembershipLegacyReqBody is a request body for teams/add-or-update-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyReqBody struct {
-
-	/*
-	   The role that this user should have in the team. Can be one of:
-	   \* `member` - a normal member of the team.
-	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
-	   promote other team members to team maintainer, and edit the team's name and
-	   description.
-	*/
-	Role *string `json:"role,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateMembershipLegacyResponseBody200 is a response body for teams/add-or-update-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#add-or-update-team-membership-legacy
-*/
-type TeamsAddOrUpdateMembershipLegacyResponseBody200 struct {
-	components.TeamMembership
-}
-
-/*
-TeamsAddOrUpdateProjectInOrgReq builds requests for "teams/add-or-update-project-in-org"
+TeamsAddOrUpdateProjectInOrg performs requests for "teams/add-or-update-project-in-org"
 
 Add or update team project.
 
@@ -201,7 +153,29 @@ Add or update team project.
 
 https://developer.github.com/v3/teams/#add-or-update-team-project
 */
+func (c *Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsAddOrUpdateProjectInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateProjectInOrgReq is request data for Client.TeamsAddOrUpdateProjectInOrg
+
+https://developer.github.com/v3/teams/#add-or-update-team-project
+*/
 type TeamsAddOrUpdateProjectInOrgReq struct {
+	pgURL       string
 	Org         string
 	TeamSlug    string
 	ProjectId   int64
@@ -215,6 +189,10 @@ type TeamsAddOrUpdateProjectInOrgReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *TeamsAddOrUpdateProjectInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
@@ -246,15 +224,40 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsAddOrUpdateProjectInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsAddOrUpdateProjectInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsAddOrUpdateProjectInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsAddOrUpdateProjectInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddOrUpdateProjectInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateProjectInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsAddOrUpdateProjectInOrgReqBody is a request body for teams/add-or-update-project-in-org
 
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project
+https://developer.github.com/v3/teams/#add-or-update-team-project
 */
 type TeamsAddOrUpdateProjectInOrgReqBody struct {
 
@@ -273,86 +276,17 @@ type TeamsAddOrUpdateProjectInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateProjectLegacyReq builds requests for "teams/add-or-update-project-legacy"
+TeamsAddOrUpdateProjectInOrgResponse is a response for TeamsAddOrUpdateProjectInOrg
 
-Add or update team project (Legacy).
-
-  PUT /teams/{team_id}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
+https://developer.github.com/v3/teams/#add-or-update-team-project
 */
-type TeamsAddOrUpdateProjectLegacyReq struct {
-	TeamId      int64
-	ProjectId   int64
-	RequestBody TeamsAddOrUpdateProjectLegacyReqBody
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r *TeamsAddOrUpdateProjectLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
-}
-
-func (r *TeamsAddOrUpdateProjectLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r *TeamsAddOrUpdateProjectLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsAddOrUpdateProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsAddOrUpdateProjectLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsAddOrUpdateProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsAddOrUpdateProjectInOrgResponse struct {
+	response
+	request *TeamsAddOrUpdateProjectInOrgReq
 }
 
 /*
-TeamsAddOrUpdateProjectLegacyReqBody is a request body for teams/add-or-update-project-legacy
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-project-legacy
-*/
-type TeamsAddOrUpdateProjectLegacyReqBody struct {
-
-	/*
-	   The permission to grant to the team for this project. Can be one of:
-	   \* `read` - team members can read, but not write to or administer this project.
-	   \* `write` - team members can read and write, but not administer this project.
-	   \* `admin` - team members can read, write and administer this project.
-	   Default: the team's `permission` attribute will be used to determine what
-	   permission to grant the team on this project. Note that, if you choose not to
-	   pass any parameters, you'll need to set `Content-Length` to zero when calling
-	   out to this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)."
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsAddOrUpdateRepoInOrgReq builds requests for "teams/add-or-update-repo-in-org"
+TeamsAddOrUpdateRepoInOrg performs requests for "teams/add-or-update-repo-in-org"
 
 Add or update team repository.
 
@@ -360,12 +294,38 @@ Add or update team repository.
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository
 */
+func (c *Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsAddOrUpdateRepoInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateRepoInOrgReq is request data for Client.TeamsAddOrUpdateRepoInOrg
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository
+*/
 type TeamsAddOrUpdateRepoInOrgReq struct {
+	pgURL       string
 	Org         string
 	TeamSlug    string
 	Owner       string
 	Repo        string
 	RequestBody TeamsAddOrUpdateRepoInOrgReqBody
+}
+
+func (r *TeamsAddOrUpdateRepoInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
@@ -391,15 +351,40 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsAddOrUpdateRepoInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsAddOrUpdateRepoInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsAddOrUpdateRepoInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsAddOrUpdateRepoInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddOrUpdateRepoInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateRepoInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsAddOrUpdateRepoInOrgReqBody is a request body for teams/add-or-update-repo-in-org
 
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-repository
+https://developer.github.com/v3/teams/#add-or-update-team-repository
 */
 type TeamsAddOrUpdateRepoInOrgReqBody struct {
 
@@ -423,71 +408,17 @@ type TeamsAddOrUpdateRepoInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateRepoLegacyReq builds requests for "teams/add-or-update-repo-legacy"
+TeamsAddOrUpdateRepoInOrgResponse is a response for TeamsAddOrUpdateRepoInOrg
 
-Add or update team repository (Legacy).
-
-  PUT /teams/{team_id}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#add-or-update-team-repository-legacy
+https://developer.github.com/v3/teams/#add-or-update-team-repository
 */
-type TeamsAddOrUpdateRepoLegacyReq struct {
-	TeamId      int64
-	Owner       string
-	Repo        string
-	RequestBody TeamsAddOrUpdateRepoLegacyReqBody
-}
-
-func (r *TeamsAddOrUpdateRepoLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
-}
-
-func (r *TeamsAddOrUpdateRepoLegacyReq) method() string {
-	return "PUT"
-}
-
-func (r *TeamsAddOrUpdateRepoLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsAddOrUpdateRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsAddOrUpdateRepoLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsAddOrUpdateRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsAddOrUpdateRepoInOrgResponse struct {
+	response
+	request *TeamsAddOrUpdateRepoInOrgReq
 }
 
 /*
-TeamsAddOrUpdateRepoLegacyReqBody is a request body for teams/add-or-update-repo-legacy
-
-API documentation: https://developer.github.com/v3/teams/#add-or-update-team-repository-legacy
-*/
-type TeamsAddOrUpdateRepoLegacyReqBody struct {
-
-	/*
-	   The permission to grant the team on this repository. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer this
-	   repository.
-	   \* `push` - team members can pull and push, but not administer this repository.
-	   \* `admin` - team members can pull, push and administer this repository.
-
-	   If no permission is specified, the team's `permission` attribute will be used to
-	   determine what permission to grant the team on this repository.
-	*/
-	Permission *string `json:"permission,omitempty"`
-}
-
-/*
-TeamsCheckManagesRepoInOrgReq builds requests for "teams/check-manages-repo-in-org"
+TeamsCheckManagesRepoInOrg performs requests for "teams/check-manages-repo-in-org"
 
 Check if a team manages a repository.
 
@@ -495,11 +426,37 @@ Check if a team manages a repository.
 
 https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
 */
+func (c *Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsCheckManagesRepoInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCheckManagesRepoInOrgReq is request data for Client.TeamsCheckManagesRepoInOrg
+
+https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+*/
 type TeamsCheckManagesRepoInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 	Owner    string
 	Repo     string
+}
+
+func (r *TeamsCheckManagesRepoInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsCheckManagesRepoInOrgReq) urlPath() string {
@@ -525,56 +482,48 @@ func (r *TeamsCheckManagesRepoInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCheckManagesRepoInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsCheckManagesRepoInOrgReq) validStatuses() []int {
+	return []int{200, 204}
+}
+
+func (r *TeamsCheckManagesRepoInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsCheckManagesRepoInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsCheckManagesRepoLegacyReq builds requests for "teams/check-manages-repo-legacy"
-
-Check if a team manages a repository (Legacy).
-
-  GET /teams/{team_id}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsCheckManagesRepoLegacyReq struct {
-	TeamId int64
-	Owner  string
-	Repo   string
-}
-
-func (r *TeamsCheckManagesRepoLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
-}
-
-func (r *TeamsCheckManagesRepoLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsCheckManagesRepoLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsCheckManagesRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsCheckManagesRepoLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsCheckManagesRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsCheckManagesRepoInOrgReq) Rel(link RelName, resp *TeamsCheckManagesRepoInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsCreateReq builds requests for "teams/create"
+TeamsCheckManagesRepoInOrgResponse is a response for TeamsCheckManagesRepoInOrg
+
+https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+*/
+type TeamsCheckManagesRepoInOrgResponse struct {
+	response
+	request *TeamsCheckManagesRepoInOrgReq
+}
+
+/*
+TeamsCreate performs requests for "teams/create"
 
 Create team.
 
@@ -582,9 +531,36 @@ Create team.
 
 https://developer.github.com/v3/teams/#create-team
 */
+func (c *Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsCreateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsCreateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateReq is request data for Client.TeamsCreate
+
+https://developer.github.com/v3/teams/#create-team
+*/
 type TeamsCreateReq struct {
+	pgURL       string
 	Org         string
 	RequestBody TeamsCreateReqBody
+}
+
+func (r *TeamsCreateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsCreateReq) urlPath() string {
@@ -610,15 +586,40 @@ func (r *TeamsCreateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCreateReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsCreateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateReq) Rel(link RelName, resp *TeamsCreateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsCreateReqBody is a request body for teams/create
 
-API documentation: https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-team
 */
 type TeamsCreateReqBody struct {
 
@@ -666,16 +667,27 @@ type TeamsCreateReqBody struct {
 }
 
 /*
-TeamsCreateResponseBody201 is a response body for teams/create
+TeamsCreateResponseBody is a response body for TeamsCreate
 
-API documentation: https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-team
 */
-type TeamsCreateResponseBody201 struct {
+type TeamsCreateResponseBody struct {
 	components.TeamFull
 }
 
 /*
-TeamsCreateDiscussionCommentInOrgReq builds requests for "teams/create-discussion-comment-in-org"
+TeamsCreateResponse is a response for TeamsCreate
+
+https://developer.github.com/v3/teams/#create-team
+*/
+type TeamsCreateResponse struct {
+	response
+	request *TeamsCreateReq
+	Data    *TeamsCreateResponseBody
+}
+
+/*
+TeamsCreateDiscussionCommentInOrg performs requests for "teams/create-discussion-comment-in-org"
 
 Create a comment.
 
@@ -683,7 +695,30 @@ Create a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
+func (c *Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsCreateDiscussionCommentInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsCreateDiscussionCommentInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateDiscussionCommentInOrgReq is request data for Client.TeamsCreateDiscussionCommentInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+*/
 type TeamsCreateDiscussionCommentInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -699,6 +734,10 @@ type TeamsCreateDiscussionCommentInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsCreateDiscussionCommentInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsCreateDiscussionCommentInOrgReq) urlPath() string {
@@ -727,15 +766,40 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCreateDiscussionCommentInOrgReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionCommentInOrgReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionCommentInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsCreateDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsCreateDiscussionCommentInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsCreateDiscussionCommentInOrgReqBody is a request body for teams/create-discussion-comment-in-org
 
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
 type TeamsCreateDiscussionCommentInOrgReqBody struct {
 
@@ -744,93 +808,27 @@ type TeamsCreateDiscussionCommentInOrgReqBody struct {
 }
 
 /*
-TeamsCreateDiscussionCommentInOrgResponseBody201 is a response body for teams/create-discussion-comment-in-org
+TeamsCreateDiscussionCommentInOrgResponseBody is a response body for TeamsCreateDiscussionCommentInOrg
 
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
-type TeamsCreateDiscussionCommentInOrgResponseBody201 struct {
+type TeamsCreateDiscussionCommentInOrgResponseBody struct {
 	components.TeamDiscussionComment
 }
 
 /*
-TeamsCreateDiscussionCommentLegacyReq builds requests for "teams/create-discussion-comment-legacy"
+TeamsCreateDiscussionCommentInOrgResponse is a response for TeamsCreateDiscussionCommentInOrg
 
-Create a comment (Legacy).
-
-  POST /teams/{team_id}/discussions/{discussion_number}/comments
-
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment-legacy
+https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
-type TeamsCreateDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	RequestBody      TeamsCreateDiscussionCommentLegacyReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsCreateDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *TeamsCreateDiscussionCommentLegacyReq) method() string {
-	return "POST"
-}
-
-func (r *TeamsCreateDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsCreateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsCreateDiscussionCommentLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsCreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsCreateDiscussionCommentInOrgResponse struct {
+	response
+	request *TeamsCreateDiscussionCommentInOrgReq
+	Data    *TeamsCreateDiscussionCommentInOrgResponseBody
 }
 
 /*
-TeamsCreateDiscussionCommentLegacyReqBody is a request body for teams/create-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment-legacy
-*/
-type TeamsCreateDiscussionCommentLegacyReqBody struct {
-
-	// The discussion comment's body text.
-	Body *string `json:"body"`
-}
-
-/*
-TeamsCreateDiscussionCommentLegacyResponseBody201 is a response body for teams/create-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#create-a-comment-legacy
-*/
-type TeamsCreateDiscussionCommentLegacyResponseBody201 struct {
-	components.TeamDiscussionComment
-}
-
-/*
-TeamsCreateDiscussionInOrgReq builds requests for "teams/create-discussion-in-org"
+TeamsCreateDiscussionInOrg performs requests for "teams/create-discussion-in-org"
 
 Create a discussion.
 
@@ -838,7 +836,30 @@ Create a discussion.
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
+func (c *Client) TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsCreateDiscussionInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsCreateDiscussionInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateDiscussionInOrgReq is request data for Client.TeamsCreateDiscussionInOrg
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion
+*/
 type TeamsCreateDiscussionInOrgReq struct {
+	pgURL       string
 	Org         string
 	TeamSlug    string
 	RequestBody TeamsCreateDiscussionInOrgReqBody
@@ -853,6 +874,10 @@ type TeamsCreateDiscussionInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsCreateDiscussionInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsCreateDiscussionInOrgReq) urlPath() string {
@@ -881,15 +906,40 @@ func (r *TeamsCreateDiscussionInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCreateDiscussionInOrgReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionInOrgReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsCreateDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateDiscussionInOrgReq) Rel(link RelName, resp *TeamsCreateDiscussionInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsCreateDiscussionInOrgReqBody is a request body for teams/create-discussion-in-org
 
-API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
+https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type TeamsCreateDiscussionInOrgReqBody struct {
 
@@ -908,102 +958,27 @@ type TeamsCreateDiscussionInOrgReqBody struct {
 }
 
 /*
-TeamsCreateDiscussionInOrgResponseBody201 is a response body for teams/create-discussion-in-org
+TeamsCreateDiscussionInOrgResponseBody is a response body for TeamsCreateDiscussionInOrg
 
-API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion
+https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-type TeamsCreateDiscussionInOrgResponseBody201 struct {
+type TeamsCreateDiscussionInOrgResponseBody struct {
 	components.TeamDiscussion
 }
 
 /*
-TeamsCreateDiscussionLegacyReq builds requests for "teams/create-discussion-legacy"
+TeamsCreateDiscussionInOrgResponse is a response for TeamsCreateDiscussionInOrg
 
-Create a discussion (Legacy).
-
-  POST /teams/{team_id}/discussions
-
-https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-type TeamsCreateDiscussionLegacyReq struct {
-	TeamId      int64
-	RequestBody TeamsCreateDiscussionLegacyReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsCreateDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions", r.TeamId)
-}
-
-func (r *TeamsCreateDiscussionLegacyReq) method() string {
-	return "POST"
-}
-
-func (r *TeamsCreateDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsCreateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsCreateDiscussionLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsCreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsCreateDiscussionInOrgResponse struct {
+	response
+	request *TeamsCreateDiscussionInOrgReq
+	Data    *TeamsCreateDiscussionInOrgResponseBody
 }
 
 /*
-TeamsCreateDiscussionLegacyReqBody is a request body for teams/create-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
-*/
-type TeamsCreateDiscussionLegacyReqBody struct {
-
-	// The discussion post's body text.
-	Body *string `json:"body"`
-
-	/*
-	   Private posts are only visible to team members, organization owners, and team
-	   maintainers. Public posts are visible to all members of the organization. Set to
-	   `true` to create a private post.
-	*/
-	Private *bool `json:"private,omitempty"`
-
-	// The discussion post's title.
-	Title *string `json:"title"`
-}
-
-/*
-TeamsCreateDiscussionLegacyResponseBody201 is a response body for teams/create-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
-*/
-type TeamsCreateDiscussionLegacyResponseBody201 struct {
-	components.TeamDiscussion
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq builds requests for "teams/create-or-update-id-p-group-connections-in-org"
+TeamsCreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
 
 Create or update IdP group connections.
 
@@ -1011,10 +986,37 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
+func (c *Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq is request data for Client.TeamsCreateOrUpdateIdPGroupConnectionsInOrg
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+*/
 type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq struct {
+	pgURL       string
 	Org         string
 	TeamSlug    string
 	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
@@ -1040,9 +1042,34 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) Rel(link RelName, resp *TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody's Groups field
@@ -1061,7 +1088,7 @@ type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups struct {
 /*
 TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-id-p-group-connections-in-org
 
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody struct {
 
@@ -1074,95 +1101,27 @@ type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody struct {
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 is a response body for teams/create-or-update-id-p-group-connections-in-org
+TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody is a response body for TeamsCreateOrUpdateIdPGroupConnectionsInOrg
 
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody200 struct {
+type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody struct {
 	components.GroupMapping
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq builds requests for "teams/create-or-update-id-p-group-connections-legacy"
+TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse is a response for TeamsCreateOrUpdateIdPGroupConnectionsInOrg
 
-Create or update IdP group connections (Legacy).
-
-  PATCH /teams/{team_id}/team-sync/group-mappings
-
-https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq struct {
-	TeamId      int64
-	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody
-}
-
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
-}
-
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-// TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody's Groups field
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups struct {
-
-	// Description of the IdP group.
-	GroupDescription *string `json:"group_description"`
-
-	// ID of the IdP group.
-	GroupId *string `json:"group_id"`
-
-	// Name of the IdP group.
-	GroupName *string `json:"group_name"`
+type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse struct {
+	response
+	request *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq
+	Data    *TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-id-p-group-connections-legacy
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody struct {
-
-	/*
-	   The IdP groups you want to connect to a GitHub team. When updating, the new
-	   `groups` object will replace the original one. You must include any existing
-	   groups that you don't want to remove.
-	*/
-	Groups []TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups `json:"groups"`
-}
-
-/*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 is a response body for teams/create-or-update-id-p-group-connections-legacy
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
-*/
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody200 struct {
-	components.GroupMapping2
-}
-
-/*
-TeamsDeleteDiscussionCommentInOrgReq builds requests for "teams/delete-discussion-comment-in-org"
+TeamsDeleteDiscussionCommentInOrg performs requests for "teams/delete-discussion-comment-in-org"
 
 Delete a comment.
 
@@ -1170,11 +1129,37 @@ Delete a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
 */
+func (c *Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsDeleteDiscussionCommentInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsDeleteDiscussionCommentInOrgReq is request data for Client.TeamsDeleteDiscussionCommentInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+*/
 type TeamsDeleteDiscussionCommentInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
 	CommentNumber    int64
+}
+
+func (r *TeamsDeleteDiscussionCommentInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsDeleteDiscussionCommentInOrgReq) urlPath() string {
@@ -1200,56 +1185,48 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsDeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsDeleteDiscussionCommentInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsDeleteDiscussionCommentInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsDeleteDiscussionCommentInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsDeleteDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsDeleteDiscussionCommentLegacyReq builds requests for "teams/delete-discussion-comment-legacy"
-
-Delete a comment (Legacy).
-
-  DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
-
-https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsDeleteDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-}
-
-func (r *TeamsDeleteDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *TeamsDeleteDiscussionCommentLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsDeleteDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsDeleteDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsDeleteDiscussionCommentLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsDeleteDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsDeleteDiscussionCommentInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsDeleteDiscussionInOrgReq builds requests for "teams/delete-discussion-in-org"
+TeamsDeleteDiscussionCommentInOrgResponse is a response for TeamsDeleteDiscussionCommentInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+*/
+type TeamsDeleteDiscussionCommentInOrgResponse struct {
+	response
+	request *TeamsDeleteDiscussionCommentInOrgReq
+}
+
+/*
+TeamsDeleteDiscussionInOrg performs requests for "teams/delete-discussion-in-org"
 
 Delete a discussion.
 
@@ -1257,10 +1234,36 @@ Delete a discussion.
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
+func (c *Client) TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsDeleteDiscussionInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsDeleteDiscussionInOrgReq is request data for Client.TeamsDeleteDiscussionInOrg
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion
+*/
 type TeamsDeleteDiscussionInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
+}
+
+func (r *TeamsDeleteDiscussionInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsDeleteDiscussionInOrgReq) urlPath() string {
@@ -1286,55 +1289,48 @@ func (r *TeamsDeleteDiscussionInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsDeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsDeleteDiscussionInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsDeleteDiscussionInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsDeleteDiscussionInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsDeleteDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsDeleteDiscussionLegacyReq builds requests for "teams/delete-discussion-legacy"
-
-Delete a discussion (Legacy).
-
-  DELETE /teams/{team_id}/discussions/{discussion_number}
-
-https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsDeleteDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-}
-
-func (r *TeamsDeleteDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *TeamsDeleteDiscussionLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsDeleteDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsDeleteDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsDeleteDiscussionLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsDeleteDiscussionInOrgReq) Rel(link RelName, resp *TeamsDeleteDiscussionInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsDeleteInOrgReq builds requests for "teams/delete-in-org"
+TeamsDeleteDiscussionInOrgResponse is a response for TeamsDeleteDiscussionInOrg
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion
+*/
+type TeamsDeleteDiscussionInOrgResponse struct {
+	response
+	request *TeamsDeleteDiscussionInOrgReq
+}
+
+/*
+TeamsDeleteInOrg performs requests for "teams/delete-in-org"
 
 Delete team.
 
@@ -1342,9 +1338,35 @@ Delete team.
 
 https://developer.github.com/v3/teams/#delete-team
 */
+func (c *Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsDeleteInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsDeleteInOrgReq is request data for Client.TeamsDeleteInOrg
+
+https://developer.github.com/v3/teams/#delete-team
+*/
 type TeamsDeleteInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
+}
+
+func (r *TeamsDeleteInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsDeleteInOrgReq) urlPath() string {
@@ -1370,54 +1392,48 @@ func (r *TeamsDeleteInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsDeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsDeleteInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsDeleteInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsDeleteInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsDeleteInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsDeleteLegacyReq builds requests for "teams/delete-legacy"
-
-Delete team (Legacy).
-
-  DELETE /teams/{team_id}
-
-https://developer.github.com/v3/teams/#delete-team-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsDeleteLegacyReq struct {
-	TeamId int64
-}
-
-func (r *TeamsDeleteLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v", r.TeamId)
-}
-
-func (r *TeamsDeleteLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsDeleteLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsDeleteLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsDeleteInOrgReq) Rel(link RelName, resp *TeamsDeleteInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsGetByNameReq builds requests for "teams/get-by-name"
+TeamsDeleteInOrgResponse is a response for TeamsDeleteInOrg
+
+https://developer.github.com/v3/teams/#delete-team
+*/
+type TeamsDeleteInOrgResponse struct {
+	response
+	request *TeamsDeleteInOrgReq
+}
+
+/*
+TeamsGetByName performs requests for "teams/get-by-name"
 
 Get team by name.
 
@@ -1425,9 +1441,36 @@ Get team by name.
 
 https://developer.github.com/v3/teams/#get-team-by-name
 */
+func (c *Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsGetByNameResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsGetByNameResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetByNameReq is request data for Client.TeamsGetByName
+
+https://developer.github.com/v3/teams/#get-team-by-name
+*/
 type TeamsGetByNameReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
+}
+
+func (r *TeamsGetByNameReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsGetByNameReq) urlPath() string {
@@ -1453,22 +1496,58 @@ func (r *TeamsGetByNameReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsGetByNameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsGetByNameReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetByNameReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetByNameReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsGetByNameReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsGetByNameResponseBody200 is a response body for teams/get-by-name
-
-API documentation: https://developer.github.com/v3/teams/#get-team-by-name
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsGetByNameResponseBody200 struct {
+func (r *TeamsGetByNameReq) Rel(link RelName, resp *TeamsGetByNameResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsGetByNameResponseBody is a response body for TeamsGetByName
+
+https://developer.github.com/v3/teams/#get-team-by-name
+*/
+type TeamsGetByNameResponseBody struct {
 	components.TeamFull
 }
 
 /*
-TeamsGetDiscussionCommentInOrgReq builds requests for "teams/get-discussion-comment-in-org"
+TeamsGetByNameResponse is a response for TeamsGetByName
+
+https://developer.github.com/v3/teams/#get-team-by-name
+*/
+type TeamsGetByNameResponse struct {
+	response
+	request *TeamsGetByNameReq
+	Data    *TeamsGetByNameResponseBody
+}
+
+/*
+TeamsGetDiscussionCommentInOrg performs requests for "teams/get-discussion-comment-in-org"
 
 Get a single comment.
 
@@ -1476,7 +1555,30 @@ Get a single comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
 */
+func (c *Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsGetDiscussionCommentInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsGetDiscussionCommentInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetDiscussionCommentInOrgReq is request data for Client.TeamsGetDiscussionCommentInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+*/
 type TeamsGetDiscussionCommentInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1492,6 +1594,10 @@ type TeamsGetDiscussionCommentInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsGetDiscussionCommentInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsGetDiscussionCommentInOrgReq) urlPath() string {
@@ -1520,88 +1626,58 @@ func (r *TeamsGetDiscussionCommentInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsGetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsGetDiscussionCommentInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionCommentInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionCommentInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsGetDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsGetDiscussionCommentInOrgResponseBody200 is a response body for teams/get-discussion-comment-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsGetDiscussionCommentInOrgResponseBody200 struct {
-	components.TeamDiscussionComment
-}
-
-/*
-TeamsGetDiscussionCommentLegacyReq builds requests for "teams/get-discussion-comment-legacy"
-
-Get a single comment (Legacy).
-
-  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
-
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
-*/
-type TeamsGetDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsGetDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *TeamsGetDiscussionCommentLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsGetDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
+func (r *TeamsGetDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsGetDiscussionCommentInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
 	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsGetDiscussionCommentLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsGetDiscussionCommentLegacyResponseBody200 is a response body for teams/get-discussion-comment-legacy
+TeamsGetDiscussionCommentInOrgResponseBody is a response body for TeamsGetDiscussionCommentInOrg
 
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment-legacy
+https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
 */
-type TeamsGetDiscussionCommentLegacyResponseBody200 struct {
+type TeamsGetDiscussionCommentInOrgResponseBody struct {
 	components.TeamDiscussionComment
 }
 
 /*
-TeamsGetDiscussionInOrgReq builds requests for "teams/get-discussion-in-org"
+TeamsGetDiscussionCommentInOrgResponse is a response for TeamsGetDiscussionCommentInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+*/
+type TeamsGetDiscussionCommentInOrgResponse struct {
+	response
+	request *TeamsGetDiscussionCommentInOrgReq
+	Data    *TeamsGetDiscussionCommentInOrgResponseBody
+}
+
+/*
+TeamsGetDiscussionInOrg performs requests for "teams/get-discussion-in-org"
 
 Get a single discussion.
 
@@ -1609,7 +1685,30 @@ Get a single discussion.
 
 https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
+func (c *Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsGetDiscussionInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsGetDiscussionInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetDiscussionInOrgReq is request data for Client.TeamsGetDiscussionInOrg
+
+https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+*/
 type TeamsGetDiscussionInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1624,6 +1723,10 @@ type TeamsGetDiscussionInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsGetDiscussionInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsGetDiscussionInOrgReq) urlPath() string {
@@ -1652,179 +1755,58 @@ func (r *TeamsGetDiscussionInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsGetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsGetDiscussionInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsGetDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsGetDiscussionInOrgResponseBody200 is a response body for teams/get-discussion-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsGetDiscussionInOrgResponseBody200 struct {
-	components.TeamDiscussion
-}
-
-/*
-TeamsGetDiscussionLegacyReq builds requests for "teams/get-discussion-legacy"
-
-Get a single discussion (Legacy).
-
-  GET /teams/{team_id}/discussions/{discussion_number}
-
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
-*/
-type TeamsGetDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsGetDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *TeamsGetDiscussionLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsGetDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
+func (r *TeamsGetDiscussionInOrgReq) Rel(link RelName, resp *TeamsGetDiscussionInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
 	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsGetDiscussionLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsGetDiscussionLegacyResponseBody200 is a response body for teams/get-discussion-legacy
+TeamsGetDiscussionInOrgResponseBody is a response body for TeamsGetDiscussionInOrg
 
-API documentation: https://developer.github.com/v3/teams/discussions/#get-a-single-discussion-legacy
+https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
-type TeamsGetDiscussionLegacyResponseBody200 struct {
+type TeamsGetDiscussionInOrgResponseBody struct {
 	components.TeamDiscussion
 }
 
 /*
-TeamsGetLegacyReq builds requests for "teams/get-legacy"
+TeamsGetDiscussionInOrgResponse is a response for TeamsGetDiscussionInOrg
 
-Get team (Legacy).
-
-  GET /teams/{team_id}
-
-https://developer.github.com/v3/teams/#get-team-legacy
+https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
-type TeamsGetLegacyReq struct {
-	TeamId int64
-}
-
-func (r *TeamsGetLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v", r.TeamId)
-}
-
-func (r *TeamsGetLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsGetLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsGetLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsGetLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsGetLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsGetDiscussionInOrgResponse struct {
+	response
+	request *TeamsGetDiscussionInOrgReq
+	Data    *TeamsGetDiscussionInOrgResponseBody
 }
 
 /*
-TeamsGetLegacyResponseBody200 is a response body for teams/get-legacy
-
-API documentation: https://developer.github.com/v3/teams/#get-team-legacy
-*/
-type TeamsGetLegacyResponseBody200 struct {
-	components.TeamFull
-}
-
-/*
-TeamsGetMemberLegacyReq builds requests for "teams/get-member-legacy"
-
-Get team member (Legacy).
-
-  GET /teams/{team_id}/members/{username}
-
-https://developer.github.com/v3/teams/members/#get-team-member-legacy
-*/
-type TeamsGetMemberLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r *TeamsGetMemberLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
-}
-
-func (r *TeamsGetMemberLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsGetMemberLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsGetMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsGetMemberLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-TeamsGetMembershipInOrgReq builds requests for "teams/get-membership-in-org"
+TeamsGetMembershipInOrg performs requests for "teams/get-membership-in-org"
 
 Get team membership.
 
@@ -1832,10 +1814,37 @@ Get team membership.
 
 https://developer.github.com/v3/teams/members/#get-team-membership
 */
+func (c *Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsGetMembershipInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsGetMembershipInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetMembershipInOrgReq is request data for Client.TeamsGetMembershipInOrg
+
+https://developer.github.com/v3/teams/members/#get-team-membership
+*/
 type TeamsGetMembershipInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 	Username string
+}
+
+func (r *TeamsGetMembershipInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsGetMembershipInOrgReq) urlPath() string {
@@ -1861,73 +1870,58 @@ func (r *TeamsGetMembershipInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsGetMembershipInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetMembershipInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetMembershipInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsGetMembershipInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsGetMembershipInOrgResponseBody200 is a response body for teams/get-membership-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#get-team-membership
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsGetMembershipInOrgResponseBody200 struct {
+func (r *TeamsGetMembershipInOrgReq) Rel(link RelName, resp *TeamsGetMembershipInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsGetMembershipInOrgResponseBody is a response body for TeamsGetMembershipInOrg
+
+https://developer.github.com/v3/teams/members/#get-team-membership
+*/
+type TeamsGetMembershipInOrgResponseBody struct {
 	components.TeamMembership
 }
 
 /*
-TeamsGetMembershipLegacyReq builds requests for "teams/get-membership-legacy"
+TeamsGetMembershipInOrgResponse is a response for TeamsGetMembershipInOrg
 
-Get team membership (Legacy).
-
-  GET /teams/{team_id}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#get-team-membership-legacy
+https://developer.github.com/v3/teams/members/#get-team-membership
 */
-type TeamsGetMembershipLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r *TeamsGetMembershipLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
-}
-
-func (r *TeamsGetMembershipLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsGetMembershipLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsGetMembershipLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsGetMembershipLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsGetMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsGetMembershipInOrgResponse struct {
+	response
+	request *TeamsGetMembershipInOrgReq
+	Data    *TeamsGetMembershipInOrgResponseBody
 }
 
 /*
-TeamsGetMembershipLegacyResponseBody200 is a response body for teams/get-membership-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#get-team-membership-legacy
-*/
-type TeamsGetMembershipLegacyResponseBody200 struct {
-	components.TeamMembership
-}
-
-/*
-TeamsListReq builds requests for "teams/list"
+TeamsList performs requests for "teams/list"
 
 List teams.
 
@@ -1935,14 +1929,41 @@ List teams.
 
 https://developer.github.com/v3/teams/#list-teams
 */
+func (c *Client) TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*TeamsListResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListReq is request data for Client.TeamsList
+
+https://developer.github.com/v3/teams/#list-teams
+*/
 type TeamsListReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListReq) urlPath() string {
@@ -1974,22 +1995,58 @@ func (r *TeamsListReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListResponseBody200 is a response body for teams/list
-
-API documentation: https://developer.github.com/v3/teams/#list-teams
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListResponseBody200 []struct {
+func (r *TeamsListReq) Rel(link RelName, resp *TeamsListResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListResponseBody is a response body for TeamsList
+
+https://developer.github.com/v3/teams/#list-teams
+*/
+type TeamsListResponseBody []struct {
 	components.Team
 }
 
 /*
-TeamsListChildInOrgReq builds requests for "teams/list-child-in-org"
+TeamsListResponse is a response for TeamsList
+
+https://developer.github.com/v3/teams/#list-teams
+*/
+type TeamsListResponse struct {
+	response
+	request *TeamsListReq
+	Data    *TeamsListResponseBody
+}
+
+/*
+TeamsListChildInOrg performs requests for "teams/list-child-in-org"
 
 List child teams.
 
@@ -1997,7 +2054,30 @@ List child teams.
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
+func (c *Client) TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt ...RequestOption) (*TeamsListChildInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListChildInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListChildInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListChildInOrgReq is request data for Client.TeamsListChildInOrg
+
+https://developer.github.com/v3/teams/#list-child-teams
+*/
 type TeamsListChildInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 
@@ -2006,6 +2086,10 @@ type TeamsListChildInOrgReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListChildInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListChildInOrgReq) urlPath() string {
@@ -2037,84 +2121,58 @@ func (r *TeamsListChildInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListChildInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListChildInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListChildInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListChildInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListChildInOrgResponseBody200 is a response body for teams/list-child-in-org
-
-API documentation: https://developer.github.com/v3/teams/#list-child-teams
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListChildInOrgResponseBody200 []struct {
+func (r *TeamsListChildInOrgReq) Rel(link RelName, resp *TeamsListChildInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListChildInOrgResponseBody is a response body for TeamsListChildInOrg
+
+https://developer.github.com/v3/teams/#list-child-teams
+*/
+type TeamsListChildInOrgResponseBody []struct {
 	components.Team2
 }
 
 /*
-TeamsListChildLegacyReq builds requests for "teams/list-child-legacy"
+TeamsListChildInOrgResponse is a response for TeamsListChildInOrg
 
-List child teams (Legacy).
-
-  GET /teams/{team_id}/teams
-
-https://developer.github.com/v3/teams/#list-child-teams-legacy
+https://developer.github.com/v3/teams/#list-child-teams
 */
-type TeamsListChildLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *TeamsListChildLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/teams", r.TeamId)
-}
-
-func (r *TeamsListChildLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListChildLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListChildLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListChildLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListChildInOrgResponse struct {
+	response
+	request *TeamsListChildInOrgReq
+	Data    *TeamsListChildInOrgResponseBody
 }
 
 /*
-TeamsListChildLegacyResponseBody200 is a response body for teams/list-child-legacy
-
-API documentation: https://developer.github.com/v3/teams/#list-child-teams-legacy
-*/
-type TeamsListChildLegacyResponseBody200 []struct {
-	components.Team2
-}
-
-/*
-TeamsListDiscussionCommentsInOrgReq builds requests for "teams/list-discussion-comments-in-org"
+TeamsListDiscussionCommentsInOrg performs requests for "teams/list-discussion-comments-in-org"
 
 List comments.
 
@@ -2122,7 +2180,30 @@ List comments.
 
 https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
+func (c *Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListDiscussionCommentsInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListDiscussionCommentsInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListDiscussionCommentsInOrgReq is request data for Client.TeamsListDiscussionCommentsInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#list-comments
+*/
 type TeamsListDiscussionCommentsInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -2149,6 +2230,10 @@ type TeamsListDiscussionCommentsInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsListDiscussionCommentsInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListDiscussionCommentsInOrgReq) urlPath() string {
@@ -2186,108 +2271,58 @@ func (r *TeamsListDiscussionCommentsInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListDiscussionCommentsInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionCommentsInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionCommentsInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListDiscussionCommentsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListDiscussionCommentsInOrgResponseBody200 is a response body for teams/list-discussion-comments-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#list-comments
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListDiscussionCommentsInOrgResponseBody200 []struct {
+func (r *TeamsListDiscussionCommentsInOrgReq) Rel(link RelName, resp *TeamsListDiscussionCommentsInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListDiscussionCommentsInOrgResponseBody is a response body for TeamsListDiscussionCommentsInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#list-comments
+*/
+type TeamsListDiscussionCommentsInOrgResponseBody []struct {
 	components.TeamDiscussionComment
 }
 
 /*
-TeamsListDiscussionCommentsLegacyReq builds requests for "teams/list-discussion-comments-legacy"
+TeamsListDiscussionCommentsInOrgResponse is a response for TeamsListDiscussionCommentsInOrg
 
-List comments (Legacy).
-
-  GET /teams/{team_id}/discussions/{discussion_number}/comments
-
-https://developer.github.com/v3/teams/discussion_comments/#list-comments-legacy
+https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
-type TeamsListDiscussionCommentsLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsListDiscussionCommentsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *TeamsListDiscussionCommentsLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListDiscussionCommentsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListDiscussionCommentsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListDiscussionCommentsLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListDiscussionCommentsInOrgResponse struct {
+	response
+	request *TeamsListDiscussionCommentsInOrgReq
+	Data    *TeamsListDiscussionCommentsInOrgResponseBody
 }
 
 /*
-TeamsListDiscussionCommentsLegacyResponseBody200 is a response body for teams/list-discussion-comments-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#list-comments-legacy
-*/
-type TeamsListDiscussionCommentsLegacyResponseBody200 []struct {
-	components.TeamDiscussionComment
-}
-
-/*
-TeamsListDiscussionsInOrgReq builds requests for "teams/list-discussions-in-org"
+TeamsListDiscussionsInOrg performs requests for "teams/list-discussions-in-org"
 
 List discussions.
 
@@ -2295,7 +2330,30 @@ List discussions.
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
+func (c *Client) TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionsInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListDiscussionsInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListDiscussionsInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListDiscussionsInOrgReq is request data for Client.TeamsListDiscussionsInOrg
+
+https://developer.github.com/v3/teams/discussions/#list-discussions
+*/
 type TeamsListDiscussionsInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 
@@ -2321,6 +2379,10 @@ type TeamsListDiscussionsInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsListDiscussionsInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListDiscussionsInOrgReq) urlPath() string {
@@ -2358,107 +2420,58 @@ func (r *TeamsListDiscussionsInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListDiscussionsInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionsInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionsInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListDiscussionsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListDiscussionsInOrgResponseBody200 is a response body for teams/list-discussions-in-org
-
-API documentation: https://developer.github.com/v3/teams/discussions/#list-discussions
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListDiscussionsInOrgResponseBody200 []struct {
+func (r *TeamsListDiscussionsInOrgReq) Rel(link RelName, resp *TeamsListDiscussionsInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListDiscussionsInOrgResponseBody is a response body for TeamsListDiscussionsInOrg
+
+https://developer.github.com/v3/teams/discussions/#list-discussions
+*/
+type TeamsListDiscussionsInOrgResponseBody []struct {
 	components.TeamDiscussion
 }
 
 /*
-TeamsListDiscussionsLegacyReq builds requests for "teams/list-discussions-legacy"
+TeamsListDiscussionsInOrgResponse is a response for TeamsListDiscussionsInOrg
 
-List discussions (Legacy).
-
-  GET /teams/{team_id}/discussions
-
-https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+https://developer.github.com/v3/teams/discussions/#list-discussions
 */
-type TeamsListDiscussionsLegacyReq struct {
-	TeamId int64
-
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
-	Direction *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsListDiscussionsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions", r.TeamId)
-}
-
-func (r *TeamsListDiscussionsLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListDiscussionsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListDiscussionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListDiscussionsLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListDiscussionsInOrgResponse struct {
+	response
+	request *TeamsListDiscussionsInOrgReq
+	Data    *TeamsListDiscussionsInOrgResponseBody
 }
 
 /*
-TeamsListDiscussionsLegacyResponseBody200 is a response body for teams/list-discussions-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
-*/
-type TeamsListDiscussionsLegacyResponseBody200 []struct {
-	components.TeamDiscussion
-}
-
-/*
-TeamsListForAuthenticatedUserReq builds requests for "teams/list-for-authenticated-user"
+TeamsListForAuthenticatedUser performs requests for "teams/list-for-authenticated-user"
 
 List user teams.
 
@@ -2466,13 +2479,40 @@ List user teams.
 
 https://developer.github.com/v3/teams/#list-user-teams
 */
+func (c *Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListForAuthenticatedUserReq is request data for Client.TeamsListForAuthenticatedUser
+
+https://developer.github.com/v3/teams/#list-user-teams
+*/
 type TeamsListForAuthenticatedUserReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListForAuthenticatedUserReq) urlPath() string {
@@ -2504,72 +2544,58 @@ func (r *TeamsListForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListForAuthenticatedUserResponseBody200 is a response body for teams/list-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/teams/#list-user-teams
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListForAuthenticatedUserResponseBody200 []struct {
+func (r *TeamsListForAuthenticatedUserReq) Rel(link RelName, resp *TeamsListForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListForAuthenticatedUserResponseBody is a response body for TeamsListForAuthenticatedUser
+
+https://developer.github.com/v3/teams/#list-user-teams
+*/
+type TeamsListForAuthenticatedUserResponseBody []struct {
 	components.TeamFull
 }
 
 /*
-TeamsListIdPGroupsForLegacyReq builds requests for "teams/list-id-p-groups-for-legacy"
+TeamsListForAuthenticatedUserResponse is a response for TeamsListForAuthenticatedUser
 
-List IdP groups for a team (Legacy).
-
-  GET /teams/{team_id}/team-sync/group-mappings
-
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+https://developer.github.com/v3/teams/#list-user-teams
 */
-type TeamsListIdPGroupsForLegacyReq struct {
-	TeamId int64
-}
-
-func (r *TeamsListIdPGroupsForLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
-}
-
-func (r *TeamsListIdPGroupsForLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsListIdPGroupsForLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListIdPGroupsForLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListForAuthenticatedUserResponse struct {
+	response
+	request *TeamsListForAuthenticatedUserReq
+	Data    *TeamsListForAuthenticatedUserResponseBody
 }
 
 /*
-TeamsListIdPGroupsForLegacyResponseBody200 is a response body for teams/list-id-p-groups-for-legacy
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
-*/
-type TeamsListIdPGroupsForLegacyResponseBody200 struct {
-	components.GroupMapping3
-}
-
-/*
-TeamsListIdPGroupsForOrgReq builds requests for "teams/list-id-p-groups-for-org"
+TeamsListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
 
 List IdP groups in an organization.
 
@@ -2577,14 +2603,41 @@ List IdP groups in an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
 */
+func (c *Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListIdPGroupsForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListIdPGroupsForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListIdPGroupsForOrgReq is request data for Client.TeamsListIdPGroupsForOrg
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+*/
 type TeamsListIdPGroupsForOrgReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListIdPGroupsForOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListIdPGroupsForOrgReq) urlPath() string {
@@ -2616,22 +2669,58 @@ func (r *TeamsListIdPGroupsForOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListIdPGroupsForOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListIdPGroupsForOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListIdPGroupsForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListIdPGroupsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListIdPGroupsForOrgResponseBody200 is a response body for teams/list-id-p-groups-for-org
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListIdPGroupsForOrgResponseBody200 struct {
+func (r *TeamsListIdPGroupsForOrgReq) Rel(link RelName, resp *TeamsListIdPGroupsForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListIdPGroupsForOrgResponseBody is a response body for TeamsListIdPGroupsForOrg
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+*/
+type TeamsListIdPGroupsForOrgResponseBody struct {
 	components.GroupMapping3
 }
 
 /*
-TeamsListIdPGroupsInOrgReq builds requests for "teams/list-id-p-groups-in-org"
+TeamsListIdPGroupsForOrgResponse is a response for TeamsListIdPGroupsForOrg
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+*/
+type TeamsListIdPGroupsForOrgResponse struct {
+	response
+	request *TeamsListIdPGroupsForOrgReq
+	Data    *TeamsListIdPGroupsForOrgResponseBody
+}
+
+/*
+TeamsListIdPGroupsInOrg performs requests for "teams/list-id-p-groups-in-org"
 
 List IdP groups for a team.
 
@@ -2639,9 +2728,36 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
+func (c *Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListIdPGroupsInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListIdPGroupsInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListIdPGroupsInOrgReq is request data for Client.TeamsListIdPGroupsInOrg
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+*/
 type TeamsListIdPGroupsInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
+}
+
+func (r *TeamsListIdPGroupsInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListIdPGroupsInOrgReq) urlPath() string {
@@ -2667,22 +2783,58 @@ func (r *TeamsListIdPGroupsInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListIdPGroupsInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListIdPGroupsInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListIdPGroupsInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListIdPGroupsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListIdPGroupsInOrgResponseBody200 is a response body for teams/list-id-p-groups-in-org
-
-API documentation: https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListIdPGroupsInOrgResponseBody200 struct {
+func (r *TeamsListIdPGroupsInOrgReq) Rel(link RelName, resp *TeamsListIdPGroupsInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListIdPGroupsInOrgResponseBody is a response body for TeamsListIdPGroupsInOrg
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+*/
+type TeamsListIdPGroupsInOrgResponseBody struct {
 	components.GroupMapping3
 }
 
 /*
-TeamsListMembersInOrgReq builds requests for "teams/list-members-in-org"
+TeamsListIdPGroupsInOrgResponse is a response for TeamsListIdPGroupsInOrg
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+*/
+type TeamsListIdPGroupsInOrgResponse struct {
+	response
+	request *TeamsListIdPGroupsInOrgReq
+	Data    *TeamsListIdPGroupsInOrgResponseBody
+}
+
+/*
+TeamsListMembersInOrg performs requests for "teams/list-members-in-org"
 
 List team members.
 
@@ -2690,7 +2842,30 @@ List team members.
 
 https://developer.github.com/v3/teams/members/#list-team-members
 */
+func (c *Client) TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, opt ...RequestOption) (*TeamsListMembersInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListMembersInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListMembersInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListMembersInOrgReq is request data for Client.TeamsListMembersInOrg
+
+https://developer.github.com/v3/teams/members/#list-team-members
+*/
 type TeamsListMembersInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 
@@ -2707,6 +2882,10 @@ type TeamsListMembersInOrgReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListMembersInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListMembersInOrgReq) urlPath() string {
@@ -2741,95 +2920,58 @@ func (r *TeamsListMembersInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListMembersInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListMembersInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListMembersInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListMembersInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListMembersInOrgResponseBody200 is a response body for teams/list-members-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#list-team-members
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListMembersInOrgResponseBody200 []struct {
+func (r *TeamsListMembersInOrgReq) Rel(link RelName, resp *TeamsListMembersInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListMembersInOrgResponseBody is a response body for TeamsListMembersInOrg
+
+https://developer.github.com/v3/teams/members/#list-team-members
+*/
+type TeamsListMembersInOrgResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-TeamsListMembersLegacyReq builds requests for "teams/list-members-legacy"
+TeamsListMembersInOrgResponse is a response for TeamsListMembersInOrg
 
-List team members (Legacy).
-
-  GET /teams/{team_id}/members
-
-https://developer.github.com/v3/teams/members/#list-team-members-legacy
+https://developer.github.com/v3/teams/members/#list-team-members
 */
-type TeamsListMembersLegacyReq struct {
-	TeamId int64
-
-	/*
-	Filters members returned by their role in the team. Can be one of:
-	\* `member` - normal members of the team.
-	\* `maintainer` - team maintainers.
-	\* `all` - all members of the team.
-	*/
-	Role *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *TeamsListMembersLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/members", r.TeamId)
-}
-
-func (r *TeamsListMembersLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListMembersLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Role != nil {
-		query.Set("role", *r.Role)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListMembersLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListMembersLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListMembersInOrgResponse struct {
+	response
+	request *TeamsListMembersInOrgReq
+	Data    *TeamsListMembersInOrgResponseBody
 }
 
 /*
-TeamsListMembersLegacyResponseBody200 is a response body for teams/list-members-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#list-team-members-legacy
-*/
-type TeamsListMembersLegacyResponseBody200 []struct {
-	components.SimpleUser
-}
-
-/*
-TeamsListPendingInvitationsInOrgReq builds requests for "teams/list-pending-invitations-in-org"
+TeamsListPendingInvitationsInOrg performs requests for "teams/list-pending-invitations-in-org"
 
 List pending team invitations.
 
@@ -2837,7 +2979,30 @@ List pending team invitations.
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
+func (c *Client) TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPendingInvitationsInOrgReq, opt ...RequestOption) (*TeamsListPendingInvitationsInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListPendingInvitationsInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListPendingInvitationsInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListPendingInvitationsInOrgReq is request data for Client.TeamsListPendingInvitationsInOrg
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+*/
 type TeamsListPendingInvitationsInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 
@@ -2846,6 +3011,10 @@ type TeamsListPendingInvitationsInOrgReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListPendingInvitationsInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListPendingInvitationsInOrgReq) urlPath() string {
@@ -2877,84 +3046,58 @@ func (r *TeamsListPendingInvitationsInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListPendingInvitationsInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListPendingInvitationsInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListPendingInvitationsInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListPendingInvitationsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListPendingInvitationsInOrgResponseBody200 is a response body for teams/list-pending-invitations-in-org
-
-API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListPendingInvitationsInOrgResponseBody200 []struct {
+func (r *TeamsListPendingInvitationsInOrgReq) Rel(link RelName, resp *TeamsListPendingInvitationsInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListPendingInvitationsInOrgResponseBody is a response body for TeamsListPendingInvitationsInOrg
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+*/
+type TeamsListPendingInvitationsInOrgResponseBody []struct {
 	components.OrganizationInvitation
 }
 
 /*
-TeamsListPendingInvitationsLegacyReq builds requests for "teams/list-pending-invitations-legacy"
+TeamsListPendingInvitationsInOrgResponse is a response for TeamsListPendingInvitationsInOrg
 
-List pending team invitations (Legacy).
-
-  GET /teams/{team_id}/invitations
-
-https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
-type TeamsListPendingInvitationsLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *TeamsListPendingInvitationsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/invitations", r.TeamId)
-}
-
-func (r *TeamsListPendingInvitationsLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListPendingInvitationsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListPendingInvitationsLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListPendingInvitationsInOrgResponse struct {
+	response
+	request *TeamsListPendingInvitationsInOrgReq
+	Data    *TeamsListPendingInvitationsInOrgResponseBody
 }
 
 /*
-TeamsListPendingInvitationsLegacyResponseBody200 is a response body for teams/list-pending-invitations-legacy
-
-API documentation: https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
-*/
-type TeamsListPendingInvitationsLegacyResponseBody200 []struct {
-	components.OrganizationInvitation
-}
-
-/*
-TeamsListProjectsInOrgReq builds requests for "teams/list-projects-in-org"
+TeamsListProjectsInOrg performs requests for "teams/list-projects-in-org"
 
 List team projects.
 
@@ -2962,7 +3105,30 @@ List team projects.
 
 https://developer.github.com/v3/teams/#list-team-projects
 */
+func (c *Client) TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq, opt ...RequestOption) (*TeamsListProjectsInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListProjectsInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListProjectsInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListProjectsInOrgReq is request data for Client.TeamsListProjectsInOrg
+
+https://developer.github.com/v3/teams/#list-team-projects
+*/
 type TeamsListProjectsInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 
@@ -2980,6 +3146,10 @@ type TeamsListProjectsInOrgReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *TeamsListProjectsInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListProjectsInOrgReq) urlPath() string {
@@ -3017,99 +3187,58 @@ func (r *TeamsListProjectsInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListProjectsInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListProjectsInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListProjectsInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListProjectsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListProjectsInOrgResponseBody200 is a response body for teams/list-projects-in-org
-
-API documentation: https://developer.github.com/v3/teams/#list-team-projects
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListProjectsInOrgResponseBody200 []struct {
+func (r *TeamsListProjectsInOrgReq) Rel(link RelName, resp *TeamsListProjectsInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListProjectsInOrgResponseBody is a response body for TeamsListProjectsInOrg
+
+https://developer.github.com/v3/teams/#list-team-projects
+*/
+type TeamsListProjectsInOrgResponseBody []struct {
 	components.TeamProject
 }
 
 /*
-TeamsListProjectsLegacyReq builds requests for "teams/list-projects-legacy"
+TeamsListProjectsInOrgResponse is a response for TeamsListProjectsInOrg
 
-List team projects (Legacy).
-
-  GET /teams/{team_id}/projects
-
-https://developer.github.com/v3/teams/#list-team-projects-legacy
+https://developer.github.com/v3/teams/#list-team-projects
 */
-type TeamsListProjectsLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r *TeamsListProjectsLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects", r.TeamId)
-}
-
-func (r *TeamsListProjectsLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListProjectsLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListProjectsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListProjectsLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListProjectsInOrgResponse struct {
+	response
+	request *TeamsListProjectsInOrgReq
+	Data    *TeamsListProjectsInOrgResponseBody
 }
 
 /*
-TeamsListProjectsLegacyResponseBody200 is a response body for teams/list-projects-legacy
-
-API documentation: https://developer.github.com/v3/teams/#list-team-projects-legacy
-*/
-type TeamsListProjectsLegacyResponseBody200 []struct {
-	components.TeamProject
-}
-
-/*
-TeamsListReposInOrgReq builds requests for "teams/list-repos-in-org"
+TeamsListReposInOrg performs requests for "teams/list-repos-in-org"
 
 List team repos.
 
@@ -3117,7 +3246,30 @@ List team repos.
 
 https://developer.github.com/v3/teams/#list-team-repos
 */
+func (c *Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsListReposInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsListReposInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListReposInOrgReq is request data for Client.TeamsListReposInOrg
+
+https://developer.github.com/v3/teams/#list-team-repos
+*/
 type TeamsListReposInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 
@@ -3126,6 +3278,10 @@ type TeamsListReposInOrgReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *TeamsListReposInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsListReposInOrgReq) urlPath() string {
@@ -3157,126 +3313,58 @@ func (r *TeamsListReposInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListReposInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListReposInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListReposInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsListReposInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsListReposInOrgResponseBody200 is a response body for teams/list-repos-in-org
-
-API documentation: https://developer.github.com/v3/teams/#list-team-repos
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsListReposInOrgResponseBody200 []struct {
+func (r *TeamsListReposInOrgReq) Rel(link RelName, resp *TeamsListReposInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsListReposInOrgResponseBody is a response body for TeamsListReposInOrg
+
+https://developer.github.com/v3/teams/#list-team-repos
+*/
+type TeamsListReposInOrgResponseBody []struct {
 	components.MinimalRepository
 }
 
 /*
-TeamsListReposLegacyReq builds requests for "teams/list-repos-legacy"
+TeamsListReposInOrgResponse is a response for TeamsListReposInOrg
 
-List team repos (Legacy).
-
-  GET /teams/{team_id}/repos
-
-https://developer.github.com/v3/teams/#list-team-repos-legacy
+https://developer.github.com/v3/teams/#list-team-repos
 */
-type TeamsListReposLegacyReq struct {
-	TeamId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *TeamsListReposLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos", r.TeamId)
-}
-
-func (r *TeamsListReposLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsListReposLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *TeamsListReposLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsListReposLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsListReposInOrgResponse struct {
+	response
+	request *TeamsListReposInOrgReq
+	Data    *TeamsListReposInOrgResponseBody
 }
 
 /*
-TeamsListReposLegacyResponseBody200 is a response body for teams/list-repos-legacy
-
-API documentation: https://developer.github.com/v3/teams/#list-team-repos-legacy
-*/
-type TeamsListReposLegacyResponseBody200 []struct {
-	components.MinimalRepository
-}
-
-/*
-TeamsRemoveMemberLegacyReq builds requests for "teams/remove-member-legacy"
-
-Remove team member (Legacy).
-
-  DELETE /teams/{team_id}/members/{username}
-
-https://developer.github.com/v3/teams/members/#remove-team-member-legacy
-*/
-type TeamsRemoveMemberLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r *TeamsRemoveMemberLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
-}
-
-func (r *TeamsRemoveMemberLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsRemoveMemberLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsRemoveMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsRemoveMemberLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsRemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-TeamsRemoveMembershipInOrgReq builds requests for "teams/remove-membership-in-org"
+TeamsRemoveMembershipInOrg performs requests for "teams/remove-membership-in-org"
 
 Remove team membership.
 
@@ -3284,10 +3372,36 @@ Remove team membership.
 
 https://developer.github.com/v3/teams/members/#remove-team-membership
 */
+func (c *Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsRemoveMembershipInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveMembershipInOrgReq is request data for Client.TeamsRemoveMembershipInOrg
+
+https://developer.github.com/v3/teams/members/#remove-team-membership
+*/
 type TeamsRemoveMembershipInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 	Username string
+}
+
+func (r *TeamsRemoveMembershipInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsRemoveMembershipInOrgReq) urlPath() string {
@@ -3313,55 +3427,48 @@ func (r *TeamsRemoveMembershipInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsRemoveMembershipInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveMembershipInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveMembershipInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsRemoveMembershipInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsRemoveMembershipLegacyReq builds requests for "teams/remove-membership-legacy"
-
-Remove team membership (Legacy).
-
-  DELETE /teams/{team_id}/memberships/{username}
-
-https://developer.github.com/v3/teams/members/#remove-team-membership-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsRemoveMembershipLegacyReq struct {
-	TeamId   int64
-	Username string
-}
-
-func (r *TeamsRemoveMembershipLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
-}
-
-func (r *TeamsRemoveMembershipLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsRemoveMembershipLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsRemoveMembershipLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsRemoveMembershipLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsRemoveMembershipLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsRemoveMembershipInOrgReq) Rel(link RelName, resp *TeamsRemoveMembershipInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsRemoveProjectInOrgReq builds requests for "teams/remove-project-in-org"
+TeamsRemoveMembershipInOrgResponse is a response for TeamsRemoveMembershipInOrg
+
+https://developer.github.com/v3/teams/members/#remove-team-membership
+*/
+type TeamsRemoveMembershipInOrgResponse struct {
+	response
+	request *TeamsRemoveMembershipInOrgReq
+}
+
+/*
+TeamsRemoveProjectInOrg performs requests for "teams/remove-project-in-org"
 
 Remove team project.
 
@@ -3369,10 +3476,36 @@ Remove team project.
 
 https://developer.github.com/v3/teams/#remove-team-project
 */
+func (c *Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsRemoveProjectInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveProjectInOrgReq is request data for Client.TeamsRemoveProjectInOrg
+
+https://developer.github.com/v3/teams/#remove-team-project
+*/
 type TeamsRemoveProjectInOrgReq struct {
+	pgURL     string
 	Org       string
 	TeamSlug  string
 	ProjectId int64
+}
+
+func (r *TeamsRemoveProjectInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsRemoveProjectInOrgReq) urlPath() string {
@@ -3398,55 +3531,48 @@ func (r *TeamsRemoveProjectInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsRemoveProjectInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveProjectInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveProjectInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsRemoveProjectInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsRemoveProjectLegacyReq builds requests for "teams/remove-project-legacy"
-
-Remove team project (Legacy).
-
-  DELETE /teams/{team_id}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#remove-team-project-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsRemoveProjectLegacyReq struct {
-	TeamId    int64
-	ProjectId int64
-}
-
-func (r *TeamsRemoveProjectLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
-}
-
-func (r *TeamsRemoveProjectLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsRemoveProjectLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsRemoveProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsRemoveProjectLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsRemoveProjectInOrgReq) Rel(link RelName, resp *TeamsRemoveProjectInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsRemoveRepoInOrgReq builds requests for "teams/remove-repo-in-org"
+TeamsRemoveProjectInOrgResponse is a response for TeamsRemoveProjectInOrg
+
+https://developer.github.com/v3/teams/#remove-team-project
+*/
+type TeamsRemoveProjectInOrgResponse struct {
+	response
+	request *TeamsRemoveProjectInOrgReq
+}
+
+/*
+TeamsRemoveRepoInOrg performs requests for "teams/remove-repo-in-org"
 
 Remove team repository.
 
@@ -3454,11 +3580,37 @@ Remove team repository.
 
 https://developer.github.com/v3/teams/#remove-team-repository
 */
+func (c *Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsRemoveRepoInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveRepoInOrgReq is request data for Client.TeamsRemoveRepoInOrg
+
+https://developer.github.com/v3/teams/#remove-team-repository
+*/
 type TeamsRemoveRepoInOrgReq struct {
+	pgURL    string
 	Org      string
 	TeamSlug string
 	Owner    string
 	Repo     string
+}
+
+func (r *TeamsRemoveRepoInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsRemoveRepoInOrgReq) urlPath() string {
@@ -3484,56 +3636,48 @@ func (r *TeamsRemoveRepoInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsRemoveRepoInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveRepoInOrgReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveRepoInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsRemoveRepoInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsRemoveRepoLegacyReq builds requests for "teams/remove-repo-legacy"
-
-Remove team repository (Legacy).
-
-  DELETE /teams/{team_id}/repos/{owner}/{repo}
-
-https://developer.github.com/v3/teams/#remove-team-repository-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsRemoveRepoLegacyReq struct {
-	TeamId int64
-	Owner  string
-	Repo   string
-}
-
-func (r *TeamsRemoveRepoLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
-}
-
-func (r *TeamsRemoveRepoLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *TeamsRemoveRepoLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsRemoveRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsRemoveRepoLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+func (r *TeamsRemoveRepoInOrgReq) Rel(link RelName, resp *TeamsRemoveRepoInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
-TeamsReviewProjectInOrgReq builds requests for "teams/review-project-in-org"
+TeamsRemoveRepoInOrgResponse is a response for TeamsRemoveRepoInOrg
+
+https://developer.github.com/v3/teams/#remove-team-repository
+*/
+type TeamsRemoveRepoInOrgResponse struct {
+	response
+	request *TeamsRemoveRepoInOrgReq
+}
+
+/*
+TeamsReviewProjectInOrg performs requests for "teams/review-project-in-org"
 
 Review a team project.
 
@@ -3541,7 +3685,30 @@ Review a team project.
 
 https://developer.github.com/v3/teams/#review-a-team-project
 */
+func (c *Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsReviewProjectInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsReviewProjectInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsReviewProjectInOrgReq is request data for Client.TeamsReviewProjectInOrg
+
+https://developer.github.com/v3/teams/#review-a-team-project
+*/
 type TeamsReviewProjectInOrgReq struct {
+	pgURL     string
 	Org       string
 	TeamSlug  string
 	ProjectId int64
@@ -3554,6 +3721,10 @@ type TeamsReviewProjectInOrgReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *TeamsReviewProjectInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsReviewProjectInOrgReq) urlPath() string {
@@ -3585,88 +3756,58 @@ func (r *TeamsReviewProjectInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsReviewProjectInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsReviewProjectInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsReviewProjectInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsReviewProjectInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-TeamsReviewProjectInOrgResponseBody200 is a response body for teams/review-project-in-org
-
-API documentation: https://developer.github.com/v3/teams/#review-a-team-project
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type TeamsReviewProjectInOrgResponseBody200 struct {
+func (r *TeamsReviewProjectInOrgReq) Rel(link RelName, resp *TeamsReviewProjectInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+TeamsReviewProjectInOrgResponseBody is a response body for TeamsReviewProjectInOrg
+
+https://developer.github.com/v3/teams/#review-a-team-project
+*/
+type TeamsReviewProjectInOrgResponseBody struct {
 	components.TeamProject
 }
 
 /*
-TeamsReviewProjectLegacyReq builds requests for "teams/review-project-legacy"
+TeamsReviewProjectInOrgResponse is a response for TeamsReviewProjectInOrg
 
-Review a team project (Legacy).
-
-  GET /teams/{team_id}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#review-a-team-project-legacy
+https://developer.github.com/v3/teams/#review-a-team-project
 */
-type TeamsReviewProjectLegacyReq struct {
-	TeamId    int64
-	ProjectId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r *TeamsReviewProjectLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
-}
-
-func (r *TeamsReviewProjectLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsReviewProjectLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsReviewProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsReviewProjectLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsReviewProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsReviewProjectInOrgResponse struct {
+	response
+	request *TeamsReviewProjectInOrgReq
+	Data    *TeamsReviewProjectInOrgResponseBody
 }
 
 /*
-TeamsReviewProjectLegacyResponseBody200 is a response body for teams/review-project-legacy
-
-API documentation: https://developer.github.com/v3/teams/#review-a-team-project-legacy
-*/
-type TeamsReviewProjectLegacyResponseBody200 struct {
-	components.TeamProject
-}
-
-/*
-TeamsUpdateDiscussionCommentInOrgReq builds requests for "teams/update-discussion-comment-in-org"
+TeamsUpdateDiscussionCommentInOrg performs requests for "teams/update-discussion-comment-in-org"
 
 Edit a comment.
 
@@ -3674,7 +3815,30 @@ Edit a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
+func (c *Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsUpdateDiscussionCommentInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsUpdateDiscussionCommentInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsUpdateDiscussionCommentInOrgReq is request data for Client.TeamsUpdateDiscussionCommentInOrg
+
+https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+*/
 type TeamsUpdateDiscussionCommentInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -3691,6 +3855,10 @@ type TeamsUpdateDiscussionCommentInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsUpdateDiscussionCommentInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsUpdateDiscussionCommentInOrgReq) urlPath() string {
@@ -3719,15 +3887,40 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsUpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsUpdateDiscussionCommentInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionCommentInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsUpdateDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsUpdateDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsUpdateDiscussionCommentInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsUpdateDiscussionCommentInOrgReqBody is a request body for teams/update-discussion-comment-in-org
 
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
 type TeamsUpdateDiscussionCommentInOrgReqBody struct {
 
@@ -3736,94 +3929,27 @@ type TeamsUpdateDiscussionCommentInOrgReqBody struct {
 }
 
 /*
-TeamsUpdateDiscussionCommentInOrgResponseBody200 is a response body for teams/update-discussion-comment-in-org
+TeamsUpdateDiscussionCommentInOrgResponseBody is a response body for TeamsUpdateDiscussionCommentInOrg
 
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
-type TeamsUpdateDiscussionCommentInOrgResponseBody200 struct {
+type TeamsUpdateDiscussionCommentInOrgResponseBody struct {
 	components.TeamDiscussionComment
 }
 
 /*
-TeamsUpdateDiscussionCommentLegacyReq builds requests for "teams/update-discussion-comment-legacy"
+TeamsUpdateDiscussionCommentInOrgResponse is a response for TeamsUpdateDiscussionCommentInOrg
 
-Edit a comment (Legacy).
-
-  PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
-
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
+https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
-type TeamsUpdateDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      TeamsUpdateDiscussionCommentLegacyReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsUpdateDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *TeamsUpdateDiscussionCommentLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r *TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsUpdateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsUpdateDiscussionCommentLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsUpdateDiscussionCommentInOrgResponse struct {
+	response
+	request *TeamsUpdateDiscussionCommentInOrgReq
+	Data    *TeamsUpdateDiscussionCommentInOrgResponseBody
 }
 
 /*
-TeamsUpdateDiscussionCommentLegacyReqBody is a request body for teams/update-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
-*/
-type TeamsUpdateDiscussionCommentLegacyReqBody struct {
-
-	// The discussion comment's body text.
-	Body *string `json:"body"`
-}
-
-/*
-TeamsUpdateDiscussionCommentLegacyResponseBody200 is a response body for teams/update-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment-legacy
-*/
-type TeamsUpdateDiscussionCommentLegacyResponseBody200 struct {
-	components.TeamDiscussionComment
-}
-
-/*
-TeamsUpdateDiscussionInOrgReq builds requests for "teams/update-discussion-in-org"
+TeamsUpdateDiscussionInOrg performs requests for "teams/update-discussion-in-org"
 
 Edit a discussion.
 
@@ -3831,7 +3957,30 @@ Edit a discussion.
 
 https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
+func (c *Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsUpdateDiscussionInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsUpdateDiscussionInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsUpdateDiscussionInOrgReq is request data for Client.TeamsUpdateDiscussionInOrg
+
+https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+*/
 type TeamsUpdateDiscussionInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -3847,6 +3996,10 @@ type TeamsUpdateDiscussionInOrgReq struct {
 	endpoint you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *TeamsUpdateDiscussionInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsUpdateDiscussionInOrgReq) urlPath() string {
@@ -3875,15 +4028,40 @@ func (r *TeamsUpdateDiscussionInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsUpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsUpdateDiscussionInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsUpdateDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsUpdateDiscussionInOrgReq) Rel(link RelName, resp *TeamsUpdateDiscussionInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsUpdateDiscussionInOrgReqBody is a request body for teams/update-discussion-in-org
 
-API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
 type TeamsUpdateDiscussionInOrgReqBody struct {
 
@@ -3895,96 +4073,27 @@ type TeamsUpdateDiscussionInOrgReqBody struct {
 }
 
 /*
-TeamsUpdateDiscussionInOrgResponseBody200 is a response body for teams/update-discussion-in-org
+TeamsUpdateDiscussionInOrgResponseBody is a response body for TeamsUpdateDiscussionInOrg
 
-API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
-type TeamsUpdateDiscussionInOrgResponseBody200 struct {
+type TeamsUpdateDiscussionInOrgResponseBody struct {
 	components.TeamDiscussion
 }
 
 /*
-TeamsUpdateDiscussionLegacyReq builds requests for "teams/update-discussion-legacy"
+TeamsUpdateDiscussionInOrgResponse is a response for TeamsUpdateDiscussionInOrg
 
-Edit a discussion (Legacy).
-
-  PATCH /teams/{team_id}/discussions/{discussion_number}
-
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
+https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
-type TeamsUpdateDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	RequestBody      TeamsUpdateDiscussionLegacyReqBody
-
-	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *TeamsUpdateDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *TeamsUpdateDiscussionLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r *TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsUpdateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsUpdateDiscussionLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type TeamsUpdateDiscussionInOrgResponse struct {
+	response
+	request *TeamsUpdateDiscussionInOrgReq
+	Data    *TeamsUpdateDiscussionInOrgResponseBody
 }
 
 /*
-TeamsUpdateDiscussionLegacyReqBody is a request body for teams/update-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
-*/
-type TeamsUpdateDiscussionLegacyReqBody struct {
-
-	// The discussion post's body text.
-	Body *string `json:"body,omitempty"`
-
-	// The discussion post's title.
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-TeamsUpdateDiscussionLegacyResponseBody200 is a response body for teams/update-discussion-legacy
-
-API documentation: https://developer.github.com/v3/teams/discussions/#edit-a-discussion-legacy
-*/
-type TeamsUpdateDiscussionLegacyResponseBody200 struct {
-	components.TeamDiscussion
-}
-
-/*
-TeamsUpdateInOrgReq builds requests for "teams/update-in-org"
+TeamsUpdateInOrg performs requests for "teams/update-in-org"
 
 Edit team.
 
@@ -3992,10 +4101,37 @@ Edit team.
 
 https://developer.github.com/v3/teams/#edit-team
 */
+func (c *Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &TeamsUpdateInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(TeamsUpdateInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsUpdateInOrgReq is request data for Client.TeamsUpdateInOrg
+
+https://developer.github.com/v3/teams/#edit-team
+*/
 type TeamsUpdateInOrgReq struct {
+	pgURL       string
 	Org         string
 	TeamSlug    string
 	RequestBody TeamsUpdateInOrgReqBody
+}
+
+func (r *TeamsUpdateInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *TeamsUpdateInOrgReq) urlPath() string {
@@ -4021,15 +4157,40 @@ func (r *TeamsUpdateInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *TeamsUpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsUpdateInOrgReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsUpdateInOrgReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsUpdateInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *TeamsUpdateInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsUpdateInOrgReq) Rel(link RelName, resp *TeamsUpdateInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 TeamsUpdateInOrgReqBody is a request body for teams/update-in-org
 
-API documentation: https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#edit-team
 */
 type TeamsUpdateInOrgReqBody struct {
 
@@ -4068,101 +4229,21 @@ type TeamsUpdateInOrgReqBody struct {
 }
 
 /*
-TeamsUpdateInOrgResponseBody201 is a response body for teams/update-in-org
+TeamsUpdateInOrgResponseBody is a response body for TeamsUpdateInOrg
 
-API documentation: https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#edit-team
 */
-type TeamsUpdateInOrgResponseBody201 struct {
+type TeamsUpdateInOrgResponseBody struct {
 	components.TeamFull
 }
 
 /*
-TeamsUpdateLegacyReq builds requests for "teams/update-legacy"
+TeamsUpdateInOrgResponse is a response for TeamsUpdateInOrg
 
-Edit team (Legacy).
-
-  PATCH /teams/{team_id}
-
-https://developer.github.com/v3/teams/#edit-team-legacy
+https://developer.github.com/v3/teams/#edit-team
 */
-type TeamsUpdateLegacyReq struct {
-	TeamId      int64
-	RequestBody TeamsUpdateLegacyReqBody
-}
-
-func (r *TeamsUpdateLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v", r.TeamId)
-}
-
-func (r *TeamsUpdateLegacyReq) method() string {
-	return "PATCH"
-}
-
-func (r *TeamsUpdateLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsUpdateLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsUpdateLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *TeamsUpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-TeamsUpdateLegacyReqBody is a request body for teams/update-legacy
-
-API documentation: https://developer.github.com/v3/teams/#edit-team-legacy
-*/
-type TeamsUpdateLegacyReqBody struct {
-
-	// The description of the team.
-	Description *string `json:"description,omitempty"`
-
-	// The name of the team.
-	Name *string `json:"name"`
-
-	// The ID of a team to set as the parent team.
-	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
-
-	/*
-	   **Deprecated**. The permission that new repositories will be added to the team
-	   with when none is specified. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer newly-added
-	   repositories.
-	   \* `push` - team members can pull and push, but not administer newly-added
-	   repositories.
-	   \* `admin` - team members can pull, push and administer newly-added
-	   repositories.
-	*/
-	Permission *string `json:"permission,omitempty"`
-
-	/*
-	   The level of privacy this team should have. Editing teams without specifying
-	   this parameter leaves `privacy` intact. The options are:
-	   **For a non-nested team:**
-	   \* `secret` - only visible to organization owners and members of this team.
-	   \* `closed` - visible to all members of this organization.
-	   **For a parent or child team:**
-	   \* `closed` - visible to all members of this organization.
-	*/
-	Privacy *string `json:"privacy,omitempty"`
-}
-
-/*
-TeamsUpdateLegacyResponseBody201 is a response body for teams/update-legacy
-
-API documentation: https://developer.github.com/v3/teams/#edit-team-legacy
-*/
-type TeamsUpdateLegacyResponseBody201 struct {
-	components.TeamFull
+type TeamsUpdateInOrgResponse struct {
+	response
+	request *TeamsUpdateInOrgReq
+	Data    *TeamsUpdateInOrgResponseBody
 }

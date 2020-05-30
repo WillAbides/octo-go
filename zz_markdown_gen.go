@@ -10,7 +10,7 @@ import (
 )
 
 /*
-MarkdownRenderReq builds requests for "markdown/render"
+MarkdownRender performs requests for "markdown/render"
 
 Render an arbitrary Markdown document.
 
@@ -18,8 +18,34 @@ Render an arbitrary Markdown document.
 
 https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
+func (c *Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &MarkdownRenderResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+MarkdownRenderReq is request data for Client.MarkdownRender
+
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+*/
 type MarkdownRenderReq struct {
+	pgURL       string
 	RequestBody MarkdownRenderReqBody
+}
+
+func (r *MarkdownRenderReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *MarkdownRenderReq) urlPath() string {
@@ -45,15 +71,40 @@ func (r *MarkdownRenderReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *MarkdownRenderReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *MarkdownRenderReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *MarkdownRenderReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *MarkdownRenderReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *MarkdownRenderReq) Rel(link RelName, resp *MarkdownRenderResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 MarkdownRenderReqBody is a request body for markdown/render
 
-API documentation: https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 type MarkdownRenderReqBody struct {
 
@@ -78,7 +129,17 @@ type MarkdownRenderReqBody struct {
 }
 
 /*
-MarkdownRenderRawReq builds requests for "markdown/render-raw"
+MarkdownRenderResponse is a response for MarkdownRender
+
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+*/
+type MarkdownRenderResponse struct {
+	response
+	request *MarkdownRenderReq
+}
+
+/*
+MarkdownRenderRaw performs requests for "markdown/render-raw"
 
 Render a Markdown document in raw mode.
 
@@ -86,11 +147,37 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
+func (c *Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &MarkdownRenderRawResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+MarkdownRenderRawReq is request data for Client.MarkdownRenderRaw
+
+https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
+*/
 type MarkdownRenderRawReq struct {
+	pgURL       string
 	RequestBody MarkdownRenderRawReqBody
 
 	// Setting content-type header is required for this endpoint
 	ContentTypeHeader *string
+}
+
+func (r *MarkdownRenderRawReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *MarkdownRenderRawReq) urlPath() string {
@@ -116,14 +203,49 @@ func (r *MarkdownRenderRawReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *MarkdownRenderRawReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *MarkdownRenderRawReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *MarkdownRenderRawReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *MarkdownRenderRawReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *MarkdownRenderRawReq) Rel(link RelName, resp *MarkdownRenderRawResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 MarkdownRenderRawReqBody is a request body for markdown/render-raw
 
-API documentation: https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
+https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type MarkdownRenderRawReqBody string
+
+/*
+MarkdownRenderRawResponse is a response for MarkdownRenderRaw
+
+https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
+*/
+type MarkdownRenderRawResponse struct {
+	response
+	request *MarkdownRenderRawReq
+}

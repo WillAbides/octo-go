@@ -12,7 +12,7 @@ import (
 )
 
 /*
-GitCreateBlobReq builds requests for "git/create-blob"
+GitCreateBlob performs requests for "git/create-blob"
 
 Create a blob.
 
@@ -20,10 +20,37 @@ Create a blob.
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
+func (c *Client) GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOption) (*GitCreateBlobResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitCreateBlobResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitCreateBlobResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitCreateBlobReq is request data for Client.GitCreateBlob
+
+https://developer.github.com/v3/git/blobs/#create-a-blob
+*/
 type GitCreateBlobReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateBlobReqBody
+}
+
+func (r *GitCreateBlobReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitCreateBlobReq) urlPath() string {
@@ -49,15 +76,40 @@ func (r *GitCreateBlobReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitCreateBlobReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateBlobReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateBlobReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitCreateBlobReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitCreateBlobReq) Rel(link RelName, resp *GitCreateBlobResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 GitCreateBlobReqBody is a request body for git/create-blob
 
-API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
+https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type GitCreateBlobReqBody struct {
 
@@ -72,16 +124,27 @@ type GitCreateBlobReqBody struct {
 }
 
 /*
-GitCreateBlobResponseBody201 is a response body for git/create-blob
+GitCreateBlobResponseBody is a response body for GitCreateBlob
 
-API documentation: https://developer.github.com/v3/git/blobs/#create-a-blob
+https://developer.github.com/v3/git/blobs/#create-a-blob
 */
-type GitCreateBlobResponseBody201 struct {
+type GitCreateBlobResponseBody struct {
 	components.ShortBlob
 }
 
 /*
-GitCreateCommitReq builds requests for "git/create-commit"
+GitCreateBlobResponse is a response for GitCreateBlob
+
+https://developer.github.com/v3/git/blobs/#create-a-blob
+*/
+type GitCreateBlobResponse struct {
+	response
+	request *GitCreateBlobReq
+	Data    *GitCreateBlobResponseBody
+}
+
+/*
+GitCreateCommit performs requests for "git/create-commit"
 
 Create a commit.
 
@@ -89,10 +152,37 @@ Create a commit.
 
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
+func (c *Client) GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...RequestOption) (*GitCreateCommitResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitCreateCommitResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitCreateCommitResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitCreateCommitReq is request data for Client.GitCreateCommit
+
+https://developer.github.com/v3/git/commits/#create-a-commit
+*/
 type GitCreateCommitReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateCommitReqBody
+}
+
+func (r *GitCreateCommitReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitCreateCommitReq) urlPath() string {
@@ -118,9 +208,34 @@ func (r *GitCreateCommitReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *GitCreateCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitCreateCommitReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateCommitReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateCommitReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitCreateCommitReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitCreateCommitReq) Rel(link RelName, resp *GitCreateCommitResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // GitCreateCommitReqBodyAuthor is a value for GitCreateCommitReqBody's Author field
@@ -160,7 +275,7 @@ type GitCreateCommitReqBodyCommitter struct {
 /*
 GitCreateCommitReqBody is a request body for git/create-commit
 
-API documentation: https://developer.github.com/v3/git/commits/#create-a-commit
+https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type GitCreateCommitReqBody struct {
 
@@ -207,16 +322,27 @@ type GitCreateCommitReqBody struct {
 }
 
 /*
-GitCreateCommitResponseBody201 is a response body for git/create-commit
+GitCreateCommitResponseBody is a response body for GitCreateCommit
 
-API documentation: https://developer.github.com/v3/git/commits/#create-a-commit
+https://developer.github.com/v3/git/commits/#create-a-commit
 */
-type GitCreateCommitResponseBody201 struct {
+type GitCreateCommitResponseBody struct {
 	components.GitCommit
 }
 
 /*
-GitCreateRefReq builds requests for "git/create-ref"
+GitCreateCommitResponse is a response for GitCreateCommit
+
+https://developer.github.com/v3/git/commits/#create-a-commit
+*/
+type GitCreateCommitResponse struct {
+	response
+	request *GitCreateCommitReq
+	Data    *GitCreateCommitResponseBody
+}
+
+/*
+GitCreateRef performs requests for "git/create-ref"
 
 Create a reference.
 
@@ -224,10 +350,37 @@ Create a reference.
 
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
+func (c *Client) GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOption) (*GitCreateRefResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitCreateRefResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitCreateRefResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitCreateRefReq is request data for Client.GitCreateRef
+
+https://developer.github.com/v3/git/refs/#create-a-reference
+*/
 type GitCreateRefReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateRefReqBody
+}
+
+func (r *GitCreateRefReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitCreateRefReq) urlPath() string {
@@ -253,15 +406,40 @@ func (r *GitCreateRefReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitCreateRefReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateRefReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateRefReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitCreateRefReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitCreateRefReq) Rel(link RelName, resp *GitCreateRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 GitCreateRefReqBody is a request body for git/create-ref
 
-API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
+https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefReqBody struct {
 
@@ -276,16 +454,27 @@ type GitCreateRefReqBody struct {
 }
 
 /*
-GitCreateRefResponseBody201 is a response body for git/create-ref
+GitCreateRefResponseBody is a response body for GitCreateRef
 
-API documentation: https://developer.github.com/v3/git/refs/#create-a-reference
+https://developer.github.com/v3/git/refs/#create-a-reference
 */
-type GitCreateRefResponseBody201 struct {
+type GitCreateRefResponseBody struct {
 	components.GitRef
 }
 
 /*
-GitCreateTagReq builds requests for "git/create-tag"
+GitCreateRefResponse is a response for GitCreateRef
+
+https://developer.github.com/v3/git/refs/#create-a-reference
+*/
+type GitCreateRefResponse struct {
+	response
+	request *GitCreateRefReq
+	Data    *GitCreateRefResponseBody
+}
+
+/*
+GitCreateTag performs requests for "git/create-tag"
 
 Create a tag object.
 
@@ -293,10 +482,37 @@ Create a tag object.
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
+func (c *Client) GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOption) (*GitCreateTagResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitCreateTagResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitCreateTagResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitCreateTagReq is request data for Client.GitCreateTag
+
+https://developer.github.com/v3/git/tags/#create-a-tag-object
+*/
 type GitCreateTagReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateTagReqBody
+}
+
+func (r *GitCreateTagReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitCreateTagReq) urlPath() string {
@@ -322,9 +538,34 @@ func (r *GitCreateTagReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *GitCreateTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitCreateTagReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateTagReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateTagReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitCreateTagReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitCreateTagReq) Rel(link RelName, resp *GitCreateTagResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // GitCreateTagReqBodyTagger is a value for GitCreateTagReqBody's Tagger field
@@ -346,7 +587,7 @@ type GitCreateTagReqBodyTagger struct {
 /*
 GitCreateTagReqBody is a request body for git/create-tag
 
-API documentation: https://developer.github.com/v3/git/tags/#create-a-tag-object
+https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type GitCreateTagReqBody struct {
 
@@ -370,16 +611,27 @@ type GitCreateTagReqBody struct {
 }
 
 /*
-GitCreateTagResponseBody201 is a response body for git/create-tag
+GitCreateTagResponseBody is a response body for GitCreateTag
 
-API documentation: https://developer.github.com/v3/git/tags/#create-a-tag-object
+https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
-type GitCreateTagResponseBody201 struct {
+type GitCreateTagResponseBody struct {
 	components.GitTag
 }
 
 /*
-GitCreateTreeReq builds requests for "git/create-tree"
+GitCreateTagResponse is a response for GitCreateTag
+
+https://developer.github.com/v3/git/tags/#create-a-tag-object
+*/
+type GitCreateTagResponse struct {
+	response
+	request *GitCreateTagReq
+	Data    *GitCreateTagResponseBody
+}
+
+/*
+GitCreateTree performs requests for "git/create-tree"
 
 Create a tree.
 
@@ -387,10 +639,37 @@ Create a tree.
 
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
+func (c *Client) GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOption) (*GitCreateTreeResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitCreateTreeResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitCreateTreeResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitCreateTreeReq is request data for Client.GitCreateTree
+
+https://developer.github.com/v3/git/trees/#create-a-tree
+*/
 type GitCreateTreeReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateTreeReqBody
+}
+
+func (r *GitCreateTreeReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitCreateTreeReq) urlPath() string {
@@ -416,9 +695,34 @@ func (r *GitCreateTreeReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitCreateTreeReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateTreeReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *GitCreateTreeReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitCreateTreeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitCreateTreeReq) Rel(link RelName, resp *GitCreateTreeResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // GitCreateTreeReqBodyTree is a value for GitCreateTreeReqBody's Tree field
@@ -459,7 +763,7 @@ type GitCreateTreeReqBodyTree struct {
 /*
 GitCreateTreeReqBody is a request body for git/create-tree
 
-API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
+https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type GitCreateTreeReqBody struct {
 
@@ -475,16 +779,27 @@ type GitCreateTreeReqBody struct {
 }
 
 /*
-GitCreateTreeResponseBody201 is a response body for git/create-tree
+GitCreateTreeResponseBody is a response body for GitCreateTree
 
-API documentation: https://developer.github.com/v3/git/trees/#create-a-tree
+https://developer.github.com/v3/git/trees/#create-a-tree
 */
-type GitCreateTreeResponseBody201 struct {
+type GitCreateTreeResponseBody struct {
 	components.GitTree
 }
 
 /*
-GitDeleteRefReq builds requests for "git/delete-ref"
+GitCreateTreeResponse is a response for GitCreateTree
+
+https://developer.github.com/v3/git/trees/#create-a-tree
+*/
+type GitCreateTreeResponse struct {
+	response
+	request *GitCreateTreeReq
+	Data    *GitCreateTreeResponseBody
+}
+
+/*
+GitDeleteRef performs requests for "git/delete-ref"
 
 Delete a reference.
 
@@ -492,10 +807,36 @@ Delete a reference.
 
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
+func (c *Client) GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...RequestOption) (*GitDeleteRefResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitDeleteRefResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitDeleteRefReq is request data for Client.GitDeleteRef
+
+https://developer.github.com/v3/git/refs/#delete-a-reference
+*/
 type GitDeleteRefReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Ref   string
+}
+
+func (r *GitDeleteRefReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitDeleteRefReq) urlPath() string {
@@ -521,13 +862,48 @@ func (r *GitDeleteRefReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitDeleteRefReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *GitDeleteRefReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *GitDeleteRefReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitDeleteRefReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitGetBlobReq builds requests for "git/get-blob"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitDeleteRefReq) Rel(link RelName, resp *GitDeleteRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitDeleteRefResponse is a response for GitDeleteRef
+
+https://developer.github.com/v3/git/refs/#delete-a-reference
+*/
+type GitDeleteRefResponse struct {
+	response
+	request *GitDeleteRefReq
+}
+
+/*
+GitGetBlob performs requests for "git/get-blob"
 
 Get a blob.
 
@@ -535,10 +911,37 @@ Get a blob.
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
+func (c *Client) GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (*GitGetBlobResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitGetBlobResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitGetBlobResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitGetBlobReq is request data for Client.GitGetBlob
+
+https://developer.github.com/v3/git/blobs/#get-a-blob
+*/
 type GitGetBlobReq struct {
+	pgURL   string
 	Owner   string
 	Repo    string
 	FileSha string
+}
+
+func (r *GitGetBlobReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitGetBlobReq) urlPath() string {
@@ -564,22 +967,58 @@ func (r *GitGetBlobReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitGetBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitGetBlobReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetBlobReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetBlobReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitGetBlobReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitGetBlobResponseBody200 is a response body for git/get-blob
-
-API documentation: https://developer.github.com/v3/git/blobs/#get-a-blob
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitGetBlobResponseBody200 struct {
+func (r *GitGetBlobReq) Rel(link RelName, resp *GitGetBlobResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitGetBlobResponseBody is a response body for GitGetBlob
+
+https://developer.github.com/v3/git/blobs/#get-a-blob
+*/
+type GitGetBlobResponseBody struct {
 	components.Blob
 }
 
 /*
-GitGetCommitReq builds requests for "git/get-commit"
+GitGetBlobResponse is a response for GitGetBlob
+
+https://developer.github.com/v3/git/blobs/#get-a-blob
+*/
+type GitGetBlobResponse struct {
+	response
+	request *GitGetBlobReq
+	Data    *GitGetBlobResponseBody
+}
+
+/*
+GitGetCommit performs requests for "git/get-commit"
 
 Get a commit.
 
@@ -587,10 +1026,37 @@ Get a commit.
 
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
+func (c *Client) GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOption) (*GitGetCommitResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitGetCommitResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitGetCommitResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitGetCommitReq is request data for Client.GitGetCommit
+
+https://developer.github.com/v3/git/commits/#get-a-commit
+*/
 type GitGetCommitReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommitSha string
+}
+
+func (r *GitGetCommitReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitGetCommitReq) urlPath() string {
@@ -616,22 +1082,58 @@ func (r *GitGetCommitReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitGetCommitReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetCommitReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetCommitReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitGetCommitReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitGetCommitResponseBody200 is a response body for git/get-commit
-
-API documentation: https://developer.github.com/v3/git/commits/#get-a-commit
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitGetCommitResponseBody200 struct {
+func (r *GitGetCommitReq) Rel(link RelName, resp *GitGetCommitResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitGetCommitResponseBody is a response body for GitGetCommit
+
+https://developer.github.com/v3/git/commits/#get-a-commit
+*/
+type GitGetCommitResponseBody struct {
 	components.GitCommit2
 }
 
 /*
-GitGetRefReq builds requests for "git/get-ref"
+GitGetCommitResponse is a response for GitGetCommit
+
+https://developer.github.com/v3/git/commits/#get-a-commit
+*/
+type GitGetCommitResponse struct {
+	response
+	request *GitGetCommitReq
+	Data    *GitGetCommitResponseBody
+}
+
+/*
+GitGetRef performs requests for "git/get-ref"
 
 Get a single reference.
 
@@ -639,10 +1141,37 @@ Get a single reference.
 
 https://developer.github.com/v3/git/refs/#get-a-single-reference
 */
+func (c *Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitGetRefResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitGetRefResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitGetRefReq is request data for Client.GitGetRef
+
+https://developer.github.com/v3/git/refs/#get-a-single-reference
+*/
 type GitGetRefReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Ref   string
+}
+
+func (r *GitGetRefReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitGetRefReq) urlPath() string {
@@ -668,22 +1197,58 @@ func (r *GitGetRefReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitGetRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitGetRefReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetRefReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetRefReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitGetRefReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitGetRefResponseBody200 is a response body for git/get-ref
-
-API documentation: https://developer.github.com/v3/git/refs/#get-a-single-reference
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitGetRefResponseBody200 struct {
+func (r *GitGetRefReq) Rel(link RelName, resp *GitGetRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitGetRefResponseBody is a response body for GitGetRef
+
+https://developer.github.com/v3/git/refs/#get-a-single-reference
+*/
+type GitGetRefResponseBody struct {
 	components.GitRef
 }
 
 /*
-GitGetTagReq builds requests for "git/get-tag"
+GitGetRefResponse is a response for GitGetRef
+
+https://developer.github.com/v3/git/refs/#get-a-single-reference
+*/
+type GitGetRefResponse struct {
+	response
+	request *GitGetRefReq
+	Data    *GitGetRefResponseBody
+}
+
+/*
+GitGetTag performs requests for "git/get-tag"
 
 Get a tag.
 
@@ -691,10 +1256,37 @@ Get a tag.
 
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
+func (c *Client) GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*GitGetTagResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitGetTagResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitGetTagResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitGetTagReq is request data for Client.GitGetTag
+
+https://developer.github.com/v3/git/tags/#get-a-tag
+*/
 type GitGetTagReq struct {
+	pgURL  string
 	Owner  string
 	Repo   string
 	TagSha string
+}
+
+func (r *GitGetTagReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitGetTagReq) urlPath() string {
@@ -720,22 +1312,58 @@ func (r *GitGetTagReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitGetTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitGetTagReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetTagReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetTagReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitGetTagReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitGetTagResponseBody200 is a response body for git/get-tag
-
-API documentation: https://developer.github.com/v3/git/tags/#get-a-tag
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitGetTagResponseBody200 struct {
+func (r *GitGetTagReq) Rel(link RelName, resp *GitGetTagResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitGetTagResponseBody is a response body for GitGetTag
+
+https://developer.github.com/v3/git/tags/#get-a-tag
+*/
+type GitGetTagResponseBody struct {
 	components.GitTag
 }
 
 /*
-GitGetTreeReq builds requests for "git/get-tree"
+GitGetTagResponse is a response for GitGetTag
+
+https://developer.github.com/v3/git/tags/#get-a-tag
+*/
+type GitGetTagResponse struct {
+	response
+	request *GitGetTagReq
+	Data    *GitGetTagResponseBody
+}
+
+/*
+GitGetTree performs requests for "git/get-tree"
 
 Get a tree.
 
@@ -743,7 +1371,30 @@ Get a tree.
 
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
+func (c *Client) GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (*GitGetTreeResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitGetTreeResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitGetTreeResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitGetTreeReq is request data for Client.GitGetTree
+
+https://developer.github.com/v3/git/trees/#get-a-tree
+*/
 type GitGetTreeReq struct {
+	pgURL string
 
 	// owner parameter
 	Owner string
@@ -756,6 +1407,10 @@ type GitGetTreeReq struct {
 
 	// recursive parameter
 	Recursive *int64
+}
+
+func (r *GitGetTreeReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitGetTreeReq) urlPath() string {
@@ -784,22 +1439,58 @@ func (r *GitGetTreeReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitGetTreeReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetTreeReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitGetTreeReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitGetTreeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitGetTreeResponseBody200 is a response body for git/get-tree
-
-API documentation: https://developer.github.com/v3/git/trees/#get-a-tree
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitGetTreeResponseBody200 struct {
+func (r *GitGetTreeReq) Rel(link RelName, resp *GitGetTreeResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitGetTreeResponseBody is a response body for GitGetTree
+
+https://developer.github.com/v3/git/trees/#get-a-tree
+*/
+type GitGetTreeResponseBody struct {
 	components.GitTree2
 }
 
 /*
-GitListMatchingRefsReq builds requests for "git/list-matching-refs"
+GitGetTreeResponse is a response for GitGetTree
+
+https://developer.github.com/v3/git/trees/#get-a-tree
+*/
+type GitGetTreeResponse struct {
+	response
+	request *GitGetTreeReq
+	Data    *GitGetTreeResponseBody
+}
+
+/*
+GitListMatchingRefs performs requests for "git/list-matching-refs"
 
 List matching references.
 
@@ -807,7 +1498,30 @@ List matching references.
 
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
+func (c *Client) GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt ...RequestOption) (*GitListMatchingRefsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitListMatchingRefsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitListMatchingRefsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitListMatchingRefsReq is request data for Client.GitListMatchingRefs
+
+https://developer.github.com/v3/git/refs/#list-matching-references
+*/
 type GitListMatchingRefsReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Ref   string
@@ -817,6 +1531,10 @@ type GitListMatchingRefsReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *GitListMatchingRefsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitListMatchingRefsReq) urlPath() string {
@@ -848,22 +1566,58 @@ func (r *GitListMatchingRefsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitListMatchingRefsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitListMatchingRefsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitListMatchingRefsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitListMatchingRefsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-GitListMatchingRefsResponseBody200 is a response body for git/list-matching-refs
-
-API documentation: https://developer.github.com/v3/git/refs/#list-matching-references
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type GitListMatchingRefsResponseBody200 []struct {
+func (r *GitListMatchingRefsReq) Rel(link RelName, resp *GitListMatchingRefsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+GitListMatchingRefsResponseBody is a response body for GitListMatchingRefs
+
+https://developer.github.com/v3/git/refs/#list-matching-references
+*/
+type GitListMatchingRefsResponseBody []struct {
 	components.GitRef
 }
 
 /*
-GitUpdateRefReq builds requests for "git/update-ref"
+GitListMatchingRefsResponse is a response for GitListMatchingRefs
+
+https://developer.github.com/v3/git/refs/#list-matching-references
+*/
+type GitListMatchingRefsResponse struct {
+	response
+	request *GitListMatchingRefsReq
+	Data    *GitListMatchingRefsResponseBody
+}
+
+/*
+GitUpdateRef performs requests for "git/update-ref"
 
 Update a reference.
 
@@ -871,11 +1625,38 @@ Update a reference.
 
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
+func (c *Client) GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOption) (*GitUpdateRefResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &GitUpdateRefResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(GitUpdateRefResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+GitUpdateRefReq is request data for Client.GitUpdateRef
+
+https://developer.github.com/v3/git/refs/#update-a-reference
+*/
 type GitUpdateRefReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	Ref         string
 	RequestBody GitUpdateRefReqBody
+}
+
+func (r *GitUpdateRefReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *GitUpdateRefReq) urlPath() string {
@@ -901,15 +1682,40 @@ func (r *GitUpdateRefReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *GitUpdateRefReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitUpdateRefReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *GitUpdateRefReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *GitUpdateRefReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *GitUpdateRefReq) Rel(link RelName, resp *GitUpdateRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 GitUpdateRefReqBody is a request body for git/update-ref
 
-API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
+https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type GitUpdateRefReqBody struct {
 
@@ -925,10 +1731,21 @@ type GitUpdateRefReqBody struct {
 }
 
 /*
-GitUpdateRefResponseBody200 is a response body for git/update-ref
+GitUpdateRefResponseBody is a response body for GitUpdateRef
 
-API documentation: https://developer.github.com/v3/git/refs/#update-a-reference
+https://developer.github.com/v3/git/refs/#update-a-reference
 */
-type GitUpdateRefResponseBody200 struct {
+type GitUpdateRefResponseBody struct {
 	components.GitRef
+}
+
+/*
+GitUpdateRefResponse is a response for GitUpdateRef
+
+https://developer.github.com/v3/git/refs/#update-a-reference
+*/
+type GitUpdateRefResponse struct {
+	response
+	request *GitUpdateRefReq
+	Data    *GitUpdateRefResponseBody
 }

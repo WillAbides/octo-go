@@ -8,7 +8,7 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func componentRefStmt(schema *model.ParamSchema) *jen.Statement {
+func compSchemaRefStmt(schema *model.ParamSchema) *jen.Statement {
 	if !strings.HasPrefix(schema.Ref, "#/components/schemas/") {
 		return nil
 	}
@@ -17,7 +17,6 @@ func componentRefStmt(schema *model.ParamSchema) *jen.Statement {
 }
 
 func addComponentSchemas(file *jen.File, schemas map[string]*model.ParamSchema) {
-
 	names := make([]string, 0, len(schemas))
 	for name := range schemas {
 		names = append(names, name)

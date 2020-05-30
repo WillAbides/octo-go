@@ -2,10 +2,8 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"time"
 
@@ -16,11 +14,13 @@ import (
 func main() {
 	ctx := context.Background()
 
-	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
+	oauthClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	))
 
-	commentsReq := octo.IssuesListCommentsReq{
+	client := octo.NewClient(oauthClient)
+
+	req := &octo.IssuesListCommentsReq{
 		Owner:       "golang",
 		Repo:        "go",
 		IssueNumber: 1,
@@ -28,34 +28,18 @@ func main() {
 		PerPage:     octo.Int64(4),
 	}
 
-	req, err := commentsReq.HTTPRequest(ctx)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("these accounts commented on golang/go's first issue:")
-	for {
-		var resp *http.Response
-		resp, err = httpClient.Do(req)
+	fmt.Println("Comments from golang/go's first GitHub issue:")
+	ok := true
+	for ok {
+		resp, err := client.IssuesListComments(ctx, req)
 		if err != nil {
 			log.Fatal(err)
 		}
-		if resp.StatusCode == 200 {
-			var result octo.IssuesListCommentsResponseBody200
-			err = json.NewDecoder(resp.Body).Decode(&result)
-			if err != nil {
-				log.Fatal(err)
-			}
-			for _, r := range result {
-				fmt.Println(r.User.Login)
+		if resp.Data != nil {
+			for _, r := range *resp.Data {
+				fmt.Printf("%s commented at %s: %s\n", r.User.Login, r.CreatedAt, r.HtmlUrl)
 			}
 		}
-		req, err = octo.ResponseNextPageReq(ctx, req, resp)
-		if err != nil {
-			log.Fatal(err)
-		}
-		if req == nil {
-			break
-		}
+		ok = req.Rel(octo.RelNext, resp)
 	}
 }

@@ -38,7 +38,7 @@ func addRequestBody(file *jen.File, endpoint model.Endpoint) {
 	}
 
 	structName := reqBodyStructName(endpoint.ID)
-	file.Commentf("%s is a request body for %s\n\nAPI documentation: %s",
+	file.Commentf("%s is a request body for %s\n\n%s",
 		structName,
 		endpoint.ID,
 		endpoint.DocsURL,

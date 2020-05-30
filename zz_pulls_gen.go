@@ -12,7 +12,7 @@ import (
 )
 
 /*
-PullsCheckIfMergedReq builds requests for "pulls/check-if-merged"
+PullsCheckIfMerged performs requests for "pulls/check-if-merged"
 
 Get if a pull request has been merged.
 
@@ -20,10 +20,37 @@ Get if a pull request has been merged.
 
 https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
 */
+func (c *Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsCheckIfMergedResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.setBoolResult(&resp.Data)
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsCheckIfMergedReq is request data for Client.PullsCheckIfMerged
+
+https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+*/
 type PullsCheckIfMergedReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
+}
+
+func (r *PullsCheckIfMergedReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsCheckIfMergedReq) urlPath() string {
@@ -49,13 +76,49 @@ func (r *PullsCheckIfMergedReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsCheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCheckIfMergedReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *PullsCheckIfMergedReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *PullsCheckIfMergedReq) endpointType() endpointType {
+	return endpointTypeBoolean
+}
+
+// httpRequest creates an http request
+func (r *PullsCheckIfMergedReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsCreateReq builds requests for "pulls/create"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsCheckIfMergedReq) Rel(link RelName, resp *PullsCheckIfMergedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsCheckIfMergedResponse is a response for PullsCheckIfMerged
+
+https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+*/
+type PullsCheckIfMergedResponse struct {
+	response
+	request *PullsCheckIfMergedReq
+	Data    bool
+}
+
+/*
+PullsCreate performs requests for "pulls/create"
 
 Create a pull request.
 
@@ -63,7 +126,30 @@ Create a pull request.
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
+func (c *Client) PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption) (*PullsCreateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsCreateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsCreateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsCreateReq is request data for Client.PullsCreate
+
+https://developer.github.com/v3/pulls/#create-a-pull-request
+*/
 type PullsCreateReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody PullsCreateReqBody
@@ -77,6 +163,10 @@ type PullsCreateReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *PullsCreateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsCreateReq) urlPath() string {
@@ -105,15 +195,40 @@ func (r *PullsCreateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsCreateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsCreateReq) Rel(link RelName, resp *PullsCreateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsCreateReqBody is a request body for pulls/create
 
-API documentation: https://developer.github.com/v3/pulls/#create-a-pull-request
+https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 type PullsCreateReqBody struct {
 
@@ -153,16 +268,27 @@ type PullsCreateReqBody struct {
 }
 
 /*
-PullsCreateResponseBody201 is a response body for pulls/create
+PullsCreateResponseBody is a response body for PullsCreate
 
-API documentation: https://developer.github.com/v3/pulls/#create-a-pull-request
+https://developer.github.com/v3/pulls/#create-a-pull-request
 */
-type PullsCreateResponseBody201 struct {
+type PullsCreateResponseBody struct {
 	components.PullRequest
 }
 
 /*
-PullsCreateCommentReq builds requests for "pulls/create-comment"
+PullsCreateResponse is a response for PullsCreate
+
+https://developer.github.com/v3/pulls/#create-a-pull-request
+*/
+type PullsCreateResponse struct {
+	response
+	request *PullsCreateReq
+	Data    *PullsCreateResponseBody
+}
+
+/*
+PullsCreateComment performs requests for "pulls/create-comment"
 
 Create a comment.
 
@@ -170,7 +296,30 @@ Create a comment.
 
 https://developer.github.com/v3/pulls/comments/#create-a-comment
 */
+func (c *Client) PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsCreateCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsCreateCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsCreateCommentReq is request data for Client.PullsCreateComment
+
+https://developer.github.com/v3/pulls/comments/#create-a-comment
+*/
 type PullsCreateCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -182,6 +331,10 @@ type PullsCreateCommentReq struct {
 	must set this to true.
 	*/
 	ComfortFadePreview bool
+}
+
+func (r *PullsCreateCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsCreateCommentReq) urlPath() string {
@@ -210,15 +363,40 @@ func (r *PullsCreateCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateCommentReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateCommentReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsCreateCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsCreateCommentReq) Rel(link RelName, resp *PullsCreateCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsCreateCommentReqBody is a request body for pulls/create-comment
 
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-comment
 */
 type PullsCreateCommentReqBody struct {
 
@@ -284,16 +462,27 @@ type PullsCreateCommentReqBody struct {
 }
 
 /*
-PullsCreateCommentResponseBody201 is a response body for pulls/create-comment
+PullsCreateCommentResponseBody is a response body for PullsCreateComment
 
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-comment
 */
-type PullsCreateCommentResponseBody201 struct {
+type PullsCreateCommentResponseBody struct {
 	components.PullRequestReviewComment
 }
 
 /*
-PullsCreateReviewReq builds requests for "pulls/create-review"
+PullsCreateCommentResponse is a response for PullsCreateComment
+
+https://developer.github.com/v3/pulls/comments/#create-a-comment
+*/
+type PullsCreateCommentResponse struct {
+	response
+	request *PullsCreateCommentReq
+	Data    *PullsCreateCommentResponseBody
+}
+
+/*
+PullsCreateReview performs requests for "pulls/create-review"
 
 Create a pull request review.
 
@@ -301,11 +490,38 @@ Create a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
 */
+func (c *Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsCreateReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsCreateReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsCreateReviewReq is request data for Client.PullsCreateReview
+
+https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+*/
 type PullsCreateReviewReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsCreateReviewReqBody
+}
+
+func (r *PullsCreateReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsCreateReviewReq) urlPath() string {
@@ -331,9 +547,34 @@ func (r *PullsCreateReviewReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsCreateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsCreateReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsCreateReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsCreateReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsCreateReviewReq) Rel(link RelName, resp *PullsCreateReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // PullsCreateReviewReqBodyComments is a value for PullsCreateReviewReqBody's Comments field
@@ -356,7 +597,7 @@ type PullsCreateReviewReqBodyComments struct {
 /*
 PullsCreateReviewReqBody is a request body for pulls/create-review
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
 */
 type PullsCreateReviewReqBody struct {
 
@@ -391,16 +632,27 @@ type PullsCreateReviewReqBody struct {
 }
 
 /*
-PullsCreateReviewResponseBody200 is a response body for pulls/create-review
+PullsCreateReviewResponseBody is a response body for PullsCreateReview
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
 */
-type PullsCreateReviewResponseBody200 struct {
+type PullsCreateReviewResponseBody struct {
 	components.PullRequestReview
 }
 
 /*
-PullsCreateReviewCommentReplyReq builds requests for "pulls/create-review-comment-reply"
+PullsCreateReviewResponse is a response for PullsCreateReview
+
+https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+*/
+type PullsCreateReviewResponse struct {
+	response
+	request *PullsCreateReviewReq
+	Data    *PullsCreateReviewResponseBody
+}
+
+/*
+PullsCreateReviewCommentReply performs requests for "pulls/create-review-comment-reply"
 
 Create a review comment reply.
 
@@ -408,12 +660,39 @@ Create a review comment reply.
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
 */
+func (c *Client) PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsCreateReviewCommentReplyResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsCreateReviewCommentReplyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsCreateReviewCommentReplyReq is request data for Client.PullsCreateReviewCommentReply
+
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+*/
 type PullsCreateReviewCommentReplyReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	CommentId   int64
 	RequestBody PullsCreateReviewCommentReplyReqBody
+}
+
+func (r *PullsCreateReviewCommentReplyReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsCreateReviewCommentReplyReq) urlPath() string {
@@ -439,15 +718,40 @@ func (r *PullsCreateReviewCommentReplyReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsCreateReviewCommentReplyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateReviewCommentReplyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateReviewCommentReplyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateReviewCommentReplyReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsCreateReviewCommentReplyReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsCreateReviewCommentReplyReq) Rel(link RelName, resp *PullsCreateReviewCommentReplyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsCreateReviewCommentReplyReqBody is a request body for pulls/create-review-comment-reply
 
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
 */
 type PullsCreateReviewCommentReplyReqBody struct {
 
@@ -456,16 +760,27 @@ type PullsCreateReviewCommentReplyReqBody struct {
 }
 
 /*
-PullsCreateReviewCommentReplyResponseBody201 is a response body for pulls/create-review-comment-reply
+PullsCreateReviewCommentReplyResponseBody is a response body for PullsCreateReviewCommentReply
 
-API documentation: https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
 */
-type PullsCreateReviewCommentReplyResponseBody201 struct {
+type PullsCreateReviewCommentReplyResponseBody struct {
 	components.PullRequestReviewComment2
 }
 
 /*
-PullsCreateReviewRequestReq builds requests for "pulls/create-review-request"
+PullsCreateReviewCommentReplyResponse is a response for PullsCreateReviewCommentReply
+
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+*/
+type PullsCreateReviewCommentReplyResponse struct {
+	response
+	request *PullsCreateReviewCommentReplyReq
+	Data    *PullsCreateReviewCommentReplyResponseBody
+}
+
+/*
+PullsCreateReviewRequest performs requests for "pulls/create-review-request"
 
 Create a review request.
 
@@ -473,11 +788,38 @@ Create a review request.
 
 https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
 */
+func (c *Client) PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsCreateReviewRequestResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsCreateReviewRequestResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsCreateReviewRequestReq is request data for Client.PullsCreateReviewRequest
+
+https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+*/
 type PullsCreateReviewRequestReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsCreateReviewRequestReqBody
+}
+
+func (r *PullsCreateReviewRequestReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsCreateReviewRequestReq) urlPath() string {
@@ -503,15 +845,40 @@ func (r *PullsCreateReviewRequestReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsCreateReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateReviewRequestReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateReviewRequestReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsCreateReviewRequestReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsCreateReviewRequestReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsCreateReviewRequestReq) Rel(link RelName, resp *PullsCreateReviewRequestResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsCreateReviewRequestReqBody is a request body for pulls/create-review-request
 
-API documentation: https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
 */
 type PullsCreateReviewRequestReqBody struct {
 
@@ -523,16 +890,27 @@ type PullsCreateReviewRequestReqBody struct {
 }
 
 /*
-PullsCreateReviewRequestResponseBody201 is a response body for pulls/create-review-request
+PullsCreateReviewRequestResponseBody is a response body for PullsCreateReviewRequest
 
-API documentation: https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
 */
-type PullsCreateReviewRequestResponseBody201 struct {
+type PullsCreateReviewRequestResponseBody struct {
 	components.PullRequestReviewRequest
 }
 
 /*
-PullsDeleteCommentReq builds requests for "pulls/delete-comment"
+PullsCreateReviewRequestResponse is a response for PullsCreateReviewRequest
+
+https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+*/
+type PullsCreateReviewRequestResponse struct {
+	response
+	request *PullsCreateReviewRequestReq
+	Data    *PullsCreateReviewRequestResponseBody
+}
+
+/*
+PullsDeleteComment performs requests for "pulls/delete-comment"
 
 Delete a comment.
 
@@ -540,10 +918,36 @@ Delete a comment.
 
 https://developer.github.com/v3/pulls/comments/#delete-a-comment
 */
+func (c *Client) PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsDeleteCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsDeleteCommentReq is request data for Client.PullsDeleteComment
+
+https://developer.github.com/v3/pulls/comments/#delete-a-comment
+*/
 type PullsDeleteCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
+}
+
+func (r *PullsDeleteCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsDeleteCommentReq) urlPath() string {
@@ -569,13 +973,48 @@ func (r *PullsDeleteCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsDeleteCommentReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *PullsDeleteCommentReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *PullsDeleteCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsDeleteCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsDeletePendingReviewReq builds requests for "pulls/delete-pending-review"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsDeleteCommentReq) Rel(link RelName, resp *PullsDeleteCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsDeleteCommentResponse is a response for PullsDeleteComment
+
+https://developer.github.com/v3/pulls/comments/#delete-a-comment
+*/
+type PullsDeleteCommentResponse struct {
+	response
+	request *PullsDeleteCommentReq
+}
+
+/*
+PullsDeletePendingReview performs requests for "pulls/delete-pending-review"
 
 Delete a pending review.
 
@@ -583,11 +1022,38 @@ Delete a pending review.
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
 */
+func (c *Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsDeletePendingReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsDeletePendingReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsDeletePendingReviewReq is request data for Client.PullsDeletePendingReview
+
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+*/
 type PullsDeletePendingReviewReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
 	ReviewId   int64
+}
+
+func (r *PullsDeletePendingReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsDeletePendingReviewReq) urlPath() string {
@@ -613,22 +1079,58 @@ func (r *PullsDeletePendingReviewReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsDeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsDeletePendingReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsDeletePendingReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsDeletePendingReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsDeletePendingReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsDeletePendingReviewResponseBody200 is a response body for pulls/delete-pending-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsDeletePendingReviewResponseBody200 struct {
+func (r *PullsDeletePendingReviewReq) Rel(link RelName, resp *PullsDeletePendingReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsDeletePendingReviewResponseBody is a response body for PullsDeletePendingReview
+
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+*/
+type PullsDeletePendingReviewResponseBody struct {
 	components.PullRequestReview
 }
 
 /*
-PullsDeleteReviewRequestReq builds requests for "pulls/delete-review-request"
+PullsDeletePendingReviewResponse is a response for PullsDeletePendingReview
+
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+*/
+type PullsDeletePendingReviewResponse struct {
+	response
+	request *PullsDeletePendingReviewReq
+	Data    *PullsDeletePendingReviewResponseBody
+}
+
+/*
+PullsDeleteReviewRequest performs requests for "pulls/delete-review-request"
 
 Delete a review request.
 
@@ -636,11 +1138,37 @@ Delete a review request.
 
 https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
 */
+func (c *Client) PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsDeleteReviewRequestResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsDeleteReviewRequestReq is request data for Client.PullsDeleteReviewRequest
+
+https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+*/
 type PullsDeleteReviewRequestReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsDeleteReviewRequestReqBody
+}
+
+func (r *PullsDeleteReviewRequestReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsDeleteReviewRequestReq) urlPath() string {
@@ -666,15 +1194,40 @@ func (r *PullsDeleteReviewRequestReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsDeleteReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsDeleteReviewRequestReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *PullsDeleteReviewRequestReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsDeleteReviewRequestReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsDeleteReviewRequestReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsDeleteReviewRequestReq) Rel(link RelName, resp *PullsDeleteReviewRequestResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsDeleteReviewRequestReqBody is a request body for pulls/delete-review-request
 
-API documentation: https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
 */
 type PullsDeleteReviewRequestReqBody struct {
 
@@ -686,7 +1239,17 @@ type PullsDeleteReviewRequestReqBody struct {
 }
 
 /*
-PullsDismissReviewReq builds requests for "pulls/dismiss-review"
+PullsDeleteReviewRequestResponse is a response for PullsDeleteReviewRequest
+
+https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+*/
+type PullsDeleteReviewRequestResponse struct {
+	response
+	request *PullsDeleteReviewRequestReq
+}
+
+/*
+PullsDismissReview performs requests for "pulls/dismiss-review"
 
 Dismiss a pull request review.
 
@@ -694,12 +1257,39 @@ Dismiss a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
 */
+func (c *Client) PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsDismissReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsDismissReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsDismissReviewReq is request data for Client.PullsDismissReview
+
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+*/
 type PullsDismissReviewReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	ReviewId    int64
 	RequestBody PullsDismissReviewReqBody
+}
+
+func (r *PullsDismissReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsDismissReviewReq) urlPath() string {
@@ -725,15 +1315,40 @@ func (r *PullsDismissReviewReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsDismissReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsDismissReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsDismissReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsDismissReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsDismissReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsDismissReviewReq) Rel(link RelName, resp *PullsDismissReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsDismissReviewReqBody is a request body for pulls/dismiss-review
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
 */
 type PullsDismissReviewReqBody struct {
 
@@ -742,16 +1357,27 @@ type PullsDismissReviewReqBody struct {
 }
 
 /*
-PullsDismissReviewResponseBody200 is a response body for pulls/dismiss-review
+PullsDismissReviewResponseBody is a response body for PullsDismissReview
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
 */
-type PullsDismissReviewResponseBody200 struct {
+type PullsDismissReviewResponseBody struct {
 	components.PullRequestReview
 }
 
 /*
-PullsGetReq builds requests for "pulls/get"
+PullsDismissReviewResponse is a response for PullsDismissReview
+
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+*/
+type PullsDismissReviewResponse struct {
+	response
+	request *PullsDismissReviewReq
+	Data    *PullsDismissReviewResponseBody
+}
+
+/*
+PullsGet performs requests for "pulls/get"
 
 Get a single pull request.
 
@@ -759,7 +1385,30 @@ Get a single pull request.
 
 https://developer.github.com/v3/pulls/#get-a-single-pull-request
 */
+func (c *Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsGetResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsGetResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsGetReq is request data for Client.PullsGet
+
+https://developer.github.com/v3/pulls/#get-a-single-pull-request
+*/
 type PullsGetReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -773,6 +1422,10 @@ type PullsGetReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *PullsGetReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsGetReq) urlPath() string {
@@ -801,22 +1454,58 @@ func (r *PullsGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsGetReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsGetResponseBody200 is a response body for pulls/get
-
-API documentation: https://developer.github.com/v3/pulls/#get-a-single-pull-request
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsGetResponseBody200 struct {
+func (r *PullsGetReq) Rel(link RelName, resp *PullsGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsGetResponseBody is a response body for PullsGet
+
+https://developer.github.com/v3/pulls/#get-a-single-pull-request
+*/
+type PullsGetResponseBody struct {
 	components.PullRequest
 }
 
 /*
-PullsGetCommentReq builds requests for "pulls/get-comment"
+PullsGetResponse is a response for PullsGet
+
+https://developer.github.com/v3/pulls/#get-a-single-pull-request
+*/
+type PullsGetResponse struct {
+	response
+	request *PullsGetReq
+	Data    *PullsGetResponseBody
+}
+
+/*
+PullsGetComment performs requests for "pulls/get-comment"
 
 Get a single comment.
 
@@ -824,7 +1513,30 @@ Get a single comment.
 
 https://developer.github.com/v3/pulls/comments/#get-a-single-comment
 */
+func (c *Client) PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsGetCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsGetCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsGetCommentReq is request data for Client.PullsGetComment
+
+https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+*/
 type PullsGetCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -846,6 +1558,10 @@ type PullsGetCommentReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *PullsGetCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsGetCommentReq) urlPath() string {
@@ -878,22 +1594,58 @@ func (r *PullsGetCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsGetCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsGetCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsGetCommentResponseBody200 is a response body for pulls/get-comment
-
-API documentation: https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsGetCommentResponseBody200 struct {
+func (r *PullsGetCommentReq) Rel(link RelName, resp *PullsGetCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsGetCommentResponseBody is a response body for PullsGetComment
+
+https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+*/
+type PullsGetCommentResponseBody struct {
 	components.PullRequestReviewComment
 }
 
 /*
-PullsGetCommentsForReviewReq builds requests for "pulls/get-comments-for-review"
+PullsGetCommentResponse is a response for PullsGetComment
+
+https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+*/
+type PullsGetCommentResponse struct {
+	response
+	request *PullsGetCommentReq
+	Data    *PullsGetCommentResponseBody
+}
+
+/*
+PullsGetCommentsForReview performs requests for "pulls/get-comments-for-review"
 
 Get comments for a single review.
 
@@ -901,7 +1653,30 @@ Get comments for a single review.
 
 https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
 */
+func (c *Client) PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsGetCommentsForReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsGetCommentsForReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsGetCommentsForReviewReq is request data for Client.PullsGetCommentsForReview
+
+https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+*/
 type PullsGetCommentsForReviewReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -912,6 +1687,10 @@ type PullsGetCommentsForReviewReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *PullsGetCommentsForReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsGetCommentsForReviewReq) urlPath() string {
@@ -943,22 +1722,58 @@ func (r *PullsGetCommentsForReviewReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsGetCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsGetCommentsForReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetCommentsForReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetCommentsForReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsGetCommentsForReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsGetCommentsForReviewResponseBody200 is a response body for pulls/get-comments-for-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsGetCommentsForReviewResponseBody200 []struct {
+func (r *PullsGetCommentsForReviewReq) Rel(link RelName, resp *PullsGetCommentsForReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsGetCommentsForReviewResponseBody is a response body for PullsGetCommentsForReview
+
+https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+*/
+type PullsGetCommentsForReviewResponseBody []struct {
 	components.LegacyReviewComment
 }
 
 /*
-PullsGetReviewReq builds requests for "pulls/get-review"
+PullsGetCommentsForReviewResponse is a response for PullsGetCommentsForReview
+
+https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+*/
+type PullsGetCommentsForReviewResponse struct {
+	response
+	request *PullsGetCommentsForReviewReq
+	Data    *PullsGetCommentsForReviewResponseBody
+}
+
+/*
+PullsGetReview performs requests for "pulls/get-review"
 
 Get a single review.
 
@@ -966,11 +1781,38 @@ Get a single review.
 
 https://developer.github.com/v3/pulls/reviews/#get-a-single-review
 */
+func (c *Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsGetReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsGetReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsGetReviewReq is request data for Client.PullsGetReview
+
+https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+*/
 type PullsGetReviewReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
 	ReviewId   int64
+}
+
+func (r *PullsGetReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsGetReviewReq) urlPath() string {
@@ -996,22 +1838,58 @@ func (r *PullsGetReviewReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsGetReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsGetReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsGetReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsGetReviewResponseBody200 is a response body for pulls/get-review
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsGetReviewResponseBody200 struct {
+func (r *PullsGetReviewReq) Rel(link RelName, resp *PullsGetReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsGetReviewResponseBody is a response body for PullsGetReview
+
+https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+*/
+type PullsGetReviewResponseBody struct {
 	components.PullRequestReview2
 }
 
 /*
-PullsListReq builds requests for "pulls/list"
+PullsGetReviewResponse is a response for PullsGetReview
+
+https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+*/
+type PullsGetReviewResponse struct {
+	response
+	request *PullsGetReviewReq
+	Data    *PullsGetReviewResponseBody
+}
+
+/*
+PullsList performs requests for "pulls/list"
 
 List pull requests.
 
@@ -1019,7 +1897,30 @@ List pull requests.
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
+func (c *Client) PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*PullsListResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListReq is request data for Client.PullsList
+
+https://developer.github.com/v3/pulls/#list-pull-requests
+*/
 type PullsListReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1064,6 +1965,10 @@ type PullsListReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *PullsListReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListReq) urlPath() string {
@@ -1113,22 +2018,58 @@ func (r *PullsListReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListResponseBody200 is a response body for pulls/list
-
-API documentation: https://developer.github.com/v3/pulls/#list-pull-requests
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListResponseBody200 []struct {
+func (r *PullsListReq) Rel(link RelName, resp *PullsListResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListResponseBody is a response body for PullsList
+
+https://developer.github.com/v3/pulls/#list-pull-requests
+*/
+type PullsListResponseBody []struct {
 	components.PullRequestSimple
 }
 
 /*
-PullsListCommentsReq builds requests for "pulls/list-comments"
+PullsListResponse is a response for PullsList
+
+https://developer.github.com/v3/pulls/#list-pull-requests
+*/
+type PullsListResponse struct {
+	response
+	request *PullsListReq
+	Data    *PullsListResponseBody
+}
+
+/*
+PullsListComments performs requests for "pulls/list-comments"
 
 List comments on a pull request.
 
@@ -1136,7 +2077,30 @@ List comments on a pull request.
 
 https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
 */
+func (c *Client) PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListCommentsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListCommentsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListCommentsReq is request data for Client.PullsListComments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+*/
 type PullsListCommentsReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1177,6 +2141,10 @@ type PullsListCommentsReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *PullsListCommentsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListCommentsReq) urlPath() string {
@@ -1224,22 +2192,58 @@ func (r *PullsListCommentsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListCommentsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListCommentsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListCommentsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListCommentsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListCommentsResponseBody200 is a response body for pulls/list-comments
-
-API documentation: https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListCommentsResponseBody200 []struct {
+func (r *PullsListCommentsReq) Rel(link RelName, resp *PullsListCommentsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListCommentsResponseBody is a response body for PullsListComments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+*/
+type PullsListCommentsResponseBody []struct {
 	components.PullRequestReviewComment
 }
 
 /*
-PullsListCommentsForRepoReq builds requests for "pulls/list-comments-for-repo"
+PullsListCommentsResponse is a response for PullsListComments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+*/
+type PullsListCommentsResponse struct {
+	response
+	request *PullsListCommentsReq
+	Data    *PullsListCommentsResponseBody
+}
+
+/*
+PullsListCommentsForRepo performs requests for "pulls/list-comments-for-repo"
 
 List comments in a repository.
 
@@ -1247,7 +2251,30 @@ List comments in a repository.
 
 https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
 */
+func (c *Client) PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListCommentsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListCommentsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListCommentsForRepoReq is request data for Client.PullsListCommentsForRepo
+
+https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+*/
 type PullsListCommentsForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1287,6 +2314,10 @@ type PullsListCommentsForRepoReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *PullsListCommentsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListCommentsForRepoReq) urlPath() string {
@@ -1334,22 +2365,58 @@ func (r *PullsListCommentsForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListCommentsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListCommentsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListCommentsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListCommentsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListCommentsForRepoResponseBody200 is a response body for pulls/list-comments-for-repo
-
-API documentation: https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListCommentsForRepoResponseBody200 []struct {
+func (r *PullsListCommentsForRepoReq) Rel(link RelName, resp *PullsListCommentsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListCommentsForRepoResponseBody is a response body for PullsListCommentsForRepo
+
+https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+*/
+type PullsListCommentsForRepoResponseBody []struct {
 	components.PullRequestReviewComment
 }
 
 /*
-PullsListCommitsReq builds requests for "pulls/list-commits"
+PullsListCommentsForRepoResponse is a response for PullsListCommentsForRepo
+
+https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+*/
+type PullsListCommentsForRepoResponse struct {
+	response
+	request *PullsListCommentsForRepoReq
+	Data    *PullsListCommentsForRepoResponseBody
+}
+
+/*
+PullsListCommits performs requests for "pulls/list-commits"
 
 List commits on a pull request.
 
@@ -1357,7 +2424,30 @@ List commits on a pull request.
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
+func (c *Client) PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...RequestOption) (*PullsListCommitsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListCommitsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListCommitsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListCommitsReq is request data for Client.PullsListCommits
+
+https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
+*/
 type PullsListCommitsReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1367,6 +2457,10 @@ type PullsListCommitsReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *PullsListCommitsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListCommitsReq) urlPath() string {
@@ -1398,22 +2492,58 @@ func (r *PullsListCommitsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListCommitsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListCommitsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListCommitsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListCommitsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListCommitsResponseBody200 is a response body for pulls/list-commits
-
-API documentation: https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListCommitsResponseBody200 []struct {
+func (r *PullsListCommitsReq) Rel(link RelName, resp *PullsListCommitsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListCommitsResponseBody is a response body for PullsListCommits
+
+https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
+*/
+type PullsListCommitsResponseBody []struct {
 	components.SimpleCommit
 }
 
 /*
-PullsListFilesReq builds requests for "pulls/list-files"
+PullsListCommitsResponse is a response for PullsListCommits
+
+https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
+*/
+type PullsListCommitsResponse struct {
+	response
+	request *PullsListCommitsReq
+	Data    *PullsListCommitsResponseBody
+}
+
+/*
+PullsListFiles performs requests for "pulls/list-files"
 
 List pull requests files.
 
@@ -1421,7 +2551,30 @@ List pull requests files.
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
+func (c *Client) PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestOption) (*PullsListFilesResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListFilesResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListFilesResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListFilesReq is request data for Client.PullsListFiles
+
+https://developer.github.com/v3/pulls/#list-pull-requests-files
+*/
 type PullsListFilesReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1431,6 +2584,10 @@ type PullsListFilesReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *PullsListFilesReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListFilesReq) urlPath() string {
@@ -1462,22 +2619,58 @@ func (r *PullsListFilesReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListFilesReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListFilesReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListFilesReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListFilesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListFilesResponseBody200 is a response body for pulls/list-files
-
-API documentation: https://developer.github.com/v3/pulls/#list-pull-requests-files
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListFilesResponseBody200 []struct {
+func (r *PullsListFilesReq) Rel(link RelName, resp *PullsListFilesResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListFilesResponseBody is a response body for PullsListFiles
+
+https://developer.github.com/v3/pulls/#list-pull-requests-files
+*/
+type PullsListFilesResponseBody []struct {
 	components.DiffEntry
 }
 
 /*
-PullsListReviewRequestsReq builds requests for "pulls/list-review-requests"
+PullsListFilesResponse is a response for PullsListFiles
+
+https://developer.github.com/v3/pulls/#list-pull-requests-files
+*/
+type PullsListFilesResponse struct {
+	response
+	request *PullsListFilesReq
+	Data    *PullsListFilesResponseBody
+}
+
+/*
+PullsListReviewRequests performs requests for "pulls/list-review-requests"
 
 List review requests.
 
@@ -1485,7 +2678,30 @@ List review requests.
 
 https://developer.github.com/v3/pulls/review_requests/#list-review-requests
 */
+func (c *Client) PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListReviewRequestsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListReviewRequestsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListReviewRequestsReq is request data for Client.PullsListReviewRequests
+
+https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+*/
 type PullsListReviewRequestsReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1495,6 +2711,10 @@ type PullsListReviewRequestsReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *PullsListReviewRequestsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListReviewRequestsReq) urlPath() string {
@@ -1526,22 +2746,58 @@ func (r *PullsListReviewRequestsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListReviewRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListReviewRequestsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewRequestsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewRequestsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListReviewRequestsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListReviewRequestsResponseBody200 is a response body for pulls/list-review-requests
-
-API documentation: https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListReviewRequestsResponseBody200 struct {
+func (r *PullsListReviewRequestsReq) Rel(link RelName, resp *PullsListReviewRequestsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListReviewRequestsResponseBody is a response body for PullsListReviewRequests
+
+https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+*/
+type PullsListReviewRequestsResponseBody struct {
 	components.SimplePullRequestReviewRequest
 }
 
 /*
-PullsListReviewsReq builds requests for "pulls/list-reviews"
+PullsListReviewRequestsResponse is a response for PullsListReviewRequests
+
+https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+*/
+type PullsListReviewRequestsResponse struct {
+	response
+	request *PullsListReviewRequestsReq
+	Data    *PullsListReviewRequestsResponseBody
+}
+
+/*
+PullsListReviews performs requests for "pulls/list-reviews"
 
 List reviews on a pull request.
 
@@ -1549,7 +2805,30 @@ List reviews on a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
 */
+func (c *Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsListReviewsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsListReviewsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListReviewsReq is request data for Client.PullsListReviews
+
+https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+*/
 type PullsListReviewsReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1559,6 +2838,10 @@ type PullsListReviewsReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *PullsListReviewsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsListReviewsReq) urlPath() string {
@@ -1590,22 +2873,58 @@ func (r *PullsListReviewsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *PullsListReviewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListReviewsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsListReviewsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-PullsListReviewsResponseBody200 is a response body for pulls/list-reviews
-
-API documentation: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type PullsListReviewsResponseBody200 []struct {
+func (r *PullsListReviewsReq) Rel(link RelName, resp *PullsListReviewsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+PullsListReviewsResponseBody is a response body for PullsListReviews
+
+https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+*/
+type PullsListReviewsResponseBody []struct {
 	components.PullRequestReview2
 }
 
 /*
-PullsMergeReq builds requests for "pulls/merge"
+PullsListReviewsResponse is a response for PullsListReviews
+
+https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+*/
+type PullsListReviewsResponse struct {
+	response
+	request *PullsListReviewsReq
+	Data    *PullsListReviewsResponseBody
+}
+
+/*
+PullsMerge performs requests for "pulls/merge"
 
 Merge a pull request (Merge Button).
 
@@ -1613,11 +2932,38 @@ Merge a pull request (Merge Button).
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
 */
+func (c *Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsMergeResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsMergeResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsMergeReq is request data for Client.PullsMerge
+
+https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
 type PullsMergeReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsMergeReqBody
+}
+
+func (r *PullsMergeReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsMergeReq) urlPath() string {
@@ -1643,15 +2989,40 @@ func (r *PullsMergeReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsMergeReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsMergeReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsMergeReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsMergeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsMergeReq) Rel(link RelName, resp *PullsMergeResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsMergeReqBody is a request body for pulls/merge
 
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
 */
 type PullsMergeReqBody struct {
 
@@ -1672,16 +3043,27 @@ type PullsMergeReqBody struct {
 }
 
 /*
-PullsMergeResponseBody200 is a response body for pulls/merge
+PullsMergeResponseBody is a response body for PullsMerge
 
-API documentation: https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
 */
-type PullsMergeResponseBody200 struct {
+type PullsMergeResponseBody struct {
 	components.PullRequestMergeResult
 }
 
 /*
-PullsSubmitReviewReq builds requests for "pulls/submit-review"
+PullsMergeResponse is a response for PullsMerge
+
+https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+type PullsMergeResponse struct {
+	response
+	request *PullsMergeReq
+	Data    *PullsMergeResponseBody
+}
+
+/*
+PullsSubmitReview performs requests for "pulls/submit-review"
 
 Submit a pull request review.
 
@@ -1689,12 +3071,39 @@ Submit a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
 */
+func (c *Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsSubmitReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsSubmitReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsSubmitReviewReq is request data for Client.PullsSubmitReview
+
+https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+*/
 type PullsSubmitReviewReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	ReviewId    int64
 	RequestBody PullsSubmitReviewReqBody
+}
+
+func (r *PullsSubmitReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsSubmitReviewReq) urlPath() string {
@@ -1720,15 +3129,40 @@ func (r *PullsSubmitReviewReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsSubmitReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsSubmitReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsSubmitReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsSubmitReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsSubmitReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsSubmitReviewReq) Rel(link RelName, resp *PullsSubmitReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsSubmitReviewReqBody is a request body for pulls/submit-review
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
 */
 type PullsSubmitReviewReqBody struct {
 
@@ -1746,16 +3180,27 @@ type PullsSubmitReviewReqBody struct {
 }
 
 /*
-PullsSubmitReviewResponseBody200 is a response body for pulls/submit-review
+PullsSubmitReviewResponseBody is a response body for PullsSubmitReview
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
 */
-type PullsSubmitReviewResponseBody200 struct {
+type PullsSubmitReviewResponseBody struct {
 	components.PullRequestReview2
 }
 
 /*
-PullsUpdateReq builds requests for "pulls/update"
+PullsSubmitReviewResponse is a response for PullsSubmitReview
+
+https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+*/
+type PullsSubmitReviewResponse struct {
+	response
+	request *PullsSubmitReviewReq
+	Data    *PullsSubmitReviewResponseBody
+}
+
+/*
+PullsUpdate performs requests for "pulls/update"
 
 Update a pull request.
 
@@ -1763,7 +3208,30 @@ Update a pull request.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
+func (c *Client) PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption) (*PullsUpdateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsUpdateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsUpdateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsUpdateReq is request data for Client.PullsUpdate
+
+https://developer.github.com/v3/pulls/#update-a-pull-request
+*/
 type PullsUpdateReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -1778,6 +3246,10 @@ type PullsUpdateReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *PullsUpdateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsUpdateReq) urlPath() string {
@@ -1806,15 +3278,40 @@ func (r *PullsUpdateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsUpdateReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsUpdateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsUpdateReq) Rel(link RelName, resp *PullsUpdateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsUpdateReqBody is a request body for pulls/update
 
-API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request
+https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 type PullsUpdateReqBody struct {
 
@@ -1843,16 +3340,27 @@ type PullsUpdateReqBody struct {
 }
 
 /*
-PullsUpdateResponseBody200 is a response body for pulls/update
+PullsUpdateResponseBody is a response body for PullsUpdate
 
-API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request
+https://developer.github.com/v3/pulls/#update-a-pull-request
 */
-type PullsUpdateResponseBody200 struct {
+type PullsUpdateResponseBody struct {
 	components.PullRequest
 }
 
 /*
-PullsUpdateBranchReq builds requests for "pulls/update-branch"
+PullsUpdateResponse is a response for PullsUpdate
+
+https://developer.github.com/v3/pulls/#update-a-pull-request
+*/
+type PullsUpdateResponse struct {
+	response
+	request *PullsUpdateReq
+	Data    *PullsUpdateResponseBody
+}
+
+/*
+PullsUpdateBranch performs requests for "pulls/update-branch"
 
 Update a pull request branch.
 
@@ -1860,7 +3368,30 @@ Update a pull request branch.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
+func (c *Client) PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...RequestOption) (*PullsUpdateBranchResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsUpdateBranchResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsUpdateBranchResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsUpdateBranchReq is request data for Client.PullsUpdateBranch
+
+https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+*/
 type PullsUpdateBranchReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -1872,6 +3403,10 @@ type PullsUpdateBranchReq struct {
 	preview period, you must set this to true.
 	*/
 	LydianPreview bool
+}
+
+func (r *PullsUpdateBranchReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsUpdateBranchReq) urlPath() string {
@@ -1903,15 +3438,40 @@ func (r *PullsUpdateBranchReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsUpdateBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsUpdateBranchReq) dataStatuses() []int {
+	return []int{202}
+}
+
+func (r *PullsUpdateBranchReq) validStatuses() []int {
+	return []int{202}
+}
+
+func (r *PullsUpdateBranchReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsUpdateBranchReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsUpdateBranchReq) Rel(link RelName, resp *PullsUpdateBranchResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsUpdateBranchReqBody is a request body for pulls/update-branch
 
-API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 type PullsUpdateBranchReqBody struct {
 
@@ -1928,17 +3488,28 @@ type PullsUpdateBranchReqBody struct {
 }
 
 /*
-PullsUpdateBranchResponseBody202 is a response body for pulls/update-branch
+PullsUpdateBranchResponseBody is a response body for PullsUpdateBranch
 
-API documentation: https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
-type PullsUpdateBranchResponseBody202 struct {
+type PullsUpdateBranchResponseBody struct {
 	Message string `json:"message,omitempty"`
 	Url     string `json:"url,omitempty"`
 }
 
 /*
-PullsUpdateCommentReq builds requests for "pulls/update-comment"
+PullsUpdateBranchResponse is a response for PullsUpdateBranch
+
+https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+*/
+type PullsUpdateBranchResponse struct {
+	response
+	request *PullsUpdateBranchReq
+	Data    *PullsUpdateBranchResponseBody
+}
+
+/*
+PullsUpdateComment performs requests for "pulls/update-comment"
 
 Edit a comment.
 
@@ -1946,7 +3517,30 @@ Edit a comment.
 
 https://developer.github.com/v3/pulls/comments/#edit-a-comment
 */
+func (c *Client) PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsUpdateCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsUpdateCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsUpdateCommentReq is request data for Client.PullsUpdateComment
+
+https://developer.github.com/v3/pulls/comments/#edit-a-comment
+*/
 type PullsUpdateCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -1958,6 +3552,10 @@ type PullsUpdateCommentReq struct {
 	must set this to true.
 	*/
 	ComfortFadePreview bool
+}
+
+func (r *PullsUpdateCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsUpdateCommentReq) urlPath() string {
@@ -1986,15 +3584,40 @@ func (r *PullsUpdateCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsUpdateCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsUpdateCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsUpdateCommentReq) Rel(link RelName, resp *PullsUpdateCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsUpdateCommentReqBody is a request body for pulls/update-comment
 
-API documentation: https://developer.github.com/v3/pulls/comments/#edit-a-comment
+https://developer.github.com/v3/pulls/comments/#edit-a-comment
 */
 type PullsUpdateCommentReqBody struct {
 
@@ -2003,16 +3626,27 @@ type PullsUpdateCommentReqBody struct {
 }
 
 /*
-PullsUpdateCommentResponseBody200 is a response body for pulls/update-comment
+PullsUpdateCommentResponseBody is a response body for PullsUpdateComment
 
-API documentation: https://developer.github.com/v3/pulls/comments/#edit-a-comment
+https://developer.github.com/v3/pulls/comments/#edit-a-comment
 */
-type PullsUpdateCommentResponseBody200 struct {
+type PullsUpdateCommentResponseBody struct {
 	components.PullRequestReviewComment
 }
 
 /*
-PullsUpdateReviewReq builds requests for "pulls/update-review"
+PullsUpdateCommentResponse is a response for PullsUpdateComment
+
+https://developer.github.com/v3/pulls/comments/#edit-a-comment
+*/
+type PullsUpdateCommentResponse struct {
+	response
+	request *PullsUpdateCommentReq
+	Data    *PullsUpdateCommentResponseBody
+}
+
+/*
+PullsUpdateReview performs requests for "pulls/update-review"
 
 Update a pull request review.
 
@@ -2020,12 +3654,39 @@ Update a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
 */
+func (c *Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &PullsUpdateReviewResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(PullsUpdateReviewResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsUpdateReviewReq is request data for Client.PullsUpdateReview
+
+https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+*/
 type PullsUpdateReviewReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	ReviewId    int64
 	RequestBody PullsUpdateReviewReqBody
+}
+
+func (r *PullsUpdateReviewReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *PullsUpdateReviewReq) urlPath() string {
@@ -2051,15 +3712,40 @@ func (r *PullsUpdateReviewReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *PullsUpdateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsUpdateReviewReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateReviewReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateReviewReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *PullsUpdateReviewReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsUpdateReviewReq) Rel(link RelName, resp *PullsUpdateReviewResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 PullsUpdateReviewReqBody is a request body for pulls/update-review
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
 */
 type PullsUpdateReviewReqBody struct {
 
@@ -2068,10 +3754,21 @@ type PullsUpdateReviewReqBody struct {
 }
 
 /*
-PullsUpdateReviewResponseBody200 is a response body for pulls/update-review
+PullsUpdateReviewResponseBody is a response body for PullsUpdateReview
 
-API documentation: https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
 */
-type PullsUpdateReviewResponseBody200 struct {
+type PullsUpdateReviewResponseBody struct {
 	components.PullRequestReview
+}
+
+/*
+PullsUpdateReviewResponse is a response for PullsUpdateReview
+
+https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+*/
+type PullsUpdateReviewResponse struct {
+	response
+	request *PullsUpdateReviewReq
+	Data    *PullsUpdateReviewResponseBody
 }

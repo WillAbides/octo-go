@@ -12,7 +12,7 @@ import (
 )
 
 /*
-ProjectsAddCollaboratorReq builds requests for "projects/add-collaborator"
+ProjectsAddCollaborator performs requests for "projects/add-collaborator"
 
 Add user as a collaborator.
 
@@ -20,7 +20,29 @@ Add user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
+func (c *Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsAddCollaboratorResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsAddCollaboratorReq is request data for Client.ProjectsAddCollaborator
+
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+*/
 type ProjectsAddCollaboratorReq struct {
+	pgURL       string
 	ProjectId   int64
 	Username    string
 	RequestBody ProjectsAddCollaboratorReqBody
@@ -33,6 +55,10 @@ type ProjectsAddCollaboratorReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsAddCollaboratorReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsAddCollaboratorReq) urlPath() string {
@@ -64,15 +90,40 @@ func (r *ProjectsAddCollaboratorReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsAddCollaboratorReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ProjectsAddCollaboratorReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsAddCollaboratorReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsAddCollaboratorReq) Rel(link RelName, resp *ProjectsAddCollaboratorResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsAddCollaboratorReqBody is a request body for projects/add-collaborator
 
-API documentation: https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
 type ProjectsAddCollaboratorReqBody struct {
 
@@ -89,7 +140,17 @@ type ProjectsAddCollaboratorReqBody struct {
 }
 
 /*
-ProjectsCreateCardReq builds requests for "projects/create-card"
+ProjectsAddCollaboratorResponse is a response for ProjectsAddCollaborator
+
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+*/
+type ProjectsAddCollaboratorResponse struct {
+	response
+	request *ProjectsAddCollaboratorReq
+}
+
+/*
+ProjectsCreateCard performs requests for "projects/create-card"
 
 Create a project card.
 
@@ -97,7 +158,30 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
+func (c *Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsCreateCardResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsCreateCardResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsCreateCardReq is request data for Client.ProjectsCreateCard
+
+https://developer.github.com/v3/projects/cards/#create-a-project-card
+*/
 type ProjectsCreateCardReq struct {
+	pgURL       string
 	ColumnId    int64
 	RequestBody ProjectsCreateCardReqBody
 
@@ -109,6 +193,10 @@ type ProjectsCreateCardReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsCreateCardReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsCreateCardReq) urlPath() string {
@@ -140,15 +228,40 @@ func (r *ProjectsCreateCardReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsCreateCardReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateCardReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateCardReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsCreateCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsCreateCardReq) Rel(link RelName, resp *ProjectsCreateCardResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsCreateCardReqBody is a request body for projects/create-card
 
-API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
+https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardReqBody struct {
 
@@ -178,16 +291,27 @@ type ProjectsCreateCardReqBody struct {
 }
 
 /*
-ProjectsCreateCardResponseBody201 is a response body for projects/create-card
+ProjectsCreateCardResponseBody is a response body for ProjectsCreateCard
 
-API documentation: https://developer.github.com/v3/projects/cards/#create-a-project-card
+https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-type ProjectsCreateCardResponseBody201 struct {
+type ProjectsCreateCardResponseBody struct {
 	components.ProjectCard
 }
 
 /*
-ProjectsCreateColumnReq builds requests for "projects/create-column"
+ProjectsCreateCardResponse is a response for ProjectsCreateCard
+
+https://developer.github.com/v3/projects/cards/#create-a-project-card
+*/
+type ProjectsCreateCardResponse struct {
+	response
+	request *ProjectsCreateCardReq
+	Data    *ProjectsCreateCardResponseBody
+}
+
+/*
+ProjectsCreateColumn performs requests for "projects/create-column"
 
 Create a project column.
 
@@ -195,7 +319,29 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
+func (c *Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsCreateColumnResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsCreateColumnReq is request data for Client.ProjectsCreateColumn
+
+https://developer.github.com/v3/projects/columns/#create-a-project-column
+*/
 type ProjectsCreateColumnReq struct {
+	pgURL       string
 	ProjectId   int64
 	RequestBody ProjectsCreateColumnReqBody
 
@@ -207,6 +353,10 @@ type ProjectsCreateColumnReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsCreateColumnReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsCreateColumnReq) urlPath() string {
@@ -238,15 +388,40 @@ func (r *ProjectsCreateColumnReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsCreateColumnReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsCreateColumnReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsCreateColumnReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsCreateColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsCreateColumnReq) Rel(link RelName, resp *ProjectsCreateColumnResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsCreateColumnReqBody is a request body for projects/create-column
 
-API documentation: https://developer.github.com/v3/projects/columns/#create-a-project-column
+https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnReqBody struct {
 
@@ -255,7 +430,17 @@ type ProjectsCreateColumnReqBody struct {
 }
 
 /*
-ProjectsCreateForAuthenticatedUserReq builds requests for "projects/create-for-authenticated-user"
+ProjectsCreateColumnResponse is a response for ProjectsCreateColumn
+
+https://developer.github.com/v3/projects/columns/#create-a-project-column
+*/
+type ProjectsCreateColumnResponse struct {
+	response
+	request *ProjectsCreateColumnReq
+}
+
+/*
+ProjectsCreateForAuthenticatedUser performs requests for "projects/create-for-authenticated-user"
 
 Create a user project.
 
@@ -263,7 +448,30 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
+func (c *Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsCreateForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsCreateForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsCreateForAuthenticatedUserReq is request data for Client.ProjectsCreateForAuthenticatedUser
+
+https://developer.github.com/v3/projects/#create-a-user-project
+*/
 type ProjectsCreateForAuthenticatedUserReq struct {
+	pgURL       string
 	RequestBody ProjectsCreateForAuthenticatedUserReqBody
 
 	/*
@@ -274,6 +482,10 @@ type ProjectsCreateForAuthenticatedUserReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsCreateForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsCreateForAuthenticatedUserReq) urlPath() string {
@@ -305,15 +517,40 @@ func (r *ProjectsCreateForAuthenticatedUserReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsCreateForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsCreateForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsCreateForAuthenticatedUserReq) Rel(link RelName, resp *ProjectsCreateForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsCreateForAuthenticatedUserReqBody is a request body for projects/create-for-authenticated-user
 
-API documentation: https://developer.github.com/v3/projects/#create-a-user-project
+https://developer.github.com/v3/projects/#create-a-user-project
 */
 type ProjectsCreateForAuthenticatedUserReqBody struct {
 
@@ -325,16 +562,27 @@ type ProjectsCreateForAuthenticatedUserReqBody struct {
 }
 
 /*
-ProjectsCreateForAuthenticatedUserResponseBody201 is a response body for projects/create-for-authenticated-user
+ProjectsCreateForAuthenticatedUserResponseBody is a response body for ProjectsCreateForAuthenticatedUser
 
-API documentation: https://developer.github.com/v3/projects/#create-a-user-project
+https://developer.github.com/v3/projects/#create-a-user-project
 */
-type ProjectsCreateForAuthenticatedUserResponseBody201 struct {
+type ProjectsCreateForAuthenticatedUserResponseBody struct {
 	components.Project
 }
 
 /*
-ProjectsCreateForOrgReq builds requests for "projects/create-for-org"
+ProjectsCreateForAuthenticatedUserResponse is a response for ProjectsCreateForAuthenticatedUser
+
+https://developer.github.com/v3/projects/#create-a-user-project
+*/
+type ProjectsCreateForAuthenticatedUserResponse struct {
+	response
+	request *ProjectsCreateForAuthenticatedUserReq
+	Data    *ProjectsCreateForAuthenticatedUserResponseBody
+}
+
+/*
+ProjectsCreateForOrg performs requests for "projects/create-for-org"
 
 Create an organization project.
 
@@ -342,7 +590,30 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
+func (c *Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsCreateForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsCreateForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsCreateForOrgReq is request data for Client.ProjectsCreateForOrg
+
+https://developer.github.com/v3/projects/#create-an-organization-project
+*/
 type ProjectsCreateForOrgReq struct {
+	pgURL       string
 	Org         string
 	RequestBody ProjectsCreateForOrgReqBody
 
@@ -354,6 +625,10 @@ type ProjectsCreateForOrgReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsCreateForOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsCreateForOrgReq) urlPath() string {
@@ -385,15 +660,40 @@ func (r *ProjectsCreateForOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsCreateForOrgReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateForOrgReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsCreateForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsCreateForOrgReq) Rel(link RelName, resp *ProjectsCreateForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsCreateForOrgReqBody is a request body for projects/create-for-org
 
-API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
+https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgReqBody struct {
 
@@ -405,16 +705,27 @@ type ProjectsCreateForOrgReqBody struct {
 }
 
 /*
-ProjectsCreateForOrgResponseBody201 is a response body for projects/create-for-org
+ProjectsCreateForOrgResponseBody is a response body for ProjectsCreateForOrg
 
-API documentation: https://developer.github.com/v3/projects/#create-an-organization-project
+https://developer.github.com/v3/projects/#create-an-organization-project
 */
-type ProjectsCreateForOrgResponseBody201 struct {
+type ProjectsCreateForOrgResponseBody struct {
 	components.Project
 }
 
 /*
-ProjectsCreateForRepoReq builds requests for "projects/create-for-repo"
+ProjectsCreateForOrgResponse is a response for ProjectsCreateForOrg
+
+https://developer.github.com/v3/projects/#create-an-organization-project
+*/
+type ProjectsCreateForOrgResponse struct {
+	response
+	request *ProjectsCreateForOrgReq
+	Data    *ProjectsCreateForOrgResponseBody
+}
+
+/*
+ProjectsCreateForRepo performs requests for "projects/create-for-repo"
 
 Create a repository project.
 
@@ -422,7 +733,30 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
+func (c *Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsCreateForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsCreateForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsCreateForRepoReq is request data for Client.ProjectsCreateForRepo
+
+https://developer.github.com/v3/projects/#create-a-repository-project
+*/
 type ProjectsCreateForRepoReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody ProjectsCreateForRepoReqBody
@@ -435,6 +769,10 @@ type ProjectsCreateForRepoReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsCreateForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsCreateForRepoReq) urlPath() string {
@@ -466,15 +804,40 @@ func (r *ProjectsCreateForRepoReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsCreateForRepoReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateForRepoReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsCreateForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsCreateForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsCreateForRepoReq) Rel(link RelName, resp *ProjectsCreateForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsCreateForRepoReqBody is a request body for projects/create-for-repo
 
-API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
+https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoReqBody struct {
 
@@ -486,16 +849,27 @@ type ProjectsCreateForRepoReqBody struct {
 }
 
 /*
-ProjectsCreateForRepoResponseBody201 is a response body for projects/create-for-repo
+ProjectsCreateForRepoResponseBody is a response body for ProjectsCreateForRepo
 
-API documentation: https://developer.github.com/v3/projects/#create-a-repository-project
+https://developer.github.com/v3/projects/#create-a-repository-project
 */
-type ProjectsCreateForRepoResponseBody201 struct {
+type ProjectsCreateForRepoResponseBody struct {
 	components.Project
 }
 
 /*
-ProjectsDeleteReq builds requests for "projects/delete"
+ProjectsCreateForRepoResponse is a response for ProjectsCreateForRepo
+
+https://developer.github.com/v3/projects/#create-a-repository-project
+*/
+type ProjectsCreateForRepoResponse struct {
+	response
+	request *ProjectsCreateForRepoReq
+	Data    *ProjectsCreateForRepoResponseBody
+}
+
+/*
+ProjectsDelete performs requests for "projects/delete"
 
 Delete a project.
 
@@ -503,7 +877,29 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
+func (c *Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsDeleteResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsDeleteReq is request data for Client.ProjectsDelete
+
+https://developer.github.com/v3/projects/#delete-a-project
+*/
 type ProjectsDeleteReq struct {
+	pgURL     string
 	ProjectId int64
 
 	/*
@@ -514,6 +910,10 @@ type ProjectsDeleteReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsDeleteReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsDeleteReq) urlPath() string {
@@ -545,13 +945,48 @@ func (r *ProjectsDeleteReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsDeleteReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsDeleteReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsDeleteReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsDeleteReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsDeleteCardReq builds requests for "projects/delete-card"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsDeleteReq) Rel(link RelName, resp *ProjectsDeleteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsDeleteResponse is a response for ProjectsDelete
+
+https://developer.github.com/v3/projects/#delete-a-project
+*/
+type ProjectsDeleteResponse struct {
+	response
+	request *ProjectsDeleteReq
+}
+
+/*
+ProjectsDeleteCard performs requests for "projects/delete-card"
 
 Delete a project card.
 
@@ -559,7 +994,29 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
+func (c *Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsDeleteCardResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsDeleteCardReq is request data for Client.ProjectsDeleteCard
+
+https://developer.github.com/v3/projects/cards/#delete-a-project-card
+*/
 type ProjectsDeleteCardReq struct {
+	pgURL  string
 	CardId int64
 
 	/*
@@ -570,6 +1027,10 @@ type ProjectsDeleteCardReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsDeleteCardReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsDeleteCardReq) urlPath() string {
@@ -601,13 +1062,48 @@ func (r *ProjectsDeleteCardReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsDeleteCardReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsDeleteCardReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ProjectsDeleteCardReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsDeleteCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsDeleteColumnReq builds requests for "projects/delete-column"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsDeleteCardReq) Rel(link RelName, resp *ProjectsDeleteCardResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsDeleteCardResponse is a response for ProjectsDeleteCard
+
+https://developer.github.com/v3/projects/cards/#delete-a-project-card
+*/
+type ProjectsDeleteCardResponse struct {
+	response
+	request *ProjectsDeleteCardReq
+}
+
+/*
+ProjectsDeleteColumn performs requests for "projects/delete-column"
 
 Delete a project column.
 
@@ -615,7 +1111,29 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
+func (c *Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsDeleteColumnResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsDeleteColumnReq is request data for Client.ProjectsDeleteColumn
+
+https://developer.github.com/v3/projects/columns/#delete-a-project-column
+*/
 type ProjectsDeleteColumnReq struct {
+	pgURL    string
 	ColumnId int64
 
 	/*
@@ -626,6 +1144,10 @@ type ProjectsDeleteColumnReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsDeleteColumnReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsDeleteColumnReq) urlPath() string {
@@ -657,13 +1179,48 @@ func (r *ProjectsDeleteColumnReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsDeleteColumnReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsDeleteColumnReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ProjectsDeleteColumnReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsDeleteColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsGetReq builds requests for "projects/get"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsDeleteColumnReq) Rel(link RelName, resp *ProjectsDeleteColumnResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsDeleteColumnResponse is a response for ProjectsDeleteColumn
+
+https://developer.github.com/v3/projects/columns/#delete-a-project-column
+*/
+type ProjectsDeleteColumnResponse struct {
+	response
+	request *ProjectsDeleteColumnReq
+}
+
+/*
+ProjectsGet performs requests for "projects/get"
 
 Get a project.
 
@@ -671,7 +1228,30 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
+func (c *Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsGetResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsGetResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsGetReq is request data for Client.ProjectsGet
+
+https://developer.github.com/v3/projects/#get-a-project
+*/
 type ProjectsGetReq struct {
+	pgURL     string
 	ProjectId int64
 
 	/*
@@ -682,6 +1262,10 @@ type ProjectsGetReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsGetReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsGetReq) urlPath() string {
@@ -713,22 +1297,58 @@ func (r *ProjectsGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsGetReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsGetResponseBody200 is a response body for projects/get
-
-API documentation: https://developer.github.com/v3/projects/#get-a-project
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsGetResponseBody200 struct {
+func (r *ProjectsGetReq) Rel(link RelName, resp *ProjectsGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsGetResponseBody is a response body for ProjectsGet
+
+https://developer.github.com/v3/projects/#get-a-project
+*/
+type ProjectsGetResponseBody struct {
 	components.Project
 }
 
 /*
-ProjectsGetCardReq builds requests for "projects/get-card"
+ProjectsGetResponse is a response for ProjectsGet
+
+https://developer.github.com/v3/projects/#get-a-project
+*/
+type ProjectsGetResponse struct {
+	response
+	request *ProjectsGetReq
+	Data    *ProjectsGetResponseBody
+}
+
+/*
+ProjectsGetCard performs requests for "projects/get-card"
 
 Get a project card.
 
@@ -736,7 +1356,29 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
+func (c *Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsGetCardResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsGetCardReq is request data for Client.ProjectsGetCard
+
+https://developer.github.com/v3/projects/cards/#get-a-project-card
+*/
 type ProjectsGetCardReq struct {
+	pgURL  string
 	CardId int64
 
 	/*
@@ -747,6 +1389,10 @@ type ProjectsGetCardReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsGetCardReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsGetCardReq) urlPath() string {
@@ -778,13 +1424,48 @@ func (r *ProjectsGetCardReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsGetCardReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsGetCardReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsGetCardReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsGetCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsGetColumnReq builds requests for "projects/get-column"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsGetCardReq) Rel(link RelName, resp *ProjectsGetCardResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsGetCardResponse is a response for ProjectsGetCard
+
+https://developer.github.com/v3/projects/cards/#get-a-project-card
+*/
+type ProjectsGetCardResponse struct {
+	response
+	request *ProjectsGetCardReq
+}
+
+/*
+ProjectsGetColumn performs requests for "projects/get-column"
 
 Get a project column.
 
@@ -792,7 +1473,29 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
+func (c *Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsGetColumnResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsGetColumnReq is request data for Client.ProjectsGetColumn
+
+https://developer.github.com/v3/projects/columns/#get-a-project-column
+*/
 type ProjectsGetColumnReq struct {
+	pgURL    string
 	ColumnId int64
 
 	/*
@@ -803,6 +1506,10 @@ type ProjectsGetColumnReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsGetColumnReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsGetColumnReq) urlPath() string {
@@ -834,13 +1541,48 @@ func (r *ProjectsGetColumnReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsGetColumnReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsGetColumnReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsGetColumnReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsGetColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListCardsReq builds requests for "projects/list-cards"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsGetColumnReq) Rel(link RelName, resp *ProjectsGetColumnResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsGetColumnResponse is a response for ProjectsGetColumn
+
+https://developer.github.com/v3/projects/columns/#get-a-project-column
+*/
+type ProjectsGetColumnResponse struct {
+	response
+	request *ProjectsGetColumnReq
+}
+
+/*
+ProjectsListCards performs requests for "projects/list-cards"
 
 List project cards.
 
@@ -848,7 +1590,30 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
+func (c *Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsListCardsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsListCardsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsListCardsReq is request data for Client.ProjectsListCards
+
+https://developer.github.com/v3/projects/cards/#list-project-cards
+*/
 type ProjectsListCardsReq struct {
+	pgURL    string
 	ColumnId int64
 
 	/*
@@ -871,6 +1636,10 @@ type ProjectsListCardsReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsListCardsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsListCardsReq) urlPath() string {
@@ -911,22 +1680,58 @@ func (r *ProjectsListCardsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsListCardsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListCardsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListCardsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsListCardsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListCardsResponseBody200 is a response body for projects/list-cards
-
-API documentation: https://developer.github.com/v3/projects/cards/#list-project-cards
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsListCardsResponseBody200 []struct {
+func (r *ProjectsListCardsReq) Rel(link RelName, resp *ProjectsListCardsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsListCardsResponseBody is a response body for ProjectsListCards
+
+https://developer.github.com/v3/projects/cards/#list-project-cards
+*/
+type ProjectsListCardsResponseBody []struct {
 	components.ProjectCard
 }
 
 /*
-ProjectsListCollaboratorsReq builds requests for "projects/list-collaborators"
+ProjectsListCardsResponse is a response for ProjectsListCards
+
+https://developer.github.com/v3/projects/cards/#list-project-cards
+*/
+type ProjectsListCardsResponse struct {
+	response
+	request *ProjectsListCardsReq
+	Data    *ProjectsListCardsResponseBody
+}
+
+/*
+ProjectsListCollaborators performs requests for "projects/list-collaborators"
 
 List collaborators.
 
@@ -934,7 +1739,30 @@ List collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
+func (c *Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsListCollaboratorsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsListCollaboratorsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsListCollaboratorsReq is request data for Client.ProjectsListCollaborators
+
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
+*/
 type ProjectsListCollaboratorsReq struct {
+	pgURL     string
 	ProjectId int64
 
 	/*
@@ -961,6 +1789,10 @@ type ProjectsListCollaboratorsReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsListCollaboratorsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsListCollaboratorsReq) urlPath() string {
@@ -1001,22 +1833,58 @@ func (r *ProjectsListCollaboratorsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsListCollaboratorsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListCollaboratorsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListCollaboratorsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsListCollaboratorsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListCollaboratorsResponseBody200 is a response body for projects/list-collaborators
-
-API documentation: https://developer.github.com/v3/projects/collaborators/#list-collaborators
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsListCollaboratorsResponseBody200 []struct {
+func (r *ProjectsListCollaboratorsReq) Rel(link RelName, resp *ProjectsListCollaboratorsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsListCollaboratorsResponseBody is a response body for ProjectsListCollaborators
+
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
+*/
+type ProjectsListCollaboratorsResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-ProjectsListColumnsReq builds requests for "projects/list-columns"
+ProjectsListCollaboratorsResponse is a response for ProjectsListCollaborators
+
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
+*/
+type ProjectsListCollaboratorsResponse struct {
+	response
+	request *ProjectsListCollaboratorsReq
+	Data    *ProjectsListCollaboratorsResponseBody
+}
+
+/*
+ProjectsListColumns performs requests for "projects/list-columns"
 
 List project columns.
 
@@ -1024,7 +1892,30 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
+func (c *Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsListColumnsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsListColumnsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsListColumnsReq is request data for Client.ProjectsListColumns
+
+https://developer.github.com/v3/projects/columns/#list-project-columns
+*/
 type ProjectsListColumnsReq struct {
+	pgURL     string
 	ProjectId int64
 
 	// Results per page (max 100)
@@ -1041,6 +1932,10 @@ type ProjectsListColumnsReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsListColumnsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsListColumnsReq) urlPath() string {
@@ -1078,22 +1973,58 @@ func (r *ProjectsListColumnsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsListColumnsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListColumnsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListColumnsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsListColumnsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListColumnsResponseBody200 is a response body for projects/list-columns
-
-API documentation: https://developer.github.com/v3/projects/columns/#list-project-columns
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsListColumnsResponseBody200 []struct {
+func (r *ProjectsListColumnsReq) Rel(link RelName, resp *ProjectsListColumnsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsListColumnsResponseBody is a response body for ProjectsListColumns
+
+https://developer.github.com/v3/projects/columns/#list-project-columns
+*/
+type ProjectsListColumnsResponseBody []struct {
 	components.ProjectColumn
 }
 
 /*
-ProjectsListForOrgReq builds requests for "projects/list-for-org"
+ProjectsListColumnsResponse is a response for ProjectsListColumns
+
+https://developer.github.com/v3/projects/columns/#list-project-columns
+*/
+type ProjectsListColumnsResponse struct {
+	response
+	request *ProjectsListColumnsReq
+	Data    *ProjectsListColumnsResponseBody
+}
+
+/*
+ProjectsListForOrg performs requests for "projects/list-for-org"
 
 List organization projects.
 
@@ -1101,8 +2032,31 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
+func (c *Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsListForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsListForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsListForOrgReq is request data for Client.ProjectsListForOrg
+
+https://developer.github.com/v3/projects/#list-organization-projects
+*/
 type ProjectsListForOrgReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -1124,6 +2078,10 @@ type ProjectsListForOrgReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsListForOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsListForOrgReq) urlPath() string {
@@ -1164,22 +2122,58 @@ func (r *ProjectsListForOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsListForOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListForOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsListForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListForOrgResponseBody200 is a response body for projects/list-for-org
-
-API documentation: https://developer.github.com/v3/projects/#list-organization-projects
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsListForOrgResponseBody200 []struct {
+func (r *ProjectsListForOrgReq) Rel(link RelName, resp *ProjectsListForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsListForOrgResponseBody is a response body for ProjectsListForOrg
+
+https://developer.github.com/v3/projects/#list-organization-projects
+*/
+type ProjectsListForOrgResponseBody []struct {
 	components.Project
 }
 
 /*
-ProjectsListForRepoReq builds requests for "projects/list-for-repo"
+ProjectsListForOrgResponse is a response for ProjectsListForOrg
+
+https://developer.github.com/v3/projects/#list-organization-projects
+*/
+type ProjectsListForOrgResponse struct {
+	response
+	request *ProjectsListForOrgReq
+	Data    *ProjectsListForOrgResponseBody
+}
+
+/*
+ProjectsListForRepo performs requests for "projects/list-for-repo"
 
 List repository projects.
 
@@ -1187,7 +2181,30 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
+func (c *Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsListForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsListForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsListForRepoReq is request data for Client.ProjectsListForRepo
+
+https://developer.github.com/v3/projects/#list-repository-projects
+*/
 type ProjectsListForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1211,6 +2228,10 @@ type ProjectsListForRepoReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsListForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsListForRepoReq) urlPath() string {
@@ -1251,22 +2272,58 @@ func (r *ProjectsListForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsListForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsListForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListForRepoResponseBody200 is a response body for projects/list-for-repo
-
-API documentation: https://developer.github.com/v3/projects/#list-repository-projects
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsListForRepoResponseBody200 []struct {
+func (r *ProjectsListForRepoReq) Rel(link RelName, resp *ProjectsListForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsListForRepoResponseBody is a response body for ProjectsListForRepo
+
+https://developer.github.com/v3/projects/#list-repository-projects
+*/
+type ProjectsListForRepoResponseBody []struct {
 	components.Project
 }
 
 /*
-ProjectsListForUserReq builds requests for "projects/list-for-user"
+ProjectsListForRepoResponse is a response for ProjectsListForRepo
+
+https://developer.github.com/v3/projects/#list-repository-projects
+*/
+type ProjectsListForRepoResponse struct {
+	response
+	request *ProjectsListForRepoReq
+	Data    *ProjectsListForRepoResponseBody
+}
+
+/*
+ProjectsListForUser performs requests for "projects/list-for-user"
 
 List user projects.
 
@@ -1274,7 +2331,30 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
+func (c *Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsListForUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsListForUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsListForUserReq is request data for Client.ProjectsListForUser
+
+https://developer.github.com/v3/projects/#list-user-projects
+*/
 type ProjectsListForUserReq struct {
+	pgURL    string
 	Username string
 
 	/*
@@ -1297,6 +2377,10 @@ type ProjectsListForUserReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsListForUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsListForUserReq) urlPath() string {
@@ -1337,22 +2421,58 @@ func (r *ProjectsListForUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsListForUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListForUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsListForUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsListForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsListForUserResponseBody200 is a response body for projects/list-for-user
-
-API documentation: https://developer.github.com/v3/projects/#list-user-projects
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsListForUserResponseBody200 []struct {
+func (r *ProjectsListForUserReq) Rel(link RelName, resp *ProjectsListForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsListForUserResponseBody is a response body for ProjectsListForUser
+
+https://developer.github.com/v3/projects/#list-user-projects
+*/
+type ProjectsListForUserResponseBody []struct {
 	components.Project
 }
 
 /*
-ProjectsMoveCardReq builds requests for "projects/move-card"
+ProjectsListForUserResponse is a response for ProjectsListForUser
+
+https://developer.github.com/v3/projects/#list-user-projects
+*/
+type ProjectsListForUserResponse struct {
+	response
+	request *ProjectsListForUserReq
+	Data    *ProjectsListForUserResponseBody
+}
+
+/*
+ProjectsMoveCard performs requests for "projects/move-card"
 
 Move a project card.
 
@@ -1360,7 +2480,29 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
+func (c *Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsMoveCardResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsMoveCardReq is request data for Client.ProjectsMoveCard
+
+https://developer.github.com/v3/projects/cards/#move-a-project-card
+*/
 type ProjectsMoveCardReq struct {
+	pgURL       string
 	CardId      int64
 	RequestBody ProjectsMoveCardReqBody
 
@@ -1372,6 +2514,10 @@ type ProjectsMoveCardReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsMoveCardReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsMoveCardReq) urlPath() string {
@@ -1403,15 +2549,40 @@ func (r *ProjectsMoveCardReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsMoveCardReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsMoveCardReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsMoveCardReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsMoveCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsMoveCardReq) Rel(link RelName, resp *ProjectsMoveCardResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsMoveCardReqBody is a request body for projects/move-card
 
-API documentation: https://developer.github.com/v3/projects/cards/#move-a-project-card
+https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type ProjectsMoveCardReqBody struct {
 
@@ -1427,7 +2598,17 @@ type ProjectsMoveCardReqBody struct {
 }
 
 /*
-ProjectsMoveColumnReq builds requests for "projects/move-column"
+ProjectsMoveCardResponse is a response for ProjectsMoveCard
+
+https://developer.github.com/v3/projects/cards/#move-a-project-card
+*/
+type ProjectsMoveCardResponse struct {
+	response
+	request *ProjectsMoveCardReq
+}
+
+/*
+ProjectsMoveColumn performs requests for "projects/move-column"
 
 Move a project column.
 
@@ -1435,7 +2616,29 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
+func (c *Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsMoveColumnResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsMoveColumnReq is request data for Client.ProjectsMoveColumn
+
+https://developer.github.com/v3/projects/columns/#move-a-project-column
+*/
 type ProjectsMoveColumnReq struct {
+	pgURL       string
 	ColumnId    int64
 	RequestBody ProjectsMoveColumnReqBody
 
@@ -1447,6 +2650,10 @@ type ProjectsMoveColumnReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsMoveColumnReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsMoveColumnReq) urlPath() string {
@@ -1478,15 +2685,40 @@ func (r *ProjectsMoveColumnReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsMoveColumnReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsMoveColumnReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ProjectsMoveColumnReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsMoveColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsMoveColumnReq) Rel(link RelName, resp *ProjectsMoveColumnResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsMoveColumnReqBody is a request body for projects/move-column
 
-API documentation: https://developer.github.com/v3/projects/columns/#move-a-project-column
+https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type ProjectsMoveColumnReqBody struct {
 
@@ -1498,7 +2730,17 @@ type ProjectsMoveColumnReqBody struct {
 }
 
 /*
-ProjectsRemoveCollaboratorReq builds requests for "projects/remove-collaborator"
+ProjectsMoveColumnResponse is a response for ProjectsMoveColumn
+
+https://developer.github.com/v3/projects/columns/#move-a-project-column
+*/
+type ProjectsMoveColumnResponse struct {
+	response
+	request *ProjectsMoveColumnReq
+}
+
+/*
+ProjectsRemoveCollaborator performs requests for "projects/remove-collaborator"
 
 Remove user as a collaborator.
 
@@ -1506,7 +2748,29 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
+func (c *Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsRemoveCollaboratorResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsRemoveCollaboratorReq is request data for Client.ProjectsRemoveCollaborator
+
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+*/
 type ProjectsRemoveCollaboratorReq struct {
+	pgURL     string
 	ProjectId int64
 	Username  string
 
@@ -1518,6 +2782,10 @@ type ProjectsRemoveCollaboratorReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsRemoveCollaboratorReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsRemoveCollaboratorReq) urlPath() string {
@@ -1549,13 +2817,48 @@ func (r *ProjectsRemoveCollaboratorReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsRemoveCollaboratorReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsRemoveCollaboratorReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ProjectsRemoveCollaboratorReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsRemoveCollaboratorReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsReviewUserPermissionLevelReq builds requests for "projects/review-user-permission-level"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsRemoveCollaboratorReq) Rel(link RelName, resp *ProjectsRemoveCollaboratorResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsRemoveCollaboratorResponse is a response for ProjectsRemoveCollaborator
+
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+*/
+type ProjectsRemoveCollaboratorResponse struct {
+	response
+	request *ProjectsRemoveCollaboratorReq
+}
+
+/*
+ProjectsReviewUserPermissionLevel performs requests for "projects/review-user-permission-level"
 
 Review a user's permission level.
 
@@ -1563,7 +2866,30 @@ Review a user's permission level.
 
 https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
+func (c *Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsReviewUserPermissionLevelResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsReviewUserPermissionLevelResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsReviewUserPermissionLevelReq is request data for Client.ProjectsReviewUserPermissionLevel
+
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+*/
 type ProjectsReviewUserPermissionLevelReq struct {
+	pgURL     string
 	ProjectId int64
 	Username  string
 
@@ -1575,6 +2901,10 @@ type ProjectsReviewUserPermissionLevelReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsReviewUserPermissionLevelReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsReviewUserPermissionLevelReq) urlPath() string {
@@ -1606,22 +2936,58 @@ func (r *ProjectsReviewUserPermissionLevelReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsReviewUserPermissionLevelReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsReviewUserPermissionLevelReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsReviewUserPermissionLevelReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsReviewUserPermissionLevelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ProjectsReviewUserPermissionLevelResponseBody200 is a response body for projects/review-user-permission-level
-
-API documentation: https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ProjectsReviewUserPermissionLevelResponseBody200 struct {
+func (r *ProjectsReviewUserPermissionLevelReq) Rel(link RelName, resp *ProjectsReviewUserPermissionLevelResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ProjectsReviewUserPermissionLevelResponseBody is a response body for ProjectsReviewUserPermissionLevel
+
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+*/
+type ProjectsReviewUserPermissionLevelResponseBody struct {
 	components.RepositoryCollaboratorPermission
 }
 
 /*
-ProjectsUpdateReq builds requests for "projects/update"
+ProjectsReviewUserPermissionLevelResponse is a response for ProjectsReviewUserPermissionLevel
+
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+*/
+type ProjectsReviewUserPermissionLevelResponse struct {
+	response
+	request *ProjectsReviewUserPermissionLevelReq
+	Data    *ProjectsReviewUserPermissionLevelResponseBody
+}
+
+/*
+ProjectsUpdate performs requests for "projects/update"
 
 Update a project.
 
@@ -1629,7 +2995,30 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
+func (c *Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsUpdateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ProjectsUpdateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsUpdateReq is request data for Client.ProjectsUpdate
+
+https://developer.github.com/v3/projects/#update-a-project
+*/
 type ProjectsUpdateReq struct {
+	pgURL       string
 	ProjectId   int64
 	RequestBody ProjectsUpdateReqBody
 
@@ -1641,6 +3030,10 @@ type ProjectsUpdateReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsUpdateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsUpdateReq) urlPath() string {
@@ -1672,15 +3065,40 @@ func (r *ProjectsUpdateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsUpdateReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsUpdateReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsUpdateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsUpdateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsUpdateReq) Rel(link RelName, resp *ProjectsUpdateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsUpdateReqBody is a request body for projects/update
 
-API documentation: https://developer.github.com/v3/projects/#update-a-project
+https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateReqBody struct {
 
@@ -1733,16 +3151,27 @@ type ProjectsUpdateReqBody struct {
 }
 
 /*
-ProjectsUpdateResponseBody200 is a response body for projects/update
+ProjectsUpdateResponseBody is a response body for ProjectsUpdate
 
-API documentation: https://developer.github.com/v3/projects/#update-a-project
+https://developer.github.com/v3/projects/#update-a-project
 */
-type ProjectsUpdateResponseBody200 struct {
+type ProjectsUpdateResponseBody struct {
 	components.Project
 }
 
 /*
-ProjectsUpdateCardReq builds requests for "projects/update-card"
+ProjectsUpdateResponse is a response for ProjectsUpdate
+
+https://developer.github.com/v3/projects/#update-a-project
+*/
+type ProjectsUpdateResponse struct {
+	response
+	request *ProjectsUpdateReq
+	Data    *ProjectsUpdateResponseBody
+}
+
+/*
+ProjectsUpdateCard performs requests for "projects/update-card"
 
 Update a project card.
 
@@ -1750,7 +3179,29 @@ Update a project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
+func (c *Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsUpdateCardResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsUpdateCardReq is request data for Client.ProjectsUpdateCard
+
+https://developer.github.com/v3/projects/cards/#update-a-project-card
+*/
 type ProjectsUpdateCardReq struct {
+	pgURL       string
 	CardId      int64
 	RequestBody ProjectsUpdateCardReqBody
 
@@ -1762,6 +3213,10 @@ type ProjectsUpdateCardReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsUpdateCardReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsUpdateCardReq) urlPath() string {
@@ -1793,15 +3248,40 @@ func (r *ProjectsUpdateCardReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsUpdateCardReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsUpdateCardReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsUpdateCardReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsUpdateCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsUpdateCardReq) Rel(link RelName, resp *ProjectsUpdateCardResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsUpdateCardReqBody is a request body for projects/update-card
 
-API documentation: https://developer.github.com/v3/projects/cards/#update-a-project-card
+https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type ProjectsUpdateCardReqBody struct {
 
@@ -1820,7 +3300,17 @@ type ProjectsUpdateCardReqBody struct {
 }
 
 /*
-ProjectsUpdateColumnReq builds requests for "projects/update-column"
+ProjectsUpdateCardResponse is a response for ProjectsUpdateCard
+
+https://developer.github.com/v3/projects/cards/#update-a-project-card
+*/
+type ProjectsUpdateCardResponse struct {
+	response
+	request *ProjectsUpdateCardReq
+}
+
+/*
+ProjectsUpdateColumn performs requests for "projects/update-column"
 
 Update a project column.
 
@@ -1828,7 +3318,29 @@ Update a project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
+func (c *Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ProjectsUpdateColumnResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsUpdateColumnReq is request data for Client.ProjectsUpdateColumn
+
+https://developer.github.com/v3/projects/columns/#update-a-project-column
+*/
 type ProjectsUpdateColumnReq struct {
+	pgURL       string
 	ColumnId    int64
 	RequestBody ProjectsUpdateColumnReqBody
 
@@ -1840,6 +3352,10 @@ type ProjectsUpdateColumnReq struct {
 	to true.
 	*/
 	InertiaPreview bool
+}
+
+func (r *ProjectsUpdateColumnReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ProjectsUpdateColumnReq) urlPath() string {
@@ -1871,18 +3387,53 @@ func (r *ProjectsUpdateColumnReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ProjectsUpdateColumnReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ProjectsUpdateColumnReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsUpdateColumnReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ProjectsUpdateColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsUpdateColumnReq) Rel(link RelName, resp *ProjectsUpdateColumnResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ProjectsUpdateColumnReqBody is a request body for projects/update-column
 
-API documentation: https://developer.github.com/v3/projects/columns/#update-a-project-column
+https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type ProjectsUpdateColumnReqBody struct {
 
 	// The new name of the column.
 	Name *string `json:"name"`
+}
+
+/*
+ProjectsUpdateColumnResponse is a response for ProjectsUpdateColumn
+
+https://developer.github.com/v3/projects/columns/#update-a-project-column
+*/
+type ProjectsUpdateColumnResponse struct {
+	response
+	request *ProjectsUpdateColumnReq
 }
