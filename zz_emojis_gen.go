@@ -10,7 +10,7 @@ import (
 )
 
 /*
-EmojisGetReq builds requests for "emojis/get"
+EmojisGet performs requests for "emojis/get"
 
 Get.
 
@@ -18,7 +18,34 @@ Get.
 
 https://developer.github.com/v3/emojis/#emojis
 */
-type EmojisGetReq struct{}
+func (c *Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &EmojisGetResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+EmojisGetReq is request data for Client.EmojisGet
+
+https://developer.github.com/v3/emojis/#emojis
+*/
+type EmojisGetReq struct {
+	pgURL string
+}
+
+func (r *EmojisGetReq) pagingURL() string {
+	return r.pgURL
+}
 
 func (r *EmojisGetReq) urlPath() string {
 	return fmt.Sprintf("/emojis")
@@ -43,7 +70,42 @@ func (r *EmojisGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *EmojisGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *EmojisGetReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *EmojisGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *EmojisGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *EmojisGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *EmojisGetReq) Rel(link RelName, resp *EmojisGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+EmojisGetResponse is a response for EmojisGet
+
+https://developer.github.com/v3/emojis/#emojis
+*/
+type EmojisGetResponse struct {
+	response
+	request *EmojisGetReq
 }

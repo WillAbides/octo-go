@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/dave/jennifer/jen"
@@ -21,15 +22,13 @@ func reqStructName(endpoint model.Endpoint) string {
 
 func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
-	file.Commentf("%s builds requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
+	file.Commentf("%s is request data for Client.%s\n\n%s",
 		structName,
-		endpoint.ID,
-		endpoint.Summary,
-		endpoint.Method,
-		endpoint.Path,
+		toExportedName(endpoint.ID),
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
+		group.Id("pgURL").String()
 		for _, param := range endpoint.PathParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
@@ -66,24 +65,94 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		}
 	})
 
-	reqURLPathFunc(file, endpoint)
-	file.Line()
+	for _, fn := range []func(file *jen.File, endpoint model.Endpoint){
+		func(fl *jen.File, endpoint model.Endpoint) {
+			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("pagingURL() string").Block(
+				jen.Id("return r.pgURL"),
+			)
+		},
+		reqURLPathFunc,
+		func(fl *jen.File, endpoint model.Endpoint) {
+			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
+				jen.Return(jen.Lit(endpoint.Method)),
+			)
+		},
+		reqURLQueryFunc,
+		reqHeaderFunc,
+		reqBodyFunc,
+		reqDataStatusesFunc,
+		reqValidStatusesFunc,
+		reqEndpointTypeFunc,
+		reqHTTPRequestFunc,
+		reqRelReqFunc,
+	} {
+		fn(file, endpoint)
+		file.Line()
+	}
 
-	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
-		jen.Return(jen.Lit(endpoint.Method)),
+}
+
+func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
+	structName := reqStructName(endpoint)
+	comment := `Rel updates this request to point to a relative link from resp. Returns false if the link does not exist. Handy for paging.`
+	file.Comment(wordwrap.WrapString(comment, 80))
+	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("Rel").Params(
+		jen.Id("link RelName"),
+		jen.Id("resp").Op("*").Id(respStructName(endpoint)),
+	).Params(jen.Bool()).Block(
+		jen.Id("u := resp.RelLink(link)"),
+		jen.If(jen.Id("u").Op("==").Lit("")).Block(jen.Return(jen.False())),
+		jen.Id("r.pgURL = u"),
+		jen.Return(jen.True()),
 	)
-	file.Line()
+}
 
-	reqURLQueryFunc(file, endpoint)
-	file.Line()
+func reqDataStatusesFunc(file *jen.File, endpoint model.Endpoint) {
+	structName := reqStructName(endpoint)
+	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("dataStatuses").Params().Params(
+		jen.Op("[]").Int(),
+	).Block(
+		jen.Return().Op("[]").Int().ValuesFunc(func(group *jen.Group) {
+			for _, code := range responseCodesWithBodies(endpoint) {
+				group.Lit(code)
+			}
+		}),
+	)
+}
 
-	reqHeaderFunc(file, endpoint)
-	file.Line()
+func reqEndpointTypeFunc(file *jen.File, endpoint model.Endpoint) {
+	tp := getEndpointType(endpoint).String()
+	structName := reqStructName(endpoint)
+	file.Func().Params(
+		jen.Id("r").Id("*" + structName),
+	).Id("endpointType()").Params(
+		jen.Id("endpointType"),
+	).Block(
+		jen.Return(jen.Id(tp)),
+	)
+}
 
-	reqBodyFunc(file, endpoint)
-	file.Line()
-
-	reqHTTPRequestFunc(file, endpoint)
+func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
+	codes := make([]int, 0, len(endpoint.Responses))
+	for code := range endpoint.Responses {
+		if code < 400 {
+			codes = append(codes, code)
+		}
+	}
+	sort.Ints(codes)
+	if isRedirectOnlyEndpoint(endpoint) {
+		codes = []int{-1}
+	}
+	structName := reqStructName(endpoint)
+	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("validStatuses").Params().Params(
+		jen.Op("[]").Int(),
+	).Block(
+		jen.Return().Op("[]").Int().ValuesFunc(func(group *jen.Group) {
+			for _, code := range codes {
+				group.Lit(code)
+			}
+		}),
+	)
 }
 
 func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
@@ -102,8 +171,8 @@ func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
 
 func reqHTTPRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
-	file.Comment("HTTPRequest creates an http request")
-	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
+	file.Comment("httpRequest creates an http request")
+	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("httpRequest").Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("opt ...RequestOption"),
 	).Params(

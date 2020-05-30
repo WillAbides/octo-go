@@ -12,7 +12,7 @@ import (
 )
 
 /*
-ChecksCreateReq builds requests for "checks/create"
+ChecksCreate performs requests for "checks/create"
 
 Create a check run.
 
@@ -20,7 +20,30 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
+func (c *Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksCreateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksCreateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksCreateReq is request data for Client.ChecksCreate
+
+https://developer.github.com/v3/checks/runs/#create-a-check-run
+*/
 type ChecksCreateReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody ChecksCreateReqBody
@@ -33,6 +56,10 @@ type ChecksCreateReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksCreateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksCreateReq) urlPath() string {
@@ -64,9 +91,34 @@ func (r *ChecksCreateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksCreateReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ChecksCreateReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ChecksCreateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksCreateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ChecksCreateReq) Rel(link RelName, resp *ChecksCreateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // ChecksCreateReqBodyActions is a value for ChecksCreateReqBody's Actions field
@@ -189,7 +241,7 @@ type ChecksCreateReqBodyOutputImages struct {
 /*
 ChecksCreateReqBody is a request body for checks/create
 
-API documentation: https://developer.github.com/v3/checks/runs/#create-a-check-run
+https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type ChecksCreateReqBody struct {
 
@@ -263,16 +315,27 @@ type ChecksCreateReqBody struct {
 }
 
 /*
-ChecksCreateResponseBody201 is a response body for checks/create
+ChecksCreateResponseBody is a response body for ChecksCreate
 
-API documentation: https://developer.github.com/v3/checks/runs/#create-a-check-run
+https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-type ChecksCreateResponseBody201 struct {
+type ChecksCreateResponseBody struct {
 	components.CheckRun
 }
 
 /*
-ChecksCreateSuiteReq builds requests for "checks/create-suite"
+ChecksCreateResponse is a response for ChecksCreate
+
+https://developer.github.com/v3/checks/runs/#create-a-check-run
+*/
+type ChecksCreateResponse struct {
+	response
+	request *ChecksCreateReq
+	Data    *ChecksCreateResponseBody
+}
+
+/*
+ChecksCreateSuite performs requests for "checks/create-suite"
 
 Create a check suite.
 
@@ -280,7 +343,30 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
+func (c *Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksCreateSuiteResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksCreateSuiteResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksCreateSuiteReq is request data for Client.ChecksCreateSuite
+
+https://developer.github.com/v3/checks/suites/#create-a-check-suite
+*/
 type ChecksCreateSuiteReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody ChecksCreateSuiteReqBody
@@ -293,6 +379,10 @@ type ChecksCreateSuiteReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksCreateSuiteReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksCreateSuiteReq) urlPath() string {
@@ -324,15 +414,40 @@ func (r *ChecksCreateSuiteReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksCreateSuiteReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ChecksCreateSuiteReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ChecksCreateSuiteReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksCreateSuiteReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ChecksCreateSuiteReq) Rel(link RelName, resp *ChecksCreateSuiteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ChecksCreateSuiteReqBody is a request body for checks/create-suite
 
-API documentation: https://developer.github.com/v3/checks/suites/#create-a-check-suite
+https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type ChecksCreateSuiteReqBody struct {
 
@@ -341,16 +456,27 @@ type ChecksCreateSuiteReqBody struct {
 }
 
 /*
-ChecksCreateSuiteResponseBody201 is a response body for checks/create-suite
+ChecksCreateSuiteResponseBody is a response body for ChecksCreateSuite
 
-API documentation: https://developer.github.com/v3/checks/suites/#create-a-check-suite
+https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-type ChecksCreateSuiteResponseBody201 struct {
+type ChecksCreateSuiteResponseBody struct {
 	components.CheckSuite
 }
 
 /*
-ChecksGetReq builds requests for "checks/get"
+ChecksCreateSuiteResponse is a response for ChecksCreateSuite
+
+https://developer.github.com/v3/checks/suites/#create-a-check-suite
+*/
+type ChecksCreateSuiteResponse struct {
+	response
+	request *ChecksCreateSuiteReq
+	Data    *ChecksCreateSuiteResponseBody
+}
+
+/*
+ChecksGet performs requests for "checks/get"
 
 Get a check run.
 
@@ -358,7 +484,30 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
+func (c *Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksGetResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksGetResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksGetReq is request data for Client.ChecksGet
+
+https://developer.github.com/v3/checks/runs/#get-a-check-run
+*/
 type ChecksGetReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	CheckRunId int64
@@ -371,6 +520,10 @@ type ChecksGetReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksGetReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksGetReq) urlPath() string {
@@ -402,22 +555,58 @@ func (r *ChecksGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksGetReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksGetResponseBody200 is a response body for checks/get
-
-API documentation: https://developer.github.com/v3/checks/runs/#get-a-check-run
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ChecksGetResponseBody200 struct {
+func (r *ChecksGetReq) Rel(link RelName, resp *ChecksGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksGetResponseBody is a response body for ChecksGet
+
+https://developer.github.com/v3/checks/runs/#get-a-check-run
+*/
+type ChecksGetResponseBody struct {
 	components.CheckRun2
 }
 
 /*
-ChecksGetSuiteReq builds requests for "checks/get-suite"
+ChecksGetResponse is a response for ChecksGet
+
+https://developer.github.com/v3/checks/runs/#get-a-check-run
+*/
+type ChecksGetResponse struct {
+	response
+	request *ChecksGetReq
+	Data    *ChecksGetResponseBody
+}
+
+/*
+ChecksGetSuite performs requests for "checks/get-suite"
 
 Get a check suite.
 
@@ -425,7 +614,30 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
+func (c *Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksGetSuiteResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksGetSuiteResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksGetSuiteReq is request data for Client.ChecksGetSuite
+
+https://developer.github.com/v3/checks/suites/#get-a-check-suite
+*/
 type ChecksGetSuiteReq struct {
+	pgURL        string
 	Owner        string
 	Repo         string
 	CheckSuiteId int64
@@ -438,6 +650,10 @@ type ChecksGetSuiteReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksGetSuiteReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksGetSuiteReq) urlPath() string {
@@ -469,22 +685,58 @@ func (r *ChecksGetSuiteReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksGetSuiteReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksGetSuiteReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksGetSuiteReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksGetSuiteReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksGetSuiteResponseBody200 is a response body for checks/get-suite
-
-API documentation: https://developer.github.com/v3/checks/suites/#get-a-check-suite
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ChecksGetSuiteResponseBody200 struct {
+func (r *ChecksGetSuiteReq) Rel(link RelName, resp *ChecksGetSuiteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksGetSuiteResponseBody is a response body for ChecksGetSuite
+
+https://developer.github.com/v3/checks/suites/#get-a-check-suite
+*/
+type ChecksGetSuiteResponseBody struct {
 	components.CheckSuite
 }
 
 /*
-ChecksListAnnotationsReq builds requests for "checks/list-annotations"
+ChecksGetSuiteResponse is a response for ChecksGetSuite
+
+https://developer.github.com/v3/checks/suites/#get-a-check-suite
+*/
+type ChecksGetSuiteResponse struct {
+	response
+	request *ChecksGetSuiteReq
+	Data    *ChecksGetSuiteResponseBody
+}
+
+/*
+ChecksListAnnotations performs requests for "checks/list-annotations"
 
 List check run annotations.
 
@@ -492,7 +744,30 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
+func (c *Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksListAnnotationsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksListAnnotationsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksListAnnotationsReq is request data for Client.ChecksListAnnotations
+
+https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+*/
 type ChecksListAnnotationsReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	CheckRunId int64
@@ -511,6 +786,10 @@ type ChecksListAnnotationsReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksListAnnotationsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksListAnnotationsReq) urlPath() string {
@@ -548,22 +827,58 @@ func (r *ChecksListAnnotationsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksListAnnotationsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListAnnotationsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListAnnotationsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksListAnnotationsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksListAnnotationsResponseBody200 is a response body for checks/list-annotations
-
-API documentation: https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ChecksListAnnotationsResponseBody200 []struct {
+func (r *ChecksListAnnotationsReq) Rel(link RelName, resp *ChecksListAnnotationsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksListAnnotationsResponseBody is a response body for ChecksListAnnotations
+
+https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+*/
+type ChecksListAnnotationsResponseBody []struct {
 	components.CheckAnnotation
 }
 
 /*
-ChecksListForRefReq builds requests for "checks/list-for-ref"
+ChecksListAnnotationsResponse is a response for ChecksListAnnotations
+
+https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+*/
+type ChecksListAnnotationsResponse struct {
+	response
+	request *ChecksListAnnotationsReq
+	Data    *ChecksListAnnotationsResponseBody
+}
+
+/*
+ChecksListForRef performs requests for "checks/list-for-ref"
 
 List check runs for a Git reference.
 
@@ -571,7 +886,30 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
+func (c *Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksListForRefResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksListForRefResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksListForRefReq is request data for Client.ChecksListForRef
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+*/
 type ChecksListForRefReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Ref   string
@@ -605,6 +943,10 @@ type ChecksListForRefReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksListForRefReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksListForRefReq) urlPath() string {
@@ -651,17 +993,42 @@ func (r *ChecksListForRefReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksListForRefReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListForRefReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListForRefReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksListForRefReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksListForRefResponseBody200 is a response body for checks/list-for-ref
-
-API documentation: https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ChecksListForRefResponseBody200 struct {
+func (r *ChecksListForRefReq) Rel(link RelName, resp *ChecksListForRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksListForRefResponseBody is a response body for ChecksListForRef
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+*/
+type ChecksListForRefResponseBody struct {
 	CheckRuns []struct {
 		components.CheckRun2
 	} `json:"check_runs,omitempty"`
@@ -669,7 +1036,18 @@ type ChecksListForRefResponseBody200 struct {
 }
 
 /*
-ChecksListForSuiteReq builds requests for "checks/list-for-suite"
+ChecksListForRefResponse is a response for ChecksListForRef
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+*/
+type ChecksListForRefResponse struct {
+	response
+	request *ChecksListForRefReq
+	Data    *ChecksListForRefResponseBody
+}
+
+/*
+ChecksListForSuite performs requests for "checks/list-for-suite"
 
 List check runs in a check suite.
 
@@ -677,7 +1055,30 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
+func (c *Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksListForSuiteResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksListForSuiteResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksListForSuiteReq is request data for Client.ChecksListForSuite
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+*/
 type ChecksListForSuiteReq struct {
+	pgURL        string
 	Owner        string
 	Repo         string
 	CheckSuiteId int64
@@ -711,6 +1112,10 @@ type ChecksListForSuiteReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksListForSuiteReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksListForSuiteReq) urlPath() string {
@@ -757,17 +1162,42 @@ func (r *ChecksListForSuiteReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksListForSuiteReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListForSuiteReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListForSuiteReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksListForSuiteReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksListForSuiteResponseBody200 is a response body for checks/list-for-suite
-
-API documentation: https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ChecksListForSuiteResponseBody200 struct {
+func (r *ChecksListForSuiteReq) Rel(link RelName, resp *ChecksListForSuiteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksListForSuiteResponseBody is a response body for ChecksListForSuite
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+*/
+type ChecksListForSuiteResponseBody struct {
 	CheckRuns []struct {
 		components.CheckRun2
 	} `json:"check_runs,omitempty"`
@@ -775,7 +1205,18 @@ type ChecksListForSuiteResponseBody200 struct {
 }
 
 /*
-ChecksListSuitesForRefReq builds requests for "checks/list-suites-for-ref"
+ChecksListForSuiteResponse is a response for ChecksListForSuite
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+*/
+type ChecksListForSuiteResponse struct {
+	response
+	request *ChecksListForSuiteReq
+	Data    *ChecksListForSuiteResponseBody
+}
+
+/*
+ChecksListSuitesForRef performs requests for "checks/list-suites-for-ref"
 
 List check suites for a Git reference.
 
@@ -783,7 +1224,30 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
+func (c *Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksListSuitesForRefResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksListSuitesForRefResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksListSuitesForRefReq is request data for Client.ChecksListSuitesForRef
+
+https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+*/
 type ChecksListSuitesForRefReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Ref   string
@@ -811,6 +1275,10 @@ type ChecksListSuitesForRefReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksListSuitesForRefReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksListSuitesForRefReq) urlPath() string {
@@ -854,17 +1322,42 @@ func (r *ChecksListSuitesForRefReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksListSuitesForRefReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListSuitesForRefReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksListSuitesForRefReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksListSuitesForRefReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksListSuitesForRefResponseBody200 is a response body for checks/list-suites-for-ref
-
-API documentation: https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ChecksListSuitesForRefResponseBody200 struct {
+func (r *ChecksListSuitesForRefReq) Rel(link RelName, resp *ChecksListSuitesForRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksListSuitesForRefResponseBody is a response body for ChecksListSuitesForRef
+
+https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+*/
+type ChecksListSuitesForRefResponseBody struct {
 	CheckSuites []struct {
 		components.CheckSuite
 	} `json:"check_suites,omitempty"`
@@ -872,7 +1365,18 @@ type ChecksListSuitesForRefResponseBody200 struct {
 }
 
 /*
-ChecksRerequestSuiteReq builds requests for "checks/rerequest-suite"
+ChecksListSuitesForRefResponse is a response for ChecksListSuitesForRef
+
+https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+*/
+type ChecksListSuitesForRefResponse struct {
+	response
+	request *ChecksListSuitesForRefReq
+	Data    *ChecksListSuitesForRefResponseBody
+}
+
+/*
+ChecksRerequestSuite performs requests for "checks/rerequest-suite"
 
 Rerequest a check suite.
 
@@ -880,7 +1384,29 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
+func (c *Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksRerequestSuiteResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksRerequestSuiteReq is request data for Client.ChecksRerequestSuite
+
+https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
+*/
 type ChecksRerequestSuiteReq struct {
+	pgURL        string
 	Owner        string
 	Repo         string
 	CheckSuiteId int64
@@ -893,6 +1419,10 @@ type ChecksRerequestSuiteReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksRerequestSuiteReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksRerequestSuiteReq) urlPath() string {
@@ -924,13 +1454,48 @@ func (r *ChecksRerequestSuiteReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksRerequestSuiteReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ChecksRerequestSuiteReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ChecksRerequestSuiteReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksRerequestSuiteReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ChecksSetSuitesPreferencesReq builds requests for "checks/set-suites-preferences"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ChecksRerequestSuiteReq) Rel(link RelName, resp *ChecksRerequestSuiteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ChecksRerequestSuiteResponse is a response for ChecksRerequestSuite
+
+https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
+*/
+type ChecksRerequestSuiteResponse struct {
+	response
+	request *ChecksRerequestSuiteReq
+}
+
+/*
+ChecksSetSuitesPreferences performs requests for "checks/set-suites-preferences"
 
 Update repository preferences for check suites.
 
@@ -938,7 +1503,30 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
+func (c *Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksSetSuitesPreferencesResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksSetSuitesPreferencesResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksSetSuitesPreferencesReq is request data for Client.ChecksSetSuitesPreferences
+
+https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+*/
 type ChecksSetSuitesPreferencesReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody ChecksSetSuitesPreferencesReqBody
@@ -951,6 +1539,10 @@ type ChecksSetSuitesPreferencesReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksSetSuitesPreferencesReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksSetSuitesPreferencesReq) urlPath() string {
@@ -982,9 +1574,34 @@ func (r *ChecksSetSuitesPreferencesReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksSetSuitesPreferencesReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksSetSuitesPreferencesReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksSetSuitesPreferencesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ChecksSetSuitesPreferencesReq) Rel(link RelName, resp *ChecksSetSuitesPreferencesResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks is a value for ChecksSetSuitesPreferencesReqBody's AutoTriggerChecks field
@@ -1003,7 +1620,7 @@ type ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks struct {
 /*
 ChecksSetSuitesPreferencesReqBody is a request body for checks/set-suites-preferences
 
-API documentation: https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type ChecksSetSuitesPreferencesReqBody struct {
 
@@ -1017,16 +1634,27 @@ type ChecksSetSuitesPreferencesReqBody struct {
 }
 
 /*
-ChecksSetSuitesPreferencesResponseBody200 is a response body for checks/set-suites-preferences
+ChecksSetSuitesPreferencesResponseBody is a response body for ChecksSetSuitesPreferences
 
-API documentation: https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-type ChecksSetSuitesPreferencesResponseBody200 struct {
+type ChecksSetSuitesPreferencesResponseBody struct {
 	components.CheckSuitePreference
 }
 
 /*
-ChecksUpdateReq builds requests for "checks/update"
+ChecksSetSuitesPreferencesResponse is a response for ChecksSetSuitesPreferences
+
+https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+*/
+type ChecksSetSuitesPreferencesResponse struct {
+	response
+	request *ChecksSetSuitesPreferencesReq
+	Data    *ChecksSetSuitesPreferencesResponseBody
+}
+
+/*
+ChecksUpdate performs requests for "checks/update"
 
 Update a check run.
 
@@ -1034,7 +1662,30 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
+func (c *Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ChecksUpdateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ChecksUpdateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ChecksUpdateReq is request data for Client.ChecksUpdate
+
+https://developer.github.com/v3/checks/runs/#update-a-check-run
+*/
 type ChecksUpdateReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	CheckRunId  int64
@@ -1048,6 +1699,10 @@ type ChecksUpdateReq struct {
 	to true.
 	*/
 	AntiopePreview bool
+}
+
+func (r *ChecksUpdateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ChecksUpdateReq) urlPath() string {
@@ -1079,9 +1734,34 @@ func (r *ChecksUpdateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ChecksUpdateReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksUpdateReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ChecksUpdateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ChecksUpdateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ChecksUpdateReq) Rel(link RelName, resp *ChecksUpdateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 // ChecksUpdateReqBodyActions is a value for ChecksUpdateReqBody's Actions field
@@ -1205,7 +1885,7 @@ type ChecksUpdateReqBodyOutputImages struct {
 /*
 ChecksUpdateReqBody is a request body for checks/update
 
-API documentation: https://developer.github.com/v3/checks/runs/#update-a-check-run
+https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type ChecksUpdateReqBody struct {
 
@@ -1264,10 +1944,21 @@ type ChecksUpdateReqBody struct {
 }
 
 /*
-ChecksUpdateResponseBody200 is a response body for checks/update
+ChecksUpdateResponseBody is a response body for ChecksUpdate
 
-API documentation: https://developer.github.com/v3/checks/runs/#update-a-check-run
+https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-type ChecksUpdateResponseBody200 struct {
+type ChecksUpdateResponseBody struct {
 	components.CheckRun2
+}
+
+/*
+ChecksUpdateResponse is a response for ChecksUpdate
+
+https://developer.github.com/v3/checks/runs/#update-a-check-run
+*/
+type ChecksUpdateResponse struct {
+	response
+	request *ChecksUpdateReq
+	Data    *ChecksUpdateResponseBody
 }

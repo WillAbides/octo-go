@@ -12,7 +12,7 @@ import (
 )
 
 /*
-ActivityCheckRepoIsStarredByAuthenticatedUserReq builds requests for "activity/check-repo-is-starred-by-authenticated-user"
+ActivityCheckRepoIsStarredByAuthenticatedUser performs requests for "activity/check-repo-is-starred-by-authenticated-user"
 
 Check if a repository is starred by the authenticated user.
 
@@ -20,9 +20,36 @@ Check if a repository is starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
+func (c *Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.setBoolResult(&resp.Data)
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityCheckRepoIsStarredByAuthenticatedUserReq is request data for Client.ActivityCheckRepoIsStarredByAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+*/
 type ActivityCheckRepoIsStarredByAuthenticatedUserReq struct {
+	pgURL string
 	Owner string
 	Repo  string
+}
+
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlPath() string {
@@ -48,13 +75,49 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeBoolean
+}
+
+// httpRequest creates an http request
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityDeleteRepoSubscriptionReq builds requests for "activity/delete-repo-subscription"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) Rel(link RelName, resp *ActivityCheckRepoIsStarredByAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityCheckRepoIsStarredByAuthenticatedUserResponse is a response for ActivityCheckRepoIsStarredByAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+*/
+type ActivityCheckRepoIsStarredByAuthenticatedUserResponse struct {
+	response
+	request *ActivityCheckRepoIsStarredByAuthenticatedUserReq
+	Data    bool
+}
+
+/*
+ActivityDeleteRepoSubscription performs requests for "activity/delete-repo-subscription"
 
 Delete a repository subscription.
 
@@ -62,9 +125,35 @@ Delete a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
+func (c *Client) ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityDeleteRepoSubscriptionResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityDeleteRepoSubscriptionReq is request data for Client.ActivityDeleteRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
+*/
 type ActivityDeleteRepoSubscriptionReq struct {
+	pgURL string
 	Owner string
 	Repo  string
+}
+
+func (r *ActivityDeleteRepoSubscriptionReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityDeleteRepoSubscriptionReq) urlPath() string {
@@ -90,13 +179,48 @@ func (r *ActivityDeleteRepoSubscriptionReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityDeleteRepoSubscriptionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityDeleteRepoSubscriptionReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActivityDeleteRepoSubscriptionReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityDeleteRepoSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityDeleteThreadSubscriptionReq builds requests for "activity/delete-thread-subscription"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityDeleteRepoSubscriptionReq) Rel(link RelName, resp *ActivityDeleteRepoSubscriptionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityDeleteRepoSubscriptionResponse is a response for ActivityDeleteRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
+*/
+type ActivityDeleteRepoSubscriptionResponse struct {
+	response
+	request *ActivityDeleteRepoSubscriptionReq
+}
+
+/*
+ActivityDeleteThreadSubscription performs requests for "activity/delete-thread-subscription"
 
 Delete a thread subscription.
 
@@ -104,8 +228,34 @@ Delete a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
+func (c *Client) ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityDeleteThreadSubscriptionResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityDeleteThreadSubscriptionReq is request data for Client.ActivityDeleteThreadSubscription
+
+https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
+*/
 type ActivityDeleteThreadSubscriptionReq struct {
+	pgURL    string
 	ThreadId int64
+}
+
+func (r *ActivityDeleteThreadSubscriptionReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityDeleteThreadSubscriptionReq) urlPath() string {
@@ -131,13 +281,48 @@ func (r *ActivityDeleteThreadSubscriptionReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityDeleteThreadSubscriptionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityDeleteThreadSubscriptionReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActivityDeleteThreadSubscriptionReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityDeleteThreadSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityGetFeedsReq builds requests for "activity/get-feeds"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityDeleteThreadSubscriptionReq) Rel(link RelName, resp *ActivityDeleteThreadSubscriptionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityDeleteThreadSubscriptionResponse is a response for ActivityDeleteThreadSubscription
+
+https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
+*/
+type ActivityDeleteThreadSubscriptionResponse struct {
+	response
+	request *ActivityDeleteThreadSubscriptionReq
+}
+
+/*
+ActivityGetFeeds performs requests for "activity/get-feeds"
 
 Get feeds.
 
@@ -145,7 +330,35 @@ Get feeds.
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-type ActivityGetFeedsReq struct{}
+func (c *Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityGetFeedsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityGetFeedsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityGetFeedsReq is request data for Client.ActivityGetFeeds
+
+https://developer.github.com/v3/activity/feeds/#get-feeds
+*/
+type ActivityGetFeedsReq struct {
+	pgURL string
+}
+
+func (r *ActivityGetFeedsReq) pagingURL() string {
+	return r.pgURL
+}
 
 func (r *ActivityGetFeedsReq) urlPath() string {
 	return fmt.Sprintf("/feeds")
@@ -170,22 +383,58 @@ func (r *ActivityGetFeedsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityGetFeedsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetFeedsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetFeedsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityGetFeedsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityGetFeedsResponseBody200 is a response body for activity/get-feeds
-
-API documentation: https://developer.github.com/v3/activity/feeds/#get-feeds
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityGetFeedsResponseBody200 struct {
+func (r *ActivityGetFeedsReq) Rel(link RelName, resp *ActivityGetFeedsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityGetFeedsResponseBody is a response body for ActivityGetFeeds
+
+https://developer.github.com/v3/activity/feeds/#get-feeds
+*/
+type ActivityGetFeedsResponseBody struct {
 	components.Feed
 }
 
 /*
-ActivityGetRepoSubscriptionReq builds requests for "activity/get-repo-subscription"
+ActivityGetFeedsResponse is a response for ActivityGetFeeds
+
+https://developer.github.com/v3/activity/feeds/#get-feeds
+*/
+type ActivityGetFeedsResponse struct {
+	response
+	request *ActivityGetFeedsReq
+	Data    *ActivityGetFeedsResponseBody
+}
+
+/*
+ActivityGetRepoSubscription performs requests for "activity/get-repo-subscription"
 
 Get a repository subscription.
 
@@ -193,9 +442,36 @@ Get a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
+func (c *Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityGetRepoSubscriptionResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityGetRepoSubscriptionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityGetRepoSubscriptionReq is request data for Client.ActivityGetRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
+*/
 type ActivityGetRepoSubscriptionReq struct {
+	pgURL string
 	Owner string
 	Repo  string
+}
+
+func (r *ActivityGetRepoSubscriptionReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityGetRepoSubscriptionReq) urlPath() string {
@@ -221,22 +497,58 @@ func (r *ActivityGetRepoSubscriptionReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityGetRepoSubscriptionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetRepoSubscriptionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetRepoSubscriptionReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityGetRepoSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityGetRepoSubscriptionResponseBody200 is a response body for activity/get-repo-subscription
-
-API documentation: https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityGetRepoSubscriptionResponseBody200 struct {
+func (r *ActivityGetRepoSubscriptionReq) Rel(link RelName, resp *ActivityGetRepoSubscriptionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityGetRepoSubscriptionResponseBody is a response body for ActivityGetRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
+*/
+type ActivityGetRepoSubscriptionResponseBody struct {
 	components.RepositorySubscription
 }
 
 /*
-ActivityGetThreadReq builds requests for "activity/get-thread"
+ActivityGetRepoSubscriptionResponse is a response for ActivityGetRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
+*/
+type ActivityGetRepoSubscriptionResponse struct {
+	response
+	request *ActivityGetRepoSubscriptionReq
+	Data    *ActivityGetRepoSubscriptionResponseBody
+}
+
+/*
+ActivityGetThread performs requests for "activity/get-thread"
 
 Get a thread.
 
@@ -244,8 +556,35 @@ Get a thread.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
+func (c *Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityGetThreadResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityGetThreadResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityGetThreadReq is request data for Client.ActivityGetThread
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread
+*/
 type ActivityGetThreadReq struct {
+	pgURL    string
 	ThreadId int64
+}
+
+func (r *ActivityGetThreadReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityGetThreadReq) urlPath() string {
@@ -271,22 +610,58 @@ func (r *ActivityGetThreadReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityGetThreadReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetThreadReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetThreadReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityGetThreadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityGetThreadResponseBody200 is a response body for activity/get-thread
-
-API documentation: https://developer.github.com/v3/activity/notifications/#get-a-thread
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityGetThreadResponseBody200 struct {
+func (r *ActivityGetThreadReq) Rel(link RelName, resp *ActivityGetThreadResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityGetThreadResponseBody is a response body for ActivityGetThread
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread
+*/
+type ActivityGetThreadResponseBody struct {
 	components.Thread
 }
 
 /*
-ActivityGetThreadSubscriptionForAuthenticatedUserReq builds requests for "activity/get-thread-subscription-for-authenticated-user"
+ActivityGetThreadResponse is a response for ActivityGetThread
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread
+*/
+type ActivityGetThreadResponse struct {
+	response
+	request *ActivityGetThreadReq
+	Data    *ActivityGetThreadResponseBody
+}
+
+/*
+ActivityGetThreadSubscriptionForAuthenticatedUser performs requests for "activity/get-thread-subscription-for-authenticated-user"
 
 Get a thread subscription for the authenticated user.
 
@@ -294,8 +669,35 @@ Get a thread subscription for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
+func (c *Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityGetThreadSubscriptionForAuthenticatedUserReq is request data for Client.ActivityGetThreadSubscriptionForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+*/
 type ActivityGetThreadSubscriptionForAuthenticatedUserReq struct {
+	pgURL    string
 	ThreadId int64
+}
+
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlPath() string {
@@ -321,22 +723,58 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) body() interface{
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody200 is a response body for activity/get-thread-subscription-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody200 struct {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link RelName, resp *ActivityGetThreadSubscriptionForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody is a response body for ActivityGetThreadSubscriptionForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+*/
+type ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody struct {
 	components.ThreadSubscription
 }
 
 /*
-ActivityListEventsForAuthenticatedUserReq builds requests for "activity/list-events-for-authenticated-user"
+ActivityGetThreadSubscriptionForAuthenticatedUserResponse is a response for ActivityGetThreadSubscriptionForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+*/
+type ActivityGetThreadSubscriptionForAuthenticatedUserResponse struct {
+	response
+	request *ActivityGetThreadSubscriptionForAuthenticatedUserReq
+	Data    *ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody
+}
+
+/*
+ActivityListEventsForAuthenticatedUser performs requests for "activity/list-events-for-authenticated-user"
 
 List events for the authenticated user.
 
@@ -344,7 +782,29 @@ List events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
+func (c *Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListEventsForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListEventsForAuthenticatedUserReq is request data for Client.ActivityListEventsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
+*/
 type ActivityListEventsForAuthenticatedUserReq struct {
+	pgURL    string
 	Username string
 
 	// Results per page (max 100)
@@ -352,6 +812,10 @@ type ActivityListEventsForAuthenticatedUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListEventsForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) urlPath() string {
@@ -383,13 +847,48 @@ func (r *ActivityListEventsForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListEventsForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListEventsForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListEventsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListNotificationsForAuthenticatedUserReq builds requests for "activity/list-notifications-for-authenticated-user"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListEventsForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListEventsForAuthenticatedUserResponse is a response for ActivityListEventsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
+*/
+type ActivityListEventsForAuthenticatedUserResponse struct {
+	response
+	request *ActivityListEventsForAuthenticatedUserReq
+}
+
+/*
+ActivityListNotificationsForAuthenticatedUser performs requests for "activity/list-notifications-for-authenticated-user"
 
 List notifications for the authenticated user.
 
@@ -397,7 +896,30 @@ List notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
+func (c *Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListNotificationsForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListNotificationsForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListNotificationsForAuthenticatedUserReq is request data for Client.ActivityListNotificationsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+*/
 type ActivityListNotificationsForAuthenticatedUserReq struct {
+	pgURL string
 
 	// If `true`, show notifications marked as read.
 	All *bool
@@ -427,6 +949,10 @@ type ActivityListNotificationsForAuthenticatedUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListNotificationsForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListNotificationsForAuthenticatedUserReq) urlPath() string {
@@ -470,22 +996,58 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListNotificationsForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListNotificationsForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListNotificationsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListNotificationsForAuthenticatedUserResponseBody200 is a response body for activity/list-notifications-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListNotificationsForAuthenticatedUserResponseBody200 []struct {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListNotificationsForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListNotificationsForAuthenticatedUserResponseBody is a response body for ActivityListNotificationsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+*/
+type ActivityListNotificationsForAuthenticatedUserResponseBody []struct {
 	components.Thread
 }
 
 /*
-ActivityListOrgEventsForAuthenticatedUserReq builds requests for "activity/list-org-events-for-authenticated-user"
+ActivityListNotificationsForAuthenticatedUserResponse is a response for ActivityListNotificationsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+*/
+type ActivityListNotificationsForAuthenticatedUserResponse struct {
+	response
+	request *ActivityListNotificationsForAuthenticatedUserReq
+	Data    *ActivityListNotificationsForAuthenticatedUserResponseBody
+}
+
+/*
+ActivityListOrgEventsForAuthenticatedUser performs requests for "activity/list-org-events-for-authenticated-user"
 
 List organization events for the authenticated user.
 
@@ -493,7 +1055,29 @@ List organization events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
+func (c *Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListOrgEventsForAuthenticatedUserReq is request data for Client.ActivityListOrgEventsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
+*/
 type ActivityListOrgEventsForAuthenticatedUserReq struct {
+	pgURL    string
 	Username string
 	Org      string
 
@@ -502,6 +1086,10 @@ type ActivityListOrgEventsForAuthenticatedUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlPath() string {
@@ -533,13 +1121,48 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListPublicEventsReq builds requests for "activity/list-public-events"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListOrgEventsForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListOrgEventsForAuthenticatedUserResponse is a response for ActivityListOrgEventsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
+*/
+type ActivityListOrgEventsForAuthenticatedUserResponse struct {
+	response
+	request *ActivityListOrgEventsForAuthenticatedUserReq
+}
+
+/*
+ActivityListPublicEvents performs requests for "activity/list-public-events"
 
 List public events.
 
@@ -547,13 +1170,39 @@ List public events.
 
 https://developer.github.com/v3/activity/events/#list-public-events
 */
+func (c *Client) ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListPublicEventsResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListPublicEventsReq is request data for Client.ActivityListPublicEvents
+
+https://developer.github.com/v3/activity/events/#list-public-events
+*/
 type ActivityListPublicEventsReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListPublicEventsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListPublicEventsReq) urlPath() string {
@@ -585,13 +1234,48 @@ func (r *ActivityListPublicEventsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListPublicEventsReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicEventsReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicEventsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListPublicEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListPublicEventsForRepoNetworkReq builds requests for "activity/list-public-events-for-repo-network"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListPublicEventsReq) Rel(link RelName, resp *ActivityListPublicEventsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListPublicEventsResponse is a response for ActivityListPublicEvents
+
+https://developer.github.com/v3/activity/events/#list-public-events
+*/
+type ActivityListPublicEventsResponse struct {
+	response
+	request *ActivityListPublicEventsReq
+}
+
+/*
+ActivityListPublicEventsForRepoNetwork performs requests for "activity/list-public-events-for-repo-network"
 
 List public events for a network of repositories.
 
@@ -599,7 +1283,29 @@ List public events for a network of repositories.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
+func (c *Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListPublicEventsForRepoNetworkResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListPublicEventsForRepoNetworkReq is request data for Client.ActivityListPublicEventsForRepoNetwork
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
+*/
 type ActivityListPublicEventsForRepoNetworkReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -608,6 +1314,10 @@ type ActivityListPublicEventsForRepoNetworkReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListPublicEventsForRepoNetworkReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) urlPath() string {
@@ -639,13 +1349,48 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListPublicEventsForRepoNetworkReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicEventsForRepoNetworkReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListPublicEventsForRepoNetworkReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListPublicEventsForUserReq builds requests for "activity/list-public-events-for-user"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link RelName, resp *ActivityListPublicEventsForRepoNetworkResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListPublicEventsForRepoNetworkResponse is a response for ActivityListPublicEventsForRepoNetwork
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
+*/
+type ActivityListPublicEventsForRepoNetworkResponse struct {
+	response
+	request *ActivityListPublicEventsForRepoNetworkReq
+}
+
+/*
+ActivityListPublicEventsForUser performs requests for "activity/list-public-events-for-user"
 
 List public events for a user.
 
@@ -653,7 +1398,29 @@ List public events for a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
+func (c *Client) ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListPublicEventsForUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListPublicEventsForUserReq is request data for Client.ActivityListPublicEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
+*/
 type ActivityListPublicEventsForUserReq struct {
+	pgURL    string
 	Username string
 
 	// Results per page (max 100)
@@ -661,6 +1428,10 @@ type ActivityListPublicEventsForUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListPublicEventsForUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListPublicEventsForUserReq) urlPath() string {
@@ -692,13 +1463,48 @@ func (r *ActivityListPublicEventsForUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListPublicEventsForUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicEventsForUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListPublicEventsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListPublicOrgEventsReq builds requests for "activity/list-public-org-events"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListPublicEventsForUserReq) Rel(link RelName, resp *ActivityListPublicEventsForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListPublicEventsForUserResponse is a response for ActivityListPublicEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
+*/
+type ActivityListPublicEventsForUserResponse struct {
+	response
+	request *ActivityListPublicEventsForUserReq
+}
+
+/*
+ActivityListPublicOrgEvents performs requests for "activity/list-public-org-events"
 
 List public organization events.
 
@@ -706,14 +1512,40 @@ List public organization events.
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
+func (c *Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListPublicOrgEventsResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListPublicOrgEventsReq is request data for Client.ActivityListPublicOrgEvents
+
+https://developer.github.com/v3/activity/events/#list-public-organization-events
+*/
 type ActivityListPublicOrgEventsReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListPublicOrgEventsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListPublicOrgEventsReq) urlPath() string {
@@ -745,13 +1577,48 @@ func (r *ActivityListPublicOrgEventsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListPublicOrgEventsReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListPublicOrgEventsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListPublicOrgEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListReceivedEventsForUserReq builds requests for "activity/list-received-events-for-user"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListPublicOrgEventsReq) Rel(link RelName, resp *ActivityListPublicOrgEventsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListPublicOrgEventsResponse is a response for ActivityListPublicOrgEvents
+
+https://developer.github.com/v3/activity/events/#list-public-organization-events
+*/
+type ActivityListPublicOrgEventsResponse struct {
+	response
+	request *ActivityListPublicOrgEventsReq
+}
+
+/*
+ActivityListReceivedEventsForUser performs requests for "activity/list-received-events-for-user"
 
 List events received by the authenticated user.
 
@@ -759,7 +1626,29 @@ List events received by the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
+func (c *Client) ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListReceivedEventsForUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListReceivedEventsForUserReq is request data for Client.ActivityListReceivedEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
+*/
 type ActivityListReceivedEventsForUserReq struct {
+	pgURL    string
 	Username string
 
 	// Results per page (max 100)
@@ -767,6 +1656,10 @@ type ActivityListReceivedEventsForUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListReceivedEventsForUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListReceivedEventsForUserReq) urlPath() string {
@@ -798,13 +1691,48 @@ func (r *ActivityListReceivedEventsForUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListReceivedEventsForUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListReceivedEventsForUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListReceivedEventsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListReceivedPublicEventsForUserReq builds requests for "activity/list-received-public-events-for-user"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListReceivedEventsForUserReq) Rel(link RelName, resp *ActivityListReceivedEventsForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListReceivedEventsForUserResponse is a response for ActivityListReceivedEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
+*/
+type ActivityListReceivedEventsForUserResponse struct {
+	response
+	request *ActivityListReceivedEventsForUserReq
+}
+
+/*
+ActivityListReceivedPublicEventsForUser performs requests for "activity/list-received-public-events-for-user"
 
 List public events received by a user.
 
@@ -812,7 +1740,29 @@ List public events received by a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
+func (c *Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListReceivedPublicEventsForUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListReceivedPublicEventsForUserReq is request data for Client.ActivityListReceivedPublicEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
+*/
 type ActivityListReceivedPublicEventsForUserReq struct {
+	pgURL    string
 	Username string
 
 	// Results per page (max 100)
@@ -820,6 +1770,10 @@ type ActivityListReceivedPublicEventsForUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListReceivedPublicEventsForUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) urlPath() string {
@@ -851,13 +1805,48 @@ func (r *ActivityListReceivedPublicEventsForUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListReceivedPublicEventsForUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListReceivedPublicEventsForUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListReceivedPublicEventsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListRepoEventsReq builds requests for "activity/list-repo-events"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link RelName, resp *ActivityListReceivedPublicEventsForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListReceivedPublicEventsForUserResponse is a response for ActivityListReceivedPublicEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
+*/
+type ActivityListReceivedPublicEventsForUserResponse struct {
+	response
+	request *ActivityListReceivedPublicEventsForUserReq
+}
+
+/*
+ActivityListRepoEvents performs requests for "activity/list-repo-events"
 
 List repository events.
 
@@ -865,7 +1854,29 @@ List repository events.
 
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
+func (c *Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListRepoEventsResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListRepoEventsReq is request data for Client.ActivityListRepoEvents
+
+https://developer.github.com/v3/activity/events/#list-repository-events
+*/
 type ActivityListRepoEventsReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -874,6 +1885,10 @@ type ActivityListRepoEventsReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListRepoEventsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListRepoEventsReq) urlPath() string {
@@ -905,13 +1920,48 @@ func (r *ActivityListRepoEventsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListRepoEventsReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListRepoEventsReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityListRepoEventsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListRepoEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListRepoNotificationsForAuthenticatedUserReq builds requests for "activity/list-repo-notifications-for-authenticated-user"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityListRepoEventsReq) Rel(link RelName, resp *ActivityListRepoEventsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListRepoEventsResponse is a response for ActivityListRepoEvents
+
+https://developer.github.com/v3/activity/events/#list-repository-events
+*/
+type ActivityListRepoEventsResponse struct {
+	response
+	request *ActivityListRepoEventsReq
+}
+
+/*
+ActivityListRepoNotificationsForAuthenticatedUser performs requests for "activity/list-repo-notifications-for-authenticated-user"
 
 List repository notifications for the authenticated user.
 
@@ -919,7 +1969,30 @@ List repository notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
+func (c *Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListRepoNotificationsForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListRepoNotificationsForAuthenticatedUserReq is request data for Client.ActivityListRepoNotificationsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
+*/
 type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -951,6 +2024,10 @@ type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlPath() string {
@@ -994,22 +2071,58 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) body() interface{
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListRepoNotificationsForAuthenticatedUserResponseBody200 is a response body for activity/list-repo-notifications-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListRepoNotificationsForAuthenticatedUserResponseBody200 []struct {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListRepoNotificationsForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListRepoNotificationsForAuthenticatedUserResponseBody is a response body for ActivityListRepoNotificationsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
+*/
+type ActivityListRepoNotificationsForAuthenticatedUserResponseBody []struct {
 	components.Thread
 }
 
 /*
-ActivityListReposStarredByAuthenticatedUserReq builds requests for "activity/list-repos-starred-by-authenticated-user"
+ActivityListRepoNotificationsForAuthenticatedUserResponse is a response for ActivityListRepoNotificationsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
+*/
+type ActivityListRepoNotificationsForAuthenticatedUserResponse struct {
+	response
+	request *ActivityListRepoNotificationsForAuthenticatedUserReq
+	Data    *ActivityListRepoNotificationsForAuthenticatedUserResponseBody
+}
+
+/*
+ActivityListReposStarredByAuthenticatedUser performs requests for "activity/list-repos-starred-by-authenticated-user"
 
 List repositories starred by the authenticated user.
 
@@ -1017,7 +2130,30 @@ List repositories starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
+func (c *Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListReposStarredByAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListReposStarredByAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListReposStarredByAuthenticatedUserReq is request data for Client.ActivityListReposStarredByAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+*/
 type ActivityListReposStarredByAuthenticatedUserReq struct {
+	pgURL string
 
 	/*
 	One of `created` (when the repository was starred) or `updated` (when it was
@@ -1033,6 +2169,10 @@ type ActivityListReposStarredByAuthenticatedUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListReposStarredByAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListReposStarredByAuthenticatedUserReq) urlPath() string {
@@ -1070,22 +2210,58 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListReposStarredByAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListReposStarredByAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListReposStarredByAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListReposStarredByAuthenticatedUserResponseBody200 is a response body for activity/list-repos-starred-by-authenticated-user
-
-API documentation: https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListReposStarredByAuthenticatedUserResponseBody200 []struct {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) Rel(link RelName, resp *ActivityListReposStarredByAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListReposStarredByAuthenticatedUserResponseBody is a response body for ActivityListReposStarredByAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+*/
+type ActivityListReposStarredByAuthenticatedUserResponseBody []struct {
 	components.Repository
 }
 
 /*
-ActivityListReposStarredByUserReq builds requests for "activity/list-repos-starred-by-user"
+ActivityListReposStarredByAuthenticatedUserResponse is a response for ActivityListReposStarredByAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+*/
+type ActivityListReposStarredByAuthenticatedUserResponse struct {
+	response
+	request *ActivityListReposStarredByAuthenticatedUserReq
+	Data    *ActivityListReposStarredByAuthenticatedUserResponseBody
+}
+
+/*
+ActivityListReposStarredByUser performs requests for "activity/list-repos-starred-by-user"
 
 List repositories starred by a user.
 
@@ -1093,7 +2269,30 @@ List repositories starred by a user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
+func (c *Client) ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListReposStarredByUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListReposStarredByUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListReposStarredByUserReq is request data for Client.ActivityListReposStarredByUser
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
+*/
 type ActivityListReposStarredByUserReq struct {
+	pgURL    string
 	Username string
 
 	/*
@@ -1110,6 +2309,10 @@ type ActivityListReposStarredByUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListReposStarredByUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListReposStarredByUserReq) urlPath() string {
@@ -1147,22 +2350,58 @@ func (r *ActivityListReposStarredByUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListReposStarredByUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListReposStarredByUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListReposStarredByUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListReposStarredByUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListReposStarredByUserResponseBody200 is a response body for activity/list-repos-starred-by-user
-
-API documentation: https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListReposStarredByUserResponseBody200 []struct {
+func (r *ActivityListReposStarredByUserReq) Rel(link RelName, resp *ActivityListReposStarredByUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListReposStarredByUserResponseBody is a response body for ActivityListReposStarredByUser
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
+*/
+type ActivityListReposStarredByUserResponseBody []struct {
 	components.Repository
 }
 
 /*
-ActivityListReposWatchedByUserReq builds requests for "activity/list-repos-watched-by-user"
+ActivityListReposStarredByUserResponse is a response for ActivityListReposStarredByUser
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
+*/
+type ActivityListReposStarredByUserResponse struct {
+	response
+	request *ActivityListReposStarredByUserReq
+	Data    *ActivityListReposStarredByUserResponseBody
+}
+
+/*
+ActivityListReposWatchedByUser performs requests for "activity/list-repos-watched-by-user"
 
 List repositories watched by a user.
 
@@ -1170,7 +2409,30 @@ List repositories watched by a user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
+func (c *Client) ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListReposWatchedByUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListReposWatchedByUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListReposWatchedByUserReq is request data for Client.ActivityListReposWatchedByUser
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
+*/
 type ActivityListReposWatchedByUserReq struct {
+	pgURL    string
 	Username string
 
 	// Results per page (max 100)
@@ -1178,6 +2440,10 @@ type ActivityListReposWatchedByUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListReposWatchedByUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListReposWatchedByUserReq) urlPath() string {
@@ -1209,22 +2475,58 @@ func (r *ActivityListReposWatchedByUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListReposWatchedByUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListReposWatchedByUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListReposWatchedByUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListReposWatchedByUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListReposWatchedByUserResponseBody200 is a response body for activity/list-repos-watched-by-user
-
-API documentation: https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListReposWatchedByUserResponseBody200 []struct {
+func (r *ActivityListReposWatchedByUserReq) Rel(link RelName, resp *ActivityListReposWatchedByUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListReposWatchedByUserResponseBody is a response body for ActivityListReposWatchedByUser
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
+*/
+type ActivityListReposWatchedByUserResponseBody []struct {
 	components.MinimalRepository
 }
 
 /*
-ActivityListStargazersForRepoReq builds requests for "activity/list-stargazers-for-repo"
+ActivityListReposWatchedByUserResponse is a response for ActivityListReposWatchedByUser
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
+*/
+type ActivityListReposWatchedByUserResponse struct {
+	response
+	request *ActivityListReposWatchedByUserReq
+	Data    *ActivityListReposWatchedByUserResponseBody
+}
+
+/*
+ActivityListStargazersForRepo performs requests for "activity/list-stargazers-for-repo"
 
 List stargazers.
 
@@ -1232,7 +2534,30 @@ List stargazers.
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
+func (c *Client) ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListStargazersForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListStargazersForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListStargazersForRepoReq is request data for Client.ActivityListStargazersForRepo
+
+https://developer.github.com/v3/activity/starring/#list-stargazers
+*/
 type ActivityListStargazersForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1241,6 +2566,10 @@ type ActivityListStargazersForRepoReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListStargazersForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListStargazersForRepoReq) urlPath() string {
@@ -1272,22 +2601,58 @@ func (r *ActivityListStargazersForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListStargazersForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListStargazersForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListStargazersForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListStargazersForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListStargazersForRepoResponseBody200 is a response body for activity/list-stargazers-for-repo
-
-API documentation: https://developer.github.com/v3/activity/starring/#list-stargazers
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListStargazersForRepoResponseBody200 []struct {
+func (r *ActivityListStargazersForRepoReq) Rel(link RelName, resp *ActivityListStargazersForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListStargazersForRepoResponseBody is a response body for ActivityListStargazersForRepo
+
+https://developer.github.com/v3/activity/starring/#list-stargazers
+*/
+type ActivityListStargazersForRepoResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-ActivityListWatchedReposForAuthenticatedUserReq builds requests for "activity/list-watched-repos-for-authenticated-user"
+ActivityListStargazersForRepoResponse is a response for ActivityListStargazersForRepo
+
+https://developer.github.com/v3/activity/starring/#list-stargazers
+*/
+type ActivityListStargazersForRepoResponse struct {
+	response
+	request *ActivityListStargazersForRepoReq
+	Data    *ActivityListStargazersForRepoResponseBody
+}
+
+/*
+ActivityListWatchedReposForAuthenticatedUser performs requests for "activity/list-watched-repos-for-authenticated-user"
 
 List repositories watched by the authenticated user.
 
@@ -1295,13 +2660,40 @@ List repositories watched by the authenticated user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
+func (c *Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListWatchedReposForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListWatchedReposForAuthenticatedUserReq is request data for Client.ActivityListWatchedReposForAuthenticatedUser
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+*/
 type ActivityListWatchedReposForAuthenticatedUserReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlPath() string {
@@ -1333,22 +2725,58 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListWatchedReposForAuthenticatedUserResponseBody200 is a response body for activity/list-watched-repos-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListWatchedReposForAuthenticatedUserResponseBody200 []struct {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListWatchedReposForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListWatchedReposForAuthenticatedUserResponseBody is a response body for ActivityListWatchedReposForAuthenticatedUser
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+*/
+type ActivityListWatchedReposForAuthenticatedUserResponseBody []struct {
 	components.MinimalRepository
 }
 
 /*
-ActivityListWatchersForRepoReq builds requests for "activity/list-watchers-for-repo"
+ActivityListWatchedReposForAuthenticatedUserResponse is a response for ActivityListWatchedReposForAuthenticatedUser
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+*/
+type ActivityListWatchedReposForAuthenticatedUserResponse struct {
+	response
+	request *ActivityListWatchedReposForAuthenticatedUserReq
+	Data    *ActivityListWatchedReposForAuthenticatedUserResponseBody
+}
+
+/*
+ActivityListWatchersForRepo performs requests for "activity/list-watchers-for-repo"
 
 List watchers.
 
@@ -1356,7 +2784,30 @@ List watchers.
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
+func (c *Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityListWatchersForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivityListWatchersForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityListWatchersForRepoReq is request data for Client.ActivityListWatchersForRepo
+
+https://developer.github.com/v3/activity/watching/#list-watchers
+*/
 type ActivityListWatchersForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1365,6 +2816,10 @@ type ActivityListWatchersForRepoReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *ActivityListWatchersForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityListWatchersForRepoReq) urlPath() string {
@@ -1396,22 +2851,58 @@ func (r *ActivityListWatchersForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityListWatchersForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListWatchersForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivityListWatchersForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityListWatchersForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityListWatchersForRepoResponseBody200 is a response body for activity/list-watchers-for-repo
-
-API documentation: https://developer.github.com/v3/activity/watching/#list-watchers
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ActivityListWatchersForRepoResponseBody200 []struct {
+func (r *ActivityListWatchersForRepoReq) Rel(link RelName, resp *ActivityListWatchersForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityListWatchersForRepoResponseBody is a response body for ActivityListWatchersForRepo
+
+https://developer.github.com/v3/activity/watching/#list-watchers
+*/
+type ActivityListWatchersForRepoResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-ActivityMarkNotificationsAsReadReq builds requests for "activity/mark-notifications-as-read"
+ActivityListWatchersForRepoResponse is a response for ActivityListWatchersForRepo
+
+https://developer.github.com/v3/activity/watching/#list-watchers
+*/
+type ActivityListWatchersForRepoResponse struct {
+	response
+	request *ActivityListWatchersForRepoReq
+	Data    *ActivityListWatchersForRepoResponseBody
+}
+
+/*
+ActivityMarkNotificationsAsRead performs requests for "activity/mark-notifications-as-read"
 
 Mark notifications as read.
 
@@ -1419,8 +2910,34 @@ Mark notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
+func (c *Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityMarkNotificationsAsReadResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityMarkNotificationsAsReadReq is request data for Client.ActivityMarkNotificationsAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+*/
 type ActivityMarkNotificationsAsReadReq struct {
+	pgURL       string
 	RequestBody ActivityMarkNotificationsAsReadReqBody
+}
+
+func (r *ActivityMarkNotificationsAsReadReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) urlPath() string {
@@ -1446,15 +2963,40 @@ func (r *ActivityMarkNotificationsAsReadReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityMarkNotificationsAsReadReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
+	return []int{205}
+}
+
+func (r *ActivityMarkNotificationsAsReadReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityMarkNotificationsAsReadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityMarkNotificationsAsReadReq) Rel(link RelName, resp *ActivityMarkNotificationsAsReadResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ActivityMarkNotificationsAsReadReqBody is a request body for activity/mark-notifications-as-read
 
-API documentation: https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 type ActivityMarkNotificationsAsReadReqBody struct {
 
@@ -1469,7 +3011,17 @@ type ActivityMarkNotificationsAsReadReqBody struct {
 }
 
 /*
-ActivityMarkRepoNotificationsAsReadReq builds requests for "activity/mark-repo-notifications-as-read"
+ActivityMarkNotificationsAsReadResponse is a response for ActivityMarkNotificationsAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+*/
+type ActivityMarkNotificationsAsReadResponse struct {
+	response
+	request *ActivityMarkNotificationsAsReadReq
+}
+
+/*
+ActivityMarkRepoNotificationsAsRead performs requests for "activity/mark-repo-notifications-as-read"
 
 Mark repository notifications as read.
 
@@ -1477,10 +3029,36 @@ Mark repository notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
+func (c *Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityMarkRepoNotificationsAsReadResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityMarkRepoNotificationsAsReadReq is request data for Client.ActivityMarkRepoNotificationsAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
+*/
 type ActivityMarkRepoNotificationsAsReadReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody ActivityMarkRepoNotificationsAsReadReqBody
+}
+
+func (r *ActivityMarkRepoNotificationsAsReadReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityMarkRepoNotificationsAsReadReq) urlPath() string {
@@ -1506,15 +3084,40 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityMarkRepoNotificationsAsReadReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
+	return []int{205}
+}
+
+func (r *ActivityMarkRepoNotificationsAsReadReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityMarkRepoNotificationsAsReadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityMarkRepoNotificationsAsReadReq) Rel(link RelName, resp *ActivityMarkRepoNotificationsAsReadResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ActivityMarkRepoNotificationsAsReadReqBody is a request body for activity/mark-repo-notifications-as-read
 
-API documentation: https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type ActivityMarkRepoNotificationsAsReadReqBody struct {
 
@@ -1529,7 +3132,17 @@ type ActivityMarkRepoNotificationsAsReadReqBody struct {
 }
 
 /*
-ActivityMarkThreadAsReadReq builds requests for "activity/mark-thread-as-read"
+ActivityMarkRepoNotificationsAsReadResponse is a response for ActivityMarkRepoNotificationsAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
+*/
+type ActivityMarkRepoNotificationsAsReadResponse struct {
+	response
+	request *ActivityMarkRepoNotificationsAsReadReq
+}
+
+/*
+ActivityMarkThreadAsRead performs requests for "activity/mark-thread-as-read"
 
 Mark a thread as read.
 
@@ -1537,8 +3150,34 @@ Mark a thread as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
+func (c *Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityMarkThreadAsReadResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityMarkThreadAsReadReq is request data for Client.ActivityMarkThreadAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
+*/
 type ActivityMarkThreadAsReadReq struct {
+	pgURL    string
 	ThreadId int64
+}
+
+func (r *ActivityMarkThreadAsReadReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityMarkThreadAsReadReq) urlPath() string {
@@ -1564,13 +3203,48 @@ func (r *ActivityMarkThreadAsReadReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityMarkThreadAsReadReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityMarkThreadAsReadReq) validStatuses() []int {
+	return []int{205}
+}
+
+func (r *ActivityMarkThreadAsReadReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityMarkThreadAsReadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivitySetRepoSubscriptionReq builds requests for "activity/set-repo-subscription"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityMarkThreadAsReadReq) Rel(link RelName, resp *ActivityMarkThreadAsReadResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityMarkThreadAsReadResponse is a response for ActivityMarkThreadAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
+*/
+type ActivityMarkThreadAsReadResponse struct {
+	response
+	request *ActivityMarkThreadAsReadReq
+}
+
+/*
+ActivitySetRepoSubscription performs requests for "activity/set-repo-subscription"
 
 Set a repository subscription.
 
@@ -1578,10 +3252,37 @@ Set a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
+func (c *Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivitySetRepoSubscriptionResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivitySetRepoSubscriptionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivitySetRepoSubscriptionReq is request data for Client.ActivitySetRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+*/
 type ActivitySetRepoSubscriptionReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody ActivitySetRepoSubscriptionReqBody
+}
+
+func (r *ActivitySetRepoSubscriptionReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivitySetRepoSubscriptionReq) urlPath() string {
@@ -1607,15 +3308,40 @@ func (r *ActivitySetRepoSubscriptionReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivitySetRepoSubscriptionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivitySetRepoSubscriptionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivitySetRepoSubscriptionReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivitySetRepoSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivitySetRepoSubscriptionReq) Rel(link RelName, resp *ActivitySetRepoSubscriptionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ActivitySetRepoSubscriptionReqBody is a request body for activity/set-repo-subscription
 
-API documentation: https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type ActivitySetRepoSubscriptionReqBody struct {
 
@@ -1627,16 +3353,27 @@ type ActivitySetRepoSubscriptionReqBody struct {
 }
 
 /*
-ActivitySetRepoSubscriptionResponseBody200 is a response body for activity/set-repo-subscription
+ActivitySetRepoSubscriptionResponseBody is a response body for ActivitySetRepoSubscription
 
-API documentation: https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-type ActivitySetRepoSubscriptionResponseBody200 struct {
+type ActivitySetRepoSubscriptionResponseBody struct {
 	components.RepositorySubscription
 }
 
 /*
-ActivitySetThreadSubscriptionReq builds requests for "activity/set-thread-subscription"
+ActivitySetRepoSubscriptionResponse is a response for ActivitySetRepoSubscription
+
+https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+*/
+type ActivitySetRepoSubscriptionResponse struct {
+	response
+	request *ActivitySetRepoSubscriptionReq
+	Data    *ActivitySetRepoSubscriptionResponseBody
+}
+
+/*
+ActivitySetThreadSubscription performs requests for "activity/set-thread-subscription"
 
 Set a thread subscription.
 
@@ -1644,9 +3381,36 @@ Set a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
+func (c *Client) ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivitySetThreadSubscriptionResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ActivitySetThreadSubscriptionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivitySetThreadSubscriptionReq is request data for Client.ActivitySetThreadSubscription
+
+https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
+*/
 type ActivitySetThreadSubscriptionReq struct {
+	pgURL       string
 	ThreadId    int64
 	RequestBody ActivitySetThreadSubscriptionReqBody
+}
+
+func (r *ActivitySetThreadSubscriptionReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivitySetThreadSubscriptionReq) urlPath() string {
@@ -1672,15 +3436,40 @@ func (r *ActivitySetThreadSubscriptionReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivitySetThreadSubscriptionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActivitySetThreadSubscriptionReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivitySetThreadSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivitySetThreadSubscriptionReq) Rel(link RelName, resp *ActivitySetThreadSubscriptionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ActivitySetThreadSubscriptionReqBody is a request body for activity/set-thread-subscription
 
-API documentation: https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
+https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type ActivitySetThreadSubscriptionReqBody struct {
 
@@ -1692,16 +3481,27 @@ type ActivitySetThreadSubscriptionReqBody struct {
 }
 
 /*
-ActivitySetThreadSubscriptionResponseBody200 is a response body for activity/set-thread-subscription
+ActivitySetThreadSubscriptionResponseBody is a response body for ActivitySetThreadSubscription
 
-API documentation: https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
+https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-type ActivitySetThreadSubscriptionResponseBody200 struct {
+type ActivitySetThreadSubscriptionResponseBody struct {
 	components.ThreadSubscription
 }
 
 /*
-ActivityStarRepoForAuthenticatedUserReq builds requests for "activity/star-repo-for-authenticated-user"
+ActivitySetThreadSubscriptionResponse is a response for ActivitySetThreadSubscription
+
+https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
+*/
+type ActivitySetThreadSubscriptionResponse struct {
+	response
+	request *ActivitySetThreadSubscriptionReq
+	Data    *ActivitySetThreadSubscriptionResponseBody
+}
+
+/*
+ActivityStarRepoForAuthenticatedUser performs requests for "activity/star-repo-for-authenticated-user"
 
 Star a repository for the authenticated user.
 
@@ -1709,9 +3509,35 @@ Star a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
+func (c *Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityStarRepoForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityStarRepoForAuthenticatedUserReq is request data for Client.ActivityStarRepoForAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+*/
 type ActivityStarRepoForAuthenticatedUserReq struct {
+	pgURL string
 	Owner string
 	Repo  string
+}
+
+func (r *ActivityStarRepoForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityStarRepoForAuthenticatedUserReq) urlPath() string {
@@ -1737,13 +3563,48 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityStarRepoForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityStarRepoForAuthenticatedUserReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActivityStarRepoForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityStarRepoForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ActivityUnstarRepoForAuthenticatedUserReq builds requests for "activity/unstar-repo-for-authenticated-user"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityStarRepoForAuthenticatedUserReq) Rel(link RelName, resp *ActivityStarRepoForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityStarRepoForAuthenticatedUserResponse is a response for ActivityStarRepoForAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+*/
+type ActivityStarRepoForAuthenticatedUserResponse struct {
+	response
+	request *ActivityStarRepoForAuthenticatedUserReq
+}
+
+/*
+ActivityUnstarRepoForAuthenticatedUser performs requests for "activity/unstar-repo-for-authenticated-user"
 
 Unstar a repository for the authenticated user.
 
@@ -1751,9 +3612,35 @@ Unstar a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
+func (c *Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActivityUnstarRepoForAuthenticatedUserReq is request data for Client.ActivityUnstarRepoForAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+*/
 type ActivityUnstarRepoForAuthenticatedUserReq struct {
+	pgURL string
 	Owner string
 	Repo  string
+}
+
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) urlPath() string {
@@ -1779,7 +3666,42 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) Rel(link RelName, resp *ActivityUnstarRepoForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ActivityUnstarRepoForAuthenticatedUserResponse is a response for ActivityUnstarRepoForAuthenticatedUser
+
+https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+*/
+type ActivityUnstarRepoForAuthenticatedUserResponse struct {
+	response
+	request *ActivityUnstarRepoForAuthenticatedUserReq
 }

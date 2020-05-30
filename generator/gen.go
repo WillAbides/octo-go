@@ -8,6 +8,44 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
+func addClientMethod(file *jen.File, endpoint model.Endpoint) {
+	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
+		toExportedName(endpoint.ID),
+		endpoint.ID,
+		endpoint.Summary,
+		endpoint.Method,
+		endpoint.Path,
+		endpoint.DocsURL,
+	)
+	file.Func().Params(jen.Id("c").Op("*").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
+		jen.Id("ctx").Qual("context", "Context"),
+		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
+		jen.Id("opt ...RequestOption"),
+	).Params(
+		jen.Op("*").Id(respStructName(endpoint)),
+		jen.Id("error"),
+	).BlockFunc(func(group *jen.Group) {
+		group.Id("r, err := c.doRequest(ctx, req, opt...)")
+		group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
+		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
+			jen.Id("response"): jen.Id("*r"),
+			jen.Id("request"):  jen.Id("req"),
+		})
+		switch {
+		case getEndpointType(endpoint) == endpointTypeBoolean:
+			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
+			group.Id("err").Op("=").Id("r.decodeBody(nil)")
+		case len(responseCodesWithBodies(endpoint)) > 0:
+			group.Id("resp").Dot("Data").Op("=").New(jen.Id(respBodyStructName(endpoint)))
+			group.Id("err").Op("=").Id("r.decodeBody(resp.Data)")
+		default:
+			group.Id("err").Op("=").Id("r.decodeBody(nil)")
+		}
+		group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
+		group.Return(jen.Id("resp, nil"))
+	})
+}
+
 func toExportedName(in string) string {
 	out := in
 	for _, separator := range []string{"_", "-", ".", "/"} {
@@ -40,9 +78,9 @@ func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, opts *
 	}
 	overrideParamSchema(schemaPath, schema)
 
-	componentRef := componentRefStmt(schema)
-	if componentRef != nil {
-		return componentRef
+	compSchemaRef := compSchemaRefStmt(schema)
+	if compSchemaRef != nil {
+		return compSchemaRef
 	}
 
 	helperStruct := reqBodyNestedStructName(schemaPath, schema)
@@ -127,4 +165,74 @@ func needsPointer(schema *model.ParamSchema) bool {
 		return false
 	}
 	return true
+}
+
+type endpointType int
+
+const (
+	// just a regular endpoint
+	endpointTypeRegular endpointType = iota
+	// endpoint that redirects via 302
+	endpointTypeRedirect
+	// gives boolean status through 204 vs 404 status codes
+	endpointTypeBoolean
+	// endpointTypeInvalid is last so we can get a list of all valid types with a for loop
+	endpointTypeInvalid
+)
+
+var endpointTypeNames = map[endpointType]string{
+	endpointTypeRegular:  "endpointTypeRegular",
+	endpointTypeRedirect: "endpointTypeRedirect",
+	endpointTypeBoolean:  "endpointTypeBoolean",
+}
+
+func (e endpointType) String() string {
+	return endpointTypeNames[e]
+}
+
+func addEndpointTypes(file *jen.File) {
+	file.Type().Id("endpointType").Int()
+	file.Const().Parens(jen.Do(func(statement *jen.Statement) {
+		for i := endpointType(0); i < endpointTypeInvalid; i++ {
+			statement.Id(endpointTypeNames[i])
+			if i == 0 {
+				statement.Id("endpointType").Op("=").Iota()
+			}
+			statement.Line()
+		}
+	}))
+}
+
+func getEndpointType(endpoint model.Endpoint) endpointType {
+	if isRedirectOnlyEndpoint(endpoint) {
+		return endpointTypeRedirect
+	}
+	switch {
+	case isRedirectOnlyEndpoint(endpoint):
+		return endpointTypeRedirect
+	case isBooleanEndpoint(endpoint):
+		return endpointTypeBoolean
+	}
+	return endpointTypeRegular
+}
+
+func isBooleanEndpoint(endpoint model.Endpoint) bool {
+	if len(endpoint.Responses) != 2 {
+		return false
+	}
+	if _, ok := endpoint.Responses[204]; !ok {
+		return false
+	}
+	if _, ok := endpoint.Responses[404]; !ok {
+		return false
+	}
+	return true
+}
+
+func isRedirectOnlyEndpoint(endpoint model.Endpoint) bool {
+	if len(endpoint.Responses) != 1 {
+		return false
+	}
+	_, ok := endpoint.Responses[302]
+	return ok
 }

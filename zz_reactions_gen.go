@@ -12,7 +12,7 @@ import (
 )
 
 /*
-ReactionsCreateForCommitCommentReq builds requests for "reactions/create-for-commit-comment"
+ReactionsCreateForCommitComment performs requests for "reactions/create-for-commit-comment"
 
 Create reaction for a commit comment.
 
@@ -20,7 +20,30 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
+func (c *Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsCreateForCommitCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsCreateForCommitCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForCommitCommentReq is request data for Client.ReactionsCreateForCommitComment
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
+*/
 type ReactionsCreateForCommitCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -34,6 +57,10 @@ type ReactionsCreateForCommitCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForCommitCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsCreateForCommitCommentReq) urlPath() string {
@@ -65,15 +92,40 @@ func (r *ReactionsCreateForCommitCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsCreateForCommitCommentReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForCommitCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsCreateForCommitCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForCommitCommentReq) Rel(link RelName, resp *ReactionsCreateForCommitCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ReactionsCreateForCommitCommentReqBody is a request body for reactions/create-for-commit-comment
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentReqBody struct {
 
@@ -85,16 +137,27 @@ type ReactionsCreateForCommitCommentReqBody struct {
 }
 
 /*
-ReactionsCreateForCommitCommentResponseBody201 is a response body for reactions/create-for-commit-comment
+ReactionsCreateForCommitCommentResponseBody is a response body for ReactionsCreateForCommitComment
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-type ReactionsCreateForCommitCommentResponseBody201 struct {
+type ReactionsCreateForCommitCommentResponseBody struct {
 	components.Reaction
 }
 
 /*
-ReactionsCreateForIssueReq builds requests for "reactions/create-for-issue"
+ReactionsCreateForCommitCommentResponse is a response for ReactionsCreateForCommitComment
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
+*/
+type ReactionsCreateForCommitCommentResponse struct {
+	response
+	request *ReactionsCreateForCommitCommentReq
+	Data    *ReactionsCreateForCommitCommentResponseBody
+}
+
+/*
+ReactionsCreateForIssue performs requests for "reactions/create-for-issue"
 
 Create reaction for an issue.
 
@@ -102,7 +165,30 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
+func (c *Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsCreateForIssueResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsCreateForIssueResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForIssueReq is request data for Client.ReactionsCreateForIssue
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+*/
 type ReactionsCreateForIssueReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -116,6 +202,10 @@ type ReactionsCreateForIssueReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForIssueReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsCreateForIssueReq) urlPath() string {
@@ -147,15 +237,40 @@ func (r *ReactionsCreateForIssueReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsCreateForIssueReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForIssueReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForIssueReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsCreateForIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForIssueReq) Rel(link RelName, resp *ReactionsCreateForIssueResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ReactionsCreateForIssueReqBody is a request body for reactions/create-for-issue
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueReqBody struct {
 
@@ -167,16 +282,27 @@ type ReactionsCreateForIssueReqBody struct {
 }
 
 /*
-ReactionsCreateForIssueResponseBody201 is a response body for reactions/create-for-issue
+ReactionsCreateForIssueResponseBody is a response body for ReactionsCreateForIssue
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-type ReactionsCreateForIssueResponseBody201 struct {
+type ReactionsCreateForIssueResponseBody struct {
 	components.Reaction
 }
 
 /*
-ReactionsCreateForIssueCommentReq builds requests for "reactions/create-for-issue-comment"
+ReactionsCreateForIssueResponse is a response for ReactionsCreateForIssue
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+*/
+type ReactionsCreateForIssueResponse struct {
+	response
+	request *ReactionsCreateForIssueReq
+	Data    *ReactionsCreateForIssueResponseBody
+}
+
+/*
+ReactionsCreateForIssueComment performs requests for "reactions/create-for-issue-comment"
 
 Create reaction for an issue comment.
 
@@ -184,7 +310,30 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
+func (c *Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsCreateForIssueCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsCreateForIssueCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForIssueCommentReq is request data for Client.ReactionsCreateForIssueComment
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+*/
 type ReactionsCreateForIssueCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -198,6 +347,10 @@ type ReactionsCreateForIssueCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForIssueCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsCreateForIssueCommentReq) urlPath() string {
@@ -229,15 +382,40 @@ func (r *ReactionsCreateForIssueCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsCreateForIssueCommentReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForIssueCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsCreateForIssueCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForIssueCommentReq) Rel(link RelName, resp *ReactionsCreateForIssueCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ReactionsCreateForIssueCommentReqBody is a request body for reactions/create-for-issue-comment
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentReqBody struct {
 
@@ -249,16 +427,27 @@ type ReactionsCreateForIssueCommentReqBody struct {
 }
 
 /*
-ReactionsCreateForIssueCommentResponseBody201 is a response body for reactions/create-for-issue-comment
+ReactionsCreateForIssueCommentResponseBody is a response body for ReactionsCreateForIssueComment
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-type ReactionsCreateForIssueCommentResponseBody201 struct {
+type ReactionsCreateForIssueCommentResponseBody struct {
 	components.Reaction
 }
 
 /*
-ReactionsCreateForPullRequestReviewCommentReq builds requests for "reactions/create-for-pull-request-review-comment"
+ReactionsCreateForIssueCommentResponse is a response for ReactionsCreateForIssueComment
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+*/
+type ReactionsCreateForIssueCommentResponse struct {
+	response
+	request *ReactionsCreateForIssueCommentReq
+	Data    *ReactionsCreateForIssueCommentResponseBody
+}
+
+/*
+ReactionsCreateForPullRequestReviewComment performs requests for "reactions/create-for-pull-request-review-comment"
 
 Create reaction for a pull request review comment.
 
@@ -266,7 +455,30 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
+func (c *Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsCreateForPullRequestReviewCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsCreateForPullRequestReviewCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForPullRequestReviewCommentReq is request data for Client.ReactionsCreateForPullRequestReviewComment
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+*/
 type ReactionsCreateForPullRequestReviewCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -280,6 +492,10 @@ type ReactionsCreateForPullRequestReviewCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForPullRequestReviewCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
@@ -311,15 +527,40 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsCreateForPullRequestReviewCommentReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsCreateForPullRequestReviewCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForPullRequestReviewCommentReq) Rel(link RelName, resp *ReactionsCreateForPullRequestReviewCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ReactionsCreateForPullRequestReviewCommentReqBody is a request body for reactions/create-for-pull-request-review-comment
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentReqBody struct {
 
@@ -331,16 +572,27 @@ type ReactionsCreateForPullRequestReviewCommentReqBody struct {
 }
 
 /*
-ReactionsCreateForPullRequestReviewCommentResponseBody201 is a response body for reactions/create-for-pull-request-review-comment
+ReactionsCreateForPullRequestReviewCommentResponseBody is a response body for ReactionsCreateForPullRequestReviewComment
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-type ReactionsCreateForPullRequestReviewCommentResponseBody201 struct {
+type ReactionsCreateForPullRequestReviewCommentResponseBody struct {
 	components.Reaction
 }
 
 /*
-ReactionsCreateForTeamDiscussionCommentInOrgReq builds requests for "reactions/create-for-team-discussion-comment-in-org"
+ReactionsCreateForPullRequestReviewCommentResponse is a response for ReactionsCreateForPullRequestReviewComment
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+*/
+type ReactionsCreateForPullRequestReviewCommentResponse struct {
+	response
+	request *ReactionsCreateForPullRequestReviewCommentReq
+	Data    *ReactionsCreateForPullRequestReviewCommentResponseBody
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentInOrg performs requests for "reactions/create-for-team-discussion-comment-in-org"
 
 Create reaction for a team discussion comment.
 
@@ -348,7 +600,30 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
+func (c *Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsCreateForTeamDiscussionCommentInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsCreateForTeamDiscussionCommentInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentInOrgReq is request data for Client.ReactionsCreateForTeamDiscussionCommentInOrg
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
+*/
 type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -363,6 +638,10 @@ type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlPath() string {
@@ -394,15 +673,40 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionCommentInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ReactionsCreateForTeamDiscussionCommentInOrgReqBody is a request body for reactions/create-for-team-discussion-comment-in-org
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgReqBody struct {
 
@@ -414,98 +718,27 @@ type ReactionsCreateForTeamDiscussionCommentInOrgReqBody struct {
 }
 
 /*
-ReactionsCreateForTeamDiscussionCommentInOrgResponseBody201 is a response body for reactions/create-for-team-discussion-comment-in-org
+ReactionsCreateForTeamDiscussionCommentInOrgResponseBody is a response body for ReactionsCreateForTeamDiscussionCommentInOrg
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-type ReactionsCreateForTeamDiscussionCommentInOrgResponseBody201 struct {
+type ReactionsCreateForTeamDiscussionCommentInOrgResponseBody struct {
 	components.Reaction
 }
 
 /*
-ReactionsCreateForTeamDiscussionCommentLegacyReq builds requests for "reactions/create-for-team-discussion-comment-legacy"
+ReactionsCreateForTeamDiscussionCommentInOrgResponse is a response for ReactionsCreateForTeamDiscussionCommentInOrg
 
-Create reaction for a team discussion comment (Legacy).
-
-  POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
-
-https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      ReactionsCreateForTeamDiscussionCommentLegacyReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type ReactionsCreateForTeamDiscussionCommentInOrgResponse struct {
+	response
+	request *ReactionsCreateForTeamDiscussionCommentInOrgReq
+	Data    *ReactionsCreateForTeamDiscussionCommentInOrgResponseBody
 }
 
 /*
-ReactionsCreateForTeamDiscussionCommentLegacyReqBody is a request body for reactions/create-for-team-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
-*/
-type ReactionsCreateForTeamDiscussionCommentLegacyReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion comment.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 is a response body for reactions/create-for-team-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
-*/
-type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody201 struct {
-	components.Reaction
-}
-
-/*
-ReactionsCreateForTeamDiscussionInOrgReq builds requests for "reactions/create-for-team-discussion-in-org"
+ReactionsCreateForTeamDiscussionInOrg performs requests for "reactions/create-for-team-discussion-in-org"
 
 Create reaction for a team discussion.
 
@@ -513,7 +746,30 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
+func (c *Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsCreateForTeamDiscussionInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsCreateForTeamDiscussionInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForTeamDiscussionInOrgReq is request data for Client.ReactionsCreateForTeamDiscussionInOrg
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
+*/
 type ReactionsCreateForTeamDiscussionInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -527,6 +783,10 @@ type ReactionsCreateForTeamDiscussionInOrgReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
@@ -558,15 +818,40 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 ReactionsCreateForTeamDiscussionInOrgReqBody is a request body for reactions/create-for-team-discussion-in-org
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgReqBody struct {
 
@@ -578,97 +863,27 @@ type ReactionsCreateForTeamDiscussionInOrgReqBody struct {
 }
 
 /*
-ReactionsCreateForTeamDiscussionInOrgResponseBody201 is a response body for reactions/create-for-team-discussion-in-org
+ReactionsCreateForTeamDiscussionInOrgResponseBody is a response body for ReactionsCreateForTeamDiscussionInOrg
 
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-type ReactionsCreateForTeamDiscussionInOrgResponseBody201 struct {
+type ReactionsCreateForTeamDiscussionInOrgResponseBody struct {
 	components.Reaction
 }
 
 /*
-ReactionsCreateForTeamDiscussionLegacyReq builds requests for "reactions/create-for-team-discussion-legacy"
+ReactionsCreateForTeamDiscussionInOrgResponse is a response for ReactionsCreateForTeamDiscussionInOrg
 
-Create reaction for a team discussion (Legacy).
-
-  POST /teams/{team_id}/discussions/{discussion_number}/reactions
-
-https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-type ReactionsCreateForTeamDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	RequestBody      ReactionsCreateForTeamDiscussionLegacyReqBody
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-// HTTPRequest creates an http request
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type ReactionsCreateForTeamDiscussionInOrgResponse struct {
+	response
+	request *ReactionsCreateForTeamDiscussionInOrgReq
+	Data    *ReactionsCreateForTeamDiscussionInOrgResponseBody
 }
 
 /*
-ReactionsCreateForTeamDiscussionLegacyReqBody is a request body for reactions/create-for-team-discussion-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
-*/
-type ReactionsCreateForTeamDiscussionLegacyReqBody struct {
-
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion.
-	*/
-	Content *string `json:"content"`
-}
-
-/*
-ReactionsCreateForTeamDiscussionLegacyResponseBody201 is a response body for reactions/create-for-team-discussion-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
-*/
-type ReactionsCreateForTeamDiscussionLegacyResponseBody201 struct {
-	components.Reaction
-}
-
-/*
-ReactionsDeleteForCommitCommentReq builds requests for "reactions/delete-for-commit-comment"
+ReactionsDeleteForCommitComment performs requests for "reactions/delete-for-commit-comment"
 
 Delete a commit comment reaction.
 
@@ -676,7 +891,29 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
+func (c *Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsDeleteForCommitCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteForCommitCommentReq is request data for Client.ReactionsDeleteForCommitComment
+
+https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
+*/
 type ReactionsDeleteForCommitCommentReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	CommentId  int64
@@ -690,6 +927,10 @@ type ReactionsDeleteForCommitCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteForCommitCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsDeleteForCommitCommentReq) urlPath() string {
@@ -721,13 +962,48 @@ func (r *ReactionsDeleteForCommitCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsDeleteForCommitCommentReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteForCommitCommentReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteForCommitCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsDeleteForCommitCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsDeleteForIssueReq builds requests for "reactions/delete-for-issue"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsDeleteForCommitCommentReq) Rel(link RelName, resp *ReactionsDeleteForCommitCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsDeleteForCommitCommentResponse is a response for ReactionsDeleteForCommitComment
+
+https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
+*/
+type ReactionsDeleteForCommitCommentResponse struct {
+	response
+	request *ReactionsDeleteForCommitCommentReq
+}
+
+/*
+ReactionsDeleteForIssue performs requests for "reactions/delete-for-issue"
 
 Delete an issue reaction.
 
@@ -735,7 +1011,29 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
+func (c *Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsDeleteForIssueResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteForIssueReq is request data for Client.ReactionsDeleteForIssue
+
+https://developer.github.com/v3/reactions/#delete-an-issue-reaction
+*/
 type ReactionsDeleteForIssueReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -749,6 +1047,10 @@ type ReactionsDeleteForIssueReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteForIssueReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsDeleteForIssueReq) urlPath() string {
@@ -780,13 +1082,48 @@ func (r *ReactionsDeleteForIssueReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsDeleteForIssueReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteForIssueReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteForIssueReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsDeleteForIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsDeleteForIssueCommentReq builds requests for "reactions/delete-for-issue-comment"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsDeleteForIssueReq) Rel(link RelName, resp *ReactionsDeleteForIssueResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsDeleteForIssueResponse is a response for ReactionsDeleteForIssue
+
+https://developer.github.com/v3/reactions/#delete-an-issue-reaction
+*/
+type ReactionsDeleteForIssueResponse struct {
+	response
+	request *ReactionsDeleteForIssueReq
+}
+
+/*
+ReactionsDeleteForIssueComment performs requests for "reactions/delete-for-issue-comment"
 
 Delete an issue comment reaction.
 
@@ -794,7 +1131,29 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
+func (c *Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsDeleteForIssueCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteForIssueCommentReq is request data for Client.ReactionsDeleteForIssueComment
+
+https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
+*/
 type ReactionsDeleteForIssueCommentReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	CommentId  int64
@@ -808,6 +1167,10 @@ type ReactionsDeleteForIssueCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteForIssueCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsDeleteForIssueCommentReq) urlPath() string {
@@ -839,13 +1202,48 @@ func (r *ReactionsDeleteForIssueCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsDeleteForIssueCommentReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteForIssueCommentReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteForIssueCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsDeleteForIssueCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsDeleteForPullRequestCommentReq builds requests for "reactions/delete-for-pull-request-comment"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsDeleteForIssueCommentReq) Rel(link RelName, resp *ReactionsDeleteForIssueCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsDeleteForIssueCommentResponse is a response for ReactionsDeleteForIssueComment
+
+https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
+*/
+type ReactionsDeleteForIssueCommentResponse struct {
+	response
+	request *ReactionsDeleteForIssueCommentReq
+}
+
+/*
+ReactionsDeleteForPullRequestComment performs requests for "reactions/delete-for-pull-request-comment"
 
 Delete a pull request comment reaction.
 
@@ -853,7 +1251,29 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
+func (c *Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsDeleteForPullRequestCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteForPullRequestCommentReq is request data for Client.ReactionsDeleteForPullRequestComment
+
+https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
+*/
 type ReactionsDeleteForPullRequestCommentReq struct {
+	pgURL      string
 	Owner      string
 	Repo       string
 	CommentId  int64
@@ -867,6 +1287,10 @@ type ReactionsDeleteForPullRequestCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteForPullRequestCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsDeleteForPullRequestCommentReq) urlPath() string {
@@ -898,13 +1322,48 @@ func (r *ReactionsDeleteForPullRequestCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsDeleteForPullRequestCommentReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteForPullRequestCommentReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteForPullRequestCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsDeleteForPullRequestCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsDeleteForTeamDiscussionReq builds requests for "reactions/delete-for-team-discussion"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsDeleteForPullRequestCommentReq) Rel(link RelName, resp *ReactionsDeleteForPullRequestCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsDeleteForPullRequestCommentResponse is a response for ReactionsDeleteForPullRequestComment
+
+https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
+*/
+type ReactionsDeleteForPullRequestCommentResponse struct {
+	response
+	request *ReactionsDeleteForPullRequestCommentReq
+}
+
+/*
+ReactionsDeleteForTeamDiscussion performs requests for "reactions/delete-for-team-discussion"
 
 Delete team discussion reaction.
 
@@ -912,7 +1371,29 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
+func (c *Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsDeleteForTeamDiscussionResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteForTeamDiscussionReq is request data for Client.ReactionsDeleteForTeamDiscussion
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
+*/
 type ReactionsDeleteForTeamDiscussionReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -926,6 +1407,10 @@ type ReactionsDeleteForTeamDiscussionReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteForTeamDiscussionReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsDeleteForTeamDiscussionReq) urlPath() string {
@@ -957,13 +1442,48 @@ func (r *ReactionsDeleteForTeamDiscussionReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsDeleteForTeamDiscussionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteForTeamDiscussionReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteForTeamDiscussionReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsDeleteForTeamDiscussionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsDeleteForTeamDiscussionCommentReq builds requests for "reactions/delete-for-team-discussion-comment"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsDeleteForTeamDiscussionReq) Rel(link RelName, resp *ReactionsDeleteForTeamDiscussionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsDeleteForTeamDiscussionResponse is a response for ReactionsDeleteForTeamDiscussion
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
+*/
+type ReactionsDeleteForTeamDiscussionResponse struct {
+	response
+	request *ReactionsDeleteForTeamDiscussionReq
+}
+
+/*
+ReactionsDeleteForTeamDiscussionComment performs requests for "reactions/delete-for-team-discussion-comment"
 
 Delete team discussion comment reaction.
 
@@ -971,7 +1491,29 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
+func (c *Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsDeleteForTeamDiscussionCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteForTeamDiscussionCommentReq is request data for Client.ReactionsDeleteForTeamDiscussionComment
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
+*/
 type ReactionsDeleteForTeamDiscussionCommentReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -986,6 +1528,10 @@ type ReactionsDeleteForTeamDiscussionCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
@@ -1017,69 +1563,48 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsDeleteLegacyReq builds requests for "reactions/delete-legacy"
-
-Delete a reaction (Legacy).
-
-  DELETE /reactions/{reaction_id}
-
-https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsDeleteLegacyReq struct {
-	ReactionId int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *ReactionsDeleteLegacyReq) urlPath() string {
-	return fmt.Sprintf("/reactions/%v", r.ReactionId)
-}
-
-func (r *ReactionsDeleteLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) Rel(link RelName, resp *ReactionsDeleteForTeamDiscussionCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	r.pgURL = u
+	return true
 }
 
 /*
-ReactionsListForCommitCommentReq builds requests for "reactions/list-for-commit-comment"
+ReactionsDeleteForTeamDiscussionCommentResponse is a response for ReactionsDeleteForTeamDiscussionComment
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
+*/
+type ReactionsDeleteForTeamDiscussionCommentResponse struct {
+	response
+	request *ReactionsDeleteForTeamDiscussionCommentReq
+}
+
+/*
+ReactionsListForCommitComment performs requests for "reactions/list-for-commit-comment"
 
 List reactions for a commit comment.
 
@@ -1087,7 +1612,30 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
+func (c *Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsListForCommitCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsListForCommitCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForCommitCommentReq is request data for Client.ReactionsListForCommitComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+*/
 type ReactionsListForCommitCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1113,6 +1661,10 @@ type ReactionsListForCommitCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForCommitCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsListForCommitCommentReq) urlPath() string {
@@ -1153,22 +1705,58 @@ func (r *ReactionsListForCommitCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsListForCommitCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForCommitCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForCommitCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsListForCommitCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsListForCommitCommentResponseBody200 is a response body for reactions/list-for-commit-comment
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsListForCommitCommentResponseBody200 []struct {
+func (r *ReactionsListForCommitCommentReq) Rel(link RelName, resp *ReactionsListForCommitCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsListForCommitCommentResponseBody is a response body for ReactionsListForCommitComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+*/
+type ReactionsListForCommitCommentResponseBody []struct {
 	components.Reaction
 }
 
 /*
-ReactionsListForIssueReq builds requests for "reactions/list-for-issue"
+ReactionsListForCommitCommentResponse is a response for ReactionsListForCommitComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+*/
+type ReactionsListForCommitCommentResponse struct {
+	response
+	request *ReactionsListForCommitCommentReq
+	Data    *ReactionsListForCommitCommentResponseBody
+}
+
+/*
+ReactionsListForIssue performs requests for "reactions/list-for-issue"
 
 List reactions for an issue.
 
@@ -1176,7 +1764,30 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
+func (c *Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsListForIssueResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsListForIssueResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForIssueReq is request data for Client.ReactionsListForIssue
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+*/
 type ReactionsListForIssueReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1202,6 +1813,10 @@ type ReactionsListForIssueReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForIssueReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsListForIssueReq) urlPath() string {
@@ -1242,22 +1857,58 @@ func (r *ReactionsListForIssueReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsListForIssueReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForIssueReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForIssueReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsListForIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsListForIssueResponseBody200 is a response body for reactions/list-for-issue
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsListForIssueResponseBody200 []struct {
+func (r *ReactionsListForIssueReq) Rel(link RelName, resp *ReactionsListForIssueResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsListForIssueResponseBody is a response body for ReactionsListForIssue
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+*/
+type ReactionsListForIssueResponseBody []struct {
 	components.Reaction
 }
 
 /*
-ReactionsListForIssueCommentReq builds requests for "reactions/list-for-issue-comment"
+ReactionsListForIssueResponse is a response for ReactionsListForIssue
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+*/
+type ReactionsListForIssueResponse struct {
+	response
+	request *ReactionsListForIssueReq
+	Data    *ReactionsListForIssueResponseBody
+}
+
+/*
+ReactionsListForIssueComment performs requests for "reactions/list-for-issue-comment"
 
 List reactions for an issue comment.
 
@@ -1265,7 +1916,30 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
+func (c *Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsListForIssueCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsListForIssueCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForIssueCommentReq is request data for Client.ReactionsListForIssueComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
+*/
 type ReactionsListForIssueCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1291,6 +1965,10 @@ type ReactionsListForIssueCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForIssueCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsListForIssueCommentReq) urlPath() string {
@@ -1331,22 +2009,58 @@ func (r *ReactionsListForIssueCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsListForIssueCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForIssueCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForIssueCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsListForIssueCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsListForIssueCommentResponseBody200 is a response body for reactions/list-for-issue-comment
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsListForIssueCommentResponseBody200 []struct {
+func (r *ReactionsListForIssueCommentReq) Rel(link RelName, resp *ReactionsListForIssueCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsListForIssueCommentResponseBody is a response body for ReactionsListForIssueComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
+*/
+type ReactionsListForIssueCommentResponseBody []struct {
 	components.Reaction
 }
 
 /*
-ReactionsListForPullRequestReviewCommentReq builds requests for "reactions/list-for-pull-request-review-comment"
+ReactionsListForIssueCommentResponse is a response for ReactionsListForIssueComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
+*/
+type ReactionsListForIssueCommentResponse struct {
+	response
+	request *ReactionsListForIssueCommentReq
+	Data    *ReactionsListForIssueCommentResponseBody
+}
+
+/*
+ReactionsListForPullRequestReviewComment performs requests for "reactions/list-for-pull-request-review-comment"
 
 List reactions for a pull request review comment.
 
@@ -1354,7 +2068,30 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
+func (c *Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsListForPullRequestReviewCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsListForPullRequestReviewCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForPullRequestReviewCommentReq is request data for Client.ReactionsListForPullRequestReviewComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
+*/
 type ReactionsListForPullRequestReviewCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1380,6 +2117,10 @@ type ReactionsListForPullRequestReviewCommentReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForPullRequestReviewCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsListForPullRequestReviewCommentReq) urlPath() string {
@@ -1420,22 +2161,58 @@ func (r *ReactionsListForPullRequestReviewCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsListForPullRequestReviewCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForPullRequestReviewCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForPullRequestReviewCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsListForPullRequestReviewCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsListForPullRequestReviewCommentResponseBody200 is a response body for reactions/list-for-pull-request-review-comment
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsListForPullRequestReviewCommentResponseBody200 []struct {
+func (r *ReactionsListForPullRequestReviewCommentReq) Rel(link RelName, resp *ReactionsListForPullRequestReviewCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsListForPullRequestReviewCommentResponseBody is a response body for ReactionsListForPullRequestReviewComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
+*/
+type ReactionsListForPullRequestReviewCommentResponseBody []struct {
 	components.Reaction
 }
 
 /*
-ReactionsListForTeamDiscussionCommentInOrgReq builds requests for "reactions/list-for-team-discussion-comment-in-org"
+ReactionsListForPullRequestReviewCommentResponse is a response for ReactionsListForPullRequestReviewComment
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
+*/
+type ReactionsListForPullRequestReviewCommentResponse struct {
+	response
+	request *ReactionsListForPullRequestReviewCommentReq
+	Data    *ReactionsListForPullRequestReviewCommentResponseBody
+}
+
+/*
+ReactionsListForTeamDiscussionCommentInOrg performs requests for "reactions/list-for-team-discussion-comment-in-org"
 
 List reactions for a team discussion comment.
 
@@ -1443,7 +2220,30 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
+func (c *Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsListForTeamDiscussionCommentInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsListForTeamDiscussionCommentInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForTeamDiscussionCommentInOrgReq is request data for Client.ReactionsListForTeamDiscussionCommentInOrg
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
+*/
 type ReactionsListForTeamDiscussionCommentInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1470,6 +2270,10 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
@@ -1510,111 +2314,58 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsListForTeamDiscussionCommentInOrgResponseBody200 is a response body for reactions/list-for-team-discussion-comment-in-org
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsListForTeamDiscussionCommentInOrgResponseBody200 []struct {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionCommentInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsListForTeamDiscussionCommentInOrgResponseBody is a response body for ReactionsListForTeamDiscussionCommentInOrg
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
+*/
+type ReactionsListForTeamDiscussionCommentInOrgResponseBody []struct {
 	components.Reaction
 }
 
 /*
-ReactionsListForTeamDiscussionCommentLegacyReq builds requests for "reactions/list-for-team-discussion-comment-legacy"
+ReactionsListForTeamDiscussionCommentInOrgResponse is a response for ReactionsListForTeamDiscussionCommentInOrg
 
-List reactions for a team discussion comment (Legacy).
-
-  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-type ReactionsListForTeamDiscussionCommentLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-	CommentNumber    int64
-
-	/*
-	Returns a single [reaction
-	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to a team discussion comment.
-	*/
-	Content *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Content != nil {
-		query.Set("content", *r.Content)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+type ReactionsListForTeamDiscussionCommentInOrgResponse struct {
+	response
+	request *ReactionsListForTeamDiscussionCommentInOrgReq
+	Data    *ReactionsListForTeamDiscussionCommentInOrgResponseBody
 }
 
 /*
-ReactionsListForTeamDiscussionCommentLegacyResponseBody200 is a response body for reactions/list-for-team-discussion-comment-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
-*/
-type ReactionsListForTeamDiscussionCommentLegacyResponseBody200 []struct {
-	components.Reaction
-}
-
-/*
-ReactionsListForTeamDiscussionInOrgReq builds requests for "reactions/list-for-team-discussion-in-org"
+ReactionsListForTeamDiscussionInOrg performs requests for "reactions/list-for-team-discussion-in-org"
 
 List reactions for a team discussion.
 
@@ -1622,7 +2373,30 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
+func (c *Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &ReactionsListForTeamDiscussionInOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(ReactionsListForTeamDiscussionInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForTeamDiscussionInOrgReq is request data for Client.ReactionsListForTeamDiscussionInOrg
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
+*/
 type ReactionsListForTeamDiscussionInOrgReq struct {
+	pgURL            string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1648,6 +2422,10 @@ type ReactionsListForTeamDiscussionInOrgReq struct {
 	true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForTeamDiscussionInOrgReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *ReactionsListForTeamDiscussionInOrgReq) urlPath() string {
@@ -1688,104 +2466,52 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReactionsListForTeamDiscussionInOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionInOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionInOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *ReactionsListForTeamDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-ReactionsListForTeamDiscussionInOrgResponseBody200 is a response body for reactions/list-for-team-discussion-in-org
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type ReactionsListForTeamDiscussionInOrgResponseBody200 []struct {
+func (r *ReactionsListForTeamDiscussionInOrgReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+ReactionsListForTeamDiscussionInOrgResponseBody is a response body for ReactionsListForTeamDiscussionInOrg
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
+*/
+type ReactionsListForTeamDiscussionInOrgResponseBody []struct {
 	components.Reaction
 }
 
 /*
-ReactionsListForTeamDiscussionLegacyReq builds requests for "reactions/list-for-team-discussion-legacy"
+ReactionsListForTeamDiscussionInOrgResponse is a response for ReactionsListForTeamDiscussionInOrg
 
-List reactions for a team discussion (Legacy).
-
-  GET /teams/{team_id}/discussions/{discussion_number}/reactions
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-type ReactionsListForTeamDiscussionLegacyReq struct {
-	TeamId           int64
-	DiscussionNumber int64
-
-	/*
-	Returns a single [reaction
-	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
-	parameter to list all reactions to a team discussion.
-	*/
-	Content *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Content != nil {
-		query.Set("content", *r.Content)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) body() interface{} {
-	return nil
-}
-
-// HTTPRequest creates an http request
-func (r *ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-ReactionsListForTeamDiscussionLegacyResponseBody200 is a response body for reactions/list-for-team-discussion-legacy
-
-API documentation: https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
-*/
-type ReactionsListForTeamDiscussionLegacyResponseBody200 []struct {
-	components.Reaction
+type ReactionsListForTeamDiscussionInOrgResponse struct {
+	response
+	request *ReactionsListForTeamDiscussionInOrgReq
+	Data    *ReactionsListForTeamDiscussionInOrgResponseBody
 }

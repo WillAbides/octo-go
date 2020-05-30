@@ -11,7 +11,7 @@ import (
 )
 
 /*
-CodesOfConductGetAllCodesOfConductReq builds requests for "codes-of-conduct/get-all-codes-of-conduct"
+CodesOfConductGetAllCodesOfConduct performs requests for "codes-of-conduct/get-all-codes-of-conduct"
 
 List all codes of conduct.
 
@@ -19,7 +19,30 @@ List all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
+func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &CodesOfConductGetAllCodesOfConductResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(CodesOfConductGetAllCodesOfConductResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+CodesOfConductGetAllCodesOfConductReq is request data for Client.CodesOfConductGetAllCodesOfConduct
+
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+*/
 type CodesOfConductGetAllCodesOfConductReq struct {
+	pgURL string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.
@@ -27,6 +50,10 @@ type CodesOfConductGetAllCodesOfConductReq struct {
 	To access the API during the preview period, you must set this to true.
 	*/
 	ScarletWitchPreview bool
+}
+
+func (r *CodesOfConductGetAllCodesOfConductReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *CodesOfConductGetAllCodesOfConductReq) urlPath() string {
@@ -58,22 +85,58 @@ func (r *CodesOfConductGetAllCodesOfConductReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *CodesOfConductGetAllCodesOfConductReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *CodesOfConductGetAllCodesOfConductReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *CodesOfConductGetAllCodesOfConductReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *CodesOfConductGetAllCodesOfConductReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-CodesOfConductGetAllCodesOfConductResponseBody200 is a response body for codes-of-conduct/get-all-codes-of-conduct
-
-API documentation: https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type CodesOfConductGetAllCodesOfConductResponseBody200 []struct {
+func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link RelName, resp *CodesOfConductGetAllCodesOfConductResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+CodesOfConductGetAllCodesOfConductResponseBody is a response body for CodesOfConductGetAllCodesOfConduct
+
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+*/
+type CodesOfConductGetAllCodesOfConductResponseBody []struct {
 	components.CodeOfConductSimple
 }
 
 /*
-CodesOfConductGetConductCodeReq builds requests for "codes-of-conduct/get-conduct-code"
+CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAllCodesOfConduct
+
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+*/
+type CodesOfConductGetAllCodesOfConductResponse struct {
+	response
+	request *CodesOfConductGetAllCodesOfConductReq
+	Data    *CodesOfConductGetAllCodesOfConductResponseBody
+}
+
+/*
+CodesOfConductGetConductCode performs requests for "codes-of-conduct/get-conduct-code"
 
 Get an individual code of conduct.
 
@@ -81,8 +144,31 @@ Get an individual code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
+func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &CodesOfConductGetConductCodeResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(CodesOfConductGetConductCodeResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+CodesOfConductGetConductCodeReq is request data for Client.CodesOfConductGetConductCode
+
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+*/
 type CodesOfConductGetConductCodeReq struct {
-	Key string
+	pgURL string
+	Key   string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.
@@ -90,6 +176,10 @@ type CodesOfConductGetConductCodeReq struct {
 	To access the API during the preview period, you must set this to true.
 	*/
 	ScarletWitchPreview bool
+}
+
+func (r *CodesOfConductGetConductCodeReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *CodesOfConductGetConductCodeReq) urlPath() string {
@@ -121,22 +211,58 @@ func (r *CodesOfConductGetConductCodeReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *CodesOfConductGetConductCodeReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *CodesOfConductGetConductCodeReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *CodesOfConductGetConductCodeReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *CodesOfConductGetConductCodeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-CodesOfConductGetConductCodeResponseBody200 is a response body for codes-of-conduct/get-conduct-code
-
-API documentation: https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type CodesOfConductGetConductCodeResponseBody200 struct {
+func (r *CodesOfConductGetConductCodeReq) Rel(link RelName, resp *CodesOfConductGetConductCodeResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+CodesOfConductGetConductCodeResponseBody is a response body for CodesOfConductGetConductCode
+
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+*/
+type CodesOfConductGetConductCodeResponseBody struct {
 	components.CodeOfConduct
 }
 
 /*
-CodesOfConductGetForRepoReq builds requests for "codes-of-conduct/get-for-repo"
+CodesOfConductGetConductCodeResponse is a response for CodesOfConductGetConductCode
+
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+*/
+type CodesOfConductGetConductCodeResponse struct {
+	response
+	request *CodesOfConductGetConductCodeReq
+	Data    *CodesOfConductGetConductCodeResponseBody
+}
+
+/*
+CodesOfConductGetForRepo performs requests for "codes-of-conduct/get-for-repo"
 
 Get the contents of a repository's code of conduct.
 
@@ -144,7 +270,30 @@ Get the contents of a repository's code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
+func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &CodesOfConductGetForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(CodesOfConductGetForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+CodesOfConductGetForRepoReq is request data for Client.CodesOfConductGetForRepo
+
+https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+*/
 type CodesOfConductGetForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -154,6 +303,10 @@ type CodesOfConductGetForRepoReq struct {
 	To access the API during the preview period, you must set this to true.
 	*/
 	ScarletWitchPreview bool
+}
+
+func (r *CodesOfConductGetForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *CodesOfConductGetForRepoReq) urlPath() string {
@@ -185,16 +338,52 @@ func (r *CodesOfConductGetForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *CodesOfConductGetForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *CodesOfConductGetForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *CodesOfConductGetForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *CodesOfConductGetForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-CodesOfConductGetForRepoResponseBody200 is a response body for codes-of-conduct/get-for-repo
-
-API documentation: https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type CodesOfConductGetForRepoResponseBody200 struct {
+func (r *CodesOfConductGetForRepoReq) Rel(link RelName, resp *CodesOfConductGetForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+CodesOfConductGetForRepoResponseBody is a response body for CodesOfConductGetForRepo
+
+https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+*/
+type CodesOfConductGetForRepoResponseBody struct {
 	components.CodeOfConduct
+}
+
+/*
+CodesOfConductGetForRepoResponse is a response for CodesOfConductGetForRepo
+
+https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+*/
+type CodesOfConductGetForRepoResponse struct {
+	response
+	request *CodesOfConductGetForRepoReq
+	Data    *CodesOfConductGetForRepoResponseBody
 }

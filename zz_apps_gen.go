@@ -12,7 +12,7 @@ import (
 )
 
 /*
-AppsAddRepoToInstallationReq builds requests for "apps/add-repo-to-installation"
+AppsAddRepoToInstallation performs requests for "apps/add-repo-to-installation"
 
 Add repository to installation.
 
@@ -20,7 +20,29 @@ Add repository to installation.
 
 https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
+func (c *Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsAddRepoToInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsAddRepoToInstallationReq is request data for Client.AppsAddRepoToInstallation
+
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+*/
 type AppsAddRepoToInstallationReq struct {
+	pgURL          string
 	InstallationId int64
 	RepositoryId   int64
 
@@ -29,6 +51,10 @@ type AppsAddRepoToInstallationReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsAddRepoToInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsAddRepoToInstallationReq) urlPath() string {
@@ -60,13 +86,48 @@ func (r *AppsAddRepoToInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsAddRepoToInstallationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsAddRepoToInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsAddRepoToInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsCheckAuthorizationReq builds requests for "apps/check-authorization"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsAddRepoToInstallationReq) Rel(link RelName, resp *AppsAddRepoToInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsAddRepoToInstallationResponse is a response for AppsAddRepoToInstallation
+
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+*/
+type AppsAddRepoToInstallationResponse struct {
+	response
+	request *AppsAddRepoToInstallationReq
+}
+
+/*
+AppsCheckAuthorization performs requests for "apps/check-authorization"
 
 Check an authorization.
 
@@ -74,9 +135,36 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
+func (c *Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsCheckAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsCheckAuthorizationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsCheckAuthorizationReq is request data for Client.AppsCheckAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+*/
 type AppsCheckAuthorizationReq struct {
+	pgURL       string
 	ClientId    string
 	AccessToken string
+}
+
+func (r *AppsCheckAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsCheckAuthorizationReq) urlPath() string {
@@ -102,22 +190,58 @@ func (r *AppsCheckAuthorizationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsCheckAuthorizationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCheckAuthorizationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCheckAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsCheckAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsCheckAuthorizationResponseBody200 is a response body for apps/check-authorization
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsCheckAuthorizationResponseBody200 struct {
+func (r *AppsCheckAuthorizationReq) Rel(link RelName, resp *AppsCheckAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsCheckAuthorizationResponseBody is a response body for AppsCheckAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+*/
+type AppsCheckAuthorizationResponseBody struct {
 	components.AuthorizationWithUser
 }
 
 /*
-AppsCheckTokenReq builds requests for "apps/check-token"
+AppsCheckAuthorizationResponse is a response for AppsCheckAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+*/
+type AppsCheckAuthorizationResponse struct {
+	response
+	request *AppsCheckAuthorizationReq
+	Data    *AppsCheckAuthorizationResponseBody
+}
+
+/*
+AppsCheckToken performs requests for "apps/check-token"
 
 Check a token.
 
@@ -125,9 +249,36 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
+func (c *Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsCheckTokenResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsCheckTokenResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsCheckTokenReq is request data for Client.AppsCheckToken
+
+https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+*/
 type AppsCheckTokenReq struct {
+	pgURL       string
 	ClientId    string
 	RequestBody AppsCheckTokenReqBody
+}
+
+func (r *AppsCheckTokenReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsCheckTokenReq) urlPath() string {
@@ -153,15 +304,40 @@ func (r *AppsCheckTokenReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsCheckTokenReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCheckTokenReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCheckTokenReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsCheckTokenReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsCheckTokenReq) Rel(link RelName, resp *AppsCheckTokenResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 AppsCheckTokenReqBody is a request body for apps/check-token
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenReqBody struct {
 
@@ -170,16 +346,27 @@ type AppsCheckTokenReqBody struct {
 }
 
 /*
-AppsCheckTokenResponseBody200 is a response body for apps/check-token
+AppsCheckTokenResponseBody is a response body for AppsCheckToken
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-type AppsCheckTokenResponseBody200 struct {
+type AppsCheckTokenResponseBody struct {
 	components.AuthorizationWithUser
 }
 
 /*
-AppsCreateContentAttachmentReq builds requests for "apps/create-content-attachment"
+AppsCheckTokenResponse is a response for AppsCheckToken
+
+https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+*/
+type AppsCheckTokenResponse struct {
+	response
+	request *AppsCheckTokenReq
+	Data    *AppsCheckTokenResponseBody
+}
+
+/*
+AppsCreateContentAttachment performs requests for "apps/create-content-attachment"
 
 Create a content attachment.
 
@@ -187,7 +374,30 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
+func (c *Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsCreateContentAttachmentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsCreateContentAttachmentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsCreateContentAttachmentReq is request data for Client.AppsCreateContentAttachment
+
+https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+*/
 type AppsCreateContentAttachmentReq struct {
+	pgURL              string
 	ContentReferenceId int64
 	RequestBody        AppsCreateContentAttachmentReqBody
 
@@ -196,6 +406,10 @@ type AppsCreateContentAttachmentReq struct {
 	this to true.
 	*/
 	CorsairPreview bool
+}
+
+func (r *AppsCreateContentAttachmentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsCreateContentAttachmentReq) urlPath() string {
@@ -227,15 +441,40 @@ func (r *AppsCreateContentAttachmentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsCreateContentAttachmentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCreateContentAttachmentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsCreateContentAttachmentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsCreateContentAttachmentReq) Rel(link RelName, resp *AppsCreateContentAttachmentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 AppsCreateContentAttachmentReqBody is a request body for apps/create-content-attachment
 
-API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentReqBody struct {
 
@@ -253,16 +492,27 @@ type AppsCreateContentAttachmentReqBody struct {
 }
 
 /*
-AppsCreateContentAttachmentResponseBody200 is a response body for apps/create-content-attachment
+AppsCreateContentAttachmentResponseBody is a response body for AppsCreateContentAttachment
 
-API documentation: https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-type AppsCreateContentAttachmentResponseBody200 struct {
+type AppsCreateContentAttachmentResponseBody struct {
 	components.ContentReferenceAttachment
 }
 
 /*
-AppsCreateFromManifestReq builds requests for "apps/create-from-manifest"
+AppsCreateContentAttachmentResponse is a response for AppsCreateContentAttachment
+
+https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+*/
+type AppsCreateContentAttachmentResponse struct {
+	response
+	request *AppsCreateContentAttachmentReq
+	Data    *AppsCreateContentAttachmentResponseBody
+}
+
+/*
+AppsCreateFromManifest performs requests for "apps/create-from-manifest"
 
 Create a GitHub App from a manifest.
 
@@ -270,8 +520,35 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
+func (c *Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsCreateFromManifestResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsCreateFromManifestResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsCreateFromManifestReq is request data for Client.AppsCreateFromManifest
+
+https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
+*/
 type AppsCreateFromManifestReq struct {
-	Code string
+	pgURL string
+	Code  string
+}
+
+func (r *AppsCreateFromManifestReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsCreateFromManifestReq) urlPath() string {
@@ -297,22 +574,58 @@ func (r *AppsCreateFromManifestReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsCreateFromManifestReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCreateFromManifestReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsCreateFromManifestReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsCreateFromManifestReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsCreateFromManifestResponseBody200 is a response body for apps/create-from-manifest
-
-API documentation: https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsCreateFromManifestResponseBody200 struct {
+func (r *AppsCreateFromManifestReq) Rel(link RelName, resp *AppsCreateFromManifestResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsCreateFromManifestResponseBody is a response body for AppsCreateFromManifest
+
+https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
+*/
+type AppsCreateFromManifestResponseBody struct {
 	components.IntegrationFromManifest
 }
 
 /*
-AppsCreateInstallationTokenReq builds requests for "apps/create-installation-token"
+AppsCreateFromManifestResponse is a response for AppsCreateFromManifest
+
+https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
+*/
+type AppsCreateFromManifestResponse struct {
+	response
+	request *AppsCreateFromManifestReq
+	Data    *AppsCreateFromManifestResponseBody
+}
+
+/*
+AppsCreateInstallationToken performs requests for "apps/create-installation-token"
 
 Create a new installation token.
 
@@ -320,7 +633,30 @@ Create a new installation token.
 
 https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
+func (c *Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsCreateInstallationTokenResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsCreateInstallationTokenResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsCreateInstallationTokenReq is request data for Client.AppsCreateInstallationToken
+
+https://developer.github.com/v3/apps/#create-a-new-installation-token
+*/
 type AppsCreateInstallationTokenReq struct {
+	pgURL          string
 	InstallationId int64
 	RequestBody    AppsCreateInstallationTokenReqBody
 
@@ -329,6 +665,10 @@ type AppsCreateInstallationTokenReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsCreateInstallationTokenReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsCreateInstallationTokenReq) urlPath() string {
@@ -360,15 +700,40 @@ func (r *AppsCreateInstallationTokenReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *AppsCreateInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsCreateInstallationTokenReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *AppsCreateInstallationTokenReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *AppsCreateInstallationTokenReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsCreateInstallationTokenReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsCreateInstallationTokenReq) Rel(link RelName, resp *AppsCreateInstallationTokenResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 AppsCreateInstallationTokenReqBody is a request body for apps/create-installation-token
 
-API documentation: https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 type AppsCreateInstallationTokenReqBody struct {
 
@@ -393,16 +758,27 @@ type AppsCreateInstallationTokenReqBody struct {
 }
 
 /*
-AppsCreateInstallationTokenResponseBody201 is a response body for apps/create-installation-token
+AppsCreateInstallationTokenResponseBody is a response body for AppsCreateInstallationToken
 
-API documentation: https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
-type AppsCreateInstallationTokenResponseBody201 struct {
+type AppsCreateInstallationTokenResponseBody struct {
 	components.InstallationToken
 }
 
 /*
-AppsDeleteAuthorizationReq builds requests for "apps/delete-authorization"
+AppsCreateInstallationTokenResponse is a response for AppsCreateInstallationToken
+
+https://developer.github.com/v3/apps/#create-a-new-installation-token
+*/
+type AppsCreateInstallationTokenResponse struct {
+	response
+	request *AppsCreateInstallationTokenReq
+	Data    *AppsCreateInstallationTokenResponseBody
+}
+
+/*
+AppsDeleteAuthorization performs requests for "apps/delete-authorization"
 
 Delete an app authorization.
 
@@ -410,9 +786,35 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
+func (c *Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsDeleteAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsDeleteAuthorizationReq is request data for Client.AppsDeleteAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+*/
 type AppsDeleteAuthorizationReq struct {
+	pgURL       string
 	ClientId    string
 	RequestBody AppsDeleteAuthorizationReqBody
+}
+
+func (r *AppsDeleteAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsDeleteAuthorizationReq) urlPath() string {
@@ -438,15 +840,40 @@ func (r *AppsDeleteAuthorizationReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsDeleteAuthorizationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsDeleteAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsDeleteAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsDeleteAuthorizationReq) Rel(link RelName, resp *AppsDeleteAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 AppsDeleteAuthorizationReqBody is a request body for apps/delete-authorization
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type AppsDeleteAuthorizationReqBody struct {
 
@@ -455,7 +882,17 @@ type AppsDeleteAuthorizationReqBody struct {
 }
 
 /*
-AppsDeleteInstallationReq builds requests for "apps/delete-installation"
+AppsDeleteAuthorizationResponse is a response for AppsDeleteAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+*/
+type AppsDeleteAuthorizationResponse struct {
+	response
+	request *AppsDeleteAuthorizationReq
+}
+
+/*
+AppsDeleteInstallation performs requests for "apps/delete-installation"
 
 Delete an installation.
 
@@ -463,7 +900,29 @@ Delete an installation.
 
 https://developer.github.com/v3/apps/#delete-an-installation
 */
+func (c *Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsDeleteInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsDeleteInstallationReq is request data for Client.AppsDeleteInstallation
+
+https://developer.github.com/v3/apps/#delete-an-installation
+*/
 type AppsDeleteInstallationReq struct {
+	pgURL          string
 	InstallationId int64
 
 	/*
@@ -471,6 +930,10 @@ type AppsDeleteInstallationReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsDeleteInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsDeleteInstallationReq) urlPath() string {
@@ -502,13 +965,48 @@ func (r *AppsDeleteInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsDeleteInstallationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsDeleteInstallationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsDeleteInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsDeleteInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsDeleteTokenReq builds requests for "apps/delete-token"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsDeleteInstallationReq) Rel(link RelName, resp *AppsDeleteInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsDeleteInstallationResponse is a response for AppsDeleteInstallation
+
+https://developer.github.com/v3/apps/#delete-an-installation
+*/
+type AppsDeleteInstallationResponse struct {
+	response
+	request *AppsDeleteInstallationReq
+}
+
+/*
+AppsDeleteToken performs requests for "apps/delete-token"
 
 Delete an app token.
 
@@ -516,9 +1014,35 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
+func (c *Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsDeleteTokenResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsDeleteTokenReq is request data for Client.AppsDeleteToken
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+*/
 type AppsDeleteTokenReq struct {
+	pgURL       string
 	ClientId    string
 	RequestBody AppsDeleteTokenReqBody
+}
+
+func (r *AppsDeleteTokenReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsDeleteTokenReq) urlPath() string {
@@ -544,15 +1068,40 @@ func (r *AppsDeleteTokenReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsDeleteTokenReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsDeleteTokenReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsDeleteTokenReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsDeleteTokenReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsDeleteTokenReq) Rel(link RelName, resp *AppsDeleteTokenResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 AppsDeleteTokenReqBody is a request body for apps/delete-token
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type AppsDeleteTokenReqBody struct {
 
@@ -561,7 +1110,17 @@ type AppsDeleteTokenReqBody struct {
 }
 
 /*
-AppsGetAuthenticatedReq builds requests for "apps/get-authenticated"
+AppsDeleteTokenResponse is a response for AppsDeleteToken
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+*/
+type AppsDeleteTokenResponse struct {
+	response
+	request *AppsDeleteTokenReq
+}
+
+/*
+AppsGetAuthenticated performs requests for "apps/get-authenticated"
 
 Get the authenticated GitHub App.
 
@@ -569,13 +1128,40 @@ Get the authenticated GitHub App.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
+func (c *Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetAuthenticatedResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetAuthenticatedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetAuthenticatedReq is request data for Client.AppsGetAuthenticated
+
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+*/
 type AppsGetAuthenticatedReq struct {
+	pgURL string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsGetAuthenticatedReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetAuthenticatedReq) urlPath() string {
@@ -607,22 +1193,58 @@ func (r *AppsGetAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetAuthenticatedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetAuthenticatedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetAuthenticatedReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetAuthenticatedReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetAuthenticatedResponseBody200 is a response body for apps/get-authenticated
-
-API documentation: https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetAuthenticatedResponseBody200 struct {
+func (r *AppsGetAuthenticatedReq) Rel(link RelName, resp *AppsGetAuthenticatedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetAuthenticatedResponseBody is a response body for AppsGetAuthenticated
+
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+*/
+type AppsGetAuthenticatedResponseBody struct {
 	components.Integration
 }
 
 /*
-AppsGetBySlugReq builds requests for "apps/get-by-slug"
+AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
+
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+*/
+type AppsGetAuthenticatedResponse struct {
+	response
+	request *AppsGetAuthenticatedReq
+	Data    *AppsGetAuthenticatedResponseBody
+}
+
+/*
+AppsGetBySlug performs requests for "apps/get-by-slug"
 
 Get a single GitHub App.
 
@@ -630,7 +1252,30 @@ Get a single GitHub App.
 
 https://developer.github.com/v3/apps/#get-a-single-github-app
 */
+func (c *Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetBySlugResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetBySlugResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetBySlugReq is request data for Client.AppsGetBySlug
+
+https://developer.github.com/v3/apps/#get-a-single-github-app
+*/
 type AppsGetBySlugReq struct {
+	pgURL   string
 	AppSlug string
 
 	/*
@@ -638,6 +1283,10 @@ type AppsGetBySlugReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsGetBySlugReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetBySlugReq) urlPath() string {
@@ -669,22 +1318,58 @@ func (r *AppsGetBySlugReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetBySlugReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetBySlugReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetBySlugReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetBySlugReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetBySlugResponseBody200 is a response body for apps/get-by-slug
-
-API documentation: https://developer.github.com/v3/apps/#get-a-single-github-app
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetBySlugResponseBody200 struct {
+func (r *AppsGetBySlugReq) Rel(link RelName, resp *AppsGetBySlugResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetBySlugResponseBody is a response body for AppsGetBySlug
+
+https://developer.github.com/v3/apps/#get-a-single-github-app
+*/
+type AppsGetBySlugResponseBody struct {
 	components.Integration2
 }
 
 /*
-AppsGetInstallationReq builds requests for "apps/get-installation"
+AppsGetBySlugResponse is a response for AppsGetBySlug
+
+https://developer.github.com/v3/apps/#get-a-single-github-app
+*/
+type AppsGetBySlugResponse struct {
+	response
+	request *AppsGetBySlugReq
+	Data    *AppsGetBySlugResponseBody
+}
+
+/*
+AppsGetInstallation performs requests for "apps/get-installation"
 
 Get an installation.
 
@@ -692,7 +1377,30 @@ Get an installation.
 
 https://developer.github.com/v3/apps/#get-an-installation
 */
+func (c *Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetInstallationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetInstallationReq is request data for Client.AppsGetInstallation
+
+https://developer.github.com/v3/apps/#get-an-installation
+*/
 type AppsGetInstallationReq struct {
+	pgURL          string
 	InstallationId int64
 
 	/*
@@ -700,6 +1408,10 @@ type AppsGetInstallationReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsGetInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetInstallationReq) urlPath() string {
@@ -731,22 +1443,58 @@ func (r *AppsGetInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetInstallationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetInstallationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetInstallationResponseBody200 is a response body for apps/get-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-an-installation
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetInstallationResponseBody200 struct {
+func (r *AppsGetInstallationReq) Rel(link RelName, resp *AppsGetInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetInstallationResponseBody is a response body for AppsGetInstallation
+
+https://developer.github.com/v3/apps/#get-an-installation
+*/
+type AppsGetInstallationResponseBody struct {
 	components.BaseInstallation
 }
 
 /*
-AppsGetOrgInstallationReq builds requests for "apps/get-org-installation"
+AppsGetInstallationResponse is a response for AppsGetInstallation
+
+https://developer.github.com/v3/apps/#get-an-installation
+*/
+type AppsGetInstallationResponse struct {
+	response
+	request *AppsGetInstallationReq
+	Data    *AppsGetInstallationResponseBody
+}
+
+/*
+AppsGetOrgInstallation performs requests for "apps/get-org-installation"
 
 Get an organization installation.
 
@@ -754,14 +1502,41 @@ Get an organization installation.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation
 */
+func (c *Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetOrgInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetOrgInstallationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetOrgInstallationReq is request data for Client.AppsGetOrgInstallation
+
+https://developer.github.com/v3/apps/#get-an-organization-installation
+*/
 type AppsGetOrgInstallationReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsGetOrgInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetOrgInstallationReq) urlPath() string {
@@ -793,22 +1568,58 @@ func (r *AppsGetOrgInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetOrgInstallationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetOrgInstallationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetOrgInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetOrgInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetOrgInstallationResponseBody200 is a response body for apps/get-org-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-an-organization-installation
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetOrgInstallationResponseBody200 struct {
+func (r *AppsGetOrgInstallationReq) Rel(link RelName, resp *AppsGetOrgInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetOrgInstallationResponseBody is a response body for AppsGetOrgInstallation
+
+https://developer.github.com/v3/apps/#get-an-organization-installation
+*/
+type AppsGetOrgInstallationResponseBody struct {
 	components.Installation
 }
 
 /*
-AppsGetRepoInstallationReq builds requests for "apps/get-repo-installation"
+AppsGetOrgInstallationResponse is a response for AppsGetOrgInstallation
+
+https://developer.github.com/v3/apps/#get-an-organization-installation
+*/
+type AppsGetOrgInstallationResponse struct {
+	response
+	request *AppsGetOrgInstallationReq
+	Data    *AppsGetOrgInstallationResponseBody
+}
+
+/*
+AppsGetRepoInstallation performs requests for "apps/get-repo-installation"
 
 Get a repository installation.
 
@@ -816,7 +1627,30 @@ Get a repository installation.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation
 */
+func (c *Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetRepoInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetRepoInstallationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetRepoInstallationReq is request data for Client.AppsGetRepoInstallation
+
+https://developer.github.com/v3/apps/#get-a-repository-installation
+*/
 type AppsGetRepoInstallationReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -825,6 +1659,10 @@ type AppsGetRepoInstallationReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsGetRepoInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetRepoInstallationReq) urlPath() string {
@@ -856,22 +1694,58 @@ func (r *AppsGetRepoInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetRepoInstallationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetRepoInstallationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetRepoInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetRepoInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetRepoInstallationResponseBody200 is a response body for apps/get-repo-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-a-repository-installation
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetRepoInstallationResponseBody200 struct {
+func (r *AppsGetRepoInstallationReq) Rel(link RelName, resp *AppsGetRepoInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetRepoInstallationResponseBody is a response body for AppsGetRepoInstallation
+
+https://developer.github.com/v3/apps/#get-a-repository-installation
+*/
+type AppsGetRepoInstallationResponseBody struct {
 	components.Installation
 }
 
 /*
-AppsGetSubscriptionPlanForAccountReq builds requests for "apps/get-subscription-plan-for-account"
+AppsGetRepoInstallationResponse is a response for AppsGetRepoInstallation
+
+https://developer.github.com/v3/apps/#get-a-repository-installation
+*/
+type AppsGetRepoInstallationResponse struct {
+	response
+	request *AppsGetRepoInstallationReq
+	Data    *AppsGetRepoInstallationResponseBody
+}
+
+/*
+AppsGetSubscriptionPlanForAccount performs requests for "apps/get-subscription-plan-for-account"
 
 Get a subscription plan for an account.
 
@@ -879,8 +1753,35 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
+func (c *Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetSubscriptionPlanForAccountResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetSubscriptionPlanForAccountResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetSubscriptionPlanForAccountReq is request data for Client.AppsGetSubscriptionPlanForAccount
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+*/
 type AppsGetSubscriptionPlanForAccountReq struct {
+	pgURL     string
 	AccountId int64
+}
+
+func (r *AppsGetSubscriptionPlanForAccountReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetSubscriptionPlanForAccountReq) urlPath() string {
@@ -906,22 +1807,58 @@ func (r *AppsGetSubscriptionPlanForAccountReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetSubscriptionPlanForAccountReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetSubscriptionPlanForAccountReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetSubscriptionPlanForAccountReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetSubscriptionPlanForAccountReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetSubscriptionPlanForAccountResponseBody200 is a response body for apps/get-subscription-plan-for-account
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetSubscriptionPlanForAccountResponseBody200 struct {
+func (r *AppsGetSubscriptionPlanForAccountReq) Rel(link RelName, resp *AppsGetSubscriptionPlanForAccountResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetSubscriptionPlanForAccountResponseBody is a response body for AppsGetSubscriptionPlanForAccount
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+*/
+type AppsGetSubscriptionPlanForAccountResponseBody struct {
 	components.MarketplacePurchase
 }
 
 /*
-AppsGetSubscriptionPlanForAccountStubbedReq builds requests for "apps/get-subscription-plan-for-account-stubbed"
+AppsGetSubscriptionPlanForAccountResponse is a response for AppsGetSubscriptionPlanForAccount
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+*/
+type AppsGetSubscriptionPlanForAccountResponse struct {
+	response
+	request *AppsGetSubscriptionPlanForAccountReq
+	Data    *AppsGetSubscriptionPlanForAccountResponseBody
+}
+
+/*
+AppsGetSubscriptionPlanForAccountStubbed performs requests for "apps/get-subscription-plan-for-account-stubbed"
 
 Get a subscription plan for an account (stubbed).
 
@@ -929,8 +1866,35 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
+func (c *Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetSubscriptionPlanForAccountStubbedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetSubscriptionPlanForAccountStubbedReq is request data for Client.AppsGetSubscriptionPlanForAccountStubbed
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+*/
 type AppsGetSubscriptionPlanForAccountStubbedReq struct {
+	pgURL     string
 	AccountId int64
+}
+
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlPath() string {
@@ -956,22 +1920,58 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetSubscriptionPlanForAccountStubbedResponseBody200 is a response body for apps/get-subscription-plan-for-account-stubbed
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetSubscriptionPlanForAccountStubbedResponseBody200 struct {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) Rel(link RelName, resp *AppsGetSubscriptionPlanForAccountStubbedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetSubscriptionPlanForAccountStubbedResponseBody is a response body for AppsGetSubscriptionPlanForAccountStubbed
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+*/
+type AppsGetSubscriptionPlanForAccountStubbedResponseBody struct {
 	components.MarketplacePurchase
 }
 
 /*
-AppsGetUserInstallationReq builds requests for "apps/get-user-installation"
+AppsGetSubscriptionPlanForAccountStubbedResponse is a response for AppsGetSubscriptionPlanForAccountStubbed
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+*/
+type AppsGetSubscriptionPlanForAccountStubbedResponse struct {
+	response
+	request *AppsGetSubscriptionPlanForAccountStubbedReq
+	Data    *AppsGetSubscriptionPlanForAccountStubbedResponseBody
+}
+
+/*
+AppsGetUserInstallation performs requests for "apps/get-user-installation"
 
 Get a user installation.
 
@@ -979,7 +1979,30 @@ Get a user installation.
 
 https://developer.github.com/v3/apps/#get-a-user-installation
 */
+func (c *Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsGetUserInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsGetUserInstallationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsGetUserInstallationReq is request data for Client.AppsGetUserInstallation
+
+https://developer.github.com/v3/apps/#get-a-user-installation
+*/
 type AppsGetUserInstallationReq struct {
+	pgURL    string
 	Username string
 
 	/*
@@ -987,6 +2010,10 @@ type AppsGetUserInstallationReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsGetUserInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsGetUserInstallationReq) urlPath() string {
@@ -1018,22 +2045,58 @@ func (r *AppsGetUserInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsGetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsGetUserInstallationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetUserInstallationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsGetUserInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsGetUserInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsGetUserInstallationResponseBody200 is a response body for apps/get-user-installation
-
-API documentation: https://developer.github.com/v3/apps/#get-a-user-installation
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsGetUserInstallationResponseBody200 struct {
+func (r *AppsGetUserInstallationReq) Rel(link RelName, resp *AppsGetUserInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsGetUserInstallationResponseBody is a response body for AppsGetUserInstallation
+
+https://developer.github.com/v3/apps/#get-a-user-installation
+*/
+type AppsGetUserInstallationResponseBody struct {
 	components.Installation2
 }
 
 /*
-AppsListAccountsForPlanReq builds requests for "apps/list-accounts-for-plan"
+AppsGetUserInstallationResponse is a response for AppsGetUserInstallation
+
+https://developer.github.com/v3/apps/#get-a-user-installation
+*/
+type AppsGetUserInstallationResponse struct {
+	response
+	request *AppsGetUserInstallationReq
+	Data    *AppsGetUserInstallationResponseBody
+}
+
+/*
+AppsListAccountsForPlan performs requests for "apps/list-accounts-for-plan"
 
 List accounts for a plan.
 
@@ -1041,7 +2104,30 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
+func (c *Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListAccountsForPlanResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListAccountsForPlanResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListAccountsForPlanReq is request data for Client.AppsListAccountsForPlan
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+*/
 type AppsListAccountsForPlanReq struct {
+	pgURL  string
 	PlanId int64
 
 	/*
@@ -1061,6 +2147,10 @@ type AppsListAccountsForPlanReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *AppsListAccountsForPlanReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListAccountsForPlanReq) urlPath() string {
@@ -1098,22 +2188,58 @@ func (r *AppsListAccountsForPlanReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListAccountsForPlanReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListAccountsForPlanReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListAccountsForPlanReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListAccountsForPlanReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListAccountsForPlanResponseBody200 is a response body for apps/list-accounts-for-plan
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListAccountsForPlanResponseBody200 []struct {
+func (r *AppsListAccountsForPlanReq) Rel(link RelName, resp *AppsListAccountsForPlanResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListAccountsForPlanResponseBody is a response body for AppsListAccountsForPlan
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+*/
+type AppsListAccountsForPlanResponseBody []struct {
 	components.MarketplacePurchase
 }
 
 /*
-AppsListAccountsForPlanStubbedReq builds requests for "apps/list-accounts-for-plan-stubbed"
+AppsListAccountsForPlanResponse is a response for AppsListAccountsForPlan
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+*/
+type AppsListAccountsForPlanResponse struct {
+	response
+	request *AppsListAccountsForPlanReq
+	Data    *AppsListAccountsForPlanResponseBody
+}
+
+/*
+AppsListAccountsForPlanStubbed performs requests for "apps/list-accounts-for-plan-stubbed"
 
 List accounts for a plan (stubbed).
 
@@ -1121,7 +2247,30 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
+func (c *Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListAccountsForPlanStubbedResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListAccountsForPlanStubbedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListAccountsForPlanStubbedReq is request data for Client.AppsListAccountsForPlanStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+*/
 type AppsListAccountsForPlanStubbedReq struct {
+	pgURL  string
 	PlanId int64
 
 	/*
@@ -1141,6 +2290,10 @@ type AppsListAccountsForPlanStubbedReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *AppsListAccountsForPlanStubbedReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListAccountsForPlanStubbedReq) urlPath() string {
@@ -1178,22 +2331,58 @@ func (r *AppsListAccountsForPlanStubbedReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListAccountsForPlanStubbedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListAccountsForPlanStubbedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListAccountsForPlanStubbedReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListAccountsForPlanStubbedReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListAccountsForPlanStubbedResponseBody200 is a response body for apps/list-accounts-for-plan-stubbed
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListAccountsForPlanStubbedResponseBody200 []struct {
+func (r *AppsListAccountsForPlanStubbedReq) Rel(link RelName, resp *AppsListAccountsForPlanStubbedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListAccountsForPlanStubbedResponseBody is a response body for AppsListAccountsForPlanStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+*/
+type AppsListAccountsForPlanStubbedResponseBody []struct {
 	components.MarketplacePurchase
 }
 
 /*
-AppsListInstallationReposForAuthenticatedUserReq builds requests for "apps/list-installation-repos-for-authenticated-user"
+AppsListAccountsForPlanStubbedResponse is a response for AppsListAccountsForPlanStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+*/
+type AppsListAccountsForPlanStubbedResponse struct {
+	response
+	request *AppsListAccountsForPlanStubbedReq
+	Data    *AppsListAccountsForPlanStubbedResponseBody
+}
+
+/*
+AppsListInstallationReposForAuthenticatedUser performs requests for "apps/list-installation-repos-for-authenticated-user"
 
 List repositories accessible to the user for an installation.
 
@@ -1201,7 +2390,30 @@ List repositories accessible to the user for an installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
+func (c *Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListInstallationReposForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListInstallationReposForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListInstallationReposForAuthenticatedUserReq is request data for Client.AppsListInstallationReposForAuthenticatedUser
+
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+*/
 type AppsListInstallationReposForAuthenticatedUserReq struct {
+	pgURL          string
 	InstallationId int64
 
 	// Results per page (max 100)
@@ -1222,6 +2434,10 @@ type AppsListInstallationReposForAuthenticatedUserReq struct {
 	repository results, you must set this to true.
 	*/
 	MercyPreview bool
+}
+
+func (r *AppsListInstallationReposForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) urlPath() string {
@@ -1263,17 +2479,42 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListInstallationReposForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListInstallationReposForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListInstallationReposForAuthenticatedUserResponseBody200 is a response body for apps/list-installation-repos-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListInstallationReposForAuthenticatedUserResponseBody200 struct {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) Rel(link RelName, resp *AppsListInstallationReposForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListInstallationReposForAuthenticatedUserResponseBody is a response body for AppsListInstallationReposForAuthenticatedUser
+
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+*/
+type AppsListInstallationReposForAuthenticatedUserResponseBody struct {
 	Repositories []struct {
 		components.Repository
 	} `json:"repositories,omitempty"`
@@ -1281,7 +2522,18 @@ type AppsListInstallationReposForAuthenticatedUserResponseBody200 struct {
 }
 
 /*
-AppsListInstallationsReq builds requests for "apps/list-installations"
+AppsListInstallationReposForAuthenticatedUserResponse is a response for AppsListInstallationReposForAuthenticatedUser
+
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+*/
+type AppsListInstallationReposForAuthenticatedUserResponse struct {
+	response
+	request *AppsListInstallationReposForAuthenticatedUserReq
+	Data    *AppsListInstallationReposForAuthenticatedUserResponseBody
+}
+
+/*
+AppsListInstallations performs requests for "apps/list-installations"
 
 List installations.
 
@@ -1289,7 +2541,30 @@ List installations.
 
 https://developer.github.com/v3/apps/#list-installations
 */
+func (c *Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListInstallationsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListInstallationsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListInstallationsReq is request data for Client.AppsListInstallations
+
+https://developer.github.com/v3/apps/#list-installations
+*/
 type AppsListInstallationsReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1302,6 +2577,10 @@ type AppsListInstallationsReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsListInstallationsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListInstallationsReq) urlPath() string {
@@ -1339,22 +2618,58 @@ func (r *AppsListInstallationsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListInstallationsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListInstallationsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListInstallationsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListInstallationsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListInstallationsResponseBody200 is a response body for apps/list-installations
-
-API documentation: https://developer.github.com/v3/apps/#list-installations
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListInstallationsResponseBody200 []struct {
+func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallationsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListInstallationsResponseBody is a response body for AppsListInstallations
+
+https://developer.github.com/v3/apps/#list-installations
+*/
+type AppsListInstallationsResponseBody []struct {
 	components.BaseInstallation
 }
 
 /*
-AppsListInstallationsForAuthenticatedUserReq builds requests for "apps/list-installations-for-authenticated-user"
+AppsListInstallationsResponse is a response for AppsListInstallations
+
+https://developer.github.com/v3/apps/#list-installations
+*/
+type AppsListInstallationsResponse struct {
+	response
+	request *AppsListInstallationsReq
+	Data    *AppsListInstallationsResponseBody
+}
+
+/*
+AppsListInstallationsForAuthenticatedUser performs requests for "apps/list-installations-for-authenticated-user"
 
 List installations for a user.
 
@@ -1362,7 +2677,30 @@ List installations for a user.
 
 https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
 */
+func (c *Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListInstallationsForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListInstallationsForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListInstallationsForAuthenticatedUserReq is request data for Client.AppsListInstallationsForAuthenticatedUser
+
+https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+*/
 type AppsListInstallationsForAuthenticatedUserReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1375,6 +2713,10 @@ type AppsListInstallationsForAuthenticatedUserReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsListInstallationsForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
@@ -1412,17 +2754,42 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListInstallationsForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListInstallationsForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListInstallationsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListInstallationsForAuthenticatedUserResponseBody200 is a response body for apps/list-installations-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListInstallationsForAuthenticatedUserResponseBody200 struct {
+func (r *AppsListInstallationsForAuthenticatedUserReq) Rel(link RelName, resp *AppsListInstallationsForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListInstallationsForAuthenticatedUserResponseBody is a response body for AppsListInstallationsForAuthenticatedUser
+
+https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+*/
+type AppsListInstallationsForAuthenticatedUserResponseBody struct {
 	Installations []struct {
 		components.BaseInstallationForAuthUser
 	} `json:"installations,omitempty"`
@@ -1430,7 +2797,18 @@ type AppsListInstallationsForAuthenticatedUserResponseBody200 struct {
 }
 
 /*
-AppsListPlansReq builds requests for "apps/list-plans"
+AppsListInstallationsForAuthenticatedUserResponse is a response for AppsListInstallationsForAuthenticatedUser
+
+https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+*/
+type AppsListInstallationsForAuthenticatedUserResponse struct {
+	response
+	request *AppsListInstallationsForAuthenticatedUserReq
+	Data    *AppsListInstallationsForAuthenticatedUserResponseBody
+}
+
+/*
+AppsListPlans performs requests for "apps/list-plans"
 
 List plans.
 
@@ -1438,13 +2816,40 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
+func (c *Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListPlansResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListPlansResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListPlansReq is request data for Client.AppsListPlans
+
+https://developer.github.com/v3/apps/marketplace/#list-plans
+*/
 type AppsListPlansReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *AppsListPlansReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListPlansReq) urlPath() string {
@@ -1476,22 +2881,58 @@ func (r *AppsListPlansReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListPlansReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListPlansReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListPlansReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListPlansReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListPlansResponseBody200 is a response body for apps/list-plans
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-plans
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListPlansResponseBody200 []struct {
+func (r *AppsListPlansReq) Rel(link RelName, resp *AppsListPlansResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListPlansResponseBody is a response body for AppsListPlans
+
+https://developer.github.com/v3/apps/marketplace/#list-plans
+*/
+type AppsListPlansResponseBody []struct {
 	components.MarketplaceListingPlan
 }
 
 /*
-AppsListPlansStubbedReq builds requests for "apps/list-plans-stubbed"
+AppsListPlansResponse is a response for AppsListPlans
+
+https://developer.github.com/v3/apps/marketplace/#list-plans
+*/
+type AppsListPlansResponse struct {
+	response
+	request *AppsListPlansReq
+	Data    *AppsListPlansResponseBody
+}
+
+/*
+AppsListPlansStubbed performs requests for "apps/list-plans-stubbed"
 
 List plans (stubbed).
 
@@ -1499,13 +2940,40 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
+func (c *Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListPlansStubbedResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListPlansStubbedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListPlansStubbedReq is request data for Client.AppsListPlansStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+*/
 type AppsListPlansStubbedReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *AppsListPlansStubbedReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListPlansStubbedReq) urlPath() string {
@@ -1537,22 +3005,58 @@ func (r *AppsListPlansStubbedReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListPlansStubbedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListPlansStubbedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListPlansStubbedReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListPlansStubbedReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListPlansStubbedResponseBody200 is a response body for apps/list-plans-stubbed
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListPlansStubbedResponseBody200 []struct {
+func (r *AppsListPlansStubbedReq) Rel(link RelName, resp *AppsListPlansStubbedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListPlansStubbedResponseBody is a response body for AppsListPlansStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+*/
+type AppsListPlansStubbedResponseBody []struct {
 	components.MarketplaceListingPlan
 }
 
 /*
-AppsListReposReq builds requests for "apps/list-repos"
+AppsListPlansStubbedResponse is a response for AppsListPlansStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+*/
+type AppsListPlansStubbedResponse struct {
+	response
+	request *AppsListPlansStubbedReq
+	Data    *AppsListPlansStubbedResponseBody
+}
+
+/*
+AppsListRepos performs requests for "apps/list-repos"
 
 List repositories.
 
@@ -1560,7 +3064,30 @@ List repositories.
 
 https://developer.github.com/v3/apps/installations/#list-repositories
 */
+func (c *Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListReposResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListReposResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListReposReq is request data for Client.AppsListRepos
+
+https://developer.github.com/v3/apps/installations/#list-repositories
+*/
 type AppsListReposReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1580,6 +3107,10 @@ type AppsListReposReq struct {
 	repository results, you must set this to true.
 	*/
 	MercyPreview bool
+}
+
+func (r *AppsListReposReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListReposReq) urlPath() string {
@@ -1621,17 +3152,42 @@ func (r *AppsListReposReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListReposReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListReposReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListReposReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListReposReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListReposResponseBody200 is a response body for apps/list-repos
-
-API documentation: https://developer.github.com/v3/apps/installations/#list-repositories
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListReposResponseBody200 struct {
+func (r *AppsListReposReq) Rel(link RelName, resp *AppsListReposResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListReposResponseBody is a response body for AppsListRepos
+
+https://developer.github.com/v3/apps/installations/#list-repositories
+*/
+type AppsListReposResponseBody struct {
 	Repositories []struct {
 		components.Repository2
 	} `json:"repositories,omitempty"`
@@ -1639,7 +3195,18 @@ type AppsListReposResponseBody200 struct {
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserReq builds requests for "apps/list-subscriptions-for-authenticated-user"
+AppsListReposResponse is a response for AppsListRepos
+
+https://developer.github.com/v3/apps/installations/#list-repositories
+*/
+type AppsListReposResponse struct {
+	response
+	request *AppsListReposReq
+	Data    *AppsListReposResponseBody
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUser performs requests for "apps/list-subscriptions-for-authenticated-user"
 
 List subscriptions for the authenticated user.
 
@@ -1647,13 +3214,40 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
+func (c *Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListSubscriptionsForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserReq is request data for Client.AppsListSubscriptionsForAuthenticatedUser
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+*/
 type AppsListSubscriptionsForAuthenticatedUserReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
@@ -1685,22 +3279,58 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserResponseBody200 is a response body for apps/list-subscriptions-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListSubscriptionsForAuthenticatedUserResponseBody200 []struct {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link RelName, resp *AppsListSubscriptionsForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserResponseBody is a response body for AppsListSubscriptionsForAuthenticatedUser
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+*/
+type AppsListSubscriptionsForAuthenticatedUserResponseBody []struct {
 	components.UserMarketplacePurchase
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserStubbedReq builds requests for "apps/list-subscriptions-for-authenticated-user-stubbed"
+AppsListSubscriptionsForAuthenticatedUserResponse is a response for AppsListSubscriptionsForAuthenticatedUser
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+*/
+type AppsListSubscriptionsForAuthenticatedUserResponse struct {
+	response
+	request *AppsListSubscriptionsForAuthenticatedUserReq
+	Data    *AppsListSubscriptionsForAuthenticatedUserResponseBody
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserStubbed performs requests for "apps/list-subscriptions-for-authenticated-user-stubbed"
 
 List subscriptions for the authenticated user (stubbed).
 
@@ -1708,13 +3338,40 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
+func (c *Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserStubbedReq is request data for Client.AppsListSubscriptionsForAuthenticatedUserStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+*/
 type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
@@ -1746,22 +3403,58 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) body() interface{}
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 is a response body for apps/list-subscriptions-for-authenticated-user-stubbed
-
-API documentation: https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody200 []struct {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link RelName, resp *AppsListSubscriptionsForAuthenticatedUserStubbedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody is a response body for AppsListSubscriptionsForAuthenticatedUserStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+*/
+type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody []struct {
 	components.UserMarketplacePurchase
 }
 
 /*
-AppsRemoveRepoFromInstallationReq builds requests for "apps/remove-repo-from-installation"
+AppsListSubscriptionsForAuthenticatedUserStubbedResponse is a response for AppsListSubscriptionsForAuthenticatedUserStubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+*/
+type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
+	response
+	request *AppsListSubscriptionsForAuthenticatedUserStubbedReq
+	Data    *AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody
+}
+
+/*
+AppsRemoveRepoFromInstallation performs requests for "apps/remove-repo-from-installation"
 
 Remove repository from installation.
 
@@ -1769,7 +3462,29 @@ Remove repository from installation.
 
 https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
+func (c *Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsRemoveRepoFromInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsRemoveRepoFromInstallationReq is request data for Client.AppsRemoveRepoFromInstallation
+
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+*/
 type AppsRemoveRepoFromInstallationReq struct {
+	pgURL          string
 	InstallationId int64
 	RepositoryId   int64
 
@@ -1778,6 +3493,10 @@ type AppsRemoveRepoFromInstallationReq struct {
 	requests.
 	*/
 	MachineManPreview bool
+}
+
+func (r *AppsRemoveRepoFromInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsRemoveRepoFromInstallationReq) urlPath() string {
@@ -1809,13 +3528,48 @@ func (r *AppsRemoveRepoFromInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsRemoveRepoFromInstallationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsRemoveRepoFromInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsRemoveRepoFromInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsResetAuthorizationReq builds requests for "apps/reset-authorization"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsRemoveRepoFromInstallationReq) Rel(link RelName, resp *AppsRemoveRepoFromInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsRemoveRepoFromInstallationResponse is a response for AppsRemoveRepoFromInstallation
+
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+*/
+type AppsRemoveRepoFromInstallationResponse struct {
+	response
+	request *AppsRemoveRepoFromInstallationReq
+}
+
+/*
+AppsResetAuthorization performs requests for "apps/reset-authorization"
 
 Reset an authorization.
 
@@ -1823,9 +3577,36 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
+func (c *Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsResetAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsResetAuthorizationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsResetAuthorizationReq is request data for Client.AppsResetAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+*/
 type AppsResetAuthorizationReq struct {
+	pgURL       string
 	ClientId    string
 	AccessToken string
+}
+
+func (r *AppsResetAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsResetAuthorizationReq) urlPath() string {
@@ -1851,22 +3632,58 @@ func (r *AppsResetAuthorizationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsResetAuthorizationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsResetAuthorizationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsResetAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsResetAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsResetAuthorizationResponseBody200 is a response body for apps/reset-authorization
-
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type AppsResetAuthorizationResponseBody200 struct {
+func (r *AppsResetAuthorizationReq) Rel(link RelName, resp *AppsResetAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsResetAuthorizationResponseBody is a response body for AppsResetAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+*/
+type AppsResetAuthorizationResponseBody struct {
 	components.AuthorizationWithUser
 }
 
 /*
-AppsResetTokenReq builds requests for "apps/reset-token"
+AppsResetAuthorizationResponse is a response for AppsResetAuthorization
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+*/
+type AppsResetAuthorizationResponse struct {
+	response
+	request *AppsResetAuthorizationReq
+	Data    *AppsResetAuthorizationResponseBody
+}
+
+/*
+AppsResetToken performs requests for "apps/reset-token"
 
 Reset a token.
 
@@ -1874,9 +3691,36 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
+func (c *Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsResetTokenResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(AppsResetTokenResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsResetTokenReq is request data for Client.AppsResetToken
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+*/
 type AppsResetTokenReq struct {
+	pgURL       string
 	ClientId    string
 	RequestBody AppsResetTokenReqBody
+}
+
+func (r *AppsResetTokenReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsResetTokenReq) urlPath() string {
@@ -1902,15 +3746,40 @@ func (r *AppsResetTokenReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsResetTokenReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsResetTokenReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *AppsResetTokenReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsResetTokenReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsResetTokenReq) Rel(link RelName, resp *AppsResetTokenResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 AppsResetTokenReqBody is a request body for apps/reset-token
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenReqBody struct {
 
@@ -1919,16 +3788,27 @@ type AppsResetTokenReqBody struct {
 }
 
 /*
-AppsResetTokenResponseBody200 is a response body for apps/reset-token
+AppsResetTokenResponseBody is a response body for AppsResetToken
 
-API documentation: https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-type AppsResetTokenResponseBody200 struct {
+type AppsResetTokenResponseBody struct {
 	components.AuthorizationWithUser
 }
 
 /*
-AppsRevokeAuthorizationForApplicationReq builds requests for "apps/revoke-authorization-for-application"
+AppsResetTokenResponse is a response for AppsResetToken
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+*/
+type AppsResetTokenResponse struct {
+	response
+	request *AppsResetTokenReq
+	Data    *AppsResetTokenResponseBody
+}
+
+/*
+AppsRevokeAuthorizationForApplication performs requests for "apps/revoke-authorization-for-application"
 
 Revoke an authorization for an application.
 
@@ -1936,9 +3816,35 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
+func (c *Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsRevokeAuthorizationForApplicationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsRevokeAuthorizationForApplicationReq is request data for Client.AppsRevokeAuthorizationForApplication
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+*/
 type AppsRevokeAuthorizationForApplicationReq struct {
+	pgURL       string
 	ClientId    string
 	AccessToken string
+}
+
+func (r *AppsRevokeAuthorizationForApplicationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsRevokeAuthorizationForApplicationReq) urlPath() string {
@@ -1964,13 +3870,48 @@ func (r *AppsRevokeAuthorizationForApplicationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsRevokeAuthorizationForApplicationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsRevokeAuthorizationForApplicationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsRevokeAuthorizationForApplicationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsRevokeAuthorizationForApplicationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsRevokeGrantForApplicationReq builds requests for "apps/revoke-grant-for-application"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsRevokeAuthorizationForApplicationReq) Rel(link RelName, resp *AppsRevokeAuthorizationForApplicationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsRevokeAuthorizationForApplicationResponse is a response for AppsRevokeAuthorizationForApplication
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+*/
+type AppsRevokeAuthorizationForApplicationResponse struct {
+	response
+	request *AppsRevokeAuthorizationForApplicationReq
+}
+
+/*
+AppsRevokeGrantForApplication performs requests for "apps/revoke-grant-for-application"
 
 Revoke a grant for an application.
 
@@ -1978,9 +3919,35 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
+func (c *Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsRevokeGrantForApplicationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsRevokeGrantForApplicationReq is request data for Client.AppsRevokeGrantForApplication
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+*/
 type AppsRevokeGrantForApplicationReq struct {
+	pgURL       string
 	ClientId    string
 	AccessToken string
+}
+
+func (r *AppsRevokeGrantForApplicationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsRevokeGrantForApplicationReq) urlPath() string {
@@ -2006,13 +3973,48 @@ func (r *AppsRevokeGrantForApplicationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsRevokeGrantForApplicationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsRevokeGrantForApplicationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsRevokeGrantForApplicationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsRevokeGrantForApplicationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsRevokeInstallationTokenReq builds requests for "apps/revoke-installation-token"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsRevokeGrantForApplicationReq) Rel(link RelName, resp *AppsRevokeGrantForApplicationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsRevokeGrantForApplicationResponse is a response for AppsRevokeGrantForApplication
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+*/
+type AppsRevokeGrantForApplicationResponse struct {
+	response
+	request *AppsRevokeGrantForApplicationReq
+}
+
+/*
+AppsRevokeInstallationToken performs requests for "apps/revoke-installation-token"
 
 Revoke an installation token.
 
@@ -2020,7 +4022,34 @@ Revoke an installation token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
 */
-type AppsRevokeInstallationTokenReq struct{}
+func (c *Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsRevokeInstallationTokenResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsRevokeInstallationTokenReq is request data for Client.AppsRevokeInstallationToken
+
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+*/
+type AppsRevokeInstallationTokenReq struct {
+	pgURL string
+}
+
+func (r *AppsRevokeInstallationTokenReq) pagingURL() string {
+	return r.pgURL
+}
 
 func (r *AppsRevokeInstallationTokenReq) urlPath() string {
 	return fmt.Sprintf("/installation/token")
@@ -2045,13 +4074,48 @@ func (r *AppsRevokeInstallationTokenReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsRevokeInstallationTokenReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsRevokeInstallationTokenReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsRevokeInstallationTokenReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsRevokeInstallationTokenReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsSuspendInstallationReq builds requests for "apps/suspend-installation"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsRevokeInstallationTokenReq) Rel(link RelName, resp *AppsRevokeInstallationTokenResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsRevokeInstallationTokenResponse is a response for AppsRevokeInstallationToken
+
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+*/
+type AppsRevokeInstallationTokenResponse struct {
+	response
+	request *AppsRevokeInstallationTokenReq
+}
+
+/*
+AppsSuspendInstallation performs requests for "apps/suspend-installation"
 
 Suspend an installation.
 
@@ -2059,8 +4123,34 @@ Suspend an installation.
 
 https://developer.github.com/v3/apps/#suspend-an-installation
 */
+func (c *Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsSuspendInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsSuspendInstallationReq is request data for Client.AppsSuspendInstallation
+
+https://developer.github.com/v3/apps/#suspend-an-installation
+*/
 type AppsSuspendInstallationReq struct {
+	pgURL          string
 	InstallationId int64
+}
+
+func (r *AppsSuspendInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsSuspendInstallationReq) urlPath() string {
@@ -2086,13 +4176,48 @@ func (r *AppsSuspendInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsSuspendInstallationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsSuspendInstallationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsSuspendInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsSuspendInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-AppsUnsuspendInstallationReq builds requests for "apps/unsuspend-installation"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsSuspendInstallationReq) Rel(link RelName, resp *AppsSuspendInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsSuspendInstallationResponse is a response for AppsSuspendInstallation
+
+https://developer.github.com/v3/apps/#suspend-an-installation
+*/
+type AppsSuspendInstallationResponse struct {
+	response
+	request *AppsSuspendInstallationReq
+}
+
+/*
+AppsUnsuspendInstallation performs requests for "apps/unsuspend-installation"
 
 Unsuspend an installation.
 
@@ -2100,8 +4225,34 @@ Unsuspend an installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-installation
 */
+func (c *Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &AppsUnsuspendInstallationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+AppsUnsuspendInstallationReq is request data for Client.AppsUnsuspendInstallation
+
+https://developer.github.com/v3/apps/#unsuspend-an-installation
+*/
 type AppsUnsuspendInstallationReq struct {
+	pgURL          string
 	InstallationId int64
+}
+
+func (r *AppsUnsuspendInstallationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *AppsUnsuspendInstallationReq) urlPath() string {
@@ -2127,7 +4278,42 @@ func (r *AppsUnsuspendInstallationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsUnsuspendInstallationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *AppsUnsuspendInstallationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *AppsUnsuspendInstallationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *AppsUnsuspendInstallationReq) Rel(link RelName, resp *AppsUnsuspendInstallationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+AppsUnsuspendInstallationResponse is a response for AppsUnsuspendInstallation
+
+https://developer.github.com/v3/apps/#unsuspend-an-installation
+*/
+type AppsUnsuspendInstallationResponse struct {
+	response
+	request *AppsUnsuspendInstallationReq
 }

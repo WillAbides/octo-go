@@ -11,7 +11,7 @@ import (
 )
 
 /*
-MetaGetReq builds requests for "meta/get"
+MetaGet performs requests for "meta/get"
 
 Get.
 
@@ -19,7 +19,35 @@ Get.
 
 https://developer.github.com/v3/meta/#meta
 */
-type MetaGetReq struct{}
+func (c *Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &MetaGetResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(MetaGetResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+MetaGetReq is request data for Client.MetaGet
+
+https://developer.github.com/v3/meta/#meta
+*/
+type MetaGetReq struct {
+	pgURL string
+}
+
+func (r *MetaGetReq) pagingURL() string {
+	return r.pgURL
+}
 
 func (r *MetaGetReq) urlPath() string {
 	return fmt.Sprintf("/meta")
@@ -44,16 +72,52 @@ func (r *MetaGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *MetaGetReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *MetaGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *MetaGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *MetaGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-MetaGetResponseBody200 is a response body for meta/get
-
-API documentation: https://developer.github.com/v3/meta/#meta
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type MetaGetResponseBody200 struct {
+func (r *MetaGetReq) Rel(link RelName, resp *MetaGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+MetaGetResponseBody is a response body for MetaGet
+
+https://developer.github.com/v3/meta/#meta
+*/
+type MetaGetResponseBody struct {
 	components.ApiOverview
+}
+
+/*
+MetaGetResponse is a response for MetaGet
+
+https://developer.github.com/v3/meta/#meta
+*/
+type MetaGetResponse struct {
+	response
+	request *MetaGetReq
+	Data    *MetaGetResponseBody
 }

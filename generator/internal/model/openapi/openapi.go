@@ -18,6 +18,7 @@ import (
 type Model struct {
 	Endpoints        []model.Endpoint
 	ComponentSchemas map[string]*model.ParamSchema
+	ComponentHeaders map[string]*model.ParamSchema
 }
 
 func Openapi2Model(schemaSrc io.Reader) (*Model, error) {
@@ -38,7 +39,23 @@ func Openapi2Model(schemaSrc io.Reader) (*Model, error) {
 	if err != nil {
 		return nil, err
 	}
+	mdl.ComponentHeaders, err = buildComponentHeaders(swagger)
+	if err != nil {
+		return nil, err
+	}
 	return mdl, nil
+}
+
+func buildComponentHeaders(swagger *openapi3.Swagger) (map[string]*model.ParamSchema, error) {
+	result := make(map[string]*model.ParamSchema, len(swagger.Components.Headers))
+	var err error
+	for name, ref := range swagger.Components.Headers {
+		result[name], err = opParamSchema(ref.Value.Schema)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return result, nil
 }
 
 func buildComponentSchemas(swagger *openapi3.Swagger) (map[string]*model.ParamSchema, error) {
@@ -112,7 +129,7 @@ func buildEndpoint(opPath, httpMethod string, op *openapi3.Operation) (*model.En
 			endpoint.PathParams = append(endpoint.PathParams, *param)
 		}
 	}
-	endpoint.Responses, err = responseSchemas(op)
+	endpoint.Responses, err = responses(op)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("error processing responses from operation %q", op.OperationID))
 	}
@@ -239,29 +256,45 @@ type extGithub struct {
 	}
 }
 
-func responseSchemas(op *openapi3.Operation) (map[int]*model.ParamSchema, error) {
-	result := make(map[int]*model.ParamSchema, len(op.Responses))
-	if len(op.Responses) == 0 {
-		return result, nil
-	}
+func responses(op *openapi3.Operation) (map[int]model.Response, error) {
+	result := make(map[int]model.Response, len(op.Responses))
 	for responseCode, responseRef := range op.Responses {
-		responseCode := responseCode
-		responseRef := responseRef
-		jsonResponse := responseRef.Value.Content.Get("application/json")
-		if jsonResponse == nil {
-			continue
-		}
-		schema, err := opParamSchema(jsonResponse.Schema)
-		if err != nil {
-			return nil, errors.WithStack(err)
-		}
 		code, err := strconv.Atoi(responseCode)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		result[code] = schema
-	}
+		var schema *model.ParamSchema
+		jsonResponse := responseRef.Value.Content.Get("application/json")
+		if jsonResponse != nil {
+			schema, err = opParamSchema(jsonResponse.Schema)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+		}
+		response := model.Response{
+			Body:    schema,
+			Headers: make([]model.Header, 0, len(responseRef.Value.Headers)),
+		}
+		for headerName, headerRef := range responseRef.Value.Headers {
+			hdr := model.Header{
+				Name:     headerName,
+				Required: headerRef.Value.Required,
+				HelpText: headerRef.Value.Description,
+				Ref:      headerRef.Ref,
+			}
+			hdr.Schema, err = opParamSchema(headerRef.Value.Schema)
 
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			response.Headers = append(response.Headers, hdr)
+		}
+		sort.Slice(response.Headers, func(i, j int) bool {
+			return response.Headers[i].Name < response.Headers[j].Name
+		})
+
+		result[code] = response
+	}
 	return result, nil
 }
 

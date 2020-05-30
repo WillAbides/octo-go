@@ -1,0 +1,75 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"description":"test gist, pls delete","files":{"foo.md":{"content":"not much here"}},"public":false}
+    form: {}
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/gists
+    method: POST
+  response:
+    body: '{"url":"https://api.github.com/gists/0c4fb38a7ee0892b850da433b4641b49","forks_url":"https://api.github.com/gists/0c4fb38a7ee0892b850da433b4641b49/forks","commits_url":"https://api.github.com/gists/0c4fb38a7ee0892b850da433b4641b49/commits","id":"0c4fb38a7ee0892b850da433b4641b49","node_id":"MDQ6R2lzdDBjNGZiMzhhN2VlMDg5MmI4NTBkYTQzM2I0NjQxYjQ5","git_pull_url":"https://gist.github.com/0c4fb38a7ee0892b850da433b4641b49.git","git_push_url":"https://gist.github.com/0c4fb38a7ee0892b850da433b4641b49.git","html_url":"https://gist.github.com/0c4fb38a7ee0892b850da433b4641b49","files":{"foo.md":{"filename":"foo.md","type":"text/markdown","language":"Markdown","raw_url":"https://gist.githubusercontent.com/WillAbides/0c4fb38a7ee0892b850da433b4641b49/raw/3be8428cf12e32d56e386fa4e51350fd426f99e9/foo.md","size":13,"truncated":false,"content":"not
+      much here"}},"public":false,"created_at":"2020-05-30T19:48:51Z","updated_at":"2020-05-30T19:48:51Z","description":"test
+      gist, pls delete","comments":0,"user":null,"comments_url":"https://api.github.com/gists/0c4fb38a7ee0892b850da433b4641b49/comments","owner":{"login":"WillAbides","id":233500,"node_id":"MDQ6VXNlcjIzMzUwMA==","avatar_url":"https://avatars3.githubusercontent.com/u/233500?v=4","gravatar_id":"","url":"https://api.github.com/users/WillAbides","html_url":"https://github.com/WillAbides","followers_url":"https://api.github.com/users/WillAbides/followers","following_url":"https://api.github.com/users/WillAbides/following{/other_user}","gists_url":"https://api.github.com/users/WillAbides/gists{/gist_id}","starred_url":"https://api.github.com/users/WillAbides/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/WillAbides/subscriptions","organizations_url":"https://api.github.com/users/WillAbides/orgs","repos_url":"https://api.github.com/users/WillAbides/repos","events_url":"https://api.github.com/users/WillAbides/events{/privacy}","received_events_url":"https://api.github.com/users/WillAbides/received_events","type":"User","site_admin":true},"forks":[],"history":[{"user":{"login":"WillAbides","id":233500,"node_id":"MDQ6VXNlcjIzMzUwMA==","avatar_url":"https://avatars3.githubusercontent.com/u/233500?v=4","gravatar_id":"","url":"https://api.github.com/users/WillAbides","html_url":"https://github.com/WillAbides","followers_url":"https://api.github.com/users/WillAbides/followers","following_url":"https://api.github.com/users/WillAbides/following{/other_user}","gists_url":"https://api.github.com/users/WillAbides/gists{/gist_id}","starred_url":"https://api.github.com/users/WillAbides/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/WillAbides/subscriptions","organizations_url":"https://api.github.com/users/WillAbides/orgs","repos_url":"https://api.github.com/users/WillAbides/repos","events_url":"https://api.github.com/users/WillAbides/events{/privacy}","received_events_url":"https://api.github.com/users/WillAbides/received_events","type":"User","site_admin":true},"version":"66f331a0a0d7d9dd7ee49ce332e4c03c0a320edc","committed_at":"2020-05-30T19:48:50Z","change_status":{"total":1,"additions":1,"deletions":0},"url":"https://api.github.com/gists/0c4fb38a7ee0892b850da433b4641b49/66f331a0a0d7d9dd7ee49ce332e4c03c0a320edc"}],"truncated":false}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "3263"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 30 May 2020 19:48:51 GMT
+      Etag:
+      - '"8153763736a2fe4c3a725094ad01b686"'
+      Location:
+      - https://api.github.com/gists/0c4fb38a7ee0892b850da433b4641b49
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 201 Created
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Accepted-Oauth-Scopes:
+      - ""
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Github-Request-Id:
+      - 8BD6:0AC5:E83AD:2EF402:5ED2B8A2
+      X-Oauth-Scopes:
+      - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
+        delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
+        write:packages
+      X-Ratelimit-Limit:
+      - "5000"
+      X-Ratelimit-Remaining:
+      - "4992"
+      X-Ratelimit-Reset:
+      - "1590869795"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 201 Created
+    code: 201
+    duration: ""

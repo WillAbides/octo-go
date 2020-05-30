@@ -7,10 +7,9 @@ import (
 //RequestOption is an option for building an http request
 type RequestOption func(opts *requestOpts)
 
-//RequestHTTPScheme set the http schema to use. Default is https.
-func RequestHTTPScheme(scheme string) RequestOption {
+func resetOptions(newOpts requestOpts) RequestOption {
 	return func(opts *requestOpts) {
-		opts.baseURL.Scheme = scheme
+		*opts = newOpts
 	}
 }
 
@@ -44,11 +43,19 @@ func RequestEnableAllPreviews() RequestOption {
 	}
 }
 
+//RequestPreserveResponseBody rewrite the body back to the http response for later inspection
+func RequestPreserveResponseBody() RequestOption {
+	return func(opts *requestOpts) {
+		opts.preserveResponseBody = true
+	}
+}
+
 type requestOpts struct {
-	baseURL          url.URL
-	userAgent        string
-	requiredPreviews bool
-	allPreviews      bool
+	baseURL              url.URL
+	userAgent            string
+	requiredPreviews     bool
+	allPreviews          bool
+	preserveResponseBody bool
 }
 
 var defaultRequestOpts = requestOpts{

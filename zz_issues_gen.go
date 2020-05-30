@@ -12,7 +12,7 @@ import (
 )
 
 /*
-IssuesAddAssigneesReq builds requests for "issues/add-assignees"
+IssuesAddAssignees performs requests for "issues/add-assignees"
 
 Add assignees to an issue.
 
@@ -20,11 +20,38 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
+func (c *Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesAddAssigneesResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesAddAssigneesResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesAddAssigneesReq is request data for Client.IssuesAddAssignees
+
+https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+*/
 type IssuesAddAssigneesReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesAddAssigneesReqBody
+}
+
+func (r *IssuesAddAssigneesReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesAddAssigneesReq) urlPath() string {
@@ -50,15 +77,40 @@ func (r *IssuesAddAssigneesReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesAddAssigneesReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesAddAssigneesReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesAddAssigneesReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesAddAssigneesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesAddAssigneesReq) Rel(link RelName, resp *IssuesAddAssigneesResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesAddAssigneesReqBody is a request body for issues/add-assignees
 
-API documentation: https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type IssuesAddAssigneesReqBody struct {
 
@@ -70,16 +122,27 @@ type IssuesAddAssigneesReqBody struct {
 }
 
 /*
-IssuesAddAssigneesResponseBody201 is a response body for issues/add-assignees
+IssuesAddAssigneesResponseBody is a response body for IssuesAddAssignees
 
-API documentation: https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-type IssuesAddAssigneesResponseBody201 struct {
+type IssuesAddAssigneesResponseBody struct {
 	components.IssueSimple
 }
 
 /*
-IssuesAddLabelsReq builds requests for "issues/add-labels"
+IssuesAddAssigneesResponse is a response for IssuesAddAssignees
+
+https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+*/
+type IssuesAddAssigneesResponse struct {
+	response
+	request *IssuesAddAssigneesReq
+	Data    *IssuesAddAssigneesResponseBody
+}
+
+/*
+IssuesAddLabels performs requests for "issues/add-labels"
 
 Add labels to an issue.
 
@@ -87,11 +150,38 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
+func (c *Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesAddLabelsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesAddLabelsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesAddLabelsReq is request data for Client.IssuesAddLabels
+
+https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+*/
 type IssuesAddLabelsReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesAddLabelsReqBody
+}
+
+func (r *IssuesAddLabelsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesAddLabelsReq) urlPath() string {
@@ -117,15 +207,40 @@ func (r *IssuesAddLabelsReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesAddLabelsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesAddLabelsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesAddLabelsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesAddLabelsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesAddLabelsReq) Rel(link RelName, resp *IssuesAddLabelsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesAddLabelsReqBody is a request body for issues/add-labels
 
-API documentation: https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type IssuesAddLabelsReqBody struct {
 
@@ -139,16 +254,27 @@ type IssuesAddLabelsReqBody struct {
 }
 
 /*
-IssuesAddLabelsResponseBody200 is a response body for issues/add-labels
+IssuesAddLabelsResponseBody is a response body for IssuesAddLabels
 
-API documentation: https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-type IssuesAddLabelsResponseBody200 []struct {
+type IssuesAddLabelsResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesCheckAssigneeReq builds requests for "issues/check-assignee"
+IssuesAddLabelsResponse is a response for IssuesAddLabels
+
+https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+*/
+type IssuesAddLabelsResponse struct {
+	response
+	request *IssuesAddLabelsReq
+	Data    *IssuesAddLabelsResponseBody
+}
+
+/*
+IssuesCheckAssignee performs requests for "issues/check-assignee"
 
 Check assignee.
 
@@ -156,10 +282,37 @@ Check assignee.
 
 https://developer.github.com/v3/issues/assignees/#check-assignee
 */
+func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesCheckAssigneeResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.setBoolResult(&resp.Data)
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesCheckAssigneeReq is request data for Client.IssuesCheckAssignee
+
+https://developer.github.com/v3/issues/assignees/#check-assignee
+*/
 type IssuesCheckAssigneeReq struct {
+	pgURL    string
 	Owner    string
 	Repo     string
 	Assignee string
+}
+
+func (r *IssuesCheckAssigneeReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesCheckAssigneeReq) urlPath() string {
@@ -185,13 +338,49 @@ func (r *IssuesCheckAssigneeReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesCheckAssigneeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesCheckAssigneeReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesCheckAssigneeReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesCheckAssigneeReq) endpointType() endpointType {
+	return endpointTypeBoolean
+}
+
+// httpRequest creates an http request
+func (r *IssuesCheckAssigneeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesCreateReq builds requests for "issues/create"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesCheckAssigneeReq) Rel(link RelName, resp *IssuesCheckAssigneeResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesCheckAssigneeResponse is a response for IssuesCheckAssignee
+
+https://developer.github.com/v3/issues/assignees/#check-assignee
+*/
+type IssuesCheckAssigneeResponse struct {
+	response
+	request *IssuesCheckAssigneeReq
+	Data    bool
+}
+
+/*
+IssuesCreate performs requests for "issues/create"
 
 Create an issue.
 
@@ -199,10 +388,37 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
+func (c *Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesCreateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesCreateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesCreateReq is request data for Client.IssuesCreate
+
+https://developer.github.com/v3/issues/#create-an-issue
+*/
 type IssuesCreateReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody IssuesCreateReqBody
+}
+
+func (r *IssuesCreateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesCreateReq) urlPath() string {
@@ -228,15 +444,40 @@ func (r *IssuesCreateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesCreateReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesCreateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesCreateReq) Rel(link RelName, resp *IssuesCreateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesCreateReqBody is a request body for issues/create
 
-API documentation: https://developer.github.com/v3/issues/#create-an-issue
+https://developer.github.com/v3/issues/#create-an-issue
 */
 type IssuesCreateReqBody struct {
 
@@ -274,16 +515,27 @@ type IssuesCreateReqBody struct {
 }
 
 /*
-IssuesCreateResponseBody201 is a response body for issues/create
+IssuesCreateResponseBody is a response body for IssuesCreate
 
-API documentation: https://developer.github.com/v3/issues/#create-an-issue
+https://developer.github.com/v3/issues/#create-an-issue
 */
-type IssuesCreateResponseBody201 struct {
+type IssuesCreateResponseBody struct {
 	components.Issue
 }
 
 /*
-IssuesCreateCommentReq builds requests for "issues/create-comment"
+IssuesCreateResponse is a response for IssuesCreate
+
+https://developer.github.com/v3/issues/#create-an-issue
+*/
+type IssuesCreateResponse struct {
+	response
+	request *IssuesCreateReq
+	Data    *IssuesCreateResponseBody
+}
+
+/*
+IssuesCreateComment performs requests for "issues/create-comment"
 
 Create a comment.
 
@@ -291,11 +543,38 @@ Create a comment.
 
 https://developer.github.com/v3/issues/comments/#create-a-comment
 */
+func (c *Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesCreateCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesCreateCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesCreateCommentReq is request data for Client.IssuesCreateComment
+
+https://developer.github.com/v3/issues/comments/#create-a-comment
+*/
 type IssuesCreateCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesCreateCommentReqBody
+}
+
+func (r *IssuesCreateCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesCreateCommentReq) urlPath() string {
@@ -321,15 +600,40 @@ func (r *IssuesCreateCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesCreateCommentReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateCommentReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesCreateCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesCreateCommentReq) Rel(link RelName, resp *IssuesCreateCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesCreateCommentReqBody is a request body for issues/create-comment
 
-API documentation: https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-a-comment
 */
 type IssuesCreateCommentReqBody struct {
 
@@ -338,16 +642,27 @@ type IssuesCreateCommentReqBody struct {
 }
 
 /*
-IssuesCreateCommentResponseBody201 is a response body for issues/create-comment
+IssuesCreateCommentResponseBody is a response body for IssuesCreateComment
 
-API documentation: https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-a-comment
 */
-type IssuesCreateCommentResponseBody201 struct {
+type IssuesCreateCommentResponseBody struct {
 	components.IssueComment
 }
 
 /*
-IssuesCreateLabelReq builds requests for "issues/create-label"
+IssuesCreateCommentResponse is a response for IssuesCreateComment
+
+https://developer.github.com/v3/issues/comments/#create-a-comment
+*/
+type IssuesCreateCommentResponse struct {
+	response
+	request *IssuesCreateCommentReq
+	Data    *IssuesCreateCommentResponseBody
+}
+
+/*
+IssuesCreateLabel performs requests for "issues/create-label"
 
 Create a label.
 
@@ -355,10 +670,37 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
+func (c *Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesCreateLabelResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesCreateLabelResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesCreateLabelReq is request data for Client.IssuesCreateLabel
+
+https://developer.github.com/v3/issues/labels/#create-a-label
+*/
 type IssuesCreateLabelReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody IssuesCreateLabelReqBody
+}
+
+func (r *IssuesCreateLabelReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesCreateLabelReq) urlPath() string {
@@ -384,15 +726,40 @@ func (r *IssuesCreateLabelReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesCreateLabelReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateLabelReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateLabelReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesCreateLabelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesCreateLabelReq) Rel(link RelName, resp *IssuesCreateLabelResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesCreateLabelReqBody is a request body for issues/create-label
 
-API documentation: https://developer.github.com/v3/issues/labels/#create-a-label
+https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelReqBody struct {
 
@@ -417,16 +784,27 @@ type IssuesCreateLabelReqBody struct {
 }
 
 /*
-IssuesCreateLabelResponseBody201 is a response body for issues/create-label
+IssuesCreateLabelResponseBody is a response body for IssuesCreateLabel
 
-API documentation: https://developer.github.com/v3/issues/labels/#create-a-label
+https://developer.github.com/v3/issues/labels/#create-a-label
 */
-type IssuesCreateLabelResponseBody201 struct {
+type IssuesCreateLabelResponseBody struct {
 	components.Label
 }
 
 /*
-IssuesCreateMilestoneReq builds requests for "issues/create-milestone"
+IssuesCreateLabelResponse is a response for IssuesCreateLabel
+
+https://developer.github.com/v3/issues/labels/#create-a-label
+*/
+type IssuesCreateLabelResponse struct {
+	response
+	request *IssuesCreateLabelReq
+	Data    *IssuesCreateLabelResponseBody
+}
+
+/*
+IssuesCreateMilestone performs requests for "issues/create-milestone"
 
 Create a milestone.
 
@@ -434,10 +812,37 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
+func (c *Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesCreateMilestoneResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesCreateMilestoneResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesCreateMilestoneReq is request data for Client.IssuesCreateMilestone
+
+https://developer.github.com/v3/issues/milestones/#create-a-milestone
+*/
 type IssuesCreateMilestoneReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	RequestBody IssuesCreateMilestoneReqBody
+}
+
+func (r *IssuesCreateMilestoneReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesCreateMilestoneReq) urlPath() string {
@@ -463,15 +868,40 @@ func (r *IssuesCreateMilestoneReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesCreateMilestoneReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateMilestoneReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *IssuesCreateMilestoneReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesCreateMilestoneReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesCreateMilestoneReq) Rel(link RelName, resp *IssuesCreateMilestoneResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesCreateMilestoneReqBody is a request body for issues/create-milestone
 
-API documentation: https://developer.github.com/v3/issues/milestones/#create-a-milestone
+https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type IssuesCreateMilestoneReqBody struct {
 
@@ -492,16 +922,27 @@ type IssuesCreateMilestoneReqBody struct {
 }
 
 /*
-IssuesCreateMilestoneResponseBody201 is a response body for issues/create-milestone
+IssuesCreateMilestoneResponseBody is a response body for IssuesCreateMilestone
 
-API documentation: https://developer.github.com/v3/issues/milestones/#create-a-milestone
+https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-type IssuesCreateMilestoneResponseBody201 struct {
+type IssuesCreateMilestoneResponseBody struct {
 	components.Milestone
 }
 
 /*
-IssuesDeleteCommentReq builds requests for "issues/delete-comment"
+IssuesCreateMilestoneResponse is a response for IssuesCreateMilestone
+
+https://developer.github.com/v3/issues/milestones/#create-a-milestone
+*/
+type IssuesCreateMilestoneResponse struct {
+	response
+	request *IssuesCreateMilestoneReq
+	Data    *IssuesCreateMilestoneResponseBody
+}
+
+/*
+IssuesDeleteComment performs requests for "issues/delete-comment"
 
 Delete a comment.
 
@@ -509,10 +950,36 @@ Delete a comment.
 
 https://developer.github.com/v3/issues/comments/#delete-a-comment
 */
+func (c *Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesDeleteCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesDeleteCommentReq is request data for Client.IssuesDeleteComment
+
+https://developer.github.com/v3/issues/comments/#delete-a-comment
+*/
 type IssuesDeleteCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
+}
+
+func (r *IssuesDeleteCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesDeleteCommentReq) urlPath() string {
@@ -538,13 +1005,48 @@ func (r *IssuesDeleteCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesDeleteCommentReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesDeleteCommentReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesDeleteCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesDeleteCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesDeleteLabelReq builds requests for "issues/delete-label"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesDeleteCommentReq) Rel(link RelName, resp *IssuesDeleteCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesDeleteCommentResponse is a response for IssuesDeleteComment
+
+https://developer.github.com/v3/issues/comments/#delete-a-comment
+*/
+type IssuesDeleteCommentResponse struct {
+	response
+	request *IssuesDeleteCommentReq
+}
+
+/*
+IssuesDeleteLabel performs requests for "issues/delete-label"
 
 Delete a label.
 
@@ -552,10 +1054,36 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
+func (c *Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesDeleteLabelResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesDeleteLabelReq is request data for Client.IssuesDeleteLabel
+
+https://developer.github.com/v3/issues/labels/#delete-a-label
+*/
 type IssuesDeleteLabelReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Name  string
+}
+
+func (r *IssuesDeleteLabelReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesDeleteLabelReq) urlPath() string {
@@ -581,13 +1109,48 @@ func (r *IssuesDeleteLabelReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesDeleteLabelReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesDeleteLabelReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesDeleteLabelReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesDeleteLabelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesDeleteMilestoneReq builds requests for "issues/delete-milestone"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesDeleteLabelReq) Rel(link RelName, resp *IssuesDeleteLabelResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesDeleteLabelResponse is a response for IssuesDeleteLabel
+
+https://developer.github.com/v3/issues/labels/#delete-a-label
+*/
+type IssuesDeleteLabelResponse struct {
+	response
+	request *IssuesDeleteLabelReq
+}
+
+/*
+IssuesDeleteMilestone performs requests for "issues/delete-milestone"
 
 Delete a milestone.
 
@@ -595,10 +1158,36 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
+func (c *Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesDeleteMilestoneResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesDeleteMilestoneReq is request data for Client.IssuesDeleteMilestone
+
+https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+*/
 type IssuesDeleteMilestoneReq struct {
+	pgURL           string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
+}
+
+func (r *IssuesDeleteMilestoneReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesDeleteMilestoneReq) urlPath() string {
@@ -624,13 +1213,48 @@ func (r *IssuesDeleteMilestoneReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesDeleteMilestoneReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesDeleteMilestoneReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesDeleteMilestoneReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesDeleteMilestoneReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesGetReq builds requests for "issues/get"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesDeleteMilestoneReq) Rel(link RelName, resp *IssuesDeleteMilestoneResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesDeleteMilestoneResponse is a response for IssuesDeleteMilestone
+
+https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+*/
+type IssuesDeleteMilestoneResponse struct {
+	response
+	request *IssuesDeleteMilestoneReq
+}
+
+/*
+IssuesGet performs requests for "issues/get"
 
 Get an issue.
 
@@ -638,7 +1262,30 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
+func (c *Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesGetResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesGetResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesGetReq is request data for Client.IssuesGet
+
+https://developer.github.com/v3/issues/#get-an-issue
+*/
 type IssuesGetReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -653,6 +1300,10 @@ type IssuesGetReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *IssuesGetReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesGetReq) urlPath() string {
@@ -681,22 +1332,58 @@ func (r *IssuesGetReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesGetReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesGetResponseBody200 is a response body for issues/get
-
-API documentation: https://developer.github.com/v3/issues/#get-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesGetResponseBody200 struct {
+func (r *IssuesGetReq) Rel(link RelName, resp *IssuesGetResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesGetResponseBody is a response body for IssuesGet
+
+https://developer.github.com/v3/issues/#get-an-issue
+*/
+type IssuesGetResponseBody struct {
 	components.Issue
 }
 
 /*
-IssuesGetCommentReq builds requests for "issues/get-comment"
+IssuesGetResponse is a response for IssuesGet
+
+https://developer.github.com/v3/issues/#get-an-issue
+*/
+type IssuesGetResponse struct {
+	response
+	request *IssuesGetReq
+	Data    *IssuesGetResponseBody
+}
+
+/*
+IssuesGetComment performs requests for "issues/get-comment"
 
 Get a single comment.
 
@@ -704,7 +1391,30 @@ Get a single comment.
 
 https://developer.github.com/v3/issues/comments/#get-a-single-comment
 */
+func (c *Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesGetCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesGetCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesGetCommentReq is request data for Client.IssuesGetComment
+
+https://developer.github.com/v3/issues/comments/#get-a-single-comment
+*/
 type IssuesGetCommentReq struct {
+	pgURL     string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -730,6 +1440,10 @@ type IssuesGetCommentReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *IssuesGetCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesGetCommentReq) urlPath() string {
@@ -762,22 +1476,58 @@ func (r *IssuesGetCommentReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesGetCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesGetCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesGetCommentResponseBody200 is a response body for issues/get-comment
-
-API documentation: https://developer.github.com/v3/issues/comments/#get-a-single-comment
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesGetCommentResponseBody200 struct {
+func (r *IssuesGetCommentReq) Rel(link RelName, resp *IssuesGetCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesGetCommentResponseBody is a response body for IssuesGetComment
+
+https://developer.github.com/v3/issues/comments/#get-a-single-comment
+*/
+type IssuesGetCommentResponseBody struct {
 	components.IssueComment
 }
 
 /*
-IssuesGetEventReq builds requests for "issues/get-event"
+IssuesGetCommentResponse is a response for IssuesGetComment
+
+https://developer.github.com/v3/issues/comments/#get-a-single-comment
+*/
+type IssuesGetCommentResponse struct {
+	response
+	request *IssuesGetCommentReq
+	Data    *IssuesGetCommentResponseBody
+}
+
+/*
+IssuesGetEvent performs requests for "issues/get-event"
 
 Get a single event.
 
@@ -785,7 +1535,30 @@ Get a single event.
 
 https://developer.github.com/v3/issues/events/#get-a-single-event
 */
+func (c *Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesGetEventResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesGetEventResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesGetEventReq is request data for Client.IssuesGetEvent
+
+https://developer.github.com/v3/issues/events/#get-a-single-event
+*/
 type IssuesGetEventReq struct {
+	pgURL   string
 	Owner   string
 	Repo    string
 	EventId int64
@@ -824,6 +1597,10 @@ type IssuesGetEventReq struct {
 	SailorVPreview bool
 }
 
+func (r *IssuesGetEventReq) pagingURL() string {
+	return r.pgURL
+}
+
 func (r *IssuesGetEventReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId)
 }
@@ -856,22 +1633,58 @@ func (r *IssuesGetEventReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesGetEventReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetEventReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetEventReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesGetEventReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesGetEventResponseBody200 is a response body for issues/get-event
-
-API documentation: https://developer.github.com/v3/issues/events/#get-a-single-event
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesGetEventResponseBody200 struct {
+func (r *IssuesGetEventReq) Rel(link RelName, resp *IssuesGetEventResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesGetEventResponseBody is a response body for IssuesGetEvent
+
+https://developer.github.com/v3/issues/events/#get-a-single-event
+*/
+type IssuesGetEventResponseBody struct {
 	components.IssueEvent
 }
 
 /*
-IssuesGetLabelReq builds requests for "issues/get-label"
+IssuesGetEventResponse is a response for IssuesGetEvent
+
+https://developer.github.com/v3/issues/events/#get-a-single-event
+*/
+type IssuesGetEventResponse struct {
+	response
+	request *IssuesGetEventReq
+	Data    *IssuesGetEventResponseBody
+}
+
+/*
+IssuesGetLabel performs requests for "issues/get-label"
 
 Get a single label.
 
@@ -879,10 +1692,37 @@ Get a single label.
 
 https://developer.github.com/v3/issues/labels/#get-a-single-label
 */
+func (c *Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesGetLabelResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesGetLabelResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesGetLabelReq is request data for Client.IssuesGetLabel
+
+https://developer.github.com/v3/issues/labels/#get-a-single-label
+*/
 type IssuesGetLabelReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 	Name  string
+}
+
+func (r *IssuesGetLabelReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesGetLabelReq) urlPath() string {
@@ -908,22 +1748,58 @@ func (r *IssuesGetLabelReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesGetLabelReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetLabelReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetLabelReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesGetLabelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesGetLabelResponseBody200 is a response body for issues/get-label
-
-API documentation: https://developer.github.com/v3/issues/labels/#get-a-single-label
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesGetLabelResponseBody200 struct {
+func (r *IssuesGetLabelReq) Rel(link RelName, resp *IssuesGetLabelResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesGetLabelResponseBody is a response body for IssuesGetLabel
+
+https://developer.github.com/v3/issues/labels/#get-a-single-label
+*/
+type IssuesGetLabelResponseBody struct {
 	components.Label
 }
 
 /*
-IssuesGetMilestoneReq builds requests for "issues/get-milestone"
+IssuesGetLabelResponse is a response for IssuesGetLabel
+
+https://developer.github.com/v3/issues/labels/#get-a-single-label
+*/
+type IssuesGetLabelResponse struct {
+	response
+	request *IssuesGetLabelReq
+	Data    *IssuesGetLabelResponseBody
+}
+
+/*
+IssuesGetMilestone performs requests for "issues/get-milestone"
 
 Get a single milestone.
 
@@ -931,10 +1807,37 @@ Get a single milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 */
+func (c *Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesGetMilestoneResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesGetMilestoneResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesGetMilestoneReq is request data for Client.IssuesGetMilestone
+
+https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+*/
 type IssuesGetMilestoneReq struct {
+	pgURL           string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
+}
+
+func (r *IssuesGetMilestoneReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesGetMilestoneReq) urlPath() string {
@@ -960,22 +1863,58 @@ func (r *IssuesGetMilestoneReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesGetMilestoneReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetMilestoneReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesGetMilestoneReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesGetMilestoneReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesGetMilestoneResponseBody200 is a response body for issues/get-milestone
-
-API documentation: https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesGetMilestoneResponseBody200 struct {
+func (r *IssuesGetMilestoneReq) Rel(link RelName, resp *IssuesGetMilestoneResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesGetMilestoneResponseBody is a response body for IssuesGetMilestone
+
+https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+*/
+type IssuesGetMilestoneResponseBody struct {
 	components.Milestone
 }
 
 /*
-IssuesListReq builds requests for "issues/list"
+IssuesGetMilestoneResponse is a response for IssuesGetMilestone
+
+https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+*/
+type IssuesGetMilestoneResponse struct {
+	response
+	request *IssuesGetMilestoneReq
+	Data    *IssuesGetMilestoneResponseBody
+}
+
+/*
+IssuesList performs requests for "issues/list"
 
 List issues assigned to the authenticated user.
 
@@ -983,7 +1922,30 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
+func (c *Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListReq is request data for Client.IssuesList
+
+https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+*/
 type IssuesListReq struct {
+	pgURL string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -1045,6 +2007,10 @@ type IssuesListReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *IssuesListReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListReq) urlPath() string {
@@ -1101,22 +2067,58 @@ func (r *IssuesListReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListResponseBody200 is a response body for issues/list
-
-API documentation: https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListResponseBody200 []struct {
+func (r *IssuesListReq) Rel(link RelName, resp *IssuesListResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListResponseBody is a response body for IssuesList
+
+https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+*/
+type IssuesListResponseBody []struct {
 	components.IssueWithRepo
 }
 
 /*
-IssuesListAssigneesReq builds requests for "issues/list-assignees"
+IssuesListResponse is a response for IssuesList
+
+https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+*/
+type IssuesListResponse struct {
+	response
+	request *IssuesListReq
+	Data    *IssuesListResponseBody
+}
+
+/*
+IssuesListAssignees performs requests for "issues/list-assignees"
 
 List assignees.
 
@@ -1124,7 +2126,30 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
+func (c *Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListAssigneesResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListAssigneesResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListAssigneesReq is request data for Client.IssuesListAssignees
+
+https://developer.github.com/v3/issues/assignees/#list-assignees
+*/
 type IssuesListAssigneesReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1133,6 +2158,10 @@ type IssuesListAssigneesReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *IssuesListAssigneesReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListAssigneesReq) urlPath() string {
@@ -1164,22 +2193,58 @@ func (r *IssuesListAssigneesReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListAssigneesReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListAssigneesReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListAssigneesReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListAssigneesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListAssigneesResponseBody200 is a response body for issues/list-assignees
-
-API documentation: https://developer.github.com/v3/issues/assignees/#list-assignees
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListAssigneesResponseBody200 []struct {
+func (r *IssuesListAssigneesReq) Rel(link RelName, resp *IssuesListAssigneesResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListAssigneesResponseBody is a response body for IssuesListAssignees
+
+https://developer.github.com/v3/issues/assignees/#list-assignees
+*/
+type IssuesListAssigneesResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-IssuesListCommentsReq builds requests for "issues/list-comments"
+IssuesListAssigneesResponse is a response for IssuesListAssignees
+
+https://developer.github.com/v3/issues/assignees/#list-assignees
+*/
+type IssuesListAssigneesResponse struct {
+	response
+	request *IssuesListAssigneesReq
+	Data    *IssuesListAssigneesResponseBody
+}
+
+/*
+IssuesListComments performs requests for "issues/list-comments"
 
 List comments on an issue.
 
@@ -1187,7 +2252,30 @@ List comments on an issue.
 
 https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
 */
+func (c *Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListCommentsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListCommentsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListCommentsReq is request data for Client.IssuesListComments
+
+https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+*/
 type IssuesListCommentsReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1215,6 +2303,10 @@ type IssuesListCommentsReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *IssuesListCommentsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListCommentsReq) urlPath() string {
@@ -1252,22 +2344,58 @@ func (r *IssuesListCommentsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListCommentsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListCommentsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListCommentsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListCommentsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListCommentsResponseBody200 is a response body for issues/list-comments
-
-API documentation: https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListCommentsResponseBody200 []struct {
+func (r *IssuesListCommentsReq) Rel(link RelName, resp *IssuesListCommentsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListCommentsResponseBody is a response body for IssuesListComments
+
+https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+*/
+type IssuesListCommentsResponseBody []struct {
 	components.IssueComment
 }
 
 /*
-IssuesListCommentsForRepoReq builds requests for "issues/list-comments-for-repo"
+IssuesListCommentsResponse is a response for IssuesListComments
+
+https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+*/
+type IssuesListCommentsResponse struct {
+	response
+	request *IssuesListCommentsReq
+	Data    *IssuesListCommentsResponseBody
+}
+
+/*
+IssuesListCommentsForRepo performs requests for "issues/list-comments-for-repo"
 
 List comments in a repository.
 
@@ -1275,7 +2403,30 @@ List comments in a repository.
 
 https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
+func (c *Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListCommentsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListCommentsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListCommentsForRepoReq is request data for Client.IssuesListCommentsForRepo
+
+https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+*/
 type IssuesListCommentsForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1308,6 +2459,10 @@ type IssuesListCommentsForRepoReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *IssuesListCommentsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListCommentsForRepoReq) urlPath() string {
@@ -1351,22 +2506,58 @@ func (r *IssuesListCommentsForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListCommentsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListCommentsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListCommentsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListCommentsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListCommentsForRepoResponseBody200 is a response body for issues/list-comments-for-repo
-
-API documentation: https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListCommentsForRepoResponseBody200 []struct {
+func (r *IssuesListCommentsForRepoReq) Rel(link RelName, resp *IssuesListCommentsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListCommentsForRepoResponseBody is a response body for IssuesListCommentsForRepo
+
+https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+*/
+type IssuesListCommentsForRepoResponseBody []struct {
 	components.IssueComment
 }
 
 /*
-IssuesListEventsReq builds requests for "issues/list-events"
+IssuesListCommentsForRepoResponse is a response for IssuesListCommentsForRepo
+
+https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+*/
+type IssuesListCommentsForRepoResponse struct {
+	response
+	request *IssuesListCommentsForRepoReq
+	Data    *IssuesListCommentsForRepoResponseBody
+}
+
+/*
+IssuesListEvents performs requests for "issues/list-events"
 
 List events for an issue.
 
@@ -1374,7 +2565,30 @@ List events for an issue.
 
 https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
+func (c *Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListEventsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListEventsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListEventsReq is request data for Client.IssuesListEvents
+
+https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+*/
 type IssuesListEventsReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1406,6 +2620,10 @@ type IssuesListEventsReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *IssuesListEventsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListEventsReq) urlPath() string {
@@ -1444,22 +2662,58 @@ func (r *IssuesListEventsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListEventsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListEventsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListEventsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListEventsResponseBody200 is a response body for issues/list-events
-
-API documentation: https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListEventsResponseBody200 []struct {
+func (r *IssuesListEventsReq) Rel(link RelName, resp *IssuesListEventsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListEventsResponseBody is a response body for IssuesListEvents
+
+https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+*/
+type IssuesListEventsResponseBody []struct {
 	components.IssueEventForIssue
 }
 
 /*
-IssuesListEventsForRepoReq builds requests for "issues/list-events-for-repo"
+IssuesListEventsResponse is a response for IssuesListEvents
+
+https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+*/
+type IssuesListEventsResponse struct {
+	response
+	request *IssuesListEventsReq
+	Data    *IssuesListEventsResponseBody
+}
+
+/*
+IssuesListEventsForRepo performs requests for "issues/list-events-for-repo"
 
 List events for a repository.
 
@@ -1467,7 +2721,30 @@ List events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-events-for-a-repository
 */
+func (c *Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListEventsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListEventsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListEventsForRepoReq is request data for Client.IssuesListEventsForRepo
+
+https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+*/
 type IssuesListEventsForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -1498,6 +2775,10 @@ type IssuesListEventsForRepoReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *IssuesListEventsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListEventsForRepoReq) urlPath() string {
@@ -1536,22 +2817,58 @@ func (r *IssuesListEventsForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListEventsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListEventsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListEventsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListEventsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListEventsForRepoResponseBody200 is a response body for issues/list-events-for-repo
-
-API documentation: https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListEventsForRepoResponseBody200 []struct {
+func (r *IssuesListEventsForRepoReq) Rel(link RelName, resp *IssuesListEventsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListEventsForRepoResponseBody is a response body for IssuesListEventsForRepo
+
+https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+*/
+type IssuesListEventsForRepoResponseBody []struct {
 	components.IssueEvent
 }
 
 /*
-IssuesListEventsForTimelineReq builds requests for "issues/list-events-for-timeline"
+IssuesListEventsForRepoResponse is a response for IssuesListEventsForRepo
+
+https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+*/
+type IssuesListEventsForRepoResponse struct {
+	response
+	request *IssuesListEventsForRepoReq
+	Data    *IssuesListEventsForRepoResponseBody
+}
+
+/*
+IssuesListEventsForTimeline performs requests for "issues/list-events-for-timeline"
 
 List events for an issue.
 
@@ -1559,7 +2876,30 @@ List events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
 */
+func (c *Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListEventsForTimelineResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListEventsForTimelineResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListEventsForTimelineReq is request data for Client.IssuesListEventsForTimeline
+
+https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+*/
 type IssuesListEventsForTimelineReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1590,6 +2930,10 @@ type IssuesListEventsForTimelineReq struct {
 	for a repository, and you must set this to true.
 	*/
 	StarfoxPreview bool
+}
+
+func (r *IssuesListEventsForTimelineReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListEventsForTimelineReq) urlPath() string {
@@ -1631,22 +2975,58 @@ func (r *IssuesListEventsForTimelineReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListEventsForTimelineReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListEventsForTimelineReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListEventsForTimelineReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListEventsForTimelineReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListEventsForTimelineResponseBody200 is a response body for issues/list-events-for-timeline
-
-API documentation: https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListEventsForTimelineResponseBody200 []struct {
+func (r *IssuesListEventsForTimelineReq) Rel(link RelName, resp *IssuesListEventsForTimelineResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListEventsForTimelineResponseBody is a response body for IssuesListEventsForTimeline
+
+https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+*/
+type IssuesListEventsForTimelineResponseBody []struct {
 	components.IssueEventForIssue
 }
 
 /*
-IssuesListForAuthenticatedUserReq builds requests for "issues/list-for-authenticated-user"
+IssuesListEventsForTimelineResponse is a response for IssuesListEventsForTimeline
+
+https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+*/
+type IssuesListEventsForTimelineResponse struct {
+	response
+	request *IssuesListEventsForTimelineReq
+	Data    *IssuesListEventsForTimelineResponseBody
+}
+
+/*
+IssuesListForAuthenticatedUser performs requests for "issues/list-for-authenticated-user"
 
 List user account issues assigned to the authenticated user.
 
@@ -1654,7 +3034,30 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
+func (c *Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListForAuthenticatedUserResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListForAuthenticatedUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListForAuthenticatedUserReq is request data for Client.IssuesListForAuthenticatedUser
+
+https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+*/
 type IssuesListForAuthenticatedUserReq struct {
+	pgURL string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -1716,6 +3119,10 @@ type IssuesListForAuthenticatedUserReq struct {
 	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
+}
+
+func (r *IssuesListForAuthenticatedUserReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListForAuthenticatedUserReq) urlPath() string {
@@ -1772,22 +3179,58 @@ func (r *IssuesListForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListForAuthenticatedUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListForAuthenticatedUserReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListForAuthenticatedUserResponseBody200 is a response body for issues/list-for-authenticated-user
-
-API documentation: https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListForAuthenticatedUserResponseBody200 []struct {
+func (r *IssuesListForAuthenticatedUserReq) Rel(link RelName, resp *IssuesListForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListForAuthenticatedUserResponseBody is a response body for IssuesListForAuthenticatedUser
+
+https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+*/
+type IssuesListForAuthenticatedUserResponseBody []struct {
 	components.IssueWithRepo
 }
 
 /*
-IssuesListForOrgReq builds requests for "issues/list-for-org"
+IssuesListForAuthenticatedUserResponse is a response for IssuesListForAuthenticatedUser
+
+https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+*/
+type IssuesListForAuthenticatedUserResponse struct {
+	response
+	request *IssuesListForAuthenticatedUserReq
+	Data    *IssuesListForAuthenticatedUserResponseBody
+}
+
+/*
+IssuesListForOrg performs requests for "issues/list-for-org"
 
 List organization issues assigned to the authenticated user.
 
@@ -1795,8 +3238,31 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
+func (c *Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListForOrgResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListForOrgReq is request data for Client.IssuesListForOrg
+
+https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+*/
 type IssuesListForOrgReq struct {
-	Org string
+	pgURL string
+	Org   string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -1860,6 +3326,10 @@ type IssuesListForOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
+func (r *IssuesListForOrgReq) pagingURL() string {
+	return r.pgURL
+}
+
 func (r *IssuesListForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/issues", r.Org)
 }
@@ -1914,22 +3384,58 @@ func (r *IssuesListForOrgReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListForOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListForOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListForOrgReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListForOrgResponseBody200 is a response body for issues/list-for-org
-
-API documentation: https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListForOrgResponseBody200 []struct {
+func (r *IssuesListForOrgReq) Rel(link RelName, resp *IssuesListForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListForOrgResponseBody is a response body for IssuesListForOrg
+
+https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+*/
+type IssuesListForOrgResponseBody []struct {
 	components.IssueWithRepo
 }
 
 /*
-IssuesListForRepoReq builds requests for "issues/list-for-repo"
+IssuesListForOrgResponse is a response for IssuesListForOrg
+
+https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+*/
+type IssuesListForOrgResponse struct {
+	response
+	request *IssuesListForOrgReq
+	Data    *IssuesListForOrgResponseBody
+}
+
+/*
+IssuesListForRepo performs requests for "issues/list-for-repo"
 
 List repository issues.
 
@@ -1937,7 +3443,30 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
+func (c *Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListForRepoReq is request data for Client.IssuesListForRepo
+
+https://developer.github.com/v3/issues/#list-repository-issues
+*/
 type IssuesListForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -2011,6 +3540,10 @@ type IssuesListForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
+func (r *IssuesListForRepoReq) pagingURL() string {
+	return r.pgURL
+}
+
 func (r *IssuesListForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
 }
@@ -2074,22 +3607,58 @@ func (r *IssuesListForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListForRepoResponseBody200 is a response body for issues/list-for-repo
-
-API documentation: https://developer.github.com/v3/issues/#list-repository-issues
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListForRepoResponseBody200 []struct {
+func (r *IssuesListForRepoReq) Rel(link RelName, resp *IssuesListForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListForRepoResponseBody is a response body for IssuesListForRepo
+
+https://developer.github.com/v3/issues/#list-repository-issues
+*/
+type IssuesListForRepoResponseBody []struct {
 	components.IssueSimple2
 }
 
 /*
-IssuesListLabelsForMilestoneReq builds requests for "issues/list-labels-for-milestone"
+IssuesListForRepoResponse is a response for IssuesListForRepo
+
+https://developer.github.com/v3/issues/#list-repository-issues
+*/
+type IssuesListForRepoResponse struct {
+	response
+	request *IssuesListForRepoReq
+	Data    *IssuesListForRepoResponseBody
+}
+
+/*
+IssuesListLabelsForMilestone performs requests for "issues/list-labels-for-milestone"
 
 Get labels for every issue in a milestone.
 
@@ -2097,7 +3666,30 @@ Get labels for every issue in a milestone.
 
 https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 */
+func (c *Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListLabelsForMilestoneResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListLabelsForMilestoneResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListLabelsForMilestoneReq is request data for Client.IssuesListLabelsForMilestone
+
+https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+*/
 type IssuesListLabelsForMilestoneReq struct {
+	pgURL           string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
@@ -2107,6 +3699,10 @@ type IssuesListLabelsForMilestoneReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *IssuesListLabelsForMilestoneReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListLabelsForMilestoneReq) urlPath() string {
@@ -2138,22 +3734,58 @@ func (r *IssuesListLabelsForMilestoneReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListLabelsForMilestoneReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListLabelsForMilestoneReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListLabelsForMilestoneReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListLabelsForMilestoneReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListLabelsForMilestoneResponseBody200 is a response body for issues/list-labels-for-milestone
-
-API documentation: https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListLabelsForMilestoneResponseBody200 []struct {
+func (r *IssuesListLabelsForMilestoneReq) Rel(link RelName, resp *IssuesListLabelsForMilestoneResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListLabelsForMilestoneResponseBody is a response body for IssuesListLabelsForMilestone
+
+https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+*/
+type IssuesListLabelsForMilestoneResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesListLabelsForRepoReq builds requests for "issues/list-labels-for-repo"
+IssuesListLabelsForMilestoneResponse is a response for IssuesListLabelsForMilestone
+
+https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+*/
+type IssuesListLabelsForMilestoneResponse struct {
+	response
+	request *IssuesListLabelsForMilestoneReq
+	Data    *IssuesListLabelsForMilestoneResponseBody
+}
+
+/*
+IssuesListLabelsForRepo performs requests for "issues/list-labels-for-repo"
 
 List all labels for this repository.
 
@@ -2161,7 +3793,30 @@ List all labels for this repository.
 
 https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
+func (c *Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListLabelsForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListLabelsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListLabelsForRepoReq is request data for Client.IssuesListLabelsForRepo
+
+https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+*/
 type IssuesListLabelsForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -2170,6 +3825,10 @@ type IssuesListLabelsForRepoReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *IssuesListLabelsForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListLabelsForRepoReq) urlPath() string {
@@ -2201,22 +3860,58 @@ func (r *IssuesListLabelsForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListLabelsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListLabelsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListLabelsForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListLabelsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListLabelsForRepoResponseBody200 is a response body for issues/list-labels-for-repo
-
-API documentation: https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListLabelsForRepoResponseBody200 []struct {
+func (r *IssuesListLabelsForRepoReq) Rel(link RelName, resp *IssuesListLabelsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListLabelsForRepoResponseBody is a response body for IssuesListLabelsForRepo
+
+https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+*/
+type IssuesListLabelsForRepoResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesListLabelsOnIssueReq builds requests for "issues/list-labels-on-issue"
+IssuesListLabelsForRepoResponse is a response for IssuesListLabelsForRepo
+
+https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+*/
+type IssuesListLabelsForRepoResponse struct {
+	response
+	request *IssuesListLabelsForRepoReq
+	Data    *IssuesListLabelsForRepoResponseBody
+}
+
+/*
+IssuesListLabelsOnIssue performs requests for "issues/list-labels-on-issue"
 
 List labels on an issue.
 
@@ -2224,7 +3919,30 @@ List labels on an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
+func (c *Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListLabelsOnIssueResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListLabelsOnIssueResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListLabelsOnIssueReq is request data for Client.IssuesListLabelsOnIssue
+
+https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+*/
 type IssuesListLabelsOnIssueReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -2234,6 +3952,10 @@ type IssuesListLabelsOnIssueReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *IssuesListLabelsOnIssueReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListLabelsOnIssueReq) urlPath() string {
@@ -2265,22 +3987,58 @@ func (r *IssuesListLabelsOnIssueReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListLabelsOnIssueReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListLabelsOnIssueReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListLabelsOnIssueReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListLabelsOnIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListLabelsOnIssueResponseBody200 is a response body for issues/list-labels-on-issue
-
-API documentation: https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListLabelsOnIssueResponseBody200 []struct {
+func (r *IssuesListLabelsOnIssueReq) Rel(link RelName, resp *IssuesListLabelsOnIssueResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListLabelsOnIssueResponseBody is a response body for IssuesListLabelsOnIssue
+
+https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+*/
+type IssuesListLabelsOnIssueResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesListMilestonesForRepoReq builds requests for "issues/list-milestones-for-repo"
+IssuesListLabelsOnIssueResponse is a response for IssuesListLabelsOnIssue
+
+https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+*/
+type IssuesListLabelsOnIssueResponse struct {
+	response
+	request *IssuesListLabelsOnIssueReq
+	Data    *IssuesListLabelsOnIssueResponseBody
+}
+
+/*
+IssuesListMilestonesForRepo performs requests for "issues/list-milestones-for-repo"
 
 List milestones for a repository.
 
@@ -2288,7 +4046,30 @@ List milestones for a repository.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 */
+func (c *Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesListMilestonesForRepoResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesListMilestonesForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesListMilestonesForRepoReq is request data for Client.IssuesListMilestonesForRepo
+
+https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+*/
 type IssuesListMilestonesForRepoReq struct {
+	pgURL string
 	Owner string
 	Repo  string
 
@@ -2306,6 +4087,10 @@ type IssuesListMilestonesForRepoReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *IssuesListMilestonesForRepoReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesListMilestonesForRepoReq) urlPath() string {
@@ -2346,22 +4131,58 @@ func (r *IssuesListMilestonesForRepoReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListMilestonesForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListMilestonesForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesListMilestonesForRepoReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesListMilestonesForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesListMilestonesForRepoResponseBody200 is a response body for issues/list-milestones-for-repo
-
-API documentation: https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesListMilestonesForRepoResponseBody200 []struct {
+func (r *IssuesListMilestonesForRepoReq) Rel(link RelName, resp *IssuesListMilestonesForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesListMilestonesForRepoResponseBody is a response body for IssuesListMilestonesForRepo
+
+https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+*/
+type IssuesListMilestonesForRepoResponseBody []struct {
 	components.Milestone
 }
 
 /*
-IssuesLockReq builds requests for "issues/lock"
+IssuesListMilestonesForRepoResponse is a response for IssuesListMilestonesForRepo
+
+https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+*/
+type IssuesListMilestonesForRepoResponse struct {
+	response
+	request *IssuesListMilestonesForRepoReq
+	Data    *IssuesListMilestonesForRepoResponseBody
+}
+
+/*
+IssuesLock performs requests for "issues/lock"
 
 Lock an issue.
 
@@ -2369,7 +4190,29 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
+func (c *Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesLockResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesLockReq is request data for Client.IssuesLock
+
+https://developer.github.com/v3/issues/#lock-an-issue
+*/
 type IssuesLockReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -2384,6 +4227,10 @@ type IssuesLockReq struct {
 	for full details. To access this feature, you must set this to true.
 	*/
 	SailorVPreview bool
+}
+
+func (r *IssuesLockReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesLockReq) urlPath() string {
@@ -2412,15 +4259,40 @@ func (r *IssuesLockReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesLockReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesLockReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesLockReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesLockReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesLockReq) Rel(link RelName, resp *IssuesLockResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesLockReqBody is a request body for issues/lock
 
-API documentation: https://developer.github.com/v3/issues/#lock-an-issue
+https://developer.github.com/v3/issues/#lock-an-issue
 */
 type IssuesLockReqBody struct {
 
@@ -2436,7 +4308,17 @@ type IssuesLockReqBody struct {
 }
 
 /*
-IssuesRemoveAllLabelsReq builds requests for "issues/remove-all-labels"
+IssuesLockResponse is a response for IssuesLock
+
+https://developer.github.com/v3/issues/#lock-an-issue
+*/
+type IssuesLockResponse struct {
+	response
+	request *IssuesLockReq
+}
+
+/*
+IssuesRemoveAllLabels performs requests for "issues/remove-all-labels"
 
 Remove all labels from an issue.
 
@@ -2444,10 +4326,36 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
+func (c *Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesRemoveAllLabelsResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesRemoveAllLabelsReq is request data for Client.IssuesRemoveAllLabels
+
+https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
+*/
 type IssuesRemoveAllLabelsReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
+}
+
+func (r *IssuesRemoveAllLabelsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesRemoveAllLabelsReq) urlPath() string {
@@ -2473,13 +4381,48 @@ func (r *IssuesRemoveAllLabelsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesRemoveAllLabelsReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesRemoveAllLabelsReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesRemoveAllLabelsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesRemoveAllLabelsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesRemoveAssigneesReq builds requests for "issues/remove-assignees"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesRemoveAllLabelsReq) Rel(link RelName, resp *IssuesRemoveAllLabelsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesRemoveAllLabelsResponse is a response for IssuesRemoveAllLabels
+
+https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
+*/
+type IssuesRemoveAllLabelsResponse struct {
+	response
+	request *IssuesRemoveAllLabelsReq
+}
+
+/*
+IssuesRemoveAssignees performs requests for "issues/remove-assignees"
 
 Remove assignees from an issue.
 
@@ -2487,11 +4430,38 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
+func (c *Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesRemoveAssigneesResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesRemoveAssigneesResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesRemoveAssigneesReq is request data for Client.IssuesRemoveAssignees
+
+https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+*/
 type IssuesRemoveAssigneesReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesRemoveAssigneesReqBody
+}
+
+func (r *IssuesRemoveAssigneesReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesRemoveAssigneesReq) urlPath() string {
@@ -2517,15 +4487,40 @@ func (r *IssuesRemoveAssigneesReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesRemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesRemoveAssigneesReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesRemoveAssigneesReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesRemoveAssigneesReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesRemoveAssigneesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesRemoveAssigneesReq) Rel(link RelName, resp *IssuesRemoveAssigneesResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesRemoveAssigneesReqBody is a request body for issues/remove-assignees
 
-API documentation: https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type IssuesRemoveAssigneesReqBody struct {
 
@@ -2538,16 +4533,27 @@ type IssuesRemoveAssigneesReqBody struct {
 }
 
 /*
-IssuesRemoveAssigneesResponseBody200 is a response body for issues/remove-assignees
+IssuesRemoveAssigneesResponseBody is a response body for IssuesRemoveAssignees
 
-API documentation: https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-type IssuesRemoveAssigneesResponseBody200 struct {
+type IssuesRemoveAssigneesResponseBody struct {
 	components.IssueSimple2
 }
 
 /*
-IssuesRemoveLabelReq builds requests for "issues/remove-label"
+IssuesRemoveAssigneesResponse is a response for IssuesRemoveAssignees
+
+https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+*/
+type IssuesRemoveAssigneesResponse struct {
+	response
+	request *IssuesRemoveAssigneesReq
+	Data    *IssuesRemoveAssigneesResponseBody
+}
+
+/*
+IssuesRemoveLabel performs requests for "issues/remove-label"
 
 Remove a label from an issue.
 
@@ -2555,11 +4561,38 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
+func (c *Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesRemoveLabelResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesRemoveLabelResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesRemoveLabelReq is request data for Client.IssuesRemoveLabel
+
+https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+*/
 type IssuesRemoveLabelReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	Name        string
+}
+
+func (r *IssuesRemoveLabelReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesRemoveLabelReq) urlPath() string {
@@ -2585,22 +4618,58 @@ func (r *IssuesRemoveLabelReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesRemoveLabelReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesRemoveLabelReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesRemoveLabelReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesRemoveLabelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesRemoveLabelResponseBody200 is a response body for issues/remove-label
-
-API documentation: https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type IssuesRemoveLabelResponseBody200 []struct {
+func (r *IssuesRemoveLabelReq) Rel(link RelName, resp *IssuesRemoveLabelResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesRemoveLabelResponseBody is a response body for IssuesRemoveLabel
+
+https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+*/
+type IssuesRemoveLabelResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesReplaceAllLabelsReq builds requests for "issues/replace-all-labels"
+IssuesRemoveLabelResponse is a response for IssuesRemoveLabel
+
+https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+*/
+type IssuesRemoveLabelResponse struct {
+	response
+	request *IssuesRemoveLabelReq
+	Data    *IssuesRemoveLabelResponseBody
+}
+
+/*
+IssuesReplaceAllLabels performs requests for "issues/replace-all-labels"
 
 Replace all labels for an issue.
 
@@ -2608,11 +4677,38 @@ Replace all labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
+func (c *Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesReplaceAllLabelsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesReplaceAllLabelsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesReplaceAllLabelsReq is request data for Client.IssuesReplaceAllLabels
+
+https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+*/
 type IssuesReplaceAllLabelsReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesReplaceAllLabelsReqBody
+}
+
+func (r *IssuesReplaceAllLabelsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesReplaceAllLabelsReq) urlPath() string {
@@ -2638,15 +4734,40 @@ func (r *IssuesReplaceAllLabelsReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesReplaceAllLabelsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesReplaceAllLabelsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesReplaceAllLabelsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesReplaceAllLabelsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesReplaceAllLabelsReq) Rel(link RelName, resp *IssuesReplaceAllLabelsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesReplaceAllLabelsReqBody is a request body for issues/replace-all-labels
 
-API documentation: https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
 type IssuesReplaceAllLabelsReqBody struct {
 
@@ -2660,16 +4781,27 @@ type IssuesReplaceAllLabelsReqBody struct {
 }
 
 /*
-IssuesReplaceAllLabelsResponseBody200 is a response body for issues/replace-all-labels
+IssuesReplaceAllLabelsResponseBody is a response body for IssuesReplaceAllLabels
 
-API documentation: https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
-type IssuesReplaceAllLabelsResponseBody200 []struct {
+type IssuesReplaceAllLabelsResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesUnlockReq builds requests for "issues/unlock"
+IssuesReplaceAllLabelsResponse is a response for IssuesReplaceAllLabels
+
+https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+*/
+type IssuesReplaceAllLabelsResponse struct {
+	response
+	request *IssuesReplaceAllLabelsReq
+	Data    *IssuesReplaceAllLabelsResponseBody
+}
+
+/*
+IssuesUnlock performs requests for "issues/unlock"
 
 Unlock an issue.
 
@@ -2677,10 +4809,36 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
+func (c *Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesUnlockResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesUnlockReq is request data for Client.IssuesUnlock
+
+https://developer.github.com/v3/issues/#unlock-an-issue
+*/
 type IssuesUnlockReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
+}
+
+func (r *IssuesUnlockReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesUnlockReq) urlPath() string {
@@ -2706,13 +4864,48 @@ func (r *IssuesUnlockReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesUnlockReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *IssuesUnlockReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *IssuesUnlockReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesUnlockReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-IssuesUpdateReq builds requests for "issues/update"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesUnlockReq) Rel(link RelName, resp *IssuesUnlockResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+IssuesUnlockResponse is a response for IssuesUnlock
+
+https://developer.github.com/v3/issues/#unlock-an-issue
+*/
+type IssuesUnlockResponse struct {
+	response
+	request *IssuesUnlockReq
+}
+
+/*
+IssuesUpdate performs requests for "issues/update"
 
 Update an issue.
 
@@ -2720,11 +4913,38 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
+func (c *Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesUpdateResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesUpdateResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesUpdateReq is request data for Client.IssuesUpdate
+
+https://developer.github.com/v3/issues/#update-an-issue
+*/
 type IssuesUpdateReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesUpdateReqBody
+}
+
+func (r *IssuesUpdateReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesUpdateReq) urlPath() string {
@@ -2750,15 +4970,40 @@ func (r *IssuesUpdateReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesUpdateReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesUpdateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesUpdateReq) Rel(link RelName, resp *IssuesUpdateResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesUpdateReqBody is a request body for issues/update
 
-API documentation: https://developer.github.com/v3/issues/#update-an-issue
+https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateReqBody struct {
 
@@ -2802,16 +5047,27 @@ type IssuesUpdateReqBody struct {
 }
 
 /*
-IssuesUpdateResponseBody200 is a response body for issues/update
+IssuesUpdateResponseBody is a response body for IssuesUpdate
 
-API documentation: https://developer.github.com/v3/issues/#update-an-issue
+https://developer.github.com/v3/issues/#update-an-issue
 */
-type IssuesUpdateResponseBody200 struct {
+type IssuesUpdateResponseBody struct {
 	components.Issue
 }
 
 /*
-IssuesUpdateCommentReq builds requests for "issues/update-comment"
+IssuesUpdateResponse is a response for IssuesUpdate
+
+https://developer.github.com/v3/issues/#update-an-issue
+*/
+type IssuesUpdateResponse struct {
+	response
+	request *IssuesUpdateReq
+	Data    *IssuesUpdateResponseBody
+}
+
+/*
+IssuesUpdateComment performs requests for "issues/update-comment"
 
 Edit a comment.
 
@@ -2819,11 +5075,38 @@ Edit a comment.
 
 https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
+func (c *Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesUpdateCommentResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesUpdateCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesUpdateCommentReq is request data for Client.IssuesUpdateComment
+
+https://developer.github.com/v3/issues/comments/#edit-a-comment
+*/
 type IssuesUpdateCommentReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	CommentId   int64
 	RequestBody IssuesUpdateCommentReqBody
+}
+
+func (r *IssuesUpdateCommentReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesUpdateCommentReq) urlPath() string {
@@ -2849,15 +5132,40 @@ func (r *IssuesUpdateCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesUpdateCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateCommentReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesUpdateCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesUpdateCommentReq) Rel(link RelName, resp *IssuesUpdateCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesUpdateCommentReqBody is a request body for issues/update-comment
 
-API documentation: https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
 type IssuesUpdateCommentReqBody struct {
 
@@ -2866,16 +5174,27 @@ type IssuesUpdateCommentReqBody struct {
 }
 
 /*
-IssuesUpdateCommentResponseBody200 is a response body for issues/update-comment
+IssuesUpdateCommentResponseBody is a response body for IssuesUpdateComment
 
-API documentation: https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
-type IssuesUpdateCommentResponseBody200 struct {
+type IssuesUpdateCommentResponseBody struct {
 	components.IssueComment
 }
 
 /*
-IssuesUpdateLabelReq builds requests for "issues/update-label"
+IssuesUpdateCommentResponse is a response for IssuesUpdateComment
+
+https://developer.github.com/v3/issues/comments/#edit-a-comment
+*/
+type IssuesUpdateCommentResponse struct {
+	response
+	request *IssuesUpdateCommentReq
+	Data    *IssuesUpdateCommentResponseBody
+}
+
+/*
+IssuesUpdateLabel performs requests for "issues/update-label"
 
 Update a label.
 
@@ -2883,11 +5202,38 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
+func (c *Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesUpdateLabelResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesUpdateLabelResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesUpdateLabelReq is request data for Client.IssuesUpdateLabel
+
+https://developer.github.com/v3/issues/labels/#update-a-label
+*/
 type IssuesUpdateLabelReq struct {
+	pgURL       string
 	Owner       string
 	Repo        string
 	Name        string
 	RequestBody IssuesUpdateLabelReqBody
+}
+
+func (r *IssuesUpdateLabelReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesUpdateLabelReq) urlPath() string {
@@ -2913,15 +5259,40 @@ func (r *IssuesUpdateLabelReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesUpdateLabelReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateLabelReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateLabelReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesUpdateLabelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesUpdateLabelReq) Rel(link RelName, resp *IssuesUpdateLabelResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesUpdateLabelReqBody is a request body for issues/update-label
 
-API documentation: https://developer.github.com/v3/issues/labels/#update-a-label
+https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelReqBody struct {
 
@@ -2946,16 +5317,27 @@ type IssuesUpdateLabelReqBody struct {
 }
 
 /*
-IssuesUpdateLabelResponseBody200 is a response body for issues/update-label
+IssuesUpdateLabelResponseBody is a response body for IssuesUpdateLabel
 
-API documentation: https://developer.github.com/v3/issues/labels/#update-a-label
+https://developer.github.com/v3/issues/labels/#update-a-label
 */
-type IssuesUpdateLabelResponseBody200 struct {
+type IssuesUpdateLabelResponseBody struct {
 	components.Label
 }
 
 /*
-IssuesUpdateMilestoneReq builds requests for "issues/update-milestone"
+IssuesUpdateLabelResponse is a response for IssuesUpdateLabel
+
+https://developer.github.com/v3/issues/labels/#update-a-label
+*/
+type IssuesUpdateLabelResponse struct {
+	response
+	request *IssuesUpdateLabelReq
+	Data    *IssuesUpdateLabelResponseBody
+}
+
+/*
+IssuesUpdateMilestone performs requests for "issues/update-milestone"
 
 Update a milestone.
 
@@ -2963,11 +5345,38 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
+func (c *Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &IssuesUpdateMilestoneResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(IssuesUpdateMilestoneResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+IssuesUpdateMilestoneReq is request data for Client.IssuesUpdateMilestone
+
+https://developer.github.com/v3/issues/milestones/#update-a-milestone
+*/
 type IssuesUpdateMilestoneReq struct {
+	pgURL           string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
 	RequestBody     IssuesUpdateMilestoneReqBody
+}
+
+func (r *IssuesUpdateMilestoneReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *IssuesUpdateMilestoneReq) urlPath() string {
@@ -2993,15 +5402,40 @@ func (r *IssuesUpdateMilestoneReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesUpdateMilestoneReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateMilestoneReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *IssuesUpdateMilestoneReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *IssuesUpdateMilestoneReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *IssuesUpdateMilestoneReq) Rel(link RelName, resp *IssuesUpdateMilestoneResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 IssuesUpdateMilestoneReqBody is a request body for issues/update-milestone
 
-API documentation: https://developer.github.com/v3/issues/milestones/#update-a-milestone
+https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type IssuesUpdateMilestoneReqBody struct {
 
@@ -3022,10 +5456,21 @@ type IssuesUpdateMilestoneReqBody struct {
 }
 
 /*
-IssuesUpdateMilestoneResponseBody200 is a response body for issues/update-milestone
+IssuesUpdateMilestoneResponseBody is a response body for IssuesUpdateMilestone
 
-API documentation: https://developer.github.com/v3/issues/milestones/#update-a-milestone
+https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-type IssuesUpdateMilestoneResponseBody200 struct {
+type IssuesUpdateMilestoneResponseBody struct {
 	components.Milestone
+}
+
+/*
+IssuesUpdateMilestoneResponse is a response for IssuesUpdateMilestone
+
+https://developer.github.com/v3/issues/milestones/#update-a-milestone
+*/
+type IssuesUpdateMilestoneResponse struct {
+	response
+	request *IssuesUpdateMilestoneReq
+	Data    *IssuesUpdateMilestoneResponseBody
 }

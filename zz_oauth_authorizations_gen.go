@@ -12,7 +12,7 @@ import (
 )
 
 /*
-OauthAuthorizationsCreateAuthorizationReq builds requests for "oauth-authorizations/create-authorization"
+OauthAuthorizationsCreateAuthorization performs requests for "oauth-authorizations/create-authorization"
 
 Create a new authorization.
 
@@ -20,8 +20,35 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
+func (c *Client) OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsCreateAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsCreateAuthorizationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsCreateAuthorizationReq is request data for Client.OauthAuthorizationsCreateAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+*/
 type OauthAuthorizationsCreateAuthorizationReq struct {
+	pgURL       string
 	RequestBody OauthAuthorizationsCreateAuthorizationReqBody
+}
+
+func (r *OauthAuthorizationsCreateAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
@@ -47,15 +74,40 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsCreateAuthorizationReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *OauthAuthorizationsCreateAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsCreateAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OauthAuthorizationsCreateAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsCreateAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 OauthAuthorizationsCreateAuthorizationReqBody is a request body for oauth-authorizations/create-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationReqBody struct {
 
@@ -86,16 +138,27 @@ type OauthAuthorizationsCreateAuthorizationReqBody struct {
 }
 
 /*
-OauthAuthorizationsCreateAuthorizationResponseBody201 is a response body for oauth-authorizations/create-authorization
+OauthAuthorizationsCreateAuthorizationResponseBody is a response body for OauthAuthorizationsCreateAuthorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-type OauthAuthorizationsCreateAuthorizationResponseBody201 struct {
+type OauthAuthorizationsCreateAuthorizationResponseBody struct {
 	components.Authorization
 }
 
 /*
-OauthAuthorizationsDeleteAuthorizationReq builds requests for "oauth-authorizations/delete-authorization"
+OauthAuthorizationsCreateAuthorizationResponse is a response for OauthAuthorizationsCreateAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+*/
+type OauthAuthorizationsCreateAuthorizationResponse struct {
+	response
+	request *OauthAuthorizationsCreateAuthorizationReq
+	Data    *OauthAuthorizationsCreateAuthorizationResponseBody
+}
+
+/*
+OauthAuthorizationsDeleteAuthorization performs requests for "oauth-authorizations/delete-authorization"
 
 Delete an authorization.
 
@@ -103,8 +166,34 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
+func (c *Client) OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsDeleteAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsDeleteAuthorizationReq is request data for Client.OauthAuthorizationsDeleteAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+*/
 type OauthAuthorizationsDeleteAuthorizationReq struct {
+	pgURL           string
 	AuthorizationId int64
+}
+
+func (r *OauthAuthorizationsDeleteAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
@@ -130,13 +219,48 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsDeleteAuthorizationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsDeleteAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-OauthAuthorizationsDeleteGrantReq builds requests for "oauth-authorizations/delete-grant"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OauthAuthorizationsDeleteAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsDeleteAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+OauthAuthorizationsDeleteAuthorizationResponse is a response for OauthAuthorizationsDeleteAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+*/
+type OauthAuthorizationsDeleteAuthorizationResponse struct {
+	response
+	request *OauthAuthorizationsDeleteAuthorizationReq
+}
+
+/*
+OauthAuthorizationsDeleteGrant performs requests for "oauth-authorizations/delete-grant"
 
 Delete a grant.
 
@@ -144,8 +268,34 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
+func (c *Client) OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...RequestOption) (*OauthAuthorizationsDeleteGrantResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsDeleteGrantResponse{
+		request:  req,
+		response: *r,
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsDeleteGrantReq is request data for Client.OauthAuthorizationsDeleteGrant
+
+https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+*/
 type OauthAuthorizationsDeleteGrantReq struct {
+	pgURL   string
 	GrantId int64
+}
+
+func (r *OauthAuthorizationsDeleteGrantReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsDeleteGrantReq) urlPath() string {
@@ -171,13 +321,48 @@ func (r *OauthAuthorizationsDeleteGrantReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsDeleteGrantReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *OauthAuthorizationsDeleteGrantReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsDeleteGrantReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-OauthAuthorizationsGetAuthorizationReq builds requests for "oauth-authorizations/get-authorization"
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OauthAuthorizationsDeleteGrantReq) Rel(link RelName, resp *OauthAuthorizationsDeleteGrantResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+OauthAuthorizationsDeleteGrantResponse is a response for OauthAuthorizationsDeleteGrant
+
+https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+*/
+type OauthAuthorizationsDeleteGrantResponse struct {
+	response
+	request *OauthAuthorizationsDeleteGrantReq
+}
+
+/*
+OauthAuthorizationsGetAuthorization performs requests for "oauth-authorizations/get-authorization"
 
 Get a single authorization.
 
@@ -185,8 +370,35 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
+func (c *Client) OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsGetAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsGetAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsGetAuthorizationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetAuthorizationReq is request data for Client.OauthAuthorizationsGetAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+*/
 type OauthAuthorizationsGetAuthorizationReq struct {
+	pgURL           string
 	AuthorizationId int64
+}
+
+func (r *OauthAuthorizationsGetAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsGetAuthorizationReq) urlPath() string {
@@ -212,22 +424,58 @@ func (r *OauthAuthorizationsGetAuthorizationReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsGetAuthorizationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsGetAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsGetAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-OauthAuthorizationsGetAuthorizationResponseBody200 is a response body for oauth-authorizations/get-authorization
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type OauthAuthorizationsGetAuthorizationResponseBody200 struct {
+func (r *OauthAuthorizationsGetAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsGetAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+OauthAuthorizationsGetAuthorizationResponseBody is a response body for OauthAuthorizationsGetAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+*/
+type OauthAuthorizationsGetAuthorizationResponseBody struct {
 	components.Authorization
 }
 
 /*
-OauthAuthorizationsGetGrantReq builds requests for "oauth-authorizations/get-grant"
+OauthAuthorizationsGetAuthorizationResponse is a response for OauthAuthorizationsGetAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+*/
+type OauthAuthorizationsGetAuthorizationResponse struct {
+	response
+	request *OauthAuthorizationsGetAuthorizationReq
+	Data    *OauthAuthorizationsGetAuthorizationResponseBody
+}
+
+/*
+OauthAuthorizationsGetGrant performs requests for "oauth-authorizations/get-grant"
 
 Get a single grant.
 
@@ -235,8 +483,35 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
+func (c *Client) OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...RequestOption) (*OauthAuthorizationsGetGrantResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsGetGrantResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsGetGrantResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetGrantReq is request data for Client.OauthAuthorizationsGetGrant
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
 type OauthAuthorizationsGetGrantReq struct {
+	pgURL   string
 	GrantId int64
+}
+
+func (r *OauthAuthorizationsGetGrantReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsGetGrantReq) urlPath() string {
@@ -262,22 +537,58 @@ func (r *OauthAuthorizationsGetGrantReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsGetGrantReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsGetGrantReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsGetGrantReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-OauthAuthorizationsGetGrantResponseBody200 is a response body for oauth-authorizations/get-grant
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type OauthAuthorizationsGetGrantResponseBody200 struct {
+func (r *OauthAuthorizationsGetGrantReq) Rel(link RelName, resp *OauthAuthorizationsGetGrantResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+OauthAuthorizationsGetGrantResponseBody is a response body for OauthAuthorizationsGetGrant
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+type OauthAuthorizationsGetGrantResponseBody struct {
 	components.ApplicationGrant
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppReq builds requests for "oauth-authorizations/get-or-create-authorization-for-app"
+OauthAuthorizationsGetGrantResponse is a response for OauthAuthorizationsGetGrant
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+type OauthAuthorizationsGetGrantResponse struct {
+	response
+	request *OauthAuthorizationsGetGrantReq
+	Data    *OauthAuthorizationsGetGrantResponseBody
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForApp performs requests for "oauth-authorizations/get-or-create-authorization-for-app"
 
 Get-or-create an authorization for a specific app.
 
@@ -285,9 +596,36 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
+func (c *Client) OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppReq is request data for Client.OauthAuthorizationsGetOrCreateAuthorizationForApp
+
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+*/
 type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
+	pgURL       string
 	ClientId    string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
@@ -313,15 +651,40 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) body() interface{
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) dataStatuses() []int {
+	return []int{200, 201}
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() []int {
+	return []int{200, 201}
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) Rel(link RelName, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody is a request body for oauth-authorizations/get-or-create-authorization-for-app
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody struct {
 
@@ -350,25 +713,27 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody struct {
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 is a response body for oauth-authorizations/get-or-create-authorization-for-app
+OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody is a response body for OauthAuthorizationsGetOrCreateAuthorizationForApp
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody200 struct {
+type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody struct {
 	components.Authorization
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 is a response body for oauth-authorizations/get-or-create-authorization-for-app
+OauthAuthorizationsGetOrCreateAuthorizationForAppResponse is a response for OauthAuthorizationsGetOrCreateAuthorizationForApp
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody201 struct {
-	components.Authorization
+type OauthAuthorizationsGetOrCreateAuthorizationForAppResponse struct {
+	response
+	request *OauthAuthorizationsGetOrCreateAuthorizationForAppReq
+	Data    *OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq builds requests for "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint"
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint performs requests for "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint"
 
 Get-or-create an authorization for a specific app and fingerprint.
 
@@ -376,10 +741,37 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
+func (c *Client) OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq is request data for Client.OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
+
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+*/
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
+	pgURL       string
 	ClientId    string
 	Fingerprint string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
@@ -405,15 +797,40 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) bod
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) dataStatuses() []int {
+	return []int{200, 201}
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) validStatuses() []int {
+	return []int{200, 201}
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) Rel(link RelName, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody is a request body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody struct {
 
@@ -434,25 +851,27 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody stru
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 is a response body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody is a response body for OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody200 struct {
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody struct {
 	components.Authorization
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 is a response body for oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse is a response for OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody201 struct {
-	components.Authorization
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse struct {
+	response
+	request *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq
+	Data    *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody
 }
 
 /*
-OauthAuthorizationsListAuthorizationsReq builds requests for "oauth-authorizations/list-authorizations"
+OauthAuthorizationsListAuthorizations performs requests for "oauth-authorizations/list-authorizations"
 
 List your authorizations.
 
@@ -460,13 +879,40 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
+func (c *Client) OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...RequestOption) (*OauthAuthorizationsListAuthorizationsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsListAuthorizationsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsListAuthorizationsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsListAuthorizationsReq is request data for Client.OauthAuthorizationsListAuthorizations
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+*/
 type OauthAuthorizationsListAuthorizationsReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *OauthAuthorizationsListAuthorizationsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsListAuthorizationsReq) urlPath() string {
@@ -498,22 +944,58 @@ func (r *OauthAuthorizationsListAuthorizationsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsListAuthorizationsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsListAuthorizationsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsListAuthorizationsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-OauthAuthorizationsListAuthorizationsResponseBody200 is a response body for oauth-authorizations/list-authorizations
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type OauthAuthorizationsListAuthorizationsResponseBody200 []struct {
+func (r *OauthAuthorizationsListAuthorizationsReq) Rel(link RelName, resp *OauthAuthorizationsListAuthorizationsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+OauthAuthorizationsListAuthorizationsResponseBody is a response body for OauthAuthorizationsListAuthorizations
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+*/
+type OauthAuthorizationsListAuthorizationsResponseBody []struct {
 	components.Authorization
 }
 
 /*
-OauthAuthorizationsListGrantsReq builds requests for "oauth-authorizations/list-grants"
+OauthAuthorizationsListAuthorizationsResponse is a response for OauthAuthorizationsListAuthorizations
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+*/
+type OauthAuthorizationsListAuthorizationsResponse struct {
+	response
+	request *OauthAuthorizationsListAuthorizationsReq
+	Data    *OauthAuthorizationsListAuthorizationsResponseBody
+}
+
+/*
+OauthAuthorizationsListGrants performs requests for "oauth-authorizations/list-grants"
 
 List your grants.
 
@@ -521,13 +1003,40 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
+func (c *Client) OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...RequestOption) (*OauthAuthorizationsListGrantsResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsListGrantsResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsListGrantsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsListGrantsReq is request data for Client.OauthAuthorizationsListGrants
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+*/
 type OauthAuthorizationsListGrantsReq struct {
+	pgURL string
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
+}
+
+func (r *OauthAuthorizationsListGrantsReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsListGrantsReq) urlPath() string {
@@ -559,22 +1068,58 @@ func (r *OauthAuthorizationsListGrantsReq) body() interface{} {
 	return nil
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsListGrantsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsListGrantsReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsListGrantsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
 /*
-OauthAuthorizationsListGrantsResponseBody200 is a response body for oauth-authorizations/list-grants
-
-API documentation: https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
 */
-type OauthAuthorizationsListGrantsResponseBody200 []struct {
+func (r *OauthAuthorizationsListGrantsReq) Rel(link RelName, resp *OauthAuthorizationsListGrantsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
+}
+
+/*
+OauthAuthorizationsListGrantsResponseBody is a response body for OauthAuthorizationsListGrants
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+*/
+type OauthAuthorizationsListGrantsResponseBody []struct {
 	components.ApplicationGrant
 }
 
 /*
-OauthAuthorizationsUpdateAuthorizationReq builds requests for "oauth-authorizations/update-authorization"
+OauthAuthorizationsListGrantsResponse is a response for OauthAuthorizationsListGrants
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+*/
+type OauthAuthorizationsListGrantsResponse struct {
+	response
+	request *OauthAuthorizationsListGrantsReq
+	Data    *OauthAuthorizationsListGrantsResponseBody
+}
+
+/*
+OauthAuthorizationsUpdateAuthorization performs requests for "oauth-authorizations/update-authorization"
 
 Update an existing authorization.
 
@@ -582,9 +1127,36 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
+func (c *Client) OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
+	r, err := c.doRequest(ctx, req, opt...)
+	if err != nil {
+		return nil, err
+	}
+	resp := &OauthAuthorizationsUpdateAuthorizationResponse{
+		request:  req,
+		response: *r,
+	}
+	resp.Data = new(OauthAuthorizationsUpdateAuthorizationResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OauthAuthorizationsUpdateAuthorizationReq is request data for Client.OauthAuthorizationsUpdateAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+*/
 type OauthAuthorizationsUpdateAuthorizationReq struct {
+	pgURL           string
 	AuthorizationId int64
 	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
+}
+
+func (r *OauthAuthorizationsUpdateAuthorizationReq) pagingURL() string {
+	return r.pgURL
 }
 
 func (r *OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
@@ -610,15 +1182,40 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) body() interface{} {
 	return r.RequestBody
 }
 
-// HTTPRequest creates an http request
-func (r *OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OauthAuthorizationsUpdateAuthorizationReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointType() endpointType {
+	return endpointTypeRegular
+}
+
+// httpRequest creates an http request
+func (r *OauthAuthorizationsUpdateAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OauthAuthorizationsUpdateAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsUpdateAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r.pgURL = u
+	return true
 }
 
 /*
 OauthAuthorizationsUpdateAuthorizationReqBody is a request body for oauth-authorizations/update-authorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 
@@ -649,10 +1246,21 @@ type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 }
 
 /*
-OauthAuthorizationsUpdateAuthorizationResponseBody200 is a response body for oauth-authorizations/update-authorization
+OauthAuthorizationsUpdateAuthorizationResponseBody is a response body for OauthAuthorizationsUpdateAuthorization
 
-API documentation: https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-type OauthAuthorizationsUpdateAuthorizationResponseBody200 struct {
+type OauthAuthorizationsUpdateAuthorizationResponseBody struct {
 	components.Authorization
+}
+
+/*
+OauthAuthorizationsUpdateAuthorizationResponse is a response for OauthAuthorizationsUpdateAuthorization
+
+https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+*/
+type OauthAuthorizationsUpdateAuthorizationResponse struct {
+	response
+	request *OauthAuthorizationsUpdateAuthorizationReq
+	Data    *OauthAuthorizationsUpdateAuthorizationResponseBody
 }
