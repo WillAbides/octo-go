@@ -48,6 +48,7 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 	concernFiles := map[string]*jen.File{}
 
 	for _, endpoint := range endpoints {
+		endpoint = endpointWithOverrides(endpoint)
 		if endpoint.Legacy {
 			continue
 		}

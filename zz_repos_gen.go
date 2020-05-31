@@ -12946,9 +12946,7 @@ ReposListLanguagesResponseBody is a response body for ReposListLanguages
 
 https://developer.github.com/v3/repos/#list-languages
 */
-type ReposListLanguagesResponseBody struct {
-	components.Language
-}
+type ReposListLanguagesResponseBody map[string]int64
 
 /*
 ReposListLanguagesResponse is a response for ReposListLanguages
@@ -18313,14 +18311,8 @@ https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 type ReposUploadReleaseAssetReq struct {
 	_url string
 
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// release_id parameter
-	ReleaseId int64
+	// URL to query. This must be explicitly set for this endpoint and any base URL set in options will be ignored.
+	URL string
 
 	// name parameter
 	Name *string
@@ -18329,7 +18321,7 @@ type ReposUploadReleaseAssetReq struct {
 	Label *string
 
 	// http request's body
-	RequestBody io.ReadCloser
+	RequestBody io.Reader
 
 	/*
 	Size of the asset in bytes. Most libraries will calculate the header
@@ -18345,11 +18337,14 @@ type ReposUploadReleaseAssetReq struct {
 }
 
 func (r *ReposUploadReleaseAssetReq) url() string {
-	return r._url
+	if r._url != "" {
+		return r._url
+	}
+	return r.URL
 }
 
 func (r *ReposUploadReleaseAssetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
+	return ""
 }
 
 func (r *ReposUploadReleaseAssetReq) method() string {
@@ -18389,7 +18384,7 @@ func (r *ReposUploadReleaseAssetReq) validStatuses() []int {
 }
 
 func (r *ReposUploadReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBodyUploader}
+	return []endpointAttribute{attrBodyUploader, attrExplicitURL}
 }
 
 // httpRequest creates an http request

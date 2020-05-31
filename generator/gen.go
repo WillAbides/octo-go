@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sort"
 	"strings"
 
 	"github.com/dave/jennifer/jen"
@@ -186,6 +187,8 @@ const (
 	attrBodyUploader
 	// endpoint with a json request body
 	attrJSONRequestBody
+	// requires a URL parameter to be set explicitly
+	attrExplicitURL
 	// attrInvalid is last so we can get a list of all valid types with a for loop
 	attrInvalid
 )
@@ -195,6 +198,7 @@ var attrNames = map[endpointAttribute]string{
 	attrBoolean:         "attrBoolean",
 	attrBodyUploader:    "attrBodyUploader",
 	attrJSONRequestBody: "attrJSONRequestBody",
+	attrExplicitURL:     "attrExplicitURL",
 }
 
 func (e endpointAttribute) String() string {
@@ -224,14 +228,17 @@ func endpointHasAttribute(endpoint model.Endpoint, attribute endpointAttribute) 
 }
 
 func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
-	override, ok := overrideEndpointAttrs[endpoint.ID]
-	if ok {
-		return override
-	}
 	var result []endpointAttribute
+	override, ok := overrideAddAttrs[endpoint.ID]
+	if ok {
+		result = append(result, override...)
+	}
 	for _, check := range attrChecks {
 		check(endpoint, &result)
 	}
+	sort.Slice(result, func(i, j int) bool {
+		return result[i] < result[j]
+	})
 	return result
 }
 

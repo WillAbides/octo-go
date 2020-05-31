@@ -1,6 +1,7 @@
 package octo_test
 
 import (
+	"bytes"
 	"context"
 	"io/ioutil"
 	"net/http"
@@ -32,6 +33,29 @@ func vcrClient(t *testing.T, cassette string) *octo.Client {
 
 	return octo.NewClient(&http.Client{
 		Transport: r,
+	})
+}
+
+func TestResposUploadReleaseAsset(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		ctx := context.Background()
+		client := vcrClient(t, t.Name())
+		releaseResp, err := client.ReposGetReleaseByTag(ctx, &octo.ReposGetReleaseByTagReq{
+			Owner: "octo-cli-testorg",
+			Repo:  "scratch",
+			Tag:   "v0.0.2",
+		})
+		require.NoError(t, err)
+		licenseBytes, err := ioutil.ReadFile("LICENSE")
+		require.NoError(t, err)
+		uploadResp, err := client.ReposUploadReleaseAsset(ctx, &octo.ReposUploadReleaseAssetReq{
+			URL:               releaseResp.Data.UploadUrl,
+			Name:              octo.String("LICENSE"),
+			RequestBody:       bytes.NewBuffer(licenseBytes),
+			ContentTypeHeader: octo.String("text/plain"),
+		})
+		require.NoError(t, err)
+		require.Equal(t, "LICENSE", uploadResp.Data.Name)
 	})
 }
 

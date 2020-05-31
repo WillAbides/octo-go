@@ -12,6 +12,7 @@ import (
 	"path"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -246,22 +247,45 @@ type requestBuilder interface {
 	endpointAttributes() []endpointAttribute
 }
 
-func httpRequestURL(builder requestBuilder, options requestOpts) string {
-	if builder.url() != "" {
-		return builder.url()
+func httpRequestURL(builder requestBuilder, options requestOpts) (string, error) {
+	expURL := builder.url()
+	if expURL != "" {
+		if !hasEndpointAttribute(builder, attrExplicitURL) {
+			return expURL, nil
+		}
+		// get rid of any {?templates}
+		expURL = strings.SplitN(expURL, "{?", 2)[0]
+
+		u, err := url.Parse(expURL)
+		if err != nil {
+			return "", err
+		}
+		expQuery := u.Query()
+		for key, vals := range builder.urlQuery() {
+			expQuery.Del(key)
+			for _, val := range vals {
+				expQuery.Add(key, val)
+			}
+		}
+		u.RawQuery = expQuery.Encode()
+		return u.String(), nil
 	}
+	if hasEndpointAttribute(builder, attrExplicitURL) {
+		return "", fmt.Errorf("URL must be set")
+	}
+
 	u := options.baseURL
 	u.Path = path.Join(u.Path, builder.urlPath())
 	urlQuery := builder.urlQuery()
 	if urlQuery != nil {
 		u.RawQuery = urlQuery.Encode()
 	}
-	return u.String()
+	return u.String(), nil
 }
 
 func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []RequestOption) (*http.Request, error) {
 	options := buildRequestOptions(opts)
-	var bodyReader io.ReadCloser
+	var bodyReader io.Reader
 	body := builder.body()
 	switch {
 	case body == nil:
@@ -271,11 +295,14 @@ func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []Reques
 		if err != nil {
 			return nil, err
 		}
-		bodyReader = ioutil.NopCloser(&buf)
+		bodyReader = &buf
 	case hasEndpointAttribute(builder, attrBodyUploader):
-		bodyReader = body.(io.ReadCloser)
+		bodyReader = body.(io.Reader)
 	}
-	urlString := httpRequestURL(builder, options)
+	urlString, err := httpRequestURL(builder, options)
+	if err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequestWithContext(ctx, builder.method(), urlString, bodyReader)
 	if err != nil {
 		return nil, err

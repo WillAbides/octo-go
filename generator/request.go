@@ -35,6 +35,10 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			}
 			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, nil))
 		}
+		if endpointHasAttribute(endpoint, attrExplicitURL) {
+			group.Line().Comment("URL to query. This must be explicitly set for this endpoint and any base URL set in options will be ignored.")
+			group.Id("URL").String()
+		}
 		for _, param := range endpoint.QueryParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
@@ -48,7 +52,7 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
 		case endpointHasAttribute(endpoint, attrBodyUploader):
 			group.Line().Comment("http request's body")
-			group.Id("RequestBody").Qual("io", "ReadCloser")
+			group.Id("RequestBody").Qual("io", "Reader")
 		}
 		for _, param := range endpoint.Headers {
 			if param.Name == "accept" {
@@ -70,17 +74,9 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 	})
 
 	for _, fn := range []func(file *jen.File, endpoint model.Endpoint){
-		func(fl *jen.File, endpoint model.Endpoint) {
-			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("url() string").Block(
-				jen.Id("return r._url"),
-			)
-		},
+		reqUrlFunc,
 		reqURLPathFunc,
-		func(fl *jen.File, endpoint model.Endpoint) {
-			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
-				jen.Return(jen.Lit(endpoint.Method)),
-			)
-		},
+		reqMethodFunc,
 		reqURLQueryFunc,
 		reqHeaderFunc,
 		reqBodyFunc,
@@ -94,6 +90,27 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		file.Line()
 	}
 
+}
+
+func reqMethodFunc(fl *jen.File, endpoint model.Endpoint) {
+	structName := reqStructName(endpoint)
+	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
+		jen.Return(jen.Lit(endpoint.Method)),
+	)
+}
+
+func reqUrlFunc(fl *jen.File, endpoint model.Endpoint) {
+	structName := reqStructName(endpoint)
+	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("url() string").BlockFunc(func(group *jen.Group) {
+		if endpointHasAttribute(endpoint, attrExplicitURL) {
+			group.If(jen.Id(`r._url != ""`)).Block(
+				jen.Id("return r._url"),
+			)
+			group.Return(jen.Id("r.URL"))
+			return
+		}
+		group.Id("return r._url")
+	})
 }
 
 func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
@@ -250,6 +267,10 @@ func reqURLPathFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("urlPath").Params().String().
 		BlockFunc(func(group *jen.Group) {
+			if endpointHasAttribute(endpoint, attrExplicitURL) {
+				group.Return(jen.Lit(""))
+				return
+			}
 			pth := bracesExp.ReplaceAllString(endpoint.Path, "%v")
 			group.Return(jen.Qual("fmt", "Sprintf").ParamsFunc(func(group *jen.Group) {
 				group.Lit(pth)

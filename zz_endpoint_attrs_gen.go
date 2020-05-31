@@ -9,4 +9,5 @@ const (
 	attrBoolean
 	attrBodyUploader
 	attrJSONRequestBody
+	attrExplicitURL
 )

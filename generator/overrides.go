@@ -6,8 +6,41 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-var overrideEndpointAttrs = map[string][]endpointAttribute{
+// the attributes here will be added for endpoints with matching IDs
+var overrideAddAttrs = map[string][]endpointAttribute{
 	"teams/check-manages-repo-in-org": {attrBoolean},
+	"repos/upload-release-asset":      {attrExplicitURL},
+}
+
+func endpointWithOverrides(endpoint model.Endpoint) model.Endpoint {
+	ptr := &endpoint
+	for _, override := range endpointOverrides {
+		override(ptr)
+	}
+	return *ptr
+}
+
+var endpointOverrides = []func(endpoint *model.Endpoint){
+	// list-languages returns a map
+	func(endpoint *model.Endpoint) {
+		if endpoint.ID != "repos/list-languages" {
+			return
+		}
+		respSchema := endpoint.Responses[200].Body
+		respSchema.Ref = ""
+		respSchema.ObjectParams = nil
+		respSchema.ItemSchema = &model.ParamSchema{
+			Type: model.ParamTypeInt,
+		}
+	},
+
+	// attrExplicitURL has no path variables
+	func(endpoint *model.Endpoint) {
+		if !endpointHasAttribute(*endpoint, attrExplicitURL) {
+			return
+		}
+		endpoint.PathParams = model.Params{}
+	},
 }
 
 func schemaPathString(schemaPath []string) string {
@@ -15,18 +48,6 @@ func schemaPathString(schemaPath []string) string {
 }
 
 var schemaOverrides = []func(schemaPath []string, schema *model.ParamSchema){
-	// list-languages returns a map
-	func(schemaPath []string, schema *model.ParamSchema) {
-		if schemaPathString(schemaPath) != "repos/list-languages/responseBody/200" {
-			return
-		}
-		schema.Type = model.ParamTypeObject
-		schema.ObjectParams = nil
-		schema.ItemSchema = &model.ParamSchema{
-			Type: model.ParamTypeInt,
-		}
-	},
-
 	// reactions are maps
 	func(schemaPath []string, schema *model.ParamSchema) {
 		if !strings.HasSuffix(schemaPathString(schemaPath), "/reactions") || schema.Type != model.ParamTypeObject {
