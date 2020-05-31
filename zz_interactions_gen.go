@@ -96,8 +96,8 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -240,8 +240,8 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -382,8 +382,8 @@ func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsGetRestrictionsForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *InteractionsGetRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -510,8 +510,8 @@ func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsGetRestrictionsForRepoReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *InteractionsGetRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -636,8 +636,8 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *InteractionsRemoveRestrictionsForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *InteractionsRemoveRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -753,8 +753,8 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *InteractionsRemoveRestrictionsForRepoReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *InteractionsRemoveRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

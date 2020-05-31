@@ -83,8 +83,8 @@ func (r *CodeScanningGetAlertReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *CodeScanningGetAlertReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *CodeScanningGetAlertReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -212,8 +212,8 @@ func (r *CodeScanningListAlertsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *CodeScanningListAlertsForRepoReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *CodeScanningListAlertsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

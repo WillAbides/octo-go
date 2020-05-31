@@ -78,8 +78,8 @@ func (r *EmojisGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *EmojisGetReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *EmojisGetReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

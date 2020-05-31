@@ -100,8 +100,8 @@ func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReactionsCreateForCommitCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -245,8 +245,8 @@ func (r *ReactionsCreateForIssueReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReactionsCreateForIssueReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsCreateForIssueReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -390,8 +390,8 @@ func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReactionsCreateForIssueCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -535,8 +535,8 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -681,8 +681,8 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int 
 	return []int{201}
 }
 
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -826,8 +826,8 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -970,8 +970,8 @@ func (r *ReactionsDeleteForCommitCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForCommitCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsDeleteForCommitCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1090,8 +1090,8 @@ func (r *ReactionsDeleteForIssueReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForIssueReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsDeleteForIssueReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1210,8 +1210,8 @@ func (r *ReactionsDeleteForIssueCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForIssueCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsDeleteForIssueCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1330,8 +1330,8 @@ func (r *ReactionsDeleteForPullRequestCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForPullRequestCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsDeleteForPullRequestCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1450,8 +1450,8 @@ func (r *ReactionsDeleteForTeamDiscussionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForTeamDiscussionReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsDeleteForTeamDiscussionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1571,8 +1571,8 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1713,8 +1713,8 @@ func (r *ReactionsListForCommitCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForCommitCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsListForCommitCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1865,8 +1865,8 @@ func (r *ReactionsListForIssueReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForIssueReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsListForIssueReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2017,8 +2017,8 @@ func (r *ReactionsListForIssueCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForIssueCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsListForIssueCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2169,8 +2169,8 @@ func (r *ReactionsListForPullRequestReviewCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForPullRequestReviewCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsListForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2322,8 +2322,8 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2474,8 +2474,8 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForTeamDiscussionInOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ReactionsListForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

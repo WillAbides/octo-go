@@ -82,8 +82,8 @@ func (r *MigrationsCancelImportReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsCancelImportReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsCancelImportReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -193,8 +193,8 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -305,8 +305,8 @@ func (r *MigrationsDeleteArchiveForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsDeleteArchiveForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsDeleteArchiveForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -414,11 +414,11 @@ func (r *MigrationsDownloadArchiveForOrgReq) dataStatuses() []int {
 }
 
 func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
-func (r *MigrationsDownloadArchiveForOrgReq) endpointType() endpointType {
-	return endpointTypeRedirect
+func (r *MigrationsDownloadArchiveForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request
@@ -525,11 +525,11 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRedirect
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request
@@ -642,8 +642,8 @@ func (r *MigrationsGetCommitAuthorsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetCommitAuthorsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsGetCommitAuthorsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -756,8 +756,8 @@ func (r *MigrationsGetImportProgressReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetImportProgressReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsGetImportProgressReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -870,8 +870,8 @@ func (r *MigrationsGetLargeFilesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetLargeFilesReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsGetLargeFilesReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -992,8 +992,8 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetStatusForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsGetStatusForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1115,8 +1115,8 @@ func (r *MigrationsGetStatusForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetStatusForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsGetStatusForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1248,8 +1248,8 @@ func (r *MigrationsListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsListForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1382,8 +1382,8 @@ func (r *MigrationsListForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsListForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsListForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1517,8 +1517,8 @@ func (r *MigrationsListReposForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsListReposForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsListReposForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1651,8 +1651,8 @@ func (r *MigrationsListReposForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsListReposForUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsListReposForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1767,8 +1767,8 @@ func (r *MigrationsMapCommitAuthorReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsMapCommitAuthorReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsMapCommitAuthorReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1896,8 +1896,8 @@ func (r *MigrationsSetLfsPreferenceReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsSetLfsPreferenceReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsSetLfsPreferenceReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2023,8 +2023,8 @@ func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *MigrationsStartForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsStartForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2161,8 +2161,8 @@ func (r *MigrationsStartForOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *MigrationsStartForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsStartForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2299,8 +2299,8 @@ func (r *MigrationsStartImportReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *MigrationsStartImportReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsStartImportReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2449,8 +2449,8 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2562,8 +2562,8 @@ func (r *MigrationsUnlockRepoForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsUnlockRepoForOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsUnlockRepoForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2667,8 +2667,8 @@ func (r *MigrationsUpdateImportReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsUpdateImportReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *MigrationsUpdateImportReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
