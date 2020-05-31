@@ -31,7 +31,7 @@ var endpointOverrides = []func(endpoint *model.Endpoint){
 			{
 				MimeType: "*/*",
 				Schema: &model.ParamSchema{
-					Type:         model.ParamTypeString,
+					Type: model.ParamTypeString,
 				},
 			},
 		}
