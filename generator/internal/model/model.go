@@ -5,7 +5,6 @@ type Endpoint struct {
 	EnabledForApps  bool
 	Legacy          bool
 	Deprecated      bool
-	JSONBodySchema  *ParamSchema
 	ID              string
 	Path            string
 	Method          string
@@ -18,7 +17,13 @@ type Endpoint struct {
 	QueryParams     Params
 	Headers         Params
 	Previews        []Preview
+	Requests        []Request
 	Responses       map[int]Response
+}
+
+type Request struct {
+	MimeType string
+	Schema   *ParamSchema
 }
 
 type Response struct {

@@ -43,7 +43,8 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 				usePointers: true,
 			}))
 		}
-		if endpoint.JSONBodySchema != nil {
+		jsonSchema := endpointJSONRequestSchema(endpoint)
+		if jsonSchema != nil {
 			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
 		}
 		for _, param := range endpoint.Headers {
@@ -161,7 +162,8 @@ func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
 		Params().
 		Interface().
 		Block(jen.Do(func(stmt *jen.Statement) {
-			if endpoint.JSONBodySchema == nil {
+			jsonSchema := endpointJSONRequestSchema(endpoint)
+			if jsonSchema == nil {
 				stmt.Return(jen.Nil())
 				return
 			}

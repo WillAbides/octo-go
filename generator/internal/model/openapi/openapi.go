@@ -133,7 +133,7 @@ func buildEndpoint(opPath, httpMethod string, op *openapi3.Operation) (*model.En
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("error processing responses from operation %q", op.OperationID))
 	}
-	endpoint.JSONBodySchema, err = jsonBodySchema(op)
+	endpoint.Requests, err = requests(op)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("error processing operation %q", op.OperationID))
 	}
@@ -298,17 +298,20 @@ func responses(op *openapi3.Operation) (map[int]model.Response, error) {
 	return result, nil
 }
 
-func jsonBodySchema(op *openapi3.Operation) (*model.ParamSchema, error) {
+func requests(op *openapi3.Operation) ([]model.Request, error) {
 	if op.RequestBody == nil || op.RequestBody.Value == nil {
 		return nil, nil
 	}
-	mt := op.RequestBody.Value.GetMediaType("application/json")
-	if mt == nil {
-		return nil, nil
+	var requests []model.Request
+	for mimeType, content := range op.RequestBody.Value.Content {
+		schema, err := opParamSchema(content.Schema)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		requests = append(requests, model.Request{
+			MimeType: mimeType,
+			Schema:   schema,
+		})
 	}
-	schema, err := opParamSchema(mt.Schema)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-	return schema, nil
+	return requests, nil
 }

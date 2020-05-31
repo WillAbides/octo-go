@@ -27,10 +27,11 @@ func reqBodyNestedStructName(schemaPath []string, schema *model.ParamSchema) str
 
 func addRequestBody(file *jen.File, endpoint model.Endpoint) {
 	addReqBodyNestedStructs(file, endpoint)
-	if endpoint.JSONBodySchema == nil {
+	jsonSchema := endpointJSONRequestSchema(endpoint)
+	if jsonSchema == nil {
 		return
 	}
-	tp := paramSchemaFieldType(endpoint.JSONBodySchema, []string{endpoint.ID, "reqBody"}, &paramSchemaFieldTypeOptions{
+	tp := paramSchemaFieldType(jsonSchema, []string{endpoint.ID, "reqBody"}, &paramSchemaFieldTypeOptions{
 		usePointers: true,
 	})
 	if tp == nil {
@@ -72,10 +73,11 @@ func reqBodyNestedStructs(schemaPath []string, schema *model.ParamSchema) []*jen
 }
 
 func addReqBodyNestedStructs(file *jen.File, endpoint model.Endpoint) {
-	if endpoint.JSONBodySchema == nil {
+	jsonSchema := endpointJSONRequestSchema(endpoint)
+	if jsonSchema == nil {
 		return
 	}
-	stmts := reqBodyNestedStructs([]string{endpoint.ID, "reqBody"}, endpoint.JSONBodySchema)
+	stmts := reqBodyNestedStructs([]string{endpoint.ID, "reqBody"}, jsonSchema)
 	for _, stmt := range stmts {
 		file.Add(stmt)
 	}
