@@ -43,15 +43,15 @@ IssuesAddAssigneesReq is request data for Client.IssuesAddAssignees
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type IssuesAddAssigneesReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesAddAssigneesReqBody
 }
 
-func (r *IssuesAddAssigneesReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesAddAssigneesReq) url() string {
+	return r._url
 }
 
 func (r *IssuesAddAssigneesReq) urlPath() string {
@@ -103,7 +103,7 @@ func (r *IssuesAddAssigneesReq) Rel(link RelName, resp *IssuesAddAssigneesRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -173,15 +173,15 @@ IssuesAddLabelsReq is request data for Client.IssuesAddLabels
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type IssuesAddLabelsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesAddLabelsReqBody
 }
 
-func (r *IssuesAddLabelsReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesAddLabelsReq) url() string {
+	return r._url
 }
 
 func (r *IssuesAddLabelsReq) urlPath() string {
@@ -233,7 +233,7 @@ func (r *IssuesAddLabelsReq) Rel(link RelName, resp *IssuesAddLabelsResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -308,14 +308,14 @@ IssuesCheckAssigneeReq is request data for Client.IssuesCheckAssignee
 https://developer.github.com/v3/issues/assignees/#check-assignee
 */
 type IssuesCheckAssigneeReq struct {
-	pgURL    string
+	_url     string
 	Owner    string
 	Repo     string
 	Assignee string
 }
 
-func (r *IssuesCheckAssigneeReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesCheckAssigneeReq) url() string {
+	return r._url
 }
 
 func (r *IssuesCheckAssigneeReq) urlPath() string {
@@ -367,7 +367,7 @@ func (r *IssuesCheckAssigneeReq) Rel(link RelName, resp *IssuesCheckAssigneeResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -414,14 +414,14 @@ IssuesCreateReq is request data for Client.IssuesCreate
 https://developer.github.com/v3/issues/#create-an-issue
 */
 type IssuesCreateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody IssuesCreateReqBody
 }
 
-func (r *IssuesCreateReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesCreateReq) url() string {
+	return r._url
 }
 
 func (r *IssuesCreateReq) urlPath() string {
@@ -473,7 +473,7 @@ func (r *IssuesCreateReq) Rel(link RelName, resp *IssuesCreateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -569,15 +569,15 @@ IssuesCreateCommentReq is request data for Client.IssuesCreateComment
 https://developer.github.com/v3/issues/comments/#create-a-comment
 */
 type IssuesCreateCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesCreateCommentReqBody
 }
 
-func (r *IssuesCreateCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesCreateCommentReq) url() string {
+	return r._url
 }
 
 func (r *IssuesCreateCommentReq) urlPath() string {
@@ -629,7 +629,7 @@ func (r *IssuesCreateCommentReq) Rel(link RelName, resp *IssuesCreateCommentResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -696,14 +696,14 @@ IssuesCreateLabelReq is request data for Client.IssuesCreateLabel
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody IssuesCreateLabelReqBody
 }
 
-func (r *IssuesCreateLabelReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesCreateLabelReq) url() string {
+	return r._url
 }
 
 func (r *IssuesCreateLabelReq) urlPath() string {
@@ -755,7 +755,7 @@ func (r *IssuesCreateLabelReq) Rel(link RelName, resp *IssuesCreateLabelResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -838,14 +838,14 @@ IssuesCreateMilestoneReq is request data for Client.IssuesCreateMilestone
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type IssuesCreateMilestoneReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody IssuesCreateMilestoneReqBody
 }
 
-func (r *IssuesCreateMilestoneReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesCreateMilestoneReq) url() string {
+	return r._url
 }
 
 func (r *IssuesCreateMilestoneReq) urlPath() string {
@@ -897,7 +897,7 @@ func (r *IssuesCreateMilestoneReq) Rel(link RelName, resp *IssuesCreateMilestone
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -975,14 +975,14 @@ IssuesDeleteCommentReq is request data for Client.IssuesDeleteComment
 https://developer.github.com/v3/issues/comments/#delete-a-comment
 */
 type IssuesDeleteCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
 }
 
-func (r *IssuesDeleteCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesDeleteCommentReq) url() string {
+	return r._url
 }
 
 func (r *IssuesDeleteCommentReq) urlPath() string {
@@ -1034,7 +1034,7 @@ func (r *IssuesDeleteCommentReq) Rel(link RelName, resp *IssuesDeleteCommentResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1079,14 +1079,14 @@ IssuesDeleteLabelReq is request data for Client.IssuesDeleteLabel
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 type IssuesDeleteLabelReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Name  string
 }
 
-func (r *IssuesDeleteLabelReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesDeleteLabelReq) url() string {
+	return r._url
 }
 
 func (r *IssuesDeleteLabelReq) urlPath() string {
@@ -1138,7 +1138,7 @@ func (r *IssuesDeleteLabelReq) Rel(link RelName, resp *IssuesDeleteLabelResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1183,14 +1183,14 @@ IssuesDeleteMilestoneReq is request data for Client.IssuesDeleteMilestone
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 type IssuesDeleteMilestoneReq struct {
-	pgURL           string
+	_url            string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
 }
 
-func (r *IssuesDeleteMilestoneReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesDeleteMilestoneReq) url() string {
+	return r._url
 }
 
 func (r *IssuesDeleteMilestoneReq) urlPath() string {
@@ -1242,7 +1242,7 @@ func (r *IssuesDeleteMilestoneReq) Rel(link RelName, resp *IssuesDeleteMilestone
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1288,7 +1288,7 @@ IssuesGetReq is request data for Client.IssuesGet
 https://developer.github.com/v3/issues/#get-an-issue
 */
 type IssuesGetReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1305,8 +1305,8 @@ type IssuesGetReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesGetReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesGetReq) url() string {
+	return r._url
 }
 
 func (r *IssuesGetReq) urlPath() string {
@@ -1361,7 +1361,7 @@ func (r *IssuesGetReq) Rel(link RelName, resp *IssuesGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1417,7 +1417,7 @@ IssuesGetCommentReq is request data for Client.IssuesGetComment
 https://developer.github.com/v3/issues/comments/#get-a-single-comment
 */
 type IssuesGetCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1445,8 +1445,8 @@ type IssuesGetCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesGetCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesGetCommentReq) url() string {
+	return r._url
 }
 
 func (r *IssuesGetCommentReq) urlPath() string {
@@ -1505,7 +1505,7 @@ func (r *IssuesGetCommentReq) Rel(link RelName, resp *IssuesGetCommentResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1561,7 +1561,7 @@ IssuesGetEventReq is request data for Client.IssuesGetEvent
 https://developer.github.com/v3/issues/events/#get-a-single-event
 */
 type IssuesGetEventReq struct {
-	pgURL   string
+	_url    string
 	Owner   string
 	Repo    string
 	EventId int64
@@ -1600,8 +1600,8 @@ type IssuesGetEventReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesGetEventReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesGetEventReq) url() string {
+	return r._url
 }
 
 func (r *IssuesGetEventReq) urlPath() string {
@@ -1662,7 +1662,7 @@ func (r *IssuesGetEventReq) Rel(link RelName, resp *IssuesGetEventResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1718,14 +1718,14 @@ IssuesGetLabelReq is request data for Client.IssuesGetLabel
 https://developer.github.com/v3/issues/labels/#get-a-single-label
 */
 type IssuesGetLabelReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Name  string
 }
 
-func (r *IssuesGetLabelReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesGetLabelReq) url() string {
+	return r._url
 }
 
 func (r *IssuesGetLabelReq) urlPath() string {
@@ -1777,7 +1777,7 @@ func (r *IssuesGetLabelReq) Rel(link RelName, resp *IssuesGetLabelResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1833,14 +1833,14 @@ IssuesGetMilestoneReq is request data for Client.IssuesGetMilestone
 https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 */
 type IssuesGetMilestoneReq struct {
-	pgURL           string
+	_url            string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
 }
 
-func (r *IssuesGetMilestoneReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesGetMilestoneReq) url() string {
+	return r._url
 }
 
 func (r *IssuesGetMilestoneReq) urlPath() string {
@@ -1892,7 +1892,7 @@ func (r *IssuesGetMilestoneReq) Rel(link RelName, resp *IssuesGetMilestoneRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1948,7 +1948,7 @@ IssuesListReq is request data for Client.IssuesList
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 type IssuesListReq struct {
-	pgURL string
+	_url string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -2012,8 +2012,8 @@ type IssuesListReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListReq) urlPath() string {
@@ -2096,7 +2096,7 @@ func (r *IssuesListReq) Rel(link RelName, resp *IssuesListResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2152,7 +2152,7 @@ IssuesListAssigneesReq is request data for Client.IssuesListAssignees
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 type IssuesListAssigneesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2163,8 +2163,8 @@ type IssuesListAssigneesReq struct {
 	Page *int64
 }
 
-func (r *IssuesListAssigneesReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListAssigneesReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListAssigneesReq) urlPath() string {
@@ -2222,7 +2222,7 @@ func (r *IssuesListAssigneesReq) Rel(link RelName, resp *IssuesListAssigneesResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2278,7 +2278,7 @@ IssuesListCommentsReq is request data for Client.IssuesListComments
 https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
 */
 type IssuesListCommentsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -2308,8 +2308,8 @@ type IssuesListCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListCommentsReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListCommentsReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListCommentsReq) urlPath() string {
@@ -2373,7 +2373,7 @@ func (r *IssuesListCommentsReq) Rel(link RelName, resp *IssuesListCommentsRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2429,7 +2429,7 @@ IssuesListCommentsForRepoReq is request data for Client.IssuesListCommentsForRep
 https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
 type IssuesListCommentsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2464,8 +2464,8 @@ type IssuesListCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListCommentsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListCommentsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListCommentsForRepoReq) urlPath() string {
@@ -2535,7 +2535,7 @@ func (r *IssuesListCommentsForRepoReq) Rel(link RelName, resp *IssuesListComment
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2591,7 +2591,7 @@ IssuesListEventsReq is request data for Client.IssuesListEvents
 https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
 type IssuesListEventsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -2625,8 +2625,8 @@ type IssuesListEventsReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesListEventsReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListEventsReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListEventsReq) urlPath() string {
@@ -2691,7 +2691,7 @@ func (r *IssuesListEventsReq) Rel(link RelName, resp *IssuesListEventsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2747,7 +2747,7 @@ IssuesListEventsForRepoReq is request data for Client.IssuesListEventsForRepo
 https://developer.github.com/v3/issues/events/#list-events-for-a-repository
 */
 type IssuesListEventsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2780,8 +2780,8 @@ type IssuesListEventsForRepoReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesListEventsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListEventsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListEventsForRepoReq) urlPath() string {
@@ -2846,7 +2846,7 @@ func (r *IssuesListEventsForRepoReq) Rel(link RelName, resp *IssuesListEventsFor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2902,7 +2902,7 @@ IssuesListEventsForTimelineReq is request data for Client.IssuesListEventsForTim
 https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
 */
 type IssuesListEventsForTimelineReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -2935,8 +2935,8 @@ type IssuesListEventsForTimelineReq struct {
 	StarfoxPreview bool
 }
 
-func (r *IssuesListEventsForTimelineReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListEventsForTimelineReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListEventsForTimelineReq) urlPath() string {
@@ -3004,7 +3004,7 @@ func (r *IssuesListEventsForTimelineReq) Rel(link RelName, resp *IssuesListEvent
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3060,7 +3060,7 @@ IssuesListForAuthenticatedUserReq is request data for Client.IssuesListForAuthen
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 type IssuesListForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -3124,8 +3124,8 @@ type IssuesListForAuthenticatedUserReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListForAuthenticatedUserReq) urlPath() string {
@@ -3208,7 +3208,7 @@ func (r *IssuesListForAuthenticatedUserReq) Rel(link RelName, resp *IssuesListFo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3264,8 +3264,8 @@ IssuesListForOrgReq is request data for Client.IssuesListForOrg
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 type IssuesListForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -3329,8 +3329,8 @@ type IssuesListForOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListForOrgReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListForOrgReq) urlPath() string {
@@ -3413,7 +3413,7 @@ func (r *IssuesListForOrgReq) Rel(link RelName, resp *IssuesListForOrgResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3469,7 +3469,7 @@ IssuesListForRepoReq is request data for Client.IssuesListForRepo
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 type IssuesListForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -3543,8 +3543,8 @@ type IssuesListForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListForRepoReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListForRepoReq) urlPath() string {
@@ -3636,7 +3636,7 @@ func (r *IssuesListForRepoReq) Rel(link RelName, resp *IssuesListForRepoResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3692,7 +3692,7 @@ IssuesListLabelsForMilestoneReq is request data for Client.IssuesListLabelsForMi
 https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 */
 type IssuesListLabelsForMilestoneReq struct {
-	pgURL           string
+	_url            string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
@@ -3704,8 +3704,8 @@ type IssuesListLabelsForMilestoneReq struct {
 	Page *int64
 }
 
-func (r *IssuesListLabelsForMilestoneReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListLabelsForMilestoneReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListLabelsForMilestoneReq) urlPath() string {
@@ -3763,7 +3763,7 @@ func (r *IssuesListLabelsForMilestoneReq) Rel(link RelName, resp *IssuesListLabe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3819,7 +3819,7 @@ IssuesListLabelsForRepoReq is request data for Client.IssuesListLabelsForRepo
 https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
 type IssuesListLabelsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -3830,8 +3830,8 @@ type IssuesListLabelsForRepoReq struct {
 	Page *int64
 }
 
-func (r *IssuesListLabelsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListLabelsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListLabelsForRepoReq) urlPath() string {
@@ -3889,7 +3889,7 @@ func (r *IssuesListLabelsForRepoReq) Rel(link RelName, resp *IssuesListLabelsFor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3945,7 +3945,7 @@ IssuesListLabelsOnIssueReq is request data for Client.IssuesListLabelsOnIssue
 https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
 type IssuesListLabelsOnIssueReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -3957,8 +3957,8 @@ type IssuesListLabelsOnIssueReq struct {
 	Page *int64
 }
 
-func (r *IssuesListLabelsOnIssueReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListLabelsOnIssueReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListLabelsOnIssueReq) urlPath() string {
@@ -4016,7 +4016,7 @@ func (r *IssuesListLabelsOnIssueReq) Rel(link RelName, resp *IssuesListLabelsOnI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4072,7 +4072,7 @@ IssuesListMilestonesForRepoReq is request data for Client.IssuesListMilestonesFo
 https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 */
 type IssuesListMilestonesForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -4092,8 +4092,8 @@ type IssuesListMilestonesForRepoReq struct {
 	Page *int64
 }
 
-func (r *IssuesListMilestonesForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesListMilestonesForRepoReq) url() string {
+	return r._url
 }
 
 func (r *IssuesListMilestonesForRepoReq) urlPath() string {
@@ -4160,7 +4160,7 @@ func (r *IssuesListMilestonesForRepoReq) Rel(link RelName, resp *IssuesListMiles
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4215,7 +4215,7 @@ IssuesLockReq is request data for Client.IssuesLock
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 type IssuesLockReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -4232,8 +4232,8 @@ type IssuesLockReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesLockReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesLockReq) url() string {
+	return r._url
 }
 
 func (r *IssuesLockReq) urlPath() string {
@@ -4288,7 +4288,7 @@ func (r *IssuesLockReq) Rel(link RelName, resp *IssuesLockResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4351,14 +4351,14 @@ IssuesRemoveAllLabelsReq is request data for Client.IssuesRemoveAllLabels
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 type IssuesRemoveAllLabelsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 }
 
-func (r *IssuesRemoveAllLabelsReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesRemoveAllLabelsReq) url() string {
+	return r._url
 }
 
 func (r *IssuesRemoveAllLabelsReq) urlPath() string {
@@ -4410,7 +4410,7 @@ func (r *IssuesRemoveAllLabelsReq) Rel(link RelName, resp *IssuesRemoveAllLabels
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4456,15 +4456,15 @@ IssuesRemoveAssigneesReq is request data for Client.IssuesRemoveAssignees
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type IssuesRemoveAssigneesReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesRemoveAssigneesReqBody
 }
 
-func (r *IssuesRemoveAssigneesReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesRemoveAssigneesReq) url() string {
+	return r._url
 }
 
 func (r *IssuesRemoveAssigneesReq) urlPath() string {
@@ -4516,7 +4516,7 @@ func (r *IssuesRemoveAssigneesReq) Rel(link RelName, resp *IssuesRemoveAssignees
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4587,15 +4587,15 @@ IssuesRemoveLabelReq is request data for Client.IssuesRemoveLabel
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 type IssuesRemoveLabelReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	Name        string
 }
 
-func (r *IssuesRemoveLabelReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesRemoveLabelReq) url() string {
+	return r._url
 }
 
 func (r *IssuesRemoveLabelReq) urlPath() string {
@@ -4647,7 +4647,7 @@ func (r *IssuesRemoveLabelReq) Rel(link RelName, resp *IssuesRemoveLabelResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4703,15 +4703,15 @@ IssuesReplaceAllLabelsReq is request data for Client.IssuesReplaceAllLabels
 https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
 type IssuesReplaceAllLabelsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesReplaceAllLabelsReqBody
 }
 
-func (r *IssuesReplaceAllLabelsReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesReplaceAllLabelsReq) url() string {
+	return r._url
 }
 
 func (r *IssuesReplaceAllLabelsReq) urlPath() string {
@@ -4763,7 +4763,7 @@ func (r *IssuesReplaceAllLabelsReq) Rel(link RelName, resp *IssuesReplaceAllLabe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4834,14 +4834,14 @@ IssuesUnlockReq is request data for Client.IssuesUnlock
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 type IssuesUnlockReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 }
 
-func (r *IssuesUnlockReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesUnlockReq) url() string {
+	return r._url
 }
 
 func (r *IssuesUnlockReq) urlPath() string {
@@ -4893,7 +4893,7 @@ func (r *IssuesUnlockReq) Rel(link RelName, resp *IssuesUnlockResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4939,15 +4939,15 @@ IssuesUpdateReq is request data for Client.IssuesUpdate
 https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
 	RequestBody IssuesUpdateReqBody
 }
 
-func (r *IssuesUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesUpdateReq) url() string {
+	return r._url
 }
 
 func (r *IssuesUpdateReq) urlPath() string {
@@ -4999,7 +4999,7 @@ func (r *IssuesUpdateReq) Rel(link RelName, resp *IssuesUpdateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5101,15 +5101,15 @@ IssuesUpdateCommentReq is request data for Client.IssuesUpdateComment
 https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
 type IssuesUpdateCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommentId   int64
 	RequestBody IssuesUpdateCommentReqBody
 }
 
-func (r *IssuesUpdateCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesUpdateCommentReq) url() string {
+	return r._url
 }
 
 func (r *IssuesUpdateCommentReq) urlPath() string {
@@ -5161,7 +5161,7 @@ func (r *IssuesUpdateCommentReq) Rel(link RelName, resp *IssuesUpdateCommentResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5228,15 +5228,15 @@ IssuesUpdateLabelReq is request data for Client.IssuesUpdateLabel
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Name        string
 	RequestBody IssuesUpdateLabelReqBody
 }
 
-func (r *IssuesUpdateLabelReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesUpdateLabelReq) url() string {
+	return r._url
 }
 
 func (r *IssuesUpdateLabelReq) urlPath() string {
@@ -5288,7 +5288,7 @@ func (r *IssuesUpdateLabelReq) Rel(link RelName, resp *IssuesUpdateLabelResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5371,15 +5371,15 @@ IssuesUpdateMilestoneReq is request data for Client.IssuesUpdateMilestone
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type IssuesUpdateMilestoneReq struct {
-	pgURL           string
+	_url            string
 	Owner           string
 	Repo            string
 	MilestoneNumber int64
 	RequestBody     IssuesUpdateMilestoneReqBody
 }
 
-func (r *IssuesUpdateMilestoneReq) pagingURL() string {
-	return r.pgURL
+func (r *IssuesUpdateMilestoneReq) url() string {
+	return r._url
 }
 
 func (r *IssuesUpdateMilestoneReq) urlPath() string {
@@ -5431,7 +5431,7 @@ func (r *IssuesUpdateMilestoneReq) Rel(link RelName, resp *IssuesUpdateMilestone
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -43,12 +43,12 @@ OauthAuthorizationsCreateAuthorizationReq is request data for Client.OauthAuthor
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationReq struct {
-	pgURL       string
+	_url        string
 	RequestBody OauthAuthorizationsCreateAuthorizationReqBody
 }
 
-func (r *OauthAuthorizationsCreateAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsCreateAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
@@ -100,7 +100,7 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) Rel(link RelName, resp *Oaut
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -188,12 +188,12 @@ OauthAuthorizationsDeleteAuthorizationReq is request data for Client.OauthAuthor
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 type OauthAuthorizationsDeleteAuthorizationReq struct {
-	pgURL           string
+	_url            string
 	AuthorizationId int64
 }
 
-func (r *OauthAuthorizationsDeleteAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsDeleteAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
@@ -245,7 +245,7 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) Rel(link RelName, resp *Oaut
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -290,12 +290,12 @@ OauthAuthorizationsDeleteGrantReq is request data for Client.OauthAuthorizations
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 type OauthAuthorizationsDeleteGrantReq struct {
-	pgURL   string
+	_url    string
 	GrantId int64
 }
 
-func (r *OauthAuthorizationsDeleteGrantReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsDeleteGrantReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsDeleteGrantReq) urlPath() string {
@@ -347,7 +347,7 @@ func (r *OauthAuthorizationsDeleteGrantReq) Rel(link RelName, resp *OauthAuthori
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -393,12 +393,12 @@ OauthAuthorizationsGetAuthorizationReq is request data for Client.OauthAuthoriza
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type OauthAuthorizationsGetAuthorizationReq struct {
-	pgURL           string
+	_url            string
 	AuthorizationId int64
 }
 
-func (r *OauthAuthorizationsGetAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsGetAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsGetAuthorizationReq) urlPath() string {
@@ -450,7 +450,7 @@ func (r *OauthAuthorizationsGetAuthorizationReq) Rel(link RelName, resp *OauthAu
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -506,12 +506,12 @@ OauthAuthorizationsGetGrantReq is request data for Client.OauthAuthorizationsGet
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type OauthAuthorizationsGetGrantReq struct {
-	pgURL   string
+	_url    string
 	GrantId int64
 }
 
-func (r *OauthAuthorizationsGetGrantReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsGetGrantReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsGetGrantReq) urlPath() string {
@@ -563,7 +563,7 @@ func (r *OauthAuthorizationsGetGrantReq) Rel(link RelName, resp *OauthAuthorizat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -619,13 +619,13 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppReq is request data for Client.
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
@@ -677,7 +677,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) Rel(link RelName,
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -764,14 +764,14 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq is request da
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	Fingerprint string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
@@ -823,7 +823,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) Rel
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -902,7 +902,7 @@ OauthAuthorizationsListAuthorizationsReq is request data for Client.OauthAuthori
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 type OauthAuthorizationsListAuthorizationsReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -911,8 +911,8 @@ type OauthAuthorizationsListAuthorizationsReq struct {
 	Page *int64
 }
 
-func (r *OauthAuthorizationsListAuthorizationsReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsListAuthorizationsReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsListAuthorizationsReq) urlPath() string {
@@ -970,7 +970,7 @@ func (r *OauthAuthorizationsListAuthorizationsReq) Rel(link RelName, resp *Oauth
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1026,7 +1026,7 @@ OauthAuthorizationsListGrantsReq is request data for Client.OauthAuthorizationsL
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 type OauthAuthorizationsListGrantsReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1035,8 +1035,8 @@ type OauthAuthorizationsListGrantsReq struct {
 	Page *int64
 }
 
-func (r *OauthAuthorizationsListGrantsReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsListGrantsReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsListGrantsReq) urlPath() string {
@@ -1094,7 +1094,7 @@ func (r *OauthAuthorizationsListGrantsReq) Rel(link RelName, resp *OauthAuthoriz
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1150,13 +1150,13 @@ OauthAuthorizationsUpdateAuthorizationReq is request data for Client.OauthAuthor
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationReq struct {
-	pgURL           string
+	_url            string
 	AuthorizationId int64
 	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
 }
 
-func (r *OauthAuthorizationsUpdateAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *OauthAuthorizationsUpdateAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
@@ -1208,7 +1208,7 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) Rel(link RelName, resp *Oaut
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

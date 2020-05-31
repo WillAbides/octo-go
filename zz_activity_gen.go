@@ -46,13 +46,13 @@ ActivityCheckRepoIsStarredByAuthenticatedUserReq is request data for Client.Acti
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type ActivityCheckRepoIsStarredByAuthenticatedUserReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlPath() string {
@@ -104,7 +104,7 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) Rel(link RelName, res
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -150,13 +150,13 @@ ActivityDeleteRepoSubscriptionReq is request data for Client.ActivityDeleteRepoS
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type ActivityDeleteRepoSubscriptionReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActivityDeleteRepoSubscriptionReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityDeleteRepoSubscriptionReq) url() string {
+	return r._url
 }
 
 func (r *ActivityDeleteRepoSubscriptionReq) urlPath() string {
@@ -208,7 +208,7 @@ func (r *ActivityDeleteRepoSubscriptionReq) Rel(link RelName, resp *ActivityDele
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -253,12 +253,12 @@ ActivityDeleteThreadSubscriptionReq is request data for Client.ActivityDeleteThr
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 type ActivityDeleteThreadSubscriptionReq struct {
-	pgURL    string
+	_url     string
 	ThreadId int64
 }
 
-func (r *ActivityDeleteThreadSubscriptionReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityDeleteThreadSubscriptionReq) url() string {
+	return r._url
 }
 
 func (r *ActivityDeleteThreadSubscriptionReq) urlPath() string {
@@ -310,7 +310,7 @@ func (r *ActivityDeleteThreadSubscriptionReq) Rel(link RelName, resp *ActivityDe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -356,11 +356,11 @@ ActivityGetFeedsReq is request data for Client.ActivityGetFeeds
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 type ActivityGetFeedsReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *ActivityGetFeedsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityGetFeedsReq) url() string {
+	return r._url
 }
 
 func (r *ActivityGetFeedsReq) urlPath() string {
@@ -412,7 +412,7 @@ func (r *ActivityGetFeedsReq) Rel(link RelName, resp *ActivityGetFeedsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -468,13 +468,13 @@ ActivityGetRepoSubscriptionReq is request data for Client.ActivityGetRepoSubscri
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type ActivityGetRepoSubscriptionReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActivityGetRepoSubscriptionReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityGetRepoSubscriptionReq) url() string {
+	return r._url
 }
 
 func (r *ActivityGetRepoSubscriptionReq) urlPath() string {
@@ -526,7 +526,7 @@ func (r *ActivityGetRepoSubscriptionReq) Rel(link RelName, resp *ActivityGetRepo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -582,12 +582,12 @@ ActivityGetThreadReq is request data for Client.ActivityGetThread
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 type ActivityGetThreadReq struct {
-	pgURL    string
+	_url     string
 	ThreadId int64
 }
 
-func (r *ActivityGetThreadReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityGetThreadReq) url() string {
+	return r._url
 }
 
 func (r *ActivityGetThreadReq) urlPath() string {
@@ -639,7 +639,7 @@ func (r *ActivityGetThreadReq) Rel(link RelName, resp *ActivityGetThreadResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -695,12 +695,12 @@ ActivityGetThreadSubscriptionForAuthenticatedUserReq is request data for Client.
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 type ActivityGetThreadSubscriptionForAuthenticatedUserReq struct {
-	pgURL    string
+	_url     string
 	ThreadId int64
 }
 
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlPath() string {
@@ -752,7 +752,7 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link RelName,
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -807,7 +807,7 @@ ActivityListEventsForAuthenticatedUserReq is request data for Client.ActivityLis
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ActivityListEventsForAuthenticatedUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -817,8 +817,8 @@ type ActivityListEventsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListEventsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListEventsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) urlPath() string {
@@ -876,7 +876,7 @@ func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link RelName, resp *Acti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -922,7 +922,7 @@ ActivityListNotificationsForAuthenticatedUserReq is request data for Client.Acti
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
 type ActivityListNotificationsForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// If `true`, show notifications marked as read.
 	All *bool
@@ -954,8 +954,8 @@ type ActivityListNotificationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListNotificationsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListNotificationsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListNotificationsForAuthenticatedUserReq) urlPath() string {
@@ -1025,7 +1025,7 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) Rel(link RelName, res
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1080,7 +1080,7 @@ ActivityListOrgEventsForAuthenticatedUserReq is request data for Client.Activity
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ActivityListOrgEventsForAuthenticatedUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 	Org      string
 
@@ -1091,8 +1091,8 @@ type ActivityListOrgEventsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlPath() string {
@@ -1150,7 +1150,7 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link RelName, resp *A
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1195,7 +1195,7 @@ ActivityListPublicEventsReq is request data for Client.ActivityListPublicEvents
 https://developer.github.com/v3/activity/events/#list-public-events
 */
 type ActivityListPublicEventsReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1204,8 +1204,8 @@ type ActivityListPublicEventsReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicEventsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListPublicEventsReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListPublicEventsReq) urlPath() string {
@@ -1263,7 +1263,7 @@ func (r *ActivityListPublicEventsReq) Rel(link RelName, resp *ActivityListPublic
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1308,7 +1308,7 @@ ActivityListPublicEventsForRepoNetworkReq is request data for Client.ActivityLis
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ActivityListPublicEventsForRepoNetworkReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -1319,8 +1319,8 @@ type ActivityListPublicEventsForRepoNetworkReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicEventsForRepoNetworkReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListPublicEventsForRepoNetworkReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) urlPath() string {
@@ -1378,7 +1378,7 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link RelName, resp *Acti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1423,7 +1423,7 @@ ActivityListPublicEventsForUserReq is request data for Client.ActivityListPublic
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ActivityListPublicEventsForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -1433,8 +1433,8 @@ type ActivityListPublicEventsForUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicEventsForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListPublicEventsForUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListPublicEventsForUserReq) urlPath() string {
@@ -1492,7 +1492,7 @@ func (r *ActivityListPublicEventsForUserReq) Rel(link RelName, resp *ActivityLis
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1537,8 +1537,8 @@ ActivityListPublicOrgEventsReq is request data for Client.ActivityListPublicOrgE
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ActivityListPublicOrgEventsReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1547,8 +1547,8 @@ type ActivityListPublicOrgEventsReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicOrgEventsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListPublicOrgEventsReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListPublicOrgEventsReq) urlPath() string {
@@ -1606,7 +1606,7 @@ func (r *ActivityListPublicOrgEventsReq) Rel(link RelName, resp *ActivityListPub
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1651,7 +1651,7 @@ ActivityListReceivedEventsForUserReq is request data for Client.ActivityListRece
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ActivityListReceivedEventsForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -1661,8 +1661,8 @@ type ActivityListReceivedEventsForUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReceivedEventsForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListReceivedEventsForUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListReceivedEventsForUserReq) urlPath() string {
@@ -1720,7 +1720,7 @@ func (r *ActivityListReceivedEventsForUserReq) Rel(link RelName, resp *ActivityL
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1765,7 +1765,7 @@ ActivityListReceivedPublicEventsForUserReq is request data for Client.ActivityLi
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ActivityListReceivedPublicEventsForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -1775,8 +1775,8 @@ type ActivityListReceivedPublicEventsForUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReceivedPublicEventsForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListReceivedPublicEventsForUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) urlPath() string {
@@ -1834,7 +1834,7 @@ func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link RelName, resp *Act
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1879,7 +1879,7 @@ ActivityListRepoEventsReq is request data for Client.ActivityListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ActivityListRepoEventsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -1890,8 +1890,8 @@ type ActivityListRepoEventsReq struct {
 	Page *int64
 }
 
-func (r *ActivityListRepoEventsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListRepoEventsReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListRepoEventsReq) urlPath() string {
@@ -1949,7 +1949,7 @@ func (r *ActivityListRepoEventsReq) Rel(link RelName, resp *ActivityListRepoEven
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1995,7 +1995,7 @@ ActivityListRepoNotificationsForAuthenticatedUserReq is request data for Client.
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2029,8 +2029,8 @@ type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlPath() string {
@@ -2100,7 +2100,7 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) Rel(link RelName,
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2156,7 +2156,7 @@ ActivityListReposStarredByAuthenticatedUserReq is request data for Client.Activi
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
 type ActivityListReposStarredByAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	/*
 	One of `created` (when the repository was starred) or `updated` (when it was
@@ -2174,8 +2174,8 @@ type ActivityListReposStarredByAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReposStarredByAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListReposStarredByAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListReposStarredByAuthenticatedUserReq) urlPath() string {
@@ -2239,7 +2239,7 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) Rel(link RelName, resp 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2295,7 +2295,7 @@ ActivityListReposStarredByUserReq is request data for Client.ActivityListReposSt
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ActivityListReposStarredByUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	/*
@@ -2314,8 +2314,8 @@ type ActivityListReposStarredByUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReposStarredByUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListReposStarredByUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListReposStarredByUserReq) urlPath() string {
@@ -2379,7 +2379,7 @@ func (r *ActivityListReposStarredByUserReq) Rel(link RelName, resp *ActivityList
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2435,7 +2435,7 @@ ActivityListReposWatchedByUserReq is request data for Client.ActivityListReposWa
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ActivityListReposWatchedByUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2445,8 +2445,8 @@ type ActivityListReposWatchedByUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReposWatchedByUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListReposWatchedByUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListReposWatchedByUserReq) urlPath() string {
@@ -2504,7 +2504,7 @@ func (r *ActivityListReposWatchedByUserReq) Rel(link RelName, resp *ActivityList
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2560,7 +2560,7 @@ ActivityListStargazersForRepoReq is request data for Client.ActivityListStargaze
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ActivityListStargazersForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2571,8 +2571,8 @@ type ActivityListStargazersForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActivityListStargazersForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListStargazersForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListStargazersForRepoReq) urlPath() string {
@@ -2630,7 +2630,7 @@ func (r *ActivityListStargazersForRepoReq) Rel(link RelName, resp *ActivityListS
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2686,7 +2686,7 @@ ActivityListWatchedReposForAuthenticatedUserReq is request data for Client.Activ
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
 type ActivityListWatchedReposForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2695,8 +2695,8 @@ type ActivityListWatchedReposForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlPath() string {
@@ -2754,7 +2754,7 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) Rel(link RelName, resp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2810,7 +2810,7 @@ ActivityListWatchersForRepoReq is request data for Client.ActivityListWatchersFo
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ActivityListWatchersForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2821,8 +2821,8 @@ type ActivityListWatchersForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActivityListWatchersForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityListWatchersForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActivityListWatchersForRepoReq) urlPath() string {
@@ -2880,7 +2880,7 @@ func (r *ActivityListWatchersForRepoReq) Rel(link RelName, resp *ActivityListWat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2935,12 +2935,12 @@ ActivityMarkNotificationsAsReadReq is request data for Client.ActivityMarkNotifi
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 type ActivityMarkNotificationsAsReadReq struct {
-	pgURL       string
+	_url        string
 	RequestBody ActivityMarkNotificationsAsReadReqBody
 }
 
-func (r *ActivityMarkNotificationsAsReadReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityMarkNotificationsAsReadReq) url() string {
+	return r._url
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) urlPath() string {
@@ -2992,7 +2992,7 @@ func (r *ActivityMarkNotificationsAsReadReq) Rel(link RelName, resp *ActivityMar
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3054,14 +3054,14 @@ ActivityMarkRepoNotificationsAsReadReq is request data for Client.ActivityMarkRe
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type ActivityMarkRepoNotificationsAsReadReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ActivityMarkRepoNotificationsAsReadReqBody
 }
 
-func (r *ActivityMarkRepoNotificationsAsReadReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityMarkRepoNotificationsAsReadReq) url() string {
+	return r._url
 }
 
 func (r *ActivityMarkRepoNotificationsAsReadReq) urlPath() string {
@@ -3113,7 +3113,7 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) Rel(link RelName, resp *Activit
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3175,12 +3175,12 @@ ActivityMarkThreadAsReadReq is request data for Client.ActivityMarkThreadAsRead
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 type ActivityMarkThreadAsReadReq struct {
-	pgURL    string
+	_url     string
 	ThreadId int64
 }
 
-func (r *ActivityMarkThreadAsReadReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityMarkThreadAsReadReq) url() string {
+	return r._url
 }
 
 func (r *ActivityMarkThreadAsReadReq) urlPath() string {
@@ -3232,7 +3232,7 @@ func (r *ActivityMarkThreadAsReadReq) Rel(link RelName, resp *ActivityMarkThread
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3278,14 +3278,14 @@ ActivitySetRepoSubscriptionReq is request data for Client.ActivitySetRepoSubscri
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type ActivitySetRepoSubscriptionReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ActivitySetRepoSubscriptionReqBody
 }
 
-func (r *ActivitySetRepoSubscriptionReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivitySetRepoSubscriptionReq) url() string {
+	return r._url
 }
 
 func (r *ActivitySetRepoSubscriptionReq) urlPath() string {
@@ -3337,7 +3337,7 @@ func (r *ActivitySetRepoSubscriptionReq) Rel(link RelName, resp *ActivitySetRepo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3407,13 +3407,13 @@ ActivitySetThreadSubscriptionReq is request data for Client.ActivitySetThreadSub
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type ActivitySetThreadSubscriptionReq struct {
-	pgURL       string
+	_url        string
 	ThreadId    int64
 	RequestBody ActivitySetThreadSubscriptionReqBody
 }
 
-func (r *ActivitySetThreadSubscriptionReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivitySetThreadSubscriptionReq) url() string {
+	return r._url
 }
 
 func (r *ActivitySetThreadSubscriptionReq) urlPath() string {
@@ -3465,7 +3465,7 @@ func (r *ActivitySetThreadSubscriptionReq) Rel(link RelName, resp *ActivitySetTh
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3534,13 +3534,13 @@ ActivityStarRepoForAuthenticatedUserReq is request data for Client.ActivityStarR
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type ActivityStarRepoForAuthenticatedUserReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActivityStarRepoForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityStarRepoForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityStarRepoForAuthenticatedUserReq) urlPath() string {
@@ -3592,7 +3592,7 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) Rel(link RelName, resp *Activi
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3637,13 +3637,13 @@ ActivityUnstarRepoForAuthenticatedUserReq is request data for Client.ActivityUns
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type ActivityUnstarRepoForAuthenticatedUserReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) urlPath() string {
@@ -3695,7 +3695,7 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) Rel(link RelName, resp *Acti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

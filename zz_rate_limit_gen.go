@@ -42,11 +42,11 @@ RateLimitGetReq is request data for Client.RateLimitGet
 https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
 type RateLimitGetReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *RateLimitGetReq) pagingURL() string {
-	return r.pgURL
+func (r *RateLimitGetReq) url() string {
+	return r._url
 }
 
 func (r *RateLimitGetReq) urlPath() string {
@@ -98,7 +98,7 @@ func (r *RateLimitGetReq) Rel(link RelName, resp *RateLimitGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

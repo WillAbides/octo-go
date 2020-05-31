@@ -28,7 +28,7 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
-		group.Id("pgURL").String()
+		group.Id("_url").String()
 		for _, param := range endpoint.PathParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
@@ -71,8 +71,8 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 
 	for _, fn := range []func(file *jen.File, endpoint model.Endpoint){
 		func(fl *jen.File, endpoint model.Endpoint) {
-			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("pagingURL() string").Block(
-				jen.Id("return r.pgURL"),
+			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("url() string").Block(
+				jen.Id("return r._url"),
 			)
 		},
 		reqURLPathFunc,
@@ -106,7 +106,7 @@ func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
 	).Params(jen.Bool()).Block(
 		jen.Id("u := resp.RelLink(link)"),
 		jen.If(jen.Id("u").Op("==").Lit("")).Block(jen.Return(jen.False())),
-		jen.Id("r.pgURL = u"),
+		jen.Id("r._url = u"),
 		jen.Return(jen.True()),
 	)
 }

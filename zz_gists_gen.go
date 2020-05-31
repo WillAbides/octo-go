@@ -46,12 +46,12 @@ GistsCheckIsStarredReq is request data for Client.GistsCheckIsStarred
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 type GistsCheckIsStarredReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 }
 
-func (r *GistsCheckIsStarredReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsCheckIsStarredReq) url() string {
+	return r._url
 }
 
 func (r *GistsCheckIsStarredReq) urlPath() string {
@@ -103,7 +103,7 @@ func (r *GistsCheckIsStarredReq) Rel(link RelName, resp *GistsCheckIsStarredResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -150,12 +150,12 @@ GistsCreateReq is request data for Client.GistsCreate
 https://developer.github.com/v3/gists/#create-a-gist
 */
 type GistsCreateReq struct {
-	pgURL       string
+	_url        string
 	RequestBody GistsCreateReqBody
 }
 
-func (r *GistsCreateReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsCreateReq) url() string {
+	return r._url
 }
 
 func (r *GistsCreateReq) urlPath() string {
@@ -207,7 +207,7 @@ func (r *GistsCreateReq) Rel(link RelName, resp *GistsCreateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -290,13 +290,13 @@ GistsCreateCommentReq is request data for Client.GistsCreateComment
 https://developer.github.com/v3/gists/comments/#create-a-comment
 */
 type GistsCreateCommentReq struct {
-	pgURL       string
+	_url        string
 	GistId      string
 	RequestBody GistsCreateCommentReqBody
 }
 
-func (r *GistsCreateCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsCreateCommentReq) url() string {
+	return r._url
 }
 
 func (r *GistsCreateCommentReq) urlPath() string {
@@ -348,7 +348,7 @@ func (r *GistsCreateCommentReq) Rel(link RelName, resp *GistsCreateCommentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -414,12 +414,12 @@ GistsDeleteReq is request data for Client.GistsDelete
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 type GistsDeleteReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 }
 
-func (r *GistsDeleteReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsDeleteReq) url() string {
+	return r._url
 }
 
 func (r *GistsDeleteReq) urlPath() string {
@@ -471,7 +471,7 @@ func (r *GistsDeleteReq) Rel(link RelName, resp *GistsDeleteResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -516,13 +516,13 @@ GistsDeleteCommentReq is request data for Client.GistsDeleteComment
 https://developer.github.com/v3/gists/comments/#delete-a-comment
 */
 type GistsDeleteCommentReq struct {
-	pgURL     string
+	_url      string
 	GistId    string
 	CommentId int64
 }
 
-func (r *GistsDeleteCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsDeleteCommentReq) url() string {
+	return r._url
 }
 
 func (r *GistsDeleteCommentReq) urlPath() string {
@@ -574,7 +574,7 @@ func (r *GistsDeleteCommentReq) Rel(link RelName, resp *GistsDeleteCommentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -620,12 +620,12 @@ GistsForkReq is request data for Client.GistsFork
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 type GistsForkReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 }
 
-func (r *GistsForkReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsForkReq) url() string {
+	return r._url
 }
 
 func (r *GistsForkReq) urlPath() string {
@@ -677,7 +677,7 @@ func (r *GistsForkReq) Rel(link RelName, resp *GistsForkResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -733,12 +733,12 @@ GistsGetReq is request data for Client.GistsGet
 https://developer.github.com/v3/gists/#get-a-gist
 */
 type GistsGetReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 }
 
-func (r *GistsGetReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsGetReq) url() string {
+	return r._url
 }
 
 func (r *GistsGetReq) urlPath() string {
@@ -790,7 +790,7 @@ func (r *GistsGetReq) Rel(link RelName, resp *GistsGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -846,13 +846,13 @@ GistsGetCommentReq is request data for Client.GistsGetComment
 https://developer.github.com/v3/gists/comments/#get-a-single-comment
 */
 type GistsGetCommentReq struct {
-	pgURL     string
+	_url      string
 	GistId    string
 	CommentId int64
 }
 
-func (r *GistsGetCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsGetCommentReq) url() string {
+	return r._url
 }
 
 func (r *GistsGetCommentReq) urlPath() string {
@@ -904,7 +904,7 @@ func (r *GistsGetCommentReq) Rel(link RelName, resp *GistsGetCommentResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -960,13 +960,13 @@ GistsGetRevisionReq is request data for Client.GistsGetRevision
 https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
 type GistsGetRevisionReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 	Sha    string
 }
 
-func (r *GistsGetRevisionReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsGetRevisionReq) url() string {
+	return r._url
 }
 
 func (r *GistsGetRevisionReq) urlPath() string {
@@ -1018,7 +1018,7 @@ func (r *GistsGetRevisionReq) Rel(link RelName, resp *GistsGetRevisionResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1074,7 +1074,7 @@ GistsListReq is request data for Client.GistsList
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 type GistsListReq struct {
-	pgURL string
+	_url string
 
 	/*
 	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -1090,8 +1090,8 @@ type GistsListReq struct {
 	Page *int64
 }
 
-func (r *GistsListReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListReq) url() string {
+	return r._url
 }
 
 func (r *GistsListReq) urlPath() string {
@@ -1152,7 +1152,7 @@ func (r *GistsListReq) Rel(link RelName, resp *GistsListResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1208,7 +1208,7 @@ GistsListCommentsReq is request data for Client.GistsListComments
 https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
 type GistsListCommentsReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 
 	// Results per page (max 100)
@@ -1218,8 +1218,8 @@ type GistsListCommentsReq struct {
 	Page *int64
 }
 
-func (r *GistsListCommentsReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListCommentsReq) url() string {
+	return r._url
 }
 
 func (r *GistsListCommentsReq) urlPath() string {
@@ -1277,7 +1277,7 @@ func (r *GistsListCommentsReq) Rel(link RelName, resp *GistsListCommentsResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1333,7 +1333,7 @@ GistsListCommitsReq is request data for Client.GistsListCommits
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 type GistsListCommitsReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 
 	// Results per page (max 100)
@@ -1343,8 +1343,8 @@ type GistsListCommitsReq struct {
 	Page *int64
 }
 
-func (r *GistsListCommitsReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListCommitsReq) url() string {
+	return r._url
 }
 
 func (r *GistsListCommitsReq) urlPath() string {
@@ -1402,7 +1402,7 @@ func (r *GistsListCommitsReq) Rel(link RelName, resp *GistsListCommitsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1458,7 +1458,7 @@ GistsListForUserReq is request data for Client.GistsListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type GistsListForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	/*
@@ -1475,8 +1475,8 @@ type GistsListForUserReq struct {
 	Page *int64
 }
 
-func (r *GistsListForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListForUserReq) url() string {
+	return r._url
 }
 
 func (r *GistsListForUserReq) urlPath() string {
@@ -1537,7 +1537,7 @@ func (r *GistsListForUserReq) Rel(link RelName, resp *GistsListForUserResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1593,7 +1593,7 @@ GistsListForksReq is request data for Client.GistsListForks
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 type GistsListForksReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 
 	// Results per page (max 100)
@@ -1603,8 +1603,8 @@ type GistsListForksReq struct {
 	Page *int64
 }
 
-func (r *GistsListForksReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListForksReq) url() string {
+	return r._url
 }
 
 func (r *GistsListForksReq) urlPath() string {
@@ -1662,7 +1662,7 @@ func (r *GistsListForksReq) Rel(link RelName, resp *GistsListForksResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1718,7 +1718,7 @@ GistsListPublicReq is request data for Client.GistsListPublic
 https://developer.github.com/v3/gists/#list-public-gists
 */
 type GistsListPublicReq struct {
-	pgURL string
+	_url string
 
 	/*
 	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -1734,8 +1734,8 @@ type GistsListPublicReq struct {
 	Page *int64
 }
 
-func (r *GistsListPublicReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListPublicReq) url() string {
+	return r._url
 }
 
 func (r *GistsListPublicReq) urlPath() string {
@@ -1796,7 +1796,7 @@ func (r *GistsListPublicReq) Rel(link RelName, resp *GistsListPublicResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1852,7 +1852,7 @@ GistsListStarredReq is request data for Client.GistsListStarred
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 type GistsListStarredReq struct {
-	pgURL string
+	_url string
 
 	/*
 	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
@@ -1868,8 +1868,8 @@ type GistsListStarredReq struct {
 	Page *int64
 }
 
-func (r *GistsListStarredReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsListStarredReq) url() string {
+	return r._url
 }
 
 func (r *GistsListStarredReq) urlPath() string {
@@ -1930,7 +1930,7 @@ func (r *GistsListStarredReq) Rel(link RelName, resp *GistsListStarredResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1985,12 +1985,12 @@ GistsStarReq is request data for Client.GistsStar
 https://developer.github.com/v3/gists/#star-a-gist
 */
 type GistsStarReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 }
 
-func (r *GistsStarReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsStarReq) url() string {
+	return r._url
 }
 
 func (r *GistsStarReq) urlPath() string {
@@ -2042,7 +2042,7 @@ func (r *GistsStarReq) Rel(link RelName, resp *GistsStarResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2087,12 +2087,12 @@ GistsUnstarReq is request data for Client.GistsUnstar
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 type GistsUnstarReq struct {
-	pgURL  string
+	_url   string
 	GistId string
 }
 
-func (r *GistsUnstarReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsUnstarReq) url() string {
+	return r._url
 }
 
 func (r *GistsUnstarReq) urlPath() string {
@@ -2144,7 +2144,7 @@ func (r *GistsUnstarReq) Rel(link RelName, resp *GistsUnstarResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2190,13 +2190,13 @@ GistsUpdateReq is request data for Client.GistsUpdate
 https://developer.github.com/v3/gists/#update-a-gist
 */
 type GistsUpdateReq struct {
-	pgURL       string
+	_url        string
 	GistId      string
 	RequestBody GistsUpdateReqBody
 }
 
-func (r *GistsUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsUpdateReq) url() string {
+	return r._url
 }
 
 func (r *GistsUpdateReq) urlPath() string {
@@ -2248,7 +2248,7 @@ func (r *GistsUpdateReq) Rel(link RelName, resp *GistsUpdateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2331,14 +2331,14 @@ GistsUpdateCommentReq is request data for Client.GistsUpdateComment
 https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
 type GistsUpdateCommentReq struct {
-	pgURL       string
+	_url        string
 	GistId      string
 	CommentId   int64
 	RequestBody GistsUpdateCommentReqBody
 }
 
-func (r *GistsUpdateCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *GistsUpdateCommentReq) url() string {
+	return r._url
 }
 
 func (r *GistsUpdateCommentReq) urlPath() string {
@@ -2390,7 +2390,7 @@ func (r *GistsUpdateCommentReq) Rel(link RelName, resp *GistsUpdateCommentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

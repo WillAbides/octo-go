@@ -40,11 +40,11 @@ EmojisGetReq is request data for Client.EmojisGet
 https://developer.github.com/v3/emojis/#emojis
 */
 type EmojisGetReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *EmojisGetReq) pagingURL() string {
-	return r.pgURL
+func (r *EmojisGetReq) url() string {
+	return r._url
 }
 
 func (r *EmojisGetReq) urlPath() string {
@@ -96,7 +96,7 @@ func (r *EmojisGetReq) Rel(link RelName, resp *EmojisGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -42,14 +42,14 @@ ActionsAddSelectedRepoToOrgSecretReq is request data for Client.ActionsAddSelect
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 type ActionsAddSelectedRepoToOrgSecretReq struct {
-	pgURL        string
+	_url         string
 	Org          string
 	SecretName   string
 	RepositoryId int64
 }
 
-func (r *ActionsAddSelectedRepoToOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsAddSelectedRepoToOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsAddSelectedRepoToOrgSecretReq) urlPath() string {
@@ -101,7 +101,7 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) Rel(link RelName, resp *ActionsAd
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -146,14 +146,14 @@ ActionsCancelWorkflowRunReq is request data for Client.ActionsCancelWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 type ActionsCancelWorkflowRunReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r *ActionsCancelWorkflowRunReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCancelWorkflowRunReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCancelWorkflowRunReq) urlPath() string {
@@ -205,7 +205,7 @@ func (r *ActionsCancelWorkflowRunReq) Rel(link RelName, resp *ActionsCancelWorkf
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -250,14 +250,14 @@ ActionsCreateOrUpdateOrgSecretReq is request data for Client.ActionsCreateOrUpda
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 type ActionsCreateOrUpdateOrgSecretReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	SecretName  string
 	RequestBody ActionsCreateOrUpdateOrgSecretReqBody
 }
 
-func (r *ActionsCreateOrUpdateOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCreateOrUpdateOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCreateOrUpdateOrgSecretReq) urlPath() string {
@@ -309,7 +309,7 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) Rel(link RelName, resp *ActionsCreat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -397,15 +397,15 @@ ActionsCreateOrUpdateRepoSecretReq is request data for Client.ActionsCreateOrUpd
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 type ActionsCreateOrUpdateRepoSecretReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	SecretName  string
 	RequestBody ActionsCreateOrUpdateRepoSecretReqBody
 }
 
-func (r *ActionsCreateOrUpdateRepoSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCreateOrUpdateRepoSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCreateOrUpdateRepoSecretReq) urlPath() string {
@@ -457,7 +457,7 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) Rel(link RelName, resp *ActionsCrea
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -523,12 +523,12 @@ ActionsCreateRegistrationTokenForOrgReq is request data for Client.ActionsCreate
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
 type ActionsCreateRegistrationTokenForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *ActionsCreateRegistrationTokenForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCreateRegistrationTokenForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCreateRegistrationTokenForOrgReq) urlPath() string {
@@ -580,7 +580,7 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) Rel(link RelName, resp *Action
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -636,13 +636,13 @@ ActionsCreateRegistrationTokenForRepoReq is request data for Client.ActionsCreat
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 type ActionsCreateRegistrationTokenForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActionsCreateRegistrationTokenForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCreateRegistrationTokenForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCreateRegistrationTokenForRepoReq) urlPath() string {
@@ -694,7 +694,7 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) Rel(link RelName, resp *Actio
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -750,12 +750,12 @@ ActionsCreateRemoveTokenForOrgReq is request data for Client.ActionsCreateRemove
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
 type ActionsCreateRemoveTokenForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *ActionsCreateRemoveTokenForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCreateRemoveTokenForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCreateRemoveTokenForOrgReq) urlPath() string {
@@ -807,7 +807,7 @@ func (r *ActionsCreateRemoveTokenForOrgReq) Rel(link RelName, resp *ActionsCreat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -863,13 +863,13 @@ ActionsCreateRemoveTokenForRepoReq is request data for Client.ActionsCreateRemov
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 type ActionsCreateRemoveTokenForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActionsCreateRemoveTokenForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsCreateRemoveTokenForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsCreateRemoveTokenForRepoReq) urlPath() string {
@@ -921,7 +921,7 @@ func (r *ActionsCreateRemoveTokenForRepoReq) Rel(link RelName, resp *ActionsCrea
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -976,14 +976,14 @@ ActionsDeleteArtifactReq is request data for Client.ActionsDeleteArtifact
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 type ActionsDeleteArtifactReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	ArtifactId int64
 }
 
-func (r *ActionsDeleteArtifactReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDeleteArtifactReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDeleteArtifactReq) urlPath() string {
@@ -1035,7 +1035,7 @@ func (r *ActionsDeleteArtifactReq) Rel(link RelName, resp *ActionsDeleteArtifact
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1080,13 +1080,13 @@ ActionsDeleteOrgSecretReq is request data for Client.ActionsDeleteOrgSecret
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 type ActionsDeleteOrgSecretReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	SecretName string
 }
 
-func (r *ActionsDeleteOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDeleteOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDeleteOrgSecretReq) urlPath() string {
@@ -1138,7 +1138,7 @@ func (r *ActionsDeleteOrgSecretReq) Rel(link RelName, resp *ActionsDeleteOrgSecr
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1183,14 +1183,14 @@ ActionsDeleteRepoSecretReq is request data for Client.ActionsDeleteRepoSecret
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 type ActionsDeleteRepoSecretReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	SecretName string
 }
 
-func (r *ActionsDeleteRepoSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDeleteRepoSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDeleteRepoSecretReq) urlPath() string {
@@ -1242,7 +1242,7 @@ func (r *ActionsDeleteRepoSecretReq) Rel(link RelName, resp *ActionsDeleteRepoSe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1287,13 +1287,13 @@ ActionsDeleteSelfHostedRunnerFromOrgReq is request data for Client.ActionsDelete
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	RunnerId int64
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) urlPath() string {
@@ -1345,7 +1345,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) Rel(link RelName, resp *Action
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1390,14 +1390,14 @@ ActionsDeleteSelfHostedRunnerFromRepoReq is request data for Client.ActionsDelet
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
-	pgURL    string
+	_url     string
 	Owner    string
 	Repo     string
 	RunnerId int64
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) urlPath() string {
@@ -1449,7 +1449,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) Rel(link RelName, resp *Actio
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1494,14 +1494,14 @@ ActionsDeleteWorkflowRunLogsReq is request data for Client.ActionsDeleteWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 type ActionsDeleteWorkflowRunLogsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r *ActionsDeleteWorkflowRunLogsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDeleteWorkflowRunLogsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDeleteWorkflowRunLogsReq) urlPath() string {
@@ -1553,7 +1553,7 @@ func (r *ActionsDeleteWorkflowRunLogsReq) Rel(link RelName, resp *ActionsDeleteW
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1598,15 +1598,15 @@ ActionsDownloadArtifactReq is request data for Client.ActionsDownloadArtifact
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 type ActionsDownloadArtifactReq struct {
-	pgURL         string
+	_url          string
 	Owner         string
 	Repo          string
 	ArtifactId    int64
 	ArchiveFormat string
 }
 
-func (r *ActionsDownloadArtifactReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDownloadArtifactReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDownloadArtifactReq) urlPath() string {
@@ -1658,7 +1658,7 @@ func (r *ActionsDownloadArtifactReq) Rel(link RelName, resp *ActionsDownloadArti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1703,14 +1703,14 @@ ActionsDownloadWorkflowJobLogsReq is request data for Client.ActionsDownloadWork
 https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
 */
 type ActionsDownloadWorkflowJobLogsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	JobId int64
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDownloadWorkflowJobLogsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDownloadWorkflowJobLogsReq) urlPath() string {
@@ -1762,7 +1762,7 @@ func (r *ActionsDownloadWorkflowJobLogsReq) Rel(link RelName, resp *ActionsDownl
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1807,14 +1807,14 @@ ActionsDownloadWorkflowRunLogsReq is request data for Client.ActionsDownloadWork
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 type ActionsDownloadWorkflowRunLogsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r *ActionsDownloadWorkflowRunLogsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsDownloadWorkflowRunLogsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsDownloadWorkflowRunLogsReq) urlPath() string {
@@ -1866,7 +1866,7 @@ func (r *ActionsDownloadWorkflowRunLogsReq) Rel(link RelName, resp *ActionsDownl
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1912,14 +1912,14 @@ ActionsGetArtifactReq is request data for Client.ActionsGetArtifact
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 type ActionsGetArtifactReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	ArtifactId int64
 }
 
-func (r *ActionsGetArtifactReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetArtifactReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetArtifactReq) urlPath() string {
@@ -1971,7 +1971,7 @@ func (r *ActionsGetArtifactReq) Rel(link RelName, resp *ActionsGetArtifactRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2027,12 +2027,12 @@ ActionsGetOrgPublicKeyReq is request data for Client.ActionsGetOrgPublicKey
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 type ActionsGetOrgPublicKeyReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *ActionsGetOrgPublicKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetOrgPublicKeyReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetOrgPublicKeyReq) urlPath() string {
@@ -2084,7 +2084,7 @@ func (r *ActionsGetOrgPublicKeyReq) Rel(link RelName, resp *ActionsGetOrgPublicK
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2140,13 +2140,13 @@ ActionsGetOrgSecretReq is request data for Client.ActionsGetOrgSecret
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 type ActionsGetOrgSecretReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	SecretName string
 }
 
-func (r *ActionsGetOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetOrgSecretReq) urlPath() string {
@@ -2198,7 +2198,7 @@ func (r *ActionsGetOrgSecretReq) Rel(link RelName, resp *ActionsGetOrgSecretResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2254,13 +2254,13 @@ ActionsGetRepoPublicKeyReq is request data for Client.ActionsGetRepoPublicKey
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 type ActionsGetRepoPublicKeyReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActionsGetRepoPublicKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetRepoPublicKeyReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetRepoPublicKeyReq) urlPath() string {
@@ -2312,7 +2312,7 @@ func (r *ActionsGetRepoPublicKeyReq) Rel(link RelName, resp *ActionsGetRepoPubli
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2368,14 +2368,14 @@ ActionsGetRepoSecretReq is request data for Client.ActionsGetRepoSecret
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 type ActionsGetRepoSecretReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	SecretName string
 }
 
-func (r *ActionsGetRepoSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetRepoSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetRepoSecretReq) urlPath() string {
@@ -2427,7 +2427,7 @@ func (r *ActionsGetRepoSecretReq) Rel(link RelName, resp *ActionsGetRepoSecretRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2483,13 +2483,13 @@ ActionsGetSelfHostedRunnerForOrgReq is request data for Client.ActionsGetSelfHos
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 type ActionsGetSelfHostedRunnerForOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	RunnerId int64
 }
 
-func (r *ActionsGetSelfHostedRunnerForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetSelfHostedRunnerForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetSelfHostedRunnerForOrgReq) urlPath() string {
@@ -2541,7 +2541,7 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) Rel(link RelName, resp *ActionsGet
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2597,14 +2597,14 @@ ActionsGetSelfHostedRunnerForRepoReq is request data for Client.ActionsGetSelfHo
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 type ActionsGetSelfHostedRunnerForRepoReq struct {
-	pgURL    string
+	_url     string
 	Owner    string
 	Repo     string
 	RunnerId int64
 }
 
-func (r *ActionsGetSelfHostedRunnerForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetSelfHostedRunnerForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetSelfHostedRunnerForRepoReq) urlPath() string {
@@ -2656,7 +2656,7 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) Rel(link RelName, resp *ActionsGe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2712,14 +2712,14 @@ ActionsGetWorkflowReq is request data for Client.ActionsGetWorkflow
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 type ActionsGetWorkflowReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	WorkflowId int64
 }
 
-func (r *ActionsGetWorkflowReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetWorkflowReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetWorkflowReq) urlPath() string {
@@ -2771,7 +2771,7 @@ func (r *ActionsGetWorkflowReq) Rel(link RelName, resp *ActionsGetWorkflowRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2827,14 +2827,14 @@ ActionsGetWorkflowJobReq is request data for Client.ActionsGetWorkflowJob
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
 */
 type ActionsGetWorkflowJobReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	JobId int64
 }
 
-func (r *ActionsGetWorkflowJobReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetWorkflowJobReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetWorkflowJobReq) urlPath() string {
@@ -2886,7 +2886,7 @@ func (r *ActionsGetWorkflowJobReq) Rel(link RelName, resp *ActionsGetWorkflowJob
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2942,14 +2942,14 @@ ActionsGetWorkflowRunReq is request data for Client.ActionsGetWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 type ActionsGetWorkflowRunReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r *ActionsGetWorkflowRunReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetWorkflowRunReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetWorkflowRunReq) urlPath() string {
@@ -3001,7 +3001,7 @@ func (r *ActionsGetWorkflowRunReq) Rel(link RelName, resp *ActionsGetWorkflowRun
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3057,14 +3057,14 @@ ActionsGetWorkflowRunUsageReq is request data for Client.ActionsGetWorkflowRunUs
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type ActionsGetWorkflowRunUsageReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r *ActionsGetWorkflowRunUsageReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetWorkflowRunUsageReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetWorkflowRunUsageReq) urlPath() string {
@@ -3116,7 +3116,7 @@ func (r *ActionsGetWorkflowRunUsageReq) Rel(link RelName, resp *ActionsGetWorkfl
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3172,14 +3172,14 @@ ActionsGetWorkflowUsageReq is request data for Client.ActionsGetWorkflowUsage
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type ActionsGetWorkflowUsageReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	WorkflowId int64
 }
 
-func (r *ActionsGetWorkflowUsageReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsGetWorkflowUsageReq) url() string {
+	return r._url
 }
 
 func (r *ActionsGetWorkflowUsageReq) urlPath() string {
@@ -3231,7 +3231,7 @@ func (r *ActionsGetWorkflowUsageReq) Rel(link RelName, resp *ActionsGetWorkflowU
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3287,7 +3287,7 @@ ActionsListArtifactsForRepoReq is request data for Client.ActionsListArtifactsFo
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -3298,8 +3298,8 @@ type ActionsListArtifactsForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActionsListArtifactsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListArtifactsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListArtifactsForRepoReq) urlPath() string {
@@ -3357,7 +3357,7 @@ func (r *ActionsListArtifactsForRepoReq) Rel(link RelName, resp *ActionsListArti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3416,7 +3416,7 @@ ActionsListJobsForWorkflowRunReq is request data for Client.ActionsListJobsForWo
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ActionsListJobsForWorkflowRunReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
@@ -3436,8 +3436,8 @@ type ActionsListJobsForWorkflowRunReq struct {
 	Page *int64
 }
 
-func (r *ActionsListJobsForWorkflowRunReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListJobsForWorkflowRunReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListJobsForWorkflowRunReq) urlPath() string {
@@ -3498,7 +3498,7 @@ func (r *ActionsListJobsForWorkflowRunReq) Rel(link RelName, resp *ActionsListJo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3557,8 +3557,8 @@ ActionsListOrgSecretsReq is request data for Client.ActionsListOrgSecrets
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3567,8 +3567,8 @@ type ActionsListOrgSecretsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListOrgSecretsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListOrgSecretsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListOrgSecretsReq) urlPath() string {
@@ -3626,7 +3626,7 @@ func (r *ActionsListOrgSecretsReq) Rel(link RelName, resp *ActionsListOrgSecrets
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3685,7 +3685,7 @@ ActionsListRepoSecretsReq is request data for Client.ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -3696,8 +3696,8 @@ type ActionsListRepoSecretsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListRepoSecretsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListRepoSecretsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListRepoSecretsReq) urlPath() string {
@@ -3755,7 +3755,7 @@ func (r *ActionsListRepoSecretsReq) Rel(link RelName, resp *ActionsListRepoSecre
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3814,7 +3814,7 @@ ActionsListRepoWorkflowRunsReq is request data for Client.ActionsListRepoWorkflo
 https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
 */
 type ActionsListRepoWorkflowRunsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -3854,8 +3854,8 @@ type ActionsListRepoWorkflowRunsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListRepoWorkflowRunsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListRepoWorkflowRunsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListRepoWorkflowRunsReq) urlPath() string {
@@ -3925,7 +3925,7 @@ func (r *ActionsListRepoWorkflowRunsReq) Rel(link RelName, resp *ActionsListRepo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3984,7 +3984,7 @@ ActionsListRepoWorkflowsReq is request data for Client.ActionsListRepoWorkflows
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -3995,8 +3995,8 @@ type ActionsListRepoWorkflowsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListRepoWorkflowsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListRepoWorkflowsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListRepoWorkflowsReq) urlPath() string {
@@ -4054,7 +4054,7 @@ func (r *ActionsListRepoWorkflowsReq) Rel(link RelName, resp *ActionsListRepoWor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4113,12 +4113,12 @@ ActionsListRunnerApplicationsForOrgReq is request data for Client.ActionsListRun
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
 type ActionsListRunnerApplicationsForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *ActionsListRunnerApplicationsForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListRunnerApplicationsForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListRunnerApplicationsForOrgReq) urlPath() string {
@@ -4170,7 +4170,7 @@ func (r *ActionsListRunnerApplicationsForOrgReq) Rel(link RelName, resp *Actions
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4226,13 +4226,13 @@ ActionsListRunnerApplicationsForRepoReq is request data for Client.ActionsListRu
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 type ActionsListRunnerApplicationsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ActionsListRunnerApplicationsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListRunnerApplicationsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListRunnerApplicationsForRepoReq) urlPath() string {
@@ -4284,7 +4284,7 @@ func (r *ActionsListRunnerApplicationsForRepoReq) Rel(link RelName, resp *Action
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4340,13 +4340,13 @@ ActionsListSelectedReposForOrgSecretReq is request data for Client.ActionsListSe
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ActionsListSelectedReposForOrgSecretReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	SecretName string
 }
 
-func (r *ActionsListSelectedReposForOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListSelectedReposForOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListSelectedReposForOrgSecretReq) urlPath() string {
@@ -4398,7 +4398,7 @@ func (r *ActionsListSelectedReposForOrgSecretReq) Rel(link RelName, resp *Action
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4457,8 +4457,8 @@ ActionsListSelfHostedRunnersForOrgReq is request data for Client.ActionsListSelf
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 type ActionsListSelfHostedRunnersForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4467,8 +4467,8 @@ type ActionsListSelfHostedRunnersForOrgReq struct {
 	Page *int64
 }
 
-func (r *ActionsListSelfHostedRunnersForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListSelfHostedRunnersForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListSelfHostedRunnersForOrgReq) urlPath() string {
@@ -4526,7 +4526,7 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) Rel(link RelName, resp *ActionsL
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4585,7 +4585,7 @@ ActionsListSelfHostedRunnersForRepoReq is request data for Client.ActionsListSel
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -4596,8 +4596,8 @@ type ActionsListSelfHostedRunnersForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActionsListSelfHostedRunnersForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListSelfHostedRunnersForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListSelfHostedRunnersForRepoReq) urlPath() string {
@@ -4655,7 +4655,7 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) Rel(link RelName, resp *Actions
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4714,7 +4714,7 @@ ActionsListWorkflowRunArtifactsReq is request data for Client.ActionsListWorkflo
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
@@ -4726,8 +4726,8 @@ type ActionsListWorkflowRunArtifactsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListWorkflowRunArtifactsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListWorkflowRunArtifactsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListWorkflowRunArtifactsReq) urlPath() string {
@@ -4785,7 +4785,7 @@ func (r *ActionsListWorkflowRunArtifactsReq) Rel(link RelName, resp *ActionsList
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4844,7 +4844,7 @@ ActionsListWorkflowRunsReq is request data for Client.ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ActionsListWorkflowRunsReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	WorkflowId int64
@@ -4885,8 +4885,8 @@ type ActionsListWorkflowRunsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListWorkflowRunsReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsListWorkflowRunsReq) url() string {
+	return r._url
 }
 
 func (r *ActionsListWorkflowRunsReq) urlPath() string {
@@ -4956,7 +4956,7 @@ func (r *ActionsListWorkflowRunsReq) Rel(link RelName, resp *ActionsListWorkflow
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5014,14 +5014,14 @@ ActionsReRunWorkflowReq is request data for Client.ActionsReRunWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 type ActionsReRunWorkflowReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	RunId int64
 }
 
-func (r *ActionsReRunWorkflowReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsReRunWorkflowReq) url() string {
+	return r._url
 }
 
 func (r *ActionsReRunWorkflowReq) urlPath() string {
@@ -5073,7 +5073,7 @@ func (r *ActionsReRunWorkflowReq) Rel(link RelName, resp *ActionsReRunWorkflowRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5118,14 +5118,14 @@ ActionsRemoveSelectedRepoFromOrgSecretReq is request data for Client.ActionsRemo
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
-	pgURL        string
+	_url         string
 	Org          string
 	SecretName   string
 	RepositoryId int64
 }
 
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) urlPath() string {
@@ -5177,7 +5177,7 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) Rel(link RelName, resp *Acti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5222,14 +5222,14 @@ ActionsSetSelectedReposForOrgSecretReq is request data for Client.ActionsSetSele
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 type ActionsSetSelectedReposForOrgSecretReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	SecretName  string
 	RequestBody ActionsSetSelectedReposForOrgSecretReqBody
 }
 
-func (r *ActionsSetSelectedReposForOrgSecretReq) pagingURL() string {
-	return r.pgURL
+func (r *ActionsSetSelectedReposForOrgSecretReq) url() string {
+	return r._url
 }
 
 func (r *ActionsSetSelectedReposForOrgSecretReq) urlPath() string {
@@ -5281,7 +5281,7 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) Rel(link RelName, resp *Actions
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

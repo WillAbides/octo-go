@@ -43,13 +43,13 @@ ScimGetProvisioningDetailsForUserReq is request data for Client.ScimGetProvision
 https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
 type ScimGetProvisioningDetailsForUserReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	ScimUserId int64
 }
 
-func (r *ScimGetProvisioningDetailsForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ScimGetProvisioningDetailsForUserReq) url() string {
+	return r._url
 }
 
 func (r *ScimGetProvisioningDetailsForUserReq) urlPath() string {
@@ -101,7 +101,7 @@ func (r *ScimGetProvisioningDetailsForUserReq) Rel(link RelName, resp *ScimGetPr
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -157,8 +157,8 @@ ScimListProvisionedIdentitiesReq is request data for Client.ScimListProvisionedI
 https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
 type ScimListProvisionedIdentitiesReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Used for pagination: the index of the first result to return.
 	StartIndex *int64
@@ -175,8 +175,8 @@ type ScimListProvisionedIdentitiesReq struct {
 	Filter *string
 }
 
-func (r *ScimListProvisionedIdentitiesReq) pagingURL() string {
-	return r.pgURL
+func (r *ScimListProvisionedIdentitiesReq) url() string {
+	return r._url
 }
 
 func (r *ScimListProvisionedIdentitiesReq) urlPath() string {
@@ -237,7 +237,7 @@ func (r *ScimListProvisionedIdentitiesReq) Rel(link RelName, resp *ScimListProvi
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -293,12 +293,12 @@ ScimProvisionAndInviteUsersReq is request data for Client.ScimProvisionAndInvite
 https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 type ScimProvisionAndInviteUsersReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *ScimProvisionAndInviteUsersReq) pagingURL() string {
-	return r.pgURL
+func (r *ScimProvisionAndInviteUsersReq) url() string {
+	return r._url
 }
 
 func (r *ScimProvisionAndInviteUsersReq) urlPath() string {
@@ -350,7 +350,7 @@ func (r *ScimProvisionAndInviteUsersReq) Rel(link RelName, resp *ScimProvisionAn
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -405,13 +405,13 @@ ScimRemoveUserFromOrgReq is request data for Client.ScimRemoveUserFromOrg
 https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
 type ScimRemoveUserFromOrgReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	ScimUserId int64
 }
 
-func (r *ScimRemoveUserFromOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ScimRemoveUserFromOrgReq) url() string {
+	return r._url
 }
 
 func (r *ScimRemoveUserFromOrgReq) urlPath() string {
@@ -463,7 +463,7 @@ func (r *ScimRemoveUserFromOrgReq) Rel(link RelName, resp *ScimRemoveUserFromOrg
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -509,13 +509,13 @@ ScimReplaceProvisionedUserInformationReq is request data for Client.ScimReplaceP
 https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 type ScimReplaceProvisionedUserInformationReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	ScimUserId int64
 }
 
-func (r *ScimReplaceProvisionedUserInformationReq) pagingURL() string {
-	return r.pgURL
+func (r *ScimReplaceProvisionedUserInformationReq) url() string {
+	return r._url
 }
 
 func (r *ScimReplaceProvisionedUserInformationReq) urlPath() string {
@@ -567,7 +567,7 @@ func (r *ScimReplaceProvisionedUserInformationReq) Rel(link RelName, resp *ScimR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -623,13 +623,13 @@ ScimUpdateUserAttributeReq is request data for Client.ScimUpdateUserAttribute
 https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 type ScimUpdateUserAttributeReq struct {
-	pgURL      string
+	_url       string
 	Org        string
 	ScimUserId int64
 }
 
-func (r *ScimUpdateUserAttributeReq) pagingURL() string {
-	return r.pgURL
+func (r *ScimUpdateUserAttributeReq) url() string {
+	return r._url
 }
 
 func (r *ScimUpdateUserAttributeReq) urlPath() string {
@@ -681,7 +681,7 @@ func (r *ScimUpdateUserAttributeReq) Rel(link RelName, resp *ScimUpdateUserAttri
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

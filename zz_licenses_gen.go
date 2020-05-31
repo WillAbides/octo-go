@@ -42,12 +42,12 @@ LicensesGetReq is request data for Client.LicensesGet
 https://developer.github.com/v3/licenses/#get-an-individual-license
 */
 type LicensesGetReq struct {
-	pgURL   string
+	_url    string
 	License string
 }
 
-func (r *LicensesGetReq) pagingURL() string {
-	return r.pgURL
+func (r *LicensesGetReq) url() string {
+	return r._url
 }
 
 func (r *LicensesGetReq) urlPath() string {
@@ -99,7 +99,7 @@ func (r *LicensesGetReq) Rel(link RelName, resp *LicensesGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -155,13 +155,13 @@ LicensesGetForRepoReq is request data for Client.LicensesGetForRepo
 https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
 */
 type LicensesGetForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *LicensesGetForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *LicensesGetForRepoReq) url() string {
+	return r._url
 }
 
 func (r *LicensesGetForRepoReq) urlPath() string {
@@ -213,7 +213,7 @@ func (r *LicensesGetForRepoReq) Rel(link RelName, resp *LicensesGetForRepoRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -269,11 +269,11 @@ LicensesListCommonlyUsedReq is request data for Client.LicensesListCommonlyUsed
 https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
 type LicensesListCommonlyUsedReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *LicensesListCommonlyUsedReq) pagingURL() string {
-	return r.pgURL
+func (r *LicensesListCommonlyUsedReq) url() string {
+	return r._url
 }
 
 func (r *LicensesListCommonlyUsedReq) urlPath() string {
@@ -325,7 +325,7 @@ func (r *LicensesListCommonlyUsedReq) Rel(link RelName, resp *LicensesListCommon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

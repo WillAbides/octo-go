@@ -40,12 +40,12 @@ MarkdownRenderReq is request data for Client.MarkdownRender
 https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 type MarkdownRenderReq struct {
-	pgURL       string
+	_url        string
 	RequestBody MarkdownRenderReqBody
 }
 
-func (r *MarkdownRenderReq) pagingURL() string {
-	return r.pgURL
+func (r *MarkdownRenderReq) url() string {
+	return r._url
 }
 
 func (r *MarkdownRenderReq) urlPath() string {
@@ -97,7 +97,7 @@ func (r *MarkdownRenderReq) Rel(link RelName, resp *MarkdownRenderResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -169,15 +169,15 @@ MarkdownRenderRawReq is request data for Client.MarkdownRenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type MarkdownRenderRawReq struct {
-	pgURL       string
+	_url        string
 	RequestBody MarkdownRenderRawReqBody
 
 	// Setting content-type header is required for this endpoint
 	ContentTypeHeader *string
 }
 
-func (r *MarkdownRenderRawReq) pagingURL() string {
-	return r.pgURL
+func (r *MarkdownRenderRawReq) url() string {
+	return r._url
 }
 
 func (r *MarkdownRenderRawReq) urlPath() string {
@@ -229,7 +229,7 @@ func (r *MarkdownRenderRawReq) Rel(link RelName, resp *MarkdownRenderRawResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -43,14 +43,14 @@ GitCreateBlobReq is request data for Client.GitCreateBlob
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type GitCreateBlobReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateBlobReqBody
 }
 
-func (r *GitCreateBlobReq) pagingURL() string {
-	return r.pgURL
+func (r *GitCreateBlobReq) url() string {
+	return r._url
 }
 
 func (r *GitCreateBlobReq) urlPath() string {
@@ -102,7 +102,7 @@ func (r *GitCreateBlobReq) Rel(link RelName, resp *GitCreateBlobResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -175,14 +175,14 @@ GitCreateCommitReq is request data for Client.GitCreateCommit
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type GitCreateCommitReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateCommitReqBody
 }
 
-func (r *GitCreateCommitReq) pagingURL() string {
-	return r.pgURL
+func (r *GitCreateCommitReq) url() string {
+	return r._url
 }
 
 func (r *GitCreateCommitReq) urlPath() string {
@@ -234,7 +234,7 @@ func (r *GitCreateCommitReq) Rel(link RelName, resp *GitCreateCommitResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -373,14 +373,14 @@ GitCreateRefReq is request data for Client.GitCreateRef
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateRefReqBody
 }
 
-func (r *GitCreateRefReq) pagingURL() string {
-	return r.pgURL
+func (r *GitCreateRefReq) url() string {
+	return r._url
 }
 
 func (r *GitCreateRefReq) urlPath() string {
@@ -432,7 +432,7 @@ func (r *GitCreateRefReq) Rel(link RelName, resp *GitCreateRefResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -505,14 +505,14 @@ GitCreateTagReq is request data for Client.GitCreateTag
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type GitCreateTagReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateTagReqBody
 }
 
-func (r *GitCreateTagReq) pagingURL() string {
-	return r.pgURL
+func (r *GitCreateTagReq) url() string {
+	return r._url
 }
 
 func (r *GitCreateTagReq) urlPath() string {
@@ -564,7 +564,7 @@ func (r *GitCreateTagReq) Rel(link RelName, resp *GitCreateTagResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -662,14 +662,14 @@ GitCreateTreeReq is request data for Client.GitCreateTree
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type GitCreateTreeReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody GitCreateTreeReqBody
 }
 
-func (r *GitCreateTreeReq) pagingURL() string {
-	return r.pgURL
+func (r *GitCreateTreeReq) url() string {
+	return r._url
 }
 
 func (r *GitCreateTreeReq) urlPath() string {
@@ -721,7 +721,7 @@ func (r *GitCreateTreeReq) Rel(link RelName, resp *GitCreateTreeResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -829,14 +829,14 @@ GitDeleteRefReq is request data for Client.GitDeleteRef
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 type GitDeleteRefReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
 }
 
-func (r *GitDeleteRefReq) pagingURL() string {
-	return r.pgURL
+func (r *GitDeleteRefReq) url() string {
+	return r._url
 }
 
 func (r *GitDeleteRefReq) urlPath() string {
@@ -888,7 +888,7 @@ func (r *GitDeleteRefReq) Rel(link RelName, resp *GitDeleteRefResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -934,14 +934,14 @@ GitGetBlobReq is request data for Client.GitGetBlob
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GitGetBlobReq struct {
-	pgURL   string
+	_url    string
 	Owner   string
 	Repo    string
 	FileSha string
 }
 
-func (r *GitGetBlobReq) pagingURL() string {
-	return r.pgURL
+func (r *GitGetBlobReq) url() string {
+	return r._url
 }
 
 func (r *GitGetBlobReq) urlPath() string {
@@ -993,7 +993,7 @@ func (r *GitGetBlobReq) Rel(link RelName, resp *GitGetBlobResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1049,14 +1049,14 @@ GitGetCommitReq is request data for Client.GitGetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GitGetCommitReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommitSha string
 }
 
-func (r *GitGetCommitReq) pagingURL() string {
-	return r.pgURL
+func (r *GitGetCommitReq) url() string {
+	return r._url
 }
 
 func (r *GitGetCommitReq) urlPath() string {
@@ -1108,7 +1108,7 @@ func (r *GitGetCommitReq) Rel(link RelName, resp *GitGetCommitResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1164,14 +1164,14 @@ GitGetRefReq is request data for Client.GitGetRef
 https://developer.github.com/v3/git/refs/#get-a-single-reference
 */
 type GitGetRefReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
 }
 
-func (r *GitGetRefReq) pagingURL() string {
-	return r.pgURL
+func (r *GitGetRefReq) url() string {
+	return r._url
 }
 
 func (r *GitGetRefReq) urlPath() string {
@@ -1223,7 +1223,7 @@ func (r *GitGetRefReq) Rel(link RelName, resp *GitGetRefResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1279,14 +1279,14 @@ GitGetTagReq is request data for Client.GitGetTag
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GitGetTagReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	TagSha string
 }
 
-func (r *GitGetTagReq) pagingURL() string {
-	return r.pgURL
+func (r *GitGetTagReq) url() string {
+	return r._url
 }
 
 func (r *GitGetTagReq) urlPath() string {
@@ -1338,7 +1338,7 @@ func (r *GitGetTagReq) Rel(link RelName, resp *GitGetTagResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1394,7 +1394,7 @@ GitGetTreeReq is request data for Client.GitGetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GitGetTreeReq struct {
-	pgURL string
+	_url string
 
 	// owner parameter
 	Owner string
@@ -1409,8 +1409,8 @@ type GitGetTreeReq struct {
 	Recursive *int64
 }
 
-func (r *GitGetTreeReq) pagingURL() string {
-	return r.pgURL
+func (r *GitGetTreeReq) url() string {
+	return r._url
 }
 
 func (r *GitGetTreeReq) urlPath() string {
@@ -1465,7 +1465,7 @@ func (r *GitGetTreeReq) Rel(link RelName, resp *GitGetTreeResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1521,7 +1521,7 @@ GitListMatchingRefsReq is request data for Client.GitListMatchingRefs
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type GitListMatchingRefsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
@@ -1533,8 +1533,8 @@ type GitListMatchingRefsReq struct {
 	Page *int64
 }
 
-func (r *GitListMatchingRefsReq) pagingURL() string {
-	return r.pgURL
+func (r *GitListMatchingRefsReq) url() string {
+	return r._url
 }
 
 func (r *GitListMatchingRefsReq) urlPath() string {
@@ -1592,7 +1592,7 @@ func (r *GitListMatchingRefsReq) Rel(link RelName, resp *GitListMatchingRefsResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1648,15 +1648,15 @@ GitUpdateRefReq is request data for Client.GitUpdateRef
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type GitUpdateRefReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Ref         string
 	RequestBody GitUpdateRefReqBody
 }
 
-func (r *GitUpdateRefReq) pagingURL() string {
-	return r.pgURL
+func (r *GitUpdateRefReq) url() string {
+	return r._url
 }
 
 func (r *GitUpdateRefReq) urlPath() string {
@@ -1708,7 +1708,7 @@ func (r *GitUpdateRefReq) Rel(link RelName, resp *GitUpdateRefResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -42,7 +42,7 @@ ProjectsAddCollaboratorReq is request data for Client.ProjectsAddCollaborator
 https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
 type ProjectsAddCollaboratorReq struct {
-	pgURL       string
+	_url        string
 	ProjectId   int64
 	Username    string
 	RequestBody ProjectsAddCollaboratorReqBody
@@ -57,8 +57,8 @@ type ProjectsAddCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsAddCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsAddCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsAddCollaboratorReq) urlPath() string {
@@ -116,7 +116,7 @@ func (r *ProjectsAddCollaboratorReq) Rel(link RelName, resp *ProjectsAddCollabor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -181,7 +181,7 @@ ProjectsCreateCardReq is request data for Client.ProjectsCreateCard
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardReq struct {
-	pgURL       string
+	_url        string
 	ColumnId    int64
 	RequestBody ProjectsCreateCardReqBody
 
@@ -195,8 +195,8 @@ type ProjectsCreateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateCardReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsCreateCardReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsCreateCardReq) urlPath() string {
@@ -254,7 +254,7 @@ func (r *ProjectsCreateCardReq) Rel(link RelName, resp *ProjectsCreateCardRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -341,7 +341,7 @@ ProjectsCreateColumnReq is request data for Client.ProjectsCreateColumn
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnReq struct {
-	pgURL       string
+	_url        string
 	ProjectId   int64
 	RequestBody ProjectsCreateColumnReqBody
 
@@ -355,8 +355,8 @@ type ProjectsCreateColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateColumnReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsCreateColumnReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsCreateColumnReq) urlPath() string {
@@ -414,7 +414,7 @@ func (r *ProjectsCreateColumnReq) Rel(link RelName, resp *ProjectsCreateColumnRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -471,7 +471,7 @@ ProjectsCreateForAuthenticatedUserReq is request data for Client.ProjectsCreateF
 https://developer.github.com/v3/projects/#create-a-user-project
 */
 type ProjectsCreateForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	RequestBody ProjectsCreateForAuthenticatedUserReqBody
 
 	/*
@@ -484,8 +484,8 @@ type ProjectsCreateForAuthenticatedUserReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsCreateForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsCreateForAuthenticatedUserReq) urlPath() string {
@@ -543,7 +543,7 @@ func (r *ProjectsCreateForAuthenticatedUserReq) Rel(link RelName, resp *Projects
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -613,7 +613,7 @@ ProjectsCreateForOrgReq is request data for Client.ProjectsCreateForOrg
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody ProjectsCreateForOrgReqBody
 
@@ -627,8 +627,8 @@ type ProjectsCreateForOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsCreateForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsCreateForOrgReq) urlPath() string {
@@ -686,7 +686,7 @@ func (r *ProjectsCreateForOrgReq) Rel(link RelName, resp *ProjectsCreateForOrgRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -756,7 +756,7 @@ ProjectsCreateForRepoReq is request data for Client.ProjectsCreateForRepo
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ProjectsCreateForRepoReqBody
@@ -771,8 +771,8 @@ type ProjectsCreateForRepoReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsCreateForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsCreateForRepoReq) urlPath() string {
@@ -830,7 +830,7 @@ func (r *ProjectsCreateForRepoReq) Rel(link RelName, resp *ProjectsCreateForRepo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -899,7 +899,7 @@ ProjectsDeleteReq is request data for Client.ProjectsDelete
 https://developer.github.com/v3/projects/#delete-a-project
 */
 type ProjectsDeleteReq struct {
-	pgURL     string
+	_url      string
 	ProjectId int64
 
 	/*
@@ -912,8 +912,8 @@ type ProjectsDeleteReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsDeleteReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsDeleteReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsDeleteReq) urlPath() string {
@@ -971,7 +971,7 @@ func (r *ProjectsDeleteReq) Rel(link RelName, resp *ProjectsDeleteResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1016,7 +1016,7 @@ ProjectsDeleteCardReq is request data for Client.ProjectsDeleteCard
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 type ProjectsDeleteCardReq struct {
-	pgURL  string
+	_url   string
 	CardId int64
 
 	/*
@@ -1029,8 +1029,8 @@ type ProjectsDeleteCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsDeleteCardReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsDeleteCardReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsDeleteCardReq) urlPath() string {
@@ -1088,7 +1088,7 @@ func (r *ProjectsDeleteCardReq) Rel(link RelName, resp *ProjectsDeleteCardRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1133,7 +1133,7 @@ ProjectsDeleteColumnReq is request data for Client.ProjectsDeleteColumn
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 type ProjectsDeleteColumnReq struct {
-	pgURL    string
+	_url     string
 	ColumnId int64
 
 	/*
@@ -1146,8 +1146,8 @@ type ProjectsDeleteColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsDeleteColumnReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsDeleteColumnReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsDeleteColumnReq) urlPath() string {
@@ -1205,7 +1205,7 @@ func (r *ProjectsDeleteColumnReq) Rel(link RelName, resp *ProjectsDeleteColumnRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1251,7 +1251,7 @@ ProjectsGetReq is request data for Client.ProjectsGet
 https://developer.github.com/v3/projects/#get-a-project
 */
 type ProjectsGetReq struct {
-	pgURL     string
+	_url      string
 	ProjectId int64
 
 	/*
@@ -1264,8 +1264,8 @@ type ProjectsGetReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsGetReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsGetReq) urlPath() string {
@@ -1323,7 +1323,7 @@ func (r *ProjectsGetReq) Rel(link RelName, resp *ProjectsGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1378,7 +1378,7 @@ ProjectsGetCardReq is request data for Client.ProjectsGetCard
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 type ProjectsGetCardReq struct {
-	pgURL  string
+	_url   string
 	CardId int64
 
 	/*
@@ -1391,8 +1391,8 @@ type ProjectsGetCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetCardReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsGetCardReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsGetCardReq) urlPath() string {
@@ -1450,7 +1450,7 @@ func (r *ProjectsGetCardReq) Rel(link RelName, resp *ProjectsGetCardResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1495,7 +1495,7 @@ ProjectsGetColumnReq is request data for Client.ProjectsGetColumn
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 type ProjectsGetColumnReq struct {
-	pgURL    string
+	_url     string
 	ColumnId int64
 
 	/*
@@ -1508,8 +1508,8 @@ type ProjectsGetColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetColumnReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsGetColumnReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsGetColumnReq) urlPath() string {
@@ -1567,7 +1567,7 @@ func (r *ProjectsGetColumnReq) Rel(link RelName, resp *ProjectsGetColumnResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1613,7 +1613,7 @@ ProjectsListCardsReq is request data for Client.ProjectsListCards
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 type ProjectsListCardsReq struct {
-	pgURL    string
+	_url     string
 	ColumnId int64
 
 	/*
@@ -1638,8 +1638,8 @@ type ProjectsListCardsReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListCardsReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsListCardsReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsListCardsReq) urlPath() string {
@@ -1706,7 +1706,7 @@ func (r *ProjectsListCardsReq) Rel(link RelName, resp *ProjectsListCardsResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1762,7 +1762,7 @@ ProjectsListCollaboratorsReq is request data for Client.ProjectsListCollaborator
 https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
 type ProjectsListCollaboratorsReq struct {
-	pgURL     string
+	_url      string
 	ProjectId int64
 
 	/*
@@ -1791,8 +1791,8 @@ type ProjectsListCollaboratorsReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListCollaboratorsReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsListCollaboratorsReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsListCollaboratorsReq) urlPath() string {
@@ -1859,7 +1859,7 @@ func (r *ProjectsListCollaboratorsReq) Rel(link RelName, resp *ProjectsListColla
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1915,7 +1915,7 @@ ProjectsListColumnsReq is request data for Client.ProjectsListColumns
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ProjectsListColumnsReq struct {
-	pgURL     string
+	_url      string
 	ProjectId int64
 
 	// Results per page (max 100)
@@ -1934,8 +1934,8 @@ type ProjectsListColumnsReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListColumnsReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsListColumnsReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsListColumnsReq) urlPath() string {
@@ -1999,7 +1999,7 @@ func (r *ProjectsListColumnsReq) Rel(link RelName, resp *ProjectsListColumnsResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2055,8 +2055,8 @@ ProjectsListForOrgReq is request data for Client.ProjectsListForOrg
 https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ProjectsListForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2080,8 +2080,8 @@ type ProjectsListForOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsListForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsListForOrgReq) urlPath() string {
@@ -2148,7 +2148,7 @@ func (r *ProjectsListForOrgReq) Rel(link RelName, resp *ProjectsListForOrgRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2204,7 +2204,7 @@ ProjectsListForRepoReq is request data for Client.ProjectsListForRepo
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ProjectsListForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2230,8 +2230,8 @@ type ProjectsListForRepoReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsListForRepoReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsListForRepoReq) urlPath() string {
@@ -2298,7 +2298,7 @@ func (r *ProjectsListForRepoReq) Rel(link RelName, resp *ProjectsListForRepoResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2354,7 +2354,7 @@ ProjectsListForUserReq is request data for Client.ProjectsListForUser
 https://developer.github.com/v3/projects/#list-user-projects
 */
 type ProjectsListForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	/*
@@ -2379,8 +2379,8 @@ type ProjectsListForUserReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsListForUserReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsListForUserReq) urlPath() string {
@@ -2447,7 +2447,7 @@ func (r *ProjectsListForUserReq) Rel(link RelName, resp *ProjectsListForUserResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2502,7 +2502,7 @@ ProjectsMoveCardReq is request data for Client.ProjectsMoveCard
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type ProjectsMoveCardReq struct {
-	pgURL       string
+	_url        string
 	CardId      int64
 	RequestBody ProjectsMoveCardReqBody
 
@@ -2516,8 +2516,8 @@ type ProjectsMoveCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsMoveCardReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsMoveCardReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsMoveCardReq) urlPath() string {
@@ -2575,7 +2575,7 @@ func (r *ProjectsMoveCardReq) Rel(link RelName, resp *ProjectsMoveCardResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2638,7 +2638,7 @@ ProjectsMoveColumnReq is request data for Client.ProjectsMoveColumn
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type ProjectsMoveColumnReq struct {
-	pgURL       string
+	_url        string
 	ColumnId    int64
 	RequestBody ProjectsMoveColumnReqBody
 
@@ -2652,8 +2652,8 @@ type ProjectsMoveColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsMoveColumnReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsMoveColumnReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsMoveColumnReq) urlPath() string {
@@ -2711,7 +2711,7 @@ func (r *ProjectsMoveColumnReq) Rel(link RelName, resp *ProjectsMoveColumnRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2770,7 +2770,7 @@ ProjectsRemoveCollaboratorReq is request data for Client.ProjectsRemoveCollabora
 https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
 type ProjectsRemoveCollaboratorReq struct {
-	pgURL     string
+	_url      string
 	ProjectId int64
 	Username  string
 
@@ -2784,8 +2784,8 @@ type ProjectsRemoveCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsRemoveCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsRemoveCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsRemoveCollaboratorReq) urlPath() string {
@@ -2843,7 +2843,7 @@ func (r *ProjectsRemoveCollaboratorReq) Rel(link RelName, resp *ProjectsRemoveCo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2889,7 +2889,7 @@ ProjectsReviewUserPermissionLevelReq is request data for Client.ProjectsReviewUs
 https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
 type ProjectsReviewUserPermissionLevelReq struct {
-	pgURL     string
+	_url      string
 	ProjectId int64
 	Username  string
 
@@ -2903,8 +2903,8 @@ type ProjectsReviewUserPermissionLevelReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsReviewUserPermissionLevelReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsReviewUserPermissionLevelReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsReviewUserPermissionLevelReq) urlPath() string {
@@ -2962,7 +2962,7 @@ func (r *ProjectsReviewUserPermissionLevelReq) Rel(link RelName, resp *ProjectsR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3018,7 +3018,7 @@ ProjectsUpdateReq is request data for Client.ProjectsUpdate
 https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateReq struct {
-	pgURL       string
+	_url        string
 	ProjectId   int64
 	RequestBody ProjectsUpdateReqBody
 
@@ -3032,8 +3032,8 @@ type ProjectsUpdateReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsUpdateReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsUpdateReq) urlPath() string {
@@ -3091,7 +3091,7 @@ func (r *ProjectsUpdateReq) Rel(link RelName, resp *ProjectsUpdateResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3201,7 +3201,7 @@ ProjectsUpdateCardReq is request data for Client.ProjectsUpdateCard
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type ProjectsUpdateCardReq struct {
-	pgURL       string
+	_url        string
 	CardId      int64
 	RequestBody ProjectsUpdateCardReqBody
 
@@ -3215,8 +3215,8 @@ type ProjectsUpdateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsUpdateCardReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsUpdateCardReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsUpdateCardReq) urlPath() string {
@@ -3274,7 +3274,7 @@ func (r *ProjectsUpdateCardReq) Rel(link RelName, resp *ProjectsUpdateCardRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3340,7 +3340,7 @@ ProjectsUpdateColumnReq is request data for Client.ProjectsUpdateColumn
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type ProjectsUpdateColumnReq struct {
-	pgURL       string
+	_url        string
 	ColumnId    int64
 	RequestBody ProjectsUpdateColumnReqBody
 
@@ -3354,8 +3354,8 @@ type ProjectsUpdateColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsUpdateColumnReq) pagingURL() string {
-	return r.pgURL
+func (r *ProjectsUpdateColumnReq) url() string {
+	return r._url
 }
 
 func (r *ProjectsUpdateColumnReq) urlPath() string {
@@ -3413,7 +3413,7 @@ func (r *ProjectsUpdateColumnReq) Rel(link RelName, resp *ProjectsUpdateColumnRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

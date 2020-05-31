@@ -235,7 +235,7 @@ func requestHeaders(headers map[string]*string, previews map[string]bool) http.H
 }
 
 type requestBuilder interface {
-	pagingURL() string
+	url() string
 	urlPath() string
 	method() string
 	urlQuery() url.Values
@@ -247,8 +247,8 @@ type requestBuilder interface {
 }
 
 func httpRequestURL(builder requestBuilder, options requestOpts) string {
-	if builder.pagingURL() != "" {
-		return builder.pagingURL()
+	if builder.url() != "" {
+		return builder.url()
 	}
 	u := options.baseURL
 	u.Path = path.Join(u.Path, builder.urlPath())

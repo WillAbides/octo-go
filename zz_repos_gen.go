@@ -43,12 +43,12 @@ ReposAcceptInvitationReq is request data for Client.ReposAcceptInvitation
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
 type ReposAcceptInvitationReq struct {
-	pgURL        string
+	_url         string
 	InvitationId int64
 }
 
-func (r *ReposAcceptInvitationReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAcceptInvitationReq) url() string {
+	return r._url
 }
 
 func (r *ReposAcceptInvitationReq) urlPath() string {
@@ -100,7 +100,7 @@ func (r *ReposAcceptInvitationReq) Rel(link RelName, resp *ReposAcceptInvitation
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -146,15 +146,15 @@ ReposAddCollaboratorReq is request data for Client.ReposAddCollaborator
 https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
 */
 type ReposAddCollaboratorReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Username    string
 	RequestBody ReposAddCollaboratorReqBody
 }
 
-func (r *ReposAddCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddCollaboratorReq) urlPath() string {
@@ -206,7 +206,7 @@ func (r *ReposAddCollaboratorReq) Rel(link RelName, resp *ReposAddCollaboratorRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -283,14 +283,14 @@ ReposAddDeployKeyReq is request data for Client.ReposAddDeployKey
 https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
 */
 type ReposAddDeployKeyReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposAddDeployKeyReqBody
 }
 
-func (r *ReposAddDeployKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddDeployKeyReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddDeployKeyReq) urlPath() string {
@@ -342,7 +342,7 @@ func (r *ReposAddDeployKeyReq) Rel(link RelName, resp *ReposAddDeployKeyResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -425,14 +425,14 @@ ReposAddProtectedBranchAdminEnforcementReq is request data for Client.ReposAddPr
 https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
 */
 type ReposAddProtectedBranchAdminEnforcementReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposAddProtectedBranchAdminEnforcementReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddProtectedBranchAdminEnforcementReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddProtectedBranchAdminEnforcementReq) urlPath() string {
@@ -484,7 +484,7 @@ func (r *ReposAddProtectedBranchAdminEnforcementReq) Rel(link RelName, resp *Rep
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -540,15 +540,15 @@ ReposAddProtectedBranchAppRestrictionsReq is request data for Client.ReposAddPro
 https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
 */
 type ReposAddProtectedBranchAppRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposAddProtectedBranchAppRestrictionsReqBody
 }
 
-func (r *ReposAddProtectedBranchAppRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddProtectedBranchAppRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddProtectedBranchAppRestrictionsReq) urlPath() string {
@@ -600,7 +600,7 @@ func (r *ReposAddProtectedBranchAppRestrictionsReq) Rel(link RelName, resp *Repo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -663,7 +663,7 @@ ReposAddProtectedBranchRequiredSignaturesReq is request data for Client.ReposAdd
 https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
 */
 type ReposAddProtectedBranchRequiredSignaturesReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
@@ -678,8 +678,8 @@ type ReposAddProtectedBranchRequiredSignaturesReq struct {
 	ZzzaxPreview bool
 }
 
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddProtectedBranchRequiredSignaturesReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddProtectedBranchRequiredSignaturesReq) urlPath() string {
@@ -737,7 +737,7 @@ func (r *ReposAddProtectedBranchRequiredSignaturesReq) Rel(link RelName, resp *R
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -793,15 +793,15 @@ ReposAddProtectedBranchRequiredStatusChecksContextsReq is request data for Clien
 https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
 */
 type ReposAddProtectedBranchRequiredStatusChecksContextsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposAddProtectedBranchRequiredStatusChecksContextsReqBody
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
@@ -853,7 +853,7 @@ func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelNam
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -914,15 +914,15 @@ ReposAddProtectedBranchTeamRestrictionsReq is request data for Client.ReposAddPr
 https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
 */
 type ReposAddProtectedBranchTeamRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposAddProtectedBranchTeamRestrictionsReqBody
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddProtectedBranchTeamRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddProtectedBranchTeamRestrictionsReq) urlPath() string {
@@ -974,7 +974,7 @@ func (r *ReposAddProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *Rep
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1037,15 +1037,15 @@ ReposAddProtectedBranchUserRestrictionsReq is request data for Client.ReposAddPr
 https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
 */
 type ReposAddProtectedBranchUserRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposAddProtectedBranchUserRestrictionsReqBody
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposAddProtectedBranchUserRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposAddProtectedBranchUserRestrictionsReq) urlPath() string {
@@ -1097,7 +1097,7 @@ func (r *ReposAddProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *Rep
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1163,14 +1163,14 @@ ReposCheckCollaboratorReq is request data for Client.ReposCheckCollaborator
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
 */
 type ReposCheckCollaboratorReq struct {
-	pgURL    string
+	_url     string
 	Owner    string
 	Repo     string
 	Username string
 }
 
-func (r *ReposCheckCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCheckCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *ReposCheckCollaboratorReq) urlPath() string {
@@ -1222,7 +1222,7 @@ func (r *ReposCheckCollaboratorReq) Rel(link RelName, resp *ReposCheckCollaborat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1272,7 +1272,7 @@ ReposCheckVulnerabilityAlertsReq is request data for Client.ReposCheckVulnerabil
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
 type ReposCheckVulnerabilityAlertsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -1284,8 +1284,8 @@ type ReposCheckVulnerabilityAlertsReq struct {
 	DorianPreview bool
 }
 
-func (r *ReposCheckVulnerabilityAlertsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCheckVulnerabilityAlertsReq) url() string {
+	return r._url
 }
 
 func (r *ReposCheckVulnerabilityAlertsReq) urlPath() string {
@@ -1343,7 +1343,7 @@ func (r *ReposCheckVulnerabilityAlertsReq) Rel(link RelName, resp *ReposCheckVul
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1390,15 +1390,15 @@ ReposCompareCommitsReq is request data for Client.ReposCompareCommits
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
 type ReposCompareCommitsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Base  string
 	Head  string
 }
 
-func (r *ReposCompareCommitsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCompareCommitsReq) url() string {
+	return r._url
 }
 
 func (r *ReposCompareCommitsReq) urlPath() string {
@@ -1450,7 +1450,7 @@ func (r *ReposCompareCommitsReq) Rel(link RelName, resp *ReposCompareCommitsResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1506,15 +1506,15 @@ ReposCreateCommitCommentReq is request data for Client.ReposCreateCommitComment
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
 type ReposCreateCommitCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommitSha   string
 	RequestBody ReposCreateCommitCommentReqBody
 }
 
-func (r *ReposCreateCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateCommitCommentReq) urlPath() string {
@@ -1566,7 +1566,7 @@ func (r *ReposCreateCommitCommentReq) Rel(link RelName, resp *ReposCreateCommitC
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1645,7 +1645,7 @@ ReposCreateDeploymentReq is request data for Client.ReposCreateDeployment
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 type ReposCreateDeploymentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposCreateDeploymentReqBody
@@ -1662,8 +1662,8 @@ type ReposCreateDeploymentReq struct {
 	AntManPreview bool
 }
 
-func (r *ReposCreateDeploymentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateDeploymentReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateDeploymentReq) urlPath() string {
@@ -1718,7 +1718,7 @@ func (r *ReposCreateDeploymentReq) Rel(link RelName, resp *ReposCreateDeployment
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1834,7 +1834,7 @@ ReposCreateDeploymentStatusReq is request data for Client.ReposCreateDeploymentS
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
 type ReposCreateDeploymentStatusReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	DeploymentId int64
@@ -1864,8 +1864,8 @@ type ReposCreateDeploymentStatusReq struct {
 	AntManPreview bool
 }
 
-func (r *ReposCreateDeploymentStatusReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateDeploymentStatusReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateDeploymentStatusReq) urlPath() string {
@@ -1924,7 +1924,7 @@ func (r *ReposCreateDeploymentStatusReq) Rel(link RelName, resp *ReposCreateDepl
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2060,14 +2060,14 @@ ReposCreateDispatchEventReq is request data for Client.ReposCreateDispatchEvent
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 type ReposCreateDispatchEventReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposCreateDispatchEventReqBody
 }
 
-func (r *ReposCreateDispatchEventReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateDispatchEventReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateDispatchEventReq) urlPath() string {
@@ -2119,7 +2119,7 @@ func (r *ReposCreateDispatchEventReq) Rel(link RelName, resp *ReposCreateDispatc
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2182,7 +2182,7 @@ ReposCreateForAuthenticatedUserReq is request data for Client.ReposCreateForAuth
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
 type ReposCreateForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	RequestBody ReposCreateForAuthenticatedUserReqBody
 
 	/*
@@ -2207,8 +2207,8 @@ type ReposCreateForAuthenticatedUserReq struct {
 	BaptistePreview bool
 }
 
-func (r *ReposCreateForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateForAuthenticatedUserReq) urlPath() string {
@@ -2267,7 +2267,7 @@ func (r *ReposCreateForAuthenticatedUserReq) Rel(link RelName, resp *ReposCreate
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2423,14 +2423,14 @@ ReposCreateForkReq is request data for Client.ReposCreateFork
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 type ReposCreateForkReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposCreateForkReqBody
 }
 
-func (r *ReposCreateForkReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateForkReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateForkReq) urlPath() string {
@@ -2482,7 +2482,7 @@ func (r *ReposCreateForkReq) Rel(link RelName, resp *ReposCreateForkResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2552,14 +2552,14 @@ ReposCreateHookReq is request data for Client.ReposCreateHook
 https://developer.github.com/v3/repos/hooks/#create-a-hook
 */
 type ReposCreateHookReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposCreateHookReqBody
 }
 
-func (r *ReposCreateHookReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateHookReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateHookReq) urlPath() string {
@@ -2611,7 +2611,7 @@ func (r *ReposCreateHookReq) Rel(link RelName, resp *ReposCreateHookResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2729,7 +2729,7 @@ ReposCreateInOrgReq is request data for Client.ReposCreateInOrg
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
 type ReposCreateInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody ReposCreateInOrgReqBody
 
@@ -2755,8 +2755,8 @@ type ReposCreateInOrgReq struct {
 	BaptistePreview bool
 }
 
-func (r *ReposCreateInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateInOrgReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateInOrgReq) urlPath() string {
@@ -2815,7 +2815,7 @@ func (r *ReposCreateInOrgReq) Rel(link RelName, resp *ReposCreateInOrgResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2971,15 +2971,15 @@ ReposCreateOrUpdateFileReq is request data for Client.ReposCreateOrUpdateFile
 https://developer.github.com/v3/repos/contents/#create-or-update-a-file
 */
 type ReposCreateOrUpdateFileReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Path        string
 	RequestBody ReposCreateOrUpdateFileReqBody
 }
 
-func (r *ReposCreateOrUpdateFileReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateOrUpdateFileReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateOrUpdateFileReq) urlPath() string {
@@ -3031,7 +3031,7 @@ func (r *ReposCreateOrUpdateFileReq) Rel(link RelName, resp *ReposCreateOrUpdate
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3151,14 +3151,14 @@ ReposCreateReleaseReq is request data for Client.ReposCreateRelease
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
 type ReposCreateReleaseReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposCreateReleaseReqBody
 }
 
-func (r *ReposCreateReleaseReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateReleaseReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateReleaseReq) urlPath() string {
@@ -3210,7 +3210,7 @@ func (r *ReposCreateReleaseReq) Rel(link RelName, resp *ReposCreateReleaseRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3302,15 +3302,15 @@ ReposCreateStatusReq is request data for Client.ReposCreateStatus
 https://developer.github.com/v3/repos/statuses/#create-a-status
 */
 type ReposCreateStatusReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Sha         string
 	RequestBody ReposCreateStatusReqBody
 }
 
-func (r *ReposCreateStatusReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateStatusReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateStatusReq) urlPath() string {
@@ -3362,7 +3362,7 @@ func (r *ReposCreateStatusReq) Rel(link RelName, resp *ReposCreateStatusResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3447,7 +3447,7 @@ ReposCreateUsingTemplateReq is request data for Client.ReposCreateUsingTemplate
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
 type ReposCreateUsingTemplateReq struct {
-	pgURL         string
+	_url          string
 	TemplateOwner string
 	TemplateRepo  string
 	RequestBody   ReposCreateUsingTemplateReqBody
@@ -3460,8 +3460,8 @@ type ReposCreateUsingTemplateReq struct {
 	BaptistePreview bool
 }
 
-func (r *ReposCreateUsingTemplateReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposCreateUsingTemplateReq) url() string {
+	return r._url
 }
 
 func (r *ReposCreateUsingTemplateReq) urlPath() string {
@@ -3519,7 +3519,7 @@ func (r *ReposCreateUsingTemplateReq) Rel(link RelName, resp *ReposCreateUsingTe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3601,12 +3601,12 @@ ReposDeclineInvitationReq is request data for Client.ReposDeclineInvitation
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
 type ReposDeclineInvitationReq struct {
-	pgURL        string
+	_url         string
 	InvitationId int64
 }
 
-func (r *ReposDeclineInvitationReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeclineInvitationReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeclineInvitationReq) urlPath() string {
@@ -3658,7 +3658,7 @@ func (r *ReposDeclineInvitationReq) Rel(link RelName, resp *ReposDeclineInvitati
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3703,13 +3703,13 @@ ReposDeleteReq is request data for Client.ReposDelete
 https://developer.github.com/v3/repos/#delete-a-repository
 */
 type ReposDeleteReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposDeleteReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteReq) urlPath() string {
@@ -3761,7 +3761,7 @@ func (r *ReposDeleteReq) Rel(link RelName, resp *ReposDeleteResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3806,14 +3806,14 @@ ReposDeleteCommitCommentReq is request data for Client.ReposDeleteCommitComment
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
 type ReposDeleteCommitCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
 }
 
-func (r *ReposDeleteCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteCommitCommentReq) urlPath() string {
@@ -3865,7 +3865,7 @@ func (r *ReposDeleteCommitCommentReq) Rel(link RelName, resp *ReposDeleteCommitC
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3910,14 +3910,14 @@ ReposDeleteDeploymentReq is request data for Client.ReposDeleteDeployment
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
 type ReposDeleteDeploymentReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	DeploymentId int64
 }
 
-func (r *ReposDeleteDeploymentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteDeploymentReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteDeploymentReq) urlPath() string {
@@ -3969,7 +3969,7 @@ func (r *ReposDeleteDeploymentReq) Rel(link RelName, resp *ReposDeleteDeployment
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4014,14 +4014,14 @@ ReposDeleteDownloadReq is request data for Client.ReposDeleteDownload
 https://developer.github.com/v3/repos/downloads/#delete-a-download
 */
 type ReposDeleteDownloadReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	DownloadId int64
 }
 
-func (r *ReposDeleteDownloadReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteDownloadReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteDownloadReq) urlPath() string {
@@ -4073,7 +4073,7 @@ func (r *ReposDeleteDownloadReq) Rel(link RelName, resp *ReposDeleteDownloadResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4119,15 +4119,15 @@ ReposDeleteFileReq is request data for Client.ReposDeleteFile
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
 type ReposDeleteFileReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Path        string
 	RequestBody ReposDeleteFileReqBody
 }
 
-func (r *ReposDeleteFileReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteFileReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteFileReq) urlPath() string {
@@ -4179,7 +4179,7 @@ func (r *ReposDeleteFileReq) Rel(link RelName, resp *ReposDeleteFileResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4277,14 +4277,14 @@ ReposDeleteHookReq is request data for Client.ReposDeleteHook
 https://developer.github.com/v3/repos/hooks/#delete-a-hook
 */
 type ReposDeleteHookReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	HookId int64
 }
 
-func (r *ReposDeleteHookReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteHookReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteHookReq) urlPath() string {
@@ -4336,7 +4336,7 @@ func (r *ReposDeleteHookReq) Rel(link RelName, resp *ReposDeleteHookResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4381,14 +4381,14 @@ ReposDeleteInvitationReq is request data for Client.ReposDeleteInvitation
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
 type ReposDeleteInvitationReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	InvitationId int64
 }
 
-func (r *ReposDeleteInvitationReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteInvitationReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteInvitationReq) urlPath() string {
@@ -4440,7 +4440,7 @@ func (r *ReposDeleteInvitationReq) Rel(link RelName, resp *ReposDeleteInvitation
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4485,14 +4485,14 @@ ReposDeleteReleaseReq is request data for Client.ReposDeleteRelease
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
 type ReposDeleteReleaseReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	ReleaseId int64
 }
 
-func (r *ReposDeleteReleaseReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteReleaseReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteReleaseReq) urlPath() string {
@@ -4544,7 +4544,7 @@ func (r *ReposDeleteReleaseReq) Rel(link RelName, resp *ReposDeleteReleaseRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4589,14 +4589,14 @@ ReposDeleteReleaseAssetReq is request data for Client.ReposDeleteReleaseAsset
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
 type ReposDeleteReleaseAssetReq struct {
-	pgURL   string
+	_url    string
 	Owner   string
 	Repo    string
 	AssetId int64
 }
 
-func (r *ReposDeleteReleaseAssetReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDeleteReleaseAssetReq) url() string {
+	return r._url
 }
 
 func (r *ReposDeleteReleaseAssetReq) urlPath() string {
@@ -4648,7 +4648,7 @@ func (r *ReposDeleteReleaseAssetReq) Rel(link RelName, resp *ReposDeleteReleaseA
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4693,7 +4693,7 @@ ReposDisableAutomatedSecurityFixesReq is request data for Client.ReposDisableAut
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
 type ReposDisableAutomatedSecurityFixesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -4705,8 +4705,8 @@ type ReposDisableAutomatedSecurityFixesReq struct {
 	LondonPreview bool
 }
 
-func (r *ReposDisableAutomatedSecurityFixesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDisableAutomatedSecurityFixesReq) url() string {
+	return r._url
 }
 
 func (r *ReposDisableAutomatedSecurityFixesReq) urlPath() string {
@@ -4764,7 +4764,7 @@ func (r *ReposDisableAutomatedSecurityFixesReq) Rel(link RelName, resp *ReposDis
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4809,7 +4809,7 @@ ReposDisablePagesSiteReq is request data for Client.ReposDisablePagesSite
 https://developer.github.com/v3/repos/pages/#disable-a-pages-site
 */
 type ReposDisablePagesSiteReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -4823,8 +4823,8 @@ type ReposDisablePagesSiteReq struct {
 	SwitcherooPreview bool
 }
 
-func (r *ReposDisablePagesSiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDisablePagesSiteReq) url() string {
+	return r._url
 }
 
 func (r *ReposDisablePagesSiteReq) urlPath() string {
@@ -4882,7 +4882,7 @@ func (r *ReposDisablePagesSiteReq) Rel(link RelName, resp *ReposDisablePagesSite
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4927,7 +4927,7 @@ ReposDisableVulnerabilityAlertsReq is request data for Client.ReposDisableVulner
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
 type ReposDisableVulnerabilityAlertsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -4939,8 +4939,8 @@ type ReposDisableVulnerabilityAlertsReq struct {
 	DorianPreview bool
 }
 
-func (r *ReposDisableVulnerabilityAlertsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposDisableVulnerabilityAlertsReq) url() string {
+	return r._url
 }
 
 func (r *ReposDisableVulnerabilityAlertsReq) urlPath() string {
@@ -4998,7 +4998,7 @@ func (r *ReposDisableVulnerabilityAlertsReq) Rel(link RelName, resp *ReposDisabl
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5043,7 +5043,7 @@ ReposEnableAutomatedSecurityFixesReq is request data for Client.ReposEnableAutom
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
 type ReposEnableAutomatedSecurityFixesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -5055,8 +5055,8 @@ type ReposEnableAutomatedSecurityFixesReq struct {
 	LondonPreview bool
 }
 
-func (r *ReposEnableAutomatedSecurityFixesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposEnableAutomatedSecurityFixesReq) url() string {
+	return r._url
 }
 
 func (r *ReposEnableAutomatedSecurityFixesReq) urlPath() string {
@@ -5114,7 +5114,7 @@ func (r *ReposEnableAutomatedSecurityFixesReq) Rel(link RelName, resp *ReposEnab
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5160,7 +5160,7 @@ ReposEnablePagesSiteReq is request data for Client.ReposEnablePagesSite
 https://developer.github.com/v3/repos/pages/#enable-a-pages-site
 */
 type ReposEnablePagesSiteReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposEnablePagesSiteReqBody
@@ -5175,8 +5175,8 @@ type ReposEnablePagesSiteReq struct {
 	SwitcherooPreview bool
 }
 
-func (r *ReposEnablePagesSiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposEnablePagesSiteReq) url() string {
+	return r._url
 }
 
 func (r *ReposEnablePagesSiteReq) urlPath() string {
@@ -5234,7 +5234,7 @@ func (r *ReposEnablePagesSiteReq) Rel(link RelName, resp *ReposEnablePagesSiteRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5316,7 +5316,7 @@ ReposEnableVulnerabilityAlertsReq is request data for Client.ReposEnableVulnerab
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
 type ReposEnableVulnerabilityAlertsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -5328,8 +5328,8 @@ type ReposEnableVulnerabilityAlertsReq struct {
 	DorianPreview bool
 }
 
-func (r *ReposEnableVulnerabilityAlertsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposEnableVulnerabilityAlertsReq) url() string {
+	return r._url
 }
 
 func (r *ReposEnableVulnerabilityAlertsReq) urlPath() string {
@@ -5387,7 +5387,7 @@ func (r *ReposEnableVulnerabilityAlertsReq) Rel(link RelName, resp *ReposEnableV
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5433,7 +5433,7 @@ ReposGetReq is request data for Client.ReposGet
 https://developer.github.com/v3/repos/#get-a-repository
 */
 type ReposGetReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -5460,8 +5460,8 @@ type ReposGetReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *ReposGetReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetReq) urlPath() string {
@@ -5520,7 +5520,7 @@ func (r *ReposGetReq) Rel(link RelName, resp *ReposGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5576,7 +5576,7 @@ ReposGetAllTopicsReq is request data for Client.ReposGetAllTopics
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
 type ReposGetAllTopicsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -5588,8 +5588,8 @@ type ReposGetAllTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r *ReposGetAllTopicsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetAllTopicsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetAllTopicsReq) urlPath() string {
@@ -5647,7 +5647,7 @@ func (r *ReposGetAllTopicsReq) Rel(link RelName, resp *ReposGetAllTopicsResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5703,14 +5703,14 @@ ReposGetAppsWithAccessToProtectedBranchReq is request data for Client.ReposGetAp
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetAppsWithAccessToProtectedBranchReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetAppsWithAccessToProtectedBranchReq) urlPath() string {
@@ -5762,7 +5762,7 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) Rel(link RelName, resp *Rep
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5817,15 +5817,15 @@ ReposGetArchiveLinkReq is request data for Client.ReposGetArchiveLink
 https://developer.github.com/v3/repos/contents/#get-archive-link
 */
 type ReposGetArchiveLinkReq struct {
-	pgURL         string
+	_url          string
 	Owner         string
 	Repo          string
 	ArchiveFormat string
 	Ref           string
 }
 
-func (r *ReposGetArchiveLinkReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetArchiveLinkReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetArchiveLinkReq) urlPath() string {
@@ -5877,7 +5877,7 @@ func (r *ReposGetArchiveLinkReq) Rel(link RelName, resp *ReposGetArchiveLinkResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -5923,14 +5923,14 @@ ReposGetBranchReq is request data for Client.ReposGetBranch
 https://developer.github.com/v3/repos/branches/#get-branch
 */
 type ReposGetBranchReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetBranchReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetBranchReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetBranchReq) urlPath() string {
@@ -5982,7 +5982,7 @@ func (r *ReposGetBranchReq) Rel(link RelName, resp *ReposGetBranchResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6038,7 +6038,7 @@ ReposGetBranchProtectionReq is request data for Client.ReposGetBranchProtection
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
 type ReposGetBranchProtectionReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
@@ -6054,8 +6054,8 @@ type ReposGetBranchProtectionReq struct {
 	LukeCagePreview bool
 }
 
-func (r *ReposGetBranchProtectionReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetBranchProtectionReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetBranchProtectionReq) urlPath() string {
@@ -6110,7 +6110,7 @@ func (r *ReposGetBranchProtectionReq) Rel(link RelName, resp *ReposGetBranchProt
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6166,7 +6166,7 @@ ReposGetClonesReq is request data for Client.ReposGetClones
 https://developer.github.com/v3/repos/traffic/#clones
 */
 type ReposGetClonesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -6174,8 +6174,8 @@ type ReposGetClonesReq struct {
 	Per *string
 }
 
-func (r *ReposGetClonesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetClonesReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetClonesReq) urlPath() string {
@@ -6230,7 +6230,7 @@ func (r *ReposGetClonesReq) Rel(link RelName, resp *ReposGetClonesResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6286,13 +6286,13 @@ ReposGetCodeFrequencyStatsReq is request data for Client.ReposGetCodeFrequencySt
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
 */
 type ReposGetCodeFrequencyStatsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetCodeFrequencyStatsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetCodeFrequencyStatsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetCodeFrequencyStatsReq) urlPath() string {
@@ -6344,7 +6344,7 @@ func (r *ReposGetCodeFrequencyStatsReq) Rel(link RelName, resp *ReposGetCodeFreq
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6400,14 +6400,14 @@ ReposGetCollaboratorPermissionLevelReq is request data for Client.ReposGetCollab
 https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
 */
 type ReposGetCollaboratorPermissionLevelReq struct {
-	pgURL    string
+	_url     string
 	Owner    string
 	Repo     string
 	Username string
 }
 
-func (r *ReposGetCollaboratorPermissionLevelReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetCollaboratorPermissionLevelReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetCollaboratorPermissionLevelReq) urlPath() string {
@@ -6459,7 +6459,7 @@ func (r *ReposGetCollaboratorPermissionLevelReq) Rel(link RelName, resp *ReposGe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6515,14 +6515,14 @@ ReposGetCombinedStatusForRefReq is request data for Client.ReposGetCombinedStatu
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
 */
 type ReposGetCombinedStatusForRefReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
 }
 
-func (r *ReposGetCombinedStatusForRefReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetCombinedStatusForRefReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetCombinedStatusForRefReq) urlPath() string {
@@ -6574,7 +6574,7 @@ func (r *ReposGetCombinedStatusForRefReq) Rel(link RelName, resp *ReposGetCombin
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6630,14 +6630,14 @@ ReposGetCommitReq is request data for Client.ReposGetCommit
 https://developer.github.com/v3/repos/commits/#get-a-single-commit
 */
 type ReposGetCommitReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
 }
 
-func (r *ReposGetCommitReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetCommitReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetCommitReq) urlPath() string {
@@ -6689,7 +6689,7 @@ func (r *ReposGetCommitReq) Rel(link RelName, resp *ReposGetCommitResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6745,13 +6745,13 @@ ReposGetCommitActivityStatsReq is request data for Client.ReposGetCommitActivity
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
 */
 type ReposGetCommitActivityStatsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetCommitActivityStatsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetCommitActivityStatsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetCommitActivityStatsReq) urlPath() string {
@@ -6803,7 +6803,7 @@ func (r *ReposGetCommitActivityStatsReq) Rel(link RelName, resp *ReposGetCommitA
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6859,7 +6859,7 @@ ReposGetCommitCommentReq is request data for Client.ReposGetCommitComment
 https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
 */
 type ReposGetCommitCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -6876,8 +6876,8 @@ type ReposGetCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReposGetCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetCommitCommentReq) urlPath() string {
@@ -6932,7 +6932,7 @@ func (r *ReposGetCommitCommentReq) Rel(link RelName, resp *ReposGetCommitComment
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -6988,7 +6988,7 @@ ReposGetContentsReq is request data for Client.ReposGetContents
 https://developer.github.com/v3/repos/contents/#get-contents
 */
 type ReposGetContentsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Path  string
@@ -7000,8 +7000,8 @@ type ReposGetContentsReq struct {
 	Ref *string
 }
 
-func (r *ReposGetContentsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetContentsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetContentsReq) urlPath() string {
@@ -7056,7 +7056,7 @@ func (r *ReposGetContentsReq) Rel(link RelName, resp *ReposGetContentsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7112,13 +7112,13 @@ ReposGetContributorsStatsReq is request data for Client.ReposGetContributorsStat
 https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
 */
 type ReposGetContributorsStatsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetContributorsStatsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetContributorsStatsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetContributorsStatsReq) urlPath() string {
@@ -7170,7 +7170,7 @@ func (r *ReposGetContributorsStatsReq) Rel(link RelName, resp *ReposGetContribut
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7226,14 +7226,14 @@ ReposGetDeployKeyReq is request data for Client.ReposGetDeployKey
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
 type ReposGetDeployKeyReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	KeyId int64
 }
 
-func (r *ReposGetDeployKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetDeployKeyReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetDeployKeyReq) urlPath() string {
@@ -7285,7 +7285,7 @@ func (r *ReposGetDeployKeyReq) Rel(link RelName, resp *ReposGetDeployKeyResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7341,7 +7341,7 @@ ReposGetDeploymentReq is request data for Client.ReposGetDeployment
 https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
 */
 type ReposGetDeploymentReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	DeploymentId int64
@@ -7369,8 +7369,8 @@ type ReposGetDeploymentReq struct {
 	AntManPreview bool
 }
 
-func (r *ReposGetDeploymentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetDeploymentReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetDeploymentReq) urlPath() string {
@@ -7429,7 +7429,7 @@ func (r *ReposGetDeploymentReq) Rel(link RelName, resp *ReposGetDeploymentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7485,7 +7485,7 @@ ReposGetDeploymentStatusReq is request data for Client.ReposGetDeploymentStatus
 https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
 */
 type ReposGetDeploymentStatusReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	DeploymentId int64
@@ -7526,8 +7526,8 @@ type ReposGetDeploymentStatusReq struct {
 	AntManPreview bool
 }
 
-func (r *ReposGetDeploymentStatusReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetDeploymentStatusReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetDeploymentStatusReq) urlPath() string {
@@ -7588,7 +7588,7 @@ func (r *ReposGetDeploymentStatusReq) Rel(link RelName, resp *ReposGetDeployment
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7644,14 +7644,14 @@ ReposGetDownloadReq is request data for Client.ReposGetDownload
 https://developer.github.com/v3/repos/downloads/#get-a-single-download
 */
 type ReposGetDownloadReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	DownloadId int64
 }
 
-func (r *ReposGetDownloadReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetDownloadReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetDownloadReq) urlPath() string {
@@ -7703,7 +7703,7 @@ func (r *ReposGetDownloadReq) Rel(link RelName, resp *ReposGetDownloadResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7759,14 +7759,14 @@ ReposGetHookReq is request data for Client.ReposGetHook
 https://developer.github.com/v3/repos/hooks/#get-single-hook
 */
 type ReposGetHookReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	HookId int64
 }
 
-func (r *ReposGetHookReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetHookReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetHookReq) urlPath() string {
@@ -7818,7 +7818,7 @@ func (r *ReposGetHookReq) Rel(link RelName, resp *ReposGetHookResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7874,13 +7874,13 @@ ReposGetLatestPagesBuildReq is request data for Client.ReposGetLatestPagesBuild
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
 type ReposGetLatestPagesBuildReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetLatestPagesBuildReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetLatestPagesBuildReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetLatestPagesBuildReq) urlPath() string {
@@ -7932,7 +7932,7 @@ func (r *ReposGetLatestPagesBuildReq) Rel(link RelName, resp *ReposGetLatestPage
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -7988,13 +7988,13 @@ ReposGetLatestReleaseReq is request data for Client.ReposGetLatestRelease
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
 type ReposGetLatestReleaseReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetLatestReleaseReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetLatestReleaseReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetLatestReleaseReq) urlPath() string {
@@ -8046,7 +8046,7 @@ func (r *ReposGetLatestReleaseReq) Rel(link RelName, resp *ReposGetLatestRelease
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8102,13 +8102,13 @@ ReposGetPagesReq is request data for Client.ReposGetPages
 https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
 */
 type ReposGetPagesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetPagesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetPagesReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetPagesReq) urlPath() string {
@@ -8160,7 +8160,7 @@ func (r *ReposGetPagesReq) Rel(link RelName, resp *ReposGetPagesResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8216,14 +8216,14 @@ ReposGetPagesBuildReq is request data for Client.ReposGetPagesBuild
 https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
 */
 type ReposGetPagesBuildReq struct {
-	pgURL   string
+	_url    string
 	Owner   string
 	Repo    string
 	BuildId int64
 }
 
-func (r *ReposGetPagesBuildReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetPagesBuildReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetPagesBuildReq) urlPath() string {
@@ -8275,7 +8275,7 @@ func (r *ReposGetPagesBuildReq) Rel(link RelName, resp *ReposGetPagesBuildRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8331,13 +8331,13 @@ ReposGetParticipationStatsReq is request data for Client.ReposGetParticipationSt
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
 */
 type ReposGetParticipationStatsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetParticipationStatsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetParticipationStatsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetParticipationStatsReq) urlPath() string {
@@ -8389,7 +8389,7 @@ func (r *ReposGetParticipationStatsReq) Rel(link RelName, resp *ReposGetParticip
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8445,14 +8445,14 @@ ReposGetProtectedBranchAdminEnforcementReq is request data for Client.ReposGetPr
 https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
 */
 type ReposGetProtectedBranchAdminEnforcementReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetProtectedBranchAdminEnforcementReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetProtectedBranchAdminEnforcementReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetProtectedBranchAdminEnforcementReq) urlPath() string {
@@ -8504,7 +8504,7 @@ func (r *ReposGetProtectedBranchAdminEnforcementReq) Rel(link RelName, resp *Rep
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8559,7 +8559,7 @@ ReposGetProtectedBranchPullRequestReviewEnforcementReq is request data for Clien
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
 */
 type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
@@ -8575,8 +8575,8 @@ type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
 	LukeCagePreview bool
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
@@ -8631,7 +8631,7 @@ func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) Rel(link RelNam
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8677,7 +8677,7 @@ ReposGetProtectedBranchRequiredSignaturesReq is request data for Client.ReposGet
 https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
 */
 type ReposGetProtectedBranchRequiredSignaturesReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
@@ -8692,8 +8692,8 @@ type ReposGetProtectedBranchRequiredSignaturesReq struct {
 	ZzzaxPreview bool
 }
 
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetProtectedBranchRequiredSignaturesReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetProtectedBranchRequiredSignaturesReq) urlPath() string {
@@ -8751,7 +8751,7 @@ func (r *ReposGetProtectedBranchRequiredSignaturesReq) Rel(link RelName, resp *R
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8807,14 +8807,14 @@ ReposGetProtectedBranchRequiredStatusChecksReq is request data for Client.ReposG
 https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
 */
 type ReposGetProtectedBranchRequiredStatusChecksReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetProtectedBranchRequiredStatusChecksReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetProtectedBranchRequiredStatusChecksReq) urlPath() string {
@@ -8866,7 +8866,7 @@ func (r *ReposGetProtectedBranchRequiredStatusChecksReq) Rel(link RelName, resp 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -8922,14 +8922,14 @@ ReposGetProtectedBranchRestrictionsReq is request data for Client.ReposGetProtec
 https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
 */
 type ReposGetProtectedBranchRestrictionsReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetProtectedBranchRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetProtectedBranchRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetProtectedBranchRestrictionsReq) urlPath() string {
@@ -8981,7 +8981,7 @@ func (r *ReposGetProtectedBranchRestrictionsReq) Rel(link RelName, resp *ReposGe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9037,13 +9037,13 @@ ReposGetPunchCardStatsReq is request data for Client.ReposGetPunchCardStats
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
 */
 type ReposGetPunchCardStatsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetPunchCardStatsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetPunchCardStatsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetPunchCardStatsReq) urlPath() string {
@@ -9095,7 +9095,7 @@ func (r *ReposGetPunchCardStatsReq) Rel(link RelName, resp *ReposGetPunchCardSta
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9151,7 +9151,7 @@ ReposGetReadmeReq is request data for Client.ReposGetReadme
 https://developer.github.com/v3/repos/contents/#get-the-readme
 */
 type ReposGetReadmeReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -9162,8 +9162,8 @@ type ReposGetReadmeReq struct {
 	Ref *string
 }
 
-func (r *ReposGetReadmeReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetReadmeReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetReadmeReq) urlPath() string {
@@ -9218,7 +9218,7 @@ func (r *ReposGetReadmeReq) Rel(link RelName, resp *ReposGetReadmeResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9274,14 +9274,14 @@ ReposGetReleaseReq is request data for Client.ReposGetRelease
 https://developer.github.com/v3/repos/releases/#get-a-single-release
 */
 type ReposGetReleaseReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	ReleaseId int64
 }
 
-func (r *ReposGetReleaseReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetReleaseReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetReleaseReq) urlPath() string {
@@ -9333,7 +9333,7 @@ func (r *ReposGetReleaseReq) Rel(link RelName, resp *ReposGetReleaseResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9389,14 +9389,14 @@ ReposGetReleaseAssetReq is request data for Client.ReposGetReleaseAsset
 https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
 */
 type ReposGetReleaseAssetReq struct {
-	pgURL   string
+	_url    string
 	Owner   string
 	Repo    string
 	AssetId int64
 }
 
-func (r *ReposGetReleaseAssetReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetReleaseAssetReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetReleaseAssetReq) urlPath() string {
@@ -9448,7 +9448,7 @@ func (r *ReposGetReleaseAssetReq) Rel(link RelName, resp *ReposGetReleaseAssetRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9504,14 +9504,14 @@ ReposGetReleaseByTagReq is request data for Client.ReposGetReleaseByTag
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
 type ReposGetReleaseByTagReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Tag   string
 }
 
-func (r *ReposGetReleaseByTagReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetReleaseByTagReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetReleaseByTagReq) urlPath() string {
@@ -9563,7 +9563,7 @@ func (r *ReposGetReleaseByTagReq) Rel(link RelName, resp *ReposGetReleaseByTagRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9619,14 +9619,14 @@ ReposGetTeamsWithAccessToProtectedBranchReq is request data for Client.ReposGetT
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetTeamsWithAccessToProtectedBranchReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetTeamsWithAccessToProtectedBranchReq) urlPath() string {
@@ -9678,7 +9678,7 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) Rel(link RelName, resp *Re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9734,13 +9734,13 @@ ReposGetTopPathsReq is request data for Client.ReposGetTopPaths
 https://developer.github.com/v3/repos/traffic/#list-paths
 */
 type ReposGetTopPathsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetTopPathsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetTopPathsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetTopPathsReq) urlPath() string {
@@ -9792,7 +9792,7 @@ func (r *ReposGetTopPathsReq) Rel(link RelName, resp *ReposGetTopPathsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9848,13 +9848,13 @@ ReposGetTopReferrersReq is request data for Client.ReposGetTopReferrers
 https://developer.github.com/v3/repos/traffic/#list-referrers
 */
 type ReposGetTopReferrersReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposGetTopReferrersReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetTopReferrersReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetTopReferrersReq) urlPath() string {
@@ -9906,7 +9906,7 @@ func (r *ReposGetTopReferrersReq) Rel(link RelName, resp *ReposGetTopReferrersRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -9962,14 +9962,14 @@ ReposGetUsersWithAccessToProtectedBranchReq is request data for Client.ReposGetU
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposGetUsersWithAccessToProtectedBranchReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetUsersWithAccessToProtectedBranchReq) urlPath() string {
@@ -10021,7 +10021,7 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) Rel(link RelName, resp *Re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10077,7 +10077,7 @@ ReposGetViewsReq is request data for Client.ReposGetViews
 https://developer.github.com/v3/repos/traffic/#views
 */
 type ReposGetViewsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -10085,8 +10085,8 @@ type ReposGetViewsReq struct {
 	Per *string
 }
 
-func (r *ReposGetViewsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposGetViewsReq) url() string {
+	return r._url
 }
 
 func (r *ReposGetViewsReq) urlPath() string {
@@ -10141,7 +10141,7 @@ func (r *ReposGetViewsReq) Rel(link RelName, resp *ReposGetViewsResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10197,7 +10197,7 @@ ReposListAssetsForReleaseReq is request data for Client.ReposListAssetsForReleas
 https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
 */
 type ReposListAssetsForReleaseReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	ReleaseId int64
@@ -10209,8 +10209,8 @@ type ReposListAssetsForReleaseReq struct {
 	Page *int64
 }
 
-func (r *ReposListAssetsForReleaseReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListAssetsForReleaseReq) url() string {
+	return r._url
 }
 
 func (r *ReposListAssetsForReleaseReq) urlPath() string {
@@ -10268,7 +10268,7 @@ func (r *ReposListAssetsForReleaseReq) Rel(link RelName, resp *ReposListAssetsFo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10324,7 +10324,7 @@ ReposListBranchesReq is request data for Client.ReposListBranches
 https://developer.github.com/v3/repos/branches/#list-branches
 */
 type ReposListBranchesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -10341,8 +10341,8 @@ type ReposListBranchesReq struct {
 	Page *int64
 }
 
-func (r *ReposListBranchesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListBranchesReq) url() string {
+	return r._url
 }
 
 func (r *ReposListBranchesReq) urlPath() string {
@@ -10403,7 +10403,7 @@ func (r *ReposListBranchesReq) Rel(link RelName, resp *ReposListBranchesResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10459,7 +10459,7 @@ ReposListBranchesForHeadCommitReq is request data for Client.ReposListBranchesFo
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
 type ReposListBranchesForHeadCommitReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommitSha string
@@ -10474,8 +10474,8 @@ type ReposListBranchesForHeadCommitReq struct {
 	GrootPreview bool
 }
 
-func (r *ReposListBranchesForHeadCommitReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListBranchesForHeadCommitReq) url() string {
+	return r._url
 }
 
 func (r *ReposListBranchesForHeadCommitReq) urlPath() string {
@@ -10533,7 +10533,7 @@ func (r *ReposListBranchesForHeadCommitReq) Rel(link RelName, resp *ReposListBra
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10589,7 +10589,7 @@ ReposListCollaboratorsReq is request data for Client.ReposListCollaborators
 https://developer.github.com/v3/repos/collaborators/#list-collaborators
 */
 type ReposListCollaboratorsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -10609,8 +10609,8 @@ type ReposListCollaboratorsReq struct {
 	Page *int64
 }
 
-func (r *ReposListCollaboratorsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListCollaboratorsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListCollaboratorsReq) urlPath() string {
@@ -10671,7 +10671,7 @@ func (r *ReposListCollaboratorsReq) Rel(link RelName, resp *ReposListCollaborato
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10727,7 +10727,7 @@ ReposListCommentsForCommitReq is request data for Client.ReposListCommentsForCom
 https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
 */
 type ReposListCommentsForCommitReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommitSha string
@@ -10750,8 +10750,8 @@ type ReposListCommentsForCommitReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReposListCommentsForCommitReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListCommentsForCommitReq) url() string {
+	return r._url
 }
 
 func (r *ReposListCommentsForCommitReq) urlPath() string {
@@ -10812,7 +10812,7 @@ func (r *ReposListCommentsForCommitReq) Rel(link RelName, resp *ReposListComment
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -10868,7 +10868,7 @@ ReposListCommitCommentsReq is request data for Client.ReposListCommitComments
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
 type ReposListCommitCommentsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -10890,8 +10890,8 @@ type ReposListCommitCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReposListCommitCommentsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListCommitCommentsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListCommitCommentsReq) urlPath() string {
@@ -10952,7 +10952,7 @@ func (r *ReposListCommitCommentsReq) Rel(link RelName, resp *ReposListCommitComm
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11008,7 +11008,7 @@ ReposListCommitsReq is request data for Client.ReposListCommits
 https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
 */
 type ReposListCommitsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -11043,8 +11043,8 @@ type ReposListCommitsReq struct {
 	Page *int64
 }
 
-func (r *ReposListCommitsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListCommitsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListCommitsReq) urlPath() string {
@@ -11117,7 +11117,7 @@ func (r *ReposListCommitsReq) Rel(link RelName, resp *ReposListCommitsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11173,7 +11173,7 @@ ReposListContributorsReq is request data for Client.ReposListContributors
 https://developer.github.com/v3/repos/#list-contributors
 */
 type ReposListContributorsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -11187,8 +11187,8 @@ type ReposListContributorsReq struct {
 	Page *int64
 }
 
-func (r *ReposListContributorsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListContributorsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListContributorsReq) urlPath() string {
@@ -11249,7 +11249,7 @@ func (r *ReposListContributorsReq) Rel(link RelName, resp *ReposListContributors
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11305,7 +11305,7 @@ ReposListDeployKeysReq is request data for Client.ReposListDeployKeys
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
 type ReposListDeployKeysReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -11316,8 +11316,8 @@ type ReposListDeployKeysReq struct {
 	Page *int64
 }
 
-func (r *ReposListDeployKeysReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListDeployKeysReq) url() string {
+	return r._url
 }
 
 func (r *ReposListDeployKeysReq) urlPath() string {
@@ -11375,7 +11375,7 @@ func (r *ReposListDeployKeysReq) Rel(link RelName, resp *ReposListDeployKeysResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11431,7 +11431,7 @@ ReposListDeploymentStatusesReq is request data for Client.ReposListDeploymentSta
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
 type ReposListDeploymentStatusesReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	DeploymentId int64
@@ -11466,8 +11466,8 @@ type ReposListDeploymentStatusesReq struct {
 	AntManPreview bool
 }
 
-func (r *ReposListDeploymentStatusesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListDeploymentStatusesReq) url() string {
+	return r._url
 }
 
 func (r *ReposListDeploymentStatusesReq) urlPath() string {
@@ -11532,7 +11532,7 @@ func (r *ReposListDeploymentStatusesReq) Rel(link RelName, resp *ReposListDeploy
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11588,7 +11588,7 @@ ReposListDeploymentsReq is request data for Client.ReposListDeployments
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
 type ReposListDeploymentsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -11625,8 +11625,8 @@ type ReposListDeploymentsReq struct {
 	AntManPreview bool
 }
 
-func (r *ReposListDeploymentsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListDeploymentsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListDeploymentsReq) urlPath() string {
@@ -11699,7 +11699,7 @@ func (r *ReposListDeploymentsReq) Rel(link RelName, resp *ReposListDeploymentsRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11755,7 +11755,7 @@ ReposListDownloadsReq is request data for Client.ReposListDownloads
 https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
 */
 type ReposListDownloadsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -11766,8 +11766,8 @@ type ReposListDownloadsReq struct {
 	Page *int64
 }
 
-func (r *ReposListDownloadsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListDownloadsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListDownloadsReq) urlPath() string {
@@ -11825,7 +11825,7 @@ func (r *ReposListDownloadsReq) Rel(link RelName, resp *ReposListDownloadsRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -11880,7 +11880,7 @@ ReposListForAuthenticatedUserReq is request data for Client.ReposListForAuthenti
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
 type ReposListForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Can be one of `all`, `public`, or `private`.
 	Visibility *string
@@ -11921,8 +11921,8 @@ type ReposListForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ReposListForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ReposListForAuthenticatedUserReq) urlPath() string {
@@ -11995,7 +11995,7 @@ func (r *ReposListForAuthenticatedUserReq) Rel(link RelName, resp *ReposListForA
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12041,8 +12041,8 @@ ReposListForOrgReq is request data for Client.ReposListForOrg
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
 type ReposListForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	Specifies the types of repositories you want returned. Can be one of `all`,
@@ -12090,8 +12090,8 @@ type ReposListForOrgReq struct {
 	BaptistePreview bool
 }
 
-func (r *ReposListForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListForOrgReq) url() string {
+	return r._url
 }
 
 func (r *ReposListForOrgReq) urlPath() string {
@@ -12165,7 +12165,7 @@ func (r *ReposListForOrgReq) Rel(link RelName, resp *ReposListForOrgResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12220,7 +12220,7 @@ ReposListForUserReq is request data for Client.ReposListForUser
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
 type ReposListForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Can be one of `all`, `owner`, `member`.
@@ -12254,8 +12254,8 @@ type ReposListForUserReq struct {
 	NebulaPreview bool
 }
 
-func (r *ReposListForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListForUserReq) url() string {
+	return r._url
 }
 
 func (r *ReposListForUserReq) urlPath() string {
@@ -12325,7 +12325,7 @@ func (r *ReposListForUserReq) Rel(link RelName, resp *ReposListForUserResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12371,7 +12371,7 @@ ReposListForksReq is request data for Client.ReposListForks
 https://developer.github.com/v3/repos/forks/#list-forks
 */
 type ReposListForksReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -12385,8 +12385,8 @@ type ReposListForksReq struct {
 	Page *int64
 }
 
-func (r *ReposListForksReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListForksReq) url() string {
+	return r._url
 }
 
 func (r *ReposListForksReq) urlPath() string {
@@ -12447,7 +12447,7 @@ func (r *ReposListForksReq) Rel(link RelName, resp *ReposListForksResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12503,7 +12503,7 @@ ReposListHooksReq is request data for Client.ReposListHooks
 https://developer.github.com/v3/repos/hooks/#list-hooks
 */
 type ReposListHooksReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -12514,8 +12514,8 @@ type ReposListHooksReq struct {
 	Page *int64
 }
 
-func (r *ReposListHooksReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListHooksReq) url() string {
+	return r._url
 }
 
 func (r *ReposListHooksReq) urlPath() string {
@@ -12573,7 +12573,7 @@ func (r *ReposListHooksReq) Rel(link RelName, resp *ReposListHooksResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12629,7 +12629,7 @@ ReposListInvitationsReq is request data for Client.ReposListInvitations
 https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
 */
 type ReposListInvitationsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -12640,8 +12640,8 @@ type ReposListInvitationsReq struct {
 	Page *int64
 }
 
-func (r *ReposListInvitationsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListInvitationsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListInvitationsReq) urlPath() string {
@@ -12699,7 +12699,7 @@ func (r *ReposListInvitationsReq) Rel(link RelName, resp *ReposListInvitationsRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12755,7 +12755,7 @@ ReposListInvitationsForAuthenticatedUserReq is request data for Client.ReposList
 https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 */
 type ReposListInvitationsForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -12764,8 +12764,8 @@ type ReposListInvitationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ReposListInvitationsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListInvitationsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *ReposListInvitationsForAuthenticatedUserReq) urlPath() string {
@@ -12823,7 +12823,7 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) Rel(link RelName, resp *Re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12879,13 +12879,13 @@ ReposListLanguagesReq is request data for Client.ReposListLanguages
 https://developer.github.com/v3/repos/#list-languages
 */
 type ReposListLanguagesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposListLanguagesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListLanguagesReq) url() string {
+	return r._url
 }
 
 func (r *ReposListLanguagesReq) urlPath() string {
@@ -12937,7 +12937,7 @@ func (r *ReposListLanguagesReq) Rel(link RelName, resp *ReposListLanguagesRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -12993,7 +12993,7 @@ ReposListPagesBuildsReq is request data for Client.ReposListPagesBuilds
 https://developer.github.com/v3/repos/pages/#list-pages-builds
 */
 type ReposListPagesBuildsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -13004,8 +13004,8 @@ type ReposListPagesBuildsReq struct {
 	Page *int64
 }
 
-func (r *ReposListPagesBuildsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListPagesBuildsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListPagesBuildsReq) urlPath() string {
@@ -13063,7 +13063,7 @@ func (r *ReposListPagesBuildsReq) Rel(link RelName, resp *ReposListPagesBuildsRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13119,14 +13119,14 @@ ReposListProtectedBranchRequiredStatusChecksContextsReq is request data for Clie
 https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
 */
 type ReposListProtectedBranchRequiredStatusChecksContextsReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
@@ -13178,7 +13178,7 @@ func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelNa
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13232,14 +13232,14 @@ ReposListPublicReq is request data for Client.ReposListPublic
 https://developer.github.com/v3/repos/#list-public-repositories
 */
 type ReposListPublicReq struct {
-	pgURL string
+	_url string
 
 	// The integer ID of the last repository that you've seen.
 	Since *int64
 }
 
-func (r *ReposListPublicReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListPublicReq) url() string {
+	return r._url
 }
 
 func (r *ReposListPublicReq) urlPath() string {
@@ -13294,7 +13294,7 @@ func (r *ReposListPublicReq) Rel(link RelName, resp *ReposListPublicResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13350,7 +13350,7 @@ ReposListPullRequestsAssociatedWithCommitReq is request data for Client.ReposLis
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
 */
 type ReposListPullRequestsAssociatedWithCommitReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommitSha string
@@ -13371,8 +13371,8 @@ type ReposListPullRequestsAssociatedWithCommitReq struct {
 	GrootPreview bool
 }
 
-func (r *ReposListPullRequestsAssociatedWithCommitReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListPullRequestsAssociatedWithCommitReq) url() string {
+	return r._url
 }
 
 func (r *ReposListPullRequestsAssociatedWithCommitReq) urlPath() string {
@@ -13436,7 +13436,7 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) Rel(link RelName, resp *R
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13492,7 +13492,7 @@ ReposListReleasesReq is request data for Client.ReposListReleases
 https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
 */
 type ReposListReleasesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -13503,8 +13503,8 @@ type ReposListReleasesReq struct {
 	Page *int64
 }
 
-func (r *ReposListReleasesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListReleasesReq) url() string {
+	return r._url
 }
 
 func (r *ReposListReleasesReq) urlPath() string {
@@ -13562,7 +13562,7 @@ func (r *ReposListReleasesReq) Rel(link RelName, resp *ReposListReleasesResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13618,7 +13618,7 @@ ReposListStatusesForRefReq is request data for Client.ReposListStatusesForRef
 https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
 */
 type ReposListStatusesForRefReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
@@ -13630,8 +13630,8 @@ type ReposListStatusesForRefReq struct {
 	Page *int64
 }
 
-func (r *ReposListStatusesForRefReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListStatusesForRefReq) url() string {
+	return r._url
 }
 
 func (r *ReposListStatusesForRefReq) urlPath() string {
@@ -13689,7 +13689,7 @@ func (r *ReposListStatusesForRefReq) Rel(link RelName, resp *ReposListStatusesFo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13745,7 +13745,7 @@ ReposListTagsReq is request data for Client.ReposListTags
 https://developer.github.com/v3/repos/#list-tags
 */
 type ReposListTagsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -13756,8 +13756,8 @@ type ReposListTagsReq struct {
 	Page *int64
 }
 
-func (r *ReposListTagsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListTagsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListTagsReq) urlPath() string {
@@ -13815,7 +13815,7 @@ func (r *ReposListTagsReq) Rel(link RelName, resp *ReposListTagsResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13871,7 +13871,7 @@ ReposListTeamsReq is request data for Client.ReposListTeams
 https://developer.github.com/v3/repos/#list-teams
 */
 type ReposListTeamsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -13882,8 +13882,8 @@ type ReposListTeamsReq struct {
 	Page *int64
 }
 
-func (r *ReposListTeamsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposListTeamsReq) url() string {
+	return r._url
 }
 
 func (r *ReposListTeamsReq) urlPath() string {
@@ -13941,7 +13941,7 @@ func (r *ReposListTeamsReq) Rel(link RelName, resp *ReposListTeamsResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -13997,14 +13997,14 @@ ReposMergeReq is request data for Client.ReposMerge
 https://developer.github.com/v3/repos/merging/#perform-a-merge
 */
 type ReposMergeReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposMergeReqBody
 }
 
-func (r *ReposMergeReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposMergeReq) url() string {
+	return r._url
 }
 
 func (r *ReposMergeReq) urlPath() string {
@@ -14056,7 +14056,7 @@ func (r *ReposMergeReq) Rel(link RelName, resp *ReposMergeResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14131,14 +14131,14 @@ ReposPingHookReq is request data for Client.ReposPingHook
 https://developer.github.com/v3/repos/hooks/#ping-a-hook
 */
 type ReposPingHookReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	HookId int64
 }
 
-func (r *ReposPingHookReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposPingHookReq) url() string {
+	return r._url
 }
 
 func (r *ReposPingHookReq) urlPath() string {
@@ -14190,7 +14190,7 @@ func (r *ReposPingHookReq) Rel(link RelName, resp *ReposPingHookResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14235,14 +14235,14 @@ ReposRemoveBranchProtectionReq is request data for Client.ReposRemoveBranchProte
 https://developer.github.com/v3/repos/branches/#remove-branch-protection
 */
 type ReposRemoveBranchProtectionReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposRemoveBranchProtectionReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveBranchProtectionReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveBranchProtectionReq) urlPath() string {
@@ -14294,7 +14294,7 @@ func (r *ReposRemoveBranchProtectionReq) Rel(link RelName, resp *ReposRemoveBran
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14339,14 +14339,14 @@ ReposRemoveCollaboratorReq is request data for Client.ReposRemoveCollaborator
 https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
 */
 type ReposRemoveCollaboratorReq struct {
-	pgURL    string
+	_url     string
 	Owner    string
 	Repo     string
 	Username string
 }
 
-func (r *ReposRemoveCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveCollaboratorReq) urlPath() string {
@@ -14398,7 +14398,7 @@ func (r *ReposRemoveCollaboratorReq) Rel(link RelName, resp *ReposRemoveCollabor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14443,14 +14443,14 @@ ReposRemoveDeployKeyReq is request data for Client.ReposRemoveDeployKey
 https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
 */
 type ReposRemoveDeployKeyReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	KeyId int64
 }
 
-func (r *ReposRemoveDeployKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveDeployKeyReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveDeployKeyReq) urlPath() string {
@@ -14502,7 +14502,7 @@ func (r *ReposRemoveDeployKeyReq) Rel(link RelName, resp *ReposRemoveDeployKeyRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14547,14 +14547,14 @@ ReposRemoveProtectedBranchAdminEnforcementReq is request data for Client.ReposRe
 https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
 */
 type ReposRemoveProtectedBranchAdminEnforcementReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchAdminEnforcementReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchAdminEnforcementReq) urlPath() string {
@@ -14606,7 +14606,7 @@ func (r *ReposRemoveProtectedBranchAdminEnforcementReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14652,15 +14652,15 @@ ReposRemoveProtectedBranchAppRestrictionsReq is request data for Client.ReposRem
 https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
 */
 type ReposRemoveProtectedBranchAppRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposRemoveProtectedBranchAppRestrictionsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchAppRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchAppRestrictionsReq) urlPath() string {
@@ -14712,7 +14712,7 @@ func (r *ReposRemoveProtectedBranchAppRestrictionsReq) Rel(link RelName, resp *R
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14774,14 +14774,14 @@ ReposRemoveProtectedBranchPullRequestReviewEnforcementReq is request data for Cl
 https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
 */
 type ReposRemoveProtectedBranchPullRequestReviewEnforcementReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
@@ -14833,7 +14833,7 @@ func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) Rel(link Rel
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14878,7 +14878,7 @@ ReposRemoveProtectedBranchRequiredSignaturesReq is request data for Client.Repos
 https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
 */
 type ReposRemoveProtectedBranchRequiredSignaturesReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
@@ -14893,8 +14893,8 @@ type ReposRemoveProtectedBranchRequiredSignaturesReq struct {
 	ZzzaxPreview bool
 }
 
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) urlPath() string {
@@ -14952,7 +14952,7 @@ func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) Rel(link RelName, resp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -14997,14 +14997,14 @@ ReposRemoveProtectedBranchRequiredStatusChecksReq is request data for Client.Rep
 https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
 */
 type ReposRemoveProtectedBranchRequiredStatusChecksReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) urlPath() string {
@@ -15056,7 +15056,7 @@ func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) Rel(link RelName, re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15102,15 +15102,15 @@ ReposRemoveProtectedBranchRequiredStatusChecksContextsReq is request data for Cl
 https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
 */
 type ReposRemoveProtectedBranchRequiredStatusChecksContextsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
@@ -15162,7 +15162,7 @@ func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) Rel(link Rel
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15222,14 +15222,14 @@ ReposRemoveProtectedBranchRestrictionsReq is request data for Client.ReposRemove
 https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
 */
 type ReposRemoveProtectedBranchRestrictionsReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchRestrictionsReq) urlPath() string {
@@ -15281,7 +15281,7 @@ func (r *ReposRemoveProtectedBranchRestrictionsReq) Rel(link RelName, resp *Repo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15327,15 +15327,15 @@ ReposRemoveProtectedBranchTeamRestrictionsReq is request data for Client.ReposRe
 https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
 */
 type ReposRemoveProtectedBranchTeamRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposRemoveProtectedBranchTeamRestrictionsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) urlPath() string {
@@ -15387,7 +15387,7 @@ func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15450,15 +15450,15 @@ ReposRemoveProtectedBranchUserRestrictionsReq is request data for Client.ReposRe
 https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
 */
 type ReposRemoveProtectedBranchUserRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposRemoveProtectedBranchUserRestrictionsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRemoveProtectedBranchUserRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposRemoveProtectedBranchUserRestrictionsReq) urlPath() string {
@@ -15510,7 +15510,7 @@ func (r *ReposRemoveProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15573,7 +15573,7 @@ ReposReplaceAllTopicsReq is request data for Client.ReposReplaceAllTopics
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
 type ReposReplaceAllTopicsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposReplaceAllTopicsReqBody
@@ -15585,8 +15585,8 @@ type ReposReplaceAllTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r *ReposReplaceAllTopicsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposReplaceAllTopicsReq) url() string {
+	return r._url
 }
 
 func (r *ReposReplaceAllTopicsReq) urlPath() string {
@@ -15644,7 +15644,7 @@ func (r *ReposReplaceAllTopicsReq) Rel(link RelName, resp *ReposReplaceAllTopics
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15716,15 +15716,15 @@ ReposReplaceProtectedBranchAppRestrictionsReq is request data for Client.ReposRe
 https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
 */
 type ReposReplaceProtectedBranchAppRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposReplaceProtectedBranchAppRestrictionsReqBody
 }
 
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposReplaceProtectedBranchAppRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposReplaceProtectedBranchAppRestrictionsReq) urlPath() string {
@@ -15776,7 +15776,7 @@ func (r *ReposReplaceProtectedBranchAppRestrictionsReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15839,15 +15839,15 @@ ReposReplaceProtectedBranchRequiredStatusChecksContextsReq is request data for C
 https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
 */
 type ReposReplaceProtectedBranchRequiredStatusChecksContextsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody
 }
 
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) url() string {
+	return r._url
 }
 
 func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
@@ -15899,7 +15899,7 @@ func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) Rel(link Re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -15960,15 +15960,15 @@ ReposReplaceProtectedBranchTeamRestrictionsReq is request data for Client.ReposR
 https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
 */
 type ReposReplaceProtectedBranchTeamRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposReplaceProtectedBranchTeamRestrictionsReqBody
 }
 
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) urlPath() string {
@@ -16020,7 +16020,7 @@ func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16083,15 +16083,15 @@ ReposReplaceProtectedBranchUserRestrictionsReq is request data for Client.ReposR
 https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
 */
 type ReposReplaceProtectedBranchUserRestrictionsReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposReplaceProtectedBranchUserRestrictionsReqBody
 }
 
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposReplaceProtectedBranchUserRestrictionsReq) url() string {
+	return r._url
 }
 
 func (r *ReposReplaceProtectedBranchUserRestrictionsReq) urlPath() string {
@@ -16143,7 +16143,7 @@ func (r *ReposReplaceProtectedBranchUserRestrictionsReq) Rel(link RelName, resp 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16206,13 +16206,13 @@ ReposRequestPageBuildReq is request data for Client.ReposRequestPageBuild
 https://developer.github.com/v3/repos/pages/#request-a-page-build
 */
 type ReposRequestPageBuildReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposRequestPageBuildReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRequestPageBuildReq) url() string {
+	return r._url
 }
 
 func (r *ReposRequestPageBuildReq) urlPath() string {
@@ -16264,7 +16264,7 @@ func (r *ReposRequestPageBuildReq) Rel(link RelName, resp *ReposRequestPageBuild
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16320,13 +16320,13 @@ ReposRetrieveCommunityProfileMetricsReq is request data for Client.ReposRetrieve
 https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
 */
 type ReposRetrieveCommunityProfileMetricsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposRetrieveCommunityProfileMetricsReq) url() string {
+	return r._url
 }
 
 func (r *ReposRetrieveCommunityProfileMetricsReq) urlPath() string {
@@ -16378,7 +16378,7 @@ func (r *ReposRetrieveCommunityProfileMetricsReq) Rel(link RelName, resp *ReposR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16433,14 +16433,14 @@ ReposTestPushHookReq is request data for Client.ReposTestPushHook
 https://developer.github.com/v3/repos/hooks/#test-a-push-hook
 */
 type ReposTestPushHookReq struct {
-	pgURL  string
+	_url   string
 	Owner  string
 	Repo   string
 	HookId int64
 }
 
-func (r *ReposTestPushHookReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposTestPushHookReq) url() string {
+	return r._url
 }
 
 func (r *ReposTestPushHookReq) urlPath() string {
@@ -16492,7 +16492,7 @@ func (r *ReposTestPushHookReq) Rel(link RelName, resp *ReposTestPushHookResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16538,14 +16538,14 @@ ReposTransferReq is request data for Client.ReposTransfer
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
 type ReposTransferReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposTransferReqBody
 }
 
-func (r *ReposTransferReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposTransferReq) url() string {
+	return r._url
 }
 
 func (r *ReposTransferReq) urlPath() string {
@@ -16597,7 +16597,7 @@ func (r *ReposTransferReq) Rel(link RelName, resp *ReposTransferResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16673,7 +16673,7 @@ ReposUpdateReq is request data for Client.ReposUpdate
 https://developer.github.com/v3/repos/#update-a-repository
 */
 type ReposUpdateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposUpdateReqBody
@@ -16700,8 +16700,8 @@ type ReposUpdateReq struct {
 	BaptistePreview bool
 }
 
-func (r *ReposUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateReq) urlPath() string {
@@ -16760,7 +16760,7 @@ func (r *ReposUpdateReq) Rel(link RelName, resp *ReposUpdateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -16909,7 +16909,7 @@ ReposUpdateBranchProtectionReq is request data for Client.ReposUpdateBranchProte
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
 type ReposUpdateBranchProtectionReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
@@ -16926,8 +16926,8 @@ type ReposUpdateBranchProtectionReq struct {
 	LukeCagePreview bool
 }
 
-func (r *ReposUpdateBranchProtectionReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateBranchProtectionReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateBranchProtectionReq) urlPath() string {
@@ -16982,7 +16982,7 @@ func (r *ReposUpdateBranchProtectionReq) Rel(link RelName, resp *ReposUpdateBran
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -17161,15 +17161,15 @@ ReposUpdateCommitCommentReq is request data for Client.ReposUpdateCommitComment
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
 type ReposUpdateCommitCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommentId   int64
 	RequestBody ReposUpdateCommitCommentReqBody
 }
 
-func (r *ReposUpdateCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateCommitCommentReq) urlPath() string {
@@ -17221,7 +17221,7 @@ func (r *ReposUpdateCommitCommentReq) Rel(link RelName, resp *ReposUpdateCommitC
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -17288,15 +17288,15 @@ ReposUpdateHookReq is request data for Client.ReposUpdateHook
 https://developer.github.com/v3/repos/hooks/#edit-a-hook
 */
 type ReposUpdateHookReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	HookId      int64
 	RequestBody ReposUpdateHookReqBody
 }
 
-func (r *ReposUpdateHookReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateHookReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateHookReq) urlPath() string {
@@ -17348,7 +17348,7 @@ func (r *ReposUpdateHookReq) Rel(link RelName, resp *ReposUpdateHookResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -17471,14 +17471,14 @@ ReposUpdateInformationAboutPagesSiteReq is request data for Client.ReposUpdateIn
 https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ReposUpdateInformationAboutPagesSiteReqBody
 }
 
-func (r *ReposUpdateInformationAboutPagesSiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateInformationAboutPagesSiteReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateInformationAboutPagesSiteReq) urlPath() string {
@@ -17530,7 +17530,7 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) Rel(link RelName, resp *ReposU
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -17599,15 +17599,15 @@ ReposUpdateInvitationReq is request data for Client.ReposUpdateInvitation
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
 type ReposUpdateInvitationReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	InvitationId int64
 	RequestBody  ReposUpdateInvitationReqBody
 }
 
-func (r *ReposUpdateInvitationReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateInvitationReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateInvitationReq) urlPath() string {
@@ -17659,7 +17659,7 @@ func (r *ReposUpdateInvitationReq) Rel(link RelName, resp *ReposUpdateInvitation
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -17729,7 +17729,7 @@ ReposUpdateProtectedBranchPullRequestReviewEnforcementReq is request data for Cl
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
 */
 type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
@@ -17746,8 +17746,8 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
 	LukeCagePreview bool
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
@@ -17802,7 +17802,7 @@ func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) Rel(link Rel
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -17902,15 +17902,15 @@ ReposUpdateProtectedBranchRequiredStatusChecksReq is request data for Client.Rep
 https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
 */
 type ReposUpdateProtectedBranchRequiredStatusChecksReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
 	RequestBody ReposUpdateProtectedBranchRequiredStatusChecksReqBody
 }
 
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) urlPath() string {
@@ -17962,7 +17962,7 @@ func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) Rel(link RelName, re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -18032,15 +18032,15 @@ ReposUpdateReleaseReq is request data for Client.ReposUpdateRelease
 https://developer.github.com/v3/repos/releases/#edit-a-release
 */
 type ReposUpdateReleaseReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	ReleaseId   int64
 	RequestBody ReposUpdateReleaseReqBody
 }
 
-func (r *ReposUpdateReleaseReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateReleaseReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateReleaseReq) urlPath() string {
@@ -18092,7 +18092,7 @@ func (r *ReposUpdateReleaseReq) Rel(link RelName, resp *ReposUpdateReleaseRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -18181,15 +18181,15 @@ ReposUpdateReleaseAssetReq is request data for Client.ReposUpdateReleaseAsset
 https://developer.github.com/v3/repos/releases/#edit-a-release-asset
 */
 type ReposUpdateReleaseAssetReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	AssetId     int64
 	RequestBody ReposUpdateReleaseAssetReqBody
 }
 
-func (r *ReposUpdateReleaseAssetReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUpdateReleaseAssetReq) url() string {
+	return r._url
 }
 
 func (r *ReposUpdateReleaseAssetReq) urlPath() string {
@@ -18241,7 +18241,7 @@ func (r *ReposUpdateReleaseAssetReq) Rel(link RelName, resp *ReposUpdateReleaseA
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -18311,7 +18311,7 @@ ReposUploadReleaseAssetReq is request data for Client.ReposUploadReleaseAsset
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
 type ReposUploadReleaseAssetReq struct {
-	pgURL string
+	_url string
 
 	// owner parameter
 	Owner string
@@ -18344,8 +18344,8 @@ type ReposUploadReleaseAssetReq struct {
 	ContentTypeHeader *string
 }
 
-func (r *ReposUploadReleaseAssetReq) pagingURL() string {
-	return r.pgURL
+func (r *ReposUploadReleaseAssetReq) url() string {
+	return r._url
 }
 
 func (r *ReposUploadReleaseAssetReq) urlPath() string {
@@ -18406,7 +18406,7 @@ func (r *ReposUploadReleaseAssetReq) Rel(link RelName, resp *ReposUploadReleaseA
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
