@@ -82,8 +82,8 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *OauthAuthorizationsCreateAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -227,8 +227,8 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -329,8 +329,8 @@ func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OauthAuthorizationsDeleteGrantReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsDeleteGrantReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -432,8 +432,8 @@ func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsGetAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -545,8 +545,8 @@ func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsGetGrantReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsGetGrantReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -659,8 +659,8 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() [
 	return []int{200, 201}
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -805,8 +805,8 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) val
 	return []int{200, 201}
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -952,8 +952,8 @@ func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsListAuthorizationsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1076,8 +1076,8 @@ func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsListGrantsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsListGrantsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1190,8 +1190,8 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

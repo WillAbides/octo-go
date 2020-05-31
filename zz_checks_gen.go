@@ -99,8 +99,8 @@ func (r *ChecksCreateReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ChecksCreateReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksCreateReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -422,8 +422,8 @@ func (r *ChecksCreateSuiteReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ChecksCreateSuiteReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksCreateSuiteReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -563,8 +563,8 @@ func (r *ChecksGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksGetReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksGetReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -693,8 +693,8 @@ func (r *ChecksGetSuiteReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksGetSuiteReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksGetSuiteReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -835,8 +835,8 @@ func (r *ChecksListAnnotationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksListAnnotationsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksListAnnotationsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1001,8 +1001,8 @@ func (r *ChecksListForRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksListForRefReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksListForRefReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1170,8 +1170,8 @@ func (r *ChecksListForSuiteReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksListForSuiteReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksListForSuiteReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1330,8 +1330,8 @@ func (r *ChecksListSuitesForRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksListSuitesForRefReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksListSuitesForRefReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1462,8 +1462,8 @@ func (r *ChecksRerequestSuiteReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ChecksRerequestSuiteReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksRerequestSuiteReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1582,8 +1582,8 @@ func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksSetSuitesPreferencesReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksSetSuitesPreferencesReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1742,8 +1742,8 @@ func (r *ChecksUpdateReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksUpdateReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ChecksUpdateReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

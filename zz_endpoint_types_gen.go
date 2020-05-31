@@ -2,10 +2,10 @@
 
 package octo
 
-type endpointType int
+type endpointAttribute int
 
 const (
-	endpointTypeRegular endpointType = iota
-	endpointTypeRedirect
-	endpointTypeBoolean
+	attrRegular endpointAttribute = iota
+	attrRedirect
+	attrBoolean
 )

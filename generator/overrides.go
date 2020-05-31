@@ -6,8 +6,8 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-var overrideEndpointTypes = map[string]endpointType{
-	"teams/check-manages-repo-in-org": endpointTypeBoolean,
+var overrideEndpointTypes = map[string]endpointAttribute{
+	"teams/check-manages-repo-in-org": attrBoolean,
 }
 
 func schemaPathString(schemaPath []string) string {

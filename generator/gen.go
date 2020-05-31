@@ -32,7 +32,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 			jen.Id("request"):  jen.Id("req"),
 		})
 		switch {
-		case getEndpointType(endpoint) == endpointTypeBoolean:
+		case getEndpointAttribute(endpoint) == attrBoolean:
 			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
 			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")
@@ -168,54 +168,54 @@ func needsPointer(schema *model.ParamSchema) bool {
 	return true
 }
 
-type endpointType int
+type endpointAttribute int
 
 const (
 	// just a regular endpoint
-	endpointTypeRegular endpointType = iota
+	attrRegular endpointAttribute = iota
 	// endpoint that redirects via 302
-	endpointTypeRedirect
+	attrRedirect
 	// gives boolean status through 204 vs 404 status codes
-	endpointTypeBoolean
-	// endpointTypeInvalid is last so we can get a list of all valid types with a for loop
-	endpointTypeInvalid
+	attrBoolean
+	// attrInvalid is last so we can get a list of all valid types with a for loop
+	attrInvalid
 )
 
-var endpointTypeNames = map[endpointType]string{
-	endpointTypeRegular:  "endpointTypeRegular",
-	endpointTypeRedirect: "endpointTypeRedirect",
-	endpointTypeBoolean:  "endpointTypeBoolean",
+var attrNames = map[endpointAttribute]string{
+	attrRegular:  "attrRegular",
+	attrRedirect: "attrRedirect",
+	attrBoolean:  "attrBoolean",
 }
 
-func (e endpointType) String() string {
-	return endpointTypeNames[e]
+func (e endpointAttribute) String() string {
+	return attrNames[e]
 }
 
-func addEndpointTypes(file *jen.File) {
-	file.Type().Id("endpointType").Int()
+func addEndpointAttributes(file *jen.File) {
+	file.Type().Id("endpointAttribute").Int()
 	file.Const().Parens(jen.Do(func(statement *jen.Statement) {
-		for i := endpointType(0); i < endpointTypeInvalid; i++ {
-			statement.Id(endpointTypeNames[i])
+		for i := endpointAttribute(0); i < attrInvalid; i++ {
+			statement.Id(attrNames[i])
 			if i == 0 {
-				statement.Id("endpointType").Op("=").Iota()
+				statement.Id("endpointAttribute").Op("=").Iota()
 			}
 			statement.Line()
 		}
 	}))
 }
 
-func getEndpointType(endpoint model.Endpoint) endpointType {
+func getEndpointAttribute(endpoint model.Endpoint) endpointAttribute {
 	override, ok := overrideEndpointTypes[endpoint.ID]
 	if ok {
 		return override
 	}
 	switch {
 	case isRedirectOnlyEndpoint(endpoint):
-		return endpointTypeRedirect
+		return attrRedirect
 	case isBooleanEndpoint(endpoint):
-		return endpointTypeBoolean
+		return attrBoolean
 	}
-	return endpointTypeRegular
+	return attrRegular
 }
 
 func isBooleanEndpoint(endpoint model.Endpoint) bool {

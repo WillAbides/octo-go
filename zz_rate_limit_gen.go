@@ -80,8 +80,8 @@ func (r *RateLimitGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *RateLimitGetReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *RateLimitGetReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

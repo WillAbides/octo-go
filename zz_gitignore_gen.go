@@ -81,8 +81,8 @@ func (r *GitignoreGetTemplateReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitignoreGetTemplateReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitignoreGetTemplateReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -193,8 +193,8 @@ func (r *GitignoreListTemplatesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitignoreListTemplatesReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitignoreListTemplatesReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

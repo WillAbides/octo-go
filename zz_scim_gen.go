@@ -83,8 +83,8 @@ func (r *ScimGetProvisioningDetailsForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimGetProvisioningDetailsForUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ScimGetProvisioningDetailsForUserReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -219,8 +219,8 @@ func (r *ScimListProvisionedIdentitiesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimListProvisionedIdentitiesReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ScimListProvisionedIdentitiesReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -332,8 +332,8 @@ func (r *ScimProvisionAndInviteUsersReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ScimProvisionAndInviteUsersReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ScimProvisionAndInviteUsersReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -445,8 +445,8 @@ func (r *ScimRemoveUserFromOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ScimRemoveUserFromOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ScimRemoveUserFromOrgReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -549,8 +549,8 @@ func (r *ScimReplaceProvisionedUserInformationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimReplaceProvisionedUserInformationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ScimReplaceProvisionedUserInformationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -663,8 +663,8 @@ func (r *ScimUpdateUserAttributeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimUpdateUserAttributeReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *ScimUpdateUserAttributeReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

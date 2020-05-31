@@ -85,8 +85,8 @@ func (r *GistsCheckIsStarredReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GistsCheckIsStarredReq) endpointType() endpointType {
-	return endpointTypeBoolean
+func (r *GistsCheckIsStarredReq) endpointAttribute() endpointAttribute {
+	return attrBoolean
 }
 
 // httpRequest creates an http request
@@ -189,8 +189,8 @@ func (r *GistsCreateReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GistsCreateReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsCreateReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -330,8 +330,8 @@ func (r *GistsCreateCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GistsCreateCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsCreateCommentReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -453,8 +453,8 @@ func (r *GistsDeleteReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GistsDeleteReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsDeleteReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -556,8 +556,8 @@ func (r *GistsDeleteCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GistsDeleteCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsDeleteCommentReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -659,8 +659,8 @@ func (r *GistsForkReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GistsForkReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsForkReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -772,8 +772,8 @@ func (r *GistsGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsGetReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsGetReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -886,8 +886,8 @@ func (r *GistsGetCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsGetCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsGetCommentReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1000,8 +1000,8 @@ func (r *GistsGetRevisionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsGetRevisionReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsGetRevisionReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1134,8 +1134,8 @@ func (r *GistsListReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1259,8 +1259,8 @@ func (r *GistsListCommentsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListCommentsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListCommentsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1384,8 +1384,8 @@ func (r *GistsListCommitsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListCommitsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListCommitsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1519,8 +1519,8 @@ func (r *GistsListForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListForUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListForUserReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1644,8 +1644,8 @@ func (r *GistsListForksReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListForksReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListForksReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1778,8 +1778,8 @@ func (r *GistsListPublicReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListPublicReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListPublicReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1912,8 +1912,8 @@ func (r *GistsListStarredReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListStarredReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsListStarredReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2024,8 +2024,8 @@ func (r *GistsStarReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GistsStarReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsStarReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2126,8 +2126,8 @@ func (r *GistsUnstarReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GistsUnstarReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsUnstarReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2230,8 +2230,8 @@ func (r *GistsUpdateReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsUpdateReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsUpdateReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2372,8 +2372,8 @@ func (r *GistsUpdateCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsUpdateCommentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GistsUpdateCommentReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

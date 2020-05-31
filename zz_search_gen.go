@@ -127,8 +127,8 @@ func (r *SearchCodeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchCodeReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchCodeReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -304,8 +304,8 @@ func (r *SearchCommitsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchCommitsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchCommitsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -469,8 +469,8 @@ func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchIssuesAndPullRequestsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchIssuesAndPullRequestsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -621,8 +621,8 @@ func (r *SearchLabelsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchLabelsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchLabelsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -794,8 +794,8 @@ func (r *SearchReposReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchReposReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchReposReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -932,8 +932,8 @@ func (r *SearchTopicsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchTopicsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchTopicsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1094,8 +1094,8 @@ func (r *SearchUsersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchUsersReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *SearchUsersReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

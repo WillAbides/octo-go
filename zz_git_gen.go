@@ -84,8 +84,8 @@ func (r *GitCreateBlobReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateBlobReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitCreateBlobReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -216,8 +216,8 @@ func (r *GitCreateCommitReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateCommitReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitCreateCommitReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -414,8 +414,8 @@ func (r *GitCreateRefReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateRefReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitCreateRefReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -546,8 +546,8 @@ func (r *GitCreateTagReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateTagReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitCreateTagReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -703,8 +703,8 @@ func (r *GitCreateTreeReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateTreeReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitCreateTreeReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -870,8 +870,8 @@ func (r *GitDeleteRefReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GitDeleteRefReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitDeleteRefReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -975,8 +975,8 @@ func (r *GitGetBlobReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetBlobReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitGetBlobReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1090,8 +1090,8 @@ func (r *GitGetCommitReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetCommitReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitGetCommitReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1205,8 +1205,8 @@ func (r *GitGetRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetRefReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitGetRefReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1320,8 +1320,8 @@ func (r *GitGetTagReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetTagReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitGetTagReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1447,8 +1447,8 @@ func (r *GitGetTreeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetTreeReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitGetTreeReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1574,8 +1574,8 @@ func (r *GitListMatchingRefsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitListMatchingRefsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitListMatchingRefsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1690,8 +1690,8 @@ func (r *GitUpdateRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitUpdateRefReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *GitUpdateRefReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

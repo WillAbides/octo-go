@@ -94,8 +94,8 @@ func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsAddRepoToInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsAddRepoToInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -198,8 +198,8 @@ func (r *AppsCheckAuthorizationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsCheckAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsCheckAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -312,8 +312,8 @@ func (r *AppsCheckTokenReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsCheckTokenReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsCheckTokenReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -449,8 +449,8 @@ func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsCreateContentAttachmentReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsCreateContentAttachmentReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -582,8 +582,8 @@ func (r *AppsCreateFromManifestReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsCreateFromManifestReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsCreateFromManifestReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -708,8 +708,8 @@ func (r *AppsCreateInstallationTokenReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *AppsCreateInstallationTokenReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsCreateInstallationTokenReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -848,8 +848,8 @@ func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsDeleteAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsDeleteAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -973,8 +973,8 @@ func (r *AppsDeleteInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsDeleteInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsDeleteInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1076,8 +1076,8 @@ func (r *AppsDeleteTokenReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsDeleteTokenReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsDeleteTokenReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1201,8 +1201,8 @@ func (r *AppsGetAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetAuthenticatedReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetAuthenticatedReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1326,8 +1326,8 @@ func (r *AppsGetBySlugReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetBySlugReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetBySlugReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1451,8 +1451,8 @@ func (r *AppsGetInstallationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1576,8 +1576,8 @@ func (r *AppsGetOrgInstallationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetOrgInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetOrgInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1702,8 +1702,8 @@ func (r *AppsGetRepoInstallationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetRepoInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetRepoInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1815,8 +1815,8 @@ func (r *AppsGetSubscriptionPlanForAccountReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetSubscriptionPlanForAccountReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetSubscriptionPlanForAccountReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -1928,8 +1928,8 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2053,8 +2053,8 @@ func (r *AppsGetUserInstallationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetUserInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsGetUserInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2196,8 +2196,8 @@ func (r *AppsListAccountsForPlanReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListAccountsForPlanReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListAccountsForPlanReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2339,8 +2339,8 @@ func (r *AppsListAccountsForPlanStubbedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListAccountsForPlanStubbedReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListAccountsForPlanStubbedReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2487,8 +2487,8 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int
 	return []int{200}
 }
 
-func (r *AppsListInstallationReposForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListInstallationReposForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2626,8 +2626,8 @@ func (r *AppsListInstallationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListInstallationsReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListInstallationsReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2762,8 +2762,8 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListInstallationsForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListInstallationsForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -2889,8 +2889,8 @@ func (r *AppsListPlansReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListPlansReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListPlansReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3013,8 +3013,8 @@ func (r *AppsListPlansStubbedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListPlansStubbedReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListPlansStubbedReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3160,8 +3160,8 @@ func (r *AppsListReposReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListReposReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListReposReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3287,8 +3287,8 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3411,8 +3411,8 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []
 	return []int{200}
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3536,8 +3536,8 @@ func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRemoveRepoFromInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsRemoveRepoFromInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3640,8 +3640,8 @@ func (r *AppsResetAuthorizationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsResetAuthorizationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsResetAuthorizationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3754,8 +3754,8 @@ func (r *AppsResetTokenReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsResetTokenReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsResetTokenReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3878,8 +3878,8 @@ func (r *AppsRevokeAuthorizationForApplicationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRevokeAuthorizationForApplicationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsRevokeAuthorizationForApplicationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -3981,8 +3981,8 @@ func (r *AppsRevokeGrantForApplicationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRevokeGrantForApplicationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsRevokeGrantForApplicationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -4082,8 +4082,8 @@ func (r *AppsRevokeInstallationTokenReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRevokeInstallationTokenReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsRevokeInstallationTokenReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -4184,8 +4184,8 @@ func (r *AppsSuspendInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsSuspendInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsSuspendInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request
@@ -4286,8 +4286,8 @@ func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsUnsuspendInstallationReq) endpointType() endpointType {
-	return endpointTypeRegular
+func (r *AppsUnsuspendInstallationReq) endpointAttribute() endpointAttribute {
+	return attrRegular
 }
 
 // httpRequest creates an http request

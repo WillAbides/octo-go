@@ -121,12 +121,12 @@ func reqDataStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 }
 
 func reqEndpointTypeFunc(file *jen.File, endpoint model.Endpoint) {
-	tp := getEndpointType(endpoint).String()
+	tp := getEndpointAttribute(endpoint).String()
 	structName := reqStructName(endpoint)
 	file.Func().Params(
 		jen.Id("r").Id("*" + structName),
-	).Id("endpointType()").Params(
-		jen.Id("endpointType"),
+	).Id("endpointAttribute()").Params(
+		jen.Id("endpointAttribute"),
 	).Block(
 		jen.Return(jen.Id(tp)),
 	)
@@ -140,7 +140,7 @@ func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 		}
 	}
 	sort.Ints(codes)
-	if getEndpointType(endpoint) == endpointTypeRedirect {
+	if getEndpointAttribute(endpoint) == attrRedirect {
 		codes = []int{-1}
 	}
 	structName := reqStructName(endpoint)
