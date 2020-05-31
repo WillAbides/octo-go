@@ -44,7 +44,7 @@ func hasEndpointAttribute(builder requestBuilder, attribute endpointAttribute) b
 }
 
 func (r *response) decodeBody(target interface{}) error {
-	if hasEndpointAttribute(r.httpRequester, attrRedirect) {
+	if hasEndpointAttribute(r.httpRequester, attrRedirectOnly) {
 		return nil
 	}
 	origBody := r.httpResponse.Body

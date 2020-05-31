@@ -37,7 +37,7 @@ func (e *UnexpectedStatusCodeError) Error() string {
 
 func unexpectedStatusCheck(resp *response) error {
 	valid := resp.httpRequester.validStatuses()
-	if hasEndpointAttribute(resp.httpRequester, attrRedirect) {
+	if hasEndpointAttribute(resp.httpRequester, attrRedirectOnly) {
 		return nil
 	}
 	if hasEndpointAttribute(resp.httpRequester, attrBoolean) {

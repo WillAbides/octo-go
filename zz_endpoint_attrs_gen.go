@@ -5,6 +5,6 @@ package octo
 type endpointAttribute int
 
 const (
-	attrRedirect endpointAttribute = iota
+	attrRedirectOnly endpointAttribute = iota
 	attrBoolean
 )

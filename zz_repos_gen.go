@@ -5859,7 +5859,7 @@ func (r *ReposGetArchiveLinkReq) validStatuses() []int {
 }
 
 func (r *ReposGetArchiveLinkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirect}
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request

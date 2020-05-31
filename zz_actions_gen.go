@@ -1641,7 +1641,7 @@ func (r *ActionsDownloadArtifactReq) validStatuses() []int {
 }
 
 func (r *ActionsDownloadArtifactReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirect}
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request
@@ -1745,7 +1745,7 @@ func (r *ActionsDownloadWorkflowJobLogsReq) validStatuses() []int {
 }
 
 func (r *ActionsDownloadWorkflowJobLogsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirect}
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request
@@ -1849,7 +1849,7 @@ func (r *ActionsDownloadWorkflowRunLogsReq) validStatuses() []int {
 }
 
 func (r *ActionsDownloadWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirect}
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request

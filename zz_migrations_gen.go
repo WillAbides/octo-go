@@ -418,7 +418,7 @@ func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
 }
 
 func (r *MigrationsDownloadArchiveForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirect}
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request
@@ -529,7 +529,7 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirect}
+	return []endpointAttribute{attrRedirectOnly}
 }
 
 // httpRequest creates an http request

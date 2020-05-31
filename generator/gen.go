@@ -172,7 +172,7 @@ type endpointAttribute int
 
 const (
 	// endpoint that redirects via 302
-	attrRedirect endpointAttribute = iota
+	attrRedirectOnly endpointAttribute = iota
 	// gives boolean status through 204 vs 404 status codes
 	attrBoolean
 	// attrInvalid is last so we can get a list of all valid types with a for loop
@@ -180,8 +180,8 @@ const (
 )
 
 var attrNames = map[endpointAttribute]string{
-	attrRedirect: "attrRedirect",
-	attrBoolean:  "attrBoolean",
+	attrRedirectOnly: "attrRedirectOnly",
+	attrBoolean:      "attrBoolean",
 }
 
 func (e endpointAttribute) String() string {
@@ -215,32 +215,39 @@ func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
 	if ok {
 		return override
 	}
-	switch {
-	case isRedirectOnlyEndpoint(endpoint):
-		return []endpointAttribute{attrRedirect}
-	case isBooleanEndpoint(endpoint):
-		return []endpointAttribute{attrBoolean}
+	var result []endpointAttribute
+	for _, check := range attrChecks {
+		check(endpoint, &result)
 	}
-	return []endpointAttribute{}
+	return result
 }
 
-func isBooleanEndpoint(endpoint model.Endpoint) bool {
-	if len(endpoint.Responses) != 2 {
-		return false
-	}
-	if _, ok := endpoint.Responses[204]; !ok {
-		return false
-	}
-	if _, ok := endpoint.Responses[404]; !ok {
-		return false
-	}
-	return true
-}
+type attrCheck func(endpoint model.Endpoint, attrs *[]endpointAttribute)
 
-func isRedirectOnlyEndpoint(endpoint model.Endpoint) bool {
-	if len(endpoint.Responses) != 1 {
-		return false
-	}
-	_, ok := endpoint.Responses[302]
-	return ok
+var attrChecks = []attrCheck{
+	// attrBoolean if the endpoint has exatcly two responses: 204 and 404
+	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+		if len(endpoint.Responses) != 2 {
+			return
+		}
+		if _, ok := endpoint.Responses[204]; !ok {
+			return
+		}
+		if _, ok := endpoint.Responses[404]; !ok {
+			return
+		}
+		*attrs = append(*attrs, attrBoolean)
+	},
+
+	// attrRedirectOnly if the endpoint has onlly one response: 302
+	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+		if len(endpoint.Responses) != 1 {
+			return
+		}
+		_, ok := endpoint.Responses[302]
+		if !ok {
+			return
+		}
+		*attrs = append(*attrs, attrRedirectOnly)
+	},
 }
