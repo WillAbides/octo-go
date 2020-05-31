@@ -72,9 +72,6 @@ func (r *response) statusCodeInList(codes []int) bool {
 		return false
 	}
 	for _, code := range codes {
-		if code == -1 {
-			return true
-		}
 		if r.httpResponse.StatusCode == code {
 			return true
 		}

@@ -5855,7 +5855,7 @@ func (r *ReposGetArchiveLinkReq) dataStatuses() []int {
 }
 
 func (r *ReposGetArchiveLinkReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
 func (r *ReposGetArchiveLinkReq) endpointAttributes() []endpointAttribute {

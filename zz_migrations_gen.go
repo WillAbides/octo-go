@@ -414,7 +414,7 @@ func (r *MigrationsDownloadArchiveForOrgReq) dataStatuses() []int {
 }
 
 func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
 func (r *MigrationsDownloadArchiveForOrgReq) endpointAttributes() []endpointAttribute {
@@ -525,7 +525,7 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {

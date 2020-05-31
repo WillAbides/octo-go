@@ -1637,7 +1637,7 @@ func (r *ActionsDownloadArtifactReq) dataStatuses() []int {
 }
 
 func (r *ActionsDownloadArtifactReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
 func (r *ActionsDownloadArtifactReq) endpointAttributes() []endpointAttribute {
@@ -1741,7 +1741,7 @@ func (r *ActionsDownloadWorkflowJobLogsReq) dataStatuses() []int {
 }
 
 func (r *ActionsDownloadWorkflowJobLogsReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
 func (r *ActionsDownloadWorkflowJobLogsReq) endpointAttributes() []endpointAttribute {
@@ -1845,7 +1845,7 @@ func (r *ActionsDownloadWorkflowRunLogsReq) dataStatuses() []int {
 }
 
 func (r *ActionsDownloadWorkflowRunLogsReq) validStatuses() []int {
-	return []int{-1}
+	return []int{302}
 }
 
 func (r *ActionsDownloadWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {

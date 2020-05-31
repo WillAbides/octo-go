@@ -143,9 +143,6 @@ func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 		}
 	}
 	sort.Ints(codes)
-	if endpointHasAttribute(endpoint, attrRedirect) {
-		codes = []int{-1}
-	}
 	structName := reqStructName(endpoint)
 	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("validStatuses").Params().Params(
 		jen.Op("[]").Int(),
