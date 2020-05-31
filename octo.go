@@ -263,13 +263,17 @@ func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []Reques
 	options := buildRequestOptions(opts)
 	var bodyReader io.ReadCloser
 	body := builder.body()
-	if body != nil {
+	switch {
+	case body == nil:
+	case hasEndpointAttribute(builder, attrJSONRequestBody):
 		var buf bytes.Buffer
 		err := json.NewEncoder(&buf).Encode(&body)
 		if err != nil {
 			return nil, err
 		}
 		bodyReader = ioutil.NopCloser(&buf)
+	case hasEndpointAttribute(builder, attrBodyUploader):
+		bodyReader = body.(io.ReadCloser)
 	}
 	urlString := httpRequestURL(builder, options)
 	req, err := http.NewRequestWithContext(ctx, builder.method(), urlString, bodyReader)

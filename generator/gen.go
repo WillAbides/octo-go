@@ -168,13 +168,11 @@ func needsPointer(schema *model.ParamSchema) bool {
 	return true
 }
 
-func endpointJSONRequestSchema(endpoint model.Endpoint) *model.ParamSchema {
-	for _, request := range endpoint.Requests {
-		if request.MimeType == "application/json" {
-			return request.Schema
-		}
+func endpointFirstRequestSchema(endpoint model.Endpoint) *model.ParamSchema {
+	if len(endpoint.Requests) == 0 {
+		return nil
 	}
-	return nil
+	return endpoint.Requests[0].Schema
 }
 
 type endpointAttribute int

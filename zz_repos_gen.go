@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -18327,6 +18328,9 @@ type ReposUploadReleaseAssetReq struct {
 	// label parameter
 	Label *string
 
+	// http request's body
+	RequestBody io.ReadCloser
+
 	/*
 	Size of the asset in bytes. Most libraries will calculate the header
 	automatically
@@ -18373,7 +18377,7 @@ func (r *ReposUploadReleaseAssetReq) header(requiredPreviews, allPreviews bool) 
 }
 
 func (r *ReposUploadReleaseAssetReq) body() interface{} {
-	return nil
+	return r.RequestBody
 }
 
 func (r *ReposUploadReleaseAssetReq) dataStatuses() []int {

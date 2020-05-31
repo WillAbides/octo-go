@@ -43,9 +43,12 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 				usePointers: true,
 			}))
 		}
-		jsonSchema := endpointJSONRequestSchema(endpoint)
-		if jsonSchema != nil {
+		switch {
+		case endpointHasAttribute(endpoint, attrJSONRequestBody):
 			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
+		case endpointHasAttribute(endpoint, attrBodyUploader):
+			group.Line().Comment("http request's body")
+			group.Id("RequestBody").Qual("io", "ReadCloser")
 		}
 		for _, param := range endpoint.Headers {
 			if param.Name == "accept" {
@@ -162,12 +165,14 @@ func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
 		Params().
 		Interface().
 		Block(jen.Do(func(stmt *jen.Statement) {
-			jsonSchema := endpointJSONRequestSchema(endpoint)
-			if jsonSchema == nil {
+			switch {
+			case endpointHasAttribute(endpoint, attrJSONRequestBody):
+				stmt.Return(jen.Id("r.RequestBody"))
+			case endpointHasAttribute(endpoint, attrBodyUploader):
+				stmt.Return(jen.Id("r.RequestBody"))
+			default:
 				stmt.Return(jen.Nil())
-				return
 			}
-			stmt.Return(jen.Id("r.RequestBody"))
 		}))
 }
 
