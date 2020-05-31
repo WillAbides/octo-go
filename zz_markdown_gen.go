@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -40,12 +41,12 @@ MarkdownRenderReq is request data for Client.MarkdownRender
 https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 type MarkdownRenderReq struct {
-	pgURL       string
+	_url        string
 	RequestBody MarkdownRenderReqBody
 }
 
-func (r *MarkdownRenderReq) pagingURL() string {
-	return r.pgURL
+func (r *MarkdownRenderReq) url() string {
+	return r._url
 }
 
 func (r *MarkdownRenderReq) urlPath() string {
@@ -80,7 +81,7 @@ func (r *MarkdownRenderReq) validStatuses() []int {
 }
 
 func (r *MarkdownRenderReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -97,7 +98,7 @@ func (r *MarkdownRenderReq) Rel(link RelName, resp *MarkdownRenderResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -169,15 +170,17 @@ MarkdownRenderRawReq is request data for Client.MarkdownRenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type MarkdownRenderRawReq struct {
-	pgURL       string
-	RequestBody MarkdownRenderRawReqBody
+	_url string
+
+	// http request's body
+	RequestBody io.Reader
 
 	// Setting content-type header is required for this endpoint
 	ContentTypeHeader *string
 }
 
-func (r *MarkdownRenderRawReq) pagingURL() string {
-	return r.pgURL
+func (r *MarkdownRenderRawReq) url() string {
+	return r._url
 }
 
 func (r *MarkdownRenderRawReq) urlPath() string {
@@ -212,7 +215,7 @@ func (r *MarkdownRenderRawReq) validStatuses() []int {
 }
 
 func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBodyUploader}
 }
 
 // httpRequest creates an http request
@@ -229,16 +232,9 @@ func (r *MarkdownRenderRawReq) Rel(link RelName, resp *MarkdownRenderRawResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
-
-/*
-MarkdownRenderRawReqBody is a request body for markdown/render-raw
-
-https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
-*/
-type MarkdownRenderRawReqBody string
 
 /*
 MarkdownRenderRawResponse is a response for MarkdownRenderRaw

@@ -46,14 +46,14 @@ PullsCheckIfMergedReq is request data for Client.PullsCheckIfMerged
 https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
 */
 type PullsCheckIfMergedReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
 }
 
-func (r *PullsCheckIfMergedReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsCheckIfMergedReq) url() string {
+	return r._url
 }
 
 func (r *PullsCheckIfMergedReq) urlPath() string {
@@ -105,7 +105,7 @@ func (r *PullsCheckIfMergedReq) Rel(link RelName, resp *PullsCheckIfMergedRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -152,7 +152,7 @@ PullsCreateReq is request data for Client.PullsCreate
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 type PullsCreateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody PullsCreateReqBody
@@ -168,8 +168,8 @@ type PullsCreateReq struct {
 	SailorVPreview bool
 }
 
-func (r *PullsCreateReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsCreateReq) url() string {
+	return r._url
 }
 
 func (r *PullsCreateReq) urlPath() string {
@@ -207,7 +207,7 @@ func (r *PullsCreateReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -224,7 +224,7 @@ func (r *PullsCreateReq) Rel(link RelName, resp *PullsCreateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -322,7 +322,7 @@ PullsCreateCommentReq is request data for Client.PullsCreateComment
 https://developer.github.com/v3/pulls/comments/#create-a-comment
 */
 type PullsCreateCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -336,8 +336,8 @@ type PullsCreateCommentReq struct {
 	ComfortFadePreview bool
 }
 
-func (r *PullsCreateCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsCreateCommentReq) url() string {
+	return r._url
 }
 
 func (r *PullsCreateCommentReq) urlPath() string {
@@ -375,7 +375,7 @@ func (r *PullsCreateCommentReq) validStatuses() []int {
 }
 
 func (r *PullsCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -392,7 +392,7 @@ func (r *PullsCreateCommentReq) Rel(link RelName, resp *PullsCreateCommentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -516,15 +516,15 @@ PullsCreateReviewReq is request data for Client.PullsCreateReview
 https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
 */
 type PullsCreateReviewReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsCreateReviewReqBody
 }
 
-func (r *PullsCreateReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsCreateReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsCreateReviewReq) urlPath() string {
@@ -559,7 +559,7 @@ func (r *PullsCreateReviewReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -576,7 +576,7 @@ func (r *PullsCreateReviewReq) Rel(link RelName, resp *PullsCreateReviewResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -686,7 +686,7 @@ PullsCreateReviewCommentReplyReq is request data for Client.PullsCreateReviewCom
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
 */
 type PullsCreateReviewCommentReplyReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -694,8 +694,8 @@ type PullsCreateReviewCommentReplyReq struct {
 	RequestBody PullsCreateReviewCommentReplyReqBody
 }
 
-func (r *PullsCreateReviewCommentReplyReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsCreateReviewCommentReplyReq) url() string {
+	return r._url
 }
 
 func (r *PullsCreateReviewCommentReplyReq) urlPath() string {
@@ -730,7 +730,7 @@ func (r *PullsCreateReviewCommentReplyReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReviewCommentReplyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -747,7 +747,7 @@ func (r *PullsCreateReviewCommentReplyReq) Rel(link RelName, resp *PullsCreateRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -814,15 +814,15 @@ PullsCreateReviewRequestReq is request data for Client.PullsCreateReviewRequest
 https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
 */
 type PullsCreateReviewRequestReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsCreateReviewRequestReqBody
 }
 
-func (r *PullsCreateReviewRequestReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsCreateReviewRequestReq) url() string {
+	return r._url
 }
 
 func (r *PullsCreateReviewRequestReq) urlPath() string {
@@ -857,7 +857,7 @@ func (r *PullsCreateReviewRequestReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReviewRequestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -874,7 +874,7 @@ func (r *PullsCreateReviewRequestReq) Rel(link RelName, resp *PullsCreateReviewR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -943,14 +943,14 @@ PullsDeleteCommentReq is request data for Client.PullsDeleteComment
 https://developer.github.com/v3/pulls/comments/#delete-a-comment
 */
 type PullsDeleteCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
 }
 
-func (r *PullsDeleteCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsDeleteCommentReq) url() string {
+	return r._url
 }
 
 func (r *PullsDeleteCommentReq) urlPath() string {
@@ -1002,7 +1002,7 @@ func (r *PullsDeleteCommentReq) Rel(link RelName, resp *PullsDeleteCommentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1048,15 +1048,15 @@ PullsDeletePendingReviewReq is request data for Client.PullsDeletePendingReview
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
 */
 type PullsDeletePendingReviewReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
 	ReviewId   int64
 }
 
-func (r *PullsDeletePendingReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsDeletePendingReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsDeletePendingReviewReq) urlPath() string {
@@ -1108,7 +1108,7 @@ func (r *PullsDeletePendingReviewReq) Rel(link RelName, resp *PullsDeletePending
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1163,15 +1163,15 @@ PullsDeleteReviewRequestReq is request data for Client.PullsDeleteReviewRequest
 https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
 */
 type PullsDeleteReviewRequestReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsDeleteReviewRequestReqBody
 }
 
-func (r *PullsDeleteReviewRequestReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsDeleteReviewRequestReq) url() string {
+	return r._url
 }
 
 func (r *PullsDeleteReviewRequestReq) urlPath() string {
@@ -1206,7 +1206,7 @@ func (r *PullsDeleteReviewRequestReq) validStatuses() []int {
 }
 
 func (r *PullsDeleteReviewRequestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1223,7 +1223,7 @@ func (r *PullsDeleteReviewRequestReq) Rel(link RelName, resp *PullsDeleteReviewR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1283,7 +1283,7 @@ PullsDismissReviewReq is request data for Client.PullsDismissReview
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
 */
 type PullsDismissReviewReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -1291,8 +1291,8 @@ type PullsDismissReviewReq struct {
 	RequestBody PullsDismissReviewReqBody
 }
 
-func (r *PullsDismissReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsDismissReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsDismissReviewReq) urlPath() string {
@@ -1327,7 +1327,7 @@ func (r *PullsDismissReviewReq) validStatuses() []int {
 }
 
 func (r *PullsDismissReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1344,7 +1344,7 @@ func (r *PullsDismissReviewReq) Rel(link RelName, resp *PullsDismissReviewRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1411,7 +1411,7 @@ PullsGetReq is request data for Client.PullsGet
 https://developer.github.com/v3/pulls/#get-a-single-pull-request
 */
 type PullsGetReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1427,8 +1427,8 @@ type PullsGetReq struct {
 	SailorVPreview bool
 }
 
-func (r *PullsGetReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsGetReq) url() string {
+	return r._url
 }
 
 func (r *PullsGetReq) urlPath() string {
@@ -1483,7 +1483,7 @@ func (r *PullsGetReq) Rel(link RelName, resp *PullsGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1539,7 +1539,7 @@ PullsGetCommentReq is request data for Client.PullsGetComment
 https://developer.github.com/v3/pulls/comments/#get-a-single-comment
 */
 type PullsGetCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1563,8 +1563,8 @@ type PullsGetCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *PullsGetCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsGetCommentReq) url() string {
+	return r._url
 }
 
 func (r *PullsGetCommentReq) urlPath() string {
@@ -1623,7 +1623,7 @@ func (r *PullsGetCommentReq) Rel(link RelName, resp *PullsGetCommentResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1679,7 +1679,7 @@ PullsGetCommentsForReviewReq is request data for Client.PullsGetCommentsForRevie
 https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
 */
 type PullsGetCommentsForReviewReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -1692,8 +1692,8 @@ type PullsGetCommentsForReviewReq struct {
 	Page *int64
 }
 
-func (r *PullsGetCommentsForReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsGetCommentsForReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsGetCommentsForReviewReq) urlPath() string {
@@ -1751,7 +1751,7 @@ func (r *PullsGetCommentsForReviewReq) Rel(link RelName, resp *PullsGetCommentsF
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1807,15 +1807,15 @@ PullsGetReviewReq is request data for Client.PullsGetReview
 https://developer.github.com/v3/pulls/reviews/#get-a-single-review
 */
 type PullsGetReviewReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
 	ReviewId   int64
 }
 
-func (r *PullsGetReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsGetReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsGetReviewReq) urlPath() string {
@@ -1867,7 +1867,7 @@ func (r *PullsGetReviewReq) Rel(link RelName, resp *PullsGetReviewResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1923,7 +1923,7 @@ PullsListReq is request data for Client.PullsList
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
 type PullsListReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -1970,8 +1970,8 @@ type PullsListReq struct {
 	SailorVPreview bool
 }
 
-func (r *PullsListReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListReq) url() string {
+	return r._url
 }
 
 func (r *PullsListReq) urlPath() string {
@@ -2047,7 +2047,7 @@ func (r *PullsListReq) Rel(link RelName, resp *PullsListResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2103,7 +2103,7 @@ PullsListCommentsReq is request data for Client.PullsListComments
 https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
 */
 type PullsListCommentsReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -2146,8 +2146,8 @@ type PullsListCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *PullsListCommentsReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListCommentsReq) url() string {
+	return r._url
 }
 
 func (r *PullsListCommentsReq) urlPath() string {
@@ -2221,7 +2221,7 @@ func (r *PullsListCommentsReq) Rel(link RelName, resp *PullsListCommentsResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2277,7 +2277,7 @@ PullsListCommentsForRepoReq is request data for Client.PullsListCommentsForRepo
 https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
 */
 type PullsListCommentsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -2319,8 +2319,8 @@ type PullsListCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *PullsListCommentsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListCommentsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *PullsListCommentsForRepoReq) urlPath() string {
@@ -2394,7 +2394,7 @@ func (r *PullsListCommentsForRepoReq) Rel(link RelName, resp *PullsListCommentsF
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2450,7 +2450,7 @@ PullsListCommitsReq is request data for Client.PullsListCommits
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
 type PullsListCommitsReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -2462,8 +2462,8 @@ type PullsListCommitsReq struct {
 	Page *int64
 }
 
-func (r *PullsListCommitsReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListCommitsReq) url() string {
+	return r._url
 }
 
 func (r *PullsListCommitsReq) urlPath() string {
@@ -2521,7 +2521,7 @@ func (r *PullsListCommitsReq) Rel(link RelName, resp *PullsListCommitsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2577,7 +2577,7 @@ PullsListFilesReq is request data for Client.PullsListFiles
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
 type PullsListFilesReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -2589,8 +2589,8 @@ type PullsListFilesReq struct {
 	Page *int64
 }
 
-func (r *PullsListFilesReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListFilesReq) url() string {
+	return r._url
 }
 
 func (r *PullsListFilesReq) urlPath() string {
@@ -2648,7 +2648,7 @@ func (r *PullsListFilesReq) Rel(link RelName, resp *PullsListFilesResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2704,7 +2704,7 @@ PullsListReviewRequestsReq is request data for Client.PullsListReviewRequests
 https://developer.github.com/v3/pulls/review_requests/#list-review-requests
 */
 type PullsListReviewRequestsReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -2716,8 +2716,8 @@ type PullsListReviewRequestsReq struct {
 	Page *int64
 }
 
-func (r *PullsListReviewRequestsReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListReviewRequestsReq) url() string {
+	return r._url
 }
 
 func (r *PullsListReviewRequestsReq) urlPath() string {
@@ -2775,7 +2775,7 @@ func (r *PullsListReviewRequestsReq) Rel(link RelName, resp *PullsListReviewRequ
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2831,7 +2831,7 @@ PullsListReviewsReq is request data for Client.PullsListReviews
 https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
 */
 type PullsListReviewsReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
@@ -2843,8 +2843,8 @@ type PullsListReviewsReq struct {
 	Page *int64
 }
 
-func (r *PullsListReviewsReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsListReviewsReq) url() string {
+	return r._url
 }
 
 func (r *PullsListReviewsReq) urlPath() string {
@@ -2902,7 +2902,7 @@ func (r *PullsListReviewsReq) Rel(link RelName, resp *PullsListReviewsResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2958,15 +2958,15 @@ PullsMergeReq is request data for Client.PullsMerge
 https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
 */
 type PullsMergeReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
 	RequestBody PullsMergeReqBody
 }
 
-func (r *PullsMergeReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsMergeReq) url() string {
+	return r._url
 }
 
 func (r *PullsMergeReq) urlPath() string {
@@ -3001,7 +3001,7 @@ func (r *PullsMergeReq) validStatuses() []int {
 }
 
 func (r *PullsMergeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3018,7 +3018,7 @@ func (r *PullsMergeReq) Rel(link RelName, resp *PullsMergeResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3097,7 +3097,7 @@ PullsSubmitReviewReq is request data for Client.PullsSubmitReview
 https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
 */
 type PullsSubmitReviewReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -3105,8 +3105,8 @@ type PullsSubmitReviewReq struct {
 	RequestBody PullsSubmitReviewReqBody
 }
 
-func (r *PullsSubmitReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsSubmitReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsSubmitReviewReq) urlPath() string {
@@ -3141,7 +3141,7 @@ func (r *PullsSubmitReviewReq) validStatuses() []int {
 }
 
 func (r *PullsSubmitReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3158,7 +3158,7 @@ func (r *PullsSubmitReviewReq) Rel(link RelName, resp *PullsSubmitReviewResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3234,7 +3234,7 @@ PullsUpdateReq is request data for Client.PullsUpdate
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 type PullsUpdateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -3251,8 +3251,8 @@ type PullsUpdateReq struct {
 	SailorVPreview bool
 }
 
-func (r *PullsUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsUpdateReq) url() string {
+	return r._url
 }
 
 func (r *PullsUpdateReq) urlPath() string {
@@ -3290,7 +3290,7 @@ func (r *PullsUpdateReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3307,7 +3307,7 @@ func (r *PullsUpdateReq) Rel(link RelName, resp *PullsUpdateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3394,7 +3394,7 @@ PullsUpdateBranchReq is request data for Client.PullsUpdateBranch
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 type PullsUpdateBranchReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -3408,8 +3408,8 @@ type PullsUpdateBranchReq struct {
 	LydianPreview bool
 }
 
-func (r *PullsUpdateBranchReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsUpdateBranchReq) url() string {
+	return r._url
 }
 
 func (r *PullsUpdateBranchReq) urlPath() string {
@@ -3450,7 +3450,7 @@ func (r *PullsUpdateBranchReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3467,7 +3467,7 @@ func (r *PullsUpdateBranchReq) Rel(link RelName, resp *PullsUpdateBranchResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3543,7 +3543,7 @@ PullsUpdateCommentReq is request data for Client.PullsUpdateComment
 https://developer.github.com/v3/pulls/comments/#edit-a-comment
 */
 type PullsUpdateCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -3557,8 +3557,8 @@ type PullsUpdateCommentReq struct {
 	ComfortFadePreview bool
 }
 
-func (r *PullsUpdateCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsUpdateCommentReq) url() string {
+	return r._url
 }
 
 func (r *PullsUpdateCommentReq) urlPath() string {
@@ -3596,7 +3596,7 @@ func (r *PullsUpdateCommentReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3613,7 +3613,7 @@ func (r *PullsUpdateCommentReq) Rel(link RelName, resp *PullsUpdateCommentRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3680,7 +3680,7 @@ PullsUpdateReviewReq is request data for Client.PullsUpdateReview
 https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
 */
 type PullsUpdateReviewReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
@@ -3688,8 +3688,8 @@ type PullsUpdateReviewReq struct {
 	RequestBody PullsUpdateReviewReqBody
 }
 
-func (r *PullsUpdateReviewReq) pagingURL() string {
-	return r.pgURL
+func (r *PullsUpdateReviewReq) url() string {
+	return r._url
 }
 
 func (r *PullsUpdateReviewReq) urlPath() string {
@@ -3724,7 +3724,7 @@ func (r *PullsUpdateReviewReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3741,7 +3741,7 @@ func (r *PullsUpdateReviewReq) Rel(link RelName, resp *PullsUpdateReviewResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -42,13 +42,13 @@ MigrationsCancelImportReq is request data for Client.MigrationsCancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type MigrationsCancelImportReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *MigrationsCancelImportReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsCancelImportReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsCancelImportReq) urlPath() string {
@@ -100,7 +100,7 @@ func (r *MigrationsCancelImportReq) Rel(link RelName, resp *MigrationsCancelImpo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -145,15 +145,15 @@ MigrationsDeleteArchiveForAuthenticatedUserReq is request data for Client.Migrat
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 type MigrationsDeleteArchiveForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
 }
 
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) urlPath() string {
@@ -211,7 +211,7 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) Rel(link RelName, resp 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -256,7 +256,7 @@ MigrationsDeleteArchiveForOrgReq is request data for Client.MigrationsDeleteArch
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 type MigrationsDeleteArchiveForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	MigrationId int64
 
@@ -264,8 +264,8 @@ type MigrationsDeleteArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsDeleteArchiveForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsDeleteArchiveForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsDeleteArchiveForOrgReq) urlPath() string {
@@ -323,7 +323,7 @@ func (r *MigrationsDeleteArchiveForOrgReq) Rel(link RelName, resp *MigrationsDel
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -368,7 +368,7 @@ MigrationsDownloadArchiveForOrgReq is request data for Client.MigrationsDownload
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 type MigrationsDownloadArchiveForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	MigrationId int64
 
@@ -376,8 +376,8 @@ type MigrationsDownloadArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsDownloadArchiveForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsDownloadArchiveForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsDownloadArchiveForOrgReq) urlPath() string {
@@ -435,7 +435,7 @@ func (r *MigrationsDownloadArchiveForOrgReq) Rel(link RelName, resp *MigrationsD
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -480,15 +480,15 @@ MigrationsGetArchiveForAuthenticatedUserReq is request data for Client.Migration
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 type MigrationsGetArchiveForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
 }
 
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) urlPath() string {
@@ -546,7 +546,7 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) Rel(link RelName, resp *Mi
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -592,7 +592,7 @@ MigrationsGetCommitAuthorsReq is request data for Client.MigrationsGetCommitAuth
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type MigrationsGetCommitAuthorsReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -604,8 +604,8 @@ type MigrationsGetCommitAuthorsReq struct {
 	Since *string
 }
 
-func (r *MigrationsGetCommitAuthorsReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsGetCommitAuthorsReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsGetCommitAuthorsReq) urlPath() string {
@@ -660,7 +660,7 @@ func (r *MigrationsGetCommitAuthorsReq) Rel(link RelName, resp *MigrationsGetCom
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -716,13 +716,13 @@ MigrationsGetImportProgressReq is request data for Client.MigrationsGetImportPro
 https://developer.github.com/v3/migrations/source_imports/#get-import-progress
 */
 type MigrationsGetImportProgressReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *MigrationsGetImportProgressReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsGetImportProgressReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsGetImportProgressReq) urlPath() string {
@@ -774,7 +774,7 @@ func (r *MigrationsGetImportProgressReq) Rel(link RelName, resp *MigrationsGetIm
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -830,13 +830,13 @@ MigrationsGetLargeFilesReq is request data for Client.MigrationsGetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type MigrationsGetLargeFilesReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *MigrationsGetLargeFilesReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsGetLargeFilesReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsGetLargeFilesReq) urlPath() string {
@@ -888,7 +888,7 @@ func (r *MigrationsGetLargeFilesReq) Rel(link RelName, resp *MigrationsGetLargeF
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -944,15 +944,15 @@ MigrationsGetStatusForAuthenticatedUserReq is request data for Client.Migrations
 https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 */
 type MigrationsGetStatusForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
 }
 
-func (r *MigrationsGetStatusForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsGetStatusForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsGetStatusForAuthenticatedUserReq) urlPath() string {
@@ -1010,7 +1010,7 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) Rel(link RelName, resp *Mig
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1066,7 +1066,7 @@ MigrationsGetStatusForOrgReq is request data for Client.MigrationsGetStatusForOr
 https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
 */
 type MigrationsGetStatusForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	MigrationId int64
 
@@ -1074,8 +1074,8 @@ type MigrationsGetStatusForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsGetStatusForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsGetStatusForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsGetStatusForOrgReq) urlPath() string {
@@ -1133,7 +1133,7 @@ func (r *MigrationsGetStatusForOrgReq) Rel(link RelName, resp *MigrationsGetStat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1189,7 +1189,7 @@ MigrationsListForAuthenticatedUserReq is request data for Client.MigrationsListF
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 type MigrationsListForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1201,8 +1201,8 @@ type MigrationsListForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsListForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsListForAuthenticatedUserReq) urlPath() string {
@@ -1266,7 +1266,7 @@ func (r *MigrationsListForAuthenticatedUserReq) Rel(link RelName, resp *Migratio
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1322,8 +1322,8 @@ MigrationsListForOrgReq is request data for Client.MigrationsListForOrg
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type MigrationsListForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1335,8 +1335,8 @@ type MigrationsListForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsListForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsListForOrgReq) urlPath() string {
@@ -1400,7 +1400,7 @@ func (r *MigrationsListForOrgReq) Rel(link RelName, resp *MigrationsListForOrgRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1456,7 +1456,7 @@ MigrationsListReposForOrgReq is request data for Client.MigrationsListReposForOr
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 type MigrationsListReposForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	MigrationId int64
 
@@ -1470,8 +1470,8 @@ type MigrationsListReposForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListReposForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsListReposForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsListReposForOrgReq) urlPath() string {
@@ -1535,7 +1535,7 @@ func (r *MigrationsListReposForOrgReq) Rel(link RelName, resp *MigrationsListRep
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1591,7 +1591,7 @@ MigrationsListReposForUserReq is request data for Client.MigrationsListReposForU
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 type MigrationsListReposForUserReq struct {
-	pgURL       string
+	_url        string
 	MigrationId int64
 
 	// Results per page (max 100)
@@ -1604,8 +1604,8 @@ type MigrationsListReposForUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListReposForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsListReposForUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsListReposForUserReq) urlPath() string {
@@ -1669,7 +1669,7 @@ func (r *MigrationsListReposForUserReq) Rel(link RelName, resp *MigrationsListRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1725,15 +1725,15 @@ MigrationsMapCommitAuthorReq is request data for Client.MigrationsMapCommitAutho
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MigrationsMapCommitAuthorReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	AuthorId    int64
 	RequestBody MigrationsMapCommitAuthorReqBody
 }
 
-func (r *MigrationsMapCommitAuthorReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsMapCommitAuthorReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsMapCommitAuthorReq) urlPath() string {
@@ -1768,7 +1768,7 @@ func (r *MigrationsMapCommitAuthorReq) validStatuses() []int {
 }
 
 func (r *MigrationsMapCommitAuthorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1785,7 +1785,7 @@ func (r *MigrationsMapCommitAuthorReq) Rel(link RelName, resp *MigrationsMapComm
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1855,14 +1855,14 @@ MigrationsSetLfsPreferenceReq is request data for Client.MigrationsSetLfsPrefere
 https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody MigrationsSetLfsPreferenceReqBody
 }
 
-func (r *MigrationsSetLfsPreferenceReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsSetLfsPreferenceReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsSetLfsPreferenceReq) urlPath() string {
@@ -1897,7 +1897,7 @@ func (r *MigrationsSetLfsPreferenceReq) validStatuses() []int {
 }
 
 func (r *MigrationsSetLfsPreferenceReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1914,7 +1914,7 @@ func (r *MigrationsSetLfsPreferenceReq) Rel(link RelName, resp *MigrationsSetLfs
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1984,12 +1984,12 @@ MigrationsStartForAuthenticatedUserReq is request data for Client.MigrationsStar
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 type MigrationsStartForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	RequestBody MigrationsStartForAuthenticatedUserReqBody
 }
 
-func (r *MigrationsStartForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsStartForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsStartForAuthenticatedUserReq) urlPath() string {
@@ -2024,7 +2024,7 @@ func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *MigrationsStartForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2041,7 +2041,7 @@ func (r *MigrationsStartForAuthenticatedUserReq) Rel(link RelName, resp *Migrati
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2121,13 +2121,13 @@ MigrationsStartForOrgReq is request data for Client.MigrationsStartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type MigrationsStartForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody MigrationsStartForOrgReqBody
 }
 
-func (r *MigrationsStartForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsStartForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsStartForOrgReq) urlPath() string {
@@ -2162,7 +2162,7 @@ func (r *MigrationsStartForOrgReq) validStatuses() []int {
 }
 
 func (r *MigrationsStartForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2179,7 +2179,7 @@ func (r *MigrationsStartForOrgReq) Rel(link RelName, resp *MigrationsStartForOrg
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2258,14 +2258,14 @@ MigrationsStartImportReq is request data for Client.MigrationsStartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type MigrationsStartImportReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody MigrationsStartImportReqBody
 }
 
-func (r *MigrationsStartImportReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsStartImportReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsStartImportReq) urlPath() string {
@@ -2300,7 +2300,7 @@ func (r *MigrationsStartImportReq) validStatuses() []int {
 }
 
 func (r *MigrationsStartImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2317,7 +2317,7 @@ func (r *MigrationsStartImportReq) Rel(link RelName, resp *MigrationsStartImport
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2400,7 +2400,7 @@ MigrationsUnlockRepoForAuthenticatedUserReq is request data for Client.Migration
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 type MigrationsUnlockRepoForAuthenticatedUserReq struct {
-	pgURL       string
+	_url        string
 	MigrationId int64
 	RepoName    string
 
@@ -2408,8 +2408,8 @@ type MigrationsUnlockRepoForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsUnlockRepoForAuthenticatedUserReq) urlPath() string {
@@ -2467,7 +2467,7 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) Rel(link RelName, resp *Mi
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2512,7 +2512,7 @@ MigrationsUnlockRepoForOrgReq is request data for Client.MigrationsUnlockRepoFor
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 type MigrationsUnlockRepoForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	MigrationId int64
 	RepoName    string
@@ -2521,8 +2521,8 @@ type MigrationsUnlockRepoForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsUnlockRepoForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsUnlockRepoForOrgReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsUnlockRepoForOrgReq) urlPath() string {
@@ -2580,7 +2580,7 @@ func (r *MigrationsUnlockRepoForOrgReq) Rel(link RelName, resp *MigrationsUnlock
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2626,14 +2626,14 @@ MigrationsUpdateImportReq is request data for Client.MigrationsUpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-existing-import
 */
 type MigrationsUpdateImportReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody MigrationsUpdateImportReqBody
 }
 
-func (r *MigrationsUpdateImportReq) pagingURL() string {
-	return r.pgURL
+func (r *MigrationsUpdateImportReq) url() string {
+	return r._url
 }
 
 func (r *MigrationsUpdateImportReq) urlPath() string {
@@ -2668,7 +2668,7 @@ func (r *MigrationsUpdateImportReq) validStatuses() []int {
 }
 
 func (r *MigrationsUpdateImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2685,7 +2685,7 @@ func (r *MigrationsUpdateImportReq) Rel(link RelName, resp *MigrationsUpdateImpo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

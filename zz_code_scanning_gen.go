@@ -42,14 +42,14 @@ CodeScanningGetAlertReq is request data for Client.CodeScanningGetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type CodeScanningGetAlertReq struct {
-	pgURL   string
+	_url    string
 	Owner   string
 	Repo    string
 	AlertId int64
 }
 
-func (r *CodeScanningGetAlertReq) pagingURL() string {
-	return r.pgURL
+func (r *CodeScanningGetAlertReq) url() string {
+	return r._url
 }
 
 func (r *CodeScanningGetAlertReq) urlPath() string {
@@ -101,7 +101,7 @@ func (r *CodeScanningGetAlertReq) Rel(link RelName, resp *CodeScanningGetAlertRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -157,7 +157,7 @@ CodeScanningListAlertsForRepoReq is request data for Client.CodeScanningListAler
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type CodeScanningListAlertsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -171,8 +171,8 @@ type CodeScanningListAlertsForRepoReq struct {
 	Ref *string
 }
 
-func (r *CodeScanningListAlertsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *CodeScanningListAlertsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *CodeScanningListAlertsForRepoReq) urlPath() string {
@@ -230,7 +230,7 @@ func (r *CodeScanningListAlertsForRepoReq) Rel(link RelName, resp *CodeScanningL
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

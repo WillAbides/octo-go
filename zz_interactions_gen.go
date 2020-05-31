@@ -42,7 +42,7 @@ InteractionsAddOrUpdateRestrictionsForOrgReq is request data for Client.Interact
 https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
 type InteractionsAddOrUpdateRestrictionsForOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody InteractionsAddOrUpdateRestrictionsForOrgReqBody
 
@@ -55,8 +55,8 @@ type InteractionsAddOrUpdateRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) url() string {
+	return r._url
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) urlPath() string {
@@ -97,7 +97,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -114,7 +114,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) Rel(link RelName, resp *I
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -185,7 +185,7 @@ InteractionsAddOrUpdateRestrictionsForRepoReq is request data for Client.Interac
 https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
 type InteractionsAddOrUpdateRestrictionsForRepoReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody InteractionsAddOrUpdateRestrictionsForRepoReqBody
@@ -199,8 +199,8 @@ type InteractionsAddOrUpdateRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) urlPath() string {
@@ -241,7 +241,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -258,7 +258,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -329,8 +329,8 @@ InteractionsGetRestrictionsForOrgReq is request data for Client.InteractionsGetR
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 type InteractionsGetRestrictionsForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -341,8 +341,8 @@ type InteractionsGetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsGetRestrictionsForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *InteractionsGetRestrictionsForOrgReq) url() string {
+	return r._url
 }
 
 func (r *InteractionsGetRestrictionsForOrgReq) urlPath() string {
@@ -400,7 +400,7 @@ func (r *InteractionsGetRestrictionsForOrgReq) Rel(link RelName, resp *Interacti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -456,7 +456,7 @@ InteractionsGetRestrictionsForRepoReq is request data for Client.InteractionsGet
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type InteractionsGetRestrictionsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -469,8 +469,8 @@ type InteractionsGetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsGetRestrictionsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *InteractionsGetRestrictionsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *InteractionsGetRestrictionsForRepoReq) urlPath() string {
@@ -528,7 +528,7 @@ func (r *InteractionsGetRestrictionsForRepoReq) Rel(link RelName, resp *Interact
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -583,8 +583,8 @@ InteractionsRemoveRestrictionsForOrgReq is request data for Client.InteractionsR
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
 type InteractionsRemoveRestrictionsForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -595,8 +595,8 @@ type InteractionsRemoveRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsRemoveRestrictionsForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *InteractionsRemoveRestrictionsForOrgReq) url() string {
+	return r._url
 }
 
 func (r *InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
@@ -654,7 +654,7 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) Rel(link RelName, resp *Intera
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -699,7 +699,7 @@ InteractionsRemoveRestrictionsForRepoReq is request data for Client.Interactions
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 type InteractionsRemoveRestrictionsForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -712,8 +712,8 @@ type InteractionsRemoveRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsRemoveRestrictionsForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *InteractionsRemoveRestrictionsForRepoReq) url() string {
+	return r._url
 }
 
 func (r *InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
@@ -771,7 +771,7 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) Rel(link RelName, resp *Inter
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

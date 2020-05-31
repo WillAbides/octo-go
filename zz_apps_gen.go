@@ -42,7 +42,7 @@ AppsAddRepoToInstallationReq is request data for Client.AppsAddRepoToInstallatio
 https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
 type AppsAddRepoToInstallationReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 	RepositoryId   int64
 
@@ -53,8 +53,8 @@ type AppsAddRepoToInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsAddRepoToInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsAddRepoToInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsAddRepoToInstallationReq) urlPath() string {
@@ -112,7 +112,7 @@ func (r *AppsAddRepoToInstallationReq) Rel(link RelName, resp *AppsAddRepoToInst
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -158,13 +158,13 @@ AppsCheckAuthorizationReq is request data for Client.AppsCheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type AppsCheckAuthorizationReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	AccessToken string
 }
 
-func (r *AppsCheckAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsCheckAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *AppsCheckAuthorizationReq) urlPath() string {
@@ -216,7 +216,7 @@ func (r *AppsCheckAuthorizationReq) Rel(link RelName, resp *AppsCheckAuthorizati
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -272,13 +272,13 @@ AppsCheckTokenReq is request data for Client.AppsCheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	RequestBody AppsCheckTokenReqBody
 }
 
-func (r *AppsCheckTokenReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsCheckTokenReq) url() string {
+	return r._url
 }
 
 func (r *AppsCheckTokenReq) urlPath() string {
@@ -313,7 +313,7 @@ func (r *AppsCheckTokenReq) validStatuses() []int {
 }
 
 func (r *AppsCheckTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -330,7 +330,7 @@ func (r *AppsCheckTokenReq) Rel(link RelName, resp *AppsCheckTokenResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -397,7 +397,7 @@ AppsCreateContentAttachmentReq is request data for Client.AppsCreateContentAttac
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentReq struct {
-	pgURL              string
+	_url               string
 	ContentReferenceId int64
 	RequestBody        AppsCreateContentAttachmentReqBody
 
@@ -408,8 +408,8 @@ type AppsCreateContentAttachmentReq struct {
 	CorsairPreview bool
 }
 
-func (r *AppsCreateContentAttachmentReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsCreateContentAttachmentReq) url() string {
+	return r._url
 }
 
 func (r *AppsCreateContentAttachmentReq) urlPath() string {
@@ -450,7 +450,7 @@ func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
 }
 
 func (r *AppsCreateContentAttachmentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -467,7 +467,7 @@ func (r *AppsCreateContentAttachmentReq) Rel(link RelName, resp *AppsCreateConte
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -543,12 +543,12 @@ AppsCreateFromManifestReq is request data for Client.AppsCreateFromManifest
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type AppsCreateFromManifestReq struct {
-	pgURL string
-	Code  string
+	_url string
+	Code string
 }
 
-func (r *AppsCreateFromManifestReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsCreateFromManifestReq) url() string {
+	return r._url
 }
 
 func (r *AppsCreateFromManifestReq) urlPath() string {
@@ -600,7 +600,7 @@ func (r *AppsCreateFromManifestReq) Rel(link RelName, resp *AppsCreateFromManife
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -656,7 +656,7 @@ AppsCreateInstallationTokenReq is request data for Client.AppsCreateInstallation
 https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 type AppsCreateInstallationTokenReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 	RequestBody    AppsCreateInstallationTokenReqBody
 
@@ -667,8 +667,8 @@ type AppsCreateInstallationTokenReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsCreateInstallationTokenReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsCreateInstallationTokenReq) url() string {
+	return r._url
 }
 
 func (r *AppsCreateInstallationTokenReq) urlPath() string {
@@ -709,7 +709,7 @@ func (r *AppsCreateInstallationTokenReq) validStatuses() []int {
 }
 
 func (r *AppsCreateInstallationTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -726,7 +726,7 @@ func (r *AppsCreateInstallationTokenReq) Rel(link RelName, resp *AppsCreateInsta
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -808,13 +808,13 @@ AppsDeleteAuthorizationReq is request data for Client.AppsDeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type AppsDeleteAuthorizationReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	RequestBody AppsDeleteAuthorizationReqBody
 }
 
-func (r *AppsDeleteAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsDeleteAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *AppsDeleteAuthorizationReq) urlPath() string {
@@ -849,7 +849,7 @@ func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -866,7 +866,7 @@ func (r *AppsDeleteAuthorizationReq) Rel(link RelName, resp *AppsDeleteAuthoriza
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -922,7 +922,7 @@ AppsDeleteInstallationReq is request data for Client.AppsDeleteInstallation
 https://developer.github.com/v3/apps/#delete-an-installation
 */
 type AppsDeleteInstallationReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 
 	/*
@@ -932,8 +932,8 @@ type AppsDeleteInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsDeleteInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsDeleteInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsDeleteInstallationReq) urlPath() string {
@@ -991,7 +991,7 @@ func (r *AppsDeleteInstallationReq) Rel(link RelName, resp *AppsDeleteInstallati
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1036,13 +1036,13 @@ AppsDeleteTokenReq is request data for Client.AppsDeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type AppsDeleteTokenReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	RequestBody AppsDeleteTokenReqBody
 }
 
-func (r *AppsDeleteTokenReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsDeleteTokenReq) url() string {
+	return r._url
 }
 
 func (r *AppsDeleteTokenReq) urlPath() string {
@@ -1077,7 +1077,7 @@ func (r *AppsDeleteTokenReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1094,7 +1094,7 @@ func (r *AppsDeleteTokenReq) Rel(link RelName, resp *AppsDeleteTokenResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1151,7 +1151,7 @@ AppsGetAuthenticatedReq is request data for Client.AppsGetAuthenticated
 https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
 type AppsGetAuthenticatedReq struct {
-	pgURL string
+	_url string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1160,8 +1160,8 @@ type AppsGetAuthenticatedReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetAuthenticatedReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetAuthenticatedReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetAuthenticatedReq) urlPath() string {
@@ -1219,7 +1219,7 @@ func (r *AppsGetAuthenticatedReq) Rel(link RelName, resp *AppsGetAuthenticatedRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1275,7 +1275,7 @@ AppsGetBySlugReq is request data for Client.AppsGetBySlug
 https://developer.github.com/v3/apps/#get-a-single-github-app
 */
 type AppsGetBySlugReq struct {
-	pgURL   string
+	_url    string
 	AppSlug string
 
 	/*
@@ -1285,8 +1285,8 @@ type AppsGetBySlugReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetBySlugReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetBySlugReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetBySlugReq) urlPath() string {
@@ -1344,7 +1344,7 @@ func (r *AppsGetBySlugReq) Rel(link RelName, resp *AppsGetBySlugResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1400,7 +1400,7 @@ AppsGetInstallationReq is request data for Client.AppsGetInstallation
 https://developer.github.com/v3/apps/#get-an-installation
 */
 type AppsGetInstallationReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 
 	/*
@@ -1410,8 +1410,8 @@ type AppsGetInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetInstallationReq) urlPath() string {
@@ -1469,7 +1469,7 @@ func (r *AppsGetInstallationReq) Rel(link RelName, resp *AppsGetInstallationResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1525,8 +1525,8 @@ AppsGetOrgInstallationReq is request data for Client.AppsGetOrgInstallation
 https://developer.github.com/v3/apps/#get-an-organization-installation
 */
 type AppsGetOrgInstallationReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1535,8 +1535,8 @@ type AppsGetOrgInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetOrgInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetOrgInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetOrgInstallationReq) urlPath() string {
@@ -1594,7 +1594,7 @@ func (r *AppsGetOrgInstallationReq) Rel(link RelName, resp *AppsGetOrgInstallati
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1650,7 +1650,7 @@ AppsGetRepoInstallationReq is request data for Client.AppsGetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation
 */
 type AppsGetRepoInstallationReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -1661,8 +1661,8 @@ type AppsGetRepoInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetRepoInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetRepoInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetRepoInstallationReq) urlPath() string {
@@ -1720,7 +1720,7 @@ func (r *AppsGetRepoInstallationReq) Rel(link RelName, resp *AppsGetRepoInstalla
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1776,12 +1776,12 @@ AppsGetSubscriptionPlanForAccountReq is request data for Client.AppsGetSubscript
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type AppsGetSubscriptionPlanForAccountReq struct {
-	pgURL     string
+	_url      string
 	AccountId int64
 }
 
-func (r *AppsGetSubscriptionPlanForAccountReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetSubscriptionPlanForAccountReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetSubscriptionPlanForAccountReq) urlPath() string {
@@ -1833,7 +1833,7 @@ func (r *AppsGetSubscriptionPlanForAccountReq) Rel(link RelName, resp *AppsGetSu
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1889,12 +1889,12 @@ AppsGetSubscriptionPlanForAccountStubbedReq is request data for Client.AppsGetSu
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type AppsGetSubscriptionPlanForAccountStubbedReq struct {
-	pgURL     string
+	_url      string
 	AccountId int64
 }
 
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlPath() string {
@@ -1946,7 +1946,7 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) Rel(link RelName, resp *Ap
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2002,7 +2002,7 @@ AppsGetUserInstallationReq is request data for Client.AppsGetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation
 */
 type AppsGetUserInstallationReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	/*
@@ -2012,8 +2012,8 @@ type AppsGetUserInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetUserInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsGetUserInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsGetUserInstallationReq) urlPath() string {
@@ -2071,7 +2071,7 @@ func (r *AppsGetUserInstallationReq) Rel(link RelName, resp *AppsGetUserInstalla
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2127,7 +2127,7 @@ AppsListAccountsForPlanReq is request data for Client.AppsListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type AppsListAccountsForPlanReq struct {
-	pgURL  string
+	_url   string
 	PlanId int64
 
 	/*
@@ -2149,8 +2149,8 @@ type AppsListAccountsForPlanReq struct {
 	Page *int64
 }
 
-func (r *AppsListAccountsForPlanReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListAccountsForPlanReq) url() string {
+	return r._url
 }
 
 func (r *AppsListAccountsForPlanReq) urlPath() string {
@@ -2214,7 +2214,7 @@ func (r *AppsListAccountsForPlanReq) Rel(link RelName, resp *AppsListAccountsFor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2270,7 +2270,7 @@ AppsListAccountsForPlanStubbedReq is request data for Client.AppsListAccountsFor
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type AppsListAccountsForPlanStubbedReq struct {
-	pgURL  string
+	_url   string
 	PlanId int64
 
 	/*
@@ -2292,8 +2292,8 @@ type AppsListAccountsForPlanStubbedReq struct {
 	Page *int64
 }
 
-func (r *AppsListAccountsForPlanStubbedReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListAccountsForPlanStubbedReq) url() string {
+	return r._url
 }
 
 func (r *AppsListAccountsForPlanStubbedReq) urlPath() string {
@@ -2357,7 +2357,7 @@ func (r *AppsListAccountsForPlanStubbedReq) Rel(link RelName, resp *AppsListAcco
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2413,7 +2413,7 @@ AppsListInstallationReposForAuthenticatedUserReq is request data for Client.Apps
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
 type AppsListInstallationReposForAuthenticatedUserReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 
 	// Results per page (max 100)
@@ -2436,8 +2436,8 @@ type AppsListInstallationReposForAuthenticatedUserReq struct {
 	MercyPreview bool
 }
 
-func (r *AppsListInstallationReposForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListInstallationReposForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) urlPath() string {
@@ -2505,7 +2505,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) Rel(link RelName, res
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2564,7 +2564,7 @@ AppsListInstallationsReq is request data for Client.AppsListInstallations
 https://developer.github.com/v3/apps/#list-installations
 */
 type AppsListInstallationsReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2579,8 +2579,8 @@ type AppsListInstallationsReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsListInstallationsReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListInstallationsReq) url() string {
+	return r._url
 }
 
 func (r *AppsListInstallationsReq) urlPath() string {
@@ -2644,7 +2644,7 @@ func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallations
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2700,7 +2700,7 @@ AppsListInstallationsForAuthenticatedUserReq is request data for Client.AppsList
 https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
 */
 type AppsListInstallationsForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2715,8 +2715,8 @@ type AppsListInstallationsForAuthenticatedUserReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsListInstallationsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListInstallationsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
@@ -2780,7 +2780,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) Rel(link RelName, resp *A
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2839,7 +2839,7 @@ AppsListPlansReq is request data for Client.AppsListPlans
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 type AppsListPlansReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2848,8 +2848,8 @@ type AppsListPlansReq struct {
 	Page *int64
 }
 
-func (r *AppsListPlansReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListPlansReq) url() string {
+	return r._url
 }
 
 func (r *AppsListPlansReq) urlPath() string {
@@ -2907,7 +2907,7 @@ func (r *AppsListPlansReq) Rel(link RelName, resp *AppsListPlansResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2963,7 +2963,7 @@ AppsListPlansStubbedReq is request data for Client.AppsListPlansStubbed
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 type AppsListPlansStubbedReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2972,8 +2972,8 @@ type AppsListPlansStubbedReq struct {
 	Page *int64
 }
 
-func (r *AppsListPlansStubbedReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListPlansStubbedReq) url() string {
+	return r._url
 }
 
 func (r *AppsListPlansStubbedReq) urlPath() string {
@@ -3031,7 +3031,7 @@ func (r *AppsListPlansStubbedReq) Rel(link RelName, resp *AppsListPlansStubbedRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3087,7 +3087,7 @@ AppsListReposReq is request data for Client.AppsListRepos
 https://developer.github.com/v3/apps/installations/#list-repositories
 */
 type AppsListReposReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3109,8 +3109,8 @@ type AppsListReposReq struct {
 	MercyPreview bool
 }
 
-func (r *AppsListReposReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListReposReq) url() string {
+	return r._url
 }
 
 func (r *AppsListReposReq) urlPath() string {
@@ -3178,7 +3178,7 @@ func (r *AppsListReposReq) Rel(link RelName, resp *AppsListReposResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3237,7 +3237,7 @@ AppsListSubscriptionsForAuthenticatedUserReq is request data for Client.AppsList
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 type AppsListSubscriptionsForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3246,8 +3246,8 @@ type AppsListSubscriptionsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
@@ -3305,7 +3305,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link RelName, resp *A
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3361,7 +3361,7 @@ AppsListSubscriptionsForAuthenticatedUserStubbedReq is request data for Client.A
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3370,8 +3370,8 @@ type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
 	Page *int64
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) url() string {
+	return r._url
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
@@ -3429,7 +3429,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link RelName, 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3484,7 +3484,7 @@ AppsRemoveRepoFromInstallationReq is request data for Client.AppsRemoveRepoFromI
 https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
 type AppsRemoveRepoFromInstallationReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 	RepositoryId   int64
 
@@ -3495,8 +3495,8 @@ type AppsRemoveRepoFromInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsRemoveRepoFromInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsRemoveRepoFromInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsRemoveRepoFromInstallationReq) urlPath() string {
@@ -3554,7 +3554,7 @@ func (r *AppsRemoveRepoFromInstallationReq) Rel(link RelName, resp *AppsRemoveRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3600,13 +3600,13 @@ AppsResetAuthorizationReq is request data for Client.AppsResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type AppsResetAuthorizationReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	AccessToken string
 }
 
-func (r *AppsResetAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsResetAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *AppsResetAuthorizationReq) urlPath() string {
@@ -3658,7 +3658,7 @@ func (r *AppsResetAuthorizationReq) Rel(link RelName, resp *AppsResetAuthorizati
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3714,13 +3714,13 @@ AppsResetTokenReq is request data for Client.AppsResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	RequestBody AppsResetTokenReqBody
 }
 
-func (r *AppsResetTokenReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsResetTokenReq) url() string {
+	return r._url
 }
 
 func (r *AppsResetTokenReq) urlPath() string {
@@ -3755,7 +3755,7 @@ func (r *AppsResetTokenReq) validStatuses() []int {
 }
 
 func (r *AppsResetTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3772,7 +3772,7 @@ func (r *AppsResetTokenReq) Rel(link RelName, resp *AppsResetTokenResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3838,13 +3838,13 @@ AppsRevokeAuthorizationForApplicationReq is request data for Client.AppsRevokeAu
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type AppsRevokeAuthorizationForApplicationReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	AccessToken string
 }
 
-func (r *AppsRevokeAuthorizationForApplicationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsRevokeAuthorizationForApplicationReq) url() string {
+	return r._url
 }
 
 func (r *AppsRevokeAuthorizationForApplicationReq) urlPath() string {
@@ -3896,7 +3896,7 @@ func (r *AppsRevokeAuthorizationForApplicationReq) Rel(link RelName, resp *AppsR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3941,13 +3941,13 @@ AppsRevokeGrantForApplicationReq is request data for Client.AppsRevokeGrantForAp
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type AppsRevokeGrantForApplicationReq struct {
-	pgURL       string
+	_url        string
 	ClientId    string
 	AccessToken string
 }
 
-func (r *AppsRevokeGrantForApplicationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsRevokeGrantForApplicationReq) url() string {
+	return r._url
 }
 
 func (r *AppsRevokeGrantForApplicationReq) urlPath() string {
@@ -3999,7 +3999,7 @@ func (r *AppsRevokeGrantForApplicationReq) Rel(link RelName, resp *AppsRevokeGra
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4044,11 +4044,11 @@ AppsRevokeInstallationTokenReq is request data for Client.AppsRevokeInstallation
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
 */
 type AppsRevokeInstallationTokenReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *AppsRevokeInstallationTokenReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsRevokeInstallationTokenReq) url() string {
+	return r._url
 }
 
 func (r *AppsRevokeInstallationTokenReq) urlPath() string {
@@ -4100,7 +4100,7 @@ func (r *AppsRevokeInstallationTokenReq) Rel(link RelName, resp *AppsRevokeInsta
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4145,12 +4145,12 @@ AppsSuspendInstallationReq is request data for Client.AppsSuspendInstallation
 https://developer.github.com/v3/apps/#suspend-an-installation
 */
 type AppsSuspendInstallationReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 }
 
-func (r *AppsSuspendInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsSuspendInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsSuspendInstallationReq) urlPath() string {
@@ -4202,7 +4202,7 @@ func (r *AppsSuspendInstallationReq) Rel(link RelName, resp *AppsSuspendInstalla
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4247,12 +4247,12 @@ AppsUnsuspendInstallationReq is request data for Client.AppsUnsuspendInstallatio
 https://developer.github.com/v3/apps/#unsuspend-an-installation
 */
 type AppsUnsuspendInstallationReq struct {
-	pgURL          string
+	_url           string
 	InstallationId int64
 }
 
-func (r *AppsUnsuspendInstallationReq) pagingURL() string {
-	return r.pgURL
+func (r *AppsUnsuspendInstallationReq) url() string {
+	return r._url
 }
 
 func (r *AppsUnsuspendInstallationReq) urlPath() string {
@@ -4304,7 +4304,7 @@ func (r *AppsUnsuspendInstallationReq) Rel(link RelName, resp *AppsUnsuspendInst
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

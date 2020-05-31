@@ -43,12 +43,12 @@ UsersAddEmailsReq is request data for Client.UsersAddEmails
 https://developer.github.com/v3/users/emails/#add-email-addresses
 */
 type UsersAddEmailsReq struct {
-	pgURL       string
+	_url        string
 	RequestBody UsersAddEmailsReqBody
 }
 
-func (r *UsersAddEmailsReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersAddEmailsReq) url() string {
+	return r._url
 }
 
 func (r *UsersAddEmailsReq) urlPath() string {
@@ -83,7 +83,7 @@ func (r *UsersAddEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersAddEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -100,7 +100,7 @@ func (r *UsersAddEmailsReq) Rel(link RelName, resp *UsersAddEmailsResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -171,12 +171,12 @@ UsersBlockReq is request data for Client.UsersBlock
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
 type UsersBlockReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersBlockReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersBlockReq) url() string {
+	return r._url
 }
 
 func (r *UsersBlockReq) urlPath() string {
@@ -228,7 +228,7 @@ func (r *UsersBlockReq) Rel(link RelName, resp *UsersBlockResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -277,12 +277,12 @@ UsersCheckBlockedReq is request data for Client.UsersCheckBlocked
 https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 */
 type UsersCheckBlockedReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersCheckBlockedReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersCheckBlockedReq) url() string {
+	return r._url
 }
 
 func (r *UsersCheckBlockedReq) urlPath() string {
@@ -334,7 +334,7 @@ func (r *UsersCheckBlockedReq) Rel(link RelName, resp *UsersCheckBlockedResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -384,12 +384,12 @@ UsersCheckFollowingReq is request data for Client.UsersCheckFollowing
 https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 */
 type UsersCheckFollowingReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersCheckFollowingReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersCheckFollowingReq) url() string {
+	return r._url
 }
 
 func (r *UsersCheckFollowingReq) urlPath() string {
@@ -441,7 +441,7 @@ func (r *UsersCheckFollowingReq) Rel(link RelName, resp *UsersCheckFollowingResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -491,13 +491,13 @@ UsersCheckFollowingForUserReq is request data for Client.UsersCheckFollowingForU
 https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
 */
 type UsersCheckFollowingForUserReq struct {
-	pgURL      string
+	_url       string
 	Username   string
 	TargetUser string
 }
 
-func (r *UsersCheckFollowingForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersCheckFollowingForUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersCheckFollowingForUserReq) urlPath() string {
@@ -549,7 +549,7 @@ func (r *UsersCheckFollowingForUserReq) Rel(link RelName, resp *UsersCheckFollow
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -596,12 +596,12 @@ UsersCreateGpgKeyReq is request data for Client.UsersCreateGpgKey
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
 type UsersCreateGpgKeyReq struct {
-	pgURL       string
+	_url        string
 	RequestBody UsersCreateGpgKeyReqBody
 }
 
-func (r *UsersCreateGpgKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersCreateGpgKeyReq) url() string {
+	return r._url
 }
 
 func (r *UsersCreateGpgKeyReq) urlPath() string {
@@ -636,7 +636,7 @@ func (r *UsersCreateGpgKeyReq) validStatuses() []int {
 }
 
 func (r *UsersCreateGpgKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -653,7 +653,7 @@ func (r *UsersCreateGpgKeyReq) Rel(link RelName, resp *UsersCreateGpgKeyResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -724,12 +724,12 @@ UsersCreatePublicKeyReq is request data for Client.UsersCreatePublicKey
 https://developer.github.com/v3/users/keys/#create-a-public-key
 */
 type UsersCreatePublicKeyReq struct {
-	pgURL       string
+	_url        string
 	RequestBody UsersCreatePublicKeyReqBody
 }
 
-func (r *UsersCreatePublicKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersCreatePublicKeyReq) url() string {
+	return r._url
 }
 
 func (r *UsersCreatePublicKeyReq) urlPath() string {
@@ -764,7 +764,7 @@ func (r *UsersCreatePublicKeyReq) validStatuses() []int {
 }
 
 func (r *UsersCreatePublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -781,7 +781,7 @@ func (r *UsersCreatePublicKeyReq) Rel(link RelName, resp *UsersCreatePublicKeyRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -858,12 +858,12 @@ UsersDeleteEmailsReq is request data for Client.UsersDeleteEmails
 https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
 type UsersDeleteEmailsReq struct {
-	pgURL       string
+	_url        string
 	RequestBody UsersDeleteEmailsReqBody
 }
 
-func (r *UsersDeleteEmailsReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersDeleteEmailsReq) url() string {
+	return r._url
 }
 
 func (r *UsersDeleteEmailsReq) urlPath() string {
@@ -898,7 +898,7 @@ func (r *UsersDeleteEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersDeleteEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -915,7 +915,7 @@ func (r *UsersDeleteEmailsReq) Rel(link RelName, resp *UsersDeleteEmailsResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -976,12 +976,12 @@ UsersDeleteGpgKeyReq is request data for Client.UsersDeleteGpgKey
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 */
 type UsersDeleteGpgKeyReq struct {
-	pgURL    string
+	_url     string
 	GpgKeyId int64
 }
 
-func (r *UsersDeleteGpgKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersDeleteGpgKeyReq) url() string {
+	return r._url
 }
 
 func (r *UsersDeleteGpgKeyReq) urlPath() string {
@@ -1033,7 +1033,7 @@ func (r *UsersDeleteGpgKeyReq) Rel(link RelName, resp *UsersDeleteGpgKeyResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1078,12 +1078,12 @@ UsersDeletePublicKeyReq is request data for Client.UsersDeletePublicKey
 https://developer.github.com/v3/users/keys/#delete-a-public-key
 */
 type UsersDeletePublicKeyReq struct {
-	pgURL string
+	_url  string
 	KeyId int64
 }
 
-func (r *UsersDeletePublicKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersDeletePublicKeyReq) url() string {
+	return r._url
 }
 
 func (r *UsersDeletePublicKeyReq) urlPath() string {
@@ -1135,7 +1135,7 @@ func (r *UsersDeletePublicKeyReq) Rel(link RelName, resp *UsersDeletePublicKeyRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1180,12 +1180,12 @@ UsersFollowReq is request data for Client.UsersFollow
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
 type UsersFollowReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersFollowReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersFollowReq) url() string {
+	return r._url
 }
 
 func (r *UsersFollowReq) urlPath() string {
@@ -1237,7 +1237,7 @@ func (r *UsersFollowReq) Rel(link RelName, resp *UsersFollowResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1283,11 +1283,11 @@ UsersGetAuthenticatedReq is request data for Client.UsersGetAuthenticated
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
 type UsersGetAuthenticatedReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *UsersGetAuthenticatedReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersGetAuthenticatedReq) url() string {
+	return r._url
 }
 
 func (r *UsersGetAuthenticatedReq) urlPath() string {
@@ -1339,7 +1339,7 @@ func (r *UsersGetAuthenticatedReq) Rel(link RelName, resp *UsersGetAuthenticated
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1395,12 +1395,12 @@ UsersGetByUsernameReq is request data for Client.UsersGetByUsername
 https://developer.github.com/v3/users/#get-a-single-user
 */
 type UsersGetByUsernameReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersGetByUsernameReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersGetByUsernameReq) url() string {
+	return r._url
 }
 
 func (r *UsersGetByUsernameReq) urlPath() string {
@@ -1452,7 +1452,7 @@ func (r *UsersGetByUsernameReq) Rel(link RelName, resp *UsersGetByUsernameRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1508,7 +1508,7 @@ UsersGetContextForUserReq is request data for Client.UsersGetContextForUser
 https://developer.github.com/v3/users/#get-contextual-information-about-a-user
 */
 type UsersGetContextForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	/*
@@ -1525,8 +1525,8 @@ type UsersGetContextForUserReq struct {
 	SubjectId *string
 }
 
-func (r *UsersGetContextForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersGetContextForUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersGetContextForUserReq) urlPath() string {
@@ -1584,7 +1584,7 @@ func (r *UsersGetContextForUserReq) Rel(link RelName, resp *UsersGetContextForUs
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1640,12 +1640,12 @@ UsersGetGpgKeyReq is request data for Client.UsersGetGpgKey
 https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
 type UsersGetGpgKeyReq struct {
-	pgURL    string
+	_url     string
 	GpgKeyId int64
 }
 
-func (r *UsersGetGpgKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersGetGpgKeyReq) url() string {
+	return r._url
 }
 
 func (r *UsersGetGpgKeyReq) urlPath() string {
@@ -1697,7 +1697,7 @@ func (r *UsersGetGpgKeyReq) Rel(link RelName, resp *UsersGetGpgKeyResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1753,12 +1753,12 @@ UsersGetPublicKeyReq is request data for Client.UsersGetPublicKey
 https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
 type UsersGetPublicKeyReq struct {
-	pgURL string
+	_url  string
 	KeyId int64
 }
 
-func (r *UsersGetPublicKeyReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersGetPublicKeyReq) url() string {
+	return r._url
 }
 
 func (r *UsersGetPublicKeyReq) urlPath() string {
@@ -1810,7 +1810,7 @@ func (r *UsersGetPublicKeyReq) Rel(link RelName, resp *UsersGetPublicKeyResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1866,14 +1866,14 @@ UsersListReq is request data for Client.UsersList
 https://developer.github.com/v3/users/#get-all-users
 */
 type UsersListReq struct {
-	pgURL string
+	_url string
 
 	// The integer ID of the last User that you've seen.
 	Since *string
 }
 
-func (r *UsersListReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListReq) url() string {
+	return r._url
 }
 
 func (r *UsersListReq) urlPath() string {
@@ -1928,7 +1928,7 @@ func (r *UsersListReq) Rel(link RelName, resp *UsersListResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1984,11 +1984,11 @@ UsersListBlockedReq is request data for Client.UsersListBlocked
 https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
 type UsersListBlockedReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *UsersListBlockedReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListBlockedReq) url() string {
+	return r._url
 }
 
 func (r *UsersListBlockedReq) urlPath() string {
@@ -2040,7 +2040,7 @@ func (r *UsersListBlockedReq) Rel(link RelName, resp *UsersListBlockedResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2096,7 +2096,7 @@ UsersListEmailsReq is request data for Client.UsersListEmails
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
 type UsersListEmailsReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2105,8 +2105,8 @@ type UsersListEmailsReq struct {
 	Page *int64
 }
 
-func (r *UsersListEmailsReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListEmailsReq) url() string {
+	return r._url
 }
 
 func (r *UsersListEmailsReq) urlPath() string {
@@ -2164,7 +2164,7 @@ func (r *UsersListEmailsReq) Rel(link RelName, resp *UsersListEmailsResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2220,7 +2220,7 @@ UsersListFollowedByAuthenticatedReq is request data for Client.UsersListFollowed
 https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
 */
 type UsersListFollowedByAuthenticatedReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2229,8 +2229,8 @@ type UsersListFollowedByAuthenticatedReq struct {
 	Page *int64
 }
 
-func (r *UsersListFollowedByAuthenticatedReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListFollowedByAuthenticatedReq) url() string {
+	return r._url
 }
 
 func (r *UsersListFollowedByAuthenticatedReq) urlPath() string {
@@ -2288,7 +2288,7 @@ func (r *UsersListFollowedByAuthenticatedReq) Rel(link RelName, resp *UsersListF
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2344,7 +2344,7 @@ UsersListFollowersForAuthenticatedUserReq is request data for Client.UsersListFo
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
 type UsersListFollowersForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2353,8 +2353,8 @@ type UsersListFollowersForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *UsersListFollowersForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListFollowersForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersListFollowersForAuthenticatedUserReq) urlPath() string {
@@ -2412,7 +2412,7 @@ func (r *UsersListFollowersForAuthenticatedUserReq) Rel(link RelName, resp *User
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2468,7 +2468,7 @@ UsersListFollowersForUserReq is request data for Client.UsersListFollowersForUse
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type UsersListFollowersForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2478,8 +2478,8 @@ type UsersListFollowersForUserReq struct {
 	Page *int64
 }
 
-func (r *UsersListFollowersForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListFollowersForUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersListFollowersForUserReq) urlPath() string {
@@ -2537,7 +2537,7 @@ func (r *UsersListFollowersForUserReq) Rel(link RelName, resp *UsersListFollower
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2593,7 +2593,7 @@ UsersListFollowingForUserReq is request data for Client.UsersListFollowingForUse
 https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
 type UsersListFollowingForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2603,8 +2603,8 @@ type UsersListFollowingForUserReq struct {
 	Page *int64
 }
 
-func (r *UsersListFollowingForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListFollowingForUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersListFollowingForUserReq) urlPath() string {
@@ -2662,7 +2662,7 @@ func (r *UsersListFollowingForUserReq) Rel(link RelName, resp *UsersListFollowin
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2718,7 +2718,7 @@ UsersListGpgKeysReq is request data for Client.UsersListGpgKeys
 https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
 type UsersListGpgKeysReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2727,8 +2727,8 @@ type UsersListGpgKeysReq struct {
 	Page *int64
 }
 
-func (r *UsersListGpgKeysReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListGpgKeysReq) url() string {
+	return r._url
 }
 
 func (r *UsersListGpgKeysReq) urlPath() string {
@@ -2786,7 +2786,7 @@ func (r *UsersListGpgKeysReq) Rel(link RelName, resp *UsersListGpgKeysResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2842,7 +2842,7 @@ UsersListGpgKeysForUserReq is request data for Client.UsersListGpgKeysForUser
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 type UsersListGpgKeysForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2852,8 +2852,8 @@ type UsersListGpgKeysForUserReq struct {
 	Page *int64
 }
 
-func (r *UsersListGpgKeysForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListGpgKeysForUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersListGpgKeysForUserReq) urlPath() string {
@@ -2911,7 +2911,7 @@ func (r *UsersListGpgKeysForUserReq) Rel(link RelName, resp *UsersListGpgKeysFor
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2967,7 +2967,7 @@ UsersListPublicEmailsReq is request data for Client.UsersListPublicEmails
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
 type UsersListPublicEmailsReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2976,8 +2976,8 @@ type UsersListPublicEmailsReq struct {
 	Page *int64
 }
 
-func (r *UsersListPublicEmailsReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListPublicEmailsReq) url() string {
+	return r._url
 }
 
 func (r *UsersListPublicEmailsReq) urlPath() string {
@@ -3035,7 +3035,7 @@ func (r *UsersListPublicEmailsReq) Rel(link RelName, resp *UsersListPublicEmails
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3091,7 +3091,7 @@ UsersListPublicKeysReq is request data for Client.UsersListPublicKeys
 https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
 type UsersListPublicKeysReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3100,8 +3100,8 @@ type UsersListPublicKeysReq struct {
 	Page *int64
 }
 
-func (r *UsersListPublicKeysReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListPublicKeysReq) url() string {
+	return r._url
 }
 
 func (r *UsersListPublicKeysReq) urlPath() string {
@@ -3159,7 +3159,7 @@ func (r *UsersListPublicKeysReq) Rel(link RelName, resp *UsersListPublicKeysResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3215,7 +3215,7 @@ UsersListPublicKeysForUserReq is request data for Client.UsersListPublicKeysForU
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 type UsersListPublicKeysForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -3225,8 +3225,8 @@ type UsersListPublicKeysForUserReq struct {
 	Page *int64
 }
 
-func (r *UsersListPublicKeysForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersListPublicKeysForUserReq) url() string {
+	return r._url
 }
 
 func (r *UsersListPublicKeysForUserReq) urlPath() string {
@@ -3284,7 +3284,7 @@ func (r *UsersListPublicKeysForUserReq) Rel(link RelName, resp *UsersListPublicK
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3340,12 +3340,12 @@ UsersTogglePrimaryEmailVisibilityReq is request data for Client.UsersTogglePrima
 https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
 type UsersTogglePrimaryEmailVisibilityReq struct {
-	pgURL       string
+	_url        string
 	RequestBody UsersTogglePrimaryEmailVisibilityReqBody
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersTogglePrimaryEmailVisibilityReq) url() string {
+	return r._url
 }
 
 func (r *UsersTogglePrimaryEmailVisibilityReq) urlPath() string {
@@ -3380,7 +3380,7 @@ func (r *UsersTogglePrimaryEmailVisibilityReq) validStatuses() []int {
 }
 
 func (r *UsersTogglePrimaryEmailVisibilityReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3397,7 +3397,7 @@ func (r *UsersTogglePrimaryEmailVisibilityReq) Rel(link RelName, resp *UsersTogg
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3469,12 +3469,12 @@ UsersUnblockReq is request data for Client.UsersUnblock
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
 type UsersUnblockReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersUnblockReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersUnblockReq) url() string {
+	return r._url
 }
 
 func (r *UsersUnblockReq) urlPath() string {
@@ -3526,7 +3526,7 @@ func (r *UsersUnblockReq) Rel(link RelName, resp *UsersUnblockResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3571,12 +3571,12 @@ UsersUnfollowReq is request data for Client.UsersUnfollow
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
 type UsersUnfollowReq struct {
-	pgURL    string
+	_url     string
 	Username string
 }
 
-func (r *UsersUnfollowReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersUnfollowReq) url() string {
+	return r._url
 }
 
 func (r *UsersUnfollowReq) urlPath() string {
@@ -3628,7 +3628,7 @@ func (r *UsersUnfollowReq) Rel(link RelName, resp *UsersUnfollowResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3674,12 +3674,12 @@ UsersUpdateAuthenticatedReq is request data for Client.UsersUpdateAuthenticated
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
 type UsersUpdateAuthenticatedReq struct {
-	pgURL       string
+	_url        string
 	RequestBody UsersUpdateAuthenticatedReqBody
 }
 
-func (r *UsersUpdateAuthenticatedReq) pagingURL() string {
-	return r.pgURL
+func (r *UsersUpdateAuthenticatedReq) url() string {
+	return r._url
 }
 
 func (r *UsersUpdateAuthenticatedReq) urlPath() string {
@@ -3714,7 +3714,7 @@ func (r *UsersUpdateAuthenticatedReq) validStatuses() []int {
 }
 
 func (r *UsersUpdateAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3731,7 +3731,7 @@ func (r *UsersUpdateAuthenticatedReq) Rel(link RelName, resp *UsersUpdateAuthent
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

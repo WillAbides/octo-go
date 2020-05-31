@@ -42,7 +42,7 @@ CodesOfConductGetAllCodesOfConductReq is request data for Client.CodesOfConductG
 https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.
@@ -52,8 +52,8 @@ type CodesOfConductGetAllCodesOfConductReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *CodesOfConductGetAllCodesOfConductReq) pagingURL() string {
-	return r.pgURL
+func (r *CodesOfConductGetAllCodesOfConductReq) url() string {
+	return r._url
 }
 
 func (r *CodesOfConductGetAllCodesOfConductReq) urlPath() string {
@@ -111,7 +111,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link RelName, resp *CodesOfC
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -167,8 +167,8 @@ CodesOfConductGetConductCodeReq is request data for Client.CodesOfConductGetCond
 https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
 type CodesOfConductGetConductCodeReq struct {
-	pgURL string
-	Key   string
+	_url string
+	Key  string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.
@@ -178,8 +178,8 @@ type CodesOfConductGetConductCodeReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *CodesOfConductGetConductCodeReq) pagingURL() string {
-	return r.pgURL
+func (r *CodesOfConductGetConductCodeReq) url() string {
+	return r._url
 }
 
 func (r *CodesOfConductGetConductCodeReq) urlPath() string {
@@ -237,7 +237,7 @@ func (r *CodesOfConductGetConductCodeReq) Rel(link RelName, resp *CodesOfConduct
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -293,7 +293,7 @@ CodesOfConductGetForRepoReq is request data for Client.CodesOfConductGetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
 type CodesOfConductGetForRepoReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 
@@ -305,8 +305,8 @@ type CodesOfConductGetForRepoReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *CodesOfConductGetForRepoReq) pagingURL() string {
-	return r.pgURL
+func (r *CodesOfConductGetForRepoReq) url() string {
+	return r._url
 }
 
 func (r *CodesOfConductGetForRepoReq) urlPath() string {
@@ -364,7 +364,7 @@ func (r *CodesOfConductGetForRepoReq) Rel(link RelName, resp *CodesOfConductGetF
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

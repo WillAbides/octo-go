@@ -168,86 +168,9 @@ func needsPointer(schema *model.ParamSchema) bool {
 	return true
 }
 
-type endpointAttribute int
-
-const (
-	// endpoint that redirects via 302
-	attrRedirectOnly endpointAttribute = iota
-	// gives boolean status through 204 vs 404 status codes
-	attrBoolean
-	// attrInvalid is last so we can get a list of all valid types with a for loop
-	attrInvalid
-)
-
-var attrNames = map[endpointAttribute]string{
-	attrRedirectOnly: "attrRedirectOnly",
-	attrBoolean:      "attrBoolean",
-}
-
-func (e endpointAttribute) String() string {
-	return attrNames[e]
-}
-
-func addEndpointAttributes(file *jen.File) {
-	file.Type().Id("endpointAttribute").Int()
-	file.Const().Parens(jen.Do(func(statement *jen.Statement) {
-		for i := endpointAttribute(0); i < attrInvalid; i++ {
-			statement.Id(attrNames[i])
-			if i == 0 {
-				statement.Id("endpointAttribute").Op("=").Iota()
-			}
-			statement.Line()
-		}
-	}))
-}
-
-func endpointHasAttribute(endpoint model.Endpoint, attribute endpointAttribute) bool {
-	for _, attr := range getEndpointAttributes(endpoint) {
-		if attribute == attr {
-			return true
-		}
+func endpointFirstRequestSchema(endpoint model.Endpoint) *model.ParamSchema {
+	if len(endpoint.Requests) == 0 {
+		return nil
 	}
-	return false
-}
-
-func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
-	override, ok := overrideEndpointAttrs[endpoint.ID]
-	if ok {
-		return override
-	}
-	var result []endpointAttribute
-	for _, check := range attrChecks {
-		check(endpoint, &result)
-	}
-	return result
-}
-
-type attrCheck func(endpoint model.Endpoint, attrs *[]endpointAttribute)
-
-var attrChecks = []attrCheck{
-	// attrBoolean if the endpoint has exatcly two responses: 204 and 404
-	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
-		if len(endpoint.Responses) != 2 {
-			return
-		}
-		if _, ok := endpoint.Responses[204]; !ok {
-			return
-		}
-		if _, ok := endpoint.Responses[404]; !ok {
-			return
-		}
-		*attrs = append(*attrs, attrBoolean)
-	},
-
-	// attrRedirectOnly if the endpoint has onlly one response: 302
-	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
-		if len(endpoint.Responses) != 1 {
-			return
-		}
-		_, ok := endpoint.Responses[302]
-		if !ok {
-			return
-		}
-		*attrs = append(*attrs, attrRedirectOnly)
-	},
+	return endpoint.Requests[0].Schema
 }

@@ -28,12 +28,16 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
-		group.Id("pgURL").String()
+		group.Id("_url").String()
 		for _, param := range endpoint.PathParams {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
 			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, nil))
+		}
+		if endpointHasAttribute(endpoint, attrExplicitURL) {
+			group.Line().Comment("URL to query. This must be explicitly set for this endpoint and any base URL set in options will be ignored.")
+			group.Id("URL").String()
 		}
 		for _, param := range endpoint.QueryParams {
 			if param.HelpText != "" {
@@ -43,8 +47,12 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 				usePointers: true,
 			}))
 		}
-		if endpoint.JSONBodySchema != nil {
+		switch {
+		case endpointHasAttribute(endpoint, attrJSONRequestBody):
 			group.Id("RequestBody").Id(reqBodyStructName(endpoint.ID))
+		case endpointHasAttribute(endpoint, attrBodyUploader):
+			group.Line().Comment("http request's body")
+			group.Id("RequestBody").Qual("io", "Reader")
 		}
 		for _, param := range endpoint.Headers {
 			if param.Name == "accept" {
@@ -66,17 +74,9 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 	})
 
 	for _, fn := range []func(file *jen.File, endpoint model.Endpoint){
-		func(fl *jen.File, endpoint model.Endpoint) {
-			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("pagingURL() string").Block(
-				jen.Id("return r.pgURL"),
-			)
-		},
+		reqUrlFunc,
 		reqURLPathFunc,
-		func(fl *jen.File, endpoint model.Endpoint) {
-			fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
-				jen.Return(jen.Lit(endpoint.Method)),
-			)
-		},
+		reqMethodFunc,
 		reqURLQueryFunc,
 		reqHeaderFunc,
 		reqBodyFunc,
@@ -92,6 +92,27 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 
 }
 
+func reqMethodFunc(fl *jen.File, endpoint model.Endpoint) {
+	structName := reqStructName(endpoint)
+	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
+		jen.Return(jen.Lit(endpoint.Method)),
+	)
+}
+
+func reqUrlFunc(fl *jen.File, endpoint model.Endpoint) {
+	structName := reqStructName(endpoint)
+	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("url() string").BlockFunc(func(group *jen.Group) {
+		if endpointHasAttribute(endpoint, attrExplicitURL) {
+			group.If(jen.Id(`r._url != ""`)).Block(
+				jen.Id("return r._url"),
+			)
+			group.Return(jen.Id("r.URL"))
+			return
+		}
+		group.Id("return r._url")
+	})
+}
+
 func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
 	comment := `Rel updates this request to point to a relative link from resp. Returns false if the link does not exist. Handy for paging.`
@@ -102,7 +123,7 @@ func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
 	).Params(jen.Bool()).Block(
 		jen.Id("u := resp.RelLink(link)"),
 		jen.If(jen.Id("u").Op("==").Lit("")).Block(jen.Return(jen.False())),
-		jen.Id("r.pgURL = u"),
+		jen.Id("r._url = u"),
 		jen.Return(jen.True()),
 	)
 }
@@ -161,11 +182,14 @@ func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
 		Params().
 		Interface().
 		Block(jen.Do(func(stmt *jen.Statement) {
-			if endpoint.JSONBodySchema == nil {
+			switch {
+			case endpointHasAttribute(endpoint, attrJSONRequestBody):
+				stmt.Return(jen.Id("r.RequestBody"))
+			case endpointHasAttribute(endpoint, attrBodyUploader):
+				stmt.Return(jen.Id("r.RequestBody"))
+			default:
 				stmt.Return(jen.Nil())
-				return
 			}
-			stmt.Return(jen.Id("r.RequestBody"))
 		}))
 }
 
@@ -243,6 +267,10 @@ func reqURLPathFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("urlPath").Params().String().
 		BlockFunc(func(group *jen.Group) {
+			if endpointHasAttribute(endpoint, attrExplicitURL) {
+				group.Return(jen.Lit(""))
+				return
+			}
 			pth := bracesExp.ReplaceAllString(endpoint.Path, "%v")
 			group.Return(jen.Qual("fmt", "Sprintf").ParamsFunc(func(group *jen.Group) {
 				group.Lit(pth)

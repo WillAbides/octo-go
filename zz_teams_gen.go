@@ -43,15 +43,15 @@ TeamsAddOrUpdateMembershipInOrgReq is request data for Client.TeamsAddOrUpdateMe
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
 type TeamsAddOrUpdateMembershipInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	TeamSlug    string
 	Username    string
 	RequestBody TeamsAddOrUpdateMembershipInOrgReqBody
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsAddOrUpdateMembershipInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
@@ -86,7 +86,7 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -103,7 +103,7 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) Rel(link RelName, resp *TeamsAddOrU
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -175,7 +175,7 @@ TeamsAddOrUpdateProjectInOrgReq is request data for Client.TeamsAddOrUpdateProje
 https://developer.github.com/v3/teams/#add-or-update-team-project
 */
 type TeamsAddOrUpdateProjectInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	TeamSlug    string
 	ProjectId   int64
@@ -191,8 +191,8 @@ type TeamsAddOrUpdateProjectInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsAddOrUpdateProjectInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
@@ -233,7 +233,7 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsAddOrUpdateProjectInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -250,7 +250,7 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) Rel(link RelName, resp *TeamsAddOrUpda
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -316,7 +316,7 @@ TeamsAddOrUpdateRepoInOrgReq is request data for Client.TeamsAddOrUpdateRepoInOr
 https://developer.github.com/v3/teams/#add-or-update-team-repository
 */
 type TeamsAddOrUpdateRepoInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	TeamSlug    string
 	Owner       string
@@ -324,8 +324,8 @@ type TeamsAddOrUpdateRepoInOrgReq struct {
 	RequestBody TeamsAddOrUpdateRepoInOrgReqBody
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsAddOrUpdateRepoInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
@@ -360,7 +360,7 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsAddOrUpdateRepoInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -377,7 +377,7 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -452,15 +452,15 @@ TeamsCheckManagesRepoInOrgReq is request data for Client.TeamsCheckManagesRepoIn
 https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
 */
 type TeamsCheckManagesRepoInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 	Owner    string
 	Repo     string
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsCheckManagesRepoInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsCheckManagesRepoInOrgReq) urlPath() string {
@@ -512,7 +512,7 @@ func (r *TeamsCheckManagesRepoInOrgReq) Rel(link RelName, resp *TeamsCheckManage
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -559,13 +559,13 @@ TeamsCreateReq is request data for Client.TeamsCreate
 https://developer.github.com/v3/teams/#create-team
 */
 type TeamsCreateReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody TeamsCreateReqBody
 }
 
-func (r *TeamsCreateReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsCreateReq) url() string {
+	return r._url
 }
 
 func (r *TeamsCreateReq) urlPath() string {
@@ -600,7 +600,7 @@ func (r *TeamsCreateReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -617,7 +617,7 @@ func (r *TeamsCreateReq) Rel(link RelName, resp *TeamsCreateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -723,7 +723,7 @@ TeamsCreateDiscussionCommentInOrgReq is request data for Client.TeamsCreateDiscu
 https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
 type TeamsCreateDiscussionCommentInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -741,8 +741,8 @@ type TeamsCreateDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsCreateDiscussionCommentInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsCreateDiscussionCommentInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsCreateDiscussionCommentInOrgReq) urlPath() string {
@@ -780,7 +780,7 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -797,7 +797,7 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsCrea
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -864,7 +864,7 @@ TeamsCreateDiscussionInOrgReq is request data for Client.TeamsCreateDiscussionIn
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type TeamsCreateDiscussionInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	TeamSlug    string
 	RequestBody TeamsCreateDiscussionInOrgReqBody
@@ -881,8 +881,8 @@ type TeamsCreateDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsCreateDiscussionInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsCreateDiscussionInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsCreateDiscussionInOrgReq) urlPath() string {
@@ -920,7 +920,7 @@ func (r *TeamsCreateDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -937,7 +937,7 @@ func (r *TeamsCreateDiscussionInOrgReq) Rel(link RelName, resp *TeamsCreateDiscu
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1014,14 +1014,14 @@ TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq is request data for Client.TeamsC
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	TeamSlug    string
 	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
@@ -1056,7 +1056,7 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1073,7 +1073,7 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) Rel(link RelName, resp 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1156,15 +1156,15 @@ TeamsDeleteDiscussionCommentInOrgReq is request data for Client.TeamsDeleteDiscu
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
 */
 type TeamsDeleteDiscussionCommentInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
 	CommentNumber    int64
 }
 
-func (r *TeamsDeleteDiscussionCommentInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsDeleteDiscussionCommentInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsDeleteDiscussionCommentInOrgReq) urlPath() string {
@@ -1216,7 +1216,7 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsDele
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1261,14 +1261,14 @@ TeamsDeleteDiscussionInOrgReq is request data for Client.TeamsDeleteDiscussionIn
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 type TeamsDeleteDiscussionInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
 }
 
-func (r *TeamsDeleteDiscussionInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsDeleteDiscussionInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsDeleteDiscussionInOrgReq) urlPath() string {
@@ -1320,7 +1320,7 @@ func (r *TeamsDeleteDiscussionInOrgReq) Rel(link RelName, resp *TeamsDeleteDiscu
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1365,13 +1365,13 @@ TeamsDeleteInOrgReq is request data for Client.TeamsDeleteInOrg
 https://developer.github.com/v3/teams/#delete-team
 */
 type TeamsDeleteInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 }
 
-func (r *TeamsDeleteInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsDeleteInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsDeleteInOrgReq) urlPath() string {
@@ -1423,7 +1423,7 @@ func (r *TeamsDeleteInOrgReq) Rel(link RelName, resp *TeamsDeleteInOrgResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1469,13 +1469,13 @@ TeamsGetByNameReq is request data for Client.TeamsGetByName
 https://developer.github.com/v3/teams/#get-team-by-name
 */
 type TeamsGetByNameReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 }
 
-func (r *TeamsGetByNameReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsGetByNameReq) url() string {
+	return r._url
 }
 
 func (r *TeamsGetByNameReq) urlPath() string {
@@ -1527,7 +1527,7 @@ func (r *TeamsGetByNameReq) Rel(link RelName, resp *TeamsGetByNameResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1583,7 +1583,7 @@ TeamsGetDiscussionCommentInOrgReq is request data for Client.TeamsGetDiscussionC
 https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
 */
 type TeamsGetDiscussionCommentInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1601,8 +1601,8 @@ type TeamsGetDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsGetDiscussionCommentInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsGetDiscussionCommentInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsGetDiscussionCommentInOrgReq) urlPath() string {
@@ -1657,7 +1657,7 @@ func (r *TeamsGetDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsGetDisc
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1713,7 +1713,7 @@ TeamsGetDiscussionInOrgReq is request data for Client.TeamsGetDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
 type TeamsGetDiscussionInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1730,8 +1730,8 @@ type TeamsGetDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsGetDiscussionInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsGetDiscussionInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsGetDiscussionInOrgReq) urlPath() string {
@@ -1786,7 +1786,7 @@ func (r *TeamsGetDiscussionInOrgReq) Rel(link RelName, resp *TeamsGetDiscussionI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1842,14 +1842,14 @@ TeamsGetMembershipInOrgReq is request data for Client.TeamsGetMembershipInOrg
 https://developer.github.com/v3/teams/members/#get-team-membership
 */
 type TeamsGetMembershipInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 	Username string
 }
 
-func (r *TeamsGetMembershipInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsGetMembershipInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsGetMembershipInOrgReq) urlPath() string {
@@ -1901,7 +1901,7 @@ func (r *TeamsGetMembershipInOrgReq) Rel(link RelName, resp *TeamsGetMembershipI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1957,8 +1957,8 @@ TeamsListReq is request data for Client.TeamsList
 https://developer.github.com/v3/teams/#list-teams
 */
 type TeamsListReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1967,8 +1967,8 @@ type TeamsListReq struct {
 	Page *int64
 }
 
-func (r *TeamsListReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListReq) urlPath() string {
@@ -2026,7 +2026,7 @@ func (r *TeamsListReq) Rel(link RelName, resp *TeamsListResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2082,7 +2082,7 @@ TeamsListChildInOrgReq is request data for Client.TeamsListChildInOrg
 https://developer.github.com/v3/teams/#list-child-teams
 */
 type TeamsListChildInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 
@@ -2093,8 +2093,8 @@ type TeamsListChildInOrgReq struct {
 	Page *int64
 }
 
-func (r *TeamsListChildInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListChildInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListChildInOrgReq) urlPath() string {
@@ -2152,7 +2152,7 @@ func (r *TeamsListChildInOrgReq) Rel(link RelName, resp *TeamsListChildInOrgResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2208,7 +2208,7 @@ TeamsListDiscussionCommentsInOrgReq is request data for Client.TeamsListDiscussi
 https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
 type TeamsListDiscussionCommentsInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -2237,8 +2237,8 @@ type TeamsListDiscussionCommentsInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsListDiscussionCommentsInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListDiscussionCommentsInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListDiscussionCommentsInOrgReq) urlPath() string {
@@ -2302,7 +2302,7 @@ func (r *TeamsListDiscussionCommentsInOrgReq) Rel(link RelName, resp *TeamsListD
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2358,7 +2358,7 @@ TeamsListDiscussionsInOrgReq is request data for Client.TeamsListDiscussionsInOr
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type TeamsListDiscussionsInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 
@@ -2386,8 +2386,8 @@ type TeamsListDiscussionsInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsListDiscussionsInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListDiscussionsInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListDiscussionsInOrgReq) urlPath() string {
@@ -2451,7 +2451,7 @@ func (r *TeamsListDiscussionsInOrgReq) Rel(link RelName, resp *TeamsListDiscussi
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2507,7 +2507,7 @@ TeamsListForAuthenticatedUserReq is request data for Client.TeamsListForAuthenti
 https://developer.github.com/v3/teams/#list-user-teams
 */
 type TeamsListForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2516,8 +2516,8 @@ type TeamsListForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *TeamsListForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListForAuthenticatedUserReq) urlPath() string {
@@ -2575,7 +2575,7 @@ func (r *TeamsListForAuthenticatedUserReq) Rel(link RelName, resp *TeamsListForA
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2631,8 +2631,8 @@ TeamsListIdPGroupsForOrgReq is request data for Client.TeamsListIdPGroupsForOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
 */
 type TeamsListIdPGroupsForOrgReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2641,8 +2641,8 @@ type TeamsListIdPGroupsForOrgReq struct {
 	Page *int64
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListIdPGroupsForOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListIdPGroupsForOrgReq) urlPath() string {
@@ -2700,7 +2700,7 @@ func (r *TeamsListIdPGroupsForOrgReq) Rel(link RelName, resp *TeamsListIdPGroups
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2756,13 +2756,13 @@ TeamsListIdPGroupsInOrgReq is request data for Client.TeamsListIdPGroupsInOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 type TeamsListIdPGroupsInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListIdPGroupsInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListIdPGroupsInOrgReq) urlPath() string {
@@ -2814,7 +2814,7 @@ func (r *TeamsListIdPGroupsInOrgReq) Rel(link RelName, resp *TeamsListIdPGroupsI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2870,7 +2870,7 @@ TeamsListMembersInOrgReq is request data for Client.TeamsListMembersInOrg
 https://developer.github.com/v3/teams/members/#list-team-members
 */
 type TeamsListMembersInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 
@@ -2889,8 +2889,8 @@ type TeamsListMembersInOrgReq struct {
 	Page *int64
 }
 
-func (r *TeamsListMembersInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListMembersInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListMembersInOrgReq) urlPath() string {
@@ -2951,7 +2951,7 @@ func (r *TeamsListMembersInOrgReq) Rel(link RelName, resp *TeamsListMembersInOrg
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3007,7 +3007,7 @@ TeamsListPendingInvitationsInOrgReq is request data for Client.TeamsListPendingI
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type TeamsListPendingInvitationsInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 
@@ -3018,8 +3018,8 @@ type TeamsListPendingInvitationsInOrgReq struct {
 	Page *int64
 }
 
-func (r *TeamsListPendingInvitationsInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListPendingInvitationsInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListPendingInvitationsInOrgReq) urlPath() string {
@@ -3077,7 +3077,7 @@ func (r *TeamsListPendingInvitationsInOrgReq) Rel(link RelName, resp *TeamsListP
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3133,7 +3133,7 @@ TeamsListProjectsInOrgReq is request data for Client.TeamsListProjectsInOrg
 https://developer.github.com/v3/teams/#list-team-projects
 */
 type TeamsListProjectsInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 
@@ -3153,8 +3153,8 @@ type TeamsListProjectsInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *TeamsListProjectsInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListProjectsInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListProjectsInOrgReq) urlPath() string {
@@ -3218,7 +3218,7 @@ func (r *TeamsListProjectsInOrgReq) Rel(link RelName, resp *TeamsListProjectsInO
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3274,7 +3274,7 @@ TeamsListReposInOrgReq is request data for Client.TeamsListReposInOrg
 https://developer.github.com/v3/teams/#list-team-repos
 */
 type TeamsListReposInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 
@@ -3285,8 +3285,8 @@ type TeamsListReposInOrgReq struct {
 	Page *int64
 }
 
-func (r *TeamsListReposInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsListReposInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsListReposInOrgReq) urlPath() string {
@@ -3344,7 +3344,7 @@ func (r *TeamsListReposInOrgReq) Rel(link RelName, resp *TeamsListReposInOrgResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3399,14 +3399,14 @@ TeamsRemoveMembershipInOrgReq is request data for Client.TeamsRemoveMembershipIn
 https://developer.github.com/v3/teams/members/#remove-team-membership
 */
 type TeamsRemoveMembershipInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 	Username string
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsRemoveMembershipInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsRemoveMembershipInOrgReq) urlPath() string {
@@ -3458,7 +3458,7 @@ func (r *TeamsRemoveMembershipInOrgReq) Rel(link RelName, resp *TeamsRemoveMembe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3503,14 +3503,14 @@ TeamsRemoveProjectInOrgReq is request data for Client.TeamsRemoveProjectInOrg
 https://developer.github.com/v3/teams/#remove-team-project
 */
 type TeamsRemoveProjectInOrgReq struct {
-	pgURL     string
+	_url      string
 	Org       string
 	TeamSlug  string
 	ProjectId int64
 }
 
-func (r *TeamsRemoveProjectInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsRemoveProjectInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsRemoveProjectInOrgReq) urlPath() string {
@@ -3562,7 +3562,7 @@ func (r *TeamsRemoveProjectInOrgReq) Rel(link RelName, resp *TeamsRemoveProjectI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3607,15 +3607,15 @@ TeamsRemoveRepoInOrgReq is request data for Client.TeamsRemoveRepoInOrg
 https://developer.github.com/v3/teams/#remove-team-repository
 */
 type TeamsRemoveRepoInOrgReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	TeamSlug string
 	Owner    string
 	Repo     string
 }
 
-func (r *TeamsRemoveRepoInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsRemoveRepoInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsRemoveRepoInOrgReq) urlPath() string {
@@ -3667,7 +3667,7 @@ func (r *TeamsRemoveRepoInOrgReq) Rel(link RelName, resp *TeamsRemoveRepoInOrgRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3713,7 +3713,7 @@ TeamsReviewProjectInOrgReq is request data for Client.TeamsReviewProjectInOrg
 https://developer.github.com/v3/teams/#review-a-team-project
 */
 type TeamsReviewProjectInOrgReq struct {
-	pgURL     string
+	_url      string
 	Org       string
 	TeamSlug  string
 	ProjectId int64
@@ -3728,8 +3728,8 @@ type TeamsReviewProjectInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *TeamsReviewProjectInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsReviewProjectInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsReviewProjectInOrgReq) urlPath() string {
@@ -3787,7 +3787,7 @@ func (r *TeamsReviewProjectInOrgReq) Rel(link RelName, resp *TeamsReviewProjectI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3843,7 +3843,7 @@ TeamsUpdateDiscussionCommentInOrgReq is request data for Client.TeamsUpdateDiscu
 https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
 type TeamsUpdateDiscussionCommentInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -3862,8 +3862,8 @@ type TeamsUpdateDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsUpdateDiscussionCommentInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsUpdateDiscussionCommentInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsUpdateDiscussionCommentInOrgReq) urlPath() string {
@@ -3901,7 +3901,7 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3918,7 +3918,7 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsUpda
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3985,7 +3985,7 @@ TeamsUpdateDiscussionInOrgReq is request data for Client.TeamsUpdateDiscussionIn
 https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
 type TeamsUpdateDiscussionInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -4003,8 +4003,8 @@ type TeamsUpdateDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *TeamsUpdateDiscussionInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsUpdateDiscussionInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsUpdateDiscussionInOrgReq) urlPath() string {
@@ -4042,7 +4042,7 @@ func (r *TeamsUpdateDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsUpdateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4059,7 +4059,7 @@ func (r *TeamsUpdateDiscussionInOrgReq) Rel(link RelName, resp *TeamsUpdateDiscu
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4129,14 +4129,14 @@ TeamsUpdateInOrgReq is request data for Client.TeamsUpdateInOrg
 https://developer.github.com/v3/teams/#edit-team
 */
 type TeamsUpdateInOrgReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	TeamSlug    string
 	RequestBody TeamsUpdateInOrgReqBody
 }
 
-func (r *TeamsUpdateInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *TeamsUpdateInOrgReq) url() string {
+	return r._url
 }
 
 func (r *TeamsUpdateInOrgReq) urlPath() string {
@@ -4171,7 +4171,7 @@ func (r *TeamsUpdateInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsUpdateInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4188,7 +4188,7 @@ func (r *TeamsUpdateInOrgReq) Rel(link RelName, resp *TeamsUpdateInOrgResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

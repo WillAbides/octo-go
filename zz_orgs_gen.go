@@ -43,14 +43,14 @@ OrgsAddOrUpdateMembershipReq is request data for Client.OrgsAddOrUpdateMembershi
 https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
 */
 type OrgsAddOrUpdateMembershipReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	Username    string
 	RequestBody OrgsAddOrUpdateMembershipReqBody
 }
 
-func (r *OrgsAddOrUpdateMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsAddOrUpdateMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsAddOrUpdateMembershipReq) urlPath() string {
@@ -85,7 +85,7 @@ func (r *OrgsAddOrUpdateMembershipReq) validStatuses() []int {
 }
 
 func (r *OrgsAddOrUpdateMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -102,7 +102,7 @@ func (r *OrgsAddOrUpdateMembershipReq) Rel(link RelName, resp *OrgsAddOrUpdateMe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -172,13 +172,13 @@ OrgsBlockUserReq is request data for Client.OrgsBlockUser
 https://developer.github.com/v3/orgs/blocking/#block-a-user
 */
 type OrgsBlockUserReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsBlockUserReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsBlockUserReq) url() string {
+	return r._url
 }
 
 func (r *OrgsBlockUserReq) urlPath() string {
@@ -230,7 +230,7 @@ func (r *OrgsBlockUserReq) Rel(link RelName, resp *OrgsBlockUserResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -279,13 +279,13 @@ OrgsCheckBlockedUserReq is request data for Client.OrgsCheckBlockedUser
 https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
 */
 type OrgsCheckBlockedUserReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsCheckBlockedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsCheckBlockedUserReq) url() string {
+	return r._url
 }
 
 func (r *OrgsCheckBlockedUserReq) urlPath() string {
@@ -337,7 +337,7 @@ func (r *OrgsCheckBlockedUserReq) Rel(link RelName, resp *OrgsCheckBlockedUserRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -383,13 +383,13 @@ OrgsCheckMembershipReq is request data for Client.OrgsCheckMembership
 https://developer.github.com/v3/orgs/members/#check-membership
 */
 type OrgsCheckMembershipReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsCheckMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsCheckMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsCheckMembershipReq) urlPath() string {
@@ -441,7 +441,7 @@ func (r *OrgsCheckMembershipReq) Rel(link RelName, resp *OrgsCheckMembershipResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -490,13 +490,13 @@ OrgsCheckPublicMembershipReq is request data for Client.OrgsCheckPublicMembershi
 https://developer.github.com/v3/orgs/members/#check-public-membership
 */
 type OrgsCheckPublicMembershipReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsCheckPublicMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsCheckPublicMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsCheckPublicMembershipReq) urlPath() string {
@@ -548,7 +548,7 @@ func (r *OrgsCheckPublicMembershipReq) Rel(link RelName, resp *OrgsCheckPublicMe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -594,13 +594,13 @@ OrgsConcealMembershipReq is request data for Client.OrgsConcealMembership
 https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
 */
 type OrgsConcealMembershipReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsConcealMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsConcealMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsConcealMembershipReq) urlPath() string {
@@ -652,7 +652,7 @@ func (r *OrgsConcealMembershipReq) Rel(link RelName, resp *OrgsConcealMembership
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -697,13 +697,13 @@ OrgsConvertMemberToOutsideCollaboratorReq is request data for Client.OrgsConvert
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
 */
 type OrgsConvertMemberToOutsideCollaboratorReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsConvertMemberToOutsideCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsConvertMemberToOutsideCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *OrgsConvertMemberToOutsideCollaboratorReq) urlPath() string {
@@ -755,7 +755,7 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) Rel(link RelName, resp *Orgs
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -801,13 +801,13 @@ OrgsCreateHookReq is request data for Client.OrgsCreateHook
 https://developer.github.com/v3/orgs/hooks/#create-a-hook
 */
 type OrgsCreateHookReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody OrgsCreateHookReqBody
 }
 
-func (r *OrgsCreateHookReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsCreateHookReq) url() string {
+	return r._url
 }
 
 func (r *OrgsCreateHookReq) urlPath() string {
@@ -842,7 +842,7 @@ func (r *OrgsCreateHookReq) validStatuses() []int {
 }
 
 func (r *OrgsCreateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -859,7 +859,7 @@ func (r *OrgsCreateHookReq) Rel(link RelName, resp *OrgsCreateHookResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -974,13 +974,13 @@ OrgsCreateInvitationReq is request data for Client.OrgsCreateInvitation
 https://developer.github.com/v3/orgs/members/#create-organization-invitation
 */
 type OrgsCreateInvitationReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody OrgsCreateInvitationReqBody
 }
 
-func (r *OrgsCreateInvitationReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsCreateInvitationReq) url() string {
+	return r._url
 }
 
 func (r *OrgsCreateInvitationReq) urlPath() string {
@@ -1015,7 +1015,7 @@ func (r *OrgsCreateInvitationReq) validStatuses() []int {
 }
 
 func (r *OrgsCreateInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1032,7 +1032,7 @@ func (r *OrgsCreateInvitationReq) Rel(link RelName, resp *OrgsCreateInvitationRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1121,13 +1121,13 @@ OrgsDeleteHookReq is request data for Client.OrgsDeleteHook
 https://developer.github.com/v3/orgs/hooks/#delete-a-hook
 */
 type OrgsDeleteHookReq struct {
-	pgURL  string
+	_url   string
 	Org    string
 	HookId int64
 }
 
-func (r *OrgsDeleteHookReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsDeleteHookReq) url() string {
+	return r._url
 }
 
 func (r *OrgsDeleteHookReq) urlPath() string {
@@ -1179,7 +1179,7 @@ func (r *OrgsDeleteHookReq) Rel(link RelName, resp *OrgsDeleteHookResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1225,8 +1225,8 @@ OrgsGetReq is request data for Client.OrgsGet
 https://developer.github.com/v3/orgs/#get-an-organization
 */
 type OrgsGetReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	New repository creation permissions are available to preview. You can now use
@@ -1244,8 +1244,8 @@ type OrgsGetReq struct {
 	SurturPreview bool
 }
 
-func (r *OrgsGetReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsGetReq) url() string {
+	return r._url
 }
 
 func (r *OrgsGetReq) urlPath() string {
@@ -1300,7 +1300,7 @@ func (r *OrgsGetReq) Rel(link RelName, resp *OrgsGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1356,13 +1356,13 @@ OrgsGetHookReq is request data for Client.OrgsGetHook
 https://developer.github.com/v3/orgs/hooks/#get-single-hook
 */
 type OrgsGetHookReq struct {
-	pgURL  string
+	_url   string
 	Org    string
 	HookId int64
 }
 
-func (r *OrgsGetHookReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsGetHookReq) url() string {
+	return r._url
 }
 
 func (r *OrgsGetHookReq) urlPath() string {
@@ -1414,7 +1414,7 @@ func (r *OrgsGetHookReq) Rel(link RelName, resp *OrgsGetHookResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1470,13 +1470,13 @@ OrgsGetMembershipReq is request data for Client.OrgsGetMembership
 https://developer.github.com/v3/orgs/members/#get-organization-membership
 */
 type OrgsGetMembershipReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsGetMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsGetMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsGetMembershipReq) urlPath() string {
@@ -1528,7 +1528,7 @@ func (r *OrgsGetMembershipReq) Rel(link RelName, resp *OrgsGetMembershipResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1584,12 +1584,12 @@ OrgsGetMembershipForAuthenticatedUserReq is request data for Client.OrgsGetMembe
 https://developer.github.com/v3/orgs/members/#get-your-organization-membership
 */
 type OrgsGetMembershipForAuthenticatedUserReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *OrgsGetMembershipForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsGetMembershipForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *OrgsGetMembershipForAuthenticatedUserReq) urlPath() string {
@@ -1641,7 +1641,7 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsG
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1697,14 +1697,14 @@ OrgsListReq is request data for Client.OrgsList
 https://developer.github.com/v3/orgs/#list-all-organizations
 */
 type OrgsListReq struct {
-	pgURL string
+	_url string
 
 	// The integer ID of the last organization that you've seen.
 	Since *int64
 }
 
-func (r *OrgsListReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListReq) urlPath() string {
@@ -1759,7 +1759,7 @@ func (r *OrgsListReq) Rel(link RelName, resp *OrgsListResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1815,12 +1815,12 @@ OrgsListBlockedUsersReq is request data for Client.OrgsListBlockedUsers
 https://developer.github.com/v3/orgs/blocking/#list-blocked-users
 */
 type OrgsListBlockedUsersReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *OrgsListBlockedUsersReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListBlockedUsersReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListBlockedUsersReq) urlPath() string {
@@ -1872,7 +1872,7 @@ func (r *OrgsListBlockedUsersReq) Rel(link RelName, resp *OrgsListBlockedUsersRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1928,12 +1928,12 @@ OrgsListCredentialAuthorizationsReq is request data for Client.OrgsListCredentia
 https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
 */
 type OrgsListCredentialAuthorizationsReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 }
 
-func (r *OrgsListCredentialAuthorizationsReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListCredentialAuthorizationsReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListCredentialAuthorizationsReq) urlPath() string {
@@ -1985,7 +1985,7 @@ func (r *OrgsListCredentialAuthorizationsReq) Rel(link RelName, resp *OrgsListCr
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2041,7 +2041,7 @@ OrgsListForAuthenticatedUserReq is request data for Client.OrgsListForAuthentica
 https://developer.github.com/v3/orgs/#list-your-organizations
 */
 type OrgsListForAuthenticatedUserReq struct {
-	pgURL string
+	_url string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2050,8 +2050,8 @@ type OrgsListForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *OrgsListForAuthenticatedUserReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListForAuthenticatedUserReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListForAuthenticatedUserReq) urlPath() string {
@@ -2109,7 +2109,7 @@ func (r *OrgsListForAuthenticatedUserReq) Rel(link RelName, resp *OrgsListForAut
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2165,7 +2165,7 @@ OrgsListForUserReq is request data for Client.OrgsListForUser
 https://developer.github.com/v3/orgs/#list-user-organizations
 */
 type OrgsListForUserReq struct {
-	pgURL    string
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2175,8 +2175,8 @@ type OrgsListForUserReq struct {
 	Page *int64
 }
 
-func (r *OrgsListForUserReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListForUserReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListForUserReq) urlPath() string {
@@ -2234,7 +2234,7 @@ func (r *OrgsListForUserReq) Rel(link RelName, resp *OrgsListForUserResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2290,8 +2290,8 @@ OrgsListHooksReq is request data for Client.OrgsListHooks
 https://developer.github.com/v3/orgs/hooks/#list-hooks
 */
 type OrgsListHooksReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2300,8 +2300,8 @@ type OrgsListHooksReq struct {
 	Page *int64
 }
 
-func (r *OrgsListHooksReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListHooksReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListHooksReq) urlPath() string {
@@ -2359,7 +2359,7 @@ func (r *OrgsListHooksReq) Rel(link RelName, resp *OrgsListHooksResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2415,8 +2415,8 @@ OrgsListInstallationsReq is request data for Client.OrgsListInstallations
 https://developer.github.com/v3/orgs/#list-installations-for-an-organization
 */
 type OrgsListInstallationsReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2431,8 +2431,8 @@ type OrgsListInstallationsReq struct {
 	MachineManPreview bool
 }
 
-func (r *OrgsListInstallationsReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListInstallationsReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListInstallationsReq) urlPath() string {
@@ -2496,7 +2496,7 @@ func (r *OrgsListInstallationsReq) Rel(link RelName, resp *OrgsListInstallations
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2555,7 +2555,7 @@ OrgsListInvitationTeamsReq is request data for Client.OrgsListInvitationTeams
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type OrgsListInvitationTeamsReq struct {
-	pgURL        string
+	_url         string
 	Org          string
 	InvitationId int64
 
@@ -2566,8 +2566,8 @@ type OrgsListInvitationTeamsReq struct {
 	Page *int64
 }
 
-func (r *OrgsListInvitationTeamsReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListInvitationTeamsReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListInvitationTeamsReq) urlPath() string {
@@ -2625,7 +2625,7 @@ func (r *OrgsListInvitationTeamsReq) Rel(link RelName, resp *OrgsListInvitationT
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2681,8 +2681,8 @@ OrgsListMembersReq is request data for Client.OrgsListMembers
 https://developer.github.com/v3/orgs/members/#members-list
 */
 type OrgsListMembersReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	Filter members returned in the list. Can be one of:
@@ -2708,8 +2708,8 @@ type OrgsListMembersReq struct {
 	Page *int64
 }
 
-func (r *OrgsListMembersReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListMembersReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListMembersReq) urlPath() string {
@@ -2773,7 +2773,7 @@ func (r *OrgsListMembersReq) Rel(link RelName, resp *OrgsListMembersResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2829,7 +2829,7 @@ OrgsListMembershipsReq is request data for Client.OrgsListMemberships
 https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
 type OrgsListMembershipsReq struct {
-	pgURL string
+	_url string
 
 	/*
 	Indicates the state of the memberships to return. Can be either `active` or
@@ -2845,8 +2845,8 @@ type OrgsListMembershipsReq struct {
 	Page *int64
 }
 
-func (r *OrgsListMembershipsReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListMembershipsReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListMembershipsReq) urlPath() string {
@@ -2907,7 +2907,7 @@ func (r *OrgsListMembershipsReq) Rel(link RelName, resp *OrgsListMembershipsResp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2963,8 +2963,8 @@ OrgsListOutsideCollaboratorsReq is request data for Client.OrgsListOutsideCollab
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
 */
 type OrgsListOutsideCollaboratorsReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	/*
 	Filter the list of outside collaborators. Can be one of:
@@ -2981,8 +2981,8 @@ type OrgsListOutsideCollaboratorsReq struct {
 	Page *int64
 }
 
-func (r *OrgsListOutsideCollaboratorsReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListOutsideCollaboratorsReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListOutsideCollaboratorsReq) urlPath() string {
@@ -3043,7 +3043,7 @@ func (r *OrgsListOutsideCollaboratorsReq) Rel(link RelName, resp *OrgsListOutsid
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3099,8 +3099,8 @@ OrgsListPendingInvitationsReq is request data for Client.OrgsListPendingInvitati
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
 type OrgsListPendingInvitationsReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3109,8 +3109,8 @@ type OrgsListPendingInvitationsReq struct {
 	Page *int64
 }
 
-func (r *OrgsListPendingInvitationsReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListPendingInvitationsReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListPendingInvitationsReq) urlPath() string {
@@ -3168,7 +3168,7 @@ func (r *OrgsListPendingInvitationsReq) Rel(link RelName, resp *OrgsListPendingI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3224,8 +3224,8 @@ OrgsListPublicMembersReq is request data for Client.OrgsListPublicMembers
 https://developer.github.com/v3/orgs/members/#public-members-list
 */
 type OrgsListPublicMembersReq struct {
-	pgURL string
-	Org   string
+	_url string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3234,8 +3234,8 @@ type OrgsListPublicMembersReq struct {
 	Page *int64
 }
 
-func (r *OrgsListPublicMembersReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsListPublicMembersReq) url() string {
+	return r._url
 }
 
 func (r *OrgsListPublicMembersReq) urlPath() string {
@@ -3293,7 +3293,7 @@ func (r *OrgsListPublicMembersReq) Rel(link RelName, resp *OrgsListPublicMembers
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3348,13 +3348,13 @@ OrgsPingHookReq is request data for Client.OrgsPingHook
 https://developer.github.com/v3/orgs/hooks/#ping-a-hook
 */
 type OrgsPingHookReq struct {
-	pgURL  string
+	_url   string
 	Org    string
 	HookId int64
 }
 
-func (r *OrgsPingHookReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsPingHookReq) url() string {
+	return r._url
 }
 
 func (r *OrgsPingHookReq) urlPath() string {
@@ -3406,7 +3406,7 @@ func (r *OrgsPingHookReq) Rel(link RelName, resp *OrgsPingHookResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3451,13 +3451,13 @@ OrgsPublicizeMembershipReq is request data for Client.OrgsPublicizeMembership
 https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
 */
 type OrgsPublicizeMembershipReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsPublicizeMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsPublicizeMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsPublicizeMembershipReq) urlPath() string {
@@ -3509,7 +3509,7 @@ func (r *OrgsPublicizeMembershipReq) Rel(link RelName, resp *OrgsPublicizeMember
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3554,13 +3554,13 @@ OrgsRemoveCredentialAuthorizationReq is request data for Client.OrgsRemoveCreden
 https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
 */
 type OrgsRemoveCredentialAuthorizationReq struct {
-	pgURL        string
+	_url         string
 	Org          string
 	CredentialId int64
 }
 
-func (r *OrgsRemoveCredentialAuthorizationReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsRemoveCredentialAuthorizationReq) url() string {
+	return r._url
 }
 
 func (r *OrgsRemoveCredentialAuthorizationReq) urlPath() string {
@@ -3612,7 +3612,7 @@ func (r *OrgsRemoveCredentialAuthorizationReq) Rel(link RelName, resp *OrgsRemov
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3657,13 +3657,13 @@ OrgsRemoveMemberReq is request data for Client.OrgsRemoveMember
 https://developer.github.com/v3/orgs/members/#remove-a-member
 */
 type OrgsRemoveMemberReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsRemoveMemberReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsRemoveMemberReq) url() string {
+	return r._url
 }
 
 func (r *OrgsRemoveMemberReq) urlPath() string {
@@ -3715,7 +3715,7 @@ func (r *OrgsRemoveMemberReq) Rel(link RelName, resp *OrgsRemoveMemberResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3760,13 +3760,13 @@ OrgsRemoveMembershipReq is request data for Client.OrgsRemoveMembership
 https://developer.github.com/v3/orgs/members/#remove-organization-membership
 */
 type OrgsRemoveMembershipReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsRemoveMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsRemoveMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsRemoveMembershipReq) urlPath() string {
@@ -3818,7 +3818,7 @@ func (r *OrgsRemoveMembershipReq) Rel(link RelName, resp *OrgsRemoveMembershipRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3863,13 +3863,13 @@ OrgsRemoveOutsideCollaboratorReq is request data for Client.OrgsRemoveOutsideCol
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
 */
 type OrgsRemoveOutsideCollaboratorReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsRemoveOutsideCollaboratorReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsRemoveOutsideCollaboratorReq) url() string {
+	return r._url
 }
 
 func (r *OrgsRemoveOutsideCollaboratorReq) urlPath() string {
@@ -3921,7 +3921,7 @@ func (r *OrgsRemoveOutsideCollaboratorReq) Rel(link RelName, resp *OrgsRemoveOut
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -3966,13 +3966,13 @@ OrgsUnblockUserReq is request data for Client.OrgsUnblockUser
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user
 */
 type OrgsUnblockUserReq struct {
-	pgURL    string
+	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsUnblockUserReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsUnblockUserReq) url() string {
+	return r._url
 }
 
 func (r *OrgsUnblockUserReq) urlPath() string {
@@ -4024,7 +4024,7 @@ func (r *OrgsUnblockUserReq) Rel(link RelName, resp *OrgsUnblockUserResponse) bo
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4070,7 +4070,7 @@ OrgsUpdateReq is request data for Client.OrgsUpdate
 https://developer.github.com/v3/orgs/#edit-an-organization
 */
 type OrgsUpdateReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody OrgsUpdateReqBody
 
@@ -4090,8 +4090,8 @@ type OrgsUpdateReq struct {
 	SurturPreview bool
 }
 
-func (r *OrgsUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsUpdateReq) url() string {
+	return r._url
 }
 
 func (r *OrgsUpdateReq) urlPath() string {
@@ -4129,7 +4129,7 @@ func (r *OrgsUpdateReq) validStatuses() []int {
 }
 
 func (r *OrgsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4146,7 +4146,7 @@ func (r *OrgsUpdateReq) Rel(link RelName, resp *OrgsUpdateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4313,14 +4313,14 @@ OrgsUpdateHookReq is request data for Client.OrgsUpdateHook
 https://developer.github.com/v3/orgs/hooks/#edit-a-hook
 */
 type OrgsUpdateHookReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	HookId      int64
 	RequestBody OrgsUpdateHookReqBody
 }
 
-func (r *OrgsUpdateHookReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsUpdateHookReq) url() string {
+	return r._url
 }
 
 func (r *OrgsUpdateHookReq) urlPath() string {
@@ -4355,7 +4355,7 @@ func (r *OrgsUpdateHookReq) validStatuses() []int {
 }
 
 func (r *OrgsUpdateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4372,7 +4372,7 @@ func (r *OrgsUpdateHookReq) Rel(link RelName, resp *OrgsUpdateHookResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -4484,13 +4484,13 @@ OrgsUpdateMembershipReq is request data for Client.OrgsUpdateMembership
 https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
 */
 type OrgsUpdateMembershipReq struct {
-	pgURL       string
+	_url        string
 	Org         string
 	RequestBody OrgsUpdateMembershipReqBody
 }
 
-func (r *OrgsUpdateMembershipReq) pagingURL() string {
-	return r.pgURL
+func (r *OrgsUpdateMembershipReq) url() string {
+	return r._url
 }
 
 func (r *OrgsUpdateMembershipReq) urlPath() string {
@@ -4525,7 +4525,7 @@ func (r *OrgsUpdateMembershipReq) validStatuses() []int {
 }
 
 func (r *OrgsUpdateMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4542,7 +4542,7 @@ func (r *OrgsUpdateMembershipReq) Rel(link RelName, resp *OrgsUpdateMembershipRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
