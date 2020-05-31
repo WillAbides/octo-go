@@ -204,8 +204,9 @@ func addEndpointTypes(file *jen.File) {
 }
 
 func getEndpointType(endpoint model.Endpoint) endpointType {
-	if isRedirectOnlyEndpoint(endpoint) {
-		return endpointTypeRedirect
+	override, ok := overrideEndpointTypes[endpoint.ID]
+	if ok {
+		return override
 	}
 	switch {
 	case isRedirectOnlyEndpoint(endpoint):

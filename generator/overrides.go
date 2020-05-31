@@ -6,6 +6,10 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
+var overrideEndpointTypes = map[string]endpointType{
+	"teams/check-manages-repo-in-org": endpointTypeBoolean,
+}
+
 func schemaPathString(schemaPath []string) string {
 	return strings.Join(schemaPath, "/")
 }
