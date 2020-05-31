@@ -263,6 +263,9 @@ func (c *Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlocked
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -471,6 +474,9 @@ func (c *Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPu
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err

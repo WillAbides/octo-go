@@ -1146,6 +1146,9 @@ func (c *Client) ReposCheckCollaborator(ctx context.Context, req *ReposCheckColl
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -1252,6 +1255,9 @@ func (c *Client) ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCh
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err

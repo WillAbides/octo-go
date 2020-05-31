@@ -30,6 +30,9 @@ func (c *Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMerged
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
