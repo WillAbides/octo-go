@@ -292,6 +292,9 @@ func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssign
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err

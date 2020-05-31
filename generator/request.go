@@ -140,7 +140,7 @@ func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 		}
 	}
 	sort.Ints(codes)
-	if isRedirectOnlyEndpoint(endpoint) {
+	if getEndpointType(endpoint) == endpointTypeRedirect {
 		codes = []int{-1}
 	}
 	structName := reqStructName(endpoint)

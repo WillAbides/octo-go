@@ -34,6 +34,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		switch {
 		case getEndpointType(endpoint) == endpointTypeBoolean:
 			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
+			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			group.Id("resp").Dot("Data").Op("=").New(jen.Id(respBodyStructName(endpoint)))
@@ -204,8 +205,9 @@ func addEndpointTypes(file *jen.File) {
 }
 
 func getEndpointType(endpoint model.Endpoint) endpointType {
-	if isRedirectOnlyEndpoint(endpoint) {
-		return endpointTypeRedirect
+	override, ok := overrideEndpointTypes[endpoint.ID]
+	if ok {
+		return override
 	}
 	switch {
 	case isRedirectOnlyEndpoint(endpoint):

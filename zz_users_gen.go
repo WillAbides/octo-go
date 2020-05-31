@@ -261,6 +261,9 @@ func (c *Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedRe
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -365,6 +368,9 @@ func (c *Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowi
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -469,6 +475,9 @@ func (c *Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheck
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err

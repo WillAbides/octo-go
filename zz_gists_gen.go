@@ -30,6 +30,9 @@ func (c *Client) GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarr
 		response: *r,
 	}
 	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err

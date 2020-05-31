@@ -435,6 +435,10 @@ func (c *Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheck
 		request:  req,
 		response: *r,
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -491,7 +495,7 @@ func (r *TeamsCheckManagesRepoInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCheckManagesRepoInOrgReq) endpointType() endpointType {
-	return endpointTypeRegular
+	return endpointTypeBoolean
 }
 
 // httpRequest creates an http request
@@ -520,6 +524,7 @@ https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
 type TeamsCheckManagesRepoInOrgResponse struct {
 	response
 	request *TeamsCheckManagesRepoInOrgReq
+	Data    bool
 }
 
 /*
