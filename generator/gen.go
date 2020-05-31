@@ -171,10 +171,8 @@ func needsPointer(schema *model.ParamSchema) bool {
 type endpointAttribute int
 
 const (
-	// just a regular endpoint
-	attrRegular endpointAttribute = iota
 	// endpoint that redirects via 302
-	attrRedirect
+	attrRedirect endpointAttribute = iota
 	// gives boolean status through 204 vs 404 status codes
 	attrBoolean
 	// attrInvalid is last so we can get a list of all valid types with a for loop
@@ -182,7 +180,6 @@ const (
 )
 
 var attrNames = map[endpointAttribute]string{
-	attrRegular:  "attrRegular",
 	attrRedirect: "attrRedirect",
 	attrBoolean:  "attrBoolean",
 }
@@ -224,7 +221,7 @@ func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
 	case isBooleanEndpoint(endpoint):
 		return []endpointAttribute{attrBoolean}
 	}
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 func isBooleanEndpoint(endpoint model.Endpoint) bool {

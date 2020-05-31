@@ -81,7 +81,7 @@ func (r *MetaGetReq) validStatuses() []int {
 }
 
 func (r *MetaGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

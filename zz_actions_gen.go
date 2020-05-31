@@ -84,7 +84,7 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsAddSelectedRepoToOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -188,7 +188,7 @@ func (r *ActionsCancelWorkflowRunReq) validStatuses() []int {
 }
 
 func (r *ActionsCancelWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -292,7 +292,7 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateOrUpdateOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -440,7 +440,7 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateOrUpdateRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -563,7 +563,7 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateRegistrationTokenForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -677,7 +677,7 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateRegistrationTokenForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -790,7 +790,7 @@ func (r *ActionsCreateRemoveTokenForOrgReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateRemoveTokenForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -904,7 +904,7 @@ func (r *ActionsCreateRemoveTokenForRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateRemoveTokenForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1018,7 +1018,7 @@ func (r *ActionsDeleteArtifactReq) validStatuses() []int {
 }
 
 func (r *ActionsDeleteArtifactReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1121,7 +1121,7 @@ func (r *ActionsDeleteOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsDeleteOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1225,7 +1225,7 @@ func (r *ActionsDeleteRepoSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsDeleteRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1328,7 +1328,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) validStatuses() []int {
 }
 
 func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1432,7 +1432,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1536,7 +1536,7 @@ func (r *ActionsDeleteWorkflowRunLogsReq) validStatuses() []int {
 }
 
 func (r *ActionsDeleteWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1954,7 +1954,7 @@ func (r *ActionsGetArtifactReq) validStatuses() []int {
 }
 
 func (r *ActionsGetArtifactReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2067,7 +2067,7 @@ func (r *ActionsGetOrgPublicKeyReq) validStatuses() []int {
 }
 
 func (r *ActionsGetOrgPublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2181,7 +2181,7 @@ func (r *ActionsGetOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsGetOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2295,7 +2295,7 @@ func (r *ActionsGetRepoPublicKeyReq) validStatuses() []int {
 }
 
 func (r *ActionsGetRepoPublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2410,7 +2410,7 @@ func (r *ActionsGetRepoSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsGetRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2524,7 +2524,7 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) validStatuses() []int {
 }
 
 func (r *ActionsGetSelfHostedRunnerForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2639,7 +2639,7 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsGetSelfHostedRunnerForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2754,7 +2754,7 @@ func (r *ActionsGetWorkflowReq) validStatuses() []int {
 }
 
 func (r *ActionsGetWorkflowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2869,7 +2869,7 @@ func (r *ActionsGetWorkflowJobReq) validStatuses() []int {
 }
 
 func (r *ActionsGetWorkflowJobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2984,7 +2984,7 @@ func (r *ActionsGetWorkflowRunReq) validStatuses() []int {
 }
 
 func (r *ActionsGetWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3099,7 +3099,7 @@ func (r *ActionsGetWorkflowRunUsageReq) validStatuses() []int {
 }
 
 func (r *ActionsGetWorkflowRunUsageReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3214,7 +3214,7 @@ func (r *ActionsGetWorkflowUsageReq) validStatuses() []int {
 }
 
 func (r *ActionsGetWorkflowUsageReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3340,7 +3340,7 @@ func (r *ActionsListArtifactsForRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsListArtifactsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3481,7 +3481,7 @@ func (r *ActionsListJobsForWorkflowRunReq) validStatuses() []int {
 }
 
 func (r *ActionsListJobsForWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3609,7 +3609,7 @@ func (r *ActionsListOrgSecretsReq) validStatuses() []int {
 }
 
 func (r *ActionsListOrgSecretsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3738,7 +3738,7 @@ func (r *ActionsListRepoSecretsReq) validStatuses() []int {
 }
 
 func (r *ActionsListRepoSecretsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3908,7 +3908,7 @@ func (r *ActionsListRepoWorkflowRunsReq) validStatuses() []int {
 }
 
 func (r *ActionsListRepoWorkflowRunsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4037,7 +4037,7 @@ func (r *ActionsListRepoWorkflowsReq) validStatuses() []int {
 }
 
 func (r *ActionsListRepoWorkflowsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4153,7 +4153,7 @@ func (r *ActionsListRunnerApplicationsForOrgReq) validStatuses() []int {
 }
 
 func (r *ActionsListRunnerApplicationsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4267,7 +4267,7 @@ func (r *ActionsListRunnerApplicationsForRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsListRunnerApplicationsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4381,7 +4381,7 @@ func (r *ActionsListSelectedReposForOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsListSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4509,7 +4509,7 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) validStatuses() []int {
 }
 
 func (r *ActionsListSelfHostedRunnersForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4638,7 +4638,7 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) validStatuses() []int {
 }
 
 func (r *ActionsListSelfHostedRunnersForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4768,7 +4768,7 @@ func (r *ActionsListWorkflowRunArtifactsReq) validStatuses() []int {
 }
 
 func (r *ActionsListWorkflowRunArtifactsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4939,7 +4939,7 @@ func (r *ActionsListWorkflowRunsReq) validStatuses() []int {
 }
 
 func (r *ActionsListWorkflowRunsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -5056,7 +5056,7 @@ func (r *ActionsReRunWorkflowReq) validStatuses() []int {
 }
 
 func (r *ActionsReRunWorkflowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -5160,7 +5160,7 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -5264,7 +5264,7 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsSetSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

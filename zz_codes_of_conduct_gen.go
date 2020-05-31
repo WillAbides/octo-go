@@ -94,7 +94,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) validStatuses() []int {
 }
 
 func (r *CodesOfConductGetAllCodesOfConductReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -220,7 +220,7 @@ func (r *CodesOfConductGetConductCodeReq) validStatuses() []int {
 }
 
 func (r *CodesOfConductGetConductCodeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -347,7 +347,7 @@ func (r *CodesOfConductGetForRepoReq) validStatuses() []int {
 }
 
 func (r *CodesOfConductGetForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

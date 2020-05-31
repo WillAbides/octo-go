@@ -5,7 +5,6 @@ package octo
 type endpointAttribute int
 
 const (
-	attrRegular endpointAttribute = iota
-	attrRedirect
+	attrRedirect endpointAttribute = iota
 	attrBoolean
 )

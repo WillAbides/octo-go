@@ -83,7 +83,7 @@ func (r *UsersAddEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersAddEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -211,7 +211,7 @@ func (r *UsersBlockReq) validStatuses() []int {
 }
 
 func (r *UsersBlockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -636,7 +636,7 @@ func (r *UsersCreateGpgKeyReq) validStatuses() []int {
 }
 
 func (r *UsersCreateGpgKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -764,7 +764,7 @@ func (r *UsersCreatePublicKeyReq) validStatuses() []int {
 }
 
 func (r *UsersCreatePublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -898,7 +898,7 @@ func (r *UsersDeleteEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersDeleteEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1016,7 +1016,7 @@ func (r *UsersDeleteGpgKeyReq) validStatuses() []int {
 }
 
 func (r *UsersDeleteGpgKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1118,7 +1118,7 @@ func (r *UsersDeletePublicKeyReq) validStatuses() []int {
 }
 
 func (r *UsersDeletePublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1220,7 +1220,7 @@ func (r *UsersFollowReq) validStatuses() []int {
 }
 
 func (r *UsersFollowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1322,7 +1322,7 @@ func (r *UsersGetAuthenticatedReq) validStatuses() []int {
 }
 
 func (r *UsersGetAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1435,7 +1435,7 @@ func (r *UsersGetByUsernameReq) validStatuses() []int {
 }
 
 func (r *UsersGetByUsernameReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1567,7 +1567,7 @@ func (r *UsersGetContextForUserReq) validStatuses() []int {
 }
 
 func (r *UsersGetContextForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1680,7 +1680,7 @@ func (r *UsersGetGpgKeyReq) validStatuses() []int {
 }
 
 func (r *UsersGetGpgKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1793,7 +1793,7 @@ func (r *UsersGetPublicKeyReq) validStatuses() []int {
 }
 
 func (r *UsersGetPublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1911,7 +1911,7 @@ func (r *UsersListReq) validStatuses() []int {
 }
 
 func (r *UsersListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2023,7 +2023,7 @@ func (r *UsersListBlockedReq) validStatuses() []int {
 }
 
 func (r *UsersListBlockedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2147,7 +2147,7 @@ func (r *UsersListEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersListEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2271,7 +2271,7 @@ func (r *UsersListFollowedByAuthenticatedReq) validStatuses() []int {
 }
 
 func (r *UsersListFollowedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2395,7 +2395,7 @@ func (r *UsersListFollowersForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *UsersListFollowersForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2520,7 +2520,7 @@ func (r *UsersListFollowersForUserReq) validStatuses() []int {
 }
 
 func (r *UsersListFollowersForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2645,7 +2645,7 @@ func (r *UsersListFollowingForUserReq) validStatuses() []int {
 }
 
 func (r *UsersListFollowingForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2769,7 +2769,7 @@ func (r *UsersListGpgKeysReq) validStatuses() []int {
 }
 
 func (r *UsersListGpgKeysReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2894,7 +2894,7 @@ func (r *UsersListGpgKeysForUserReq) validStatuses() []int {
 }
 
 func (r *UsersListGpgKeysForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3018,7 +3018,7 @@ func (r *UsersListPublicEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersListPublicEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3142,7 +3142,7 @@ func (r *UsersListPublicKeysReq) validStatuses() []int {
 }
 
 func (r *UsersListPublicKeysReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3267,7 +3267,7 @@ func (r *UsersListPublicKeysForUserReq) validStatuses() []int {
 }
 
 func (r *UsersListPublicKeysForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3380,7 +3380,7 @@ func (r *UsersTogglePrimaryEmailVisibilityReq) validStatuses() []int {
 }
 
 func (r *UsersTogglePrimaryEmailVisibilityReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3509,7 +3509,7 @@ func (r *UsersUnblockReq) validStatuses() []int {
 }
 
 func (r *UsersUnblockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3611,7 +3611,7 @@ func (r *UsersUnfollowReq) validStatuses() []int {
 }
 
 func (r *UsersUnfollowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3714,7 +3714,7 @@ func (r *UsersUpdateAuthenticatedReq) validStatuses() []int {
 }
 
 func (r *UsersUpdateAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

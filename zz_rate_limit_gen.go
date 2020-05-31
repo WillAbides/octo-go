@@ -81,7 +81,7 @@ func (r *RateLimitGetReq) validStatuses() []int {
 }
 
 func (r *RateLimitGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

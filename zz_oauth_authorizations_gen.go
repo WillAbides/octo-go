@@ -83,7 +83,7 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -228,7 +228,7 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -330,7 +330,7 @@ func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsDeleteGrantReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -433,7 +433,7 @@ func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -546,7 +546,7 @@ func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsGetGrantReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -660,7 +660,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() [
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -806,7 +806,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) val
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -953,7 +953,7 @@ func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1077,7 +1077,7 @@ func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsListGrantsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1191,7 +1191,7 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

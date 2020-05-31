@@ -82,7 +82,7 @@ func (r *LicensesGetReq) validStatuses() []int {
 }
 
 func (r *LicensesGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -196,7 +196,7 @@ func (r *LicensesGetForRepoReq) validStatuses() []int {
 }
 
 func (r *LicensesGetForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -308,7 +308,7 @@ func (r *LicensesListCommonlyUsedReq) validStatuses() []int {
 }
 
 func (r *LicensesListCommonlyUsedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

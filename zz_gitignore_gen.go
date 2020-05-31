@@ -82,7 +82,7 @@ func (r *GitignoreGetTemplateReq) validStatuses() []int {
 }
 
 func (r *GitignoreGetTemplateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -194,7 +194,7 @@ func (r *GitignoreListTemplatesReq) validStatuses() []int {
 }
 
 func (r *GitignoreListTemplatesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

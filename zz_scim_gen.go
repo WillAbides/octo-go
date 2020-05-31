@@ -84,7 +84,7 @@ func (r *ScimGetProvisioningDetailsForUserReq) validStatuses() []int {
 }
 
 func (r *ScimGetProvisioningDetailsForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -220,7 +220,7 @@ func (r *ScimListProvisionedIdentitiesReq) validStatuses() []int {
 }
 
 func (r *ScimListProvisionedIdentitiesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -333,7 +333,7 @@ func (r *ScimProvisionAndInviteUsersReq) validStatuses() []int {
 }
 
 func (r *ScimProvisionAndInviteUsersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -446,7 +446,7 @@ func (r *ScimRemoveUserFromOrgReq) validStatuses() []int {
 }
 
 func (r *ScimRemoveUserFromOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -550,7 +550,7 @@ func (r *ScimReplaceProvisionedUserInformationReq) validStatuses() []int {
 }
 
 func (r *ScimReplaceProvisionedUserInformationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -664,7 +664,7 @@ func (r *ScimUpdateUserAttributeReq) validStatuses() []int {
 }
 
 func (r *ScimUpdateUserAttributeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

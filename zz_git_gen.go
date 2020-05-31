@@ -85,7 +85,7 @@ func (r *GitCreateBlobReq) validStatuses() []int {
 }
 
 func (r *GitCreateBlobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -217,7 +217,7 @@ func (r *GitCreateCommitReq) validStatuses() []int {
 }
 
 func (r *GitCreateCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -415,7 +415,7 @@ func (r *GitCreateRefReq) validStatuses() []int {
 }
 
 func (r *GitCreateRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -547,7 +547,7 @@ func (r *GitCreateTagReq) validStatuses() []int {
 }
 
 func (r *GitCreateTagReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -704,7 +704,7 @@ func (r *GitCreateTreeReq) validStatuses() []int {
 }
 
 func (r *GitCreateTreeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -871,7 +871,7 @@ func (r *GitDeleteRefReq) validStatuses() []int {
 }
 
 func (r *GitDeleteRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -976,7 +976,7 @@ func (r *GitGetBlobReq) validStatuses() []int {
 }
 
 func (r *GitGetBlobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1091,7 +1091,7 @@ func (r *GitGetCommitReq) validStatuses() []int {
 }
 
 func (r *GitGetCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1206,7 +1206,7 @@ func (r *GitGetRefReq) validStatuses() []int {
 }
 
 func (r *GitGetRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1321,7 +1321,7 @@ func (r *GitGetTagReq) validStatuses() []int {
 }
 
 func (r *GitGetTagReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1448,7 +1448,7 @@ func (r *GitGetTreeReq) validStatuses() []int {
 }
 
 func (r *GitGetTreeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1575,7 +1575,7 @@ func (r *GitListMatchingRefsReq) validStatuses() []int {
 }
 
 func (r *GitListMatchingRefsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1691,7 +1691,7 @@ func (r *GitUpdateRefReq) validStatuses() []int {
 }
 
 func (r *GitUpdateRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

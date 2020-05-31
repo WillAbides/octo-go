@@ -95,7 +95,7 @@ func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsAddRepoToInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -199,7 +199,7 @@ func (r *AppsCheckAuthorizationReq) validStatuses() []int {
 }
 
 func (r *AppsCheckAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -313,7 +313,7 @@ func (r *AppsCheckTokenReq) validStatuses() []int {
 }
 
 func (r *AppsCheckTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -450,7 +450,7 @@ func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
 }
 
 func (r *AppsCreateContentAttachmentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -583,7 +583,7 @@ func (r *AppsCreateFromManifestReq) validStatuses() []int {
 }
 
 func (r *AppsCreateFromManifestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -709,7 +709,7 @@ func (r *AppsCreateInstallationTokenReq) validStatuses() []int {
 }
 
 func (r *AppsCreateInstallationTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -849,7 +849,7 @@ func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -974,7 +974,7 @@ func (r *AppsDeleteInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1077,7 +1077,7 @@ func (r *AppsDeleteTokenReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1202,7 +1202,7 @@ func (r *AppsGetAuthenticatedReq) validStatuses() []int {
 }
 
 func (r *AppsGetAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1327,7 +1327,7 @@ func (r *AppsGetBySlugReq) validStatuses() []int {
 }
 
 func (r *AppsGetBySlugReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1452,7 +1452,7 @@ func (r *AppsGetInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsGetInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1577,7 +1577,7 @@ func (r *AppsGetOrgInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsGetOrgInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1703,7 +1703,7 @@ func (r *AppsGetRepoInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsGetRepoInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1816,7 +1816,7 @@ func (r *AppsGetSubscriptionPlanForAccountReq) validStatuses() []int {
 }
 
 func (r *AppsGetSubscriptionPlanForAccountReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1929,7 +1929,7 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) validStatuses() []int {
 }
 
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2054,7 +2054,7 @@ func (r *AppsGetUserInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsGetUserInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2197,7 +2197,7 @@ func (r *AppsListAccountsForPlanReq) validStatuses() []int {
 }
 
 func (r *AppsListAccountsForPlanReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2340,7 +2340,7 @@ func (r *AppsListAccountsForPlanStubbedReq) validStatuses() []int {
 }
 
 func (r *AppsListAccountsForPlanStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2488,7 +2488,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int
 }
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2627,7 +2627,7 @@ func (r *AppsListInstallationsReq) validStatuses() []int {
 }
 
 func (r *AppsListInstallationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2763,7 +2763,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *AppsListInstallationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2890,7 +2890,7 @@ func (r *AppsListPlansReq) validStatuses() []int {
 }
 
 func (r *AppsListPlansReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3014,7 +3014,7 @@ func (r *AppsListPlansStubbedReq) validStatuses() []int {
 }
 
 func (r *AppsListPlansStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3161,7 +3161,7 @@ func (r *AppsListReposReq) validStatuses() []int {
 }
 
 func (r *AppsListReposReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3288,7 +3288,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3412,7 +3412,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3537,7 +3537,7 @@ func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsRemoveRepoFromInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3641,7 +3641,7 @@ func (r *AppsResetAuthorizationReq) validStatuses() []int {
 }
 
 func (r *AppsResetAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3755,7 +3755,7 @@ func (r *AppsResetTokenReq) validStatuses() []int {
 }
 
 func (r *AppsResetTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3879,7 +3879,7 @@ func (r *AppsRevokeAuthorizationForApplicationReq) validStatuses() []int {
 }
 
 func (r *AppsRevokeAuthorizationForApplicationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3982,7 +3982,7 @@ func (r *AppsRevokeGrantForApplicationReq) validStatuses() []int {
 }
 
 func (r *AppsRevokeGrantForApplicationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4083,7 +4083,7 @@ func (r *AppsRevokeInstallationTokenReq) validStatuses() []int {
 }
 
 func (r *AppsRevokeInstallationTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4185,7 +4185,7 @@ func (r *AppsSuspendInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsSuspendInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -4287,7 +4287,7 @@ func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsUnsuspendInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

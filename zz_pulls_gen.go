@@ -207,7 +207,7 @@ func (r *PullsCreateReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -375,7 +375,7 @@ func (r *PullsCreateCommentReq) validStatuses() []int {
 }
 
 func (r *PullsCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -559,7 +559,7 @@ func (r *PullsCreateReviewReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -730,7 +730,7 @@ func (r *PullsCreateReviewCommentReplyReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReviewCommentReplyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -857,7 +857,7 @@ func (r *PullsCreateReviewRequestReq) validStatuses() []int {
 }
 
 func (r *PullsCreateReviewRequestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -985,7 +985,7 @@ func (r *PullsDeleteCommentReq) validStatuses() []int {
 }
 
 func (r *PullsDeleteCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1091,7 +1091,7 @@ func (r *PullsDeletePendingReviewReq) validStatuses() []int {
 }
 
 func (r *PullsDeletePendingReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1206,7 +1206,7 @@ func (r *PullsDeleteReviewRequestReq) validStatuses() []int {
 }
 
 func (r *PullsDeleteReviewRequestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1327,7 +1327,7 @@ func (r *PullsDismissReviewReq) validStatuses() []int {
 }
 
 func (r *PullsDismissReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1466,7 +1466,7 @@ func (r *PullsGetReq) validStatuses() []int {
 }
 
 func (r *PullsGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1606,7 +1606,7 @@ func (r *PullsGetCommentReq) validStatuses() []int {
 }
 
 func (r *PullsGetCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1734,7 +1734,7 @@ func (r *PullsGetCommentsForReviewReq) validStatuses() []int {
 }
 
 func (r *PullsGetCommentsForReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1850,7 +1850,7 @@ func (r *PullsGetReviewReq) validStatuses() []int {
 }
 
 func (r *PullsGetReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2030,7 +2030,7 @@ func (r *PullsListReq) validStatuses() []int {
 }
 
 func (r *PullsListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2204,7 +2204,7 @@ func (r *PullsListCommentsReq) validStatuses() []int {
 }
 
 func (r *PullsListCommentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2377,7 +2377,7 @@ func (r *PullsListCommentsForRepoReq) validStatuses() []int {
 }
 
 func (r *PullsListCommentsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2504,7 +2504,7 @@ func (r *PullsListCommitsReq) validStatuses() []int {
 }
 
 func (r *PullsListCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2631,7 +2631,7 @@ func (r *PullsListFilesReq) validStatuses() []int {
 }
 
 func (r *PullsListFilesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2758,7 +2758,7 @@ func (r *PullsListReviewRequestsReq) validStatuses() []int {
 }
 
 func (r *PullsListReviewRequestsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2885,7 +2885,7 @@ func (r *PullsListReviewsReq) validStatuses() []int {
 }
 
 func (r *PullsListReviewsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3001,7 +3001,7 @@ func (r *PullsMergeReq) validStatuses() []int {
 }
 
 func (r *PullsMergeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3141,7 +3141,7 @@ func (r *PullsSubmitReviewReq) validStatuses() []int {
 }
 
 func (r *PullsSubmitReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3290,7 +3290,7 @@ func (r *PullsUpdateReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3450,7 +3450,7 @@ func (r *PullsUpdateBranchReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3596,7 +3596,7 @@ func (r *PullsUpdateCommentReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -3724,7 +3724,7 @@ func (r *PullsUpdateReviewReq) validStatuses() []int {
 }
 
 func (r *PullsUpdateReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

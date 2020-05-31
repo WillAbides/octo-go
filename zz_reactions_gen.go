@@ -101,7 +101,7 @@ func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -246,7 +246,7 @@ func (r *ReactionsCreateForIssueReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -391,7 +391,7 @@ func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -536,7 +536,7 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -682,7 +682,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int 
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -827,7 +827,7 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -971,7 +971,7 @@ func (r *ReactionsDeleteForCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsDeleteForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1091,7 +1091,7 @@ func (r *ReactionsDeleteForIssueReq) validStatuses() []int {
 }
 
 func (r *ReactionsDeleteForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1211,7 +1211,7 @@ func (r *ReactionsDeleteForIssueCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsDeleteForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1331,7 +1331,7 @@ func (r *ReactionsDeleteForPullRequestCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsDeleteForPullRequestCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1451,7 +1451,7 @@ func (r *ReactionsDeleteForTeamDiscussionReq) validStatuses() []int {
 }
 
 func (r *ReactionsDeleteForTeamDiscussionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1572,7 +1572,7 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsDeleteForTeamDiscussionCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1714,7 +1714,7 @@ func (r *ReactionsListForCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsListForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1866,7 +1866,7 @@ func (r *ReactionsListForIssueReq) validStatuses() []int {
 }
 
 func (r *ReactionsListForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2018,7 +2018,7 @@ func (r *ReactionsListForIssueCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsListForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2170,7 +2170,7 @@ func (r *ReactionsListForPullRequestReviewCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsListForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2323,7 +2323,7 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) validStatuses() []int {
 }
 
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2475,7 +2475,7 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *ReactionsListForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

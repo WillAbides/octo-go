@@ -128,7 +128,7 @@ func (r *SearchCodeReq) validStatuses() []int {
 }
 
 func (r *SearchCodeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -305,7 +305,7 @@ func (r *SearchCommitsReq) validStatuses() []int {
 }
 
 func (r *SearchCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -470,7 +470,7 @@ func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
 }
 
 func (r *SearchIssuesAndPullRequestsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -622,7 +622,7 @@ func (r *SearchLabelsReq) validStatuses() []int {
 }
 
 func (r *SearchLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -795,7 +795,7 @@ func (r *SearchReposReq) validStatuses() []int {
 }
 
 func (r *SearchReposReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -933,7 +933,7 @@ func (r *SearchTopicsReq) validStatuses() []int {
 }
 
 func (r *SearchTopicsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1095,7 +1095,7 @@ func (r *SearchUsersReq) validStatuses() []int {
 }
 
 func (r *SearchUsersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

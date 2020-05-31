@@ -190,7 +190,7 @@ func (r *GistsCreateReq) validStatuses() []int {
 }
 
 func (r *GistsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -331,7 +331,7 @@ func (r *GistsCreateCommentReq) validStatuses() []int {
 }
 
 func (r *GistsCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -454,7 +454,7 @@ func (r *GistsDeleteReq) validStatuses() []int {
 }
 
 func (r *GistsDeleteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -557,7 +557,7 @@ func (r *GistsDeleteCommentReq) validStatuses() []int {
 }
 
 func (r *GistsDeleteCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -660,7 +660,7 @@ func (r *GistsForkReq) validStatuses() []int {
 }
 
 func (r *GistsForkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -773,7 +773,7 @@ func (r *GistsGetReq) validStatuses() []int {
 }
 
 func (r *GistsGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -887,7 +887,7 @@ func (r *GistsGetCommentReq) validStatuses() []int {
 }
 
 func (r *GistsGetCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1001,7 +1001,7 @@ func (r *GistsGetRevisionReq) validStatuses() []int {
 }
 
 func (r *GistsGetRevisionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1135,7 +1135,7 @@ func (r *GistsListReq) validStatuses() []int {
 }
 
 func (r *GistsListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1260,7 +1260,7 @@ func (r *GistsListCommentsReq) validStatuses() []int {
 }
 
 func (r *GistsListCommentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1385,7 +1385,7 @@ func (r *GistsListCommitsReq) validStatuses() []int {
 }
 
 func (r *GistsListCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1520,7 +1520,7 @@ func (r *GistsListForUserReq) validStatuses() []int {
 }
 
 func (r *GistsListForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1645,7 +1645,7 @@ func (r *GistsListForksReq) validStatuses() []int {
 }
 
 func (r *GistsListForksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1779,7 +1779,7 @@ func (r *GistsListPublicReq) validStatuses() []int {
 }
 
 func (r *GistsListPublicReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1913,7 +1913,7 @@ func (r *GistsListStarredReq) validStatuses() []int {
 }
 
 func (r *GistsListStarredReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2025,7 +2025,7 @@ func (r *GistsStarReq) validStatuses() []int {
 }
 
 func (r *GistsStarReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2127,7 +2127,7 @@ func (r *GistsUnstarReq) validStatuses() []int {
 }
 
 func (r *GistsUnstarReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2231,7 +2231,7 @@ func (r *GistsUpdateReq) validStatuses() []int {
 }
 
 func (r *GistsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -2373,7 +2373,7 @@ func (r *GistsUpdateCommentReq) validStatuses() []int {
 }
 
 func (r *GistsUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

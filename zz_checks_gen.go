@@ -100,7 +100,7 @@ func (r *ChecksCreateReq) validStatuses() []int {
 }
 
 func (r *ChecksCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -423,7 +423,7 @@ func (r *ChecksCreateSuiteReq) validStatuses() []int {
 }
 
 func (r *ChecksCreateSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -564,7 +564,7 @@ func (r *ChecksGetReq) validStatuses() []int {
 }
 
 func (r *ChecksGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -694,7 +694,7 @@ func (r *ChecksGetSuiteReq) validStatuses() []int {
 }
 
 func (r *ChecksGetSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -836,7 +836,7 @@ func (r *ChecksListAnnotationsReq) validStatuses() []int {
 }
 
 func (r *ChecksListAnnotationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1002,7 +1002,7 @@ func (r *ChecksListForRefReq) validStatuses() []int {
 }
 
 func (r *ChecksListForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1171,7 +1171,7 @@ func (r *ChecksListForSuiteReq) validStatuses() []int {
 }
 
 func (r *ChecksListForSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1331,7 +1331,7 @@ func (r *ChecksListSuitesForRefReq) validStatuses() []int {
 }
 
 func (r *ChecksListSuitesForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1463,7 +1463,7 @@ func (r *ChecksRerequestSuiteReq) validStatuses() []int {
 }
 
 func (r *ChecksRerequestSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1583,7 +1583,7 @@ func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
 }
 
 func (r *ChecksSetSuitesPreferencesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -1743,7 +1743,7 @@ func (r *ChecksUpdateReq) validStatuses() []int {
 }
 
 func (r *ChecksUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request

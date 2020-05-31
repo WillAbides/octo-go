@@ -97,7 +97,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -241,7 +241,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -383,7 +383,7 @@ func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
 }
 
 func (r *InteractionsGetRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -511,7 +511,7 @@ func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
 }
 
 func (r *InteractionsGetRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -637,7 +637,7 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
 }
 
 func (r *InteractionsRemoveRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
@@ -754,7 +754,7 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
 }
 
 func (r *InteractionsRemoveRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRegular}
+	return []endpointAttribute{}
 }
 
 // httpRequest creates an http request
