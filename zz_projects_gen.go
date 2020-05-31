@@ -98,8 +98,8 @@ func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ProjectsAddCollaboratorReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsAddCollaboratorReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -236,8 +236,8 @@ func (r *ProjectsCreateCardReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsCreateCardReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsCreateCardReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -396,8 +396,8 @@ func (r *ProjectsCreateColumnReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsCreateColumnReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsCreateColumnReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -525,8 +525,8 @@ func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsCreateForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -668,8 +668,8 @@ func (r *ProjectsCreateForOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsCreateForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsCreateForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -812,8 +812,8 @@ func (r *ProjectsCreateForRepoReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsCreateForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsCreateForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -953,8 +953,8 @@ func (r *ProjectsDeleteReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ProjectsDeleteReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsDeleteReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1070,8 +1070,8 @@ func (r *ProjectsDeleteCardReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ProjectsDeleteCardReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsDeleteCardReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1187,8 +1187,8 @@ func (r *ProjectsDeleteColumnReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ProjectsDeleteColumnReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsDeleteColumnReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1305,8 +1305,8 @@ func (r *ProjectsGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsGetReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsGetReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1432,8 +1432,8 @@ func (r *ProjectsGetCardReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsGetCardReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsGetCardReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1549,8 +1549,8 @@ func (r *ProjectsGetColumnReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsGetColumnReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsGetColumnReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1688,8 +1688,8 @@ func (r *ProjectsListCardsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListCardsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsListCardsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1841,8 +1841,8 @@ func (r *ProjectsListCollaboratorsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListCollaboratorsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsListCollaboratorsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1981,8 +1981,8 @@ func (r *ProjectsListColumnsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListColumnsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsListColumnsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2130,8 +2130,8 @@ func (r *ProjectsListForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsListForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2280,8 +2280,8 @@ func (r *ProjectsListForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsListForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2429,8 +2429,8 @@ func (r *ProjectsListForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListForUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsListForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2557,8 +2557,8 @@ func (r *ProjectsMoveCardReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsMoveCardReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsMoveCardReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2693,8 +2693,8 @@ func (r *ProjectsMoveColumnReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsMoveColumnReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsMoveColumnReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2825,8 +2825,8 @@ func (r *ProjectsRemoveCollaboratorReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ProjectsRemoveCollaboratorReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsRemoveCollaboratorReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2944,8 +2944,8 @@ func (r *ProjectsReviewUserPermissionLevelReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsReviewUserPermissionLevelReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsReviewUserPermissionLevelReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3073,8 +3073,8 @@ func (r *ProjectsUpdateReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsUpdateReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsUpdateReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3256,8 +3256,8 @@ func (r *ProjectsUpdateCardReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsUpdateCardReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsUpdateCardReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3395,8 +3395,8 @@ func (r *ProjectsUpdateColumnReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsUpdateColumnReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ProjectsUpdateColumnReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

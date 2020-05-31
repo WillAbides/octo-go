@@ -86,8 +86,8 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) validStatuses() []int
 	return []int{204}
 }
 
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrBoolean
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
 }
 
 // httpRequest creates an http request
@@ -190,8 +190,8 @@ func (r *ActivityDeleteRepoSubscriptionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActivityDeleteRepoSubscriptionReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityDeleteRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -292,8 +292,8 @@ func (r *ActivityDeleteThreadSubscriptionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActivityDeleteThreadSubscriptionReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityDeleteThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -394,8 +394,8 @@ func (r *ActivityGetFeedsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityGetFeedsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityGetFeedsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -508,8 +508,8 @@ func (r *ActivityGetRepoSubscriptionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityGetRepoSubscriptionReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityGetRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -621,8 +621,8 @@ func (r *ActivityGetThreadReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityGetThreadReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityGetThreadReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -734,8 +734,8 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) validStatuses() [
 	return []int{200}
 }
 
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -858,8 +858,8 @@ func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListEventsForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListEventsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1007,8 +1007,8 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) validStatuses() []int
 	return []int{200}
 }
 
-func (r *ActivityListNotificationsForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListNotificationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1132,8 +1132,8 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1245,8 +1245,8 @@ func (r *ActivityListPublicEventsReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListPublicEventsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListPublicEventsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1360,8 +1360,8 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListPublicEventsForRepoNetworkReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListPublicEventsForRepoNetworkReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1474,8 +1474,8 @@ func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListPublicEventsForUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListPublicEventsForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1588,8 +1588,8 @@ func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListPublicOrgEventsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListPublicOrgEventsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1702,8 +1702,8 @@ func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListReceivedEventsForUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListReceivedEventsForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1816,8 +1816,8 @@ func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListReceivedPublicEventsForUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListReceivedPublicEventsForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1931,8 +1931,8 @@ func (r *ActivityListRepoEventsReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ActivityListRepoEventsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListRepoEventsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2082,8 +2082,8 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) validStatuses() [
 	return []int{200}
 }
 
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2221,8 +2221,8 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListReposStarredByAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListReposStarredByAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2361,8 +2361,8 @@ func (r *ActivityListReposStarredByUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListReposStarredByUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListReposStarredByUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2486,8 +2486,8 @@ func (r *ActivityListReposWatchedByUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListReposWatchedByUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListReposWatchedByUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2612,8 +2612,8 @@ func (r *ActivityListStargazersForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListStargazersForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListStargazersForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2736,8 +2736,8 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) validStatuses() []int 
 	return []int{200}
 }
 
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2862,8 +2862,8 @@ func (r *ActivityListWatchersForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListWatchersForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityListWatchersForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2974,8 +2974,8 @@ func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
 	return []int{205}
 }
 
-func (r *ActivityMarkNotificationsAsReadReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityMarkNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3095,8 +3095,8 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
 	return []int{205}
 }
 
-func (r *ActivityMarkRepoNotificationsAsReadReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityMarkRepoNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3214,8 +3214,8 @@ func (r *ActivityMarkThreadAsReadReq) validStatuses() []int {
 	return []int{205}
 }
 
-func (r *ActivityMarkThreadAsReadReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityMarkThreadAsReadReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3319,8 +3319,8 @@ func (r *ActivitySetRepoSubscriptionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivitySetRepoSubscriptionReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivitySetRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3447,8 +3447,8 @@ func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivitySetThreadSubscriptionReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivitySetThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3574,8 +3574,8 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActivityStarRepoForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityStarRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3677,8 +3677,8 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

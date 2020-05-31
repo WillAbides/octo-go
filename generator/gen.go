@@ -32,7 +32,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 			jen.Id("request"):  jen.Id("req"),
 		})
 		switch {
-		case getEndpointAttribute(endpoint) == attrBoolean:
+		case endpointHasAttribute(endpoint, attrBoolean):
 			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
 			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")
@@ -204,18 +204,27 @@ func addEndpointAttributes(file *jen.File) {
 	}))
 }
 
-func getEndpointAttribute(endpoint model.Endpoint) endpointAttribute {
-	override, ok := overrideEndpointTypes[endpoint.ID]
+func endpointHasAttribute(endpoint model.Endpoint, attribute endpointAttribute) bool {
+	for _, attr := range getEndpointAttributes(endpoint) {
+		if attribute == attr {
+			return true
+		}
+	}
+	return false
+}
+
+func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
+	override, ok := overrideEndpointAttrs[endpoint.ID]
 	if ok {
 		return override
 	}
 	switch {
 	case isRedirectOnlyEndpoint(endpoint):
-		return attrRedirect
+		return []endpointAttribute{attrRedirect}
 	case isBooleanEndpoint(endpoint):
-		return attrBoolean
+		return []endpointAttribute{attrBoolean}
 	}
-	return attrRegular
+	return []endpointAttribute{attrRegular}
 }
 
 func isBooleanEndpoint(endpoint model.Endpoint) bool {

@@ -85,8 +85,8 @@ func (r *IssuesAddAssigneesReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesAddAssigneesReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesAddAssigneesReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -215,8 +215,8 @@ func (r *IssuesAddLabelsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesAddLabelsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesAddLabelsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -349,8 +349,8 @@ func (r *IssuesCheckAssigneeReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesCheckAssigneeReq) endpointAttribute() endpointAttribute {
-	return attrBoolean
+func (r *IssuesCheckAssigneeReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
 }
 
 // httpRequest creates an http request
@@ -455,8 +455,8 @@ func (r *IssuesCreateReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesCreateReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesCreateReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -611,8 +611,8 @@ func (r *IssuesCreateCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesCreateCommentReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesCreateCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -737,8 +737,8 @@ func (r *IssuesCreateLabelReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesCreateLabelReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesCreateLabelReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -879,8 +879,8 @@ func (r *IssuesCreateMilestoneReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesCreateMilestoneReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesCreateMilestoneReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1016,8 +1016,8 @@ func (r *IssuesDeleteCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesDeleteCommentReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesDeleteCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1120,8 +1120,8 @@ func (r *IssuesDeleteLabelReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesDeleteLabelReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesDeleteLabelReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1224,8 +1224,8 @@ func (r *IssuesDeleteMilestoneReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesDeleteMilestoneReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesDeleteMilestoneReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1343,8 +1343,8 @@ func (r *IssuesGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesGetReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1487,8 +1487,8 @@ func (r *IssuesGetCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetCommentReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesGetCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1644,8 +1644,8 @@ func (r *IssuesGetEventReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetEventReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesGetEventReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1759,8 +1759,8 @@ func (r *IssuesGetLabelReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetLabelReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesGetLabelReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1874,8 +1874,8 @@ func (r *IssuesGetMilestoneReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetMilestoneReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesGetMilestoneReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2078,8 +2078,8 @@ func (r *IssuesListReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2204,8 +2204,8 @@ func (r *IssuesListAssigneesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListAssigneesReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListAssigneesReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2355,8 +2355,8 @@ func (r *IssuesListCommentsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListCommentsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListCommentsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2517,8 +2517,8 @@ func (r *IssuesListCommentsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListCommentsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListCommentsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2673,8 +2673,8 @@ func (r *IssuesListEventsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListEventsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListEventsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2828,8 +2828,8 @@ func (r *IssuesListEventsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListEventsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListEventsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2986,8 +2986,8 @@ func (r *IssuesListEventsForTimelineReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListEventsForTimelineReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListEventsForTimelineReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3190,8 +3190,8 @@ func (r *IssuesListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3395,8 +3395,8 @@ func (r *IssuesListForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3618,8 +3618,8 @@ func (r *IssuesListForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3745,8 +3745,8 @@ func (r *IssuesListLabelsForMilestoneReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListLabelsForMilestoneReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListLabelsForMilestoneReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3871,8 +3871,8 @@ func (r *IssuesListLabelsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListLabelsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListLabelsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3998,8 +3998,8 @@ func (r *IssuesListLabelsOnIssueReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListLabelsOnIssueReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListLabelsOnIssueReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4142,8 +4142,8 @@ func (r *IssuesListMilestonesForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListMilestonesForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesListMilestonesForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4270,8 +4270,8 @@ func (r *IssuesLockReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesLockReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesLockReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4392,8 +4392,8 @@ func (r *IssuesRemoveAllLabelsReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesRemoveAllLabelsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesRemoveAllLabelsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4498,8 +4498,8 @@ func (r *IssuesRemoveAssigneesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesRemoveAssigneesReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesRemoveAssigneesReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4629,8 +4629,8 @@ func (r *IssuesRemoveLabelReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesRemoveLabelReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesRemoveLabelReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4745,8 +4745,8 @@ func (r *IssuesReplaceAllLabelsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesReplaceAllLabelsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesReplaceAllLabelsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4875,8 +4875,8 @@ func (r *IssuesUnlockReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesUnlockReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesUnlockReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4981,8 +4981,8 @@ func (r *IssuesUpdateReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesUpdateReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesUpdateReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -5143,8 +5143,8 @@ func (r *IssuesUpdateCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesUpdateCommentReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesUpdateCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -5270,8 +5270,8 @@ func (r *IssuesUpdateLabelReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesUpdateLabelReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesUpdateLabelReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -5413,8 +5413,8 @@ func (r *IssuesUpdateMilestoneReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesUpdateMilestoneReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *IssuesUpdateMilestoneReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

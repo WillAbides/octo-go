@@ -96,8 +96,8 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -240,8 +240,8 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -382,8 +382,8 @@ func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsGetRestrictionsForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *InteractionsGetRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -510,8 +510,8 @@ func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsGetRestrictionsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *InteractionsGetRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -636,8 +636,8 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *InteractionsRemoveRestrictionsForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *InteractionsRemoveRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -753,8 +753,8 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *InteractionsRemoveRestrictionsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *InteractionsRemoveRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

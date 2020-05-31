@@ -83,8 +83,8 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsAddSelectedRepoToOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsAddSelectedRepoToOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -187,8 +187,8 @@ func (r *ActionsCancelWorkflowRunReq) validStatuses() []int {
 	return []int{202}
 }
 
-func (r *ActionsCancelWorkflowRunReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCancelWorkflowRunReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -291,8 +291,8 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) validStatuses() []int {
 	return []int{201, 204}
 }
 
-func (r *ActionsCreateOrUpdateOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCreateOrUpdateOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -439,8 +439,8 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) validStatuses() []int {
 	return []int{201, 204}
 }
 
-func (r *ActionsCreateOrUpdateRepoSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCreateOrUpdateRepoSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -562,8 +562,8 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRegistrationTokenForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCreateRegistrationTokenForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -676,8 +676,8 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRegistrationTokenForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCreateRegistrationTokenForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -789,8 +789,8 @@ func (r *ActionsCreateRemoveTokenForOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRemoveTokenForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCreateRemoveTokenForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -903,8 +903,8 @@ func (r *ActionsCreateRemoveTokenForRepoReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRemoveTokenForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsCreateRemoveTokenForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1017,8 +1017,8 @@ func (r *ActionsDeleteArtifactReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteArtifactReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsDeleteArtifactReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1120,8 +1120,8 @@ func (r *ActionsDeleteOrgSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsDeleteOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1224,8 +1224,8 @@ func (r *ActionsDeleteRepoSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteRepoSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsDeleteRepoSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1327,8 +1327,8 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1431,8 +1431,8 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1535,8 +1535,8 @@ func (r *ActionsDeleteWorkflowRunLogsReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteWorkflowRunLogsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsDeleteWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1640,8 +1640,8 @@ func (r *ActionsDownloadArtifactReq) validStatuses() []int {
 	return []int{-1}
 }
 
-func (r *ActionsDownloadArtifactReq) endpointAttribute() endpointAttribute {
-	return attrRedirect
+func (r *ActionsDownloadArtifactReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirect}
 }
 
 // httpRequest creates an http request
@@ -1744,8 +1744,8 @@ func (r *ActionsDownloadWorkflowJobLogsReq) validStatuses() []int {
 	return []int{-1}
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) endpointAttribute() endpointAttribute {
-	return attrRedirect
+func (r *ActionsDownloadWorkflowJobLogsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirect}
 }
 
 // httpRequest creates an http request
@@ -1848,8 +1848,8 @@ func (r *ActionsDownloadWorkflowRunLogsReq) validStatuses() []int {
 	return []int{-1}
 }
 
-func (r *ActionsDownloadWorkflowRunLogsReq) endpointAttribute() endpointAttribute {
-	return attrRedirect
+func (r *ActionsDownloadWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirect}
 }
 
 // httpRequest creates an http request
@@ -1953,8 +1953,8 @@ func (r *ActionsGetArtifactReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetArtifactReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetArtifactReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2066,8 +2066,8 @@ func (r *ActionsGetOrgPublicKeyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetOrgPublicKeyReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetOrgPublicKeyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2180,8 +2180,8 @@ func (r *ActionsGetOrgSecretReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2294,8 +2294,8 @@ func (r *ActionsGetRepoPublicKeyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetRepoPublicKeyReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetRepoPublicKeyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2409,8 +2409,8 @@ func (r *ActionsGetRepoSecretReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetRepoSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetRepoSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2523,8 +2523,8 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetSelfHostedRunnerForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetSelfHostedRunnerForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2638,8 +2638,8 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetSelfHostedRunnerForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetSelfHostedRunnerForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2753,8 +2753,8 @@ func (r *ActionsGetWorkflowReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetWorkflowReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetWorkflowReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2868,8 +2868,8 @@ func (r *ActionsGetWorkflowJobReq) validStatuses() []int {
 	return []int{202}
 }
 
-func (r *ActionsGetWorkflowJobReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetWorkflowJobReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2983,8 +2983,8 @@ func (r *ActionsGetWorkflowRunReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetWorkflowRunReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetWorkflowRunReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3098,8 +3098,8 @@ func (r *ActionsGetWorkflowRunUsageReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetWorkflowRunUsageReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetWorkflowRunUsageReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3213,8 +3213,8 @@ func (r *ActionsGetWorkflowUsageReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetWorkflowUsageReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsGetWorkflowUsageReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3339,8 +3339,8 @@ func (r *ActionsListArtifactsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListArtifactsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListArtifactsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3480,8 +3480,8 @@ func (r *ActionsListJobsForWorkflowRunReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListJobsForWorkflowRunReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListJobsForWorkflowRunReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3608,8 +3608,8 @@ func (r *ActionsListOrgSecretsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListOrgSecretsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListOrgSecretsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3737,8 +3737,8 @@ func (r *ActionsListRepoSecretsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRepoSecretsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListRepoSecretsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3907,8 +3907,8 @@ func (r *ActionsListRepoWorkflowRunsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRepoWorkflowRunsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListRepoWorkflowRunsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4036,8 +4036,8 @@ func (r *ActionsListRepoWorkflowsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRepoWorkflowsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListRepoWorkflowsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4152,8 +4152,8 @@ func (r *ActionsListRunnerApplicationsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRunnerApplicationsForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListRunnerApplicationsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4266,8 +4266,8 @@ func (r *ActionsListRunnerApplicationsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRunnerApplicationsForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListRunnerApplicationsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4380,8 +4380,8 @@ func (r *ActionsListSelectedReposForOrgSecretReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListSelectedReposForOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4508,8 +4508,8 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListSelfHostedRunnersForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListSelfHostedRunnersForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4637,8 +4637,8 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListSelfHostedRunnersForRepoReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListSelfHostedRunnersForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4767,8 +4767,8 @@ func (r *ActionsListWorkflowRunArtifactsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListWorkflowRunArtifactsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListWorkflowRunArtifactsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4938,8 +4938,8 @@ func (r *ActionsListWorkflowRunsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListWorkflowRunsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsListWorkflowRunsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -5055,8 +5055,8 @@ func (r *ActionsReRunWorkflowReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsReRunWorkflowReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsReRunWorkflowReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -5159,8 +5159,8 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -5263,8 +5263,8 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsSetSelectedReposForOrgSecretReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ActionsSetSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

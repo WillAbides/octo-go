@@ -84,8 +84,8 @@ func (r *OrgsAddOrUpdateMembershipReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsAddOrUpdateMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsAddOrUpdateMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -212,8 +212,8 @@ func (r *OrgsBlockUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsBlockUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsBlockUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -319,8 +319,8 @@ func (r *OrgsCheckBlockedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsCheckBlockedUserReq) endpointAttribute() endpointAttribute {
-	return attrBoolean
+func (r *OrgsCheckBlockedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
 }
 
 // httpRequest creates an http request
@@ -423,8 +423,8 @@ func (r *OrgsCheckMembershipReq) validStatuses() []int {
 	return []int{204, 302}
 }
 
-func (r *OrgsCheckMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsCheckMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -530,8 +530,8 @@ func (r *OrgsCheckPublicMembershipReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsCheckPublicMembershipReq) endpointAttribute() endpointAttribute {
-	return attrBoolean
+func (r *OrgsCheckPublicMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
 }
 
 // httpRequest creates an http request
@@ -634,8 +634,8 @@ func (r *OrgsConcealMembershipReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsConcealMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsConcealMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -737,8 +737,8 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsConvertMemberToOutsideCollaboratorReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsConvertMemberToOutsideCollaboratorReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -841,8 +841,8 @@ func (r *OrgsCreateHookReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *OrgsCreateHookReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsCreateHookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1014,8 +1014,8 @@ func (r *OrgsCreateInvitationReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *OrgsCreateInvitationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsCreateInvitationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1161,8 +1161,8 @@ func (r *OrgsDeleteHookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsDeleteHookReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsDeleteHookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1282,8 +1282,8 @@ func (r *OrgsGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsGetReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsGetReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1396,8 +1396,8 @@ func (r *OrgsGetHookReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsGetHookReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsGetHookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1510,8 +1510,8 @@ func (r *OrgsGetMembershipReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsGetMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsGetMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1623,8 +1623,8 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsGetMembershipForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsGetMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1741,8 +1741,8 @@ func (r *OrgsListReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1854,8 +1854,8 @@ func (r *OrgsListBlockedUsersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListBlockedUsersReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListBlockedUsersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1967,8 +1967,8 @@ func (r *OrgsListCredentialAuthorizationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListCredentialAuthorizationsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListCredentialAuthorizationsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2091,8 +2091,8 @@ func (r *OrgsListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2216,8 +2216,8 @@ func (r *OrgsListForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListForUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2341,8 +2341,8 @@ func (r *OrgsListHooksReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListHooksReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListHooksReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2478,8 +2478,8 @@ func (r *OrgsListInstallationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListInstallationsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListInstallationsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2607,8 +2607,8 @@ func (r *OrgsListInvitationTeamsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListInvitationTeamsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListInvitationTeamsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2755,8 +2755,8 @@ func (r *OrgsListMembersReq) validStatuses() []int {
 	return []int{200, 302}
 }
 
-func (r *OrgsListMembersReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListMembersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2889,8 +2889,8 @@ func (r *OrgsListMembershipsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListMembershipsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListMembershipsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3025,8 +3025,8 @@ func (r *OrgsListOutsideCollaboratorsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListOutsideCollaboratorsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListOutsideCollaboratorsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3150,8 +3150,8 @@ func (r *OrgsListPendingInvitationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListPendingInvitationsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListPendingInvitationsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3275,8 +3275,8 @@ func (r *OrgsListPublicMembersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListPublicMembersReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsListPublicMembersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3388,8 +3388,8 @@ func (r *OrgsPingHookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsPingHookReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsPingHookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3491,8 +3491,8 @@ func (r *OrgsPublicizeMembershipReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsPublicizeMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsPublicizeMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3594,8 +3594,8 @@ func (r *OrgsRemoveCredentialAuthorizationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveCredentialAuthorizationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsRemoveCredentialAuthorizationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3697,8 +3697,8 @@ func (r *OrgsRemoveMemberReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveMemberReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsRemoveMemberReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3800,8 +3800,8 @@ func (r *OrgsRemoveMembershipReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsRemoveMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3903,8 +3903,8 @@ func (r *OrgsRemoveOutsideCollaboratorReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveOutsideCollaboratorReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsRemoveOutsideCollaboratorReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4006,8 +4006,8 @@ func (r *OrgsUnblockUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsUnblockUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsUnblockUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4128,8 +4128,8 @@ func (r *OrgsUpdateReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsUpdateReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsUpdateReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4354,8 +4354,8 @@ func (r *OrgsUpdateHookReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsUpdateHookReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsUpdateHookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4524,8 +4524,8 @@ func (r *OrgsUpdateMembershipReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsUpdateMembershipReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OrgsUpdateMembershipReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

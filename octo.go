@@ -34,8 +34,17 @@ type response struct {
 	httpRequester httpRequester
 }
 
+func hasEndpointAttribute(builder requestBuilder, attribute endpointAttribute) bool {
+	for _, attr := range builder.endpointAttributes() {
+		if attr == attribute {
+			return true
+		}
+	}
+	return false
+}
+
 func (r *response) decodeBody(target interface{}) error {
-	if r.httpRequester.endpointAttribute() == attrRedirect {
+	if hasEndpointAttribute(r.httpRequester, attrRedirect) {
 		return nil
 	}
 	origBody := r.httpResponse.Body
@@ -237,7 +246,7 @@ type requestBuilder interface {
 	body() interface{}
 	validStatuses() []int
 	dataStatuses() []int
-	endpointAttribute() endpointAttribute
+	endpointAttributes() []endpointAttribute
 }
 
 func httpRequestURL(builder requestBuilder, options requestOpts) string {

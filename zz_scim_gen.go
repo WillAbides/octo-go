@@ -83,8 +83,8 @@ func (r *ScimGetProvisioningDetailsForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimGetProvisioningDetailsForUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ScimGetProvisioningDetailsForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -219,8 +219,8 @@ func (r *ScimListProvisionedIdentitiesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimListProvisionedIdentitiesReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ScimListProvisionedIdentitiesReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -332,8 +332,8 @@ func (r *ScimProvisionAndInviteUsersReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ScimProvisionAndInviteUsersReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ScimProvisionAndInviteUsersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -445,8 +445,8 @@ func (r *ScimRemoveUserFromOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ScimRemoveUserFromOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ScimRemoveUserFromOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -549,8 +549,8 @@ func (r *ScimReplaceProvisionedUserInformationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimReplaceProvisionedUserInformationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ScimReplaceProvisionedUserInformationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -663,8 +663,8 @@ func (r *ScimUpdateUserAttributeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ScimUpdateUserAttributeReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *ScimUpdateUserAttributeReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

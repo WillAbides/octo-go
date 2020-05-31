@@ -79,8 +79,8 @@ func (r *MarkdownRenderReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MarkdownRenderReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *MarkdownRenderReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -211,8 +211,8 @@ func (r *MarkdownRenderRawReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MarkdownRenderRawReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

@@ -85,8 +85,8 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -232,8 +232,8 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsAddOrUpdateProjectInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -359,8 +359,8 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsAddOrUpdateRepoInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -494,8 +494,8 @@ func (r *TeamsCheckManagesRepoInOrgReq) validStatuses() []int {
 	return []int{200, 204}
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) endpointAttribute() endpointAttribute {
-	return attrBoolean
+func (r *TeamsCheckManagesRepoInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
 }
 
 // httpRequest creates an http request
@@ -599,8 +599,8 @@ func (r *TeamsCreateReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *TeamsCreateReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsCreateReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -779,8 +779,8 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *TeamsCreateDiscussionCommentInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsCreateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -919,8 +919,8 @@ func (r *TeamsCreateDiscussionInOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *TeamsCreateDiscussionInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsCreateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1055,8 +1055,8 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1198,8 +1198,8 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsDeleteDiscussionCommentInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsDeleteDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1302,8 +1302,8 @@ func (r *TeamsDeleteDiscussionInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsDeleteDiscussionInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsDeleteDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1405,8 +1405,8 @@ func (r *TeamsDeleteInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsDeleteInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsDeleteInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1509,8 +1509,8 @@ func (r *TeamsGetByNameReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetByNameReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsGetByNameReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1639,8 +1639,8 @@ func (r *TeamsGetDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetDiscussionCommentInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsGetDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1768,8 +1768,8 @@ func (r *TeamsGetDiscussionInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetDiscussionInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsGetDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1883,8 +1883,8 @@ func (r *TeamsGetMembershipInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetMembershipInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsGetMembershipInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2008,8 +2008,8 @@ func (r *TeamsListReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2134,8 +2134,8 @@ func (r *TeamsListChildInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListChildInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListChildInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2284,8 +2284,8 @@ func (r *TeamsListDiscussionCommentsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListDiscussionCommentsInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListDiscussionCommentsInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2433,8 +2433,8 @@ func (r *TeamsListDiscussionsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListDiscussionsInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListDiscussionsInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2557,8 +2557,8 @@ func (r *TeamsListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListForAuthenticatedUserReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2682,8 +2682,8 @@ func (r *TeamsListIdPGroupsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListIdPGroupsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2796,8 +2796,8 @@ func (r *TeamsListIdPGroupsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListIdPGroupsInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -2933,8 +2933,8 @@ func (r *TeamsListMembersInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListMembersInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListMembersInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3059,8 +3059,8 @@ func (r *TeamsListPendingInvitationsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListPendingInvitationsInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListPendingInvitationsInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3200,8 +3200,8 @@ func (r *TeamsListProjectsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListProjectsInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListProjectsInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3326,8 +3326,8 @@ func (r *TeamsListReposInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListReposInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsListReposInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3440,8 +3440,8 @@ func (r *TeamsRemoveMembershipInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsRemoveMembershipInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3544,8 +3544,8 @@ func (r *TeamsRemoveProjectInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveProjectInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsRemoveProjectInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3649,8 +3649,8 @@ func (r *TeamsRemoveRepoInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveRepoInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsRemoveRepoInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3769,8 +3769,8 @@ func (r *TeamsReviewProjectInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsReviewProjectInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsReviewProjectInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -3900,8 +3900,8 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4041,8 +4041,8 @@ func (r *TeamsUpdateDiscussionInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsUpdateDiscussionInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsUpdateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -4170,8 +4170,8 @@ func (r *TeamsUpdateInOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *TeamsUpdateInOrgReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *TeamsUpdateInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

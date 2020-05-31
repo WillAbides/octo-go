@@ -84,8 +84,8 @@ func (r *GitCreateBlobReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateBlobReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitCreateBlobReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -216,8 +216,8 @@ func (r *GitCreateCommitReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateCommitReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitCreateCommitReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -414,8 +414,8 @@ func (r *GitCreateRefReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateRefReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitCreateRefReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -546,8 +546,8 @@ func (r *GitCreateTagReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateTagReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitCreateTagReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -703,8 +703,8 @@ func (r *GitCreateTreeReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateTreeReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitCreateTreeReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -870,8 +870,8 @@ func (r *GitDeleteRefReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GitDeleteRefReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitDeleteRefReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -975,8 +975,8 @@ func (r *GitGetBlobReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetBlobReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitGetBlobReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1090,8 +1090,8 @@ func (r *GitGetCommitReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetCommitReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitGetCommitReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1205,8 +1205,8 @@ func (r *GitGetRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetRefReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitGetRefReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1320,8 +1320,8 @@ func (r *GitGetTagReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetTagReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitGetTagReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1447,8 +1447,8 @@ func (r *GitGetTreeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetTreeReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitGetTreeReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1574,8 +1574,8 @@ func (r *GitListMatchingRefsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitListMatchingRefsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitListMatchingRefsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1690,8 +1690,8 @@ func (r *GitUpdateRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitUpdateRefReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *GitUpdateRefReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

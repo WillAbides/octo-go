@@ -82,8 +82,8 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -227,8 +227,8 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -329,8 +329,8 @@ func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OauthAuthorizationsDeleteGrantReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsDeleteGrantReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -432,8 +432,8 @@ func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -545,8 +545,8 @@ func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsGetGrantReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsGetGrantReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -659,8 +659,8 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() [
 	return []int{200, 201}
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -805,8 +805,8 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) val
 	return []int{200, 201}
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -952,8 +952,8 @@ func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1076,8 +1076,8 @@ func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsListGrantsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsListGrantsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1190,8 +1190,8 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

@@ -82,7 +82,7 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		reqBodyFunc,
 		reqDataStatusesFunc,
 		reqValidStatusesFunc,
-		reqEndpointTypeFunc,
+		reqEndpointAttributesFunc,
 		reqHTTPRequestFunc,
 		reqRelReqFunc,
 	} {
@@ -120,16 +120,19 @@ func reqDataStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
-func reqEndpointTypeFunc(file *jen.File, endpoint model.Endpoint) {
-	tp := getEndpointAttribute(endpoint).String()
+func reqEndpointAttributesFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(
 		jen.Id("r").Id("*" + structName),
-	).Id("endpointAttribute()").Params(
-		jen.Id("endpointAttribute"),
+	).Id("endpointAttributes()").Params(
+		jen.Id("[]endpointAttribute"),
 	).Block(
-		jen.Return(jen.Id(tp)),
-	)
+		jen.Return(jen.Id("[]endpointAttribute").ValuesFunc(func(group *jen.Group) {
+			for _, attr := range getEndpointAttributes(endpoint) {
+				group.Id(attr.String())
+			}
+		}),
+		))
 }
 
 func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
@@ -140,7 +143,7 @@ func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 		}
 	}
 	sort.Ints(codes)
-	if getEndpointAttribute(endpoint) == attrRedirect {
+	if endpointHasAttribute(endpoint, attrRedirect) {
 		codes = []int{-1}
 	}
 	structName := reqStructName(endpoint)

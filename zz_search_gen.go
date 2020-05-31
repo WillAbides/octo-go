@@ -127,8 +127,8 @@ func (r *SearchCodeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchCodeReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchCodeReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -304,8 +304,8 @@ func (r *SearchCommitsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchCommitsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchCommitsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -469,8 +469,8 @@ func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchIssuesAndPullRequestsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchIssuesAndPullRequestsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -621,8 +621,8 @@ func (r *SearchLabelsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchLabelsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchLabelsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -794,8 +794,8 @@ func (r *SearchReposReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchReposReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchReposReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -932,8 +932,8 @@ func (r *SearchTopicsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchTopicsReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchTopicsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
@@ -1094,8 +1094,8 @@ func (r *SearchUsersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *SearchUsersReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *SearchUsersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request

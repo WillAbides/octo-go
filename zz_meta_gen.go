@@ -80,8 +80,8 @@ func (r *MetaGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MetaGetReq) endpointAttribute() endpointAttribute {
-	return attrRegular
+func (r *MetaGetReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRegular}
 }
 
 // httpRequest creates an http request
