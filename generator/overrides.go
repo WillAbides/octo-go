@@ -21,6 +21,22 @@ func endpointWithOverrides(endpoint model.Endpoint) model.Endpoint {
 }
 
 var endpointOverrides = []func(endpoint *model.Endpoint){
+
+	// markdown/render-raw doesn't take a json body
+	func(endpoint *model.Endpoint) {
+		if endpoint.ID != "markdown/render-raw" {
+			return
+		}
+		endpoint.Requests = []model.Request{
+			{
+				MimeType: "*/*",
+				Schema: &model.ParamSchema{
+					Type:         model.ParamTypeString,
+				},
+			},
+		}
+	},
+
 	// list-languages returns a map
 	func(endpoint *model.Endpoint) {
 		if endpoint.ID != "repos/list-languages" {

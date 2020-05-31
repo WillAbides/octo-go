@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -169,8 +170,10 @@ MarkdownRenderRawReq is request data for Client.MarkdownRenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type MarkdownRenderRawReq struct {
-	_url        string
-	RequestBody MarkdownRenderRawReqBody
+	_url string
+
+	// http request's body
+	RequestBody io.Reader
 
 	// Setting content-type header is required for this endpoint
 	ContentTypeHeader *string
@@ -212,7 +215,7 @@ func (r *MarkdownRenderRawReq) validStatuses() []int {
 }
 
 func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
+	return []endpointAttribute{attrBodyUploader}
 }
 
 // httpRequest creates an http request
@@ -232,13 +235,6 @@ func (r *MarkdownRenderRawReq) Rel(link RelName, resp *MarkdownRenderRawResponse
 	r._url = u
 	return true
 }
-
-/*
-MarkdownRenderRawReqBody is a request body for markdown/render-raw
-
-https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
-*/
-type MarkdownRenderRawReqBody string
 
 /*
 MarkdownRenderRawResponse is a response for MarkdownRenderRaw
