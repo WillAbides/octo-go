@@ -145,3 +145,17 @@ func TestIssuesListComments(t *testing.T) {
 		require.Len(t, commentIDs, 12)
 	})
 }
+
+func TestMarkdownRender(t *testing.T) {
+	ctx := context.Background()
+	client := vcrClient(t, t.Name())
+	response, err := client.MarkdownRender(ctx, &octo.MarkdownRenderReq{
+		RequestBody: octo.MarkdownRenderReqBody{
+			Text: octo.String("this is my body"),
+		},
+	}, octo.RequestPreserveResponseBody())
+	require.NoError(t, err)
+	rendered, err := ioutil.ReadAll(response.HTTPResponse().Body)
+	require.NoError(t, err)
+	require.Equal(t, "<p>this is my body</p>\n", string(rendered))
+}
