@@ -86,7 +86,7 @@ func (r *IssuesAddAssigneesReq) validStatuses() []int {
 }
 
 func (r *IssuesAddAssigneesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -216,7 +216,7 @@ func (r *IssuesAddLabelsReq) validStatuses() []int {
 }
 
 func (r *IssuesAddLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -456,7 +456,7 @@ func (r *IssuesCreateReq) validStatuses() []int {
 }
 
 func (r *IssuesCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -612,7 +612,7 @@ func (r *IssuesCreateCommentReq) validStatuses() []int {
 }
 
 func (r *IssuesCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -738,7 +738,7 @@ func (r *IssuesCreateLabelReq) validStatuses() []int {
 }
 
 func (r *IssuesCreateLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -880,7 +880,7 @@ func (r *IssuesCreateMilestoneReq) validStatuses() []int {
 }
 
 func (r *IssuesCreateMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4271,7 +4271,7 @@ func (r *IssuesLockReq) validStatuses() []int {
 }
 
 func (r *IssuesLockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4499,7 +4499,7 @@ func (r *IssuesRemoveAssigneesReq) validStatuses() []int {
 }
 
 func (r *IssuesRemoveAssigneesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4746,7 +4746,7 @@ func (r *IssuesReplaceAllLabelsReq) validStatuses() []int {
 }
 
 func (r *IssuesReplaceAllLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4982,7 +4982,7 @@ func (r *IssuesUpdateReq) validStatuses() []int {
 }
 
 func (r *IssuesUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -5144,7 +5144,7 @@ func (r *IssuesUpdateCommentReq) validStatuses() []int {
 }
 
 func (r *IssuesUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -5271,7 +5271,7 @@ func (r *IssuesUpdateLabelReq) validStatuses() []int {
 }
 
 func (r *IssuesUpdateLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -5414,7 +5414,7 @@ func (r *IssuesUpdateMilestoneReq) validStatuses() []int {
 }
 
 func (r *IssuesUpdateMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

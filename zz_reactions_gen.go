@@ -101,7 +101,7 @@ func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -246,7 +246,7 @@ func (r *ReactionsCreateForIssueReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -391,7 +391,7 @@ func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -536,7 +536,7 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -682,7 +682,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int 
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -827,7 +827,7 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

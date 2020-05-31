@@ -184,13 +184,19 @@ const (
 	attrRedirectOnly endpointAttribute = iota
 	// gives boolean status through 204 vs 404 status codes
 	attrBoolean
+	// endpoint where the request body is a reader to be uploaded instead of something to be marshalled to JSON
+	attrBodyUploader
+	// endpoint with a json request body
+	attrJSONRequestBody
 	// attrInvalid is last so we can get a list of all valid types with a for loop
 	attrInvalid
 )
 
 var attrNames = map[endpointAttribute]string{
-	attrRedirectOnly: "attrRedirectOnly",
-	attrBoolean:      "attrBoolean",
+	attrRedirectOnly:    "attrRedirectOnly",
+	attrBoolean:         "attrBoolean",
+	attrBodyUploader:    "attrBodyUploader",
+	attrJSONRequestBody: "attrJSONRequestBody",
 }
 
 func (e endpointAttribute) String() string {
@@ -234,6 +240,26 @@ func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
 type attrCheck func(endpoint model.Endpoint, attrs *[]endpointAttribute)
 
 var attrChecks = []attrCheck{
+	// attrJSONRequestBody if the endpoint has an application/json request
+	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+		for _, request := range endpoint.Requests {
+			if strings.EqualFold("application/json", request.MimeType) {
+				*attrs = append(*attrs, attrJSONRequestBody)
+				break
+			}
+		}
+	},
+
+	// attrBodyUploader if the endpoint has a */* request
+	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+		for _, request := range endpoint.Requests {
+			if request.MimeType == "*/*" {
+				*attrs = append(*attrs, attrBodyUploader)
+				break
+			}
+		}
+	},
+
 	// attrBoolean if the endpoint has exatcly two responses: 204 and 404
 	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
 		if len(endpoint.Responses) != 2 {

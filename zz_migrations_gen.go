@@ -1768,7 +1768,7 @@ func (r *MigrationsMapCommitAuthorReq) validStatuses() []int {
 }
 
 func (r *MigrationsMapCommitAuthorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1897,7 +1897,7 @@ func (r *MigrationsSetLfsPreferenceReq) validStatuses() []int {
 }
 
 func (r *MigrationsSetLfsPreferenceReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2024,7 +2024,7 @@ func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *MigrationsStartForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2162,7 +2162,7 @@ func (r *MigrationsStartForOrgReq) validStatuses() []int {
 }
 
 func (r *MigrationsStartForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2300,7 +2300,7 @@ func (r *MigrationsStartImportReq) validStatuses() []int {
 }
 
 func (r *MigrationsStartImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2668,7 +2668,7 @@ func (r *MigrationsUpdateImportReq) validStatuses() []int {
 }
 
 func (r *MigrationsUpdateImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

@@ -190,7 +190,7 @@ func (r *GistsCreateReq) validStatuses() []int {
 }
 
 func (r *GistsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -331,7 +331,7 @@ func (r *GistsCreateCommentReq) validStatuses() []int {
 }
 
 func (r *GistsCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2231,7 +2231,7 @@ func (r *GistsUpdateReq) validStatuses() []int {
 }
 
 func (r *GistsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2373,7 +2373,7 @@ func (r *GistsUpdateCommentReq) validStatuses() []int {
 }
 
 func (r *GistsUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

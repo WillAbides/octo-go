@@ -97,7 +97,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -241,7 +241,7 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
 }
 
 func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

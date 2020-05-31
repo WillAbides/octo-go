@@ -80,7 +80,7 @@ func (r *MarkdownRenderReq) validStatuses() []int {
 }
 
 func (r *MarkdownRenderReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -212,7 +212,7 @@ func (r *MarkdownRenderRawReq) validStatuses() []int {
 }
 
 func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

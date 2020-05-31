@@ -100,7 +100,7 @@ func (r *ChecksCreateReq) validStatuses() []int {
 }
 
 func (r *ChecksCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -423,7 +423,7 @@ func (r *ChecksCreateSuiteReq) validStatuses() []int {
 }
 
 func (r *ChecksCreateSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1583,7 +1583,7 @@ func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
 }
 
 func (r *ChecksSetSuitesPreferencesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1743,7 +1743,7 @@ func (r *ChecksUpdateReq) validStatuses() []int {
 }
 
 func (r *ChecksUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

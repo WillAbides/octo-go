@@ -85,7 +85,7 @@ func (r *GitCreateBlobReq) validStatuses() []int {
 }
 
 func (r *GitCreateBlobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -217,7 +217,7 @@ func (r *GitCreateCommitReq) validStatuses() []int {
 }
 
 func (r *GitCreateCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -415,7 +415,7 @@ func (r *GitCreateRefReq) validStatuses() []int {
 }
 
 func (r *GitCreateRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -547,7 +547,7 @@ func (r *GitCreateTagReq) validStatuses() []int {
 }
 
 func (r *GitCreateTagReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -704,7 +704,7 @@ func (r *GitCreateTreeReq) validStatuses() []int {
 }
 
 func (r *GitCreateTreeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1691,7 +1691,7 @@ func (r *GitUpdateRefReq) validStatuses() []int {
 }
 
 func (r *GitUpdateRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

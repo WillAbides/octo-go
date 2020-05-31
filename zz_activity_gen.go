@@ -2975,7 +2975,7 @@ func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3096,7 +3096,7 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
 }
 
 func (r *ActivityMarkRepoNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3320,7 +3320,7 @@ func (r *ActivitySetRepoSubscriptionReq) validStatuses() []int {
 }
 
 func (r *ActivitySetRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3448,7 +3448,7 @@ func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
 }
 
 func (r *ActivitySetThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

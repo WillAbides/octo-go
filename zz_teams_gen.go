@@ -86,7 +86,7 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -233,7 +233,7 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsAddOrUpdateProjectInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -360,7 +360,7 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsAddOrUpdateRepoInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -600,7 +600,7 @@ func (r *TeamsCreateReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -780,7 +780,7 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -920,7 +920,7 @@ func (r *TeamsCreateDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1056,7 +1056,7 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3901,7 +3901,7 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4042,7 +4042,7 @@ func (r *TeamsUpdateDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsUpdateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4171,7 +4171,7 @@ func (r *TeamsUpdateInOrgReq) validStatuses() []int {
 }
 
 func (r *TeamsUpdateInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

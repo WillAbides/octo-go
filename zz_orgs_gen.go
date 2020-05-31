@@ -85,7 +85,7 @@ func (r *OrgsAddOrUpdateMembershipReq) validStatuses() []int {
 }
 
 func (r *OrgsAddOrUpdateMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -842,7 +842,7 @@ func (r *OrgsCreateHookReq) validStatuses() []int {
 }
 
 func (r *OrgsCreateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1015,7 +1015,7 @@ func (r *OrgsCreateInvitationReq) validStatuses() []int {
 }
 
 func (r *OrgsCreateInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4129,7 +4129,7 @@ func (r *OrgsUpdateReq) validStatuses() []int {
 }
 
 func (r *OrgsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4355,7 +4355,7 @@ func (r *OrgsUpdateHookReq) validStatuses() []int {
 }
 
 func (r *OrgsUpdateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4525,7 +4525,7 @@ func (r *OrgsUpdateMembershipReq) validStatuses() []int {
 }
 
 func (r *OrgsUpdateMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

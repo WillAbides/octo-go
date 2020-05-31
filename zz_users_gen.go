@@ -83,7 +83,7 @@ func (r *UsersAddEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersAddEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -636,7 +636,7 @@ func (r *UsersCreateGpgKeyReq) validStatuses() []int {
 }
 
 func (r *UsersCreateGpgKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -764,7 +764,7 @@ func (r *UsersCreatePublicKeyReq) validStatuses() []int {
 }
 
 func (r *UsersCreatePublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -898,7 +898,7 @@ func (r *UsersDeleteEmailsReq) validStatuses() []int {
 }
 
 func (r *UsersDeleteEmailsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3380,7 +3380,7 @@ func (r *UsersTogglePrimaryEmailVisibilityReq) validStatuses() []int {
 }
 
 func (r *UsersTogglePrimaryEmailVisibilityReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3714,7 +3714,7 @@ func (r *UsersUpdateAuthenticatedReq) validStatuses() []int {
 }
 
 func (r *UsersUpdateAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

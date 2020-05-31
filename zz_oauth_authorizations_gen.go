@@ -83,7 +83,7 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -660,7 +660,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() [
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -806,7 +806,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) val
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1191,7 +1191,7 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

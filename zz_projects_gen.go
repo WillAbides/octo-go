@@ -99,7 +99,7 @@ func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
 }
 
 func (r *ProjectsAddCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -237,7 +237,7 @@ func (r *ProjectsCreateCardReq) validStatuses() []int {
 }
 
 func (r *ProjectsCreateCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -397,7 +397,7 @@ func (r *ProjectsCreateColumnReq) validStatuses() []int {
 }
 
 func (r *ProjectsCreateColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -526,7 +526,7 @@ func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *ProjectsCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -669,7 +669,7 @@ func (r *ProjectsCreateForOrgReq) validStatuses() []int {
 }
 
 func (r *ProjectsCreateForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -813,7 +813,7 @@ func (r *ProjectsCreateForRepoReq) validStatuses() []int {
 }
 
 func (r *ProjectsCreateForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2558,7 +2558,7 @@ func (r *ProjectsMoveCardReq) validStatuses() []int {
 }
 
 func (r *ProjectsMoveCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2694,7 +2694,7 @@ func (r *ProjectsMoveColumnReq) validStatuses() []int {
 }
 
 func (r *ProjectsMoveColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3074,7 +3074,7 @@ func (r *ProjectsUpdateReq) validStatuses() []int {
 }
 
 func (r *ProjectsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3257,7 +3257,7 @@ func (r *ProjectsUpdateCardReq) validStatuses() []int {
 }
 
 func (r *ProjectsUpdateCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3396,7 +3396,7 @@ func (r *ProjectsUpdateColumnReq) validStatuses() []int {
 }
 
 func (r *ProjectsUpdateColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

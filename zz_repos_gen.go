@@ -188,7 +188,7 @@ func (r *ReposAddCollaboratorReq) validStatuses() []int {
 }
 
 func (r *ReposAddCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -324,7 +324,7 @@ func (r *ReposAddDeployKeyReq) validStatuses() []int {
 }
 
 func (r *ReposAddDeployKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -582,7 +582,7 @@ func (r *ReposAddProtectedBranchAppRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposAddProtectedBranchAppRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -835,7 +835,7 @@ func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) validStatuses()
 }
 
 func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -956,7 +956,7 @@ func (r *ReposAddProtectedBranchTeamRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposAddProtectedBranchTeamRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1079,7 +1079,7 @@ func (r *ReposAddProtectedBranchUserRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposAddProtectedBranchUserRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1548,7 +1548,7 @@ func (r *ReposCreateCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReposCreateCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1700,7 +1700,7 @@ func (r *ReposCreateDeploymentReq) validStatuses() []int {
 }
 
 func (r *ReposCreateDeploymentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1906,7 +1906,7 @@ func (r *ReposCreateDeploymentStatusReq) validStatuses() []int {
 }
 
 func (r *ReposCreateDeploymentStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2101,7 +2101,7 @@ func (r *ReposCreateDispatchEventReq) validStatuses() []int {
 }
 
 func (r *ReposCreateDispatchEventReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2249,7 +2249,7 @@ func (r *ReposCreateForAuthenticatedUserReq) validStatuses() []int {
 }
 
 func (r *ReposCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2464,7 +2464,7 @@ func (r *ReposCreateForkReq) validStatuses() []int {
 }
 
 func (r *ReposCreateForkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2593,7 +2593,7 @@ func (r *ReposCreateHookReq) validStatuses() []int {
 }
 
 func (r *ReposCreateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -2797,7 +2797,7 @@ func (r *ReposCreateInOrgReq) validStatuses() []int {
 }
 
 func (r *ReposCreateInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3013,7 +3013,7 @@ func (r *ReposCreateOrUpdateFileReq) validStatuses() []int {
 }
 
 func (r *ReposCreateOrUpdateFileReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3192,7 +3192,7 @@ func (r *ReposCreateReleaseReq) validStatuses() []int {
 }
 
 func (r *ReposCreateReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3344,7 +3344,7 @@ func (r *ReposCreateStatusReq) validStatuses() []int {
 }
 
 func (r *ReposCreateStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3501,7 +3501,7 @@ func (r *ReposCreateUsingTemplateReq) validStatuses() []int {
 }
 
 func (r *ReposCreateUsingTemplateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -4161,7 +4161,7 @@ func (r *ReposDeleteFileReq) validStatuses() []int {
 }
 
 func (r *ReposDeleteFileReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -5216,7 +5216,7 @@ func (r *ReposEnablePagesSiteReq) validStatuses() []int {
 }
 
 func (r *ReposEnablePagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -14038,7 +14038,7 @@ func (r *ReposMergeReq) validStatuses() []int {
 }
 
 func (r *ReposMergeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -14694,7 +14694,7 @@ func (r *ReposRemoveProtectedBranchAppRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposRemoveProtectedBranchAppRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -15144,7 +15144,7 @@ func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) validStatuse
 }
 
 func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -15369,7 +15369,7 @@ func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -15492,7 +15492,7 @@ func (r *ReposRemoveProtectedBranchUserRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposRemoveProtectedBranchUserRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -15626,7 +15626,7 @@ func (r *ReposReplaceAllTopicsReq) validStatuses() []int {
 }
 
 func (r *ReposReplaceAllTopicsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -15758,7 +15758,7 @@ func (r *ReposReplaceProtectedBranchAppRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposReplaceProtectedBranchAppRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -15881,7 +15881,7 @@ func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) validStatus
 }
 
 func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -16002,7 +16002,7 @@ func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -16125,7 +16125,7 @@ func (r *ReposReplaceProtectedBranchUserRestrictionsReq) validStatuses() []int {
 }
 
 func (r *ReposReplaceProtectedBranchUserRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -16579,7 +16579,7 @@ func (r *ReposTransferReq) validStatuses() []int {
 }
 
 func (r *ReposTransferReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -16742,7 +16742,7 @@ func (r *ReposUpdateReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -16964,7 +16964,7 @@ func (r *ReposUpdateBranchProtectionReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -17203,7 +17203,7 @@ func (r *ReposUpdateCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -17330,7 +17330,7 @@ func (r *ReposUpdateHookReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -17512,7 +17512,7 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateInformationAboutPagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -17641,7 +17641,7 @@ func (r *ReposUpdateInvitationReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -17784,7 +17784,7 @@ func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) validStatuse
 }
 
 func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -17944,7 +17944,7 @@ func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) validStatuses() []in
 }
 
 func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -18074,7 +18074,7 @@ func (r *ReposUpdateReleaseReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -18223,7 +18223,7 @@ func (r *ReposUpdateReleaseAssetReq) validStatuses() []int {
 }
 
 func (r *ReposUpdateReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -18385,7 +18385,7 @@ func (r *ReposUploadReleaseAssetReq) validStatuses() []int {
 }
 
 func (r *ReposUploadReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBodyUploader}
 }
 
 // httpRequest creates an http request

@@ -292,7 +292,7 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateOrUpdateOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -440,7 +440,7 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsCreateOrUpdateRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -5264,7 +5264,7 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) validStatuses() []int {
 }
 
 func (r *ActionsSetSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request

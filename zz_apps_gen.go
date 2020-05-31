@@ -313,7 +313,7 @@ func (r *AppsCheckTokenReq) validStatuses() []int {
 }
 
 func (r *AppsCheckTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -450,7 +450,7 @@ func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
 }
 
 func (r *AppsCreateContentAttachmentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -709,7 +709,7 @@ func (r *AppsCreateInstallationTokenReq) validStatuses() []int {
 }
 
 func (r *AppsCreateInstallationTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -849,7 +849,7 @@ func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1077,7 +1077,7 @@ func (r *AppsDeleteTokenReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -3755,7 +3755,7 @@ func (r *AppsResetTokenReq) validStatuses() []int {
 }
 
 func (r *AppsResetTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
