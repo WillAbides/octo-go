@@ -16,7 +16,7 @@ func TestCreateGist(t *testing.T) {
 		RequestBody: octo.GistsCreateReqBody{
 			Description: octo.String("test gist, pls delete"),
 			Public:      octo.Bool(false),
-			Files: map[string]*octo.GistsCreateReqBodyFiles{
+			Files: map[string]octo.GistsCreateReqBodyFiles{
 				"foo.md": {
 					Content: octo.String(`not much here`),
 				},

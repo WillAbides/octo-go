@@ -150,9 +150,6 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 	}
 	if schema.ItemSchema != nil {
 		stmt := jen.Map(jen.String())
-		if opts.usePointers && needsPointer(schema.ItemSchema) {
-			stmt.Op("*")
-		}
 		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), opts))
 	}
 	return jen.Interface()
