@@ -140,6 +140,9 @@ var defaultRequestOpts = requestOpts{
 func buildRequestOptions(opts []RequestOption) (requestOpts, error) {
 	result := defaultRequestOpts
 	for _, opt := range opts {
+		if opt == nil {
+			continue
+		}
 		err := opt(&result)
 		if err != nil {
 			return requestOpts{}, err

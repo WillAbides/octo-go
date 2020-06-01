@@ -2,6 +2,7 @@ package octo_test
 
 import (
 	"encoding/base64"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -33,7 +34,7 @@ func appPrivateKey(t *testing.T) []byte {
 func init() {
 	err := godotenv.Load()
 	if err != nil {
-		panic(err)
+		fmt.Println("no .env file. tests can still run")
 	}
 }
 
@@ -42,11 +43,19 @@ func patAuth() octo.RequestOption {
 }
 
 func appAuth(t *testing.T) octo.RequestOption {
-	return octo.RequestAppAuth(appID, appPrivateKey(t))
+	key := appPrivateKey(t)
+	if key == nil {
+		return nil
+	}
+	return octo.RequestAppAuth(appID, key)
 }
 
 func appInstallationAuth(t *testing.T) octo.RequestOption {
-	return octo.RequestAppInstallationAuth(appID, appInstallationID, appPrivateKey(t))
+	key := appPrivateKey(t)
+	if key == nil {
+		return nil
+	}
+	return octo.RequestAppInstallationAuth(appID, appInstallationID, key)
 }
 
 func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) *octo.Client {

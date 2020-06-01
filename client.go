@@ -68,6 +68,9 @@ func (c *Client) doRequest(ctx context.Context, requester httpRequester, opt ...
 // SetRequestOptions sets options that will be used on all requests this client makes
 func (c *Client) SetRequestOptions(opt ...RequestOption) error {
 	for _, o := range opt {
+		if o == nil {
+			continue
+		}
 		err := o(&c.requestOpts)
 		if err != nil {
 			return err
