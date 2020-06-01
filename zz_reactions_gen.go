@@ -43,7 +43,7 @@ ReactionsCreateForCommitCommentReq is request data for Client.ReactionsCreateFor
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -59,8 +59,8 @@ type ReactionsCreateForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsCreateForCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsCreateForCommitCommentReq) urlPath() string {
@@ -101,7 +101,7 @@ func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -118,7 +118,7 @@ func (r *ReactionsCreateForCommitCommentReq) Rel(link RelName, resp *ReactionsCr
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -188,7 +188,7 @@ ReactionsCreateForIssueReq is request data for Client.ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -204,8 +204,8 @@ type ReactionsCreateForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForIssueReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsCreateForIssueReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsCreateForIssueReq) urlPath() string {
@@ -246,7 +246,7 @@ func (r *ReactionsCreateForIssueReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -263,7 +263,7 @@ func (r *ReactionsCreateForIssueReq) Rel(link RelName, resp *ReactionsCreateForI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -333,7 +333,7 @@ ReactionsCreateForIssueCommentReq is request data for Client.ReactionsCreateForI
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -349,8 +349,8 @@ type ReactionsCreateForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForIssueCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsCreateForIssueCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsCreateForIssueCommentReq) urlPath() string {
@@ -391,7 +391,7 @@ func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -408,7 +408,7 @@ func (r *ReactionsCreateForIssueCommentReq) Rel(link RelName, resp *ReactionsCre
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -478,7 +478,7 @@ ReactionsCreateForPullRequestReviewCommentReq is request data for Client.Reactio
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CommentId   int64
@@ -494,8 +494,8 @@ type ReactionsCreateForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForPullRequestReviewCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsCreateForPullRequestReviewCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
@@ -536,7 +536,7 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -553,7 +553,7 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -623,7 +623,7 @@ ReactionsCreateForTeamDiscussionCommentInOrgReq is request data for Client.React
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -640,8 +640,8 @@ type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlPath() string {
@@ -682,7 +682,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int 
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -699,7 +699,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -769,7 +769,7 @@ ReactionsCreateForTeamDiscussionInOrgReq is request data for Client.ReactionsCre
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -785,8 +785,8 @@ type ReactionsCreateForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
@@ -827,7 +827,7 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
 }
 
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -844,7 +844,7 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) Rel(link RelName, resp *React
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -913,7 +913,7 @@ ReactionsDeleteForCommitCommentReq is request data for Client.ReactionsDeleteFor
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 type ReactionsDeleteForCommitCommentReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	CommentId  int64
@@ -929,8 +929,8 @@ type ReactionsDeleteForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsDeleteForCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsDeleteForCommitCommentReq) urlPath() string {
@@ -988,7 +988,7 @@ func (r *ReactionsDeleteForCommitCommentReq) Rel(link RelName, resp *ReactionsDe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1033,7 +1033,7 @@ ReactionsDeleteForIssueReq is request data for Client.ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 type ReactionsDeleteForIssueReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1049,8 +1049,8 @@ type ReactionsDeleteForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForIssueReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsDeleteForIssueReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsDeleteForIssueReq) urlPath() string {
@@ -1108,7 +1108,7 @@ func (r *ReactionsDeleteForIssueReq) Rel(link RelName, resp *ReactionsDeleteForI
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1153,7 +1153,7 @@ ReactionsDeleteForIssueCommentReq is request data for Client.ReactionsDeleteForI
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 type ReactionsDeleteForIssueCommentReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	CommentId  int64
@@ -1169,8 +1169,8 @@ type ReactionsDeleteForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForIssueCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsDeleteForIssueCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsDeleteForIssueCommentReq) urlPath() string {
@@ -1228,7 +1228,7 @@ func (r *ReactionsDeleteForIssueCommentReq) Rel(link RelName, resp *ReactionsDel
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1273,7 +1273,7 @@ ReactionsDeleteForPullRequestCommentReq is request data for Client.ReactionsDele
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 type ReactionsDeleteForPullRequestCommentReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	CommentId  int64
@@ -1289,8 +1289,8 @@ type ReactionsDeleteForPullRequestCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForPullRequestCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsDeleteForPullRequestCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsDeleteForPullRequestCommentReq) urlPath() string {
@@ -1348,7 +1348,7 @@ func (r *ReactionsDeleteForPullRequestCommentReq) Rel(link RelName, resp *Reacti
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1393,7 +1393,7 @@ ReactionsDeleteForTeamDiscussionReq is request data for Client.ReactionsDeleteFo
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 type ReactionsDeleteForTeamDiscussionReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1409,8 +1409,8 @@ type ReactionsDeleteForTeamDiscussionReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForTeamDiscussionReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsDeleteForTeamDiscussionReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsDeleteForTeamDiscussionReq) urlPath() string {
@@ -1468,7 +1468,7 @@ func (r *ReactionsDeleteForTeamDiscussionReq) Rel(link RelName, resp *ReactionsD
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1513,7 +1513,7 @@ ReactionsDeleteForTeamDiscussionCommentReq is request data for Client.ReactionsD
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
 type ReactionsDeleteForTeamDiscussionCommentReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -1530,8 +1530,8 @@ type ReactionsDeleteForTeamDiscussionCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
@@ -1589,7 +1589,7 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) Rel(link RelName, resp *Rea
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1635,7 +1635,7 @@ ReactionsListForCommitCommentReq is request data for Client.ReactionsListForComm
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ReactionsListForCommitCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1663,8 +1663,8 @@ type ReactionsListForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForCommitCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsListForCommitCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsListForCommitCommentReq) urlPath() string {
@@ -1731,7 +1731,7 @@ func (r *ReactionsListForCommitCommentReq) Rel(link RelName, resp *ReactionsList
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1787,7 +1787,7 @@ ReactionsListForIssueReq is request data for Client.ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ReactionsListForIssueReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
@@ -1815,8 +1815,8 @@ type ReactionsListForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForIssueReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsListForIssueReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsListForIssueReq) urlPath() string {
@@ -1883,7 +1883,7 @@ func (r *ReactionsListForIssueReq) Rel(link RelName, resp *ReactionsListForIssue
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1939,7 +1939,7 @@ ReactionsListForIssueCommentReq is request data for Client.ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ReactionsListForIssueCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -1967,8 +1967,8 @@ type ReactionsListForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForIssueCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsListForIssueCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsListForIssueCommentReq) urlPath() string {
@@ -2035,7 +2035,7 @@ func (r *ReactionsListForIssueCommentReq) Rel(link RelName, resp *ReactionsListF
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2091,7 +2091,7 @@ ReactionsListForPullRequestReviewCommentReq is request data for Client.Reactions
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ReactionsListForPullRequestReviewCommentReq struct {
-	pgURL     string
+	_url      string
 	Owner     string
 	Repo      string
 	CommentId int64
@@ -2119,8 +2119,8 @@ type ReactionsListForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForPullRequestReviewCommentReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsListForPullRequestReviewCommentReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsListForPullRequestReviewCommentReq) urlPath() string {
@@ -2187,7 +2187,7 @@ func (r *ReactionsListForPullRequestReviewCommentReq) Rel(link RelName, resp *Re
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2243,7 +2243,7 @@ ReactionsListForTeamDiscussionCommentInOrgReq is request data for Client.Reactio
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 type ReactionsListForTeamDiscussionCommentInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -2272,8 +2272,8 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
@@ -2340,7 +2340,7 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -2396,7 +2396,7 @@ ReactionsListForTeamDiscussionInOrgReq is request data for Client.ReactionsListF
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ReactionsListForTeamDiscussionInOrgReq struct {
-	pgURL            string
+	_url             string
 	Org              string
 	TeamSlug         string
 	DiscussionNumber int64
@@ -2424,8 +2424,8 @@ type ReactionsListForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForTeamDiscussionInOrgReq) pagingURL() string {
-	return r.pgURL
+func (r *ReactionsListForTeamDiscussionInOrgReq) url() string {
+	return r._url
 }
 
 func (r *ReactionsListForTeamDiscussionInOrgReq) urlPath() string {
@@ -2492,7 +2492,7 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) Rel(link RelName, resp *Reactio
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -43,7 +43,7 @@ SearchCodeReq is request data for Client.SearchCode
 https://developer.github.com/v3/search/#search-code
 */
 type SearchCodeReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -77,8 +77,8 @@ type SearchCodeReq struct {
 	Page *int64
 }
 
-func (r *SearchCodeReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchCodeReq) url() string {
+	return r._url
 }
 
 func (r *SearchCodeReq) urlPath() string {
@@ -145,7 +145,7 @@ func (r *SearchCodeReq) Rel(link RelName, resp *SearchCodeResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -205,7 +205,7 @@ SearchCommitsReq is request data for Client.SearchCommits
 https://developer.github.com/v3/search/#search-commits
 */
 type SearchCommitsReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -248,8 +248,8 @@ type SearchCommitsReq struct {
 	CloakPreview bool
 }
 
-func (r *SearchCommitsReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchCommitsReq) url() string {
+	return r._url
 }
 
 func (r *SearchCommitsReq) urlPath() string {
@@ -322,7 +322,7 @@ func (r *SearchCommitsReq) Rel(link RelName, resp *SearchCommitsResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -382,7 +382,7 @@ SearchIssuesAndPullRequestsReq is request data for Client.SearchIssuesAndPullReq
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 type SearchIssuesAndPullRequestsReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -419,8 +419,8 @@ type SearchIssuesAndPullRequestsReq struct {
 	Page *int64
 }
 
-func (r *SearchIssuesAndPullRequestsReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchIssuesAndPullRequestsReq) url() string {
+	return r._url
 }
 
 func (r *SearchIssuesAndPullRequestsReq) urlPath() string {
@@ -487,7 +487,7 @@ func (r *SearchIssuesAndPullRequestsReq) Rel(link RelName, resp *SearchIssuesAnd
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -547,7 +547,7 @@ SearchLabelsReq is request data for Client.SearchLabels
 https://developer.github.com/v3/search/#search-labels
 */
 type SearchLabelsReq struct {
-	pgURL string
+	_url string
 
 	// The id of the repository.
 	RepositoryId *int64
@@ -574,8 +574,8 @@ type SearchLabelsReq struct {
 	Order *string
 }
 
-func (r *SearchLabelsReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchLabelsReq) url() string {
+	return r._url
 }
 
 func (r *SearchLabelsReq) urlPath() string {
@@ -639,7 +639,7 @@ func (r *SearchLabelsReq) Rel(link RelName, resp *SearchLabelsResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -699,7 +699,7 @@ SearchReposReq is request data for Client.SearchRepos
 https://developer.github.com/v3/search/#search-repositories
 */
 type SearchReposReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -741,8 +741,8 @@ type SearchReposReq struct {
 	MercyPreview bool
 }
 
-func (r *SearchReposReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchReposReq) url() string {
+	return r._url
 }
 
 func (r *SearchReposReq) urlPath() string {
@@ -812,7 +812,7 @@ func (r *SearchReposReq) Rel(link RelName, resp *SearchReposResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -872,7 +872,7 @@ SearchTopicsReq is request data for Client.SearchTopics
 https://developer.github.com/v3/search/#search-topics
 */
 type SearchTopicsReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -891,8 +891,8 @@ type SearchTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r *SearchTopicsReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchTopicsReq) url() string {
+	return r._url
 }
 
 func (r *SearchTopicsReq) urlPath() string {
@@ -950,7 +950,7 @@ func (r *SearchTopicsReq) Rel(link RelName, resp *SearchTopicsResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1010,7 +1010,7 @@ SearchUsersReq is request data for Client.SearchUsers
 https://developer.github.com/v3/search/#search-users
 */
 type SearchUsersReq struct {
-	pgURL string
+	_url string
 
 	/*
 	The query contains one or more search keywords and qualifiers. Qualifiers allow
@@ -1044,8 +1044,8 @@ type SearchUsersReq struct {
 	Page *int64
 }
 
-func (r *SearchUsersReq) pagingURL() string {
-	return r.pgURL
+func (r *SearchUsersReq) url() string {
+	return r._url
 }
 
 func (r *SearchUsersReq) urlPath() string {
@@ -1112,7 +1112,7 @@ func (r *SearchUsersReq) Rel(link RelName, resp *SearchUsersResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

@@ -43,7 +43,7 @@ ChecksCreateReq is request data for Client.ChecksCreate
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type ChecksCreateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ChecksCreateReqBody
@@ -58,8 +58,8 @@ type ChecksCreateReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksCreateReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksCreateReq) url() string {
+	return r._url
 }
 
 func (r *ChecksCreateReq) urlPath() string {
@@ -100,7 +100,7 @@ func (r *ChecksCreateReq) validStatuses() []int {
 }
 
 func (r *ChecksCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -117,7 +117,7 @@ func (r *ChecksCreateReq) Rel(link RelName, resp *ChecksCreateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -366,7 +366,7 @@ ChecksCreateSuiteReq is request data for Client.ChecksCreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type ChecksCreateSuiteReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ChecksCreateSuiteReqBody
@@ -381,8 +381,8 @@ type ChecksCreateSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksCreateSuiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksCreateSuiteReq) url() string {
+	return r._url
 }
 
 func (r *ChecksCreateSuiteReq) urlPath() string {
@@ -423,7 +423,7 @@ func (r *ChecksCreateSuiteReq) validStatuses() []int {
 }
 
 func (r *ChecksCreateSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -440,7 +440,7 @@ func (r *ChecksCreateSuiteReq) Rel(link RelName, resp *ChecksCreateSuiteResponse
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -507,7 +507,7 @@ ChecksGetReq is request data for Client.ChecksGet
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type ChecksGetReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	CheckRunId int64
@@ -522,8 +522,8 @@ type ChecksGetReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksGetReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksGetReq) url() string {
+	return r._url
 }
 
 func (r *ChecksGetReq) urlPath() string {
@@ -581,7 +581,7 @@ func (r *ChecksGetReq) Rel(link RelName, resp *ChecksGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -637,7 +637,7 @@ ChecksGetSuiteReq is request data for Client.ChecksGetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type ChecksGetSuiteReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	CheckSuiteId int64
@@ -652,8 +652,8 @@ type ChecksGetSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksGetSuiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksGetSuiteReq) url() string {
+	return r._url
 }
 
 func (r *ChecksGetSuiteReq) urlPath() string {
@@ -711,7 +711,7 @@ func (r *ChecksGetSuiteReq) Rel(link RelName, resp *ChecksGetSuiteResponse) bool
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -767,7 +767,7 @@ ChecksListAnnotationsReq is request data for Client.ChecksListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ChecksListAnnotationsReq struct {
-	pgURL      string
+	_url       string
 	Owner      string
 	Repo       string
 	CheckRunId int64
@@ -788,8 +788,8 @@ type ChecksListAnnotationsReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListAnnotationsReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksListAnnotationsReq) url() string {
+	return r._url
 }
 
 func (r *ChecksListAnnotationsReq) urlPath() string {
@@ -853,7 +853,7 @@ func (r *ChecksListAnnotationsReq) Rel(link RelName, resp *ChecksListAnnotations
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -909,7 +909,7 @@ ChecksListForRefReq is request data for Client.ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
@@ -945,8 +945,8 @@ type ChecksListForRefReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListForRefReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksListForRefReq) url() string {
+	return r._url
 }
 
 func (r *ChecksListForRefReq) urlPath() string {
@@ -1019,7 +1019,7 @@ func (r *ChecksListForRefReq) Rel(link RelName, resp *ChecksListForRefResponse) 
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1078,7 +1078,7 @@ ChecksListForSuiteReq is request data for Client.ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	CheckSuiteId int64
@@ -1114,8 +1114,8 @@ type ChecksListForSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListForSuiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksListForSuiteReq) url() string {
+	return r._url
 }
 
 func (r *ChecksListForSuiteReq) urlPath() string {
@@ -1188,7 +1188,7 @@ func (r *ChecksListForSuiteReq) Rel(link RelName, resp *ChecksListForSuiteRespon
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1247,7 +1247,7 @@ ChecksListSuitesForRefReq is request data for Client.ChecksListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ChecksListSuitesForRefReq struct {
-	pgURL string
+	_url  string
 	Owner string
 	Repo  string
 	Ref   string
@@ -1277,8 +1277,8 @@ type ChecksListSuitesForRefReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListSuitesForRefReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksListSuitesForRefReq) url() string {
+	return r._url
 }
 
 func (r *ChecksListSuitesForRefReq) urlPath() string {
@@ -1348,7 +1348,7 @@ func (r *ChecksListSuitesForRefReq) Rel(link RelName, resp *ChecksListSuitesForR
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1406,7 +1406,7 @@ ChecksRerequestSuiteReq is request data for Client.ChecksRerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type ChecksRerequestSuiteReq struct {
-	pgURL        string
+	_url         string
 	Owner        string
 	Repo         string
 	CheckSuiteId int64
@@ -1421,8 +1421,8 @@ type ChecksRerequestSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksRerequestSuiteReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksRerequestSuiteReq) url() string {
+	return r._url
 }
 
 func (r *ChecksRerequestSuiteReq) urlPath() string {
@@ -1480,7 +1480,7 @@ func (r *ChecksRerequestSuiteReq) Rel(link RelName, resp *ChecksRerequestSuiteRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1526,7 +1526,7 @@ ChecksSetSuitesPreferencesReq is request data for Client.ChecksSetSuitesPreferen
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type ChecksSetSuitesPreferencesReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	RequestBody ChecksSetSuitesPreferencesReqBody
@@ -1541,8 +1541,8 @@ type ChecksSetSuitesPreferencesReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksSetSuitesPreferencesReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksSetSuitesPreferencesReq) url() string {
+	return r._url
 }
 
 func (r *ChecksSetSuitesPreferencesReq) urlPath() string {
@@ -1583,7 +1583,7 @@ func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
 }
 
 func (r *ChecksSetSuitesPreferencesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1600,7 +1600,7 @@ func (r *ChecksSetSuitesPreferencesReq) Rel(link RelName, resp *ChecksSetSuitesP
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -1685,7 +1685,7 @@ ChecksUpdateReq is request data for Client.ChecksUpdate
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type ChecksUpdateReq struct {
-	pgURL       string
+	_url        string
 	Owner       string
 	Repo        string
 	CheckRunId  int64
@@ -1701,8 +1701,8 @@ type ChecksUpdateReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksUpdateReq) pagingURL() string {
-	return r.pgURL
+func (r *ChecksUpdateReq) url() string {
+	return r._url
 }
 
 func (r *ChecksUpdateReq) urlPath() string {
@@ -1743,7 +1743,7 @@ func (r *ChecksUpdateReq) validStatuses() []int {
 }
 
 func (r *ChecksUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // httpRequest creates an http request
@@ -1760,7 +1760,7 @@ func (r *ChecksUpdateReq) Rel(link RelName, resp *ChecksUpdateResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

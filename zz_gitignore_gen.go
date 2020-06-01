@@ -42,12 +42,12 @@ GitignoreGetTemplateReq is request data for Client.GitignoreGetTemplate
 https://developer.github.com/v3/gitignore/#get-a-single-template
 */
 type GitignoreGetTemplateReq struct {
-	pgURL string
-	Name  string
+	_url string
+	Name string
 }
 
-func (r *GitignoreGetTemplateReq) pagingURL() string {
-	return r.pgURL
+func (r *GitignoreGetTemplateReq) url() string {
+	return r._url
 }
 
 func (r *GitignoreGetTemplateReq) urlPath() string {
@@ -99,7 +99,7 @@ func (r *GitignoreGetTemplateReq) Rel(link RelName, resp *GitignoreGetTemplateRe
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 
@@ -155,11 +155,11 @@ GitignoreListTemplatesReq is request data for Client.GitignoreListTemplates
 https://developer.github.com/v3/gitignore/#listing-available-templates
 */
 type GitignoreListTemplatesReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *GitignoreListTemplatesReq) pagingURL() string {
-	return r.pgURL
+func (r *GitignoreListTemplatesReq) url() string {
+	return r._url
 }
 
 func (r *GitignoreListTemplatesReq) urlPath() string {
@@ -211,7 +211,7 @@ func (r *GitignoreListTemplatesReq) Rel(link RelName, resp *GitignoreListTemplat
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

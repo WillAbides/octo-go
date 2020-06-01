@@ -1,0 +1,60 @@
+---
+version: 1
+interactions:
+- request:
+    body: this is my body
+    form: {}
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/markdown/raw
+    method: POST
+  response:
+    body: |
+      <p>this is my body</p>
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Sun, 31 May 2020 22:30:37 GMT
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Commonmarker-Version:
+      - 0.21.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Request-Id:
+      - B8F3:610E:15D85B6:249B2C1:5ED4300D
+      X-Ratelimit-Limit:
+      - "5000"
+      X-Ratelimit-Remaining:
+      - "4995"
+      X-Ratelimit-Reset:
+      - "1590965189"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

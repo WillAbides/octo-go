@@ -7,4 +7,7 @@ type endpointAttribute int
 const (
 	attrRedirectOnly endpointAttribute = iota
 	attrBoolean
+	attrBodyUploader
+	attrJSONRequestBody
+	attrExplicitURL
 )

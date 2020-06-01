@@ -42,11 +42,11 @@ MetaGetReq is request data for Client.MetaGet
 https://developer.github.com/v3/meta/#meta
 */
 type MetaGetReq struct {
-	pgURL string
+	_url string
 }
 
-func (r *MetaGetReq) pagingURL() string {
-	return r.pgURL
+func (r *MetaGetReq) url() string {
+	return r._url
 }
 
 func (r *MetaGetReq) urlPath() string {
@@ -98,7 +98,7 @@ func (r *MetaGetReq) Rel(link RelName, resp *MetaGetResponse) bool {
 	if u == "" {
 		return false
 	}
-	r.pgURL = u
+	r._url = u
 	return true
 }
 

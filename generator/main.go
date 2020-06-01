@@ -48,8 +48,13 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 	concernFiles := map[string]*jen.File{}
 
 	for _, endpoint := range endpoints {
+		endpoint = endpointWithOverrides(endpoint)
 		if endpoint.Legacy {
 			continue
+		}
+		if len(endpoint.Requests) > 1 {
+			// better save than sorry.  check on what triggers this and make sure it's handled right.
+			return fmt.Errorf("we've never had an endpoint with multiple requests before. endpoint: %s", endpoint.ID)
 		}
 		if concernFiles[endpoint.Concern] == nil {
 			cf := jen.NewFilePathName(pkgPath, pkgName)
