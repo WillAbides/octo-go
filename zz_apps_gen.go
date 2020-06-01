@@ -21,13 +21,13 @@ Add repository to installation.
 https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
 func (c *Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+	resp := &AppsAddRepoToInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsAddRepoToInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -136,13 +136,13 @@ Check an authorization.
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 func (c *Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+	resp := &AppsCheckAuthorizationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsCheckAuthorizationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsCheckAuthorizationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -250,13 +250,13 @@ Check a token.
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 func (c *Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+	resp := &AppsCheckTokenResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsCheckTokenResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsCheckTokenResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -375,13 +375,13 @@ Create a content attachment.
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 func (c *Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+	resp := &AppsCreateContentAttachmentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsCreateContentAttachmentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsCreateContentAttachmentResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -521,13 +521,13 @@ Create a GitHub App from a manifest.
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 func (c *Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+	resp := &AppsCreateFromManifestResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsCreateFromManifestResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsCreateFromManifestResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -634,13 +634,13 @@ Create a new installation token.
 https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 func (c *Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
+	resp := &AppsCreateInstallationTokenResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsCreateInstallationTokenResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsCreateInstallationTokenResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -787,13 +787,13 @@ Delete an app authorization.
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 func (c *Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+	resp := &AppsDeleteAuthorizationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsDeleteAuthorizationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -901,13 +901,13 @@ Delete an installation.
 https://developer.github.com/v3/apps/#delete-an-installation
 */
 func (c *Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+	resp := &AppsDeleteInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsDeleteInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1015,13 +1015,13 @@ Delete an app token.
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 func (c *Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+	resp := &AppsDeleteTokenResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsDeleteTokenResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1129,13 +1129,13 @@ Get the authenticated GitHub App.
 https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
 func (c *Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+	resp := &AppsGetAuthenticatedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetAuthenticatedResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1253,13 +1253,13 @@ Get a single GitHub App.
 https://developer.github.com/v3/apps/#get-a-single-github-app
 */
 func (c *Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+	resp := &AppsGetBySlugResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetBySlugResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetBySlugResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1378,13 +1378,13 @@ Get an installation.
 https://developer.github.com/v3/apps/#get-an-installation
 */
 func (c *Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+	resp := &AppsGetInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetInstallationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1503,13 +1503,13 @@ Get an organization installation.
 https://developer.github.com/v3/apps/#get-an-organization-installation
 */
 func (c *Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+	resp := &AppsGetOrgInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetOrgInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetOrgInstallationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1628,13 +1628,13 @@ Get a repository installation.
 https://developer.github.com/v3/apps/#get-a-repository-installation
 */
 func (c *Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+	resp := &AppsGetRepoInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetRepoInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetRepoInstallationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1754,13 +1754,13 @@ Get a subscription plan for an account.
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 func (c *Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+	resp := &AppsGetSubscriptionPlanForAccountResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetSubscriptionPlanForAccountResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetSubscriptionPlanForAccountResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1867,13 +1867,13 @@ Get a subscription plan for an account (stubbed).
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 func (c *Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetSubscriptionPlanForAccountStubbedResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1980,13 +1980,13 @@ Get a user installation.
 https://developer.github.com/v3/apps/#get-a-user-installation
 */
 func (c *Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+	resp := &AppsGetUserInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsGetUserInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsGetUserInstallationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2105,13 +2105,13 @@ List accounts for a plan.
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 func (c *Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+	resp := &AppsListAccountsForPlanResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListAccountsForPlanResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListAccountsForPlanResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2248,13 +2248,13 @@ List accounts for a plan (stubbed).
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 func (c *Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+	resp := &AppsListAccountsForPlanStubbedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListAccountsForPlanStubbedResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListAccountsForPlanStubbedResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2391,13 +2391,13 @@ List repositories accessible to the user for an installation.
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
 func (c *Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+	resp := &AppsListInstallationReposForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListInstallationReposForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListInstallationReposForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2542,13 +2542,13 @@ List installations.
 https://developer.github.com/v3/apps/#list-installations
 */
 func (c *Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+	resp := &AppsListInstallationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListInstallationsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListInstallationsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2678,13 +2678,13 @@ List installations for a user.
 https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
 */
 func (c *Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+	resp := &AppsListInstallationsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListInstallationsForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListInstallationsForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2817,13 +2817,13 @@ List plans.
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 func (c *Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+	resp := &AppsListPlansResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListPlansResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListPlansResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2941,13 +2941,13 @@ List plans (stubbed).
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 func (c *Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+	resp := &AppsListPlansStubbedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListPlansStubbedResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListPlansStubbedResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3065,13 +3065,13 @@ List repositories.
 https://developer.github.com/v3/apps/installations/#list-repositories
 */
 func (c *Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
+	resp := &AppsListReposResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListReposResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListReposResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3215,13 +3215,13 @@ List subscriptions for the authenticated user.
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 func (c *Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListSubscriptionsForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3339,13 +3339,13 @@ List subscriptions for the authenticated user (stubbed).
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 func (c *Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3463,13 +3463,13 @@ Remove repository from installation.
 https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
 func (c *Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+	resp := &AppsRemoveRepoFromInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsRemoveRepoFromInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -3578,13 +3578,13 @@ Reset an authorization.
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 func (c *Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+	resp := &AppsResetAuthorizationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsResetAuthorizationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsResetAuthorizationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3692,13 +3692,13 @@ Reset a token.
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 func (c *Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+	resp := &AppsResetTokenResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsResetTokenResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(AppsResetTokenResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3817,13 +3817,13 @@ Revoke an authorization for an application.
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 func (c *Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+	resp := &AppsRevokeAuthorizationForApplicationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsRevokeAuthorizationForApplicationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -3920,13 +3920,13 @@ Revoke a grant for an application.
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 func (c *Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+	resp := &AppsRevokeGrantForApplicationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsRevokeGrantForApplicationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4023,13 +4023,13 @@ Revoke an installation token.
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
 */
 func (c *Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
+	resp := &AppsRevokeInstallationTokenResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsRevokeInstallationTokenResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4124,13 +4124,13 @@ Suspend an installation.
 https://developer.github.com/v3/apps/#suspend-an-installation
 */
 func (c *Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+	resp := &AppsSuspendInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsSuspendInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4226,13 +4226,13 @@ Unsuspend an installation.
 https://developer.github.com/v3/apps/#unsuspend-an-installation
 */
 func (c *Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+	resp := &AppsUnsuspendInstallationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &AppsUnsuspendInstallationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {

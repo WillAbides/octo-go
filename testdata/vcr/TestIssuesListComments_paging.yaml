@@ -43,9 +43,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 30 May 2020 19:59:42 GMT
+      - Mon, 01 Jun 2020 21:01:05 GMT
       Etag:
-      - W/"26f5c6384f1b63307fae4bdd07e10b22"
+      - W/"8f640d1722ace6e905d27c8040db8037"
       Link:
       - <https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=2>;
         rel="next", <https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=3>;
@@ -70,7 +70,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 8A99:7FDD:6C0EF7:ED9AB0:5ED2BB2E
+      - A0BA:521C:C0ECFA:1D50443:5ED56C91
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -78,9 +78,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4985"
+      - "4970"
       X-Ratelimit-Reset:
-      - "1590869795"
+      - "1591048138"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -120,9 +120,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 30 May 2020 19:59:43 GMT
+      - Mon, 01 Jun 2020 21:01:05 GMT
       Etag:
-      - W/"5251587f3fb823d71b624423ddfc62f6"
+      - W/"2f9f5efd83e08c3b5059936c72c753a2"
       Link:
       - <https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=1>;
         rel="prev", <https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=3>;
@@ -149,7 +149,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 8A99:7FDD:6C0F06:ED9AC0:5ED2BB2E
+      - A0BA:521C:C0ED08:1D5045E:5ED56C91
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -157,9 +157,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4984"
+      - "4969"
       X-Ratelimit-Reset:
-      - "1590869796"
+      - "1591048138"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -195,9 +195,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 30 May 2020 19:59:43 GMT
+      - Mon, 01 Jun 2020 21:01:06 GMT
       Etag:
-      - W/"91f7c7ca2a8b0ee47b754aeb53dc50cf"
+      - W/"dfa0cffdb800aed8ab4f3bc8a1d430db"
       Link:
       - <https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=2>;
         rel="prev", <https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=1>;
@@ -222,7 +222,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 8A99:7FDD:6C0F10:ED9AD1:5ED2BB2F
+      - A0BA:521C:C0ED20:1D5047E:5ED56C91
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -230,9 +230,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4983"
+      - "4968"
       X-Ratelimit-Reset:
-      - "1590869796"
+      - "1591048139"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

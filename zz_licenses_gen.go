@@ -20,13 +20,13 @@ Get an individual license.
 https://developer.github.com/v3/licenses/#get-an-individual-license
 */
 func (c *Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
+	resp := &LicensesGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &LicensesGetResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(LicensesGetResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -133,13 +133,13 @@ Get the contents of a repository's license.
 https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
 */
 func (c *Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
+	resp := &LicensesGetForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &LicensesGetForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(LicensesGetForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -247,13 +247,13 @@ List commonly used licenses.
 https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
 func (c *Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
+	resp := &LicensesListCommonlyUsedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &LicensesListCommonlyUsedResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(LicensesListCommonlyUsedResponseBody)
 	err = r.decodeBody(resp.Data)

@@ -25,12 +25,15 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),
 	).BlockFunc(func(group *jen.Group) {
-		group.Id("r, err := c.doRequest(ctx, req, opt...)")
-		group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
-			jen.Id("response"): jen.Id("*r"),
-			jen.Id("request"):  jen.Id("req"),
+			jen.Id("request"): jen.Id("req"),
 		})
+		group.Id("r, err := c.doRequest(ctx, req, opt...)")
+		group.If(jen.Id("r != nil")).Block(
+			jen.Id("resp.response = *r"),
+		)
+		group.If(jen.Id("err != nil")).Block(jen.Id("return resp, err"))
+
 		switch {
 		case endpointHasAttribute(endpoint, attrBoolean):
 			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")

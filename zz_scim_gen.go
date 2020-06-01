@@ -21,13 +21,13 @@ Get provisioning details for a single user.
 https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
 func (c *Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
+	resp := &ScimGetProvisioningDetailsForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ScimGetProvisioningDetailsForUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ScimGetProvisioningDetailsForUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -135,13 +135,13 @@ Get a list of provisioned identities.
 https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
 func (c *Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+	resp := &ScimListProvisionedIdentitiesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ScimListProvisionedIdentitiesResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ScimListProvisionedIdentitiesResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -271,13 +271,13 @@ Provision and invite users.
 https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 func (c *Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
+	resp := &ScimProvisionAndInviteUsersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ScimProvisionAndInviteUsersResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ScimProvisionAndInviteUsersResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -384,13 +384,13 @@ Remove a user from the organization.
 https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
 func (c *Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
+	resp := &ScimRemoveUserFromOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ScimRemoveUserFromOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -487,13 +487,13 @@ Replace a provisioned user's information.
 https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 func (c *Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
+	resp := &ScimReplaceProvisionedUserInformationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ScimReplaceProvisionedUserInformationResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ScimReplaceProvisionedUserInformationResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -601,13 +601,13 @@ Update a user attribute.
 https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 func (c *Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
+	resp := &ScimUpdateUserAttributeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ScimUpdateUserAttributeResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ScimUpdateUserAttributeResponseBody)
 	err = r.decodeBody(resp.Data)

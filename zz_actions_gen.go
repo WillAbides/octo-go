@@ -21,13 +21,13 @@ Add selected repository to an organization secret.
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 func (c *Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+	resp := &ActionsAddSelectedRepoToOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsAddSelectedRepoToOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -125,13 +125,13 @@ Cancel a workflow run.
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 func (c *Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
+	resp := &ActionsCancelWorkflowRunResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCancelWorkflowRunResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -229,13 +229,13 @@ Create or update an organization secret.
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 func (c *Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+	resp := &ActionsCreateOrUpdateOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCreateOrUpdateOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -376,13 +376,13 @@ Create or update a repository secret.
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 func (c *Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+	resp := &ActionsCreateOrUpdateRepoSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCreateOrUpdateRepoSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -501,13 +501,13 @@ Create a registration token for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
 func (c *Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+	resp := &ActionsCreateRegistrationTokenForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCreateRegistrationTokenForOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsCreateRegistrationTokenForOrgResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -614,13 +614,13 @@ Create a registration token for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 func (c *Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+	resp := &ActionsCreateRegistrationTokenForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCreateRegistrationTokenForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsCreateRegistrationTokenForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -728,13 +728,13 @@ Create a remove token for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
 func (c *Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+	resp := &ActionsCreateRemoveTokenForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCreateRemoveTokenForOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsCreateRemoveTokenForOrgResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -841,13 +841,13 @@ Create a remove token for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 func (c *Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+	resp := &ActionsCreateRemoveTokenForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsCreateRemoveTokenForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsCreateRemoveTokenForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -955,13 +955,13 @@ Delete an artifact.
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 func (c *Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
+	resp := &ActionsDeleteArtifactResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDeleteArtifactResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1059,13 +1059,13 @@ Delete an organization secret.
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 func (c *Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
+	resp := &ActionsDeleteOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDeleteOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1162,13 +1162,13 @@ Delete a repository secret.
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 func (c *Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
+	resp := &ActionsDeleteRepoSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDeleteRepoSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1266,13 +1266,13 @@ Delete a self-hosted runner from an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 func (c *Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+	resp := &ActionsDeleteSelfHostedRunnerFromOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDeleteSelfHostedRunnerFromOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1369,13 +1369,13 @@ Delete a self-hosted runner from a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 func (c *Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+	resp := &ActionsDeleteSelfHostedRunnerFromRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDeleteSelfHostedRunnerFromRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1473,13 +1473,13 @@ Delete workflow run logs.
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 func (c *Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+	resp := &ActionsDeleteWorkflowRunLogsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDeleteWorkflowRunLogsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1577,13 +1577,13 @@ Download an artifact.
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 func (c *Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
+	resp := &ActionsDownloadArtifactResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDownloadArtifactResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1682,13 +1682,13 @@ Download workflow job logs.
 https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
 */
 func (c *Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
+	resp := &ActionsDownloadWorkflowJobLogsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDownloadWorkflowJobLogsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1786,13 +1786,13 @@ Download workflow run logs.
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 func (c *Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+	resp := &ActionsDownloadWorkflowRunLogsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsDownloadWorkflowRunLogsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1890,13 +1890,13 @@ Get an artifact.
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 func (c *Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
+	resp := &ActionsGetArtifactResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetArtifactResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetArtifactResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2005,13 +2005,13 @@ Get an organization public key.
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 func (c *Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
+	resp := &ActionsGetOrgPublicKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetOrgPublicKeyResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetOrgPublicKeyResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2118,13 +2118,13 @@ Get an organization secret.
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 func (c *Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
+	resp := &ActionsGetOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetOrgSecretResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2232,13 +2232,13 @@ Get a repository public key.
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 func (c *Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
+	resp := &ActionsGetRepoPublicKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetRepoPublicKeyResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetRepoPublicKeyResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2346,13 +2346,13 @@ Get a repository secret.
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 func (c *Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
+	resp := &ActionsGetRepoSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetRepoSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetRepoSecretResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2461,13 +2461,13 @@ Get a self-hosted runner for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 func (c *Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+	resp := &ActionsGetSelfHostedRunnerForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetSelfHostedRunnerForOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetSelfHostedRunnerForOrgResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2575,13 +2575,13 @@ Get a self-hosted runner for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 func (c *Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+	resp := &ActionsGetSelfHostedRunnerForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetSelfHostedRunnerForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetSelfHostedRunnerForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2690,13 +2690,13 @@ Get a workflow.
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 func (c *Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
+	resp := &ActionsGetWorkflowResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetWorkflowResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetWorkflowResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2805,13 +2805,13 @@ Get a workflow job.
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
 */
 func (c *Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
+	resp := &ActionsGetWorkflowJobResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetWorkflowJobResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetWorkflowJobResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2920,13 +2920,13 @@ Get a workflow run.
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 func (c *Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
+	resp := &ActionsGetWorkflowRunResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetWorkflowRunResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetWorkflowRunResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3035,13 +3035,13 @@ Get workflow run usage.
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 func (c *Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
+	resp := &ActionsGetWorkflowRunUsageResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetWorkflowRunUsageResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetWorkflowRunUsageResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3150,13 +3150,13 @@ Get workflow usage.
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 func (c *Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
+	resp := &ActionsGetWorkflowUsageResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsGetWorkflowUsageResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsGetWorkflowUsageResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3265,13 +3265,13 @@ List artifacts for a repository.
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 func (c *Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
+	resp := &ActionsListArtifactsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListArtifactsForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListArtifactsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3394,13 +3394,13 @@ List jobs for a workflow run.
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 func (c *Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
+	resp := &ActionsListJobsForWorkflowRunResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListJobsForWorkflowRunResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListJobsForWorkflowRunResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3535,13 +3535,13 @@ List organization secrets.
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 func (c *Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
+	resp := &ActionsListOrgSecretsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListOrgSecretsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListOrgSecretsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3663,13 +3663,13 @@ List repository secrets.
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 func (c *Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
+	resp := &ActionsListRepoSecretsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListRepoSecretsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListRepoSecretsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3792,13 +3792,13 @@ List repository workflow runs.
 https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
 */
 func (c *Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
+	resp := &ActionsListRepoWorkflowRunsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListRepoWorkflowRunsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListRepoWorkflowRunsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3962,13 +3962,13 @@ List repository workflows.
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 func (c *Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
+	resp := &ActionsListRepoWorkflowsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListRepoWorkflowsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListRepoWorkflowsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4091,13 +4091,13 @@ List runner applications for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
 func (c *Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+	resp := &ActionsListRunnerApplicationsForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListRunnerApplicationsForOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListRunnerApplicationsForOrgResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4204,13 +4204,13 @@ List runner applications for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 func (c *Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+	resp := &ActionsListRunnerApplicationsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListRunnerApplicationsForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListRunnerApplicationsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4318,13 +4318,13 @@ List selected repositories for an organization secret.
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 func (c *Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+	resp := &ActionsListSelectedReposForOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListSelectedReposForOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListSelectedReposForOrgSecretResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4435,13 +4435,13 @@ List self-hosted runners for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 func (c *Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+	resp := &ActionsListSelfHostedRunnersForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListSelfHostedRunnersForOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListSelfHostedRunnersForOrgResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4563,13 +4563,13 @@ List self-hosted runners for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 func (c *Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+	resp := &ActionsListSelfHostedRunnersForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListSelfHostedRunnersForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListSelfHostedRunnersForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4692,13 +4692,13 @@ List workflow run artifacts.
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 func (c *Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
+	resp := &ActionsListWorkflowRunArtifactsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListWorkflowRunArtifactsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListWorkflowRunArtifactsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4822,13 +4822,13 @@ List workflow runs.
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 func (c *Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
+	resp := &ActionsListWorkflowRunsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsListWorkflowRunsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActionsListWorkflowRunsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4993,13 +4993,13 @@ Re-run a workflow.
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 func (c *Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
+	resp := &ActionsReRunWorkflowResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsReRunWorkflowResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -5097,13 +5097,13 @@ Remove selected repository from an organization secret.
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 func (c *Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+	resp := &ActionsRemoveSelectedRepoFromOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsRemoveSelectedRepoFromOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -5201,13 +5201,13 @@ Set selected repositories for an organization secret.
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 func (c *Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+	resp := &ActionsSetSelectedReposForOrgSecretResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActionsSetSelectedReposForOrgSecretResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {

@@ -1,0 +1,57 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      - application/vnd.github.machine-man-preview+json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/users/WillAbides/installation
+    method: GET
+  response:
+    body: '{"id":9385805,"account":{"login":"WillAbides","id":233500,"node_id":"MDQ6VXNlcjIzMzUwMA==","avatar_url":"https://avatars3.githubusercontent.com/u/233500?v=4","gravatar_id":"","url":"https://api.github.com/users/WillAbides","html_url":"https://github.com/WillAbides","followers_url":"https://api.github.com/users/WillAbides/followers","following_url":"https://api.github.com/users/WillAbides/following{/other_user}","gists_url":"https://api.github.com/users/WillAbides/gists{/gist_id}","starred_url":"https://api.github.com/users/WillAbides/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/WillAbides/subscriptions","organizations_url":"https://api.github.com/users/WillAbides/orgs","repos_url":"https://api.github.com/users/WillAbides/repos","events_url":"https://api.github.com/users/WillAbides/events{/privacy}","received_events_url":"https://api.github.com/users/WillAbides/received_events","type":"User","site_admin":true},"repository_selection":"selected","access_tokens_url":"https://api.github.com/app/installations/9385805/access_tokens","repositories_url":"https://api.github.com/installation/repositories","html_url":"https://github.com/settings/installations/9385805","app_id":67080,"app_slug":"octo-go-test-app","target_id":233500,"target_type":"User","permissions":{"issues":"write","metadata":"read"},"events":[],"created_at":"2020-05-31T22:59:03.000Z","updated_at":"2020-05-31T22:59:03.000Z","single_file_name":null}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 01 Jun 2020 21:01:03 GMT
+      Etag:
+      - W/"5be38bac8d98b50a0129de6b746b5a79"
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3; format=json, github.machine-man-preview; format=json
+      X-Github-Request-Id:
+      - A0BA:521C:C0EC36:1D502AC:5ED56C8F
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

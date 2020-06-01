@@ -20,13 +20,13 @@ Get a code scanning alert.
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 func (c *Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+	resp := &CodeScanningGetAlertResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &CodeScanningGetAlertResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(CodeScanningGetAlertResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -135,13 +135,13 @@ List code scanning alerts for a repository.
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 func (c *Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+	resp := &CodeScanningListAlertsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &CodeScanningListAlertsForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(CodeScanningListAlertsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
