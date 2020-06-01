@@ -153,66 +153,9 @@ func (r *response) RateLimitReset() time.Time {
 	return time.Unix(int64(i), 0)
 }
 
-// Client is a client for the GitHub API
-type Client struct {
-	requestOpts requestOpts
-	HttpClient  *http.Client
-}
-
-// NewClient returns a new Client
-func NewClient(httpClient *http.Client, opt ...RequestOption) *Client {
-	client := &Client{
-		HttpClient:  httpClient,
-		requestOpts: buildRequestOptions(opt),
-	}
-	return client
-}
-
 type httpRequester interface {
 	httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error)
 	requestBuilder
-}
-
-func (c *Client) doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
-	if c.HttpClient == nil {
-		c.HttpClient = http.DefaultClient
-	}
-	opts := make([]RequestOption, 0, len(opt)+1)
-	opts = append(opts, resetOptions(c.requestOpts))
-	opts = append(opts, opt...)
-	req, err := requester.httpRequest(ctx, opts...)
-	if err != nil {
-		return nil, err
-	}
-	httpResponse, err := c.HttpClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	resp := &response{
-		httpResponse:  httpResponse,
-		httpRequester: requester,
-		opts:          buildRequestOptions(opts),
-	}
-
-	err = errorCheck(resp)
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
-}
-
-// SetHttpClient sets a client's underlying *http.Client
-func (c *Client) SetHttpClient(httpClient *http.Client) {
-	c.HttpClient = httpClient
-}
-
-// SetRequestOptions sets options that will be used on all requests this client makes
-func (c *Client) SetRequestOptions(opt ...RequestOption) {
-	for _, o := range opt {
-		o(&c.requestOpts)
-	}
 }
 
 var relLinkExp = regexp.MustCompile(`<(.+?)>\s*;\s*rel="([^"]*)"`)
@@ -284,14 +227,17 @@ func httpRequestURL(builder requestBuilder, options requestOpts) (string, error)
 }
 
 func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []RequestOption) (*http.Request, error) {
-	options := buildRequestOptions(opts)
+	options, err := buildRequestOptions(opts)
+	if err != nil {
+		return nil, err
+	}
 	var bodyReader io.Reader
 	body := builder.body()
 	switch {
 	case body == nil:
 	case hasEndpointAttribute(builder, attrJSONRequestBody):
 		var buf bytes.Buffer
-		err := json.NewEncoder(&buf).Encode(&body)
+		err = json.NewEncoder(&buf).Encode(&body)
 		if err != nil {
 			return nil, err
 		}

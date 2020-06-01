@@ -21,13 +21,13 @@ Check if a repository is starred by the authenticated user.
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 func (c *Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.setBoolResult(&resp.Data)
 	if err != nil {
@@ -129,13 +129,13 @@ Delete a repository subscription.
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 func (c *Client) ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
+	resp := &ActivityDeleteRepoSubscriptionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityDeleteRepoSubscriptionResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -232,13 +232,13 @@ Delete a thread subscription.
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 func (c *Client) ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
+	resp := &ActivityDeleteThreadSubscriptionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityDeleteThreadSubscriptionResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -334,13 +334,13 @@ Get feeds.
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 func (c *Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
+	resp := &ActivityGetFeedsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityGetFeedsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityGetFeedsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -446,13 +446,13 @@ Get a repository subscription.
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 func (c *Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
+	resp := &ActivityGetRepoSubscriptionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityGetRepoSubscriptionResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityGetRepoSubscriptionResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -560,13 +560,13 @@ Get a thread.
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 func (c *Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
+	resp := &ActivityGetThreadResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityGetThreadResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityGetThreadResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -673,13 +673,13 @@ Get a thread subscription for the authenticated user.
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 func (c *Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -786,13 +786,13 @@ List events for the authenticated user.
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 func (c *Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+	resp := &ActivityListEventsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListEventsForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -900,13 +900,13 @@ List notifications for the authenticated user.
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
 func (c *Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+	resp := &ActivityListNotificationsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListNotificationsForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListNotificationsForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1059,13 +1059,13 @@ List organization events for the authenticated user.
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 func (c *Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1174,13 +1174,13 @@ List public events.
 https://developer.github.com/v3/activity/events/#list-public-events
 */
 func (c *Client) ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
+	resp := &ActivityListPublicEventsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListPublicEventsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1287,13 +1287,13 @@ List public events for a network of repositories.
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 func (c *Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+	resp := &ActivityListPublicEventsForRepoNetworkResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListPublicEventsForRepoNetworkResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1402,13 +1402,13 @@ List public events for a user.
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 func (c *Client) ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
+	resp := &ActivityListPublicEventsForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListPublicEventsForUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1516,13 +1516,13 @@ List public organization events.
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 func (c *Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
+	resp := &ActivityListPublicOrgEventsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListPublicOrgEventsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1630,13 +1630,13 @@ List events received by the authenticated user.
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 func (c *Client) ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
+	resp := &ActivityListReceivedEventsForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListReceivedEventsForUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1744,13 +1744,13 @@ List public events received by a user.
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 func (c *Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+	resp := &ActivityListReceivedPublicEventsForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListReceivedPublicEventsForUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1858,13 +1858,13 @@ List repository events.
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 func (c *Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
+	resp := &ActivityListRepoEventsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListRepoEventsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1973,13 +1973,13 @@ List repository notifications for the authenticated user.
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 func (c *Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListRepoNotificationsForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2134,13 +2134,13 @@ List repositories starred by the authenticated user.
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
 func (c *Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+	resp := &ActivityListReposStarredByAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListReposStarredByAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListReposStarredByAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2273,13 +2273,13 @@ List repositories starred by a user.
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 func (c *Client) ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
+	resp := &ActivityListReposStarredByUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListReposStarredByUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListReposStarredByUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2413,13 +2413,13 @@ List repositories watched by a user.
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 func (c *Client) ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
+	resp := &ActivityListReposWatchedByUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListReposWatchedByUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListReposWatchedByUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2538,13 +2538,13 @@ List stargazers.
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 func (c *Client) ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
+	resp := &ActivityListStargazersForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListStargazersForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListStargazersForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2664,13 +2664,13 @@ List repositories watched by the authenticated user.
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
 func (c *Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListWatchedReposForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2788,13 +2788,13 @@ List watchers.
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 func (c *Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
+	resp := &ActivityListWatchersForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityListWatchersForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivityListWatchersForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2914,13 +2914,13 @@ Mark notifications as read.
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 func (c *Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
+	resp := &ActivityMarkNotificationsAsReadResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityMarkNotificationsAsReadResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -3033,13 +3033,13 @@ Mark repository notifications as read.
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 func (c *Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+	resp := &ActivityMarkRepoNotificationsAsReadResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityMarkRepoNotificationsAsReadResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -3154,13 +3154,13 @@ Mark a thread as read.
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 func (c *Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
+	resp := &ActivityMarkThreadAsReadResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityMarkThreadAsReadResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -3256,13 +3256,13 @@ Set a repository subscription.
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 func (c *Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
+	resp := &ActivitySetRepoSubscriptionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivitySetRepoSubscriptionResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivitySetRepoSubscriptionResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3385,13 +3385,13 @@ Set a thread subscription.
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 func (c *Client) ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
+	resp := &ActivitySetThreadSubscriptionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivitySetThreadSubscriptionResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ActivitySetThreadSubscriptionResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3513,13 +3513,13 @@ Star a repository for the authenticated user.
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 func (c *Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+	resp := &ActivityStarRepoForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityStarRepoForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -3616,13 +3616,13 @@ Unstar a repository for the authenticated user.
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 func (c *Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {

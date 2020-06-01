@@ -21,13 +21,13 @@ Search code.
 https://developer.github.com/v3/search/#search-code
 */
 func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+	resp := &SearchCodeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchCodeResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchCodeResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -183,13 +183,13 @@ Search commits.
 https://developer.github.com/v3/search/#search-commits
 */
 func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+	resp := &SearchCommitsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchCommitsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchCommitsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -360,13 +360,13 @@ Search issues and pull requests.
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+	resp := &SearchIssuesAndPullRequestsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchIssuesAndPullRequestsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchIssuesAndPullRequestsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -525,13 +525,13 @@ Search labels.
 https://developer.github.com/v3/search/#search-labels
 */
 func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+	resp := &SearchLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchLabelsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchLabelsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -677,13 +677,13 @@ Search repositories.
 https://developer.github.com/v3/search/#search-repositories
 */
 func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+	resp := &SearchReposResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchReposResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchReposResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -850,13 +850,13 @@ Search topics.
 https://developer.github.com/v3/search/#search-topics
 */
 func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+	resp := &SearchTopicsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchTopicsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchTopicsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -988,13 +988,13 @@ Search users.
 https://developer.github.com/v3/search/#search-users
 */
 func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+	resp := &SearchUsersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &SearchUsersResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(SearchUsersResponseBody)
 	err = r.decodeBody(resp.Data)

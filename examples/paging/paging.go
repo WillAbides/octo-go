@@ -8,17 +8,17 @@ import (
 	"time"
 
 	"github.com/willabides/octo-go"
-	"golang.org/x/oauth2"
 )
 
 func main() {
 	ctx := context.Background()
 
-	oauthClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
-	))
-
-	client := octo.NewClient(oauthClient)
+	client, err := octo.NewClient(
+		octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN")),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	req := &octo.IssuesListCommentsReq{
 		Owner:       "golang",

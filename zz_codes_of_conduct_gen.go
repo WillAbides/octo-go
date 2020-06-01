@@ -20,13 +20,13 @@ List all codes of conduct.
 https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
 func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+	resp := &CodesOfConductGetAllCodesOfConductResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &CodesOfConductGetAllCodesOfConductResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(CodesOfConductGetAllCodesOfConductResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -145,13 +145,13 @@ Get an individual code of conduct.
 https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
 func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+	resp := &CodesOfConductGetConductCodeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &CodesOfConductGetConductCodeResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(CodesOfConductGetConductCodeResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -271,13 +271,13 @@ Get the contents of a repository's code of conduct.
 https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
 func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+	resp := &CodesOfConductGetForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &CodesOfConductGetForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(CodesOfConductGetForRepoResponseBody)
 	err = r.decodeBody(resp.Data)

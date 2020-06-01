@@ -20,13 +20,13 @@ Get.
 https://developer.github.com/v3/meta/#meta
 */
 func (c *Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+	resp := &MetaGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &MetaGetResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(MetaGetResponseBody)
 	err = r.decodeBody(resp.Data)

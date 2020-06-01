@@ -21,13 +21,13 @@ Check if a gist is starred.
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 func (c *Client) GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...RequestOption) (*GistsCheckIsStarredResponse, error) {
+	resp := &GistsCheckIsStarredResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsCheckIsStarredResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.setBoolResult(&resp.Data)
 	if err != nil {
@@ -128,13 +128,13 @@ Create a gist.
 https://developer.github.com/v3/gists/#create-a-gist
 */
 func (c *Client) GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption) (*GistsCreateResponse, error) {
+	resp := &GistsCreateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsCreateResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsCreateResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -268,13 +268,13 @@ Create a comment.
 https://developer.github.com/v3/gists/comments/#create-a-comment
 */
 func (c *Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
+	resp := &GistsCreateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsCreateCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsCreateCommentResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -393,13 +393,13 @@ Delete a gist.
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 func (c *Client) GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...RequestOption) (*GistsDeleteResponse, error) {
+	resp := &GistsDeleteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsDeleteResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -495,13 +495,13 @@ Delete a comment.
 https://developer.github.com/v3/gists/comments/#delete-a-comment
 */
 func (c *Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
+	resp := &GistsDeleteCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsDeleteCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -598,13 +598,13 @@ Fork a gist.
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 func (c *Client) GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*GistsForkResponse, error) {
+	resp := &GistsForkResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsForkResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsForkResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -711,13 +711,13 @@ Get a gist.
 https://developer.github.com/v3/gists/#get-a-gist
 */
 func (c *Client) GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*GistsGetResponse, error) {
+	resp := &GistsGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsGetResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsGetResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -824,13 +824,13 @@ Get a single comment.
 https://developer.github.com/v3/gists/comments/#get-a-single-comment
 */
 func (c *Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
+	resp := &GistsGetCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsGetCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsGetCommentResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -938,13 +938,13 @@ Get a specific revision of a gist.
 https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
 func (c *Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
+	resp := &GistsGetRevisionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsGetRevisionResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsGetRevisionResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1052,13 +1052,13 @@ List gists for the authenticated user.
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 func (c *Client) GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*GistsListResponse, error) {
+	resp := &GistsListResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1186,13 +1186,13 @@ List comments on a gist.
 https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
 func (c *Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
+	resp := &GistsListCommentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListCommentsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListCommentsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1311,13 +1311,13 @@ List gist commits.
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 func (c *Client) GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...RequestOption) (*GistsListCommitsResponse, error) {
+	resp := &GistsListCommitsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListCommitsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListCommitsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1436,13 +1436,13 @@ List gists for a user.
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 func (c *Client) GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...RequestOption) (*GistsListForUserResponse, error) {
+	resp := &GistsListForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListForUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListForUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1571,13 +1571,13 @@ List gist forks.
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 func (c *Client) GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestOption) (*GistsListForksResponse, error) {
+	resp := &GistsListForksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListForksResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListForksResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1696,13 +1696,13 @@ List public gists.
 https://developer.github.com/v3/gists/#list-public-gists
 */
 func (c *Client) GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...RequestOption) (*GistsListPublicResponse, error) {
+	resp := &GistsListPublicResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListPublicResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListPublicResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1830,13 +1830,13 @@ List starred gists.
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 func (c *Client) GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...RequestOption) (*GistsListStarredResponse, error) {
+	resp := &GistsListStarredResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsListStarredResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsListStarredResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1964,13 +1964,13 @@ Star a gist.
 https://developer.github.com/v3/gists/#star-a-gist
 */
 func (c *Client) GistsStar(ctx context.Context, req *GistsStarReq, opt ...RequestOption) (*GistsStarResponse, error) {
+	resp := &GistsStarResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsStarResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -2066,13 +2066,13 @@ Unstar a gist.
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 func (c *Client) GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...RequestOption) (*GistsUnstarResponse, error) {
+	resp := &GistsUnstarResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsUnstarResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -2168,13 +2168,13 @@ Update a gist.
 https://developer.github.com/v3/gists/#update-a-gist
 */
 func (c *Client) GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption) (*GistsUpdateResponse, error) {
+	resp := &GistsUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsUpdateResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsUpdateResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2309,13 +2309,13 @@ Edit a comment.
 https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
 func (c *Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
+	resp := &GistsUpdateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GistsUpdateCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GistsUpdateCommentResponseBody)
 	err = r.decodeBody(resp.Data)

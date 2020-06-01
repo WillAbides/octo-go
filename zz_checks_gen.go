@@ -21,13 +21,13 @@ Create a check run.
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 func (c *Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+	resp := &ChecksCreateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksCreateResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksCreateResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -344,13 +344,13 @@ Create a check suite.
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 func (c *Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+	resp := &ChecksCreateSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksCreateSuiteResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksCreateSuiteResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -485,13 +485,13 @@ Get a check run.
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 func (c *Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+	resp := &ChecksGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksGetResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksGetResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -615,13 +615,13 @@ Get a check suite.
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 func (c *Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+	resp := &ChecksGetSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksGetSuiteResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksGetSuiteResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -745,13 +745,13 @@ List check run annotations.
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 func (c *Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+	resp := &ChecksListAnnotationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksListAnnotationsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksListAnnotationsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -887,13 +887,13 @@ List check runs for a Git reference.
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 func (c *Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+	resp := &ChecksListForRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksListForRefResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksListForRefResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1056,13 +1056,13 @@ List check runs in a check suite.
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 func (c *Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+	resp := &ChecksListForSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksListForSuiteResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksListForSuiteResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1225,13 +1225,13 @@ List check suites for a Git reference.
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 func (c *Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+	resp := &ChecksListSuitesForRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksListSuitesForRefResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksListSuitesForRefResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1385,13 +1385,13 @@ Rerequest a check suite.
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 func (c *Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+	resp := &ChecksRerequestSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksRerequestSuiteResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1504,13 +1504,13 @@ Update repository preferences for check suites.
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 func (c *Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+	resp := &ChecksSetSuitesPreferencesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksSetSuitesPreferencesResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksSetSuitesPreferencesResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1663,13 +1663,13 @@ Update a check run.
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 func (c *Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+	resp := &ChecksUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &ChecksUpdateResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(ChecksUpdateResponseBody)
 	err = r.decodeBody(resp.Data)

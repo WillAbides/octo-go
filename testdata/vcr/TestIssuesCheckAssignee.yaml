@@ -23,7 +23,7 @@ interactions:
       Content-Security-Policy:
       - default-src 'none'
       Date:
-      - Sat, 30 May 2020 19:40:59 GMT
+      - Mon, 01 Jun 2020 21:01:05 GMT
       Referrer-Policy:
       - origin-when-cross-origin, strict-origin-when-cross-origin
       Server:
@@ -43,7 +43,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 9870:6BF2:2D5332:703DC2:5ED2B6CB
+      - A0BA:521C:C0ECDC:1D5041A:5ED56C91
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -51,9 +51,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4996"
+      - "4972"
       X-Ratelimit-Reset:
-      - "1590869796"
+      - "1591048139"
       X-Xss-Protection:
       - 1; mode=block
     status: 204 No Content
@@ -83,7 +83,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Sat, 30 May 2020 19:40:59 GMT
+      - Mon, 01 Jun 2020 21:01:05 GMT
       Referrer-Policy:
       - origin-when-cross-origin, strict-origin-when-cross-origin
       Server:
@@ -103,7 +103,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 9870:6BF2:2D5336:703DC6:5ED2B6CB
+      - A0BA:521C:C0ECEB:1D50435:5ED56C91
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -111,9 +111,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4995"
+      - "4971"
       X-Ratelimit-Reset:
-      - "1590869795"
+      - "1591048139"
       X-Xss-Protection:
       - 1; mode=block
     status: 404 Not Found

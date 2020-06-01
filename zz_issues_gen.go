@@ -21,13 +21,13 @@ Add assignees to an issue.
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 func (c *Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+	resp := &IssuesAddAssigneesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesAddAssigneesResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesAddAssigneesResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -151,13 +151,13 @@ Add labels to an issue.
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 func (c *Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+	resp := &IssuesAddLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesAddLabelsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesAddLabelsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -283,13 +283,13 @@ Check assignee.
 https://developer.github.com/v3/issues/assignees/#check-assignee
 */
 func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+	resp := &IssuesCheckAssigneeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesCheckAssigneeResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.setBoolResult(&resp.Data)
 	if err != nil {
@@ -392,13 +392,13 @@ Create an issue.
 https://developer.github.com/v3/issues/#create-an-issue
 */
 func (c *Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+	resp := &IssuesCreateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesCreateResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesCreateResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -547,13 +547,13 @@ Create a comment.
 https://developer.github.com/v3/issues/comments/#create-a-comment
 */
 func (c *Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+	resp := &IssuesCreateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesCreateCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesCreateCommentResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -674,13 +674,13 @@ Create a label.
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 func (c *Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+	resp := &IssuesCreateLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesCreateLabelResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesCreateLabelResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -816,13 +816,13 @@ Create a milestone.
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 func (c *Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+	resp := &IssuesCreateMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesCreateMilestoneResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesCreateMilestoneResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -954,13 +954,13 @@ Delete a comment.
 https://developer.github.com/v3/issues/comments/#delete-a-comment
 */
 func (c *Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+	resp := &IssuesDeleteCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesDeleteCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1058,13 +1058,13 @@ Delete a label.
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 func (c *Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+	resp := &IssuesDeleteLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesDeleteLabelResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1162,13 +1162,13 @@ Delete a milestone.
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 func (c *Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+	resp := &IssuesDeleteMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesDeleteMilestoneResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -1266,13 +1266,13 @@ Get an issue.
 https://developer.github.com/v3/issues/#get-an-issue
 */
 func (c *Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+	resp := &IssuesGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesGetResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesGetResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1395,13 +1395,13 @@ Get a single comment.
 https://developer.github.com/v3/issues/comments/#get-a-single-comment
 */
 func (c *Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+	resp := &IssuesGetCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesGetCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesGetCommentResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1539,13 +1539,13 @@ Get a single event.
 https://developer.github.com/v3/issues/events/#get-a-single-event
 */
 func (c *Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+	resp := &IssuesGetEventResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesGetEventResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesGetEventResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1696,13 +1696,13 @@ Get a single label.
 https://developer.github.com/v3/issues/labels/#get-a-single-label
 */
 func (c *Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+	resp := &IssuesGetLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesGetLabelResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesGetLabelResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1811,13 +1811,13 @@ Get a single milestone.
 https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 */
 func (c *Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+	resp := &IssuesGetMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesGetMilestoneResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesGetMilestoneResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1926,13 +1926,13 @@ List issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 func (c *Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+	resp := &IssuesListResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2130,13 +2130,13 @@ List assignees.
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 func (c *Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+	resp := &IssuesListAssigneesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListAssigneesResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListAssigneesResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2256,13 +2256,13 @@ List comments on an issue.
 https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
 */
 func (c *Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+	resp := &IssuesListCommentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListCommentsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListCommentsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2407,13 +2407,13 @@ List comments in a repository.
 https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
 func (c *Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+	resp := &IssuesListCommentsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListCommentsForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListCommentsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2569,13 +2569,13 @@ List events for an issue.
 https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
 func (c *Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+	resp := &IssuesListEventsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListEventsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListEventsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2725,13 +2725,13 @@ List events for a repository.
 https://developer.github.com/v3/issues/events/#list-events-for-a-repository
 */
 func (c *Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+	resp := &IssuesListEventsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListEventsForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListEventsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -2880,13 +2880,13 @@ List events for an issue.
 https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
 */
 func (c *Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+	resp := &IssuesListEventsForTimelineResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListEventsForTimelineResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListEventsForTimelineResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3038,13 +3038,13 @@ List user account issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 func (c *Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+	resp := &IssuesListForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListForAuthenticatedUserResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3242,13 +3242,13 @@ List organization issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 func (c *Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+	resp := &IssuesListForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListForOrgResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListForOrgResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3447,13 +3447,13 @@ List repository issues.
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 func (c *Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+	resp := &IssuesListForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3670,13 +3670,13 @@ Get labels for every issue in a milestone.
 https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 */
 func (c *Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+	resp := &IssuesListLabelsForMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListLabelsForMilestoneResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListLabelsForMilestoneResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3797,13 +3797,13 @@ List all labels for this repository.
 https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
 func (c *Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+	resp := &IssuesListLabelsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListLabelsForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListLabelsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -3923,13 +3923,13 @@ List labels on an issue.
 https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
 func (c *Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+	resp := &IssuesListLabelsOnIssueResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListLabelsOnIssueResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListLabelsOnIssueResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4050,13 +4050,13 @@ List milestones for a repository.
 https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 */
 func (c *Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+	resp := &IssuesListMilestonesForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesListMilestonesForRepoResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesListMilestonesForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4194,13 +4194,13 @@ Lock an issue.
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 func (c *Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+	resp := &IssuesLockResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesLockResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4330,13 +4330,13 @@ Remove all labels from an issue.
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 func (c *Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+	resp := &IssuesRemoveAllLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesRemoveAllLabelsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4434,13 +4434,13 @@ Remove assignees from an issue.
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 func (c *Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+	resp := &IssuesRemoveAssigneesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesRemoveAssigneesResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesRemoveAssigneesResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4565,13 +4565,13 @@ Remove a label from an issue.
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 func (c *Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+	resp := &IssuesRemoveLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesRemoveLabelResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesRemoveLabelResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4681,13 +4681,13 @@ Replace all labels for an issue.
 https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
 func (c *Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+	resp := &IssuesReplaceAllLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesReplaceAllLabelsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesReplaceAllLabelsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -4813,13 +4813,13 @@ Unlock an issue.
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 func (c *Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+	resp := &IssuesUnlockResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesUnlockResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4917,13 +4917,13 @@ Update an issue.
 https://developer.github.com/v3/issues/#update-an-issue
 */
 func (c *Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+	resp := &IssuesUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesUpdateResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesUpdateResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -5079,13 +5079,13 @@ Edit a comment.
 https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
 func (c *Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+	resp := &IssuesUpdateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesUpdateCommentResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesUpdateCommentResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -5206,13 +5206,13 @@ Update a label.
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 func (c *Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+	resp := &IssuesUpdateLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesUpdateLabelResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesUpdateLabelResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -5349,13 +5349,13 @@ Update a milestone.
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 func (c *Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+	resp := &IssuesUpdateMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &IssuesUpdateMilestoneResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(IssuesUpdateMilestoneResponseBody)
 	err = r.decodeBody(resp.Data)

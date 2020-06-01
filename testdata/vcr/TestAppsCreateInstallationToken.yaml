@@ -1,0 +1,60 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {}
+    form: {}
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      - application/vnd.github.machine-man-preview+json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/app/installations/9385805/access_tokens
+    method: POST
+  response:
+    body: '{"token":"v1.c9e47e4aac2f0e4b8a770f43dd3dee48030d2891","expires_at":"2020-06-01T22:01:02Z","permissions":{"issues":"write","metadata":"read"},"repository_selection":"selected"}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Content-Length:
+      - "176"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 01 Jun 2020 21:01:02 GMT
+      Etag:
+      - '"c80840e5b292144dc49060fc995c6c64"'
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 201 Created
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3; format=json, github.machine-man-preview; format=json
+      X-Github-Request-Id:
+      - A0BA:521C:C0EBF8:1D5023D:5ED56C8E
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 201 Created
+    code: 201
+    duration: ""

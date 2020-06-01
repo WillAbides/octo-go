@@ -21,13 +21,13 @@ Create a blob.
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 func (c *Client) GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOption) (*GitCreateBlobResponse, error) {
+	resp := &GitCreateBlobResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitCreateBlobResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitCreateBlobResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -153,13 +153,13 @@ Create a commit.
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 func (c *Client) GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...RequestOption) (*GitCreateCommitResponse, error) {
+	resp := &GitCreateCommitResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitCreateCommitResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitCreateCommitResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -351,13 +351,13 @@ Create a reference.
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 func (c *Client) GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOption) (*GitCreateRefResponse, error) {
+	resp := &GitCreateRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitCreateRefResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitCreateRefResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -483,13 +483,13 @@ Create a tag object.
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 func (c *Client) GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOption) (*GitCreateTagResponse, error) {
+	resp := &GitCreateTagResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitCreateTagResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitCreateTagResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -640,13 +640,13 @@ Create a tree.
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 func (c *Client) GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOption) (*GitCreateTreeResponse, error) {
+	resp := &GitCreateTreeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitCreateTreeResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitCreateTreeResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -808,13 +808,13 @@ Delete a reference.
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 func (c *Client) GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...RequestOption) (*GitDeleteRefResponse, error) {
+	resp := &GitDeleteRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitDeleteRefResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -912,13 +912,13 @@ Get a blob.
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 func (c *Client) GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (*GitGetBlobResponse, error) {
+	resp := &GitGetBlobResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitGetBlobResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitGetBlobResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1027,13 +1027,13 @@ Get a commit.
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 func (c *Client) GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOption) (*GitGetCommitResponse, error) {
+	resp := &GitGetCommitResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitGetCommitResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitGetCommitResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1142,13 +1142,13 @@ Get a single reference.
 https://developer.github.com/v3/git/refs/#get-a-single-reference
 */
 func (c *Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
+	resp := &GitGetRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitGetRefResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitGetRefResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1257,13 +1257,13 @@ Get a tag.
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 func (c *Client) GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*GitGetTagResponse, error) {
+	resp := &GitGetTagResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitGetTagResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitGetTagResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1372,13 +1372,13 @@ Get a tree.
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 func (c *Client) GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (*GitGetTreeResponse, error) {
+	resp := &GitGetTreeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitGetTreeResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitGetTreeResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1499,13 +1499,13 @@ List matching references.
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 func (c *Client) GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt ...RequestOption) (*GitListMatchingRefsResponse, error) {
+	resp := &GitListMatchingRefsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitListMatchingRefsResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitListMatchingRefsResponseBody)
 	err = r.decodeBody(resp.Data)
@@ -1626,13 +1626,13 @@ Update a reference.
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 func (c *Client) GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOption) (*GitUpdateRefResponse, error) {
+	resp := &GitUpdateRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &GitUpdateRefResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	resp.Data = new(GitUpdateRefResponseBody)
 	err = r.decodeBody(resp.Data)

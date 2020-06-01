@@ -19,13 +19,13 @@ Get.
 https://developer.github.com/v3/emojis/#emojis
 */
 func (c *Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+	resp := &EmojisGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
-	if err != nil {
-		return nil, err
+	if r != nil {
+		resp.response = *r
 	}
-	resp := &EmojisGetResponse{
-		request:  req,
-		response: *r,
+	if err != nil {
+		return resp, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
