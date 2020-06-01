@@ -64,6 +64,17 @@ func schemaPathString(schemaPath []string) string {
 }
 
 var schemaOverrides = []func(schemaPath []string, schema *model.ParamSchema){
+	// permissions are maps
+	func(schemaPath []string, schema *model.ParamSchema) {
+		if !strings.HasSuffix(schemaPathString(schemaPath), "/permissions") || schema.Type != model.ParamTypeObject {
+			return
+		}
+		schema.ObjectParams = nil
+		schema.ItemSchema = &model.ParamSchema{
+			Type: model.ParamTypeString,
+		}
+	},
+
 	// reactions are maps
 	func(schemaPath []string, schema *model.ParamSchema) {
 		if !strings.HasSuffix(schemaPathString(schemaPath), "/reactions") || schema.Type != model.ParamTypeObject {

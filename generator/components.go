@@ -25,7 +25,7 @@ func addComponentSchemas(file *jen.File, schemas map[string]*model.ParamSchema) 
 	for _, name := range names {
 		schema := schemas[name]
 		structName := toExportedName(name)
-		tp := paramSchemaFieldType(schema, []string{"components", "schemas", "name"}, &paramSchemaFieldTypeOptions{
+		tp := paramSchemaFieldType(schema, []string{"components", "schemas", name}, &paramSchemaFieldTypeOptions{
 			noHelperRecursive: true,
 		})
 		file.Type().Id(structName).Add(tp)

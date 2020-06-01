@@ -199,21 +199,16 @@ type BaseInstallation struct {
 		ReposUrl         string `json:"repos_url,omitempty"`
 		Url              string `json:"url,omitempty"`
 	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
+	AppId               int64             `json:"app_id,omitempty"`
+	Events              []string          `json:"events,omitempty"`
+	HtmlUrl             string            `json:"html_url,omitempty"`
+	Id                  int64             `json:"id,omitempty"`
+	Permissions         map[string]string `json:"permissions,omitempty"`
+	RepositoriesUrl     string            `json:"repositories_url,omitempty"`
+	RepositorySelection string            `json:"repository_selection,omitempty"`
+	SingleFileName      string            `json:"single_file_name,omitempty"`
+	TargetId            int64             `json:"target_id,omitempty"`
+	TargetType          string            `json:"target_type,omitempty"`
 }
 
 type BaseInstallationForAuthUser struct {
@@ -243,20 +238,15 @@ type BaseInstallationForAuthUser struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"account"`
-	AppId       int64    `json:"app_id"`
-	Events      []string `json:"events"`
-	HtmlUrl     string   `json:"html_url"`
-	Id          int64    `json:"id"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions"`
-	RepositoriesUrl string `json:"repositories_url"`
-	SingleFileName  string `json:"single_file_name"`
-	TargetId        int64  `json:"target_id"`
-	TargetType      string `json:"target_type"`
+	AppId           int64             `json:"app_id"`
+	Events          []string          `json:"events"`
+	HtmlUrl         string            `json:"html_url"`
+	Id              int64             `json:"id"`
+	Permissions     map[string]string `json:"permissions"`
+	RepositoriesUrl string            `json:"repositories_url"`
+	SingleFileName  string            `json:"single_file_name"`
+	TargetId        int64             `json:"target_id"`
+	TargetType      string            `json:"target_type"`
 }
 
 type Blob struct {
@@ -356,14 +346,9 @@ type BranchProtection struct {
 				ReposUrl         string `json:"repos_url,omitempty"`
 				Url              string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Contents   string `json:"contents,omitempty"`
-				Issues     string `json:"issues,omitempty"`
-				Metadata   string `json:"metadata,omitempty"`
-				SingleFile string `json:"single_file,omitempty"`
-			} `json:"permissions,omitempty"`
-			Slug      string `json:"slug,omitempty"`
-			UpdatedAt string `json:"updated_at,omitempty"`
+			Permissions map[string]string `json:"permissions,omitempty"`
+			Slug        string            `json:"slug,omitempty"`
+			UpdatedAt   string            `json:"updated_at,omitempty"`
 		} `json:"apps,omitempty"`
 		AppsUrl string `json:"apps_url,omitempty"`
 		Teams   []struct {
@@ -431,14 +416,9 @@ type BranchRestrictionPolicy struct {
 			ReposUrl         string `json:"repos_url,omitempty"`
 			Url              string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions,omitempty"`
-		Slug      string `json:"slug,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
+		Permissions map[string]string `json:"permissions,omitempty"`
+		Slug        string            `json:"slug,omitempty"`
+		UpdatedAt   string            `json:"updated_at,omitempty"`
 	} `json:"apps,omitempty"`
 	AppsUrl string `json:"apps_url,omitempty"`
 	Teams   []struct {
@@ -589,14 +569,9 @@ type CheckRun struct {
 			ReposUrl         string `json:"repos_url,omitempty"`
 			Url              string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions,omitempty"`
-		Slug      string `json:"slug,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
+		Permissions map[string]string `json:"permissions,omitempty"`
+		Slug        string            `json:"slug,omitempty"`
+		UpdatedAt   string            `json:"updated_at,omitempty"`
 	} `json:"app,omitempty"`
 	CheckSuite struct {
 		Id int64 `json:"id,omitempty"`
@@ -667,14 +642,9 @@ type CheckRun2 struct {
 			ReposUrl         string `json:"repos_url,omitempty"`
 			Url              string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions,omitempty"`
-		Slug      string `json:"slug,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
+		Permissions map[string]string `json:"permissions,omitempty"`
+		Slug        string            `json:"slug,omitempty"`
+		UpdatedAt   string            `json:"updated_at,omitempty"`
 	} `json:"app,omitempty"`
 	CheckSuite struct {
 		Id int64 `json:"id,omitempty"`
@@ -748,14 +718,9 @@ type CheckSuite struct {
 			ReposUrl         string `json:"repos_url,omitempty"`
 			Url              string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Contents   string `json:"contents,omitempty"`
-			Issues     string `json:"issues,omitempty"`
-			Metadata   string `json:"metadata,omitempty"`
-			SingleFile string `json:"single_file,omitempty"`
-		} `json:"permissions,omitempty"`
-		Slug      string `json:"slug,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
+		Permissions map[string]string `json:"permissions,omitempty"`
+		Slug        string            `json:"slug,omitempty"`
+		UpdatedAt   string            `json:"updated_at,omitempty"`
 	} `json:"app,omitempty"`
 	Before       string        `json:"before,omitempty"`
 	Conclusion   string        `json:"conclusion,omitempty"`
@@ -840,34 +805,30 @@ type CheckSuite struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repository,omitempty"`
 	Status string `json:"status,omitempty"`
 	Url    string `json:"url,omitempty"`
@@ -956,34 +917,30 @@ type CheckSuitePreference struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repository,omitempty"`
 }
 
@@ -1101,29 +1058,25 @@ type CodeSearchResultItem struct {
 }
 
 type Collaborator struct {
-	AvatarUrl        string `json:"avatar_url,omitempty"`
-	EventsUrl        string `json:"events_url,omitempty"`
-	FollowersUrl     string `json:"followers_url,omitempty"`
-	FollowingUrl     string `json:"following_url,omitempty"`
-	GistsUrl         string `json:"gists_url,omitempty"`
-	GravatarId       string `json:"gravatar_id,omitempty"`
-	HtmlUrl          string `json:"html_url,omitempty"`
-	Id               int64  `json:"id,omitempty"`
-	Login            string `json:"login,omitempty"`
-	NodeId           string `json:"node_id,omitempty"`
-	OrganizationsUrl string `json:"organizations_url,omitempty"`
-	Permissions      struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	AvatarUrl         string            `json:"avatar_url,omitempty"`
+	EventsUrl         string            `json:"events_url,omitempty"`
+	FollowersUrl      string            `json:"followers_url,omitempty"`
+	FollowingUrl      string            `json:"following_url,omitempty"`
+	GistsUrl          string            `json:"gists_url,omitempty"`
+	GravatarId        string            `json:"gravatar_id,omitempty"`
+	HtmlUrl           string            `json:"html_url,omitempty"`
+	Id                int64             `json:"id,omitempty"`
+	Login             string            `json:"login,omitempty"`
+	NodeId            string            `json:"node_id,omitempty"`
+	OrganizationsUrl  string            `json:"organizations_url,omitempty"`
+	Permissions       map[string]string `json:"permissions,omitempty"`
+	ReceivedEventsUrl string            `json:"received_events_url,omitempty"`
+	ReposUrl          string            `json:"repos_url,omitempty"`
+	SiteAdmin         bool              `json:"site_admin,omitempty"`
+	StarredUrl        string            `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string            `json:"subscriptions_url,omitempty"`
+	Type              string            `json:"type,omitempty"`
+	Url               string            `json:"url,omitempty"`
 }
 
 type CombinedCommitStatus struct {
@@ -2297,47 +2250,37 @@ type FullRepository struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"parent,omitempty"`
-	Permissions struct {
-		Admin    bool `json:"admin,omitempty"`
-		Maintain bool `json:"maintain,omitempty"`
-		Pull     bool `json:"pull,omitempty"`
-		Push     bool `json:"push,omitempty"`
-		Triage   bool `json:"triage,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private     bool        `json:"private,omitempty"`
-	PullsUrl    string      `json:"pulls_url,omitempty"`
-	PushedAt    string      `json:"pushed_at,omitempty"`
-	ReleasesUrl string      `json:"releases_url,omitempty"`
-	Size        json.Number `json:"size,omitempty"`
+	Permissions map[string]string `json:"permissions,omitempty"`
+	Private     bool              `json:"private,omitempty"`
+	PullsUrl    string            `json:"pulls_url,omitempty"`
+	PushedAt    string            `json:"pushed_at,omitempty"`
+	ReleasesUrl string            `json:"releases_url,omitempty"`
+	Size        json.Number       `json:"size,omitempty"`
 	Source      struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
 		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
@@ -2414,34 +2357,30 @@ type FullRepository struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"source,omitempty"`
 	SshUrl             string   `json:"ssh_url,omitempty"`
 	StargazersCount    int64    `json:"stargazers_count,omitempty"`
@@ -2635,47 +2574,37 @@ type FullRepository2 struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"parent,omitempty"`
-	Permissions struct {
-		Admin    bool `json:"admin,omitempty"`
-		Maintain bool `json:"maintain,omitempty"`
-		Pull     bool `json:"pull,omitempty"`
-		Push     bool `json:"push,omitempty"`
-		Triage   bool `json:"triage,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private     bool        `json:"private,omitempty"`
-	PullsUrl    string      `json:"pulls_url,omitempty"`
-	PushedAt    string      `json:"pushed_at,omitempty"`
-	ReleasesUrl string      `json:"releases_url,omitempty"`
-	Size        json.Number `json:"size,omitempty"`
+	Permissions map[string]string `json:"permissions,omitempty"`
+	Private     bool              `json:"private,omitempty"`
+	PullsUrl    string            `json:"pulls_url,omitempty"`
+	PushedAt    string            `json:"pushed_at,omitempty"`
+	ReleasesUrl string            `json:"releases_url,omitempty"`
+	Size        json.Number       `json:"size,omitempty"`
 	Source      struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
 		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
@@ -2752,34 +2681,30 @@ type FullRepository2 struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"source,omitempty"`
 	SshUrl             string   `json:"ssh_url,omitempty"`
 	StargazersCount    int64    `json:"stargazers_count,omitempty"`
@@ -3271,22 +3196,18 @@ type Installation struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
+	AppId               int64             `json:"app_id,omitempty"`
+	CreatedAt           string            `json:"created_at,omitempty"`
+	Events              []string          `json:"events,omitempty"`
+	HtmlUrl             string            `json:"html_url,omitempty"`
+	Id                  int64             `json:"id,omitempty"`
+	Permissions         map[string]string `json:"permissions,omitempty"`
+	RepositoriesUrl     string            `json:"repositories_url,omitempty"`
+	RepositorySelection string            `json:"repository_selection,omitempty"`
+	SingleFileName      string            `json:"single_file_name,omitempty"`
+	TargetId            int64             `json:"target_id,omitempty"`
+	TargetType          string            `json:"target_type,omitempty"`
+	UpdatedAt           string            `json:"updated_at,omitempty"`
 }
 
 type Installation2 struct {
@@ -3311,22 +3232,18 @@ type Installation2 struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Checks   string `json:"checks,omitempty"`
-		Contents string `json:"contents,omitempty"`
-		Metadata string `json:"metadata,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
+	AppId               int64             `json:"app_id,omitempty"`
+	CreatedAt           string            `json:"created_at,omitempty"`
+	Events              []string          `json:"events,omitempty"`
+	HtmlUrl             string            `json:"html_url,omitempty"`
+	Id                  int64             `json:"id,omitempty"`
+	Permissions         map[string]string `json:"permissions,omitempty"`
+	RepositoriesUrl     string            `json:"repositories_url,omitempty"`
+	RepositorySelection string            `json:"repository_selection,omitempty"`
+	SingleFileName      string            `json:"single_file_name,omitempty"`
+	TargetId            int64             `json:"target_id,omitempty"`
+	TargetType          string            `json:"target_type,omitempty"`
+	UpdatedAt           string            `json:"updated_at,omitempty"`
 }
 
 type Installation3 struct {
@@ -3351,31 +3268,23 @@ type Installation3 struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"account,omitempty"`
-	AppId       int64    `json:"app_id,omitempty"`
-	CreatedAt   string   `json:"created_at,omitempty"`
-	Events      []string `json:"events,omitempty"`
-	HtmlUrl     string   `json:"html_url,omitempty"`
-	Id          int64    `json:"id,omitempty"`
-	Permissions struct {
-		Deployments  string `json:"deployments,omitempty"`
-		Metadata     string `json:"metadata,omitempty"`
-		PullRequests string `json:"pull_requests,omitempty"`
-		Statuses     string `json:"statuses,omitempty"`
-	} `json:"permissions,omitempty"`
-	RepositoriesUrl     string `json:"repositories_url,omitempty"`
-	RepositorySelection string `json:"repository_selection,omitempty"`
-	SingleFileName      string `json:"single_file_name,omitempty"`
-	TargetId            int64  `json:"target_id,omitempty"`
-	TargetType          string `json:"target_type,omitempty"`
-	UpdatedAt           string `json:"updated_at,omitempty"`
+	AppId               int64             `json:"app_id,omitempty"`
+	CreatedAt           string            `json:"created_at,omitempty"`
+	Events              []string          `json:"events,omitempty"`
+	HtmlUrl             string            `json:"html_url,omitempty"`
+	Id                  int64             `json:"id,omitempty"`
+	Permissions         map[string]string `json:"permissions,omitempty"`
+	RepositoriesUrl     string            `json:"repositories_url,omitempty"`
+	RepositorySelection string            `json:"repository_selection,omitempty"`
+	SingleFileName      string            `json:"single_file_name,omitempty"`
+	TargetId            int64             `json:"target_id,omitempty"`
+	TargetType          string            `json:"target_type,omitempty"`
+	UpdatedAt           string            `json:"updated_at,omitempty"`
 }
 
 type InstallationToken struct {
-	ExpiresAt   string `json:"expires_at,omitempty"`
-	Permissions struct {
-		Contents string `json:"contents,omitempty"`
-		Issues   string `json:"issues,omitempty"`
-	} `json:"permissions,omitempty"`
+	ExpiresAt    string            `json:"expires_at,omitempty"`
+	Permissions  map[string]string `json:"permissions,omitempty"`
 	Repositories []struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
 		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
@@ -3452,34 +3361,30 @@ type InstallationToken struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repositories,omitempty"`
 	Token string `json:"token,omitempty"`
 }
@@ -3508,14 +3413,9 @@ type Integration struct {
 		ReposUrl         string `json:"repos_url,omitempty"`
 		Url              string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+	Permissions map[string]string `json:"permissions,omitempty"`
+	Slug        string            `json:"slug,omitempty"`
+	UpdatedAt   string            `json:"updated_at,omitempty"`
 }
 
 type Integration2 struct {
@@ -3541,14 +3441,9 @@ type Integration2 struct {
 		ReposUrl         string `json:"repos_url,omitempty"`
 		Url              string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
-	Permissions struct {
-		Contents   string `json:"contents,omitempty"`
-		Issues     string `json:"issues,omitempty"`
-		Metadata   string `json:"metadata,omitempty"`
-		SingleFile string `json:"single_file,omitempty"`
-	} `json:"permissions,omitempty"`
-	Slug      string `json:"slug,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
+	Permissions map[string]string `json:"permissions,omitempty"`
+	Slug        string            `json:"slug,omitempty"`
+	UpdatedAt   string            `json:"updated_at,omitempty"`
 }
 
 type IntegrationFromManifest struct {
@@ -4468,34 +4363,30 @@ type IssueWithRepo struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repository,omitempty"`
 	RepositoryUrl string `json:"repository_url,omitempty"`
 	State         string `json:"state,omitempty"`
@@ -4850,34 +4741,30 @@ type Migration struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repositories,omitempty"`
 	State     string `json:"state,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
@@ -4980,34 +4867,30 @@ type MigrationWithShortOrg struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repositories,omitempty"`
 	State     string `json:"state,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
@@ -5132,34 +5015,30 @@ type MinimalRepository struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
+	Permissions        map[string]string `json:"permissions,omitempty"`
+	Private            bool              `json:"private,omitempty"`
+	PullsUrl           string            `json:"pulls_url,omitempty"`
+	PushedAt           string            `json:"pushed_at,omitempty"`
+	ReleasesUrl        string            `json:"releases_url,omitempty"`
+	Size               json.Number       `json:"size,omitempty"`
+	SshUrl             string            `json:"ssh_url,omitempty"`
+	StargazersCount    int64             `json:"stargazers_count,omitempty"`
+	StargazersUrl      string            `json:"stargazers_url,omitempty"`
+	StatusesUrl        string            `json:"statuses_url,omitempty"`
+	SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+	SvnUrl             string            `json:"svn_url,omitempty"`
+	TagsUrl            string            `json:"tags_url,omitempty"`
+	TeamsUrl           string            `json:"teams_url,omitempty"`
+	TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+	TemplateRepository string            `json:"template_repository,omitempty"`
+	Topics             []string          `json:"topics,omitempty"`
+	TreesUrl           string            `json:"trees_url,omitempty"`
+	UpdatedAt          string            `json:"updated_at,omitempty"`
+	Url                string            `json:"url,omitempty"`
+	Visibility         string            `json:"visibility,omitempty"`
+	WatchersCount      int64             `json:"watchers_count,omitempty"`
 }
 
 type OrgHook struct {
@@ -5826,34 +5705,30 @@ type PullRequest struct {
 				Type              string `json:"type,omitempty"`
 				Url               string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
+			Permissions        map[string]string `json:"permissions,omitempty"`
+			Private            bool              `json:"private,omitempty"`
+			PullsUrl           string            `json:"pulls_url,omitempty"`
+			PushedAt           string            `json:"pushed_at,omitempty"`
+			ReleasesUrl        string            `json:"releases_url,omitempty"`
+			Size               json.Number       `json:"size,omitempty"`
+			SshUrl             string            `json:"ssh_url,omitempty"`
+			StargazersCount    int64             `json:"stargazers_count,omitempty"`
+			StargazersUrl      string            `json:"stargazers_url,omitempty"`
+			StatusesUrl        string            `json:"statuses_url,omitempty"`
+			SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+			SvnUrl             string            `json:"svn_url,omitempty"`
+			TagsUrl            string            `json:"tags_url,omitempty"`
+			TeamsUrl           string            `json:"teams_url,omitempty"`
+			TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+			TemplateRepository string            `json:"template_repository,omitempty"`
+			Topics             []string          `json:"topics,omitempty"`
+			TreesUrl           string            `json:"trees_url,omitempty"`
+			UpdatedAt          string            `json:"updated_at,omitempty"`
+			Url                string            `json:"url,omitempty"`
+			Visibility         string            `json:"visibility,omitempty"`
+			WatchersCount      int64             `json:"watchers_count,omitempty"`
 		} `json:"repo,omitempty"`
 		Sha  string `json:"sha,omitempty"`
 		User struct {
@@ -5967,34 +5842,30 @@ type PullRequest struct {
 				Type              string `json:"type,omitempty"`
 				Url               string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
+			Permissions        map[string]string `json:"permissions,omitempty"`
+			Private            bool              `json:"private,omitempty"`
+			PullsUrl           string            `json:"pulls_url,omitempty"`
+			PushedAt           string            `json:"pushed_at,omitempty"`
+			ReleasesUrl        string            `json:"releases_url,omitempty"`
+			Size               json.Number       `json:"size,omitempty"`
+			SshUrl             string            `json:"ssh_url,omitempty"`
+			StargazersCount    int64             `json:"stargazers_count,omitempty"`
+			StargazersUrl      string            `json:"stargazers_url,omitempty"`
+			StatusesUrl        string            `json:"statuses_url,omitempty"`
+			SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+			SvnUrl             string            `json:"svn_url,omitempty"`
+			TagsUrl            string            `json:"tags_url,omitempty"`
+			TeamsUrl           string            `json:"teams_url,omitempty"`
+			TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+			TemplateRepository string            `json:"template_repository,omitempty"`
+			Topics             []string          `json:"topics,omitempty"`
+			TreesUrl           string            `json:"trees_url,omitempty"`
+			UpdatedAt          string            `json:"updated_at,omitempty"`
+			Url                string            `json:"url,omitempty"`
+			Visibility         string            `json:"visibility,omitempty"`
+			WatchersCount      int64             `json:"watchers_count,omitempty"`
 		} `json:"repo,omitempty"`
 		Sha  string `json:"sha,omitempty"`
 		User struct {
@@ -6500,34 +6371,30 @@ type PullRequestReviewRequest struct {
 				Type              string `json:"type,omitempty"`
 				Url               string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
+			Permissions        map[string]string `json:"permissions,omitempty"`
+			Private            bool              `json:"private,omitempty"`
+			PullsUrl           string            `json:"pulls_url,omitempty"`
+			PushedAt           string            `json:"pushed_at,omitempty"`
+			ReleasesUrl        string            `json:"releases_url,omitempty"`
+			Size               json.Number       `json:"size,omitempty"`
+			SshUrl             string            `json:"ssh_url,omitempty"`
+			StargazersCount    int64             `json:"stargazers_count,omitempty"`
+			StargazersUrl      string            `json:"stargazers_url,omitempty"`
+			StatusesUrl        string            `json:"statuses_url,omitempty"`
+			SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+			SvnUrl             string            `json:"svn_url,omitempty"`
+			TagsUrl            string            `json:"tags_url,omitempty"`
+			TeamsUrl           string            `json:"teams_url,omitempty"`
+			TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+			TemplateRepository string            `json:"template_repository,omitempty"`
+			Topics             []string          `json:"topics,omitempty"`
+			TreesUrl           string            `json:"trees_url,omitempty"`
+			UpdatedAt          string            `json:"updated_at,omitempty"`
+			Url                string            `json:"url,omitempty"`
+			Visibility         string            `json:"visibility,omitempty"`
+			WatchersCount      int64             `json:"watchers_count,omitempty"`
 		} `json:"repo,omitempty"`
 		Sha  string `json:"sha,omitempty"`
 		User struct {
@@ -6637,34 +6504,30 @@ type PullRequestReviewRequest struct {
 				Type              string `json:"type,omitempty"`
 				Url               string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
+			Permissions        map[string]string `json:"permissions,omitempty"`
+			Private            bool              `json:"private,omitempty"`
+			PullsUrl           string            `json:"pulls_url,omitempty"`
+			PushedAt           string            `json:"pushed_at,omitempty"`
+			ReleasesUrl        string            `json:"releases_url,omitempty"`
+			Size               json.Number       `json:"size,omitempty"`
+			SshUrl             string            `json:"ssh_url,omitempty"`
+			StargazersCount    int64             `json:"stargazers_count,omitempty"`
+			StargazersUrl      string            `json:"stargazers_url,omitempty"`
+			StatusesUrl        string            `json:"statuses_url,omitempty"`
+			SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+			SvnUrl             string            `json:"svn_url,omitempty"`
+			TagsUrl            string            `json:"tags_url,omitempty"`
+			TeamsUrl           string            `json:"teams_url,omitempty"`
+			TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+			TemplateRepository string            `json:"template_repository,omitempty"`
+			Topics             []string          `json:"topics,omitempty"`
+			TreesUrl           string            `json:"trees_url,omitempty"`
+			UpdatedAt          string            `json:"updated_at,omitempty"`
+			Url                string            `json:"url,omitempty"`
+			Visibility         string            `json:"visibility,omitempty"`
+			WatchersCount      int64             `json:"watchers_count,omitempty"`
 		} `json:"repo,omitempty"`
 		Sha  string `json:"sha,omitempty"`
 		User struct {
@@ -6954,34 +6817,30 @@ type PullRequestSimple struct {
 				Type              string `json:"type,omitempty"`
 				Url               string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
+			Permissions        map[string]string `json:"permissions,omitempty"`
+			Private            bool              `json:"private,omitempty"`
+			PullsUrl           string            `json:"pulls_url,omitempty"`
+			PushedAt           string            `json:"pushed_at,omitempty"`
+			ReleasesUrl        string            `json:"releases_url,omitempty"`
+			Size               json.Number       `json:"size,omitempty"`
+			SshUrl             string            `json:"ssh_url,omitempty"`
+			StargazersCount    int64             `json:"stargazers_count,omitempty"`
+			StargazersUrl      string            `json:"stargazers_url,omitempty"`
+			StatusesUrl        string            `json:"statuses_url,omitempty"`
+			SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+			SvnUrl             string            `json:"svn_url,omitempty"`
+			TagsUrl            string            `json:"tags_url,omitempty"`
+			TeamsUrl           string            `json:"teams_url,omitempty"`
+			TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+			TemplateRepository string            `json:"template_repository,omitempty"`
+			Topics             []string          `json:"topics,omitempty"`
+			TreesUrl           string            `json:"trees_url,omitempty"`
+			UpdatedAt          string            `json:"updated_at,omitempty"`
+			Url                string            `json:"url,omitempty"`
+			Visibility         string            `json:"visibility,omitempty"`
+			WatchersCount      int64             `json:"watchers_count,omitempty"`
 		} `json:"repo,omitempty"`
 		Sha  string `json:"sha,omitempty"`
 		User struct {
@@ -7091,34 +6950,30 @@ type PullRequestSimple struct {
 				Type              string `json:"type,omitempty"`
 				Url               string `json:"url,omitempty"`
 			} `json:"owner,omitempty"`
-			Permissions struct {
-				Admin bool `json:"admin,omitempty"`
-				Pull  bool `json:"pull,omitempty"`
-				Push  bool `json:"push,omitempty"`
-			} `json:"permissions,omitempty"`
-			Private            bool        `json:"private,omitempty"`
-			PullsUrl           string      `json:"pulls_url,omitempty"`
-			PushedAt           string      `json:"pushed_at,omitempty"`
-			ReleasesUrl        string      `json:"releases_url,omitempty"`
-			Size               json.Number `json:"size,omitempty"`
-			SshUrl             string      `json:"ssh_url,omitempty"`
-			StargazersCount    int64       `json:"stargazers_count,omitempty"`
-			StargazersUrl      string      `json:"stargazers_url,omitempty"`
-			StatusesUrl        string      `json:"statuses_url,omitempty"`
-			SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-			SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-			SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-			SvnUrl             string      `json:"svn_url,omitempty"`
-			TagsUrl            string      `json:"tags_url,omitempty"`
-			TeamsUrl           string      `json:"teams_url,omitempty"`
-			TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-			TemplateRepository string      `json:"template_repository,omitempty"`
-			Topics             []string    `json:"topics,omitempty"`
-			TreesUrl           string      `json:"trees_url,omitempty"`
-			UpdatedAt          string      `json:"updated_at,omitempty"`
-			Url                string      `json:"url,omitempty"`
-			Visibility         string      `json:"visibility,omitempty"`
-			WatchersCount      int64       `json:"watchers_count,omitempty"`
+			Permissions        map[string]string `json:"permissions,omitempty"`
+			Private            bool              `json:"private,omitempty"`
+			PullsUrl           string            `json:"pulls_url,omitempty"`
+			PushedAt           string            `json:"pushed_at,omitempty"`
+			ReleasesUrl        string            `json:"releases_url,omitempty"`
+			Size               json.Number       `json:"size,omitempty"`
+			SshUrl             string            `json:"ssh_url,omitempty"`
+			StargazersCount    int64             `json:"stargazers_count,omitempty"`
+			StargazersUrl      string            `json:"stargazers_url,omitempty"`
+			StatusesUrl        string            `json:"statuses_url,omitempty"`
+			SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+			SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+			SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+			SvnUrl             string            `json:"svn_url,omitempty"`
+			TagsUrl            string            `json:"tags_url,omitempty"`
+			TeamsUrl           string            `json:"teams_url,omitempty"`
+			TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+			TemplateRepository string            `json:"template_repository,omitempty"`
+			Topics             []string          `json:"topics,omitempty"`
+			TreesUrl           string            `json:"trees_url,omitempty"`
+			UpdatedAt          string            `json:"updated_at,omitempty"`
+			Url                string            `json:"url,omitempty"`
+			Visibility         string            `json:"visibility,omitempty"`
+			WatchersCount      int64             `json:"watchers_count,omitempty"`
 		} `json:"repo,omitempty"`
 		Sha  string `json:"sha,omitempty"`
 		User struct {
@@ -7582,34 +7437,30 @@ type Repository struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
-	Topics             []string    `json:"topics,omitempty"`
-	TreesUrl           string      `json:"trees_url,omitempty"`
-	UpdatedAt          string      `json:"updated_at,omitempty"`
-	Url                string      `json:"url,omitempty"`
-	Visibility         string      `json:"visibility,omitempty"`
-	WatchersCount      int64       `json:"watchers_count,omitempty"`
+	Permissions        map[string]string `json:"permissions,omitempty"`
+	Private            bool              `json:"private,omitempty"`
+	PullsUrl           string            `json:"pulls_url,omitempty"`
+	PushedAt           string            `json:"pushed_at,omitempty"`
+	ReleasesUrl        string            `json:"releases_url,omitempty"`
+	Size               json.Number       `json:"size,omitempty"`
+	SshUrl             string            `json:"ssh_url,omitempty"`
+	StargazersCount    int64             `json:"stargazers_count,omitempty"`
+	StargazersUrl      string            `json:"stargazers_url,omitempty"`
+	StatusesUrl        string            `json:"statuses_url,omitempty"`
+	SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+	SvnUrl             string            `json:"svn_url,omitempty"`
+	TagsUrl            string            `json:"tags_url,omitempty"`
+	TeamsUrl           string            `json:"teams_url,omitempty"`
+	TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+	TemplateRepository string            `json:"template_repository,omitempty"`
+	Topics             []string          `json:"topics,omitempty"`
+	TreesUrl           string            `json:"trees_url,omitempty"`
+	UpdatedAt          string            `json:"updated_at,omitempty"`
+	Url                string            `json:"url,omitempty"`
+	Visibility         string            `json:"visibility,omitempty"`
+	WatchersCount      int64             `json:"watchers_count,omitempty"`
 }
 
 type Repository2 struct {
@@ -7789,27 +7640,23 @@ type Repository3 struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"owner,omitempty"`
-	Permissions struct {
-		Admin bool `json:"admin,omitempty"`
-		Pull  bool `json:"pull,omitempty"`
-		Push  bool `json:"push,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private            bool        `json:"private,omitempty"`
-	PullsUrl           string      `json:"pulls_url,omitempty"`
-	PushedAt           string      `json:"pushed_at,omitempty"`
-	ReleasesUrl        string      `json:"releases_url,omitempty"`
-	Size               json.Number `json:"size,omitempty"`
-	SshUrl             string      `json:"ssh_url,omitempty"`
-	StargazersCount    int64       `json:"stargazers_count,omitempty"`
-	StargazersUrl      string      `json:"stargazers_url,omitempty"`
-	StatusesUrl        string      `json:"statuses_url,omitempty"`
-	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-	SvnUrl             string      `json:"svn_url,omitempty"`
-	TagsUrl            string      `json:"tags_url,omitempty"`
-	TeamsUrl           string      `json:"teams_url,omitempty"`
-	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	Permissions        map[string]string `json:"permissions,omitempty"`
+	Private            bool              `json:"private,omitempty"`
+	PullsUrl           string            `json:"pulls_url,omitempty"`
+	PushedAt           string            `json:"pushed_at,omitempty"`
+	ReleasesUrl        string            `json:"releases_url,omitempty"`
+	Size               json.Number       `json:"size,omitempty"`
+	SshUrl             string            `json:"ssh_url,omitempty"`
+	StargazersCount    int64             `json:"stargazers_count,omitempty"`
+	StargazersUrl      string            `json:"stargazers_url,omitempty"`
+	StatusesUrl        string            `json:"statuses_url,omitempty"`
+	SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+	SvnUrl             string            `json:"svn_url,omitempty"`
+	TagsUrl            string            `json:"tags_url,omitempty"`
+	TeamsUrl           string            `json:"teams_url,omitempty"`
+	TempCloneToken     string            `json:"temp_clone_token,omitempty"`
 	TemplateRepository struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
 		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
@@ -7886,34 +7733,30 @@ type Repository3 struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"template_repository,omitempty"`
 	Topics        []string `json:"topics,omitempty"`
 	TreesUrl      string   `json:"trees_url,omitempty"`
@@ -8503,34 +8346,30 @@ type StarredRepository struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"repo,omitempty"`
 	StarredAt string `json:"starred_at,omitempty"`
 }
@@ -8779,22 +8618,18 @@ type TeamProject struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"creator,omitempty"`
-	HtmlUrl                string `json:"html_url,omitempty"`
-	Id                     int64  `json:"id,omitempty"`
-	Name                   string `json:"name,omitempty"`
-	NodeId                 string `json:"node_id,omitempty"`
-	Number                 int64  `json:"number,omitempty"`
-	OrganizationPermission string `json:"organization_permission,omitempty"`
-	OwnerUrl               string `json:"owner_url,omitempty"`
-	Permissions            struct {
-		Admin bool `json:"admin,omitempty"`
-		Read  bool `json:"read,omitempty"`
-		Write bool `json:"write,omitempty"`
-	} `json:"permissions,omitempty"`
-	Private   bool   `json:"private,omitempty"`
-	State     string `json:"state,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Url       string `json:"url,omitempty"`
+	HtmlUrl                string            `json:"html_url,omitempty"`
+	Id                     int64             `json:"id,omitempty"`
+	Name                   string            `json:"name,omitempty"`
+	NodeId                 string            `json:"node_id,omitempty"`
+	Number                 int64             `json:"number,omitempty"`
+	OrganizationPermission string            `json:"organization_permission,omitempty"`
+	OwnerUrl               string            `json:"owner_url,omitempty"`
+	Permissions            map[string]string `json:"permissions,omitempty"`
+	Private                bool              `json:"private,omitempty"`
+	State                  string            `json:"state,omitempty"`
+	UpdatedAt              string            `json:"updated_at,omitempty"`
+	Url                    string            `json:"url,omitempty"`
 }
 
 type TeamRepository struct {
@@ -8894,43 +8729,33 @@ type TeamRepository struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"parent,omitempty"`
-	Permissions struct {
-		Admin    bool `json:"admin,omitempty"`
-		Maintain bool `json:"maintain,omitempty"`
-		Pull     bool `json:"pull,omitempty"`
-		Push     bool `json:"push,omitempty"`
-		Triage   bool `json:"triage,omitempty"`
-	} `json:"permissions,omitempty"`
-	Source struct {
+	Permissions map[string]string `json:"permissions,omitempty"`
+	Source      struct {
 		AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
 		AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
 		AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
@@ -9006,34 +8831,30 @@ type TeamRepository struct {
 			Type              string `json:"type,omitempty"`
 			Url               string `json:"url,omitempty"`
 		} `json:"owner,omitempty"`
-		Permissions struct {
-			Admin bool `json:"admin,omitempty"`
-			Pull  bool `json:"pull,omitempty"`
-			Push  bool `json:"push,omitempty"`
-		} `json:"permissions,omitempty"`
-		Private            bool        `json:"private,omitempty"`
-		PullsUrl           string      `json:"pulls_url,omitempty"`
-		PushedAt           string      `json:"pushed_at,omitempty"`
-		ReleasesUrl        string      `json:"releases_url,omitempty"`
-		Size               json.Number `json:"size,omitempty"`
-		SshUrl             string      `json:"ssh_url,omitempty"`
-		StargazersCount    int64       `json:"stargazers_count,omitempty"`
-		StargazersUrl      string      `json:"stargazers_url,omitempty"`
-		StatusesUrl        string      `json:"statuses_url,omitempty"`
-		SubscribersCount   int64       `json:"subscribers_count,omitempty"`
-		SubscribersUrl     string      `json:"subscribers_url,omitempty"`
-		SubscriptionUrl    string      `json:"subscription_url,omitempty"`
-		SvnUrl             string      `json:"svn_url,omitempty"`
-		TagsUrl            string      `json:"tags_url,omitempty"`
-		TeamsUrl           string      `json:"teams_url,omitempty"`
-		TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-		TemplateRepository string      `json:"template_repository,omitempty"`
-		Topics             []string    `json:"topics,omitempty"`
-		TreesUrl           string      `json:"trees_url,omitempty"`
-		UpdatedAt          string      `json:"updated_at,omitempty"`
-		Url                string      `json:"url,omitempty"`
-		Visibility         string      `json:"visibility,omitempty"`
-		WatchersCount      int64       `json:"watchers_count,omitempty"`
+		Permissions        map[string]string `json:"permissions,omitempty"`
+		Private            bool              `json:"private,omitempty"`
+		PullsUrl           string            `json:"pulls_url,omitempty"`
+		PushedAt           string            `json:"pushed_at,omitempty"`
+		ReleasesUrl        string            `json:"releases_url,omitempty"`
+		Size               json.Number       `json:"size,omitempty"`
+		SshUrl             string            `json:"ssh_url,omitempty"`
+		StargazersCount    int64             `json:"stargazers_count,omitempty"`
+		StargazersUrl      string            `json:"stargazers_url,omitempty"`
+		StatusesUrl        string            `json:"statuses_url,omitempty"`
+		SubscribersCount   int64             `json:"subscribers_count,omitempty"`
+		SubscribersUrl     string            `json:"subscribers_url,omitempty"`
+		SubscriptionUrl    string            `json:"subscription_url,omitempty"`
+		SvnUrl             string            `json:"svn_url,omitempty"`
+		TagsUrl            string            `json:"tags_url,omitempty"`
+		TeamsUrl           string            `json:"teams_url,omitempty"`
+		TempCloneToken     string            `json:"temp_clone_token,omitempty"`
+		TemplateRepository string            `json:"template_repository,omitempty"`
+		Topics             []string          `json:"topics,omitempty"`
+		TreesUrl           string            `json:"trees_url,omitempty"`
+		UpdatedAt          string            `json:"updated_at,omitempty"`
+		Url                string            `json:"url,omitempty"`
+		Visibility         string            `json:"visibility,omitempty"`
+		WatchersCount      int64             `json:"watchers_count,omitempty"`
 	} `json:"source,omitempty"`
 }
 

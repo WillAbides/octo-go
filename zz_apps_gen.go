@@ -743,7 +743,7 @@ type AppsCreateInstallationTokenReqBody struct {
 	   allowable values, see "[GitHub App
 	   permissions](https://developer.github.com/apps/building-github-apps/creating-github-apps-using-url-parameters/#github-app-permissions)."
 	*/
-	Permissions interface{} `json:"permissions,omitempty"`
+	Permissions map[string]*string `json:"permissions,omitempty"`
 
 	/*
 	   The `id`s of the repositories that the installation token can access. Providing
