@@ -163,7 +163,6 @@ var relLinkExp = regexp.MustCompile(`<(.+?)>\s*;\s*rel="([^"]*)"`)
 func requestHeaders(headers map[string]*string, previews map[string]bool) http.Header {
 	header := make(http.Header, len(headers)+len(previews)+1)
 	header.Set("Accept", "application/vnd.github.v3+json")
-	header.Set("Accept", "application/vnd.github.machine-man-preview+json")
 	for k, v := range headers {
 		if v == nil {
 			continue

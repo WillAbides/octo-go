@@ -71,7 +71,10 @@ func RequestHTTPClient(client *http.Client) RequestOption {
 	}
 }
 
-// RequestAuthProvider sets a provider to use for Authenticating
+// RequestAuthProvider sets a provider to use in setting the Authentication header
+//
+// This is for custom providers. You will typically want to use RequestPATAuth, RequestAppAuth or RequestAppInstallationAuth
+// instead.
 func RequestAuthProvider(authProvider AuthProvider) RequestOption {
 	return func(opts *requestOpts) error {
 		opts.authProvider = authProvider
@@ -81,12 +84,18 @@ func RequestAuthProvider(authProvider AuthProvider) RequestOption {
 
 // RequestPATAuth authenticates requests with a Personal Access Token
 func RequestPATAuth(token string) RequestOption {
-	return RequestAuthProvider(&patAuthProvider{
-		Token: token,
-	})
+	return func(opts *requestOpts) error {
+		opts.authProvider = &patAuthProvider{
+			token: token,
+		}
+		return nil
+	}
 }
 
 // RequestAppAuth provides authentication for a GitHub App. See also RequestAppInstallationAuth
+//
+// appID is the GitHub App's id
+// privateKey is the app's private key. It should be the content of a PEM file
 func RequestAppAuth(appID int64, privateKey []byte) RequestOption {
 	return func(opts *requestOpts) error {
 		pk, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
@@ -94,25 +103,32 @@ func RequestAppAuth(appID int64, privateKey []byte) RequestOption {
 			return fmt.Errorf("error parsing private key: %v", pk)
 		}
 		opts.authProvider = &appAuthProvider{
-			AppID:      appID,
-			PrivateKey: pk,
+			appID:      appID,
+			privateKey: pk,
 		}
 		return nil
 	}
 }
 
 // RequestAppInstallationAuth provides authentication for a GitHub App installation
-func RequestAppInstallationAuth(appID, installationID int64, privateKey []byte, opt ...RequestOption) RequestOption {
+//
+// appID is the GitHub App's id
+// privateKey is the app's private key. It should be the content of a PEM file
+// requestBody is the body to be sent when creating an installation token. It can be nil, or you can set it to limit the
+//  scope of the token's authorizations.
+// requestOptions are options to be use when requesting a token. They do not affect options for the main request.
+func RequestAppInstallationAuth(appID, installationID int64, privateKey []byte, requestBody *AppsCreateInstallationTokenReqBody, opt ...RequestOption) RequestOption {
 	return func(opts *requestOpts) error {
 		pk, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
 		if err != nil {
 			return fmt.Errorf("error parsing private key: %v", pk)
 		}
 		opts.authProvider = &appInstallationAuthProvider{
-			AppID:          appID,
-			InstallationID: installationID,
-			PrivateKey:     pk,
-			RequestOptions: opt,
+			appID:          appID,
+			installationID: installationID,
+			privateKey:     pk,
+			requestBody:    requestBody,
+			requestOptions: opt,
 		}
 		return nil
 	}
