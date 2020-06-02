@@ -50,6 +50,8 @@ type appInstallationAuthProvider struct {
 	AppID          int64
 	InstallationID int64
 	PrivateKey     *rsa.PrivateKey
+	RepositoryIDs  []int64
+	Permissions    map[string]string
 
 	// request options for requests made to the create-installation-token endpoint
 	RequestOptions []RequestOption
@@ -90,6 +92,10 @@ func (a *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (
 	resp, err := tokenClient.AppsCreateInstallationToken(ctx, &AppsCreateInstallationTokenReq{
 		InstallationId:    a.InstallationID,
 		MachineManPreview: true,
+		RequestBody: AppsCreateInstallationTokenReqBody{
+			Permissions:   a.Permissions,
+			RepositoryIds: a.RepositoryIDs,
+		},
 	})
 	if err != nil {
 		return "", fmt.Errorf("error getting installation token: %v", err)
