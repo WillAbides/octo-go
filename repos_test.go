@@ -48,8 +48,8 @@ func TestResposUploadReleaseAsset(t *testing.T) {
 
 		t.Cleanup(func() {
 			_, err := client.ReposDeleteReleaseAsset(ctx, &octo.ReposDeleteReleaseAssetReq{
-				Owner: "octo-cli-testorg",
-				Repo:  "scratch",
+				Owner:   "octo-cli-testorg",
+				Repo:    "scratch",
 				AssetId: uploadResp.Data.Id,
 			})
 			require.NoError(t, err)
