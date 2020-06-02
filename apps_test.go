@@ -8,16 +8,6 @@ import (
 	"github.com/willabides/octo-go"
 )
 
-func TestAppsCreateInstallationToken(t *testing.T) {
-	ctx := context.Background()
-	client := vcrClient(t, t.Name(), appAuth(t))
-	_, err := client.AppsCreateInstallationToken(ctx, &octo.AppsCreateInstallationTokenReq{
-		InstallationId:    appInstallationID,
-		MachineManPreview: true,
-	})
-	require.NoError(t, err)
-}
-
 func TestAppsGetRepoInstallation(t *testing.T) {
 	t.Run("exists", func(t *testing.T) {
 		ctx := context.Background()
