@@ -232,7 +232,7 @@ type GistsCreateReqBody struct {
 	   The filenames and content of each file in the gist. The keys in the `files`
 	   object represent the filename and have the type `string`.
 	*/
-	Files map[string]*GistsCreateReqBodyFiles `json:"files"`
+	Files map[string]GistsCreateReqBodyFiles `json:"files"`
 
 	// When `true`, the gist will be public and available for anyone to see.
 	Public *bool `json:"public,omitempty"`
@@ -2276,7 +2276,7 @@ type GistsUpdateReqBody struct {
 	Description *string `json:"description,omitempty"`
 
 	// The filenames and content that make up this gist.
-	Files map[string]*GistsUpdateReqBodyFiles `json:"files,omitempty"`
+	Files map[string]GistsUpdateReqBodyFiles `json:"files,omitempty"`
 }
 
 /*
