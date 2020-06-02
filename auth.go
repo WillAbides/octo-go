@@ -16,18 +16,18 @@ type AuthProvider interface {
 }
 
 type patAuthProvider struct {
-	Token string
+	token string
 }
 
 // AuthorizationHeader implements AuthProvider
 func (p *patAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
-	return "token " + p.Token, nil
+	return "token " + p.token, nil
 }
 
 // appAuthProvider provides authentication for a GitHub App. See also appInstallationAuthProvider
 type appAuthProvider struct {
-	AppID      int64
-	PrivateKey *rsa.PrivateKey
+	appID      int64
+	privateKey *rsa.PrivateKey
 }
 
 // AuthorizationHeader implements AuthProvider
@@ -36,9 +36,9 @@ func (a *appAuthProvider) AuthorizationHeader(_ context.Context) (string, error)
 	claims := &jwt.StandardClaims{
 		IssuedAt:  now.Unix(),
 		ExpiresAt: now.Add(time.Minute).Unix(),
-		Issuer:    fmt.Sprintf("%d", a.AppID),
+		Issuer:    fmt.Sprintf("%d", a.appID),
 	}
-	signed, err := jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(a.PrivateKey)
+	signed, err := jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(a.privateKey)
 	if err != nil {
 		return "", fmt.Errorf("can't sign claims: %v", err)
 	}
@@ -47,31 +47,27 @@ func (a *appAuthProvider) AuthorizationHeader(_ context.Context) (string, error)
 
 // appInstallationAuthProvider provides authentication for a GitHub App Installation
 type appInstallationAuthProvider struct {
-	AppID          int64
-	InstallationID int64
-	PrivateKey     *rsa.PrivateKey
-	RepositoryIDs  []int64
-	Permissions    map[string]string
-
-	// request options for requests made to the create-installation-token endpoint
-	RequestOptions []RequestOption
-
-	tkn         string
-	tknExpiry   time.Time
-	tknMux      sync.Mutex
-	tokenClient *Client
+	appID          int64
+	installationID int64
+	privateKey     *rsa.PrivateKey
+	requestOptions []RequestOption
+	requestBody    *AppsCreateInstallationTokenReqBody
+	tkn            string
+	tknExpiry      time.Time
+	tknMux         sync.Mutex
+	tokenClient    *Client
 }
 
 func (a *appInstallationAuthProvider) getTokenClient() (*Client, error) {
 	if a.tokenClient != nil {
 		return a.tokenClient, nil
 	}
-	opts := append(a.RequestOptions, RequestAuthProvider(&appAuthProvider{
-		AppID:      a.AppID,
-		PrivateKey: a.PrivateKey,
+	opts := append(a.requestOptions, RequestAuthProvider(&appAuthProvider{
+		appID:      a.appID,
+		privateKey: a.privateKey,
 	}))
 	var err error
-	a.tokenClient, err = NewClient(opts...)
+	a.tokenClient, err = NewClient(append(opts, RequestEnableRequirePreviews())...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,14 +85,13 @@ func (a *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (
 	if err != nil {
 		return "", err
 	}
-	resp, err := tokenClient.AppsCreateInstallationToken(ctx, &AppsCreateInstallationTokenReq{
-		InstallationId:    a.InstallationID,
-		MachineManPreview: true,
-		RequestBody: AppsCreateInstallationTokenReqBody{
-			Permissions:   a.Permissions,
-			RepositoryIds: a.RepositoryIDs,
-		},
-	})
+	req := &AppsCreateInstallationTokenReq{
+		InstallationId: a.installationID,
+	}
+	if a.requestBody != nil {
+		req.RequestBody = *a.requestBody
+	}
+	resp, err := tokenClient.AppsCreateInstallationToken(ctx, req)
 	if err != nil {
 		return "", fmt.Errorf("error getting installation token: %v", err)
 	}

@@ -55,7 +55,7 @@ func appInstallationAuth(t *testing.T) octo.RequestOption {
 	if key == nil {
 		return nil
 	}
-	return octo.RequestAppInstallationAuth(appID, appInstallationID, key)
+	return octo.RequestAppInstallationAuth(appID, appInstallationID, key, nil)
 }
 
 func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) *octo.Client {
