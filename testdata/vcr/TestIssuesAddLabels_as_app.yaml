@@ -28,9 +28,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 01 Jun 2020 21:06:42 GMT
+      - Wed, 03 Jun 2020 14:11:37 GMT
       Etag:
-      - W/"176301b3c5438c3def925aaec2a59789"
+      - W/"5863c6c78219edc3c784b3ce1babe517"
       Referrer-Policy:
       - origin-when-cross-origin, strict-origin-when-cross-origin
       Server:
@@ -49,13 +49,13 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 84D7:46A0:117B0FB:272C46A:5ED56DE2
+      - 855C:66D4:6A6B0:12C067:5ED7AF99
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4997"
+      - "4986"
       X-Ratelimit-Reset:
-      - "1591046677"
+      - "1591194633"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

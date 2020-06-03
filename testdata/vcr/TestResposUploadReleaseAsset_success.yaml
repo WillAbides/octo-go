@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 02 Jun 2020 16:47:48 GMT
+      - Wed, 03 Jun 2020 14:11:39 GMT
       Etag:
       - W/"b8330032ad1fa85a23d5a0eea7e9cad9"
       Last-Modified:
@@ -54,7 +54,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 994F:71CC:1406D19:2D5D451:5ED682B4
+      - 855C:66D4:6A730:12C107:5ED7AF9A
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -62,9 +62,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4919"
+      - "4935"
       X-Ratelimit-Reset:
-      - "1591116500"
+      - "1591195682"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -104,7 +104,7 @@ interactions:
     url: https://uploads.github.com/repos/octo-cli-testorg/scratch/releases/26474415/assets?name=LICENSE
     method: POST
   response:
-    body: '{"url":"https://api.github.com/repos/octo-cli-testorg/scratch/releases/assets/21294454","id":21294454,"node_id":"MDEyOlJlbGVhc2VBc3NldDIxMjk0NDU0","name":"LICENSE","label":"","uploader":{"login":"WillAbides","id":233500,"node_id":"MDQ6VXNlcjIzMzUwMA==","avatar_url":"https://avatars3.githubusercontent.com/u/233500?v=4","gravatar_id":"","url":"https://api.github.com/users/WillAbides","html_url":"https://github.com/WillAbides","followers_url":"https://api.github.com/users/WillAbides/followers","following_url":"https://api.github.com/users/WillAbides/following{/other_user}","gists_url":"https://api.github.com/users/WillAbides/gists{/gist_id}","starred_url":"https://api.github.com/users/WillAbides/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/WillAbides/subscriptions","organizations_url":"https://api.github.com/users/WillAbides/orgs","repos_url":"https://api.github.com/users/WillAbides/repos","events_url":"https://api.github.com/users/WillAbides/events{/privacy}","received_events_url":"https://api.github.com/users/WillAbides/received_events","type":"User","site_admin":true},"content_type":"text/plain","state":"uploaded","size":1067,"download_count":0,"created_at":"2020-06-02T16:47:49Z","updated_at":"2020-06-02T16:47:49Z","browser_download_url":"https://github.com/octo-cli-testorg/scratch/releases/download/v0.0.2/LICENSE"}'
+    body: '{"url":"https://api.github.com/repos/octo-cli-testorg/scratch/releases/assets/21335070","id":21335070,"node_id":"MDEyOlJlbGVhc2VBc3NldDIxMzM1MDcw","name":"LICENSE","label":"","uploader":{"login":"WillAbides","id":233500,"node_id":"MDQ6VXNlcjIzMzUwMA==","avatar_url":"https://avatars3.githubusercontent.com/u/233500?v=4","gravatar_id":"","url":"https://api.github.com/users/WillAbides","html_url":"https://github.com/WillAbides","followers_url":"https://api.github.com/users/WillAbides/followers","following_url":"https://api.github.com/users/WillAbides/following{/other_user}","gists_url":"https://api.github.com/users/WillAbides/gists{/gist_id}","starred_url":"https://api.github.com/users/WillAbides/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/WillAbides/subscriptions","organizations_url":"https://api.github.com/users/WillAbides/orgs","repos_url":"https://api.github.com/users/WillAbides/repos","events_url":"https://api.github.com/users/WillAbides/events{/privacy}","received_events_url":"https://api.github.com/users/WillAbides/received_events","type":"User","site_admin":true},"content_type":"text/plain","state":"uploaded","size":1067,"download_count":0,"created_at":"2020-06-03T14:11:39Z","updated_at":"2020-06-03T14:11:39Z","browser_download_url":"https://github.com/octo-cli-testorg/scratch/releases/download/v0.0.2/LICENSE"}'
     headers:
       Cache-Control:
       - no-cache
@@ -113,11 +113,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 02 Jun 2020 16:47:49 GMT
+      - Wed, 03 Jun 2020 14:11:39 GMT
       Etag:
-      - W/"c6888aba4d875b0dff0834e0a38b550b"
+      - W/"16a7ba2f34bb444bdb0490884bb5e046"
       Last-Modified:
-      - Tue, 02 Jun 2020 16:47:49 GMT
+      - Wed, 03 Jun 2020 14:11:39 GMT
       Strict-Transport-Security:
       - max-age=31557600
       Vary:
@@ -131,7 +131,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 9BA6:7723:28C7F4:31E388:5ED682B5
+      - A901:7FF9:2EECD0:38D9A8:5ED7AF9B
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -149,7 +149,7 @@ interactions:
       - application/vnd.github.v3+json
       User-Agent:
       - octo-go
-    url: https://api.github.com/repos/octo-cli-testorg/scratch/releases/assets/21294454
+    url: https://api.github.com/repos/octo-cli-testorg/scratch/releases/assets/21335070
     method: DELETE
   response:
     body: ""
@@ -163,7 +163,7 @@ interactions:
       Content-Security-Policy:
       - default-src 'none'
       Date:
-      - Tue, 02 Jun 2020 16:47:49 GMT
+      - Wed, 03 Jun 2020 14:11:39 GMT
       Referrer-Policy:
       - origin-when-cross-origin, strict-origin-when-cross-origin
       Server:
@@ -183,7 +183,7 @@ interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       X-Github-Request-Id:
-      - 994F:71CC:1406D3D:2D5D464:5ED682B4
+      - 855C:66D4:6A75A:12C132:5ED7AF9B
       X-Oauth-Scopes:
       - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
         delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
@@ -191,9 +191,9 @@ interactions:
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4916"
+      - "4932"
       X-Ratelimit-Reset:
-      - "1591116500"
+      - "1591195682"
       X-Xss-Protection:
       - 1; mode=block
     status: 204 No Content

@@ -18,7 +18,7 @@ import (
 
 const (
 	appID             int64 = 67080
-	appInstallationID int64 = 9385805
+	appInstallationID int64 = 9437013
 )
 
 func appPrivateKey(t *testing.T) []byte {

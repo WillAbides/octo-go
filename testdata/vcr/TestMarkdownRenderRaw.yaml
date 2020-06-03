@@ -28,7 +28,7 @@ interactions:
       Content-Type:
       - text/html;charset=utf-8
       Date:
-      - Sun, 31 May 2020 22:30:37 GMT
+      - Wed, 03 Jun 2020 14:11:38 GMT
       Referrer-Policy:
       - origin-when-cross-origin, strict-origin-when-cross-origin
       Server:
@@ -46,13 +46,13 @@ interactions:
       X-Frame-Options:
       - deny
       X-Github-Request-Id:
-      - B8F3:610E:15D85B6:249B2C1:5ED4300D
+      - 855C:66D4:6A708:12C0F0:5ED7AF9A
       X-Ratelimit-Limit:
-      - "5000"
+      - "60"
       X-Ratelimit-Remaining:
-      - "4995"
+      - "54"
       X-Ratelimit-Reset:
-      - "1590965189"
+      - "1591195130"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

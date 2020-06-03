@@ -29,9 +29,9 @@ interactions:
       Content-Type:
       - text/html;charset=utf-8
       Date:
-      - Mon, 01 Jun 2020 21:01:06 GMT
+      - Wed, 03 Jun 2020 14:11:38 GMT
       Expires:
-      - Mon, 01 Jun 2020 21:01:06 GMT
+      - Wed, 03 Jun 2020 14:11:38 GMT
       Location:
       - https://codeload.github.com/octocat/Hello-World/legacy.tar.gz/master
       Referrer-Policy:
@@ -49,13 +49,13 @@ interactions:
       X-Frame-Options:
       - deny
       X-Github-Request-Id:
-      - A0BA:521C:C0ED31:1D504A9:5ED56C92
+      - 855C:66D4:6A70F:12C0F4:5ED7AF9A
       X-Ratelimit-Limit:
       - "5000"
       X-Ratelimit-Remaining:
-      - "4968"
+      - "4936"
       X-Ratelimit-Reset:
-      - "1591048139"
+      - "1591195682"
       X-Xss-Protection:
       - 1; mode=block
     status: 302 Found
@@ -97,7 +97,7 @@ interactions:
       Content-Type:
       - application/x-gzip
       Date:
-      - Mon, 01 Jun 2020 21:01:06 GMT
+      - Wed, 03 Jun 2020 14:11:38 GMT
       Etag:
       - W/"1a407e40f6daa2c9f1368c0a3e929ff75361c644ac1473eeedda27f0638da89f"
       Strict-Transport-Security:
@@ -107,7 +107,7 @@ interactions:
       Via:
       - 1.1 varnish (Varnish/6.0)
       X-Cache:
-      - MISS
+      - HFM
       X-Cache-Hits:
       - "0"
       X-Content-Type-Options:
@@ -115,9 +115,9 @@ interactions:
       X-Frame-Options:
       - deny
       X-Github-Request-Id:
-      - 8C71:70B4:101082:217C15:5ED56C92
+      - 9ED3:1A9E:364D3:7EA5E:5ED7AF9A
       X-Varnish:
-      - "65787868"
+      - "354173098"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -8,6 +8,20 @@ import (
 	"github.com/willabides/octo-go"
 )
 
+func TestAppsCreateInstallationToken(t *testing.T) {
+	ctx := context.Background()
+	client := vcrClient(t, t.Name(), appAuth(t), octo.RequestEnableRequirePreviews())
+	token, err := client.AppsCreateInstallationToken(ctx, &octo.AppsCreateInstallationTokenReq{
+		InstallationId: appInstallationID,
+	})
+	require.NoError(t, err)
+
+	// revoke the token so that we don't inadvertently commit a valid token to git
+	_, err = client.AppsRevokeInstallationToken(ctx, &octo.AppsRevokeInstallationTokenReq{},
+		octo.RequestPATAuth(token.Data.Token))
+	require.NoError(t, err)
+}
+
 func TestAppsGetRepoInstallation(t *testing.T) {
 	t.Run("exists", func(t *testing.T) {
 		ctx := context.Background()

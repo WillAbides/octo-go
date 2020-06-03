@@ -38,7 +38,7 @@ func (c *Client) doRequest(ctx context.Context, requester httpRequester, opt ...
 		var authHeader string
 		authHeader, err = ro.authProvider.AuthorizationHeader(ctx)
 		if err != nil {
-			return nil, fmt.Errorf("error setting authorization header")
+			return nil, fmt.Errorf("error setting authorization header: %v", err)
 		}
 		req.Header.Set("Authorization", authHeader)
 	}
