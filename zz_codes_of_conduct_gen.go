@@ -20,6 +20,9 @@ List all codes of conduct.
 https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
 func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+	if req == nil {
+		req = new(CodesOfConductGetAllCodesOfConductReq)
+	}
 	resp := &CodesOfConductGetAllCodesOfConductResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -145,6 +148,9 @@ Get an individual code of conduct.
 https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
 func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+	if req == nil {
+		req = new(CodesOfConductGetConductCodeReq)
+	}
 	resp := &CodesOfConductGetConductCodeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -271,6 +277,9 @@ Get the contents of a repository's code of conduct.
 https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
 func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+	if req == nil {
+		req = new(CodesOfConductGetForRepoReq)
+	}
 	resp := &CodesOfConductGetForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

@@ -25,6 +25,9 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),
 	).BlockFunc(func(group *jen.Group) {
+		group.If(jen.Id("req == nil")).Block(
+			jen.Id("req").Op("=").New(jen.Id(reqStructName(endpoint))),
+		)
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
 			jen.Id("request"): jen.Id("req"),
 		})

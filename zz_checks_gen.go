@@ -21,6 +21,9 @@ Create a check run.
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 func (c *Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+	if req == nil {
+		req = new(ChecksCreateReq)
+	}
 	resp := &ChecksCreateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -344,6 +347,9 @@ Create a check suite.
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 func (c *Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+	if req == nil {
+		req = new(ChecksCreateSuiteReq)
+	}
 	resp := &ChecksCreateSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -485,6 +491,9 @@ Get a check run.
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 func (c *Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+	if req == nil {
+		req = new(ChecksGetReq)
+	}
 	resp := &ChecksGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -615,6 +624,9 @@ Get a check suite.
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 func (c *Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+	if req == nil {
+		req = new(ChecksGetSuiteReq)
+	}
 	resp := &ChecksGetSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -745,6 +757,9 @@ List check run annotations.
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 func (c *Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+	if req == nil {
+		req = new(ChecksListAnnotationsReq)
+	}
 	resp := &ChecksListAnnotationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -887,6 +902,9 @@ List check runs for a Git reference.
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 func (c *Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+	if req == nil {
+		req = new(ChecksListForRefReq)
+	}
 	resp := &ChecksListForRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1056,6 +1074,9 @@ List check runs in a check suite.
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 func (c *Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+	if req == nil {
+		req = new(ChecksListForSuiteReq)
+	}
 	resp := &ChecksListForSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1225,6 +1246,9 @@ List check suites for a Git reference.
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 func (c *Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+	if req == nil {
+		req = new(ChecksListSuitesForRefReq)
+	}
 	resp := &ChecksListSuitesForRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1385,6 +1409,9 @@ Rerequest a check suite.
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 func (c *Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+	if req == nil {
+		req = new(ChecksRerequestSuiteReq)
+	}
 	resp := &ChecksRerequestSuiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1504,6 +1531,9 @@ Update repository preferences for check suites.
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 func (c *Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+	if req == nil {
+		req = new(ChecksSetSuitesPreferencesReq)
+	}
 	resp := &ChecksSetSuitesPreferencesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1663,6 +1693,9 @@ Update a check run.
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 func (c *Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+	if req == nil {
+		req = new(ChecksUpdateReq)
+	}
 	resp := &ChecksUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

@@ -21,6 +21,9 @@ Create reaction for a commit comment.
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 func (c *Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForCommitCommentReq)
+	}
 	resp := &ReactionsCreateForCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -166,6 +169,9 @@ Create reaction for an issue.
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 func (c *Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForIssueReq)
+	}
 	resp := &ReactionsCreateForIssueResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -311,6 +317,9 @@ Create reaction for an issue comment.
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 func (c *Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForIssueCommentReq)
+	}
 	resp := &ReactionsCreateForIssueCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -456,6 +465,9 @@ Create reaction for a pull request review comment.
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 func (c *Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForPullRequestReviewCommentReq)
+	}
 	resp := &ReactionsCreateForPullRequestReviewCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -601,6 +613,9 @@ Create reaction for a team discussion comment.
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 func (c *Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForTeamDiscussionCommentInOrgReq)
+	}
 	resp := &ReactionsCreateForTeamDiscussionCommentInOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -747,6 +762,9 @@ Create reaction for a team discussion.
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 func (c *Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForTeamDiscussionInOrgReq)
+	}
 	resp := &ReactionsCreateForTeamDiscussionInOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -892,6 +910,9 @@ Delete a commit comment reaction.
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 func (c *Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteForCommitCommentReq)
+	}
 	resp := &ReactionsDeleteForCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1012,6 +1033,9 @@ Delete an issue reaction.
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 func (c *Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteForIssueReq)
+	}
 	resp := &ReactionsDeleteForIssueResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1132,6 +1156,9 @@ Delete an issue comment reaction.
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 func (c *Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteForIssueCommentReq)
+	}
 	resp := &ReactionsDeleteForIssueCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1252,6 +1279,9 @@ Delete a pull request comment reaction.
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 func (c *Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteForPullRequestCommentReq)
+	}
 	resp := &ReactionsDeleteForPullRequestCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1372,6 +1402,9 @@ Delete team discussion reaction.
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 func (c *Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteForTeamDiscussionReq)
+	}
 	resp := &ReactionsDeleteForTeamDiscussionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1492,6 +1525,9 @@ Delete team discussion comment reaction.
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
 func (c *Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteForTeamDiscussionCommentReq)
+	}
 	resp := &ReactionsDeleteForTeamDiscussionCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1613,6 +1649,9 @@ List reactions for a commit comment.
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 func (c *Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForCommitCommentReq)
+	}
 	resp := &ReactionsListForCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1765,6 +1804,9 @@ List reactions for an issue.
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 func (c *Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForIssueReq)
+	}
 	resp := &ReactionsListForIssueResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1917,6 +1959,9 @@ List reactions for an issue comment.
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 func (c *Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForIssueCommentReq)
+	}
 	resp := &ReactionsListForIssueCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2069,6 +2114,9 @@ List reactions for a pull request review comment.
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 func (c *Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForPullRequestReviewCommentReq)
+	}
 	resp := &ReactionsListForPullRequestReviewCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2221,6 +2269,9 @@ List reactions for a team discussion comment.
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 func (c *Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForTeamDiscussionCommentInOrgReq)
+	}
 	resp := &ReactionsListForTeamDiscussionCommentInOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2374,6 +2425,9 @@ List reactions for a team discussion.
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 func (c *Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForTeamDiscussionInOrgReq)
+	}
 	resp := &ReactionsListForTeamDiscussionInOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

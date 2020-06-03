@@ -20,6 +20,9 @@ Render an arbitrary Markdown document.
 https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 func (c *Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+	if req == nil {
+		req = new(MarkdownRenderReq)
+	}
 	resp := &MarkdownRenderResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -149,6 +152,9 @@ Render a Markdown document in raw mode.
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 func (c *Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+	if req == nil {
+		req = new(MarkdownRenderRawReq)
+	}
 	resp := &MarkdownRenderRawResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

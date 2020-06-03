@@ -21,6 +21,9 @@ Cancel an import.
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 func (c *Client) MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...RequestOption) (*MigrationsCancelImportResponse, error) {
+	if req == nil {
+		req = new(MigrationsCancelImportReq)
+	}
 	resp := &MigrationsCancelImportResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -124,6 +127,9 @@ Delete a user migration archive.
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 func (c *Client) MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsDeleteArchiveForAuthenticatedUserReq)
+	}
 	resp := &MigrationsDeleteArchiveForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -235,6 +241,9 @@ Delete an organization migration archive.
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 func (c *Client) MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...RequestOption) (*MigrationsDeleteArchiveForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsDeleteArchiveForOrgReq)
+	}
 	resp := &MigrationsDeleteArchiveForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -347,6 +356,9 @@ Download an organization migration archive.
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 func (c *Client) MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...RequestOption) (*MigrationsDownloadArchiveForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsDownloadArchiveForOrgReq)
+	}
 	resp := &MigrationsDownloadArchiveForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -459,6 +471,9 @@ Download a user migration archive.
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 func (c *Client) MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsGetArchiveForAuthenticatedUserReq)
+	}
 	resp := &MigrationsGetArchiveForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -570,6 +585,9 @@ Get commit authors.
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 func (c *Client) MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...RequestOption) (*MigrationsGetCommitAuthorsResponse, error) {
+	if req == nil {
+		req = new(MigrationsGetCommitAuthorsReq)
+	}
 	resp := &MigrationsGetCommitAuthorsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -694,6 +712,9 @@ Get import progress.
 https://developer.github.com/v3/migrations/source_imports/#get-import-progress
 */
 func (c *Client) MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportProgressReq, opt ...RequestOption) (*MigrationsGetImportProgressResponse, error) {
+	if req == nil {
+		req = new(MigrationsGetImportProgressReq)
+	}
 	resp := &MigrationsGetImportProgressResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -808,6 +829,9 @@ Get large files.
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 func (c *Client) MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...RequestOption) (*MigrationsGetLargeFilesResponse, error) {
+	if req == nil {
+		req = new(MigrationsGetLargeFilesReq)
+	}
 	resp := &MigrationsGetLargeFilesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -922,6 +946,9 @@ Get the status of a user migration.
 https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 */
 func (c *Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsGetStatusForAuthenticatedUserReq)
+	}
 	resp := &MigrationsGetStatusForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1044,6 +1071,9 @@ Get the status of an organization migration.
 https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
 */
 func (c *Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsGetStatusForOrgReq)
+	}
 	resp := &MigrationsGetStatusForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1167,6 +1197,9 @@ List user migrations.
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 func (c *Client) MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsListForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsListForAuthenticatedUserReq)
+	}
 	resp := &MigrationsListForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1300,6 +1333,9 @@ List organization migrations.
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 func (c *Client) MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...RequestOption) (*MigrationsListForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsListForOrgReq)
+	}
 	resp := &MigrationsListForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1434,6 +1470,9 @@ List repositories in an organization migration.
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 func (c *Client) MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...RequestOption) (*MigrationsListReposForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsListReposForOrgReq)
+	}
 	resp := &MigrationsListReposForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1569,6 +1608,9 @@ List repositories for a user migration.
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 func (c *Client) MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...RequestOption) (*MigrationsListReposForUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsListReposForUserReq)
+	}
 	resp := &MigrationsListReposForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1703,6 +1745,9 @@ Map a commit author.
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 func (c *Client) MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...RequestOption) (*MigrationsMapCommitAuthorResponse, error) {
+	if req == nil {
+		req = new(MigrationsMapCommitAuthorReq)
+	}
 	resp := &MigrationsMapCommitAuthorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1833,6 +1878,9 @@ Set Git LFS preference.
 https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
 */
 func (c *Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
+	if req == nil {
+		req = new(MigrationsSetLfsPreferenceReq)
+	}
 	resp := &MigrationsSetLfsPreferenceResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1962,6 +2010,9 @@ Start a user migration.
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 func (c *Client) MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsStartForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsStartForAuthenticatedUserReq)
+	}
 	resp := &MigrationsStartForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2099,6 +2150,9 @@ Start an organization migration.
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 func (c *Client) MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...RequestOption) (*MigrationsStartForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsStartForOrgReq)
+	}
 	resp := &MigrationsStartForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2236,6 +2290,9 @@ Start an import.
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 func (c *Client) MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...RequestOption) (*MigrationsStartImportResponse, error) {
+	if req == nil {
+		req = new(MigrationsStartImportReq)
+	}
 	resp := &MigrationsStartImportResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2379,6 +2436,9 @@ Unlock a user repository.
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 func (c *Client) MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(MigrationsUnlockRepoForAuthenticatedUserReq)
+	}
 	resp := &MigrationsUnlockRepoForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2491,6 +2551,9 @@ Unlock an organization repository.
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 func (c *Client) MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...RequestOption) (*MigrationsUnlockRepoForOrgResponse, error) {
+	if req == nil {
+		req = new(MigrationsUnlockRepoForOrgReq)
+	}
 	resp := &MigrationsUnlockRepoForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2604,6 +2667,9 @@ Update existing import.
 https://developer.github.com/v3/migrations/source_imports/#update-existing-import
 */
 func (c *Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
+	if req == nil {
+		req = new(MigrationsUpdateImportReq)
+	}
 	resp := &MigrationsUpdateImportResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

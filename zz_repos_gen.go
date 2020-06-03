@@ -22,6 +22,9 @@ Accept a repository invitation.
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
 func (c *Client) ReposAcceptInvitation(ctx context.Context, req *ReposAcceptInvitationReq, opt ...RequestOption) (*ReposAcceptInvitationResponse, error) {
+	if req == nil {
+		req = new(ReposAcceptInvitationReq)
+	}
 	resp := &ReposAcceptInvitationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -124,6 +127,9 @@ Add user as a collaborator.
 https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
 */
 func (c *Client) ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt ...RequestOption) (*ReposAddCollaboratorResponse, error) {
+	if req == nil {
+		req = new(ReposAddCollaboratorReq)
+	}
 	resp := &ReposAddCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -261,6 +267,9 @@ Add a new deploy key.
 https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
 */
 func (c *Client) ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...RequestOption) (*ReposAddDeployKeyResponse, error) {
+	if req == nil {
+		req = new(ReposAddDeployKeyReq)
+	}
 	resp := &ReposAddDeployKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -403,6 +412,9 @@ Add admin enforcement of protected branch.
 https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
 */
 func (c *Client) ReposAddProtectedBranchAdminEnforcement(ctx context.Context, req *ReposAddProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposAddProtectedBranchAdminEnforcementResponse, error) {
+	if req == nil {
+		req = new(ReposAddProtectedBranchAdminEnforcementReq)
+	}
 	resp := &ReposAddProtectedBranchAdminEnforcementResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -518,6 +530,9 @@ Add app restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
 */
 func (c *Client) ReposAddProtectedBranchAppRestrictions(ctx context.Context, req *ReposAddProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchAppRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposAddProtectedBranchAppRestrictionsReq)
+	}
 	resp := &ReposAddProtectedBranchAppRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -641,6 +656,9 @@ Add required signatures of protected branch.
 https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
 */
 func (c *Client) ReposAddProtectedBranchRequiredSignatures(ctx context.Context, req *ReposAddProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredSignaturesResponse, error) {
+	if req == nil {
+		req = new(ReposAddProtectedBranchRequiredSignaturesReq)
+	}
 	resp := &ReposAddProtectedBranchRequiredSignaturesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -771,6 +789,9 @@ Add required status checks contexts of protected branch.
 https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
 */
 func (c *Client) ReposAddProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposAddProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	if req == nil {
+		req = new(ReposAddProtectedBranchRequiredStatusChecksContextsReq)
+	}
 	resp := &ReposAddProtectedBranchRequiredStatusChecksContextsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -892,6 +913,9 @@ Add team restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
 */
 func (c *Client) ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchTeamRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposAddProtectedBranchTeamRestrictionsReq)
+	}
 	resp := &ReposAddProtectedBranchTeamRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1015,6 +1039,9 @@ Add user restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
 */
 func (c *Client) ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchUserRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposAddProtectedBranchUserRestrictionsReq)
+	}
 	resp := &ReposAddProtectedBranchUserRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1138,6 +1165,9 @@ Check if a user is a collaborator.
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
 */
 func (c *Client) ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq, opt ...RequestOption) (*ReposCheckCollaboratorResponse, error) {
+	if req == nil {
+		req = new(ReposCheckCollaboratorReq)
+	}
 	resp := &ReposCheckCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1247,6 +1277,9 @@ Check if vulnerability alerts are enabled for a repository.
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
 func (c *Client) ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabilityAlertsReq, opt ...RequestOption) (*ReposCheckVulnerabilityAlertsResponse, error) {
+	if req == nil {
+		req = new(ReposCheckVulnerabilityAlertsReq)
+	}
 	resp := &ReposCheckVulnerabilityAlertsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1368,6 +1401,9 @@ Compare two commits.
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
 func (c *Client) ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt ...RequestOption) (*ReposCompareCommitsResponse, error) {
+	if req == nil {
+		req = new(ReposCompareCommitsReq)
+	}
 	resp := &ReposCompareCommitsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1484,6 +1520,9 @@ Create a commit comment.
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
 func (c *Client) ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitCommentReq, opt ...RequestOption) (*ReposCreateCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReposCreateCommitCommentReq)
+	}
 	resp := &ReposCreateCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1623,6 +1662,9 @@ Create a deployment.
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 func (c *Client) ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, opt ...RequestOption) (*ReposCreateDeploymentResponse, error) {
+	if req == nil {
+		req = new(ReposCreateDeploymentReq)
+	}
 	resp := &ReposCreateDeploymentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1812,6 +1854,9 @@ Create a deployment status.
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
 func (c *Client) ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeploymentStatusReq, opt ...RequestOption) (*ReposCreateDeploymentStatusResponse, error) {
+	if req == nil {
+		req = new(ReposCreateDeploymentStatusReq)
+	}
 	resp := &ReposCreateDeploymentStatusResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2039,6 +2084,9 @@ Create a repository dispatch event.
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 func (c *Client) ReposCreateDispatchEvent(ctx context.Context, req *ReposCreateDispatchEventReq, opt ...RequestOption) (*ReposCreateDispatchEventResponse, error) {
+	if req == nil {
+		req = new(ReposCreateDispatchEventReq)
+	}
 	resp := &ReposCreateDispatchEventResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2160,6 +2208,9 @@ Create a repository for the authenticated user.
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
 func (c *Client) ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAuthenticatedUserReq, opt ...RequestOption) (*ReposCreateForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(ReposCreateForAuthenticatedUserReq)
+	}
 	resp := &ReposCreateForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2401,6 +2452,9 @@ Create a fork.
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 func (c *Client) ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...RequestOption) (*ReposCreateForkResponse, error) {
+	if req == nil {
+		req = new(ReposCreateForkReq)
+	}
 	resp := &ReposCreateForkResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2530,6 +2584,9 @@ Create a hook.
 https://developer.github.com/v3/repos/hooks/#create-a-hook
 */
 func (c *Client) ReposCreateHook(ctx context.Context, req *ReposCreateHookReq, opt ...RequestOption) (*ReposCreateHookResponse, error) {
+	if req == nil {
+		req = new(ReposCreateHookReq)
+	}
 	resp := &ReposCreateHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2707,6 +2764,9 @@ Create an organization repository.
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
 func (c *Client) ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...RequestOption) (*ReposCreateInOrgResponse, error) {
+	if req == nil {
+		req = new(ReposCreateInOrgReq)
+	}
 	resp := &ReposCreateInOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2949,6 +3009,9 @@ Create or update a file.
 https://developer.github.com/v3/repos/contents/#create-or-update-a-file
 */
 func (c *Client) ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileReq, opt ...RequestOption) (*ReposCreateOrUpdateFileResponse, error) {
+	if req == nil {
+		req = new(ReposCreateOrUpdateFileReq)
+	}
 	resp := &ReposCreateOrUpdateFileResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3129,6 +3192,9 @@ Create a release.
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
 func (c *Client) ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...RequestOption) (*ReposCreateReleaseResponse, error) {
+	if req == nil {
+		req = new(ReposCreateReleaseReq)
+	}
 	resp := &ReposCreateReleaseResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3280,6 +3346,9 @@ Create a status.
 https://developer.github.com/v3/repos/statuses/#create-a-status
 */
 func (c *Client) ReposCreateStatus(ctx context.Context, req *ReposCreateStatusReq, opt ...RequestOption) (*ReposCreateStatusResponse, error) {
+	if req == nil {
+		req = new(ReposCreateStatusReq)
+	}
 	resp := &ReposCreateStatusResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3425,6 +3494,9 @@ Create a repository using a template.
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
 func (c *Client) ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplateReq, opt ...RequestOption) (*ReposCreateUsingTemplateResponse, error) {
+	if req == nil {
+		req = new(ReposCreateUsingTemplateReq)
+	}
 	resp := &ReposCreateUsingTemplateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3580,6 +3652,9 @@ Decline a repository invitation.
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
 func (c *Client) ReposDeclineInvitation(ctx context.Context, req *ReposDeclineInvitationReq, opt ...RequestOption) (*ReposDeclineInvitationResponse, error) {
+	if req == nil {
+		req = new(ReposDeclineInvitationReq)
+	}
 	resp := &ReposDeclineInvitationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3682,6 +3757,9 @@ Delete a repository.
 https://developer.github.com/v3/repos/#delete-a-repository
 */
 func (c *Client) ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...RequestOption) (*ReposDeleteResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteReq)
+	}
 	resp := &ReposDeleteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3785,6 +3863,9 @@ Delete a commit comment.
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
 func (c *Client) ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitCommentReq, opt ...RequestOption) (*ReposDeleteCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteCommitCommentReq)
+	}
 	resp := &ReposDeleteCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3889,6 +3970,9 @@ Delete a deployment.
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
 func (c *Client) ReposDeleteDeployment(ctx context.Context, req *ReposDeleteDeploymentReq, opt ...RequestOption) (*ReposDeleteDeploymentResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteDeploymentReq)
+	}
 	resp := &ReposDeleteDeploymentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3993,6 +4077,9 @@ Delete a download.
 https://developer.github.com/v3/repos/downloads/#delete-a-download
 */
 func (c *Client) ReposDeleteDownload(ctx context.Context, req *ReposDeleteDownloadReq, opt ...RequestOption) (*ReposDeleteDownloadResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteDownloadReq)
+	}
 	resp := &ReposDeleteDownloadResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4097,6 +4184,9 @@ Delete a file.
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
 func (c *Client) ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...RequestOption) (*ReposDeleteFileResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteFileReq)
+	}
 	resp := &ReposDeleteFileResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4256,6 +4346,9 @@ Delete a hook.
 https://developer.github.com/v3/repos/hooks/#delete-a-hook
 */
 func (c *Client) ReposDeleteHook(ctx context.Context, req *ReposDeleteHookReq, opt ...RequestOption) (*ReposDeleteHookResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteHookReq)
+	}
 	resp := &ReposDeleteHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4360,6 +4453,9 @@ Delete a repository invitation.
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
 func (c *Client) ReposDeleteInvitation(ctx context.Context, req *ReposDeleteInvitationReq, opt ...RequestOption) (*ReposDeleteInvitationResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteInvitationReq)
+	}
 	resp := &ReposDeleteInvitationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4464,6 +4560,9 @@ Delete a release.
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
 func (c *Client) ReposDeleteRelease(ctx context.Context, req *ReposDeleteReleaseReq, opt ...RequestOption) (*ReposDeleteReleaseResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteReleaseReq)
+	}
 	resp := &ReposDeleteReleaseResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4568,6 +4667,9 @@ Delete a release asset.
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
 func (c *Client) ReposDeleteReleaseAsset(ctx context.Context, req *ReposDeleteReleaseAssetReq, opt ...RequestOption) (*ReposDeleteReleaseAssetResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteReleaseAssetReq)
+	}
 	resp := &ReposDeleteReleaseAssetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4672,6 +4774,9 @@ Disable automated security fixes.
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
 func (c *Client) ReposDisableAutomatedSecurityFixes(ctx context.Context, req *ReposDisableAutomatedSecurityFixesReq, opt ...RequestOption) (*ReposDisableAutomatedSecurityFixesResponse, error) {
+	if req == nil {
+		req = new(ReposDisableAutomatedSecurityFixesReq)
+	}
 	resp := &ReposDisableAutomatedSecurityFixesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4788,6 +4893,9 @@ Disable a Pages site.
 https://developer.github.com/v3/repos/pages/#disable-a-pages-site
 */
 func (c *Client) ReposDisablePagesSite(ctx context.Context, req *ReposDisablePagesSiteReq, opt ...RequestOption) (*ReposDisablePagesSiteResponse, error) {
+	if req == nil {
+		req = new(ReposDisablePagesSiteReq)
+	}
 	resp := &ReposDisablePagesSiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4906,6 +5014,9 @@ Disable vulnerability alerts.
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
 func (c *Client) ReposDisableVulnerabilityAlerts(ctx context.Context, req *ReposDisableVulnerabilityAlertsReq, opt ...RequestOption) (*ReposDisableVulnerabilityAlertsResponse, error) {
+	if req == nil {
+		req = new(ReposDisableVulnerabilityAlertsReq)
+	}
 	resp := &ReposDisableVulnerabilityAlertsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5022,6 +5133,9 @@ Enable automated security fixes.
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
 func (c *Client) ReposEnableAutomatedSecurityFixes(ctx context.Context, req *ReposEnableAutomatedSecurityFixesReq, opt ...RequestOption) (*ReposEnableAutomatedSecurityFixesResponse, error) {
+	if req == nil {
+		req = new(ReposEnableAutomatedSecurityFixesReq)
+	}
 	resp := &ReposEnableAutomatedSecurityFixesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5138,6 +5252,9 @@ Enable a Pages site.
 https://developer.github.com/v3/repos/pages/#enable-a-pages-site
 */
 func (c *Client) ReposEnablePagesSite(ctx context.Context, req *ReposEnablePagesSiteReq, opt ...RequestOption) (*ReposEnablePagesSiteResponse, error) {
+	if req == nil {
+		req = new(ReposEnablePagesSiteReq)
+	}
 	resp := &ReposEnablePagesSiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5295,6 +5412,9 @@ Enable vulnerability alerts.
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
 func (c *Client) ReposEnableVulnerabilityAlerts(ctx context.Context, req *ReposEnableVulnerabilityAlertsReq, opt ...RequestOption) (*ReposEnableVulnerabilityAlertsResponse, error) {
+	if req == nil {
+		req = new(ReposEnableVulnerabilityAlertsReq)
+	}
 	resp := &ReposEnableVulnerabilityAlertsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5411,6 +5531,9 @@ Get a repository.
 https://developer.github.com/v3/repos/#get-a-repository
 */
 func (c *Client) ReposGet(ctx context.Context, req *ReposGetReq, opt ...RequestOption) (*ReposGetResponse, error) {
+	if req == nil {
+		req = new(ReposGetReq)
+	}
 	resp := &ReposGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5554,6 +5677,9 @@ Get all repository topics.
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
 func (c *Client) ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...RequestOption) (*ReposGetAllTopicsResponse, error) {
+	if req == nil {
+		req = new(ReposGetAllTopicsReq)
+	}
 	resp := &ReposGetAllTopicsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5681,6 +5807,9 @@ Get apps with access to protected branch.
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
 */
 func (c *Client) ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetAppsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetAppsWithAccessToProtectedBranchResponse, error) {
+	if req == nil {
+		req = new(ReposGetAppsWithAccessToProtectedBranchReq)
+	}
 	resp := &ReposGetAppsWithAccessToProtectedBranchResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5796,6 +5925,9 @@ Get archive link.
 https://developer.github.com/v3/repos/contents/#get-archive-link
 */
 func (c *Client) ReposGetArchiveLink(ctx context.Context, req *ReposGetArchiveLinkReq, opt ...RequestOption) (*ReposGetArchiveLinkResponse, error) {
+	if req == nil {
+		req = new(ReposGetArchiveLinkReq)
+	}
 	resp := &ReposGetArchiveLinkResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5901,6 +6033,9 @@ Get branch.
 https://developer.github.com/v3/repos/branches/#get-branch
 */
 func (c *Client) ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestOption) (*ReposGetBranchResponse, error) {
+	if req == nil {
+		req = new(ReposGetBranchReq)
+	}
 	resp := &ReposGetBranchResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6016,6 +6151,9 @@ Get branch protection.
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
 func (c *Client) ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtectionReq, opt ...RequestOption) (*ReposGetBranchProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposGetBranchProtectionReq)
+	}
 	resp := &ReposGetBranchProtectionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6144,6 +6282,9 @@ Clones.
 https://developer.github.com/v3/repos/traffic/#clones
 */
 func (c *Client) ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestOption) (*ReposGetClonesResponse, error) {
+	if req == nil {
+		req = new(ReposGetClonesReq)
+	}
 	resp := &ReposGetClonesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6264,6 +6405,9 @@ Get the number of additions and deletions per week.
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
 */
 func (c *Client) ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyStatsReq, opt ...RequestOption) (*ReposGetCodeFrequencyStatsResponse, error) {
+	if req == nil {
+		req = new(ReposGetCodeFrequencyStatsReq)
+	}
 	resp := &ReposGetCodeFrequencyStatsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6378,6 +6522,9 @@ Review a user's permission level.
 https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
 */
 func (c *Client) ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetCollaboratorPermissionLevelReq, opt ...RequestOption) (*ReposGetCollaboratorPermissionLevelResponse, error) {
+	if req == nil {
+		req = new(ReposGetCollaboratorPermissionLevelReq)
+	}
 	resp := &ReposGetCollaboratorPermissionLevelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6493,6 +6640,9 @@ Get the combined status for a specific ref.
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
 */
 func (c *Client) ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStatusForRefReq, opt ...RequestOption) (*ReposGetCombinedStatusForRefResponse, error) {
+	if req == nil {
+		req = new(ReposGetCombinedStatusForRefReq)
+	}
 	resp := &ReposGetCombinedStatusForRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6608,6 +6758,9 @@ Get a single commit.
 https://developer.github.com/v3/repos/commits/#get-a-single-commit
 */
 func (c *Client) ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestOption) (*ReposGetCommitResponse, error) {
+	if req == nil {
+		req = new(ReposGetCommitReq)
+	}
 	resp := &ReposGetCommitResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6723,6 +6876,9 @@ Get the last year of commit activity data.
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
 */
 func (c *Client) ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivityStatsReq, opt ...RequestOption) (*ReposGetCommitActivityStatsResponse, error) {
+	if req == nil {
+		req = new(ReposGetCommitActivityStatsReq)
+	}
 	resp := &ReposGetCommitActivityStatsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6837,6 +6993,9 @@ Get a single commit comment.
 https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
 */
 func (c *Client) ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, opt ...RequestOption) (*ReposGetCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReposGetCommitCommentReq)
+	}
 	resp := &ReposGetCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -6966,6 +7125,9 @@ Get contents.
 https://developer.github.com/v3/repos/contents/#get-contents
 */
 func (c *Client) ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...RequestOption) (*ReposGetContentsResponse, error) {
+	if req == nil {
+		req = new(ReposGetContentsReq)
+	}
 	resp := &ReposGetContentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7090,6 +7252,9 @@ Get contributors list with additions, deletions, and commit counts.
 https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
 */
 func (c *Client) ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsStatsReq, opt ...RequestOption) (*ReposGetContributorsStatsResponse, error) {
+	if req == nil {
+		req = new(ReposGetContributorsStatsReq)
+	}
 	resp := &ReposGetContributorsStatsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7204,6 +7369,9 @@ Get a deploy key.
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
 func (c *Client) ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...RequestOption) (*ReposGetDeployKeyResponse, error) {
+	if req == nil {
+		req = new(ReposGetDeployKeyReq)
+	}
 	resp := &ReposGetDeployKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7319,6 +7487,9 @@ Get a single deployment.
 https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
 */
 func (c *Client) ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...RequestOption) (*ReposGetDeploymentResponse, error) {
+	if req == nil {
+		req = new(ReposGetDeploymentReq)
+	}
 	resp := &ReposGetDeploymentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7463,6 +7634,9 @@ Get a single deployment status.
 https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
 */
 func (c *Client) ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatusReq, opt ...RequestOption) (*ReposGetDeploymentStatusResponse, error) {
+	if req == nil {
+		req = new(ReposGetDeploymentStatusReq)
+	}
 	resp := &ReposGetDeploymentStatusResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7622,6 +7796,9 @@ Get a single download.
 https://developer.github.com/v3/repos/downloads/#get-a-single-download
 */
 func (c *Client) ReposGetDownload(ctx context.Context, req *ReposGetDownloadReq, opt ...RequestOption) (*ReposGetDownloadResponse, error) {
+	if req == nil {
+		req = new(ReposGetDownloadReq)
+	}
 	resp := &ReposGetDownloadResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7737,6 +7914,9 @@ Get single hook.
 https://developer.github.com/v3/repos/hooks/#get-single-hook
 */
 func (c *Client) ReposGetHook(ctx context.Context, req *ReposGetHookReq, opt ...RequestOption) (*ReposGetHookResponse, error) {
+	if req == nil {
+		req = new(ReposGetHookReq)
+	}
 	resp := &ReposGetHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7852,6 +8032,9 @@ Get latest Pages build.
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
 func (c *Client) ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuildReq, opt ...RequestOption) (*ReposGetLatestPagesBuildResponse, error) {
+	if req == nil {
+		req = new(ReposGetLatestPagesBuildReq)
+	}
 	resp := &ReposGetLatestPagesBuildResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -7966,6 +8149,9 @@ Get the latest release.
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
 func (c *Client) ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, opt ...RequestOption) (*ReposGetLatestReleaseResponse, error) {
+	if req == nil {
+		req = new(ReposGetLatestReleaseReq)
+	}
 	resp := &ReposGetLatestReleaseResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8080,6 +8266,9 @@ Get information about a Pages site.
 https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
 */
 func (c *Client) ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOption) (*ReposGetPagesResponse, error) {
+	if req == nil {
+		req = new(ReposGetPagesReq)
+	}
 	resp := &ReposGetPagesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8194,6 +8383,9 @@ Get a specific Pages build.
 https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
 */
 func (c *Client) ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...RequestOption) (*ReposGetPagesBuildResponse, error) {
+	if req == nil {
+		req = new(ReposGetPagesBuildReq)
+	}
 	resp := &ReposGetPagesBuildResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8309,6 +8501,9 @@ Get the weekly commit count for the repository owner and everyone else.
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
 */
 func (c *Client) ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationStatsReq, opt ...RequestOption) (*ReposGetParticipationStatsResponse, error) {
+	if req == nil {
+		req = new(ReposGetParticipationStatsReq)
+	}
 	resp := &ReposGetParticipationStatsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8423,6 +8618,9 @@ Get admin enforcement of protected branch.
 https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
 */
 func (c *Client) ReposGetProtectedBranchAdminEnforcement(ctx context.Context, req *ReposGetProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchAdminEnforcementResponse, error) {
+	if req == nil {
+		req = new(ReposGetProtectedBranchAdminEnforcementReq)
+	}
 	resp := &ReposGetProtectedBranchAdminEnforcementResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8538,6 +8736,9 @@ Get pull request review enforcement of protected branch.
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
 */
 func (c *Client) ReposGetProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposGetProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchPullRequestReviewEnforcementResponse, error) {
+	if req == nil {
+		req = new(ReposGetProtectedBranchPullRequestReviewEnforcementReq)
+	}
 	resp := &ReposGetProtectedBranchPullRequestReviewEnforcementResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8655,6 +8856,9 @@ Get required signatures of protected branch.
 https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
 */
 func (c *Client) ReposGetProtectedBranchRequiredSignatures(ctx context.Context, req *ReposGetProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredSignaturesResponse, error) {
+	if req == nil {
+		req = new(ReposGetProtectedBranchRequiredSignaturesReq)
+	}
 	resp := &ReposGetProtectedBranchRequiredSignaturesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8785,6 +8989,9 @@ Get required status checks of protected branch.
 https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
 */
 func (c *Client) ReposGetProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposGetProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredStatusChecksResponse, error) {
+	if req == nil {
+		req = new(ReposGetProtectedBranchRequiredStatusChecksReq)
+	}
 	resp := &ReposGetProtectedBranchRequiredStatusChecksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -8900,6 +9107,9 @@ Get restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
 */
 func (c *Client) ReposGetProtectedBranchRestrictions(ctx context.Context, req *ReposGetProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposGetProtectedBranchRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposGetProtectedBranchRestrictionsReq)
+	}
 	resp := &ReposGetProtectedBranchRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9015,6 +9225,9 @@ Get the number of commits per hour in each day.
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
 */
 func (c *Client) ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq, opt ...RequestOption) (*ReposGetPunchCardStatsResponse, error) {
+	if req == nil {
+		req = new(ReposGetPunchCardStatsReq)
+	}
 	resp := &ReposGetPunchCardStatsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9129,6 +9342,9 @@ Get the README.
 https://developer.github.com/v3/repos/contents/#get-the-readme
 */
 func (c *Client) ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestOption) (*ReposGetReadmeResponse, error) {
+	if req == nil {
+		req = new(ReposGetReadmeReq)
+	}
 	resp := &ReposGetReadmeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9252,6 +9468,9 @@ Get a single release.
 https://developer.github.com/v3/repos/releases/#get-a-single-release
 */
 func (c *Client) ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...RequestOption) (*ReposGetReleaseResponse, error) {
+	if req == nil {
+		req = new(ReposGetReleaseReq)
+	}
 	resp := &ReposGetReleaseResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9367,6 +9586,9 @@ Get a single release asset.
 https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
 */
 func (c *Client) ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt ...RequestOption) (*ReposGetReleaseAssetResponse, error) {
+	if req == nil {
+		req = new(ReposGetReleaseAssetReq)
+	}
 	resp := &ReposGetReleaseAssetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9482,6 +9704,9 @@ Get a release by tag name.
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
 func (c *Client) ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt ...RequestOption) (*ReposGetReleaseByTagResponse, error) {
+	if req == nil {
+		req = new(ReposGetReleaseByTagReq)
+	}
 	resp := &ReposGetReleaseByTagResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9597,6 +9822,9 @@ Get teams with access to protected branch.
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
 */
 func (c *Client) ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetTeamsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetTeamsWithAccessToProtectedBranchResponse, error) {
+	if req == nil {
+		req = new(ReposGetTeamsWithAccessToProtectedBranchReq)
+	}
 	resp := &ReposGetTeamsWithAccessToProtectedBranchResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9712,6 +9940,9 @@ List paths.
 https://developer.github.com/v3/repos/traffic/#list-paths
 */
 func (c *Client) ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...RequestOption) (*ReposGetTopPathsResponse, error) {
+	if req == nil {
+		req = new(ReposGetTopPathsReq)
+	}
 	resp := &ReposGetTopPathsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9826,6 +10057,9 @@ List referrers.
 https://developer.github.com/v3/repos/traffic/#list-referrers
 */
 func (c *Client) ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt ...RequestOption) (*ReposGetTopReferrersResponse, error) {
+	if req == nil {
+		req = new(ReposGetTopReferrersReq)
+	}
 	resp := &ReposGetTopReferrersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -9940,6 +10174,9 @@ Get users with access to protected branch.
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
 */
 func (c *Client) ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGetUsersWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetUsersWithAccessToProtectedBranchResponse, error) {
+	if req == nil {
+		req = new(ReposGetUsersWithAccessToProtectedBranchReq)
+	}
 	resp := &ReposGetUsersWithAccessToProtectedBranchResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10055,6 +10292,9 @@ Views.
 https://developer.github.com/v3/repos/traffic/#views
 */
 func (c *Client) ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOption) (*ReposGetViewsResponse, error) {
+	if req == nil {
+		req = new(ReposGetViewsReq)
+	}
 	resp := &ReposGetViewsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10175,6 +10415,9 @@ List assets for a release.
 https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
 */
 func (c *Client) ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForReleaseReq, opt ...RequestOption) (*ReposListAssetsForReleaseResponse, error) {
+	if req == nil {
+		req = new(ReposListAssetsForReleaseReq)
+	}
 	resp := &ReposListAssetsForReleaseResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10302,6 +10545,9 @@ List branches.
 https://developer.github.com/v3/repos/branches/#list-branches
 */
 func (c *Client) ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...RequestOption) (*ReposListBranchesResponse, error) {
+	if req == nil {
+		req = new(ReposListBranchesReq)
+	}
 	resp := &ReposListBranchesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10437,6 +10683,9 @@ List branches for HEAD commit.
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
 func (c *Client) ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesForHeadCommitReq, opt ...RequestOption) (*ReposListBranchesForHeadCommitResponse, error) {
+	if req == nil {
+		req = new(ReposListBranchesForHeadCommitReq)
+	}
 	resp := &ReposListBranchesForHeadCommitResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10567,6 +10816,9 @@ List collaborators.
 https://developer.github.com/v3/repos/collaborators/#list-collaborators
 */
 func (c *Client) ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq, opt ...RequestOption) (*ReposListCollaboratorsResponse, error) {
+	if req == nil {
+		req = new(ReposListCollaboratorsReq)
+	}
 	resp := &ReposListCollaboratorsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10705,6 +10957,9 @@ List comments for a single commit.
 https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
 */
 func (c *Client) ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCommitReq, opt ...RequestOption) (*ReposListCommentsForCommitResponse, error) {
+	if req == nil {
+		req = new(ReposListCommentsForCommitReq)
+	}
 	resp := &ReposListCommentsForCommitResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10846,6 +11101,9 @@ List commit comments for a repository.
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
 func (c *Client) ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsReq, opt ...RequestOption) (*ReposListCommitCommentsResponse, error) {
+	if req == nil {
+		req = new(ReposListCommitCommentsReq)
+	}
 	resp := &ReposListCommitCommentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -10986,6 +11244,9 @@ List commits on a repository.
 https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
 */
 func (c *Client) ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...RequestOption) (*ReposListCommitsResponse, error) {
+	if req == nil {
+		req = new(ReposListCommitsReq)
+	}
 	resp := &ReposListCommitsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -11151,6 +11412,9 @@ List contributors.
 https://developer.github.com/v3/repos/#list-contributors
 */
 func (c *Client) ReposListContributors(ctx context.Context, req *ReposListContributorsReq, opt ...RequestOption) (*ReposListContributorsResponse, error) {
+	if req == nil {
+		req = new(ReposListContributorsReq)
+	}
 	resp := &ReposListContributorsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -11283,6 +11547,9 @@ List deploy keys.
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
 func (c *Client) ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt ...RequestOption) (*ReposListDeployKeysResponse, error) {
+	if req == nil {
+		req = new(ReposListDeployKeysReq)
+	}
 	resp := &ReposListDeployKeysResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -11409,6 +11676,9 @@ List deployment statuses.
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
 func (c *Client) ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentStatusesReq, opt ...RequestOption) (*ReposListDeploymentStatusesResponse, error) {
+	if req == nil {
+		req = new(ReposListDeploymentStatusesReq)
+	}
 	resp := &ReposListDeploymentStatusesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -11566,6 +11836,9 @@ List deployments.
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
 func (c *Client) ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt ...RequestOption) (*ReposListDeploymentsResponse, error) {
+	if req == nil {
+		req = new(ReposListDeploymentsReq)
+	}
 	resp := &ReposListDeploymentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -11733,6 +12006,9 @@ List downloads for a repository.
 https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
 */
 func (c *Client) ReposListDownloads(ctx context.Context, req *ReposListDownloadsReq, opt ...RequestOption) (*ReposListDownloadsResponse, error) {
+	if req == nil {
+		req = new(ReposListDownloadsReq)
+	}
 	resp := &ReposListDownloadsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -11859,6 +12135,9 @@ List repositories for the authenticated user.
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
 func (c *Client) ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthenticatedUserReq, opt ...RequestOption) (*ReposListForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(ReposListForAuthenticatedUserReq)
+	}
 	resp := &ReposListForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12019,6 +12298,9 @@ List organization repositories.
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
 func (c *Client) ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...RequestOption) (*ReposListForOrgResponse, error) {
+	if req == nil {
+		req = new(ReposListForOrgReq)
+	}
 	resp := &ReposListForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12199,6 +12481,9 @@ List repositories for a user.
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
 func (c *Client) ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...RequestOption) (*ReposListForUserResponse, error) {
+	if req == nil {
+		req = new(ReposListForUserReq)
+	}
 	resp := &ReposListForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12349,6 +12634,9 @@ List forks.
 https://developer.github.com/v3/repos/forks/#list-forks
 */
 func (c *Client) ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...RequestOption) (*ReposListForksResponse, error) {
+	if req == nil {
+		req = new(ReposListForksReq)
+	}
 	resp := &ReposListForksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12481,6 +12769,9 @@ List hooks.
 https://developer.github.com/v3/repos/hooks/#list-hooks
 */
 func (c *Client) ReposListHooks(ctx context.Context, req *ReposListHooksReq, opt ...RequestOption) (*ReposListHooksResponse, error) {
+	if req == nil {
+		req = new(ReposListHooksReq)
+	}
 	resp := &ReposListHooksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12607,6 +12898,9 @@ List invitations for a repository.
 https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
 */
 func (c *Client) ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt ...RequestOption) (*ReposListInvitationsResponse, error) {
+	if req == nil {
+		req = new(ReposListInvitationsReq)
+	}
 	resp := &ReposListInvitationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12733,6 +13027,9 @@ List a user's repository invitations.
 https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 */
 func (c *Client) ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposListInvitationsForAuthenticatedUserReq, opt ...RequestOption) (*ReposListInvitationsForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(ReposListInvitationsForAuthenticatedUserReq)
+	}
 	resp := &ReposListInvitationsForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12857,6 +13154,9 @@ List languages.
 https://developer.github.com/v3/repos/#list-languages
 */
 func (c *Client) ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...RequestOption) (*ReposListLanguagesResponse, error) {
+	if req == nil {
+		req = new(ReposListLanguagesReq)
+	}
 	resp := &ReposListLanguagesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -12969,6 +13269,9 @@ List Pages builds.
 https://developer.github.com/v3/repos/pages/#list-pages-builds
 */
 func (c *Client) ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt ...RequestOption) (*ReposListPagesBuildsResponse, error) {
+	if req == nil {
+		req = new(ReposListPagesBuildsReq)
+	}
 	resp := &ReposListPagesBuildsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13095,6 +13398,9 @@ List required status checks contexts of protected branch.
 https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
 */
 func (c *Client) ReposListProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposListProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposListProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	if req == nil {
+		req = new(ReposListProtectedBranchRequiredStatusChecksContextsReq)
+	}
 	resp := &ReposListProtectedBranchRequiredStatusChecksContextsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13208,6 +13514,9 @@ List public repositories.
 https://developer.github.com/v3/repos/#list-public-repositories
 */
 func (c *Client) ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...RequestOption) (*ReposListPublicResponse, error) {
+	if req == nil {
+		req = new(ReposListPublicReq)
+	}
 	resp := &ReposListPublicResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13326,6 +13635,9 @@ List pull requests associated with commit.
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
 */
 func (c *Client) ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposListPullRequestsAssociatedWithCommitReq, opt ...RequestOption) (*ReposListPullRequestsAssociatedWithCommitResponse, error) {
+	if req == nil {
+		req = new(ReposListPullRequestsAssociatedWithCommitReq)
+	}
 	resp := &ReposListPullRequestsAssociatedWithCommitResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13468,6 +13780,9 @@ List releases for a repository.
 https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
 */
 func (c *Client) ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...RequestOption) (*ReposListReleasesResponse, error) {
+	if req == nil {
+		req = new(ReposListReleasesReq)
+	}
 	resp := &ReposListReleasesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13594,6 +13909,9 @@ List statuses for a specific ref.
 https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
 */
 func (c *Client) ReposListStatusesForRef(ctx context.Context, req *ReposListStatusesForRefReq, opt ...RequestOption) (*ReposListStatusesForRefResponse, error) {
+	if req == nil {
+		req = new(ReposListStatusesForRefReq)
+	}
 	resp := &ReposListStatusesForRefResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13721,6 +14039,9 @@ List tags.
 https://developer.github.com/v3/repos/#list-tags
 */
 func (c *Client) ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOption) (*ReposListTagsResponse, error) {
+	if req == nil {
+		req = new(ReposListTagsReq)
+	}
 	resp := &ReposListTagsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13847,6 +14168,9 @@ List teams.
 https://developer.github.com/v3/repos/#list-teams
 */
 func (c *Client) ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestOption) (*ReposListTeamsResponse, error) {
+	if req == nil {
+		req = new(ReposListTeamsReq)
+	}
 	resp := &ReposListTeamsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -13973,6 +14297,9 @@ Perform a merge.
 https://developer.github.com/v3/repos/merging/#perform-a-merge
 */
 func (c *Client) ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (*ReposMergeResponse, error) {
+	if req == nil {
+		req = new(ReposMergeReq)
+	}
 	resp := &ReposMergeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14108,6 +14435,9 @@ Ping a hook.
 https://developer.github.com/v3/repos/hooks/#ping-a-hook
 */
 func (c *Client) ReposPingHook(ctx context.Context, req *ReposPingHookReq, opt ...RequestOption) (*ReposPingHookResponse, error) {
+	if req == nil {
+		req = new(ReposPingHookReq)
+	}
 	resp := &ReposPingHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14212,6 +14542,9 @@ Remove branch protection.
 https://developer.github.com/v3/repos/branches/#remove-branch-protection
 */
 func (c *Client) ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProtectionReq, opt ...RequestOption) (*ReposRemoveBranchProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveBranchProtectionReq)
+	}
 	resp := &ReposRemoveBranchProtectionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14316,6 +14649,9 @@ Remove user as a collaborator.
 https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
 */
 func (c *Client) ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorReq, opt ...RequestOption) (*ReposRemoveCollaboratorResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveCollaboratorReq)
+	}
 	resp := &ReposRemoveCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14420,6 +14756,9 @@ Remove a deploy key.
 https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
 */
 func (c *Client) ReposRemoveDeployKey(ctx context.Context, req *ReposRemoveDeployKeyReq, opt ...RequestOption) (*ReposRemoveDeployKeyResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveDeployKeyReq)
+	}
 	resp := &ReposRemoveDeployKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14524,6 +14863,9 @@ Remove admin enforcement of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchAdminEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAdminEnforcementResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchAdminEnforcementReq)
+	}
 	resp := &ReposRemoveProtectedBranchAdminEnforcementResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14628,6 +14970,9 @@ Remove app restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchAppRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAppRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchAppRestrictionsReq)
+	}
 	resp := &ReposRemoveProtectedBranchAppRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14751,6 +15096,9 @@ Remove pull request review enforcement of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchPullRequestReviewEnforcementReq)
+	}
 	resp := &ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14855,6 +15203,9 @@ Remove required signatures of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchRequiredSignatures(ctx context.Context, req *ReposRemoveProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredSignaturesResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchRequiredSignaturesReq)
+	}
 	resp := &ReposRemoveProtectedBranchRequiredSignaturesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -14974,6 +15325,9 @@ Remove required status checks of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchRequiredStatusChecksReq)
+	}
 	resp := &ReposRemoveProtectedBranchRequiredStatusChecksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15078,6 +15432,9 @@ Remove required status checks contexts of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchRequiredStatusChecksContextsReq)
+	}
 	resp := &ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15199,6 +15556,9 @@ Remove restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchRestrictionsReq)
+	}
 	resp := &ReposRemoveProtectedBranchRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15303,6 +15663,9 @@ Remove team restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchTeamRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchTeamRestrictionsReq)
+	}
 	resp := &ReposRemoveProtectedBranchTeamRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15426,6 +15789,9 @@ Remove user restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
 */
 func (c *Client) ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchUserRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposRemoveProtectedBranchUserRestrictionsReq)
+	}
 	resp := &ReposRemoveProtectedBranchUserRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15549,6 +15915,9 @@ Replace all repository topics.
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
 func (c *Client) ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, opt ...RequestOption) (*ReposReplaceAllTopicsResponse, error) {
+	if req == nil {
+		req = new(ReposReplaceAllTopicsReq)
+	}
 	resp := &ReposReplaceAllTopicsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15692,6 +16061,9 @@ Replace app restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
 */
 func (c *Client) ReposReplaceProtectedBranchAppRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchAppRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposReplaceProtectedBranchAppRestrictionsReq)
+	}
 	resp := &ReposReplaceProtectedBranchAppRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15815,6 +16187,9 @@ Replace required status checks contexts of protected branch.
 https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
 */
 func (c *Client) ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	if req == nil {
+		req = new(ReposReplaceProtectedBranchRequiredStatusChecksContextsReq)
+	}
 	resp := &ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -15936,6 +16311,9 @@ Replace team restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
 */
 func (c *Client) ReposReplaceProtectedBranchTeamRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchTeamRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposReplaceProtectedBranchTeamRestrictionsReq)
+	}
 	resp := &ReposReplaceProtectedBranchTeamRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16059,6 +16437,9 @@ Replace user restrictions of protected branch.
 https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
 */
 func (c *Client) ReposReplaceProtectedBranchUserRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchUserRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposReplaceProtectedBranchUserRestrictionsReq)
+	}
 	resp := &ReposReplaceProtectedBranchUserRestrictionsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16182,6 +16563,9 @@ Request a page build.
 https://developer.github.com/v3/repos/pages/#request-a-page-build
 */
 func (c *Client) ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, opt ...RequestOption) (*ReposRequestPageBuildResponse, error) {
+	if req == nil {
+		req = new(ReposRequestPageBuildReq)
+	}
 	resp := &ReposRequestPageBuildResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16296,6 +16680,9 @@ Retrieve community profile metrics.
 https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
 */
 func (c *Client) ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetrieveCommunityProfileMetricsReq, opt ...RequestOption) (*ReposRetrieveCommunityProfileMetricsResponse, error) {
+	if req == nil {
+		req = new(ReposRetrieveCommunityProfileMetricsReq)
+	}
 	resp := &ReposRetrieveCommunityProfileMetricsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16410,6 +16797,9 @@ Test a push hook.
 https://developer.github.com/v3/repos/hooks/#test-a-push-hook
 */
 func (c *Client) ReposTestPushHook(ctx context.Context, req *ReposTestPushHookReq, opt ...RequestOption) (*ReposTestPushHookResponse, error) {
+	if req == nil {
+		req = new(ReposTestPushHookReq)
+	}
 	resp := &ReposTestPushHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16514,6 +16904,9 @@ Transfer a repository.
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
 func (c *Client) ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...RequestOption) (*ReposTransferResponse, error) {
+	if req == nil {
+		req = new(ReposTransferReq)
+	}
 	resp := &ReposTransferResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16649,6 +17042,9 @@ Update a repository.
 https://developer.github.com/v3/repos/#update-a-repository
 */
 func (c *Client) ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...RequestOption) (*ReposUpdateResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateReq)
+	}
 	resp := &ReposUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -16885,6 +17281,9 @@ Update branch protection.
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
 func (c *Client) ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProtectionReq, opt ...RequestOption) (*ReposUpdateBranchProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateBranchProtectionReq)
+	}
 	resp := &ReposUpdateBranchProtectionResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -17137,6 +17536,9 @@ Update a commit comment.
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
 func (c *Client) ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitCommentReq, opt ...RequestOption) (*ReposUpdateCommitCommentResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateCommitCommentReq)
+	}
 	resp := &ReposUpdateCommitCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -17264,6 +17666,9 @@ Edit a hook.
 https://developer.github.com/v3/repos/hooks/#edit-a-hook
 */
 func (c *Client) ReposUpdateHook(ctx context.Context, req *ReposUpdateHookReq, opt ...RequestOption) (*ReposUpdateHookResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateHookReq)
+	}
 	resp := &ReposUpdateHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -17448,6 +17853,9 @@ Update information about a Pages site.
 https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
 */
 func (c *Client) ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateInformationAboutPagesSiteReq, opt ...RequestOption) (*ReposUpdateInformationAboutPagesSiteResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateInformationAboutPagesSiteReq)
+	}
 	resp := &ReposUpdateInformationAboutPagesSiteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -17575,6 +17983,9 @@ Update a repository invitation.
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
 func (c *Client) ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, opt ...RequestOption) (*ReposUpdateInvitationResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateInvitationReq)
+	}
 	resp := &ReposUpdateInvitationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -17705,6 +18116,9 @@ Update pull request review enforcement of protected branch.
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
 */
 func (c *Client) ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateProtectedBranchPullRequestReviewEnforcementReq)
+	}
 	resp := &ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -17878,6 +18292,9 @@ Update required status checks of protected branch.
 https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
 */
 func (c *Client) ReposUpdateProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposUpdateProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposUpdateProtectedBranchRequiredStatusChecksResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateProtectedBranchRequiredStatusChecksReq)
+	}
 	resp := &ReposUpdateProtectedBranchRequiredStatusChecksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -18008,6 +18425,9 @@ Edit a release.
 https://developer.github.com/v3/repos/releases/#edit-a-release
 */
 func (c *Client) ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...RequestOption) (*ReposUpdateReleaseResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateReleaseReq)
+	}
 	resp := &ReposUpdateReleaseResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -18157,6 +18577,9 @@ Edit a release asset.
 https://developer.github.com/v3/repos/releases/#edit-a-release-asset
 */
 func (c *Client) ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetReq, opt ...RequestOption) (*ReposUpdateReleaseAssetResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateReleaseAssetReq)
+	}
 	resp := &ReposUpdateReleaseAssetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -18287,6 +18710,9 @@ Upload a release asset.
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
 func (c *Client) ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetReq, opt ...RequestOption) (*ReposUploadReleaseAssetResponse, error) {
+	if req == nil {
+		req = new(ReposUploadReleaseAssetReq)
+	}
 	resp := &ReposUploadReleaseAssetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

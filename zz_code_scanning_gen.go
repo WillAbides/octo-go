@@ -20,6 +20,9 @@ Get a code scanning alert.
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 func (c *Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+	if req == nil {
+		req = new(CodeScanningGetAlertReq)
+	}
 	resp := &CodeScanningGetAlertResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -135,6 +138,9 @@ List code scanning alerts for a repository.
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 func (c *Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+	if req == nil {
+		req = new(CodeScanningListAlertsForRepoReq)
+	}
 	resp := &CodeScanningListAlertsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

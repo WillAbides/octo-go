@@ -20,6 +20,9 @@ Get a single template.
 https://developer.github.com/v3/gitignore/#get-a-single-template
 */
 func (c *Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+	if req == nil {
+		req = new(GitignoreGetTemplateReq)
+	}
 	resp := &GitignoreGetTemplateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -133,6 +136,9 @@ Listing available templates.
 https://developer.github.com/v3/gitignore/#listing-available-templates
 */
 func (c *Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
+	if req == nil {
+		req = new(GitignoreListTemplatesReq)
+	}
 	resp := &GitignoreListTemplatesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

@@ -21,6 +21,9 @@ Add assignees to an issue.
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 func (c *Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+	if req == nil {
+		req = new(IssuesAddAssigneesReq)
+	}
 	resp := &IssuesAddAssigneesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -151,6 +154,9 @@ Add labels to an issue.
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 func (c *Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+	if req == nil {
+		req = new(IssuesAddLabelsReq)
+	}
 	resp := &IssuesAddLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -283,6 +289,9 @@ Check assignee.
 https://developer.github.com/v3/issues/assignees/#check-assignee
 */
 func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+	if req == nil {
+		req = new(IssuesCheckAssigneeReq)
+	}
 	resp := &IssuesCheckAssigneeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -392,6 +401,9 @@ Create an issue.
 https://developer.github.com/v3/issues/#create-an-issue
 */
 func (c *Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+	if req == nil {
+		req = new(IssuesCreateReq)
+	}
 	resp := &IssuesCreateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -547,6 +559,9 @@ Create a comment.
 https://developer.github.com/v3/issues/comments/#create-a-comment
 */
 func (c *Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+	if req == nil {
+		req = new(IssuesCreateCommentReq)
+	}
 	resp := &IssuesCreateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -674,6 +689,9 @@ Create a label.
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 func (c *Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+	if req == nil {
+		req = new(IssuesCreateLabelReq)
+	}
 	resp := &IssuesCreateLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -816,6 +834,9 @@ Create a milestone.
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 func (c *Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+	if req == nil {
+		req = new(IssuesCreateMilestoneReq)
+	}
 	resp := &IssuesCreateMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -954,6 +975,9 @@ Delete a comment.
 https://developer.github.com/v3/issues/comments/#delete-a-comment
 */
 func (c *Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+	if req == nil {
+		req = new(IssuesDeleteCommentReq)
+	}
 	resp := &IssuesDeleteCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1058,6 +1082,9 @@ Delete a label.
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 func (c *Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+	if req == nil {
+		req = new(IssuesDeleteLabelReq)
+	}
 	resp := &IssuesDeleteLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1162,6 +1189,9 @@ Delete a milestone.
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 func (c *Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+	if req == nil {
+		req = new(IssuesDeleteMilestoneReq)
+	}
 	resp := &IssuesDeleteMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1266,6 +1296,9 @@ Get an issue.
 https://developer.github.com/v3/issues/#get-an-issue
 */
 func (c *Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+	if req == nil {
+		req = new(IssuesGetReq)
+	}
 	resp := &IssuesGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1395,6 +1428,9 @@ Get a single comment.
 https://developer.github.com/v3/issues/comments/#get-a-single-comment
 */
 func (c *Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+	if req == nil {
+		req = new(IssuesGetCommentReq)
+	}
 	resp := &IssuesGetCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1539,6 +1575,9 @@ Get a single event.
 https://developer.github.com/v3/issues/events/#get-a-single-event
 */
 func (c *Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+	if req == nil {
+		req = new(IssuesGetEventReq)
+	}
 	resp := &IssuesGetEventResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1696,6 +1735,9 @@ Get a single label.
 https://developer.github.com/v3/issues/labels/#get-a-single-label
 */
 func (c *Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+	if req == nil {
+		req = new(IssuesGetLabelReq)
+	}
 	resp := &IssuesGetLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1811,6 +1853,9 @@ Get a single milestone.
 https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 */
 func (c *Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+	if req == nil {
+		req = new(IssuesGetMilestoneReq)
+	}
 	resp := &IssuesGetMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1926,6 +1971,9 @@ List issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 func (c *Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+	if req == nil {
+		req = new(IssuesListReq)
+	}
 	resp := &IssuesListResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2130,6 +2178,9 @@ List assignees.
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 func (c *Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+	if req == nil {
+		req = new(IssuesListAssigneesReq)
+	}
 	resp := &IssuesListAssigneesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2256,6 +2307,9 @@ List comments on an issue.
 https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
 */
 func (c *Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+	if req == nil {
+		req = new(IssuesListCommentsReq)
+	}
 	resp := &IssuesListCommentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2407,6 +2461,9 @@ List comments in a repository.
 https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
 func (c *Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+	if req == nil {
+		req = new(IssuesListCommentsForRepoReq)
+	}
 	resp := &IssuesListCommentsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2569,6 +2626,9 @@ List events for an issue.
 https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
 func (c *Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+	if req == nil {
+		req = new(IssuesListEventsReq)
+	}
 	resp := &IssuesListEventsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2725,6 +2785,9 @@ List events for a repository.
 https://developer.github.com/v3/issues/events/#list-events-for-a-repository
 */
 func (c *Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+	if req == nil {
+		req = new(IssuesListEventsForRepoReq)
+	}
 	resp := &IssuesListEventsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2880,6 +2943,9 @@ List events for an issue.
 https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
 */
 func (c *Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+	if req == nil {
+		req = new(IssuesListEventsForTimelineReq)
+	}
 	resp := &IssuesListEventsForTimelineResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3038,6 +3104,9 @@ List user account issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 func (c *Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(IssuesListForAuthenticatedUserReq)
+	}
 	resp := &IssuesListForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3242,6 +3311,9 @@ List organization issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 func (c *Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+	if req == nil {
+		req = new(IssuesListForOrgReq)
+	}
 	resp := &IssuesListForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3447,6 +3519,9 @@ List repository issues.
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 func (c *Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+	if req == nil {
+		req = new(IssuesListForRepoReq)
+	}
 	resp := &IssuesListForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3670,6 +3745,9 @@ Get labels for every issue in a milestone.
 https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 */
 func (c *Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+	if req == nil {
+		req = new(IssuesListLabelsForMilestoneReq)
+	}
 	resp := &IssuesListLabelsForMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3797,6 +3875,9 @@ List all labels for this repository.
 https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
 func (c *Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+	if req == nil {
+		req = new(IssuesListLabelsForRepoReq)
+	}
 	resp := &IssuesListLabelsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3923,6 +4004,9 @@ List labels on an issue.
 https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
 func (c *Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+	if req == nil {
+		req = new(IssuesListLabelsOnIssueReq)
+	}
 	resp := &IssuesListLabelsOnIssueResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4050,6 +4134,9 @@ List milestones for a repository.
 https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 */
 func (c *Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+	if req == nil {
+		req = new(IssuesListMilestonesForRepoReq)
+	}
 	resp := &IssuesListMilestonesForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4194,6 +4281,9 @@ Lock an issue.
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 func (c *Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+	if req == nil {
+		req = new(IssuesLockReq)
+	}
 	resp := &IssuesLockResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4330,6 +4420,9 @@ Remove all labels from an issue.
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 func (c *Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+	if req == nil {
+		req = new(IssuesRemoveAllLabelsReq)
+	}
 	resp := &IssuesRemoveAllLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4434,6 +4527,9 @@ Remove assignees from an issue.
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 func (c *Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+	if req == nil {
+		req = new(IssuesRemoveAssigneesReq)
+	}
 	resp := &IssuesRemoveAssigneesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4565,6 +4661,9 @@ Remove a label from an issue.
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 func (c *Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+	if req == nil {
+		req = new(IssuesRemoveLabelReq)
+	}
 	resp := &IssuesRemoveLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4681,6 +4780,9 @@ Replace all labels for an issue.
 https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
 func (c *Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+	if req == nil {
+		req = new(IssuesReplaceAllLabelsReq)
+	}
 	resp := &IssuesReplaceAllLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4813,6 +4915,9 @@ Unlock an issue.
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 func (c *Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+	if req == nil {
+		req = new(IssuesUnlockReq)
+	}
 	resp := &IssuesUnlockResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4917,6 +5022,9 @@ Update an issue.
 https://developer.github.com/v3/issues/#update-an-issue
 */
 func (c *Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+	if req == nil {
+		req = new(IssuesUpdateReq)
+	}
 	resp := &IssuesUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5079,6 +5187,9 @@ Edit a comment.
 https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
 func (c *Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+	if req == nil {
+		req = new(IssuesUpdateCommentReq)
+	}
 	resp := &IssuesUpdateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5206,6 +5317,9 @@ Update a label.
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 func (c *Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+	if req == nil {
+		req = new(IssuesUpdateLabelReq)
+	}
 	resp := &IssuesUpdateLabelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -5349,6 +5463,9 @@ Update a milestone.
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 func (c *Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+	if req == nil {
+		req = new(IssuesUpdateMilestoneReq)
+	}
 	resp := &IssuesUpdateMilestoneResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

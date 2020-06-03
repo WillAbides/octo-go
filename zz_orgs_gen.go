@@ -21,6 +21,9 @@ Add or update organization membership.
 https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
 */
 func (c *Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsAddOrUpdateMembershipReq)
+	}
 	resp := &OrgsAddOrUpdateMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -151,6 +154,9 @@ Block a user.
 https://developer.github.com/v3/orgs/blocking/#block-a-user
 */
 func (c *Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
+	if req == nil {
+		req = new(OrgsBlockUserReq)
+	}
 	resp := &OrgsBlockUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -254,6 +260,9 @@ Check whether a user is blocked from an organization.
 https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
 */
 func (c *Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
+	if req == nil {
+		req = new(OrgsCheckBlockedUserReq)
+	}
 	resp := &OrgsCheckBlockedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -362,6 +371,9 @@ Check membership.
 https://developer.github.com/v3/orgs/members/#check-membership
 */
 func (c *Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsCheckMembershipReq)
+	}
 	resp := &OrgsCheckMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -465,6 +477,9 @@ Check public membership.
 https://developer.github.com/v3/orgs/members/#check-public-membership
 */
 func (c *Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsCheckPublicMembershipReq)
+	}
 	resp := &OrgsCheckPublicMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -573,6 +588,9 @@ Conceal a user's membership.
 https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
 */
 func (c *Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsConcealMembershipReq)
+	}
 	resp := &OrgsConcealMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -676,6 +694,9 @@ Convert member to outside collaborator.
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
 */
 func (c *Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
+	if req == nil {
+		req = new(OrgsConvertMemberToOutsideCollaboratorReq)
+	}
 	resp := &OrgsConvertMemberToOutsideCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -779,6 +800,9 @@ Create a hook.
 https://developer.github.com/v3/orgs/hooks/#create-a-hook
 */
 func (c *Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
+	if req == nil {
+		req = new(OrgsCreateHookReq)
+	}
 	resp := &OrgsCreateHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -952,6 +976,9 @@ Create organization invitation.
 https://developer.github.com/v3/orgs/members/#create-organization-invitation
 */
 func (c *Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
+	if req == nil {
+		req = new(OrgsCreateInvitationReq)
+	}
 	resp := &OrgsCreateInvitationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1100,6 +1127,9 @@ Delete a hook.
 https://developer.github.com/v3/orgs/hooks/#delete-a-hook
 */
 func (c *Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
+	if req == nil {
+		req = new(OrgsDeleteHookReq)
+	}
 	resp := &OrgsDeleteHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1203,6 +1233,9 @@ Get an organization.
 https://developer.github.com/v3/orgs/#get-an-organization
 */
 func (c *Client) OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsGetResponse, error) {
+	if req == nil {
+		req = new(OrgsGetReq)
+	}
 	resp := &OrgsGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1334,6 +1367,9 @@ Get single hook.
 https://developer.github.com/v3/orgs/hooks/#get-single-hook
 */
 func (c *Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
+	if req == nil {
+		req = new(OrgsGetHookReq)
+	}
 	resp := &OrgsGetHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1448,6 +1484,9 @@ Get organization membership.
 https://developer.github.com/v3/orgs/members/#get-organization-membership
 */
 func (c *Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsGetMembershipReq)
+	}
 	resp := &OrgsGetMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1562,6 +1601,9 @@ Get your organization membership.
 https://developer.github.com/v3/orgs/members/#get-your-organization-membership
 */
 func (c *Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(OrgsGetMembershipForAuthenticatedUserReq)
+	}
 	resp := &OrgsGetMembershipForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1675,6 +1717,9 @@ List all organizations.
 https://developer.github.com/v3/orgs/#list-all-organizations
 */
 func (c *Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
+	if req == nil {
+		req = new(OrgsListReq)
+	}
 	resp := &OrgsListResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1793,6 +1838,9 @@ List blocked users.
 https://developer.github.com/v3/orgs/blocking/#list-blocked-users
 */
 func (c *Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
+	if req == nil {
+		req = new(OrgsListBlockedUsersReq)
+	}
 	resp := &OrgsListBlockedUsersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1906,6 +1954,9 @@ List credential authorizations for an organization.
 https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
 */
 func (c *Client) OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
+	if req == nil {
+		req = new(OrgsListCredentialAuthorizationsReq)
+	}
 	resp := &OrgsListCredentialAuthorizationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2019,6 +2070,9 @@ List your organizations.
 https://developer.github.com/v3/orgs/#list-your-organizations
 */
 func (c *Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(OrgsListForAuthenticatedUserReq)
+	}
 	resp := &OrgsListForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2143,6 +2197,9 @@ List user organizations.
 https://developer.github.com/v3/orgs/#list-user-organizations
 */
 func (c *Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
+	if req == nil {
+		req = new(OrgsListForUserReq)
+	}
 	resp := &OrgsListForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2268,6 +2325,9 @@ List hooks.
 https://developer.github.com/v3/orgs/hooks/#list-hooks
 */
 func (c *Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
+	if req == nil {
+		req = new(OrgsListHooksReq)
+	}
 	resp := &OrgsListHooksResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2393,6 +2453,9 @@ List installations for an organization.
 https://developer.github.com/v3/orgs/#list-installations-for-an-organization
 */
 func (c *Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
+	if req == nil {
+		req = new(OrgsListInstallationsReq)
+	}
 	resp := &OrgsListInstallationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2533,6 +2596,9 @@ List organization invitation teams.
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 func (c *Client) OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsReq, opt ...RequestOption) (*OrgsListInvitationTeamsResponse, error) {
+	if req == nil {
+		req = new(OrgsListInvitationTeamsReq)
+	}
 	resp := &OrgsListInvitationTeamsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2659,6 +2725,9 @@ Members list.
 https://developer.github.com/v3/orgs/members/#members-list
 */
 func (c *Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
+	if req == nil {
+		req = new(OrgsListMembersReq)
+	}
 	resp := &OrgsListMembersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2807,6 +2876,9 @@ List your organization memberships.
 https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
 func (c *Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
+	if req == nil {
+		req = new(OrgsListMembershipsReq)
+	}
 	resp := &OrgsListMembershipsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2941,6 +3013,9 @@ List outside collaborators.
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
 */
 func (c *Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
+	if req == nil {
+		req = new(OrgsListOutsideCollaboratorsReq)
+	}
 	resp := &OrgsListOutsideCollaboratorsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3077,6 +3152,9 @@ List pending organization invitations.
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
 func (c *Client) OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitationsReq, opt ...RequestOption) (*OrgsListPendingInvitationsResponse, error) {
+	if req == nil {
+		req = new(OrgsListPendingInvitationsReq)
+	}
 	resp := &OrgsListPendingInvitationsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3202,6 +3280,9 @@ Public members list.
 https://developer.github.com/v3/orgs/members/#public-members-list
 */
 func (c *Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
+	if req == nil {
+		req = new(OrgsListPublicMembersReq)
+	}
 	resp := &OrgsListPublicMembersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3327,6 +3408,9 @@ Ping a hook.
 https://developer.github.com/v3/orgs/hooks/#ping-a-hook
 */
 func (c *Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
+	if req == nil {
+		req = new(OrgsPingHookReq)
+	}
 	resp := &OrgsPingHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3430,6 +3514,9 @@ Publicize a user's membership.
 https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
 */
 func (c *Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsPublicizeMembershipReq)
+	}
 	resp := &OrgsPublicizeMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3533,6 +3620,9 @@ Remove a credential authorization for an organization.
 https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
 */
 func (c *Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
+	if req == nil {
+		req = new(OrgsRemoveCredentialAuthorizationReq)
+	}
 	resp := &OrgsRemoveCredentialAuthorizationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3636,6 +3726,9 @@ Remove a member.
 https://developer.github.com/v3/orgs/members/#remove-a-member
 */
 func (c *Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
+	if req == nil {
+		req = new(OrgsRemoveMemberReq)
+	}
 	resp := &OrgsRemoveMemberResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3739,6 +3832,9 @@ Remove organization membership.
 https://developer.github.com/v3/orgs/members/#remove-organization-membership
 */
 func (c *Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsRemoveMembershipReq)
+	}
 	resp := &OrgsRemoveMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3842,6 +3938,9 @@ Remove outside collaborator.
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
 */
 func (c *Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
+	if req == nil {
+		req = new(OrgsRemoveOutsideCollaboratorReq)
+	}
 	resp := &OrgsRemoveOutsideCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3945,6 +4044,9 @@ Unblock a user.
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user
 */
 func (c *Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
+	if req == nil {
+		req = new(OrgsUnblockUserReq)
+	}
 	resp := &OrgsUnblockUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4048,6 +4150,9 @@ Edit an organization.
 https://developer.github.com/v3/orgs/#edit-an-organization
 */
 func (c *Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
+	if req == nil {
+		req = new(OrgsUpdateReq)
+	}
 	resp := &OrgsUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4291,6 +4396,9 @@ Edit a hook.
 https://developer.github.com/v3/orgs/hooks/#edit-a-hook
 */
 func (c *Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
+	if req == nil {
+		req = new(OrgsUpdateHookReq)
+	}
 	resp := &OrgsUpdateHookResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -4462,6 +4570,9 @@ Edit your organization membership.
 https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
 */
 func (c *Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
+	if req == nil {
+		req = new(OrgsUpdateMembershipReq)
+	}
 	resp := &OrgsUpdateMembershipResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

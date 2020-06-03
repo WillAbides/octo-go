@@ -21,6 +21,9 @@ Get provisioning details for a single user.
 https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
 func (c *Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
+	if req == nil {
+		req = new(ScimGetProvisioningDetailsForUserReq)
+	}
 	resp := &ScimGetProvisioningDetailsForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -135,6 +138,9 @@ Get a list of provisioned identities.
 https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
 func (c *Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+	if req == nil {
+		req = new(ScimListProvisionedIdentitiesReq)
+	}
 	resp := &ScimListProvisionedIdentitiesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -271,6 +277,9 @@ Provision and invite users.
 https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 func (c *Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
+	if req == nil {
+		req = new(ScimProvisionAndInviteUsersReq)
+	}
 	resp := &ScimProvisionAndInviteUsersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -384,6 +393,9 @@ Remove a user from the organization.
 https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
 func (c *Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
+	if req == nil {
+		req = new(ScimRemoveUserFromOrgReq)
+	}
 	resp := &ScimRemoveUserFromOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -487,6 +499,9 @@ Replace a provisioned user's information.
 https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 func (c *Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
+	if req == nil {
+		req = new(ScimReplaceProvisionedUserInformationReq)
+	}
 	resp := &ScimReplaceProvisionedUserInformationResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -601,6 +616,9 @@ Update a user attribute.
 https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 func (c *Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
+	if req == nil {
+		req = new(ScimUpdateUserAttributeReq)
+	}
 	resp := &ScimUpdateUserAttributeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

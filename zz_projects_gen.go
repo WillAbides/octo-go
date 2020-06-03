@@ -21,6 +21,9 @@ Add user as a collaborator.
 https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
 func (c *Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+	if req == nil {
+		req = new(ProjectsAddCollaboratorReq)
+	}
 	resp := &ProjectsAddCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -159,6 +162,9 @@ Create a project card.
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 func (c *Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+	if req == nil {
+		req = new(ProjectsCreateCardReq)
+	}
 	resp := &ProjectsCreateCardResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -320,6 +326,9 @@ Create a project column.
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 func (c *Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+	if req == nil {
+		req = new(ProjectsCreateColumnReq)
+	}
 	resp := &ProjectsCreateColumnResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -449,6 +458,9 @@ Create a user project.
 https://developer.github.com/v3/projects/#create-a-user-project
 */
 func (c *Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(ProjectsCreateForAuthenticatedUserReq)
+	}
 	resp := &ProjectsCreateForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -591,6 +603,9 @@ Create an organization project.
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 func (c *Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+	if req == nil {
+		req = new(ProjectsCreateForOrgReq)
+	}
 	resp := &ProjectsCreateForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -734,6 +749,9 @@ Create a repository project.
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 func (c *Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+	if req == nil {
+		req = new(ProjectsCreateForRepoReq)
+	}
 	resp := &ProjectsCreateForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -878,6 +896,9 @@ Delete a project.
 https://developer.github.com/v3/projects/#delete-a-project
 */
 func (c *Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+	if req == nil {
+		req = new(ProjectsDeleteReq)
+	}
 	resp := &ProjectsDeleteResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -995,6 +1016,9 @@ Delete a project card.
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 func (c *Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+	if req == nil {
+		req = new(ProjectsDeleteCardReq)
+	}
 	resp := &ProjectsDeleteCardResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1112,6 +1136,9 @@ Delete a project column.
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 func (c *Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+	if req == nil {
+		req = new(ProjectsDeleteColumnReq)
+	}
 	resp := &ProjectsDeleteColumnResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1229,6 +1256,9 @@ Get a project.
 https://developer.github.com/v3/projects/#get-a-project
 */
 func (c *Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+	if req == nil {
+		req = new(ProjectsGetReq)
+	}
 	resp := &ProjectsGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1357,6 +1387,9 @@ Get a project card.
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 func (c *Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+	if req == nil {
+		req = new(ProjectsGetCardReq)
+	}
 	resp := &ProjectsGetCardResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1474,6 +1507,9 @@ Get a project column.
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 func (c *Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+	if req == nil {
+		req = new(ProjectsGetColumnReq)
+	}
 	resp := &ProjectsGetColumnResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1591,6 +1627,9 @@ List project cards.
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 func (c *Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+	if req == nil {
+		req = new(ProjectsListCardsReq)
+	}
 	resp := &ProjectsListCardsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1740,6 +1779,9 @@ List collaborators.
 https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
 func (c *Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+	if req == nil {
+		req = new(ProjectsListCollaboratorsReq)
+	}
 	resp := &ProjectsListCollaboratorsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1893,6 +1935,9 @@ List project columns.
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 func (c *Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+	if req == nil {
+		req = new(ProjectsListColumnsReq)
+	}
 	resp := &ProjectsListColumnsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2033,6 +2078,9 @@ List organization projects.
 https://developer.github.com/v3/projects/#list-organization-projects
 */
 func (c *Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+	if req == nil {
+		req = new(ProjectsListForOrgReq)
+	}
 	resp := &ProjectsListForOrgResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2182,6 +2230,9 @@ List repository projects.
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 func (c *Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+	if req == nil {
+		req = new(ProjectsListForRepoReq)
+	}
 	resp := &ProjectsListForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2332,6 +2383,9 @@ List user projects.
 https://developer.github.com/v3/projects/#list-user-projects
 */
 func (c *Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+	if req == nil {
+		req = new(ProjectsListForUserReq)
+	}
 	resp := &ProjectsListForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2481,6 +2535,9 @@ Move a project card.
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 func (c *Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+	if req == nil {
+		req = new(ProjectsMoveCardReq)
+	}
 	resp := &ProjectsMoveCardResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2617,6 +2674,9 @@ Move a project column.
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 func (c *Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+	if req == nil {
+		req = new(ProjectsMoveColumnReq)
+	}
 	resp := &ProjectsMoveColumnResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2749,6 +2809,9 @@ Remove user as a collaborator.
 https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
 func (c *Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+	if req == nil {
+		req = new(ProjectsRemoveCollaboratorReq)
+	}
 	resp := &ProjectsRemoveCollaboratorResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2867,6 +2930,9 @@ Review a user's permission level.
 https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
 func (c *Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
+	if req == nil {
+		req = new(ProjectsReviewUserPermissionLevelReq)
+	}
 	resp := &ProjectsReviewUserPermissionLevelResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2996,6 +3062,9 @@ Update a project.
 https://developer.github.com/v3/projects/#update-a-project
 */
 func (c *Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+	if req == nil {
+		req = new(ProjectsUpdateReq)
+	}
 	resp := &ProjectsUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3180,6 +3249,9 @@ Update a project card.
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 func (c *Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+	if req == nil {
+		req = new(ProjectsUpdateCardReq)
+	}
 	resp := &ProjectsUpdateCardResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3319,6 +3391,9 @@ Update a project column.
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 func (c *Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+	if req == nil {
+		req = new(ProjectsUpdateColumnReq)
+	}
 	resp := &ProjectsUpdateColumnResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

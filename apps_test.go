@@ -17,8 +17,7 @@ func TestAppsCreateInstallationToken(t *testing.T) {
 	require.NoError(t, err)
 
 	// revoke the token so that we don't inadvertently commit a valid token to git
-	_, err = client.AppsRevokeInstallationToken(ctx, &octo.AppsRevokeInstallationTokenReq{},
-		octo.RequestPATAuth(token.Data.Token))
+	_, err = client.AppsRevokeInstallationToken(ctx, nil, octo.RequestPATAuth(token.Data.Token))
 	require.NoError(t, err)
 }
 

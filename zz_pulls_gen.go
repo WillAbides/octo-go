@@ -21,6 +21,9 @@ Get if a pull request has been merged.
 https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
 */
 func (c *Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
+	if req == nil {
+		req = new(PullsCheckIfMergedReq)
+	}
 	resp := &PullsCheckIfMergedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -130,6 +133,9 @@ Create a pull request.
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 func (c *Client) PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption) (*PullsCreateResponse, error) {
+	if req == nil {
+		req = new(PullsCreateReq)
+	}
 	resp := &PullsCreateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -300,6 +306,9 @@ Create a comment.
 https://developer.github.com/v3/pulls/comments/#create-a-comment
 */
 func (c *Client) PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
+	if req == nil {
+		req = new(PullsCreateCommentReq)
+	}
 	resp := &PullsCreateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -494,6 +503,9 @@ Create a pull request review.
 https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
 */
 func (c *Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
+	if req == nil {
+		req = new(PullsCreateReviewReq)
+	}
 	resp := &PullsCreateReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -664,6 +676,9 @@ Create a review comment reply.
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
 */
 func (c *Client) PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
+	if req == nil {
+		req = new(PullsCreateReviewCommentReplyReq)
+	}
 	resp := &PullsCreateReviewCommentReplyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -792,6 +807,9 @@ Create a review request.
 https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
 */
 func (c *Client) PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
+	if req == nil {
+		req = new(PullsCreateReviewRequestReq)
+	}
 	resp := &PullsCreateReviewRequestResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -922,6 +940,9 @@ Delete a comment.
 https://developer.github.com/v3/pulls/comments/#delete-a-comment
 */
 func (c *Client) PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
+	if req == nil {
+		req = new(PullsDeleteCommentReq)
+	}
 	resp := &PullsDeleteCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1026,6 +1047,9 @@ Delete a pending review.
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
 */
 func (c *Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
+	if req == nil {
+		req = new(PullsDeletePendingReviewReq)
+	}
 	resp := &PullsDeletePendingReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1142,6 +1166,9 @@ Delete a review request.
 https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
 */
 func (c *Client) PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
+	if req == nil {
+		req = new(PullsDeleteReviewRequestReq)
+	}
 	resp := &PullsDeleteReviewRequestResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1261,6 +1288,9 @@ Dismiss a pull request review.
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
 */
 func (c *Client) PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
+	if req == nil {
+		req = new(PullsDismissReviewReq)
+	}
 	resp := &PullsDismissReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1389,6 +1419,9 @@ Get a single pull request.
 https://developer.github.com/v3/pulls/#get-a-single-pull-request
 */
 func (c *Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
+	if req == nil {
+		req = new(PullsGetReq)
+	}
 	resp := &PullsGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1517,6 +1550,9 @@ Get a single comment.
 https://developer.github.com/v3/pulls/comments/#get-a-single-comment
 */
 func (c *Client) PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
+	if req == nil {
+		req = new(PullsGetCommentReq)
+	}
 	resp := &PullsGetCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1657,6 +1693,9 @@ Get comments for a single review.
 https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
 */
 func (c *Client) PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
+	if req == nil {
+		req = new(PullsGetCommentsForReviewReq)
+	}
 	resp := &PullsGetCommentsForReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1785,6 +1824,9 @@ Get a single review.
 https://developer.github.com/v3/pulls/reviews/#get-a-single-review
 */
 func (c *Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
+	if req == nil {
+		req = new(PullsGetReviewReq)
+	}
 	resp := &PullsGetReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1901,6 +1943,9 @@ List pull requests.
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
 func (c *Client) PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*PullsListResponse, error) {
+	if req == nil {
+		req = new(PullsListReq)
+	}
 	resp := &PullsListResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2081,6 +2126,9 @@ List comments on a pull request.
 https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
 */
 func (c *Client) PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
+	if req == nil {
+		req = new(PullsListCommentsReq)
+	}
 	resp := &PullsListCommentsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2255,6 +2303,9 @@ List comments in a repository.
 https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
 */
 func (c *Client) PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
+	if req == nil {
+		req = new(PullsListCommentsForRepoReq)
+	}
 	resp := &PullsListCommentsForRepoResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2428,6 +2479,9 @@ List commits on a pull request.
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
 func (c *Client) PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...RequestOption) (*PullsListCommitsResponse, error) {
+	if req == nil {
+		req = new(PullsListCommitsReq)
+	}
 	resp := &PullsListCommitsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2555,6 +2609,9 @@ List pull requests files.
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
 func (c *Client) PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestOption) (*PullsListFilesResponse, error) {
+	if req == nil {
+		req = new(PullsListFilesReq)
+	}
 	resp := &PullsListFilesResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2682,6 +2739,9 @@ List review requests.
 https://developer.github.com/v3/pulls/review_requests/#list-review-requests
 */
 func (c *Client) PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
+	if req == nil {
+		req = new(PullsListReviewRequestsReq)
+	}
 	resp := &PullsListReviewRequestsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2809,6 +2869,9 @@ List reviews on a pull request.
 https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
 */
 func (c *Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
+	if req == nil {
+		req = new(PullsListReviewsReq)
+	}
 	resp := &PullsListReviewsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2936,6 +2999,9 @@ Merge a pull request (Merge Button).
 https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
 */
 func (c *Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
+	if req == nil {
+		req = new(PullsMergeReq)
+	}
 	resp := &PullsMergeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3075,6 +3141,9 @@ Submit a pull request review.
 https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
 */
 func (c *Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
+	if req == nil {
+		req = new(PullsSubmitReviewReq)
+	}
 	resp := &PullsSubmitReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3212,6 +3281,9 @@ Update a pull request.
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 func (c *Client) PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption) (*PullsUpdateResponse, error) {
+	if req == nil {
+		req = new(PullsUpdateReq)
+	}
 	resp := &PullsUpdateResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3372,6 +3444,9 @@ Update a pull request branch.
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 func (c *Client) PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...RequestOption) (*PullsUpdateBranchResponse, error) {
+	if req == nil {
+		req = new(PullsUpdateBranchReq)
+	}
 	resp := &PullsUpdateBranchResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3521,6 +3596,9 @@ Edit a comment.
 https://developer.github.com/v3/pulls/comments/#edit-a-comment
 */
 func (c *Client) PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
+	if req == nil {
+		req = new(PullsUpdateCommentReq)
+	}
 	resp := &PullsUpdateCommentResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3658,6 +3736,9 @@ Update a pull request review.
 https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
 */
 func (c *Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
+	if req == nil {
+		req = new(PullsUpdateReviewReq)
+	}
 	resp := &PullsUpdateReviewResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

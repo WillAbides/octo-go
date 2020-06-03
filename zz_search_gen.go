@@ -21,6 +21,9 @@ Search code.
 https://developer.github.com/v3/search/#search-code
 */
 func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+	if req == nil {
+		req = new(SearchCodeReq)
+	}
 	resp := &SearchCodeResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -183,6 +186,9 @@ Search commits.
 https://developer.github.com/v3/search/#search-commits
 */
 func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+	if req == nil {
+		req = new(SearchCommitsReq)
+	}
 	resp := &SearchCommitsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -360,6 +366,9 @@ Search issues and pull requests.
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+	if req == nil {
+		req = new(SearchIssuesAndPullRequestsReq)
+	}
 	resp := &SearchIssuesAndPullRequestsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -525,6 +534,9 @@ Search labels.
 https://developer.github.com/v3/search/#search-labels
 */
 func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+	if req == nil {
+		req = new(SearchLabelsReq)
+	}
 	resp := &SearchLabelsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -677,6 +689,9 @@ Search repositories.
 https://developer.github.com/v3/search/#search-repositories
 */
 func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+	if req == nil {
+		req = new(SearchReposReq)
+	}
 	resp := &SearchReposResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -850,6 +865,9 @@ Search topics.
 https://developer.github.com/v3/search/#search-topics
 */
 func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+	if req == nil {
+		req = new(SearchTopicsReq)
+	}
 	resp := &SearchTopicsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -988,6 +1006,9 @@ Search users.
 https://developer.github.com/v3/search/#search-users
 */
 func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+	if req == nil {
+		req = new(SearchUsersReq)
+	}
 	resp := &SearchUsersResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

@@ -20,6 +20,9 @@ Get your current rate limit status.
 https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
 func (c *Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
+	if req == nil {
+		req = new(RateLimitGetReq)
+	}
 	resp := &RateLimitGetResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {

@@ -21,6 +21,9 @@ Add email address(es).
 https://developer.github.com/v3/users/emails/#add-email-addresses
 */
 func (c *Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
+	if req == nil {
+		req = new(UsersAddEmailsReq)
+	}
 	resp := &UsersAddEmailsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -150,6 +153,9 @@ Block a user.
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
 func (c *Client) UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (*UsersBlockResponse, error) {
+	if req == nil {
+		req = new(UsersBlockReq)
+	}
 	resp := &UsersBlockResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -252,6 +258,9 @@ Check whether you've blocked a user.
 https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 */
 func (c *Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
+	if req == nil {
+		req = new(UsersCheckBlockedReq)
+	}
 	resp := &UsersCheckBlockedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -359,6 +368,9 @@ Check if you are following a user.
 https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 */
 func (c *Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
+	if req == nil {
+		req = new(UsersCheckFollowingReq)
+	}
 	resp := &UsersCheckFollowingResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -466,6 +478,9 @@ Check if one user follows another.
 https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
 */
 func (c *Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
+	if req == nil {
+		req = new(UsersCheckFollowingForUserReq)
+	}
 	resp := &UsersCheckFollowingForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -574,6 +589,9 @@ Create a GPG key.
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
 func (c *Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
+	if req == nil {
+		req = new(UsersCreateGpgKeyReq)
+	}
 	resp := &UsersCreateGpgKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -702,6 +720,9 @@ Create a public key.
 https://developer.github.com/v3/users/keys/#create-a-public-key
 */
 func (c *Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
+	if req == nil {
+		req = new(UsersCreatePublicKeyReq)
+	}
 	resp := &UsersCreatePublicKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -837,6 +858,9 @@ Delete email address(es).
 https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
 func (c *Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
+	if req == nil {
+		req = new(UsersDeleteEmailsReq)
+	}
 	resp := &UsersDeleteEmailsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -955,6 +979,9 @@ Delete a GPG key.
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 */
 func (c *Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
+	if req == nil {
+		req = new(UsersDeleteGpgKeyReq)
+	}
 	resp := &UsersDeleteGpgKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1057,6 +1084,9 @@ Delete a public key.
 https://developer.github.com/v3/users/keys/#delete-a-public-key
 */
 func (c *Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
+	if req == nil {
+		req = new(UsersDeletePublicKeyReq)
+	}
 	resp := &UsersDeletePublicKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1159,6 +1189,9 @@ Follow a user.
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
 func (c *Client) UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption) (*UsersFollowResponse, error) {
+	if req == nil {
+		req = new(UsersFollowReq)
+	}
 	resp := &UsersFollowResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1261,6 +1294,9 @@ Get the authenticated user.
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
 func (c *Client) UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, opt ...RequestOption) (*UsersGetAuthenticatedResponse, error) {
+	if req == nil {
+		req = new(UsersGetAuthenticatedReq)
+	}
 	resp := &UsersGetAuthenticatedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1373,6 +1409,9 @@ Get a single user.
 https://developer.github.com/v3/users/#get-a-single-user
 */
 func (c *Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
+	if req == nil {
+		req = new(UsersGetByUsernameReq)
+	}
 	resp := &UsersGetByUsernameResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1486,6 +1525,9 @@ Get contextual information about a user.
 https://developer.github.com/v3/users/#get-contextual-information-about-a-user
 */
 func (c *Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
+	if req == nil {
+		req = new(UsersGetContextForUserReq)
+	}
 	resp := &UsersGetContextForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1618,6 +1660,9 @@ Get a single GPG key.
 https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
 func (c *Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
+	if req == nil {
+		req = new(UsersGetGpgKeyReq)
+	}
 	resp := &UsersGetGpgKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1731,6 +1776,9 @@ Get a single public key.
 https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
 func (c *Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
+	if req == nil {
+		req = new(UsersGetPublicKeyReq)
+	}
 	resp := &UsersGetPublicKeyResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1844,6 +1892,9 @@ Get all users.
 https://developer.github.com/v3/users/#get-all-users
 */
 func (c *Client) UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
+	if req == nil {
+		req = new(UsersListReq)
+	}
 	resp := &UsersListResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -1962,6 +2013,9 @@ List blocked users.
 https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
 func (c *Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
+	if req == nil {
+		req = new(UsersListBlockedReq)
+	}
 	resp := &UsersListBlockedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2074,6 +2128,9 @@ List email addresses for a user.
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
 func (c *Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
+	if req == nil {
+		req = new(UsersListEmailsReq)
+	}
 	resp := &UsersListEmailsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2198,6 +2255,9 @@ List users followed by the authenticated user.
 https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
 */
 func (c *Client) UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
+	if req == nil {
+		req = new(UsersListFollowedByAuthenticatedReq)
+	}
 	resp := &UsersListFollowedByAuthenticatedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2322,6 +2382,9 @@ List followers of the authenticated user.
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
 func (c *Client) UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListFollowersForAuthenticatedUserReq, opt ...RequestOption) (*UsersListFollowersForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(UsersListFollowersForAuthenticatedUserReq)
+	}
 	resp := &UsersListFollowersForAuthenticatedUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2446,6 +2509,9 @@ List followers of a user.
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 func (c *Client) UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUserReq, opt ...RequestOption) (*UsersListFollowersForUserResponse, error) {
+	if req == nil {
+		req = new(UsersListFollowersForUserReq)
+	}
 	resp := &UsersListFollowersForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2571,6 +2637,9 @@ List users followed by another user.
 https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
 func (c *Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
+	if req == nil {
+		req = new(UsersListFollowingForUserReq)
+	}
 	resp := &UsersListFollowingForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2696,6 +2765,9 @@ List your GPG keys.
 https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
 func (c *Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
+	if req == nil {
+		req = new(UsersListGpgKeysReq)
+	}
 	resp := &UsersListGpgKeysResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2820,6 +2892,9 @@ List GPG keys for a user.
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 func (c *Client) UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserReq, opt ...RequestOption) (*UsersListGpgKeysForUserResponse, error) {
+	if req == nil {
+		req = new(UsersListGpgKeysForUserReq)
+	}
 	resp := &UsersListGpgKeysForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -2945,6 +3020,9 @@ List public email addresses for a user.
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
 func (c *Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
+	if req == nil {
+		req = new(UsersListPublicEmailsReq)
+	}
 	resp := &UsersListPublicEmailsResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3069,6 +3147,9 @@ List your public keys.
 https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
 func (c *Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
+	if req == nil {
+		req = new(UsersListPublicKeysReq)
+	}
 	resp := &UsersListPublicKeysResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3193,6 +3274,9 @@ List public keys for a user.
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 func (c *Client) UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysForUserReq, opt ...RequestOption) (*UsersListPublicKeysForUserResponse, error) {
+	if req == nil {
+		req = new(UsersListPublicKeysForUserReq)
+	}
 	resp := &UsersListPublicKeysForUserResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3318,6 +3402,9 @@ Toggle primary email visibility.
 https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
 func (c *Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
+	if req == nil {
+		req = new(UsersTogglePrimaryEmailVisibilityReq)
+	}
 	resp := &UsersTogglePrimaryEmailVisibilityResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3448,6 +3535,9 @@ Unblock a user.
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
 func (c *Client) UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOption) (*UsersUnblockResponse, error) {
+	if req == nil {
+		req = new(UsersUnblockReq)
+	}
 	resp := &UsersUnblockResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3550,6 +3640,9 @@ Unfollow a user.
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
 func (c *Client) UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOption) (*UsersUnfollowResponse, error) {
+	if req == nil {
+		req = new(UsersUnfollowReq)
+	}
 	resp := &UsersUnfollowResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
@@ -3652,6 +3745,9 @@ Update the authenticated user.
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
 func (c *Client) UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticatedReq, opt ...RequestOption) (*UsersUpdateAuthenticatedResponse, error) {
+	if req == nil {
+		req = new(UsersUpdateAuthenticatedReq)
+	}
 	resp := &UsersUpdateAuthenticatedResponse{request: req}
 	r, err := c.doRequest(ctx, req, opt...)
 	if r != nil {
