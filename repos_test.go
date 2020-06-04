@@ -26,6 +26,19 @@ func TestReposGetArchiveLink(t *testing.T) {
 	require.True(t, len(g) > 100)
 }
 
+func TestReposCompareCommits(t *testing.T) {
+	ctx := context.Background()
+	client := vcrClient(t, t.Name(), patAuth())
+	got, err := client.ReposCompareCommits(ctx, &octo.ReposCompareCommitsReq{
+		Owner: "WillAbides",
+		Repo:  "octo-go",
+		Base:  "2c80673f15b275cbb22fc167cb1b9aa43ba7a27a",
+		Head:  "ceac7c6d9a134326a0871174423bea19acbb122a",
+	})
+	require.NoError(t, err)
+	require.Equal(t, "ahead", got.Data.Status)
+}
+
 func TestResposUploadReleaseAsset(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		ctx := context.Background()
