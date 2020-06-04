@@ -65,7 +65,10 @@ func responseCodesWithBodies(endpoint model.Endpoint) []int {
 		bodyCodes = append(bodyCodes, respCode)
 	}
 	for i := 1; i < len(bodyCodes); i++ {
-		if !cmp.Equal(endpoint.Responses[bodyCodes[0]], endpoint.Responses[bodyCodes[i]]) {
+		if !cmp.Equal(endpoint.Responses[bodyCodes[0]].Body, endpoint.Responses[bodyCodes[i]].Body) {
+			panic(fmt.Sprintf("%s has broken our assumption that success bodies will all be equal", endpoint.ID))
+		}
+		if !cmp.Equal(endpoint.Responses[bodyCodes[0]].Headers, endpoint.Responses[bodyCodes[i]].Headers) {
 			panic(fmt.Sprintf("%s has broken our assumption that success bodies will all be equal", endpoint.ID))
 		}
 	}

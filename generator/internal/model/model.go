@@ -27,8 +27,9 @@ type Request struct {
 }
 
 type Response struct {
-	Body    *ParamSchema
-	Headers []Header
+	Body       *ParamSchema
+	HasExample bool
+	Headers    []Header
 }
 
 type Preview struct {

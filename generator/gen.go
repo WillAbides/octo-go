@@ -54,6 +54,9 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 }
 
 func toExportedName(in string) string {
+	if _, ok := exportedNameOverrides[in]; ok {
+		return exportedNameOverrides[in]
+	}
 	out := in
 	for _, separator := range []string{"_", "-", ".", "/"} {
 		words := strings.Split(out, separator)

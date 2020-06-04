@@ -8486,23 +8486,32 @@ type TeamDiscussion struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CommentsCount int64            `json:"comments_count,omitempty"`
-	CommentsUrl   string           `json:"comments_url,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Pinned        bool             `json:"pinned,omitempty"`
-	Private       bool             `json:"private,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	TeamUrl       string           `json:"team_url,omitempty"`
-	Title         string           `json:"title,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	Body          string `json:"body,omitempty"`
+	BodyHtml      string `json:"body_html,omitempty"`
+	BodyVersion   string `json:"body_version,omitempty"`
+	CommentsCount int64  `json:"comments_count,omitempty"`
+	CommentsUrl   string `json:"comments_url,omitempty"`
+	CreatedAt     string `json:"created_at,omitempty"`
+	HtmlUrl       string `json:"html_url,omitempty"`
+	LastEditedAt  string `json:"last_edited_at,omitempty"`
+	NodeId        string `json:"node_id,omitempty"`
+	Number        int64  `json:"number,omitempty"`
+	Pinned        bool   `json:"pinned,omitempty"`
+	Private       bool   `json:"private,omitempty"`
+	Reactions     struct {
+		PlusOne    json.Number `json:"+1,omitempty"`
+		MinusOne   json.Number `json:"-1,omitempty"`
+		Confused   json.Number `json:"confused,omitempty"`
+		Heart      json.Number `json:"heart,omitempty"`
+		Hooray     json.Number `json:"hooray,omitempty"`
+		Laugh      json.Number `json:"laugh,omitempty"`
+		TotalCount int64       `json:"total_count,omitempty"`
+		Url        string      `json:"url,omitempty"`
+	} `json:"reactions,omitempty"`
+	TeamUrl   string `json:"team_url,omitempty"`
+	Title     string `json:"title,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
 }
 
 type TeamDiscussionComment struct {
@@ -8526,18 +8535,27 @@ type TeamDiscussionComment struct {
 		Type              string `json:"type,omitempty"`
 		Url               string `json:"url,omitempty"`
 	} `json:"author,omitempty"`
-	Body          string           `json:"body,omitempty"`
-	BodyHtml      string           `json:"body_html,omitempty"`
-	BodyVersion   string           `json:"body_version,omitempty"`
-	CreatedAt     string           `json:"created_at,omitempty"`
-	DiscussionUrl string           `json:"discussion_url,omitempty"`
-	HtmlUrl       string           `json:"html_url,omitempty"`
-	LastEditedAt  string           `json:"last_edited_at,omitempty"`
-	NodeId        string           `json:"node_id,omitempty"`
-	Number        int64            `json:"number,omitempty"`
-	Reactions     map[string]int64 `json:"reactions,omitempty"`
-	UpdatedAt     string           `json:"updated_at,omitempty"`
-	Url           string           `json:"url,omitempty"`
+	Body          string `json:"body,omitempty"`
+	BodyHtml      string `json:"body_html,omitempty"`
+	BodyVersion   string `json:"body_version,omitempty"`
+	CreatedAt     string `json:"created_at,omitempty"`
+	DiscussionUrl string `json:"discussion_url,omitempty"`
+	HtmlUrl       string `json:"html_url,omitempty"`
+	LastEditedAt  string `json:"last_edited_at,omitempty"`
+	NodeId        string `json:"node_id,omitempty"`
+	Number        int64  `json:"number,omitempty"`
+	Reactions     struct {
+		PlusOne    json.Number `json:"+1,omitempty"`
+		MinusOne   json.Number `json:"-1,omitempty"`
+		Confused   json.Number `json:"confused,omitempty"`
+		Heart      json.Number `json:"heart,omitempty"`
+		Hooray     json.Number `json:"hooray,omitempty"`
+		Laugh      json.Number `json:"laugh,omitempty"`
+		TotalCount int64       `json:"total_count,omitempty"`
+		Url        string      `json:"url,omitempty"`
+	} `json:"reactions,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
+	Url       string `json:"url,omitempty"`
 }
 
 type TeamFull struct {

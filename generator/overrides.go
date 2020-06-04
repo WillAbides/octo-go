@@ -60,6 +60,11 @@ var endpointOverrides = []func(endpoint *model.Endpoint){
 	},
 }
 
+var exportedNameOverrides = map[string]string{
+	"+1": "PlusOne",
+	"-1": "MinusOne",
+}
+
 func schemaPathString(schemaPath []string) string {
 	return strings.Join(schemaPath, "/")
 }
@@ -74,7 +79,6 @@ var schemaOverrides = []func(schemaPath []string, schema *model.ParamSchema){
 		schema.ItemSchema = &model.ParamSchema{
 			Type: model.ParamTypeString,
 		}
-		fmt.Println(schemaPathString(schemaPath))
 	},
 
 	// permissions are maps
@@ -96,27 +100,6 @@ var schemaOverrides = []func(schemaPath []string, schema *model.ParamSchema){
 		schema.ObjectParams = nil
 	},
 
-	// reactions are maps
-	func(schemaPath []string, schema *model.ParamSchema) {
-		if !strings.HasSuffix(schemaPathString(schemaPath), "/reactions") || schema.Type != model.ParamTypeObject {
-			return
-		}
-		var found bool
-		for _, objectParam := range schema.ObjectParams {
-			if objectParam.Name == "+1" {
-				found = true
-				break
-			}
-		}
-		if !found {
-			return
-		}
-		schema.ObjectParams = nil
-		schema.ItemSchema = &model.ParamSchema{
-			Type: model.ParamTypeInt,
-		}
-	},
-	// a lot of numbers should be integers
 	func(schemaPath []string, schema *model.ParamSchema) {
 		if schema.Type != model.ParamTypeNumber {
 			return

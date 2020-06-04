@@ -263,6 +263,7 @@ func responses(op *openapi3.Operation) (map[int]model.Response, error) {
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
+		var hasExample bool
 		var schema *model.ParamSchema
 		jsonResponse := responseRef.Value.Content.Get("application/json")
 		if jsonResponse != nil {
@@ -270,10 +271,12 @@ func responses(op *openapi3.Operation) (map[int]model.Response, error) {
 			if err != nil {
 				return nil, errors.WithStack(err)
 			}
+			hasExample = jsonResponse.Example != nil
 		}
 		response := model.Response{
-			Body:    schema,
-			Headers: make([]model.Header, 0, len(responseRef.Value.Headers)),
+			Body:       schema,
+			Headers:    make([]model.Header, 0, len(responseRef.Value.Headers)),
+			HasExample: hasExample,
 		}
 		for headerName, headerRef := range responseRef.Value.Headers {
 			hdr := model.Header{

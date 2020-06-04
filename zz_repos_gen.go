@@ -6497,9 +6497,7 @@ ReposGetCodeFrequencyStatsResponseBody is a response body for ReposGetCodeFreque
 
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
 */
-type ReposGetCodeFrequencyStatsResponseBody []struct {
-	components.CodeFrequencyStat
-}
+type ReposGetCodeFrequencyStatsResponseBody []components.CodeFrequencyStat
 
 /*
 ReposGetCodeFrequencyStatsResponse is a response for ReposGetCodeFrequencyStats
@@ -9317,9 +9315,7 @@ ReposGetPunchCardStatsResponseBody is a response body for ReposGetPunchCardStats
 
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
 */
-type ReposGetPunchCardStatsResponseBody []struct {
-	components.CodeFrequencyStat
-}
+type ReposGetPunchCardStatsResponseBody []components.CodeFrequencyStat
 
 /*
 ReposGetPunchCardStatsResponse is a response for ReposGetPunchCardStats
