@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/willabides/octo-go/generator/internal/model"
@@ -64,15 +65,35 @@ func schemaPathString(schemaPath []string) string {
 }
 
 var schemaOverrides = []func(schemaPath []string, schema *model.ParamSchema){
+
+	// apps/create-installation-token/reqBody/permissions is map[string]string
+	func(schemaPath []string, schema *model.ParamSchema) {
+		if schemaPathString(schemaPath) != "apps/create-installation-token/reqBody/permissions" {
+			return
+		}
+		schema.ItemSchema = &model.ParamSchema{
+			Type: model.ParamTypeString,
+		}
+		fmt.Println(schemaPathString(schemaPath))
+	},
+
 	// permissions are maps
 	func(schemaPath []string, schema *model.ParamSchema) {
 		if !strings.HasSuffix(schemaPathString(schemaPath), "/permissions") || schema.Type != model.ParamTypeObject {
 			return
 		}
-		schema.ObjectParams = nil
-		schema.ItemSchema = &model.ParamSchema{
-			Type: model.ParamTypeString,
+		if len(schema.ObjectParams) == 0 {
+			return
 		}
+		for i := 1; i < len(schema.ObjectParams); i++ {
+			if schema.ObjectParams[i].Schema.Type != schema.ObjectParams[i-1].Schema.Type {
+				panic(fmt.Sprintf("%s violates the assumption that permissions maps will only have one type", schemaPathString(schemaPath)))
+			}
+		}
+		schema.ItemSchema = &model.ParamSchema{
+			Type: schema.ObjectParams[0].Schema.Type,
+		}
+		schema.ObjectParams = nil
 	},
 
 	// reactions are maps
