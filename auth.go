@@ -58,20 +58,16 @@ type appInstallationAuthProvider struct {
 	tokenClient    *Client
 }
 
-func (a *appInstallationAuthProvider) getTokenClient() (*Client, error) {
+func (a *appInstallationAuthProvider) getTokenClient() *Client {
 	if a.tokenClient != nil {
-		return a.tokenClient, nil
+		return a.tokenClient
 	}
 	opts := append(a.requestOptions, RequestAuthProvider(&appAuthProvider{
 		appID:      a.appID,
 		privateKey: a.privateKey,
 	}))
-	var err error
-	a.tokenClient, err = NewClient(append(opts, RequestEnableRequirePreviews())...)
-	if err != nil {
-		return nil, err
-	}
-	return a.tokenClient, nil
+	a.tokenClient = NewClient(append(opts, RequestEnableRequirePreviews())...)
+	return a.tokenClient
 }
 
 // AuthorizationHeader implements AuthProvider
@@ -81,10 +77,7 @@ func (a *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (
 	if time.Now().Before(a.tknExpiry.Add(-1 * time.Minute)) {
 		return a.tkn, nil
 	}
-	tokenClient, err := a.getTokenClient()
-	if err != nil {
-		return "", err
-	}
+	tokenClient := a.getTokenClient()
 	req := &AppsCreateInstallationTokenReq{
 		InstallationId: a.installationID,
 	}

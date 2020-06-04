@@ -72,9 +72,7 @@ func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) *octo.Clien
 		require.NoError(t, r.Stop())
 	})
 
-	cl, err := octo.NewClient(append(opts, octo.RequestHTTPClient(&http.Client{
+	return octo.NewClient(append(opts, octo.RequestHTTPClient(&http.Client{
 		Transport: r,
 	}))...)
-	require.NoError(t, err)
-	return cl
 }

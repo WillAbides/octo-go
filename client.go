@@ -8,29 +8,22 @@ import (
 
 // Client is a client for the GitHub API
 type Client struct {
-	requestOpts requestOpts
+	opts []RequestOption
 }
 
 // NewClient returns a new Client
-func NewClient(opt ...RequestOption) (*Client, error) {
-	ro, err := buildRequestOptions(opt)
-	if err != nil {
-		return nil, err
-	}
+func NewClient(opt ...RequestOption) *Client {
 	return &Client{
-		requestOpts: ro,
-	}, nil
+		opts: opt,
+	}
 }
 
-func (c *Client) doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
-	opts := make([]RequestOption, 0, len(opt)+1)
-	opts = append(opts, resetOptions(c.requestOpts))
-	opts = append(opts, opt...)
-	req, err := requester.httpRequest(ctx, opts...)
+func doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
+	req, err := requester.httpRequest(ctx, opt...)
 	if err != nil {
 		return nil, err
 	}
-	ro, err := buildRequestOptions(opts)
+	ro, err := buildRequestOptions(opt)
 	if err != nil {
 		return nil, err
 	}
@@ -65,16 +58,14 @@ func (c *Client) doRequest(ctx context.Context, requester httpRequester, opt ...
 	return resp, nil
 }
 
+func (c *Client) doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
+	opts := make([]RequestOption, len(c.opts), len(c.opts)+len(opt))
+	copy(opts, c.opts)
+	opts = append(opts, opt...)
+	return doRequest(ctx, requester, opts...)
+}
+
 // SetRequestOptions sets options that will be used on all requests this client makes
-func (c *Client) SetRequestOptions(opt ...RequestOption) error {
-	for _, o := range opt {
-		if o == nil {
-			continue
-		}
-		err := o(&c.requestOpts)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+func (c *Client) SetRequestOptions(opt ...RequestOption) {
+	c.opts = append(c.opts, opt...)
 }
