@@ -53,11 +53,13 @@ type ReactionsCreateForCommitCommentReq struct {
 	RequestBody ReactionsCreateForCommitCommentReqBody
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -201,11 +203,13 @@ type ReactionsCreateForIssueReq struct {
 	RequestBody ReactionsCreateForIssueReqBody
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -349,11 +353,13 @@ type ReactionsCreateForIssueCommentReq struct {
 	RequestBody ReactionsCreateForIssueCommentReqBody
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -497,11 +503,13 @@ type ReactionsCreateForPullRequestReviewCommentReq struct {
 	RequestBody ReactionsCreateForPullRequestReviewCommentReqBody
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -646,11 +654,13 @@ type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
 	RequestBody      ReactionsCreateForTeamDiscussionCommentInOrgReqBody
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -794,11 +804,13 @@ type ReactionsCreateForTeamDiscussionInOrgReq struct {
 	RequestBody      ReactionsCreateForTeamDiscussionInOrgReqBody
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -941,11 +953,13 @@ type ReactionsDeleteForCommitCommentReq struct {
 	ReactionId int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1064,11 +1078,13 @@ type ReactionsDeleteForIssueReq struct {
 	ReactionId  int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1187,11 +1203,13 @@ type ReactionsDeleteForIssueCommentReq struct {
 	ReactionId int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1310,11 +1328,13 @@ type ReactionsDeleteForPullRequestCommentReq struct {
 	ReactionId int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1433,11 +1453,13 @@ type ReactionsDeleteForTeamDiscussionReq struct {
 	ReactionId       int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1557,11 +1579,13 @@ type ReactionsDeleteForTeamDiscussionCommentReq struct {
 	ReactionId       int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1693,11 +1717,13 @@ type ReactionsListForCommitCommentReq struct {
 	Page *int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1848,11 +1874,13 @@ type ReactionsListForIssueReq struct {
 	Page *int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -2003,11 +2031,13 @@ type ReactionsListForIssueCommentReq struct {
 	Page *int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -2158,11 +2188,13 @@ type ReactionsListForPullRequestReviewCommentReq struct {
 	Page *int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -2314,11 +2346,13 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	Page *int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -2469,11 +2503,13 @@ type ReactionsListForTeamDiscussionInOrgReq struct {
 	Page *int64
 
 	/*
-	APIs for managing reactions are currently available for developers to preview.
-	See the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To access the API during the preview period, you must set this to
-	true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }

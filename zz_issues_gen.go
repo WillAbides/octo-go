@@ -1327,9 +1327,9 @@ type IssuesGetReq struct {
 	IssueNumber int64
 
 	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
 
@@ -1459,13 +1459,8 @@ type IssuesGetCommentReq struct {
 	CommentId int64
 
 	/*
-	If an issue comment is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
@@ -1618,13 +1613,8 @@ type IssuesGetEventReq struct {
 	StarfoxPreview bool
 
 	/*
-	If an issue event is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
@@ -2038,20 +2028,15 @@ type IssuesListReq struct {
 	Page *int64
 
 	/*
-	If an issue is opened via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
 	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
 
@@ -3171,20 +3156,15 @@ type IssuesListForAuthenticatedUserReq struct {
 	Page *int64
 
 	/*
-	If an issue is opened via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
 	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
 
@@ -3379,20 +3359,15 @@ type IssuesListForOrgReq struct {
 	Page *int64
 
 	/*
-	If an issue is opened via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
 	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
 
@@ -3596,20 +3571,15 @@ type IssuesListForRepoReq struct {
 	Page *int64
 
 	/*
-	If an issue is opened via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
 	/*
-	An additional `reactions` object in the issue payload is currently available for
-	developers to preview. During the preview period, the APIs may change without
-	advance notice. Please see the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
 

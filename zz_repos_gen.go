@@ -1693,9 +1693,9 @@ type ReposCreateDeploymentReq struct {
 	RequestBody ReposCreateDeploymentReqBody
 
 	/*
-	The `transient_environment` and `production_environment` parameters are
-	currently available for developers to preview. During the preview period, the
-	API may change without advance notice. Please see the [blog
+	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
+	parameters are currently available for developers to preview. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
 	for full details.
 
@@ -3525,9 +3525,11 @@ type ReposCreateUsingTemplateReq struct {
 	RequestBody   ReposCreateUsingTemplateReqBody
 
 	/*
-	Creating and using repository templates is currently available for developers to
-	preview. To access this new endpoint during the preview period, you must set
-	this to true.
+	The `is_template` and `template_repository` keys are currently available for
+	developer to preview. See [Create a repository using a
+	template](https://developer.github.com/v3/repos/#create-a-repository-using-a-template)
+	to learn how to create template repositories. To access these new response keys
+	during the preview period, you must set this to true.
 	*/
 	BaptistePreview bool
 }
@@ -5573,12 +5575,9 @@ type ReposGetReq struct {
 	NebulaPreview bool
 
 	/*
-	Developers can preview a new `code_of_conduct` key in responses. For more
-	information, see [Codes of Conduct
-	API](https://developer.github.com/v3/codes_of_conduct/).
+	The Codes of Conduct API is currently available for developers to preview.
 
-	To access this new response key during the preview period, you must set this to
-	true.
+	To access the API during the preview period, you must set this to true.
 	*/
 	ScarletWitchPreview bool
 }
@@ -7022,7 +7021,7 @@ type ReposGetCommitCommentReq struct {
 	CommentId int64
 
 	/*
-	An additional `reactions` object in the commit comment payload is currently
+	An additional `reactions` object in the issue comment payload is currently
 	available for developers to preview. During the preview period, the APIs may
 	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
@@ -7516,20 +7515,15 @@ type ReposGetDeploymentReq struct {
 	DeploymentId int64
 
 	/*
-	If a deployment is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
 	/*
-	The `transient_environment` and `production_environment` parameters are
-	currently available for developers to preview. During the preview period, the
-	API may change without advance notice. Please see the [blog
+	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
+	parameters are currently available for developers to preview. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
 	for full details.
 
@@ -7664,13 +7658,8 @@ type ReposGetDeploymentStatusReq struct {
 	StatusId     int64
 
 	/*
-	If a deployment is created via a GitHub App, the response will include the
-	`performed_via_github_app` object with information about the GitHub App. For
-	more information, see the [related blog
-	post](https://developer.github.com/changes/2016-09-14-Integrations-Early-Access).
-
-	To receive the `performed_via_github_app` object in the response, you must set
-	this to true.
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
 	*/
 	MachineManPreview bool
 
@@ -10990,7 +10979,7 @@ type ReposListCommentsForCommitReq struct {
 	Page *int64
 
 	/*
-	An additional `reactions` object in the commit comment payload is currently
+	An additional `reactions` object in the issue comment payload is currently
 	available for developers to preview. During the preview period, the APIs may
 	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
@@ -11133,7 +11122,7 @@ type ReposListCommitCommentsReq struct {
 	Page *int64
 
 	/*
-	An additional `reactions` object in the commit comment payload is currently
+	An additional `reactions` object in the issue comment payload is currently
 	available for developers to preview. During the preview period, the APIs may
 	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
@@ -11883,9 +11872,9 @@ type ReposListDeploymentsReq struct {
 	Page *int64
 
 	/*
-	The `transient_environment` and `production_environment` parameters are
-	currently available for developers to preview. During the preview period, the
-	API may change without advance notice. Please see the [blog
+	The `inactive` state and the `log_url`, `environment_url`, and `auto_inactive`
+	parameters are currently available for developers to preview. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-04-06-deployment-and-deployment-status-enhancements)
 	for full details.
 
@@ -15942,8 +15931,9 @@ type ReposReplaceAllTopicsReq struct {
 	RequestBody ReposReplaceAllTopicsReqBody
 
 	/*
-	Repository topics on GitHub are currently available for developers to preview.
-	To use this endpoint, you must set this to true.
+	The `topics` property for repositories on GitHub is currently available for
+	developers to preview. To view the `topics` property in calls that return
+	repository results, you must set this to true.
 	*/
 	MercyPreview bool
 }

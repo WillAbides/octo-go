@@ -748,13 +748,13 @@ type TeamsCreateDiscussionCommentInOrgReq struct {
 	RequestBody      TeamsCreateDiscussionCommentInOrgReqBody
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -891,13 +891,13 @@ type TeamsCreateDiscussionInOrgReq struct {
 	RequestBody TeamsCreateDiscussionInOrgReqBody
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1629,13 +1629,13 @@ type TeamsGetDiscussionCommentInOrgReq struct {
 	CommentNumber    int64
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -1761,13 +1761,13 @@ type TeamsGetDiscussionInOrgReq struct {
 	DiscussionNumber int64
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -2280,13 +2280,13 @@ type TeamsListDiscussionCommentsInOrgReq struct {
 	Page *int64
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -2432,13 +2432,13 @@ type TeamsListDiscussionsInOrgReq struct {
 	Page *int64
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -3944,13 +3944,13 @@ type TeamsUpdateDiscussionCommentInOrgReq struct {
 	RequestBody      TeamsUpdateDiscussionCommentInOrgReqBody
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }
@@ -4088,13 +4088,13 @@ type TeamsUpdateDiscussionInOrgReq struct {
 	RequestBody      TeamsUpdateDiscussionInOrgReqBody
 
 	/*
-	The [reactions API](https://developer.github.com/v3/reactions/) is available for
-	developers to preview. The `url` can be used to construct the API location for
-	[listing and creating](https://developer.github.com/v3/reactions) reactions. See
-	the [blog
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details. To receive the `reactions` object in the response for this
-	endpoint you must set this to true.
+	full details.
+
+	To access the API you must set this to true.
 	*/
 	SquirrelGirlPreview bool
 }

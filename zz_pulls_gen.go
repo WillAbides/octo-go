@@ -1588,7 +1588,7 @@ type PullsGetCommentReq struct {
 	ComfortFadePreview bool
 
 	/*
-	An additional `reactions` object in the review comment payload is currently
+	An additional `reactions` object in the issue comment payload is currently
 	available for developers to preview. During the preview period, the APIs may
 	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
@@ -2183,7 +2183,7 @@ type PullsListCommentsReq struct {
 	ComfortFadePreview bool
 
 	/*
-	An additional `reactions` object in the review comment payload is currently
+	An additional `reactions` object in the issue comment payload is currently
 	available for developers to preview. During the preview period, the APIs may
 	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
@@ -2359,7 +2359,7 @@ type PullsListCommentsForRepoReq struct {
 	ComfortFadePreview bool
 
 	/*
-	An additional `reactions` object in the review comment payload is currently
+	An additional `reactions` object in the issue comment payload is currently
 	available for developers to preview. During the preview period, the APIs may
 	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
