@@ -3,16 +3,19 @@ package octo_test
 import (
 	"encoding/base64"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/require"
+	"github.com/tidwall/gjson"
 	"github.com/willabides/octo-go"
 )
 
@@ -75,4 +78,29 @@ func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) *octo.Clien
 	return octo.NewClient(append(opts, octo.RequestHTTPClient(&http.Client{
 		Transport: r,
 	}))...)
+}
+
+var schemaBytes []byte
+var schemaBytesOnce sync.Once
+
+func schemaGJSON(t *testing.T, path string) gjson.Result {
+	schemaBytesOnce.Do(func() {
+		var err error
+		schemaBytes, err = ioutil.ReadFile("api.github.com.json")
+		require.NoError(t, err)
+	})
+	return gjson.GetBytes(schemaBytes, path)
+}
+
+func responseExample(t *testing.T, endpointPath, httpMethod string, statusCode int) []byte {
+	t.Helper()
+	endpointPath = strings.ReplaceAll(endpointPath, ".", `\.`)
+	path := fmt.Sprintf("paths.%s.%s.responses.%d.content.application/json.example",
+		endpointPath,
+		strings.ToLower(httpMethod),
+		statusCode,
+	)
+	ex := schemaGJSON(t, path)
+	require.True(t, ex.Exists(), "example doesn't exist in schema")
+	return []byte(ex.String())
 }
