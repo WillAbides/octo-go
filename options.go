@@ -11,13 +11,6 @@ import (
 // RequestOption is an option for building an http request
 type RequestOption func(opts *requestOpts) error
 
-func resetOptions(newOpts requestOpts) RequestOption {
-	return func(opts *requestOpts) error {
-		*opts = newOpts
-		return nil
-	}
-}
-
 // RequestBaseURL set the baseURL to use. Default is https://api.github.com
 func RequestBaseURL(baseURL url.URL) RequestOption {
 	return func(opts *requestOpts) error {

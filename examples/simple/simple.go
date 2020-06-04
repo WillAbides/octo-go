@@ -12,12 +12,9 @@ import (
 func main() {
 	ctx := context.Background()
 
-	client, err := octo.NewClient(
+	client := octo.NewClient(
 		octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN")),
 	)
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	issue, err := client.IssuesGet(ctx, &octo.IssuesGetReq{
 		Owner:       "golang",
