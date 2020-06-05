@@ -10,4 +10,5 @@ const (
 	attrBodyUploader
 	attrJSONRequestBody
 	attrExplicitURL
+	attrForceArrayResponse
 )

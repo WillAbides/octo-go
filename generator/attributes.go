@@ -21,16 +21,19 @@ const (
 	attrJSONRequestBody
 	// requires a URL parameter to be set explicitly
 	attrExplicitURL
+	// endpoint that may need some coercing to return an array response
+	attrForceArrayResponse
 	// attrInvalid is last so we can get a list of all valid types with a for loop
 	attrInvalid
 )
 
 var attrNames = map[endpointAttribute]string{
-	attrRedirectOnly:    "attrRedirectOnly",
-	attrBoolean:         "attrBoolean",
-	attrBodyUploader:    "attrBodyUploader",
-	attrJSONRequestBody: "attrJSONRequestBody",
-	attrExplicitURL:     "attrExplicitURL",
+	attrRedirectOnly:       "attrRedirectOnly",
+	attrBoolean:            "attrBoolean",
+	attrBodyUploader:       "attrBodyUploader",
+	attrJSONRequestBody:    "attrJSONRequestBody",
+	attrExplicitURL:        "attrExplicitURL",
+	attrForceArrayResponse: "attrForceArrayResponse",
 }
 
 func (e endpointAttribute) String() string {

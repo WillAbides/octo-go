@@ -10,6 +10,34 @@ import (
 	"github.com/willabides/octo-go"
 )
 
+func TestReposGetContents(t *testing.T) {
+	t.Run("file", func(t *testing.T) {
+		ctx := context.Background()
+		client := vcrClient(t, t.Name(), patAuth())
+
+		response, err := client.ReposGetContents(ctx, &octo.ReposGetContentsReq{
+			Owner: "WillAbides",
+			Repo:  "octo-go",
+			Path:  "generator/main.go",
+		})
+		require.NoError(t, err)
+		require.Len(t, *response.Data, 1)
+	})
+
+	t.Run("directory", func(t *testing.T) {
+		ctx := context.Background()
+		client := vcrClient(t, t.Name(), patAuth())
+
+		response, err := client.ReposGetContents(ctx, &octo.ReposGetContentsReq{
+			Owner: "WillAbides",
+			Repo:  "octo-go",
+			Path:  "generator",
+		})
+		require.NoError(t, err)
+		require.Greater(t, len(*response.Data), 1)
+	})
+}
+
 func TestReposGetArchiveLink(t *testing.T) {
 	ctx := context.Background()
 	client := vcrClient(t, t.Name(), patAuth())

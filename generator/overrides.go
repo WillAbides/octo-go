@@ -11,6 +11,7 @@ import (
 var overrideAddAttrs = map[string][]endpointAttribute{
 	"teams/check-manages-repo-in-org": {attrBoolean},
 	"repos/upload-release-asset":      {attrExplicitURL},
+	"repos/get-contents":              {attrForceArrayResponse},
 }
 
 func endpointWithOverrides(endpoint model.Endpoint) model.Endpoint {
@@ -58,6 +59,27 @@ var endpointOverrides = []func(endpoint *model.Endpoint){
 		}
 		endpoint.PathParams = model.Params{}
 	},
+
+	// attrForceArrayResponse responses should be coerced into arrays
+	func(endpoint *model.Endpoint) {
+		if !endpointHasAttribute(*endpoint, attrForceArrayResponse) {
+			return
+		}
+		for code, response := range endpoint.Responses {
+			if code > 203 {
+				continue
+			}
+			if response.Body.Type == model.ParamTypeArray {
+				continue
+			}
+			schema := response.Body
+			oldSchema := schema.Clone()
+			schema.Type = model.ParamTypeArray
+			schema.ObjectParams = nil
+			schema.Ref = ""
+			schema.ItemSchema = oldSchema
+		}
+	},
 }
 
 var exportedNameOverrides = map[string]string{
@@ -70,7 +92,6 @@ func schemaPathString(schemaPath []string) string {
 }
 
 var schemaOverrides = []func(schemaPath []string, schema *model.ParamSchema){
-
 	// apps/create-installation-token/reqBody/permissions is map[string]string
 	func(schemaPath []string, schema *model.ParamSchema) {
 		if schemaPathString(schemaPath) != "apps/create-installation-token/reqBody/permissions" {

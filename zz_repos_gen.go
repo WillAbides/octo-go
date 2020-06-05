@@ -7198,7 +7198,7 @@ func (r *ReposGetContentsReq) validStatuses() []int {
 }
 
 func (r *ReposGetContentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrForceArrayResponse}
 }
 
 // httpRequest creates an http request
@@ -7224,7 +7224,7 @@ ReposGetContentsResponseBody is a response body for ReposGetContents
 
 https://developer.github.com/v3/repos/contents/#get-contents
 */
-type ReposGetContentsResponseBody struct {
+type ReposGetContentsResponseBody []struct {
 	components.ContentFile
 }
 
