@@ -1,0 +1,49 @@
+{
+  "_links": {
+    "html": {
+      "href": "https://github.com/octocat/Hello-World/pull/1#discussion-diff-1"
+    },
+    "pull_request": {
+      "href": "https://api.github.com/repos/octocat/Hello-World/pulls/1"
+    },
+    "self": {
+      "href": "https://api.github.com/repos/octocat/Hello-World/pulls/comments/1"
+    }
+  },
+  "author_association": "NONE",
+  "body": "I like this too!",
+  "commit_id": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+  "created_at": "2019-08-11T16:00:49Z",
+  "diff_hunk": "@@ -18,3 +18,5 @@ This is my amazing work.",
+  "html_url": "https://github.com/octocat/Hello-World/pull/1#discussion-diff-1",
+  "id": 2,
+  "node_id": "MDEzOkNvbW1pdENvbW1lbnQx",
+  "original_commit_id": "9c48853fa3dc5c1c3d6f1f1cd1f2743e72652840",
+  "original_position": 4,
+  "path": "file1.txt",
+  "position": 4,
+  "pull_request_review_id": 1,
+  "pull_request_url": "https://api.github.com/repos/octocat/Hello-World/pulls/1",
+  "updated_at": "2019-08-11T16:00:49Z",
+  "url": "https://api.github.com/repos/octocat/Hello-World/comments/1",
+  "user": {
+    "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+    "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+    "followers_url": "https://api.github.com/users/octocat/followers",
+    "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+    "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+    "gravatar_id": "",
+    "html_url": "https://github.com/octocat",
+    "id": 1,
+    "login": "octocat",
+    "node_id": "MDQ6VXNlcjE=",
+    "organizations_url": "https://api.github.com/users/octocat/orgs",
+    "received_events_url": "https://api.github.com/users/octocat/received_events",
+    "repos_url": "https://api.github.com/users/octocat/repos",
+    "site_admin": false,
+    "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+    "type": "User",
+    "url": "https://api.github.com/users/octocat"
+  }
+}

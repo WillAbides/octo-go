@@ -1,0 +1,41 @@
+{
+  "access_tokens_url": "https://api.github.com/installations/3/access_tokens",
+  "account": {
+    "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+    "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+    "followers_url": "https://api.github.com/users/octocat/followers",
+    "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+    "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+    "gravatar_id": "",
+    "html_url": "https://github.com/octocat",
+    "id": 1,
+    "login": "octocat",
+    "node_id": "MDQ6VXNlcjE=",
+    "organizations_url": "https://api.github.com/users/octocat/orgs",
+    "received_events_url": "https://api.github.com/users/octocat/received_events",
+    "repos_url": "https://api.github.com/users/octocat/repos",
+    "site_admin": false,
+    "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+    "type": "User",
+    "url": "https://api.github.com/users/octocat"
+  },
+  "app_id": 2,
+  "created_at": "2018-02-22T20:51:14Z",
+  "events": [
+    "label"
+  ],
+  "html_url": "https://github.com/organizations/github/settings/installations/3",
+  "id": 3,
+  "permissions": {
+    "checks": "write",
+    "contents": "read",
+    "metadata": "read"
+  },
+  "repositories_url": "https://api.github.com/installation/repositories",
+  "repository_selection": "selected",
+  "single_file_name": null,
+  "target_id": 1,
+  "target_type": "User",
+  "updated_at": "2018-02-22T20:51:14Z"
+}

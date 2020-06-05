@@ -1,0 +1,18 @@
+{
+  "_links": {
+    "git": "https://api.github.com/repos/octokit/octokit.rb/git/blobs/3d21ec53a331a6f037a91c368710b99387d012c1",
+    "html": "https://github.com/octokit/octokit.rb/blob/master/README.md",
+    "self": "https://api.github.com/repos/octokit/octokit.rb/contents/README.md"
+  },
+  "content": "encoded content ...",
+  "download_url": "https://raw.githubusercontent.com/octokit/octokit.rb/master/README.md",
+  "encoding": "base64",
+  "git_url": "https://api.github.com/repos/octokit/octokit.rb/git/blobs/3d21ec53a331a6f037a91c368710b99387d012c1",
+  "html_url": "https://github.com/octokit/octokit.rb/blob/master/README.md",
+  "name": "README.md",
+  "path": "README.md",
+  "sha": "3d21ec53a331a6f037a91c368710b99387d012c1",
+  "size": 5362,
+  "type": "file",
+  "url": "https://api.github.com/repos/octokit/octokit.rb/contents/README.md"
+}

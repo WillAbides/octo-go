@@ -1,0 +1,26 @@
+[
+  {
+    "closed_at": null,
+    "closed_by": null,
+    "created_at": "2020-05-06T12:00:00Z",
+    "html_url": "https://github.com/Octo-org/octo-repo/security/code-scanning/25",
+    "open": true,
+    "rule_description": "Useless conditional",
+    "rule_id": "js/trivial-conditional",
+    "rule_severity": "warning",
+    "tool": "CodeQL",
+    "url": "https://api.github.com/repos/Octo-org/octo-repo/code-scanning/alerts/25"
+  },
+  {
+    "closed_at": null,
+    "closed_by": null,
+    "created_at": "2020-05-06T12:00:00Z",
+    "html_url": "https://github.com/Octo-org/octo-repo/security/code-scanning/88",
+    "open": true,
+    "rule_description": "Expression has no effect",
+    "rule_id": "js/useless-expression",
+    "rule_severity": "warning",
+    "tool": "CodeQL",
+    "url": "https://api.github.com/repos/Octo-org/octo-repo/code-scanning/alerts/88"
+  }
+]

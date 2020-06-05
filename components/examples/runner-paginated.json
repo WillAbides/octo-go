@@ -1,0 +1,17 @@
+{
+  "runners": [
+    {
+      "id": 23,
+      "name": "MBP",
+      "os": "macos",
+      "status": "online"
+    },
+    {
+      "id": 24,
+      "name": "iMac",
+      "os": "macos",
+      "status": "offline"
+    }
+  ],
+  "total_count": 2
+}

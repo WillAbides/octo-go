@@ -1,0 +1,37 @@
+{
+  "description": "My first repository on GitHub!",
+  "documentation": true,
+  "files": {
+    "code_of_conduct": {
+      "html_url": "https://github.com/octocat/Hello-World/blob/master/CODE_OF_CONDUCT.md",
+      "key": "contributor_covenant",
+      "name": "Contributor Covenant",
+      "url": "https://api.github.com/codes_of_conduct/contributor_covenant"
+    },
+    "contributing": {
+      "html_url": "https://github.com/octocat/Hello-World/blob/master/CONTRIBUTING",
+      "url": "https://api.github.com/repos/octocat/Hello-World/contents/CONTRIBUTING"
+    },
+    "issue_template": {
+      "html_url": "https://github.com/octocat/Hello-World/blob/master/ISSUE_TEMPLATE",
+      "url": "https://api.github.com/repos/octocat/Hello-World/contents/ISSUE_TEMPLATE"
+    },
+    "license": {
+      "html_url": "https://github.com/octocat/Hello-World/blob/master/LICENSE",
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit"
+    },
+    "pull_request_template": {
+      "html_url": "https://github.com/octocat/Hello-World/blob/master/PULL_REQUEST_TEMPLATE",
+      "url": "https://api.github.com/repos/octocat/Hello-World/contents/PULL_REQUEST_TEMPLATE"
+    },
+    "readme": {
+      "html_url": "https://github.com/octocat/Hello-World/blob/master/README.md",
+      "url": "https://api.github.com/repos/octocat/Hello-World/contents/README.md"
+    }
+  },
+  "health_percentage": 100,
+  "updated_at": "2017-02-28T19:09:29Z"
+}

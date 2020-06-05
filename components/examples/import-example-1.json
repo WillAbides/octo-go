@@ -1,0 +1,10 @@
+{
+  "authors_url": "https://api.github.com/repos/octocat/socm/import/authors",
+  "html_url": "https://import.github.com/octocat/socm/import",
+  "repository_url": "https://api.github.com/repos/octocat/socm",
+  "status": "detecting",
+  "url": "https://api.github.com/repos/octocat/socm/import",
+  "use_lfs": "undecided",
+  "vcs": "subversion",
+  "vcs_url": "http://svn.mycompany.com/svn/myproject"
+}

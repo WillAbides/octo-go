@@ -1,0 +1,17 @@
+{
+  "_links": {
+    "git": "https://api.github.com/repos/octokit/octokit.rb/git/blobs/452a98979c88e093d682cab404a3ec82babebb48",
+    "html": "https://github.com/octokit/octokit.rb/blob/master/bin/some-symlink",
+    "self": "https://api.github.com/repos/octokit/octokit.rb/contents/bin/some-symlink"
+  },
+  "download_url": "https://raw.githubusercontent.com/octokit/octokit.rb/master/bin/some-symlink",
+  "git_url": "https://api.github.com/repos/octokit/octokit.rb/git/blobs/452a98979c88e093d682cab404a3ec82babebb48",
+  "html_url": "https://github.com/octokit/octokit.rb/blob/master/bin/some-symlink",
+  "name": "some-symlink",
+  "path": "bin/some-symlink",
+  "sha": "452a98979c88e093d682cab404a3ec82babebb48",
+  "size": 23,
+  "target": "/path/to/symlink/target",
+  "type": "symlink",
+  "url": "https://api.github.com/repos/octokit/octokit.rb/contents/bin/some-symlink"
+}

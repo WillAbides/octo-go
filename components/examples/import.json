@@ -1,0 +1,15 @@
+{
+  "authors_count": 4,
+  "authors_url": "https://api.github.com/repos/octocat/socm/import/authors",
+  "has_large_files": true,
+  "html_url": "https://import.github.com/octocat/socm/import",
+  "large_files_count": 1,
+  "large_files_size": 132331036,
+  "repository_url": "https://api.github.com/repos/octocat/socm",
+  "status": "complete",
+  "status_text": "Done",
+  "url": "https://api.github.com/repos/octocat/socm/import",
+  "use_lfs": "opt_in",
+  "vcs": "subversion",
+  "vcs_url": "http://svn.mycompany.com/svn/myproject"
+}

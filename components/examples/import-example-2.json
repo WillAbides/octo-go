@@ -1,0 +1,18 @@
+{
+  "authors_count": 0,
+  "authors_url": "https://api.github.com/repos/octocat/socm/import/authors",
+  "commit_count": 1042,
+  "has_large_files": false,
+  "html_url": "https://import.github.com/octocat/socm/import",
+  "large_files_count": 0,
+  "large_files_size": 0,
+  "percent": 42,
+  "repository_url": "https://api.github.com/repos/octocat/socm",
+  "status": "importing",
+  "status_text": "Importing...",
+  "tfvc_project": "project1",
+  "url": "https://api.github.com/repos/octocat/socm/import",
+  "use_lfs": "undecided",
+  "vcs": "tfvc",
+  "vcs_url": "http://tfs.mycompany.com/tfs/myproject"
+}

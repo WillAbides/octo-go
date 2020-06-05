@@ -1,0 +1,27 @@
+[
+  {
+    "active": true,
+    "config": {
+      "content_type": "json",
+      "insecure_ssl": "0",
+      "url": "https://example.com/webhook"
+    },
+    "created_at": "2019-06-03T00:57:16Z",
+    "events": [
+      "push",
+      "pull_request"
+    ],
+    "id": 12345678,
+    "last_response": {
+      "code": null,
+      "message": null,
+      "status": "unused"
+    },
+    "name": "web",
+    "ping_url": "https://api.github.com/repos/octocat/Hello-World/hooks/12345678/pings",
+    "test_url": "https://api.github.com/repos/octocat/Hello-World/hooks/12345678/test",
+    "type": "Repository",
+    "updated_at": "2019-06-03T00:57:16Z",
+    "url": "https://api.github.com/repos/octocat/Hello-World/hooks/12345678"
+  }
+]

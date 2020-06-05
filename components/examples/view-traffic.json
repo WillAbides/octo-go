@@ -1,0 +1,81 @@
+{
+  "count": 14850,
+  "uniques": 3782,
+  "views": [
+    {
+      "count": 440,
+      "timestamp": "2016-10-10T00:00:00Z",
+      "uniques": 143
+    },
+    {
+      "count": 1308,
+      "timestamp": "2016-10-11T00:00:00Z",
+      "uniques": 414
+    },
+    {
+      "count": 1486,
+      "timestamp": "2016-10-12T00:00:00Z",
+      "uniques": 452
+    },
+    {
+      "count": 1170,
+      "timestamp": "2016-10-13T00:00:00Z",
+      "uniques": 401
+    },
+    {
+      "count": 868,
+      "timestamp": "2016-10-14T00:00:00Z",
+      "uniques": 266
+    },
+    {
+      "count": 495,
+      "timestamp": "2016-10-15T00:00:00Z",
+      "uniques": 157
+    },
+    {
+      "count": 524,
+      "timestamp": "2016-10-16T00:00:00Z",
+      "uniques": 175
+    },
+    {
+      "count": 1263,
+      "timestamp": "2016-10-17T00:00:00Z",
+      "uniques": 412
+    },
+    {
+      "count": 1402,
+      "timestamp": "2016-10-18T00:00:00Z",
+      "uniques": 417
+    },
+    {
+      "count": 1394,
+      "timestamp": "2016-10-19T00:00:00Z",
+      "uniques": 424
+    },
+    {
+      "count": 1492,
+      "timestamp": "2016-10-20T00:00:00Z",
+      "uniques": 448
+    },
+    {
+      "count": 1153,
+      "timestamp": "2016-10-21T00:00:00Z",
+      "uniques": 332
+    },
+    {
+      "count": 566,
+      "timestamp": "2016-10-22T00:00:00Z",
+      "uniques": 168
+    },
+    {
+      "count": 675,
+      "timestamp": "2016-10-23T00:00:00Z",
+      "uniques": 184
+    },
+    {
+      "count": 614,
+      "timestamp": "2016-10-24T00:00:00Z",
+      "uniques": 237
+    }
+  ]
+}

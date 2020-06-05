@@ -1,0 +1,22 @@
+[
+  {
+    "count": 4,
+    "referrer": "Google",
+    "uniques": 3
+  },
+  {
+    "count": 2,
+    "referrer": "stackoverflow.com",
+    "uniques": 2
+  },
+  {
+    "count": 1,
+    "referrer": "eggsonbread.com",
+    "uniques": 1
+  },
+  {
+    "count": 1,
+    "referrer": "yandex.ru",
+    "uniques": 1
+  }
+]

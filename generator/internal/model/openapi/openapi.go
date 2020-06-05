@@ -271,7 +271,9 @@ func responses(op *openapi3.Operation) (map[int]model.Response, error) {
 			if err != nil {
 				return nil, errors.WithStack(err)
 			}
-			hasExample = jsonResponse.Example != nil
+			if jsonResponse.Example != nil || len(jsonResponse.Examples) > 0 {
+				hasExample = true
+			}
 		}
 		response := model.Response{
 			Body:       schema,

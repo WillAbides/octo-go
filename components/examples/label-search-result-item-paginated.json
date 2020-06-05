@@ -1,0 +1,26 @@
+{
+  "incomplete_results": false,
+  "items": [
+    {
+      "color": "84b6eb",
+      "default": true,
+      "description": "New feature or request.",
+      "id": 418327088,
+      "name": "enhancement",
+      "node_id": "MDU6TGFiZWw0MTgzMjcwODg=",
+      "score": 1,
+      "url": "https://api.github.com/repos/octocat/linguist/labels/enhancement"
+    },
+    {
+      "color": "ee0701",
+      "default": true,
+      "description": "Something isn't working.",
+      "id": 418327086,
+      "name": "bug",
+      "node_id": "MDU6TGFiZWw0MTgzMjcwODY=",
+      "score": 1,
+      "url": "https://api.github.com/repos/octocat/linguist/labels/bug"
+    }
+  ],
+  "total_count": 2
+}

@@ -92,7 +92,16 @@ func schemaGJSON(t *testing.T, path string) gjson.Result {
 	return gjson.GetBytes(schemaBytes, path)
 }
 
-func responseExample(t *testing.T, endpointPath, httpMethod string, statusCode int) []byte {
+func responseExamples(t *testing.T, endpointPath, httpMethod string, statusCode int) map[string][]byte {
+	examples := mappedResponseExamples(t, endpointPath, httpMethod, statusCode)
+	single := singleResponseExample(t, endpointPath, httpMethod, statusCode)
+	if single != nil {
+		examples["_singleton_example"] = single
+	}
+	return examples
+}
+
+func singleResponseExample(t *testing.T, endpointPath, httpMethod string, statusCode int) []byte {
 	t.Helper()
 	endpointPath = strings.ReplaceAll(endpointPath, ".", `\.`)
 	path := fmt.Sprintf("paths.%s.%s.responses.%d.content.application/json.example",
@@ -101,6 +110,34 @@ func responseExample(t *testing.T, endpointPath, httpMethod string, statusCode i
 		statusCode,
 	)
 	ex := schemaGJSON(t, path)
-	require.True(t, ex.Exists(), "example doesn't exist in schema")
-	return []byte(ex.String())
+	if ex.Exists() {
+		return []byte(ex.String())
+	}
+	return nil
+}
+
+func mappedResponseExamples(t *testing.T, endpointPath, httpMethod string, statusCode int) map[string][]byte {
+	t.Helper()
+	endpointPath = strings.ReplaceAll(endpointPath, ".", `\.`)
+	path := fmt.Sprintf("paths.%s.%s.responses.%d.content.application/json.examples",
+		endpointPath,
+		strings.ToLower(httpMethod),
+		statusCode,
+	)
+	result := map[string][]byte{}
+	for name, mapItem := range schemaGJSON(t, path).Map() {
+		ref := mapItem.Get("$ref")
+		if !ref.Exists() {
+			continue
+		}
+		if !strings.HasPrefix(ref.String(), "#/components/examples/") {
+			continue
+		}
+		jsonFile := strings.TrimPrefix(ref.String(), "#/") + ".json"
+		b, err := ioutil.ReadFile(jsonFile)
+		require.NoError(t, err)
+		result[name] = b
+	}
+
+	return result
 }

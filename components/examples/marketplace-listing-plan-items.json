@@ -1,0 +1,20 @@
+[
+  {
+    "accounts_url": "https://api.github.com/marketplace_listing/plans/1313/accounts",
+    "bullets": [
+      "Up to 25 private repositories",
+      "11 concurrent builds"
+    ],
+    "description": "A professional-grade CI solution",
+    "has_free_trial": true,
+    "id": 1313,
+    "monthly_price_in_cents": 1099,
+    "name": "Pro",
+    "number": 3,
+    "price_model": "flat-rate",
+    "state": "published",
+    "unit_name": null,
+    "url": "https://api.github.com/marketplace_listing/plans/1313",
+    "yearly_price_in_cents": 11870
+  }
+]

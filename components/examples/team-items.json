@@ -1,0 +1,16 @@
+[
+  {
+    "description": "A great team.",
+    "html_url": "https://api.github.com/teams/justice-league",
+    "id": 1,
+    "members_url": "https://api.github.com/teams/1/members{/member}",
+    "name": "Justice League",
+    "node_id": "MDQ6VGVhbTE=",
+    "parent": null,
+    "permission": "admin",
+    "privacy": "closed",
+    "repositories_url": "https://api.github.com/teams/1/repos",
+    "slug": "justice-league",
+    "url": "https://api.github.com/teams/1"
+  }
+]

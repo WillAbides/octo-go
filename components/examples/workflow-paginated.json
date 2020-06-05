@@ -1,0 +1,29 @@
+{
+  "total_count": 2,
+  "workflows": [
+    {
+      "badge_url": "https://github.com/octo-org/octo-repo/workflows/CI/badge.svg",
+      "created_at": "2020-01-08T23:48:37.000-08:00",
+      "html_url": "https://github.com/octo-org/octo-repo/blob/master/.github/workflows/161335",
+      "id": 161335,
+      "name": "CI",
+      "node_id": "MDg6V29ya2Zsb3cxNjEzMzU=",
+      "path": ".github/workflows/blank.yml",
+      "state": "active",
+      "updated_at": "2020-01-08T23:50:21.000-08:00",
+      "url": "https://api.github.com/repos/octo-org/octo-repo/actions/workflows/161335"
+    },
+    {
+      "badge_url": "https://github.com/octo-org/octo-repo/workflows/Linter/badge.svg",
+      "created_at": "2020-01-08T23:48:37.000-08:00",
+      "html_url": "https://github.com/octo-org/octo-repo/blob/master/.github/workflows/269289",
+      "id": 269289,
+      "name": "Linter",
+      "node_id": "MDE4OldvcmtmbG93IFNlY29uZGFyeTI2OTI4OQ==",
+      "path": ".github/workflows/linter.yml",
+      "state": "active",
+      "updated_at": "2020-01-08T23:50:21.000-08:00",
+      "url": "https://api.github.com/repos/octo-org/octo-repo/actions/workflows/269289"
+    }
+  ]
+}

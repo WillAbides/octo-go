@@ -1,0 +1,31 @@
+{
+  "api": [
+    "192.30.252.0/22",
+    "185.199.108.0/22"
+  ],
+  "git": [
+    "192.30.252.0/22"
+  ],
+  "hooks": [
+    "192.30.252.0/22"
+  ],
+  "importer": [
+    "54.158.161.132",
+    "54.226.70.38"
+  ],
+  "pages": [
+    "192.30.252.153/32",
+    "192.30.252.154/32"
+  ],
+  "ssh_key_fingerprints": {
+    "MD5_DSA": "ad:1c:08:a4:40:e3:6f:9c:f5:66:26:5d:4b:33:5d:8c",
+    "MD5_RSA": "16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48",
+    "SHA256_DSA": "br9IjFspm1vxR3iA35FWE+4VTyz1hYVLIE2t1/CeyWQ",
+    "SHA256_RSA": "nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8"
+  },
+  "verifiable_password_authentication": true,
+  "web": [
+    "192.30.252.0/22",
+    "185.199.108.0/22"
+  ]
+}

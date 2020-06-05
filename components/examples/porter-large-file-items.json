@@ -1,0 +1,20 @@
+[
+  {
+    "oid": "d3d9446802a44259755d38e6d163e820",
+    "path": "foo/bar/1",
+    "ref_name": "refs/heads/master",
+    "size": 10485760
+  },
+  {
+    "oid": "6512bd43d9caa6e02c990b0a82652dca",
+    "path": "foo/bar/2",
+    "ref_name": "refs/heads/master",
+    "size": 11534336
+  },
+  {
+    "oid": "c20ad4d76fe97759aa27a0c99bff6710",
+    "path": "foo/bar/3",
+    "ref_name": "refs/heads/master",
+    "size": 12582912
+  }
+]

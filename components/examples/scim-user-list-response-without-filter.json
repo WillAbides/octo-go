@@ -1,0 +1,62 @@
+{
+  "Resources": [
+    {
+      "active": true,
+      "emails": [
+        {
+          "primary": true,
+          "type": "work",
+          "value": "mona.octocat@okta.example.com"
+        }
+      ],
+      "externalId": "a7d0f98382",
+      "id": "edefdfedf-050c-11e7-8d32",
+      "meta": {
+        "created": "2017-03-09T16:11:13-05:00",
+        "lastModified": "2017-03-09T16:11:13-05:00",
+        "location": "https://api.github.com/scim/v2/organizations/octo-org/Users/edefdfedf-050c-11e7-8d32",
+        "resourceType": "User"
+      },
+      "name": {
+        "familyName": "Octocat",
+        "givenName": "Mona"
+      },
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:User"
+      ],
+      "userName": "mona.octocat@okta.example.com"
+    },
+    {
+      "active": true,
+      "emails": [
+        {
+          "primary": true,
+          "type": "work",
+          "value": "hubot@example.com"
+        }
+      ],
+      "externalId": "sdfoiausdofiua",
+      "id": "77563764-eb6-24-0598234-958243",
+      "meta": {
+        "created": "2017-03-09T16:11:13-05:00",
+        "lastModified": "2017-03-09T16:11:13-05:00",
+        "location": "https://api.github.com/scim/v2/organizations/octo-org/Users/77563764-eb6-24-0598234-958243",
+        "resourceType": "User"
+      },
+      "name": {
+        "familyName": "bot",
+        "givenName": "hu"
+      },
+      "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:User"
+      ],
+      "userName": "hubot@example.com"
+    }
+  ],
+  "itemsPerPage": 2,
+  "schemas": [
+    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+  ],
+  "startIndex": 1,
+  "totalResults": 2
+}

@@ -32,6 +32,10 @@ func main() {
 }
 
 func run(schemaPath, outputPath, pkgPath, pkgName string) error {
+	err := componentExampleFiles(schemaPath, filepath.Join(outputPath, "components", "examples"))
+	if err != nil {
+		return err
+	}
 	schemaFile, err := os.Open(schemaPath)
 	if err != nil {
 		return err

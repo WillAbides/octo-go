@@ -1,0 +1,59 @@
+[
+  {
+    "email": null,
+    "id": 4,
+    "login": "github",
+    "marketplace_pending_change": {
+      "effective_date": "2017-11-11T00:00:00Z",
+      "id": 77,
+      "plan": {
+        "accounts_url": "https://api.github.com/marketplace_listing/plans/1111/accounts",
+        "bullets": [
+          "Up to 10 private repositories",
+          "3 concurrent builds"
+        ],
+        "description": "A professional-grade CI solution",
+        "has_free_trial": true,
+        "id": 1111,
+        "monthly_price_in_cents": 699,
+        "name": "Startup",
+        "number": 2,
+        "price_model": "flat-rate",
+        "state": "published",
+        "unit_name": null,
+        "url": "https://api.github.com/marketplace_listing/plans/1111",
+        "yearly_price_in_cents": 7870
+      },
+      "unit_count": null
+    },
+    "marketplace_purchase": {
+      "billing_cycle": "monthly",
+      "free_trial_ends_on": "2017-11-11T00:00:00Z",
+      "next_billing_date": "2017-11-11T00:00:00Z",
+      "on_free_trial": true,
+      "plan": {
+        "accounts_url": "https://api.github.com/marketplace_listing/plans/1313/accounts",
+        "bullets": [
+          "Up to 25 private repositories",
+          "11 concurrent builds"
+        ],
+        "description": "A professional-grade CI solution",
+        "has_free_trial": true,
+        "id": 1313,
+        "monthly_price_in_cents": 1099,
+        "name": "Pro",
+        "number": 3,
+        "price_model": "flat-rate",
+        "state": "published",
+        "unit_name": null,
+        "url": "https://api.github.com/marketplace_listing/plans/1313",
+        "yearly_price_in_cents": 11870
+      },
+      "unit_count": null,
+      "updated_at": "2017-11-02T01:12:12Z"
+    },
+    "organization_billing_email": "billing@github.com",
+    "type": "Organization",
+    "url": "https://api.github.com/orgs/github"
+  }
+]

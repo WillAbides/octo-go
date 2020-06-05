@@ -1,0 +1,29 @@
+[
+  {
+    "email": "hubot@github.com",
+    "id": 2268557,
+    "import_url": "https://api.github.com/repos/octocat/socm/import",
+    "name": "Hubot",
+    "remote_id": "nobody@fc7da526-431c-80fe-3c8c-c148ff18d7ef",
+    "remote_name": "nobody",
+    "url": "https://api.github.com/repos/octocat/socm/import/authors/2268557"
+  },
+  {
+    "email": "svner@fc7da526-431c-80fe-3c8c-c148ff18d7ef",
+    "id": 2268558,
+    "import_url": "https://api.github.com/repos/octocat/socm/import",
+    "name": "svner",
+    "remote_id": "svner@fc7da526-431c-80fe-3c8c-c148ff18d7ef",
+    "remote_name": "svner",
+    "url": "https://api.github.com/repos/octocat/socm/import/authors/2268558"
+  },
+  {
+    "email": "svner@example.com@fc7da526-431c-80fe-3c8c-c148ff18d7ef",
+    "id": 2268559,
+    "import_url": "https://api.github.com/repos/octocat/socm/import",
+    "name": "svner@example.com",
+    "remote_id": "svner@example.com@fc7da526-431c-80fe-3c8c-c148ff18d7ef",
+    "remote_name": "svner@example.com",
+    "url": "https://api.github.com/repos/octocat/socm/import/authors/2268559"
+  }
+]
