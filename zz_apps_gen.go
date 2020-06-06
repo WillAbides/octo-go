@@ -48,8 +48,8 @@ Add repository to installation.
 
 https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
-func (c *Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
-	return AppsAddRepoToInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+	return AppsAddRepoToInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -180,8 +180,8 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-func (c *Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
-	return AppsCheckAuthorization(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+	return AppsCheckAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -310,8 +310,8 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-func (c *Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
-	return AppsCheckToken(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+	return AppsCheckToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -451,8 +451,8 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-func (c *Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
-	return AppsCreateContentAttachment(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+	return AppsCreateContentAttachment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -613,8 +613,8 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-func (c *Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
-	return AppsCreateFromManifest(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+	return AppsCreateFromManifest(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -742,8 +742,8 @@ Create a new installation token.
 
 https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
-func (c *Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
-	return AppsCreateInstallationToken(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
+	return AppsCreateInstallationToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -910,8 +910,8 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
-func (c *Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
-	return AppsDeleteAuthorization(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+	return AppsDeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1040,8 +1040,8 @@ Delete an installation.
 
 https://developer.github.com/v3/apps/#delete-an-installation
 */
-func (c *Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
-	return AppsDeleteInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+	return AppsDeleteInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1170,8 +1170,8 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
-func (c *Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
-	return AppsDeleteToken(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+	return AppsDeleteToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1301,8 +1301,8 @@ Get the authenticated GitHub App.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
-func (c *Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
-	return AppsGetAuthenticated(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+	return AppsGetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1441,8 +1441,8 @@ Get a single GitHub App.
 
 https://developer.github.com/v3/apps/#get-a-single-github-app
 */
-func (c *Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
-	return AppsGetBySlug(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+	return AppsGetBySlug(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1582,8 +1582,8 @@ Get an installation.
 
 https://developer.github.com/v3/apps/#get-an-installation
 */
-func (c *Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
-	return AppsGetInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+	return AppsGetInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1723,8 +1723,8 @@ Get an organization installation.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation
 */
-func (c *Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
-	return AppsGetOrgInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+	return AppsGetOrgInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1864,8 +1864,8 @@ Get a repository installation.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation
 */
-func (c *Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
-	return AppsGetRepoInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+	return AppsGetRepoInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2006,8 +2006,8 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-func (c *Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
-	return AppsGetSubscriptionPlanForAccount(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+	return AppsGetSubscriptionPlanForAccount(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2135,8 +2135,8 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-func (c *Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
-	return AppsGetSubscriptionPlanForAccountStubbed(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+	return AppsGetSubscriptionPlanForAccountStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2264,8 +2264,8 @@ Get a user installation.
 
 https://developer.github.com/v3/apps/#get-a-user-installation
 */
-func (c *Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
-	return AppsGetUserInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+	return AppsGetUserInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2405,8 +2405,8 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-func (c *Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
-	return AppsListAccountsForPlan(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+	return AppsListAccountsForPlan(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2564,8 +2564,8 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-func (c *Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
-	return AppsListAccountsForPlanStubbed(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+	return AppsListAccountsForPlanStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2723,8 +2723,8 @@ List repositories accessible to the user for an installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
-func (c *Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
-	return AppsListInstallationReposForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+	return AppsListInstallationReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2890,8 +2890,8 @@ List installations.
 
 https://developer.github.com/v3/apps/#list-installations
 */
-func (c *Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
-	return AppsListInstallations(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+	return AppsListInstallations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3042,8 +3042,8 @@ List installations for a user.
 
 https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
 */
-func (c *Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
-	return AppsListInstallationsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+	return AppsListInstallationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3197,8 +3197,8 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-func (c *Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
-	return AppsListPlans(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+	return AppsListPlans(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3337,8 +3337,8 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-func (c *Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
-	return AppsListPlansStubbed(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+	return AppsListPlansStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3477,8 +3477,8 @@ List repositories.
 
 https://developer.github.com/v3/apps/installations/#list-repositories
 */
-func (c *Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
-	return AppsListRepos(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
+	return AppsListRepos(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3643,8 +3643,8 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-func (c *Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
-	return AppsListSubscriptionsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+	return AppsListSubscriptionsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3783,8 +3783,8 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-func (c *Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
-	return AppsListSubscriptionsForAuthenticatedUserStubbed(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	return AppsListSubscriptionsForAuthenticatedUserStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3922,8 +3922,8 @@ Remove repository from installation.
 
 https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
-func (c *Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
-	return AppsRemoveRepoFromInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+	return AppsRemoveRepoFromInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4054,8 +4054,8 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-func (c *Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
-	return AppsResetAuthorization(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+	return AppsResetAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4184,8 +4184,8 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-func (c *Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
-	return AppsResetToken(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+	return AppsResetToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4324,8 +4324,8 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
-func (c *Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
-	return AppsRevokeAuthorizationForApplication(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+	return AppsRevokeAuthorizationForApplication(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4443,8 +4443,8 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-func (c *Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
-	return AppsRevokeGrantForApplication(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+	return AppsRevokeGrantForApplication(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4562,8 +4562,8 @@ Revoke an installation token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
 */
-func (c *Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
-	return AppsRevokeInstallationToken(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
+	return AppsRevokeInstallationToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4679,8 +4679,8 @@ Suspend an installation.
 
 https://developer.github.com/v3/apps/#suspend-an-installation
 */
-func (c *Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
-	return AppsSuspendInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+	return AppsSuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4797,8 +4797,8 @@ Unsuspend an installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-installation
 */
-func (c *Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
-	return AppsUnsuspendInstallation(ctx, req, append(c.opts, opt...)...)
+func (c Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+	return AppsUnsuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*

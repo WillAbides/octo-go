@@ -49,8 +49,8 @@ Add or update organization membership.
 
 https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
 */
-func (c *Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
-	return OrgsAddOrUpdateMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
+	return OrgsAddOrUpdateMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -194,8 +194,8 @@ Block a user.
 
 https://developer.github.com/v3/orgs/blocking/#block-a-user
 */
-func (c *Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
-	return OrgsBlockUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
+	return OrgsBlockUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -317,8 +317,8 @@ Check whether a user is blocked from an organization.
 
 https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
 */
-func (c *Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
-	return OrgsCheckBlockedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
+	return OrgsCheckBlockedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -437,8 +437,8 @@ Check membership.
 
 https://developer.github.com/v3/orgs/members/#check-membership
 */
-func (c *Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
-	return OrgsCheckMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
+	return OrgsCheckMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -560,8 +560,8 @@ Check public membership.
 
 https://developer.github.com/v3/orgs/members/#check-public-membership
 */
-func (c *Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
-	return OrgsCheckPublicMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
+	return OrgsCheckPublicMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -680,8 +680,8 @@ Conceal a user's membership.
 
 https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
 */
-func (c *Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
-	return OrgsConcealMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
+	return OrgsConcealMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -799,8 +799,8 @@ Convert member to outside collaborator.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
 */
-func (c *Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
-	return OrgsConvertMemberToOutsideCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
+	return OrgsConvertMemberToOutsideCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -919,8 +919,8 @@ Create a hook.
 
 https://developer.github.com/v3/orgs/hooks/#create-a-hook
 */
-func (c *Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
-	return OrgsCreateHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
+	return OrgsCreateHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1108,8 +1108,8 @@ Create organization invitation.
 
 https://developer.github.com/v3/orgs/members/#create-organization-invitation
 */
-func (c *Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
-	return OrgsCreateInvitation(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
+	return OrgsCreateInvitation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1271,8 +1271,8 @@ Delete a hook.
 
 https://developer.github.com/v3/orgs/hooks/#delete-a-hook
 */
-func (c *Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
-	return OrgsDeleteHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
+	return OrgsDeleteHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1391,8 +1391,8 @@ Get an organization.
 
 https://developer.github.com/v3/orgs/#get-an-organization
 */
-func (c *Client) OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsGetResponse, error) {
-	return OrgsGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsGetResponse, error) {
+	return OrgsGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1538,8 +1538,8 @@ Get single hook.
 
 https://developer.github.com/v3/orgs/hooks/#get-single-hook
 */
-func (c *Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
-	return OrgsGetHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
+	return OrgsGetHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1668,8 +1668,8 @@ Get organization membership.
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership
 */
-func (c *Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
-	return OrgsGetMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
+	return OrgsGetMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1798,8 +1798,8 @@ Get your organization membership.
 
 https://developer.github.com/v3/orgs/members/#get-your-organization-membership
 */
-func (c *Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
-	return OrgsGetMembershipForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
+	return OrgsGetMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1927,8 +1927,8 @@ List all organizations.
 
 https://developer.github.com/v3/orgs/#list-all-organizations
 */
-func (c *Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
-	return OrgsList(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
+	return OrgsList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2061,8 +2061,8 @@ List blocked users.
 
 https://developer.github.com/v3/orgs/blocking/#list-blocked-users
 */
-func (c *Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
-	return OrgsListBlockedUsers(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
+	return OrgsListBlockedUsers(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2190,8 +2190,8 @@ List credential authorizations for an organization.
 
 https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
 */
-func (c *Client) OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
-	return OrgsListCredentialAuthorizations(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
+	return OrgsListCredentialAuthorizations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2319,8 +2319,8 @@ List your organizations.
 
 https://developer.github.com/v3/orgs/#list-your-organizations
 */
-func (c *Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
-	return OrgsListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
+	return OrgsListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2459,8 +2459,8 @@ List user organizations.
 
 https://developer.github.com/v3/orgs/#list-user-organizations
 */
-func (c *Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
-	return OrgsListForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
+	return OrgsListForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2600,8 +2600,8 @@ List hooks.
 
 https://developer.github.com/v3/orgs/hooks/#list-hooks
 */
-func (c *Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
-	return OrgsListHooks(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
+	return OrgsListHooks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2741,8 +2741,8 @@ List installations for an organization.
 
 https://developer.github.com/v3/orgs/#list-installations-for-an-organization
 */
-func (c *Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
-	return OrgsListInstallations(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
+	return OrgsListInstallations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2897,8 +2897,8 @@ List organization invitation teams.
 
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
-func (c *Client) OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsReq, opt ...RequestOption) (*OrgsListInvitationTeamsResponse, error) {
-	return OrgsListInvitationTeams(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsReq, opt ...RequestOption) (*OrgsListInvitationTeamsResponse, error) {
+	return OrgsListInvitationTeams(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3039,8 +3039,8 @@ Members list.
 
 https://developer.github.com/v3/orgs/members/#members-list
 */
-func (c *Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
-	return OrgsListMembers(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
+	return OrgsListMembers(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3203,8 +3203,8 @@ List your organization memberships.
 
 https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
-func (c *Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
-	return OrgsListMemberships(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
+	return OrgsListMemberships(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3353,8 +3353,8 @@ List outside collaborators.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
 */
-func (c *Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
-	return OrgsListOutsideCollaborators(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
+	return OrgsListOutsideCollaborators(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3505,8 +3505,8 @@ List pending organization invitations.
 
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
-func (c *Client) OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitationsReq, opt ...RequestOption) (*OrgsListPendingInvitationsResponse, error) {
-	return OrgsListPendingInvitations(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitationsReq, opt ...RequestOption) (*OrgsListPendingInvitationsResponse, error) {
+	return OrgsListPendingInvitations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3646,8 +3646,8 @@ Public members list.
 
 https://developer.github.com/v3/orgs/members/#public-members-list
 */
-func (c *Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
-	return OrgsListPublicMembers(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
+	return OrgsListPublicMembers(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3786,8 +3786,8 @@ Ping a hook.
 
 https://developer.github.com/v3/orgs/hooks/#ping-a-hook
 */
-func (c *Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
-	return OrgsPingHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
+	return OrgsPingHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3905,8 +3905,8 @@ Publicize a user's membership.
 
 https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
 */
-func (c *Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
-	return OrgsPublicizeMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
+	return OrgsPublicizeMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4024,8 +4024,8 @@ Remove a credential authorization for an organization.
 
 https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
 */
-func (c *Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
-	return OrgsRemoveCredentialAuthorization(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
+	return OrgsRemoveCredentialAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4143,8 +4143,8 @@ Remove a member.
 
 https://developer.github.com/v3/orgs/members/#remove-a-member
 */
-func (c *Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
-	return OrgsRemoveMember(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
+	return OrgsRemoveMember(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4262,8 +4262,8 @@ Remove organization membership.
 
 https://developer.github.com/v3/orgs/members/#remove-organization-membership
 */
-func (c *Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
-	return OrgsRemoveMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
+	return OrgsRemoveMembership(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4381,8 +4381,8 @@ Remove outside collaborator.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
 */
-func (c *Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
-	return OrgsRemoveOutsideCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
+	return OrgsRemoveOutsideCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4500,8 +4500,8 @@ Unblock a user.
 
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user
 */
-func (c *Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
-	return OrgsUnblockUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
+	return OrgsUnblockUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4620,8 +4620,8 @@ Edit an organization.
 
 https://developer.github.com/v3/orgs/#edit-an-organization
 */
-func (c *Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
-	return OrgsUpdate(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
+	return OrgsUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4879,8 +4879,8 @@ Edit a hook.
 
 https://developer.github.com/v3/orgs/hooks/#edit-a-hook
 */
-func (c *Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
-	return OrgsUpdateHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
+	return OrgsUpdateHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5066,8 +5066,8 @@ Edit your organization membership.
 
 https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
 */
-func (c *Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
-	return OrgsUpdateMembership(ctx, req, append(c.opts, opt...)...)
+func (c Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
+	return OrgsUpdateMembership(ctx, req, append(c, opt...)...)
 }
 
 /*

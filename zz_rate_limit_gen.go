@@ -48,8 +48,8 @@ Get your current rate limit status.
 
 https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
-func (c *Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
-	return RateLimitGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
+	return RateLimitGet(ctx, req, append(c, opt...)...)
 }
 
 /*

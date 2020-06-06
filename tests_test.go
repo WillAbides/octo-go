@@ -61,7 +61,7 @@ func appInstallationAuth(t *testing.T) octo.RequestOption {
 	return octo.RequestAppInstallationAuth(appID, appInstallationID, key, nil)
 }
 
-func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) *octo.Client {
+func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) octo.Client {
 	t.Helper()
 	cas = strings.ReplaceAll(cas, "/", "_")
 	cas = filepath.Join(filepath.FromSlash("testdata/vcr/"), cas)

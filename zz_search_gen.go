@@ -49,8 +49,8 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
-func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
-	return SearchCode(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+	return SearchCode(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -227,8 +227,8 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
-func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
-	return SearchCommits(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+	return SearchCommits(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -420,8 +420,8 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
-func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
-	return SearchIssuesAndPullRequests(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+	return SearchIssuesAndPullRequests(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -601,8 +601,8 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
-func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
-	return SearchLabels(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+	return SearchLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -769,8 +769,8 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
-func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
-	return SearchRepos(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+	return SearchRepos(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -958,8 +958,8 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
-func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
-	return SearchTopics(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+	return SearchTopics(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1112,8 +1112,8 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
-func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
-	return SearchUsers(ctx, req, append(c.opts, opt...)...)
+func (c Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+	return SearchUsers(ctx, req, append(c, opt...)...)
 }
 
 /*

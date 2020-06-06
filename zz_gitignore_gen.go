@@ -48,8 +48,8 @@ Get a single template.
 
 https://developer.github.com/v3/gitignore/#get-a-single-template
 */
-func (c *Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
-	return GitignoreGetTemplate(ctx, req, append(c.opts, opt...)...)
+func (c Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+	return GitignoreGetTemplate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -177,8 +177,8 @@ Listing available templates.
 
 https://developer.github.com/v3/gitignore/#listing-available-templates
 */
-func (c *Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
-	return GitignoreListTemplates(ctx, req, append(c.opts, opt...)...)
+func (c Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
+	return GitignoreListTemplates(ctx, req, append(c, opt...)...)
 }
 
 /*

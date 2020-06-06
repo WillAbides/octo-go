@@ -49,8 +49,8 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-func (c *Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
-	return IssuesAddAssignees(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+	return IssuesAddAssignees(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -195,8 +195,8 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-func (c *Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
-	return IssuesAddLabels(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+	return IssuesAddLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -346,8 +346,8 @@ Check assignee.
 
 https://developer.github.com/v3/issues/assignees/#check-assignee
 */
-func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
-	return IssuesCheckAssignee(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+	return IssuesCheckAssignee(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -468,8 +468,8 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-func (c *Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
-	return IssuesCreate(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+	return IssuesCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -639,8 +639,8 @@ Create a comment.
 
 https://developer.github.com/v3/issues/comments/#create-a-comment
 */
-func (c *Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
-	return IssuesCreateComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+	return IssuesCreateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -782,8 +782,8 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-func (c *Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
-	return IssuesCreateLabel(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+	return IssuesCreateLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -940,8 +940,8 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-func (c *Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
-	return IssuesCreateMilestone(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+	return IssuesCreateMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1093,8 +1093,8 @@ Delete a comment.
 
 https://developer.github.com/v3/issues/comments/#delete-a-comment
 */
-func (c *Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
-	return IssuesDeleteComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+	return IssuesDeleteComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1213,8 +1213,8 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
-func (c *Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
-	return IssuesDeleteLabel(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+	return IssuesDeleteLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1333,8 +1333,8 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
-func (c *Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
-	return IssuesDeleteMilestone(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+	return IssuesDeleteMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1454,8 +1454,8 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-func (c *Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
-	return IssuesGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+	return IssuesGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1599,8 +1599,8 @@ Get a single comment.
 
 https://developer.github.com/v3/issues/comments/#get-a-single-comment
 */
-func (c *Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
-	return IssuesGetComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+	return IssuesGetComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1754,8 +1754,8 @@ Get a single event.
 
 https://developer.github.com/v3/issues/events/#get-a-single-event
 */
-func (c *Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
-	return IssuesGetEvent(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+	return IssuesGetEvent(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1922,8 +1922,8 @@ Get a single label.
 
 https://developer.github.com/v3/issues/labels/#get-a-single-label
 */
-func (c *Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
-	return IssuesGetLabel(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+	return IssuesGetLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2053,8 +2053,8 @@ Get a single milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 */
-func (c *Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
-	return IssuesGetMilestone(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+	return IssuesGetMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2184,8 +2184,8 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-func (c *Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
-	return IssuesList(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+	return IssuesList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2399,8 +2399,8 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-func (c *Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
-	return IssuesListAssignees(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+	return IssuesListAssignees(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2541,8 +2541,8 @@ List comments on an issue.
 
 https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
 */
-func (c *Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
-	return IssuesListComments(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+	return IssuesListComments(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2708,8 +2708,8 @@ List comments in a repository.
 
 https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
-func (c *Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
-	return IssuesListCommentsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+	return IssuesListCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2886,8 +2886,8 @@ List events for an issue.
 
 https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
-func (c *Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
-	return IssuesListEvents(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+	return IssuesListEvents(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3058,8 +3058,8 @@ List events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-events-for-a-repository
 */
-func (c *Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
-	return IssuesListEventsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+	return IssuesListEventsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3229,8 +3229,8 @@ List events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
 */
-func (c *Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
-	return IssuesListEventsForTimeline(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+	return IssuesListEventsForTimeline(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3403,8 +3403,8 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-func (c *Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
-	return IssuesListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+	return IssuesListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3618,8 +3618,8 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-func (c *Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
-	return IssuesListForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+	return IssuesListForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3834,8 +3834,8 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-func (c *Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
-	return IssuesListForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+	return IssuesListForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4068,8 +4068,8 @@ Get labels for every issue in a milestone.
 
 https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 */
-func (c *Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
-	return IssuesListLabelsForMilestone(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+	return IssuesListLabelsForMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4211,8 +4211,8 @@ List all labels for this repository.
 
 https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
-func (c *Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
-	return IssuesListLabelsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+	return IssuesListLabelsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4353,8 +4353,8 @@ List labels on an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
-func (c *Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
-	return IssuesListLabelsOnIssue(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+	return IssuesListLabelsOnIssue(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4496,8 +4496,8 @@ List milestones for a repository.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 */
-func (c *Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
-	return IssuesListMilestonesForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+	return IssuesListMilestonesForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4655,8 +4655,8 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
-func (c *Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
-	return IssuesLock(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+	return IssuesLock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4807,8 +4807,8 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-func (c *Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
-	return IssuesRemoveAllLabels(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+	return IssuesRemoveAllLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4928,8 +4928,8 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-func (c *Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
-	return IssuesRemoveAssignees(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+	return IssuesRemoveAssignees(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5075,8 +5075,8 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-func (c *Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
-	return IssuesRemoveLabel(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+	return IssuesRemoveLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5207,8 +5207,8 @@ Replace all labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
-func (c *Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
-	return IssuesReplaceAllLabels(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+	return IssuesReplaceAllLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5354,8 +5354,8 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
-func (c *Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
-	return IssuesUnlock(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+	return IssuesUnlock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5475,8 +5475,8 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-func (c *Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
-	return IssuesUpdate(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+	return IssuesUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5653,8 +5653,8 @@ Edit a comment.
 
 https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
-func (c *Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
-	return IssuesUpdateComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+	return IssuesUpdateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5796,8 +5796,8 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-func (c *Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
-	return IssuesUpdateLabel(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+	return IssuesUpdateLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5955,8 +5955,8 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-func (c *Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
-	return IssuesUpdateMilestone(ctx, req, append(c.opts, opt...)...)
+func (c Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+	return IssuesUpdateMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*

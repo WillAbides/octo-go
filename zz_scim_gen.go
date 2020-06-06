@@ -49,8 +49,8 @@ Get provisioning details for a single user.
 
 https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
-func (c *Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
-	return ScimGetProvisioningDetailsForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
+	return ScimGetProvisioningDetailsForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -179,8 +179,8 @@ Get a list of provisioned identities.
 
 https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
-func (c *Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
-	return ScimListProvisionedIdentities(ctx, req, append(c.opts, opt...)...)
+func (c Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+	return ScimListProvisionedIdentities(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -331,8 +331,8 @@ Provision and invite users.
 
 https://developer.github.com/v3/scim/#provision-and-invite-users
 */
-func (c *Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
-	return ScimProvisionAndInviteUsers(ctx, req, append(c.opts, opt...)...)
+func (c Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
+	return ScimProvisionAndInviteUsers(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -459,8 +459,8 @@ Remove a user from the organization.
 
 https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
-func (c *Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
-	return ScimRemoveUserFromOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
+	return ScimRemoveUserFromOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -579,8 +579,8 @@ Replace a provisioned user's information.
 
 https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
-func (c *Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
-	return ScimReplaceProvisionedUserInformation(ctx, req, append(c.opts, opt...)...)
+func (c Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
+	return ScimReplaceProvisionedUserInformation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -709,8 +709,8 @@ Update a user attribute.
 
 https://developer.github.com/v3/scim/#update-a-user-attribute
 */
-func (c *Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
-	return ScimUpdateUserAttribute(ctx, req, append(c.opts, opt...)...)
+func (c Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
+	return ScimUpdateUserAttribute(ctx, req, append(c, opt...)...)
 }
 
 /*

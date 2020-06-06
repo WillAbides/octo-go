@@ -48,8 +48,8 @@ List all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
-func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
-	return CodesOfConductGetAllCodesOfConduct(ctx, req, append(c.opts, opt...)...)
+func (c Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+	return CodesOfConductGetAllCodesOfConduct(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -189,8 +189,8 @@ Get an individual code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
-func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
-	return CodesOfConductGetConductCode(ctx, req, append(c.opts, opt...)...)
+func (c Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+	return CodesOfConductGetConductCode(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -331,8 +331,8 @@ Get the contents of a repository's code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
-func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
-	return CodesOfConductGetForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+	return CodesOfConductGetForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*

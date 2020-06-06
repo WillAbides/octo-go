@@ -52,8 +52,8 @@ Check if a gist is starred.
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
-func (c *Client) GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...RequestOption) (*GistsCheckIsStarredResponse, error) {
-	return GistsCheckIsStarred(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...RequestOption) (*GistsCheckIsStarredResponse, error) {
+	return GistsCheckIsStarred(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -172,8 +172,8 @@ Create a gist.
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-func (c *Client) GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption) (*GistsCreateResponse, error) {
-	return GistsCreate(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption) (*GistsCreateResponse, error) {
+	return GistsCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -328,8 +328,8 @@ Create a comment.
 
 https://developer.github.com/v3/gists/comments/#create-a-comment
 */
-func (c *Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
-	return GistsCreateComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
+	return GistsCreateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -468,8 +468,8 @@ Delete a gist.
 
 https://developer.github.com/v3/gists/#delete-a-gist
 */
-func (c *Client) GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...RequestOption) (*GistsDeleteResponse, error) {
-	return GistsDelete(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...RequestOption) (*GistsDeleteResponse, error) {
+	return GistsDelete(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -586,8 +586,8 @@ Delete a comment.
 
 https://developer.github.com/v3/gists/comments/#delete-a-comment
 */
-func (c *Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
-	return GistsDeleteComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
+	return GistsDeleteComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -706,8 +706,8 @@ Fork a gist.
 
 https://developer.github.com/v3/gists/#fork-a-gist
 */
-func (c *Client) GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*GistsForkResponse, error) {
-	return GistsFork(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*GistsForkResponse, error) {
+	return GistsFork(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -835,8 +835,8 @@ Get a gist.
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-func (c *Client) GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*GistsGetResponse, error) {
-	return GistsGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*GistsGetResponse, error) {
+	return GistsGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -964,8 +964,8 @@ Get a single comment.
 
 https://developer.github.com/v3/gists/comments/#get-a-single-comment
 */
-func (c *Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
-	return GistsGetComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
+	return GistsGetComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1094,8 +1094,8 @@ Get a specific revision of a gist.
 
 https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
-func (c *Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
-	return GistsGetRevision(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
+	return GistsGetRevision(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1224,8 +1224,8 @@ List gists for the authenticated user.
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
-func (c *Client) GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*GistsListResponse, error) {
-	return GistsList(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*GistsListResponse, error) {
+	return GistsList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1374,8 +1374,8 @@ List comments on a gist.
 
 https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
-func (c *Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
-	return GistsListComments(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
+	return GistsListComments(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1515,8 +1515,8 @@ List gist commits.
 
 https://developer.github.com/v3/gists/#list-gist-commits
 */
-func (c *Client) GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...RequestOption) (*GistsListCommitsResponse, error) {
-	return GistsListCommits(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...RequestOption) (*GistsListCommitsResponse, error) {
+	return GistsListCommits(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1656,8 +1656,8 @@ List gists for a user.
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
-func (c *Client) GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...RequestOption) (*GistsListForUserResponse, error) {
-	return GistsListForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...RequestOption) (*GistsListForUserResponse, error) {
+	return GistsListForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1807,8 +1807,8 @@ List gist forks.
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-func (c *Client) GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestOption) (*GistsListForksResponse, error) {
-	return GistsListForks(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestOption) (*GistsListForksResponse, error) {
+	return GistsListForks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1948,8 +1948,8 @@ List public gists.
 
 https://developer.github.com/v3/gists/#list-public-gists
 */
-func (c *Client) GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...RequestOption) (*GistsListPublicResponse, error) {
-	return GistsListPublic(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...RequestOption) (*GistsListPublicResponse, error) {
+	return GistsListPublic(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2098,8 +2098,8 @@ List starred gists.
 
 https://developer.github.com/v3/gists/#list-starred-gists
 */
-func (c *Client) GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...RequestOption) (*GistsListStarredResponse, error) {
-	return GistsListStarred(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...RequestOption) (*GistsListStarredResponse, error) {
+	return GistsListStarred(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2247,8 +2247,8 @@ Star a gist.
 
 https://developer.github.com/v3/gists/#star-a-gist
 */
-func (c *Client) GistsStar(ctx context.Context, req *GistsStarReq, opt ...RequestOption) (*GistsStarResponse, error) {
-	return GistsStar(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsStar(ctx context.Context, req *GistsStarReq, opt ...RequestOption) (*GistsStarResponse, error) {
+	return GistsStar(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2365,8 +2365,8 @@ Unstar a gist.
 
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
-func (c *Client) GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...RequestOption) (*GistsUnstarResponse, error) {
-	return GistsUnstar(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...RequestOption) (*GistsUnstarResponse, error) {
+	return GistsUnstar(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2484,8 +2484,8 @@ Update a gist.
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-func (c *Client) GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption) (*GistsUpdateResponse, error) {
-	return GistsUpdate(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption) (*GistsUpdateResponse, error) {
+	return GistsUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2641,8 +2641,8 @@ Edit a comment.
 
 https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
-func (c *Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
-	return GistsUpdateComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
+	return GistsUpdateComment(ctx, req, append(c, opt...)...)
 }
 
 /*

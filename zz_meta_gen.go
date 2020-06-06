@@ -48,8 +48,8 @@ Get.
 
 https://developer.github.com/v3/meta/#meta
 */
-func (c *Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
-	return MetaGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+	return MetaGet(ctx, req, append(c, opt...)...)
 }
 
 /*

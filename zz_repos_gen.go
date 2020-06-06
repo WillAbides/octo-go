@@ -49,8 +49,8 @@ Accept a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
-func (c *Client) ReposAcceptInvitation(ctx context.Context, req *ReposAcceptInvitationReq, opt ...RequestOption) (*ReposAcceptInvitationResponse, error) {
-	return ReposAcceptInvitation(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAcceptInvitation(ctx context.Context, req *ReposAcceptInvitationReq, opt ...RequestOption) (*ReposAcceptInvitationResponse, error) {
+	return ReposAcceptInvitation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -168,8 +168,8 @@ Add user as a collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
 */
-func (c *Client) ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt ...RequestOption) (*ReposAddCollaboratorResponse, error) {
-	return ReposAddCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt ...RequestOption) (*ReposAddCollaboratorResponse, error) {
+	return ReposAddCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -321,8 +321,8 @@ Add a new deploy key.
 
 https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
 */
-func (c *Client) ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...RequestOption) (*ReposAddDeployKeyResponse, error) {
-	return ReposAddDeployKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...RequestOption) (*ReposAddDeployKeyResponse, error) {
+	return ReposAddDeployKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -479,8 +479,8 @@ Add admin enforcement of protected branch.
 
 https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
 */
-func (c *Client) ReposAddProtectedBranchAdminEnforcement(ctx context.Context, req *ReposAddProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposAddProtectedBranchAdminEnforcementResponse, error) {
-	return ReposAddProtectedBranchAdminEnforcement(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddProtectedBranchAdminEnforcement(ctx context.Context, req *ReposAddProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposAddProtectedBranchAdminEnforcementResponse, error) {
+	return ReposAddProtectedBranchAdminEnforcement(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -610,8 +610,8 @@ Add app restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
 */
-func (c *Client) ReposAddProtectedBranchAppRestrictions(ctx context.Context, req *ReposAddProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchAppRestrictionsResponse, error) {
-	return ReposAddProtectedBranchAppRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddProtectedBranchAppRestrictions(ctx context.Context, req *ReposAddProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchAppRestrictionsResponse, error) {
+	return ReposAddProtectedBranchAppRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -749,8 +749,8 @@ Add required signatures of protected branch.
 
 https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
 */
-func (c *Client) ReposAddProtectedBranchRequiredSignatures(ctx context.Context, req *ReposAddProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredSignaturesResponse, error) {
-	return ReposAddProtectedBranchRequiredSignatures(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddProtectedBranchRequiredSignatures(ctx context.Context, req *ReposAddProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredSignaturesResponse, error) {
+	return ReposAddProtectedBranchRequiredSignatures(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -895,8 +895,8 @@ Add required status checks contexts of protected branch.
 
 https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
 */
-func (c *Client) ReposAddProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposAddProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposAddProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposAddProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	return ReposAddProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1032,8 +1032,8 @@ Add team restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
 */
-func (c *Client) ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchTeamRestrictionsResponse, error) {
-	return ReposAddProtectedBranchTeamRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchTeamRestrictionsResponse, error) {
+	return ReposAddProtectedBranchTeamRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1171,8 +1171,8 @@ Add user restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
 */
-func (c *Client) ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchUserRestrictionsResponse, error) {
-	return ReposAddProtectedBranchUserRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchUserRestrictionsResponse, error) {
+	return ReposAddProtectedBranchUserRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1313,8 +1313,8 @@ Check if a user is a collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
 */
-func (c *Client) ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq, opt ...RequestOption) (*ReposCheckCollaboratorResponse, error) {
-	return ReposCheckCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq, opt ...RequestOption) (*ReposCheckCollaboratorResponse, error) {
+	return ReposCheckCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1438,8 +1438,8 @@ Check if vulnerability alerts are enabled for a repository.
 
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
-func (c *Client) ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabilityAlertsReq, opt ...RequestOption) (*ReposCheckVulnerabilityAlertsResponse, error) {
-	return ReposCheckVulnerabilityAlerts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabilityAlertsReq, opt ...RequestOption) (*ReposCheckVulnerabilityAlertsResponse, error) {
+	return ReposCheckVulnerabilityAlerts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1572,8 +1572,8 @@ Compare two commits.
 
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
-func (c *Client) ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt ...RequestOption) (*ReposCompareCommitsResponse, error) {
-	return ReposCompareCommits(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt ...RequestOption) (*ReposCompareCommitsResponse, error) {
+	return ReposCompareCommits(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1704,8 +1704,8 @@ Create a commit comment.
 
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
-func (c *Client) ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitCommentReq, opt ...RequestOption) (*ReposCreateCommitCommentResponse, error) {
-	return ReposCreateCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitCommentReq, opt ...RequestOption) (*ReposCreateCommitCommentResponse, error) {
+	return ReposCreateCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1859,8 +1859,8 @@ Create a deployment.
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-func (c *Client) ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, opt ...RequestOption) (*ReposCreateDeploymentResponse, error) {
-	return ReposCreateDeployment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, opt ...RequestOption) (*ReposCreateDeploymentResponse, error) {
+	return ReposCreateDeployment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2064,8 +2064,8 @@ Create a deployment status.
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
-func (c *Client) ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeploymentStatusReq, opt ...RequestOption) (*ReposCreateDeploymentStatusResponse, error) {
-	return ReposCreateDeploymentStatus(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeploymentStatusReq, opt ...RequestOption) (*ReposCreateDeploymentStatusResponse, error) {
+	return ReposCreateDeploymentStatus(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2306,8 +2306,8 @@ Create a repository dispatch event.
 
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
-func (c *Client) ReposCreateDispatchEvent(ctx context.Context, req *ReposCreateDispatchEventReq, opt ...RequestOption) (*ReposCreateDispatchEventResponse, error) {
-	return ReposCreateDispatchEvent(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateDispatchEvent(ctx context.Context, req *ReposCreateDispatchEventReq, opt ...RequestOption) (*ReposCreateDispatchEventResponse, error) {
+	return ReposCreateDispatchEvent(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2444,8 +2444,8 @@ Create a repository for the authenticated user.
 
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
-func (c *Client) ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAuthenticatedUserReq, opt ...RequestOption) (*ReposCreateForAuthenticatedUserResponse, error) {
-	return ReposCreateForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAuthenticatedUserReq, opt ...RequestOption) (*ReposCreateForAuthenticatedUserResponse, error) {
+	return ReposCreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2701,8 +2701,8 @@ Create a fork.
 
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-func (c *Client) ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...RequestOption) (*ReposCreateForkResponse, error) {
-	return ReposCreateFork(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...RequestOption) (*ReposCreateForkResponse, error) {
+	return ReposCreateFork(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2846,8 +2846,8 @@ Create a hook.
 
 https://developer.github.com/v3/repos/hooks/#create-a-hook
 */
-func (c *Client) ReposCreateHook(ctx context.Context, req *ReposCreateHookReq, opt ...RequestOption) (*ReposCreateHookResponse, error) {
-	return ReposCreateHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateHook(ctx context.Context, req *ReposCreateHookReq, opt ...RequestOption) (*ReposCreateHookResponse, error) {
+	return ReposCreateHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3039,8 +3039,8 @@ Create an organization repository.
 
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
-func (c *Client) ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...RequestOption) (*ReposCreateInOrgResponse, error) {
-	return ReposCreateInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...RequestOption) (*ReposCreateInOrgResponse, error) {
+	return ReposCreateInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3297,8 +3297,8 @@ Create or update a file.
 
 https://developer.github.com/v3/repos/contents/#create-or-update-a-file
 */
-func (c *Client) ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileReq, opt ...RequestOption) (*ReposCreateOrUpdateFileResponse, error) {
-	return ReposCreateOrUpdateFile(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileReq, opt ...RequestOption) (*ReposCreateOrUpdateFileResponse, error) {
+	return ReposCreateOrUpdateFile(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3493,8 +3493,8 @@ Create a release.
 
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
-func (c *Client) ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...RequestOption) (*ReposCreateReleaseResponse, error) {
-	return ReposCreateRelease(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...RequestOption) (*ReposCreateReleaseResponse, error) {
+	return ReposCreateRelease(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3660,8 +3660,8 @@ Create a status.
 
 https://developer.github.com/v3/repos/statuses/#create-a-status
 */
-func (c *Client) ReposCreateStatus(ctx context.Context, req *ReposCreateStatusReq, opt ...RequestOption) (*ReposCreateStatusResponse, error) {
-	return ReposCreateStatus(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateStatus(ctx context.Context, req *ReposCreateStatusReq, opt ...RequestOption) (*ReposCreateStatusResponse, error) {
+	return ReposCreateStatus(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3821,8 +3821,8 @@ Create a repository using a template.
 
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
-func (c *Client) ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplateReq, opt ...RequestOption) (*ReposCreateUsingTemplateResponse, error) {
-	return ReposCreateUsingTemplate(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplateReq, opt ...RequestOption) (*ReposCreateUsingTemplateResponse, error) {
+	return ReposCreateUsingTemplate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3993,8 +3993,8 @@ Decline a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
-func (c *Client) ReposDeclineInvitation(ctx context.Context, req *ReposDeclineInvitationReq, opt ...RequestOption) (*ReposDeclineInvitationResponse, error) {
-	return ReposDeclineInvitation(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeclineInvitation(ctx context.Context, req *ReposDeclineInvitationReq, opt ...RequestOption) (*ReposDeclineInvitationResponse, error) {
+	return ReposDeclineInvitation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4111,8 +4111,8 @@ Delete a repository.
 
 https://developer.github.com/v3/repos/#delete-a-repository
 */
-func (c *Client) ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...RequestOption) (*ReposDeleteResponse, error) {
-	return ReposDelete(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...RequestOption) (*ReposDeleteResponse, error) {
+	return ReposDelete(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4230,8 +4230,8 @@ Delete a commit comment.
 
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
-func (c *Client) ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitCommentReq, opt ...RequestOption) (*ReposDeleteCommitCommentResponse, error) {
-	return ReposDeleteCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitCommentReq, opt ...RequestOption) (*ReposDeleteCommitCommentResponse, error) {
+	return ReposDeleteCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4350,8 +4350,8 @@ Delete a deployment.
 
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
-func (c *Client) ReposDeleteDeployment(ctx context.Context, req *ReposDeleteDeploymentReq, opt ...RequestOption) (*ReposDeleteDeploymentResponse, error) {
-	return ReposDeleteDeployment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteDeployment(ctx context.Context, req *ReposDeleteDeploymentReq, opt ...RequestOption) (*ReposDeleteDeploymentResponse, error) {
+	return ReposDeleteDeployment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4470,8 +4470,8 @@ Delete a download.
 
 https://developer.github.com/v3/repos/downloads/#delete-a-download
 */
-func (c *Client) ReposDeleteDownload(ctx context.Context, req *ReposDeleteDownloadReq, opt ...RequestOption) (*ReposDeleteDownloadResponse, error) {
-	return ReposDeleteDownload(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteDownload(ctx context.Context, req *ReposDeleteDownloadReq, opt ...RequestOption) (*ReposDeleteDownloadResponse, error) {
+	return ReposDeleteDownload(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4591,8 +4591,8 @@ Delete a file.
 
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
-func (c *Client) ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...RequestOption) (*ReposDeleteFileResponse, error) {
-	return ReposDeleteFile(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...RequestOption) (*ReposDeleteFileResponse, error) {
+	return ReposDeleteFile(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4765,8 +4765,8 @@ Delete a hook.
 
 https://developer.github.com/v3/repos/hooks/#delete-a-hook
 */
-func (c *Client) ReposDeleteHook(ctx context.Context, req *ReposDeleteHookReq, opt ...RequestOption) (*ReposDeleteHookResponse, error) {
-	return ReposDeleteHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteHook(ctx context.Context, req *ReposDeleteHookReq, opt ...RequestOption) (*ReposDeleteHookResponse, error) {
+	return ReposDeleteHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4885,8 +4885,8 @@ Delete a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
-func (c *Client) ReposDeleteInvitation(ctx context.Context, req *ReposDeleteInvitationReq, opt ...RequestOption) (*ReposDeleteInvitationResponse, error) {
-	return ReposDeleteInvitation(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteInvitation(ctx context.Context, req *ReposDeleteInvitationReq, opt ...RequestOption) (*ReposDeleteInvitationResponse, error) {
+	return ReposDeleteInvitation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5005,8 +5005,8 @@ Delete a release.
 
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
-func (c *Client) ReposDeleteRelease(ctx context.Context, req *ReposDeleteReleaseReq, opt ...RequestOption) (*ReposDeleteReleaseResponse, error) {
-	return ReposDeleteRelease(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteRelease(ctx context.Context, req *ReposDeleteReleaseReq, opt ...RequestOption) (*ReposDeleteReleaseResponse, error) {
+	return ReposDeleteRelease(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5125,8 +5125,8 @@ Delete a release asset.
 
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
-func (c *Client) ReposDeleteReleaseAsset(ctx context.Context, req *ReposDeleteReleaseAssetReq, opt ...RequestOption) (*ReposDeleteReleaseAssetResponse, error) {
-	return ReposDeleteReleaseAsset(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDeleteReleaseAsset(ctx context.Context, req *ReposDeleteReleaseAssetReq, opt ...RequestOption) (*ReposDeleteReleaseAssetResponse, error) {
+	return ReposDeleteReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5245,8 +5245,8 @@ Disable automated security fixes.
 
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
-func (c *Client) ReposDisableAutomatedSecurityFixes(ctx context.Context, req *ReposDisableAutomatedSecurityFixesReq, opt ...RequestOption) (*ReposDisableAutomatedSecurityFixesResponse, error) {
-	return ReposDisableAutomatedSecurityFixes(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDisableAutomatedSecurityFixes(ctx context.Context, req *ReposDisableAutomatedSecurityFixesReq, opt ...RequestOption) (*ReposDisableAutomatedSecurityFixesResponse, error) {
+	return ReposDisableAutomatedSecurityFixes(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5377,8 +5377,8 @@ Disable a Pages site.
 
 https://developer.github.com/v3/repos/pages/#disable-a-pages-site
 */
-func (c *Client) ReposDisablePagesSite(ctx context.Context, req *ReposDisablePagesSiteReq, opt ...RequestOption) (*ReposDisablePagesSiteResponse, error) {
-	return ReposDisablePagesSite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDisablePagesSite(ctx context.Context, req *ReposDisablePagesSiteReq, opt ...RequestOption) (*ReposDisablePagesSiteResponse, error) {
+	return ReposDisablePagesSite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5511,8 +5511,8 @@ Disable vulnerability alerts.
 
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
-func (c *Client) ReposDisableVulnerabilityAlerts(ctx context.Context, req *ReposDisableVulnerabilityAlertsReq, opt ...RequestOption) (*ReposDisableVulnerabilityAlertsResponse, error) {
-	return ReposDisableVulnerabilityAlerts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposDisableVulnerabilityAlerts(ctx context.Context, req *ReposDisableVulnerabilityAlertsReq, opt ...RequestOption) (*ReposDisableVulnerabilityAlertsResponse, error) {
+	return ReposDisableVulnerabilityAlerts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5643,8 +5643,8 @@ Enable automated security fixes.
 
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
-func (c *Client) ReposEnableAutomatedSecurityFixes(ctx context.Context, req *ReposEnableAutomatedSecurityFixesReq, opt ...RequestOption) (*ReposEnableAutomatedSecurityFixesResponse, error) {
-	return ReposEnableAutomatedSecurityFixes(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposEnableAutomatedSecurityFixes(ctx context.Context, req *ReposEnableAutomatedSecurityFixesReq, opt ...RequestOption) (*ReposEnableAutomatedSecurityFixesResponse, error) {
+	return ReposEnableAutomatedSecurityFixes(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5776,8 +5776,8 @@ Enable a Pages site.
 
 https://developer.github.com/v3/repos/pages/#enable-a-pages-site
 */
-func (c *Client) ReposEnablePagesSite(ctx context.Context, req *ReposEnablePagesSiteReq, opt ...RequestOption) (*ReposEnablePagesSiteResponse, error) {
-	return ReposEnablePagesSite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposEnablePagesSite(ctx context.Context, req *ReposEnablePagesSiteReq, opt ...RequestOption) (*ReposEnablePagesSiteResponse, error) {
+	return ReposEnablePagesSite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5948,8 +5948,8 @@ Enable vulnerability alerts.
 
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
-func (c *Client) ReposEnableVulnerabilityAlerts(ctx context.Context, req *ReposEnableVulnerabilityAlertsReq, opt ...RequestOption) (*ReposEnableVulnerabilityAlertsResponse, error) {
-	return ReposEnableVulnerabilityAlerts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposEnableVulnerabilityAlerts(ctx context.Context, req *ReposEnableVulnerabilityAlertsReq, opt ...RequestOption) (*ReposEnableVulnerabilityAlertsResponse, error) {
+	return ReposEnableVulnerabilityAlerts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6081,8 +6081,8 @@ Get a repository.
 
 https://developer.github.com/v3/repos/#get-a-repository
 */
-func (c *Client) ReposGet(ctx context.Context, req *ReposGetReq, opt ...RequestOption) (*ReposGetResponse, error) {
-	return ReposGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGet(ctx context.Context, req *ReposGetReq, opt ...RequestOption) (*ReposGetResponse, error) {
+	return ReposGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6237,8 +6237,8 @@ Get all repository topics.
 
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
-func (c *Client) ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...RequestOption) (*ReposGetAllTopicsResponse, error) {
-	return ReposGetAllTopics(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...RequestOption) (*ReposGetAllTopicsResponse, error) {
+	return ReposGetAllTopics(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6380,8 +6380,8 @@ Get apps with access to protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
 */
-func (c *Client) ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetAppsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetAppsWithAccessToProtectedBranchResponse, error) {
-	return ReposGetAppsWithAccessToProtectedBranch(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetAppsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetAppsWithAccessToProtectedBranchResponse, error) {
+	return ReposGetAppsWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6510,8 +6510,8 @@ Get archive link.
 
 https://developer.github.com/v3/repos/contents/#get-archive-link
 */
-func (c *Client) ReposGetArchiveLink(ctx context.Context, req *ReposGetArchiveLinkReq, opt ...RequestOption) (*ReposGetArchiveLinkResponse, error) {
-	return ReposGetArchiveLink(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetArchiveLink(ctx context.Context, req *ReposGetArchiveLinkReq, opt ...RequestOption) (*ReposGetArchiveLinkResponse, error) {
+	return ReposGetArchiveLink(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6632,8 +6632,8 @@ Get branch.
 
 https://developer.github.com/v3/repos/branches/#get-branch
 */
-func (c *Client) ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestOption) (*ReposGetBranchResponse, error) {
-	return ReposGetBranch(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestOption) (*ReposGetBranchResponse, error) {
+	return ReposGetBranch(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6763,8 +6763,8 @@ Get branch protection.
 
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
-func (c *Client) ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtectionReq, opt ...RequestOption) (*ReposGetBranchProtectionResponse, error) {
-	return ReposGetBranchProtection(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtectionReq, opt ...RequestOption) (*ReposGetBranchProtectionResponse, error) {
+	return ReposGetBranchProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -6907,8 +6907,8 @@ Clones.
 
 https://developer.github.com/v3/repos/traffic/#clones
 */
-func (c *Client) ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestOption) (*ReposGetClonesResponse, error) {
-	return ReposGetClones(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestOption) (*ReposGetClonesResponse, error) {
+	return ReposGetClones(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7043,8 +7043,8 @@ Get the number of additions and deletions per week.
 
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
 */
-func (c *Client) ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyStatsReq, opt ...RequestOption) (*ReposGetCodeFrequencyStatsResponse, error) {
-	return ReposGetCodeFrequencyStats(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyStatsReq, opt ...RequestOption) (*ReposGetCodeFrequencyStatsResponse, error) {
+	return ReposGetCodeFrequencyStats(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7171,8 +7171,8 @@ Review a user's permission level.
 
 https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
 */
-func (c *Client) ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetCollaboratorPermissionLevelReq, opt ...RequestOption) (*ReposGetCollaboratorPermissionLevelResponse, error) {
-	return ReposGetCollaboratorPermissionLevel(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetCollaboratorPermissionLevelReq, opt ...RequestOption) (*ReposGetCollaboratorPermissionLevelResponse, error) {
+	return ReposGetCollaboratorPermissionLevel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7302,8 +7302,8 @@ Get the combined status for a specific ref.
 
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
 */
-func (c *Client) ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStatusForRefReq, opt ...RequestOption) (*ReposGetCombinedStatusForRefResponse, error) {
-	return ReposGetCombinedStatusForRef(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStatusForRefReq, opt ...RequestOption) (*ReposGetCombinedStatusForRefResponse, error) {
+	return ReposGetCombinedStatusForRef(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7433,8 +7433,8 @@ Get a single commit.
 
 https://developer.github.com/v3/repos/commits/#get-a-single-commit
 */
-func (c *Client) ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestOption) (*ReposGetCommitResponse, error) {
-	return ReposGetCommit(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestOption) (*ReposGetCommitResponse, error) {
+	return ReposGetCommit(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7564,8 +7564,8 @@ Get the last year of commit activity data.
 
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
 */
-func (c *Client) ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivityStatsReq, opt ...RequestOption) (*ReposGetCommitActivityStatsResponse, error) {
-	return ReposGetCommitActivityStats(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivityStatsReq, opt ...RequestOption) (*ReposGetCommitActivityStatsResponse, error) {
+	return ReposGetCommitActivityStats(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7694,8 +7694,8 @@ Get a single commit comment.
 
 https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
 */
-func (c *Client) ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, opt ...RequestOption) (*ReposGetCommitCommentResponse, error) {
-	return ReposGetCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, opt ...RequestOption) (*ReposGetCommitCommentResponse, error) {
+	return ReposGetCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7839,8 +7839,8 @@ Get contents.
 
 https://developer.github.com/v3/repos/contents/#get-contents
 */
-func (c *Client) ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...RequestOption) (*ReposGetContentsResponse, error) {
-	return ReposGetContents(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...RequestOption) (*ReposGetContentsResponse, error) {
+	return ReposGetContents(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -7979,8 +7979,8 @@ Get contributors list with additions, deletions, and commit counts.
 
 https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
 */
-func (c *Client) ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsStatsReq, opt ...RequestOption) (*ReposGetContributorsStatsResponse, error) {
-	return ReposGetContributorsStats(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsStatsReq, opt ...RequestOption) (*ReposGetContributorsStatsResponse, error) {
+	return ReposGetContributorsStats(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8109,8 +8109,8 @@ Get a deploy key.
 
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
-func (c *Client) ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...RequestOption) (*ReposGetDeployKeyResponse, error) {
-	return ReposGetDeployKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...RequestOption) (*ReposGetDeployKeyResponse, error) {
+	return ReposGetDeployKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8240,8 +8240,8 @@ Get a single deployment.
 
 https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
 */
-func (c *Client) ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...RequestOption) (*ReposGetDeploymentResponse, error) {
-	return ReposGetDeployment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...RequestOption) (*ReposGetDeploymentResponse, error) {
+	return ReposGetDeployment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8395,8 +8395,8 @@ Get a single deployment status.
 
 https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
 */
-func (c *Client) ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatusReq, opt ...RequestOption) (*ReposGetDeploymentStatusResponse, error) {
-	return ReposGetDeploymentStatus(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatusReq, opt ...RequestOption) (*ReposGetDeploymentStatusResponse, error) {
+	return ReposGetDeploymentStatus(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8565,8 +8565,8 @@ Get a single download.
 
 https://developer.github.com/v3/repos/downloads/#get-a-single-download
 */
-func (c *Client) ReposGetDownload(ctx context.Context, req *ReposGetDownloadReq, opt ...RequestOption) (*ReposGetDownloadResponse, error) {
-	return ReposGetDownload(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetDownload(ctx context.Context, req *ReposGetDownloadReq, opt ...RequestOption) (*ReposGetDownloadResponse, error) {
+	return ReposGetDownload(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8696,8 +8696,8 @@ Get single hook.
 
 https://developer.github.com/v3/repos/hooks/#get-single-hook
 */
-func (c *Client) ReposGetHook(ctx context.Context, req *ReposGetHookReq, opt ...RequestOption) (*ReposGetHookResponse, error) {
-	return ReposGetHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetHook(ctx context.Context, req *ReposGetHookReq, opt ...RequestOption) (*ReposGetHookResponse, error) {
+	return ReposGetHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8827,8 +8827,8 @@ Get latest Pages build.
 
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
-func (c *Client) ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuildReq, opt ...RequestOption) (*ReposGetLatestPagesBuildResponse, error) {
-	return ReposGetLatestPagesBuild(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuildReq, opt ...RequestOption) (*ReposGetLatestPagesBuildResponse, error) {
+	return ReposGetLatestPagesBuild(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -8957,8 +8957,8 @@ Get the latest release.
 
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
-func (c *Client) ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, opt ...RequestOption) (*ReposGetLatestReleaseResponse, error) {
-	return ReposGetLatestRelease(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, opt ...RequestOption) (*ReposGetLatestReleaseResponse, error) {
+	return ReposGetLatestRelease(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9087,8 +9087,8 @@ Get information about a Pages site.
 
 https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
 */
-func (c *Client) ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOption) (*ReposGetPagesResponse, error) {
-	return ReposGetPages(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOption) (*ReposGetPagesResponse, error) {
+	return ReposGetPages(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9217,8 +9217,8 @@ Get a specific Pages build.
 
 https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
 */
-func (c *Client) ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...RequestOption) (*ReposGetPagesBuildResponse, error) {
-	return ReposGetPagesBuild(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...RequestOption) (*ReposGetPagesBuildResponse, error) {
+	return ReposGetPagesBuild(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9348,8 +9348,8 @@ Get the weekly commit count for the repository owner and everyone else.
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
 */
-func (c *Client) ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationStatsReq, opt ...RequestOption) (*ReposGetParticipationStatsResponse, error) {
-	return ReposGetParticipationStats(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationStatsReq, opt ...RequestOption) (*ReposGetParticipationStatsResponse, error) {
+	return ReposGetParticipationStats(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9478,8 +9478,8 @@ Get admin enforcement of protected branch.
 
 https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
 */
-func (c *Client) ReposGetProtectedBranchAdminEnforcement(ctx context.Context, req *ReposGetProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchAdminEnforcementResponse, error) {
-	return ReposGetProtectedBranchAdminEnforcement(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetProtectedBranchAdminEnforcement(ctx context.Context, req *ReposGetProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchAdminEnforcementResponse, error) {
+	return ReposGetProtectedBranchAdminEnforcement(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9608,8 +9608,8 @@ Get pull request review enforcement of protected branch.
 
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
 */
-func (c *Client) ReposGetProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposGetProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	return ReposGetProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposGetProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchPullRequestReviewEnforcementResponse, error) {
+	return ReposGetProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9742,8 +9742,8 @@ Get required signatures of protected branch.
 
 https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
 */
-func (c *Client) ReposGetProtectedBranchRequiredSignatures(ctx context.Context, req *ReposGetProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredSignaturesResponse, error) {
-	return ReposGetProtectedBranchRequiredSignatures(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetProtectedBranchRequiredSignatures(ctx context.Context, req *ReposGetProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredSignaturesResponse, error) {
+	return ReposGetProtectedBranchRequiredSignatures(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -9888,8 +9888,8 @@ Get required status checks of protected branch.
 
 https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
 */
-func (c *Client) ReposGetProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposGetProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredStatusChecksResponse, error) {
-	return ReposGetProtectedBranchRequiredStatusChecks(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposGetProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredStatusChecksResponse, error) {
+	return ReposGetProtectedBranchRequiredStatusChecks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10019,8 +10019,8 @@ Get restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
 */
-func (c *Client) ReposGetProtectedBranchRestrictions(ctx context.Context, req *ReposGetProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposGetProtectedBranchRestrictionsResponse, error) {
-	return ReposGetProtectedBranchRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetProtectedBranchRestrictions(ctx context.Context, req *ReposGetProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposGetProtectedBranchRestrictionsResponse, error) {
+	return ReposGetProtectedBranchRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10150,8 +10150,8 @@ Get the number of commits per hour in each day.
 
 https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
 */
-func (c *Client) ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq, opt ...RequestOption) (*ReposGetPunchCardStatsResponse, error) {
-	return ReposGetPunchCardStats(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq, opt ...RequestOption) (*ReposGetPunchCardStatsResponse, error) {
+	return ReposGetPunchCardStats(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10278,8 +10278,8 @@ Get the README.
 
 https://developer.github.com/v3/repos/contents/#get-the-readme
 */
-func (c *Client) ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestOption) (*ReposGetReadmeResponse, error) {
-	return ReposGetReadme(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestOption) (*ReposGetReadmeResponse, error) {
+	return ReposGetReadme(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10417,8 +10417,8 @@ Get a single release.
 
 https://developer.github.com/v3/repos/releases/#get-a-single-release
 */
-func (c *Client) ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...RequestOption) (*ReposGetReleaseResponse, error) {
-	return ReposGetRelease(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...RequestOption) (*ReposGetReleaseResponse, error) {
+	return ReposGetRelease(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10548,8 +10548,8 @@ Get a single release asset.
 
 https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
 */
-func (c *Client) ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt ...RequestOption) (*ReposGetReleaseAssetResponse, error) {
-	return ReposGetReleaseAsset(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt ...RequestOption) (*ReposGetReleaseAssetResponse, error) {
+	return ReposGetReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10679,8 +10679,8 @@ Get a release by tag name.
 
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
-func (c *Client) ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt ...RequestOption) (*ReposGetReleaseByTagResponse, error) {
-	return ReposGetReleaseByTag(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt ...RequestOption) (*ReposGetReleaseByTagResponse, error) {
+	return ReposGetReleaseByTag(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10810,8 +10810,8 @@ Get teams with access to protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
 */
-func (c *Client) ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetTeamsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetTeamsWithAccessToProtectedBranchResponse, error) {
-	return ReposGetTeamsWithAccessToProtectedBranch(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetTeamsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetTeamsWithAccessToProtectedBranchResponse, error) {
+	return ReposGetTeamsWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -10941,8 +10941,8 @@ List paths.
 
 https://developer.github.com/v3/repos/traffic/#list-paths
 */
-func (c *Client) ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...RequestOption) (*ReposGetTopPathsResponse, error) {
-	return ReposGetTopPaths(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...RequestOption) (*ReposGetTopPathsResponse, error) {
+	return ReposGetTopPaths(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11071,8 +11071,8 @@ List referrers.
 
 https://developer.github.com/v3/repos/traffic/#list-referrers
 */
-func (c *Client) ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt ...RequestOption) (*ReposGetTopReferrersResponse, error) {
-	return ReposGetTopReferrers(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt ...RequestOption) (*ReposGetTopReferrersResponse, error) {
+	return ReposGetTopReferrers(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11201,8 +11201,8 @@ Get users with access to protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
 */
-func (c *Client) ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGetUsersWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetUsersWithAccessToProtectedBranchResponse, error) {
-	return ReposGetUsersWithAccessToProtectedBranch(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGetUsersWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetUsersWithAccessToProtectedBranchResponse, error) {
+	return ReposGetUsersWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11332,8 +11332,8 @@ Views.
 
 https://developer.github.com/v3/repos/traffic/#views
 */
-func (c *Client) ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOption) (*ReposGetViewsResponse, error) {
-	return ReposGetViews(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOption) (*ReposGetViewsResponse, error) {
+	return ReposGetViews(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11468,8 +11468,8 @@ List assets for a release.
 
 https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
 */
-func (c *Client) ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForReleaseReq, opt ...RequestOption) (*ReposListAssetsForReleaseResponse, error) {
-	return ReposListAssetsForRelease(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForReleaseReq, opt ...RequestOption) (*ReposListAssetsForReleaseResponse, error) {
+	return ReposListAssetsForRelease(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11611,8 +11611,8 @@ List branches.
 
 https://developer.github.com/v3/repos/branches/#list-branches
 */
-func (c *Client) ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...RequestOption) (*ReposListBranchesResponse, error) {
-	return ReposListBranches(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...RequestOption) (*ReposListBranchesResponse, error) {
+	return ReposListBranches(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11762,8 +11762,8 @@ List branches for HEAD commit.
 
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
-func (c *Client) ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesForHeadCommitReq, opt ...RequestOption) (*ReposListBranchesForHeadCommitResponse, error) {
-	return ReposListBranchesForHeadCommit(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesForHeadCommitReq, opt ...RequestOption) (*ReposListBranchesForHeadCommitResponse, error) {
+	return ReposListBranchesForHeadCommit(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -11908,8 +11908,8 @@ List collaborators.
 
 https://developer.github.com/v3/repos/collaborators/#list-collaborators
 */
-func (c *Client) ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq, opt ...RequestOption) (*ReposListCollaboratorsResponse, error) {
-	return ReposListCollaborators(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq, opt ...RequestOption) (*ReposListCollaboratorsResponse, error) {
+	return ReposListCollaborators(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -12062,8 +12062,8 @@ List comments for a single commit.
 
 https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
 */
-func (c *Client) ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCommitReq, opt ...RequestOption) (*ReposListCommentsForCommitResponse, error) {
-	return ReposListCommentsForCommit(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCommitReq, opt ...RequestOption) (*ReposListCommentsForCommitResponse, error) {
+	return ReposListCommentsForCommit(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -12219,8 +12219,8 @@ List commit comments for a repository.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-func (c *Client) ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsReq, opt ...RequestOption) (*ReposListCommitCommentsResponse, error) {
-	return ReposListCommitComments(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsReq, opt ...RequestOption) (*ReposListCommitCommentsResponse, error) {
+	return ReposListCommitComments(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -12375,8 +12375,8 @@ List commits on a repository.
 
 https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
 */
-func (c *Client) ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...RequestOption) (*ReposListCommitsResponse, error) {
-	return ReposListCommits(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...RequestOption) (*ReposListCommitsResponse, error) {
+	return ReposListCommits(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -12556,8 +12556,8 @@ List contributors.
 
 https://developer.github.com/v3/repos/#list-contributors
 */
-func (c *Client) ReposListContributors(ctx context.Context, req *ReposListContributorsReq, opt ...RequestOption) (*ReposListContributorsResponse, error) {
-	return ReposListContributors(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListContributors(ctx context.Context, req *ReposListContributorsReq, opt ...RequestOption) (*ReposListContributorsResponse, error) {
+	return ReposListContributors(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -12704,8 +12704,8 @@ List deploy keys.
 
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
-func (c *Client) ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt ...RequestOption) (*ReposListDeployKeysResponse, error) {
-	return ReposListDeployKeys(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt ...RequestOption) (*ReposListDeployKeysResponse, error) {
+	return ReposListDeployKeys(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -12846,8 +12846,8 @@ List deployment statuses.
 
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
-func (c *Client) ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentStatusesReq, opt ...RequestOption) (*ReposListDeploymentStatusesResponse, error) {
-	return ReposListDeploymentStatuses(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentStatusesReq, opt ...RequestOption) (*ReposListDeploymentStatusesResponse, error) {
+	return ReposListDeploymentStatuses(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -13019,8 +13019,8 @@ List deployments.
 
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
-func (c *Client) ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt ...RequestOption) (*ReposListDeploymentsResponse, error) {
-	return ReposListDeployments(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt ...RequestOption) (*ReposListDeploymentsResponse, error) {
+	return ReposListDeployments(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -13202,8 +13202,8 @@ List downloads for a repository.
 
 https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
 */
-func (c *Client) ReposListDownloads(ctx context.Context, req *ReposListDownloadsReq, opt ...RequestOption) (*ReposListDownloadsResponse, error) {
-	return ReposListDownloads(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListDownloads(ctx context.Context, req *ReposListDownloadsReq, opt ...RequestOption) (*ReposListDownloadsResponse, error) {
+	return ReposListDownloads(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -13343,8 +13343,8 @@ List repositories for the authenticated user.
 
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
-func (c *Client) ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthenticatedUserReq, opt ...RequestOption) (*ReposListForAuthenticatedUserResponse, error) {
-	return ReposListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthenticatedUserReq, opt ...RequestOption) (*ReposListForAuthenticatedUserResponse, error) {
+	return ReposListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -13520,8 +13520,8 @@ List organization repositories.
 
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
-func (c *Client) ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...RequestOption) (*ReposListForOrgResponse, error) {
-	return ReposListForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...RequestOption) (*ReposListForOrgResponse, error) {
+	return ReposListForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -13715,8 +13715,8 @@ List repositories for a user.
 
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
-func (c *Client) ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...RequestOption) (*ReposListForUserResponse, error) {
-	return ReposListForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...RequestOption) (*ReposListForUserResponse, error) {
+	return ReposListForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -13882,8 +13882,8 @@ List forks.
 
 https://developer.github.com/v3/repos/forks/#list-forks
 */
-func (c *Client) ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...RequestOption) (*ReposListForksResponse, error) {
-	return ReposListForks(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...RequestOption) (*ReposListForksResponse, error) {
+	return ReposListForks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14030,8 +14030,8 @@ List hooks.
 
 https://developer.github.com/v3/repos/hooks/#list-hooks
 */
-func (c *Client) ReposListHooks(ctx context.Context, req *ReposListHooksReq, opt ...RequestOption) (*ReposListHooksResponse, error) {
-	return ReposListHooks(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListHooks(ctx context.Context, req *ReposListHooksReq, opt ...RequestOption) (*ReposListHooksResponse, error) {
+	return ReposListHooks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14172,8 +14172,8 @@ List invitations for a repository.
 
 https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
 */
-func (c *Client) ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt ...RequestOption) (*ReposListInvitationsResponse, error) {
-	return ReposListInvitations(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt ...RequestOption) (*ReposListInvitationsResponse, error) {
+	return ReposListInvitations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14314,8 +14314,8 @@ List a user's repository invitations.
 
 https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 */
-func (c *Client) ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposListInvitationsForAuthenticatedUserReq, opt ...RequestOption) (*ReposListInvitationsForAuthenticatedUserResponse, error) {
-	return ReposListInvitationsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposListInvitationsForAuthenticatedUserReq, opt ...RequestOption) (*ReposListInvitationsForAuthenticatedUserResponse, error) {
+	return ReposListInvitationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14454,8 +14454,8 @@ List languages.
 
 https://developer.github.com/v3/repos/#list-languages
 */
-func (c *Client) ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...RequestOption) (*ReposListLanguagesResponse, error) {
-	return ReposListLanguages(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...RequestOption) (*ReposListLanguagesResponse, error) {
+	return ReposListLanguages(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14582,8 +14582,8 @@ List Pages builds.
 
 https://developer.github.com/v3/repos/pages/#list-pages-builds
 */
-func (c *Client) ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt ...RequestOption) (*ReposListPagesBuildsResponse, error) {
-	return ReposListPagesBuilds(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt ...RequestOption) (*ReposListPagesBuildsResponse, error) {
+	return ReposListPagesBuilds(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14724,8 +14724,8 @@ List required status checks contexts of protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
 */
-func (c *Client) ReposListProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposListProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposListProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposListProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposListProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposListProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	return ReposListProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14853,8 +14853,8 @@ List public repositories.
 
 https://developer.github.com/v3/repos/#list-public-repositories
 */
-func (c *Client) ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...RequestOption) (*ReposListPublicResponse, error) {
-	return ReposListPublic(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...RequestOption) (*ReposListPublicResponse, error) {
+	return ReposListPublic(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -14987,8 +14987,8 @@ List pull requests associated with commit.
 
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
 */
-func (c *Client) ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposListPullRequestsAssociatedWithCommitReq, opt ...RequestOption) (*ReposListPullRequestsAssociatedWithCommitResponse, error) {
-	return ReposListPullRequestsAssociatedWithCommit(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposListPullRequestsAssociatedWithCommitReq, opt ...RequestOption) (*ReposListPullRequestsAssociatedWithCommitResponse, error) {
+	return ReposListPullRequestsAssociatedWithCommit(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15145,8 +15145,8 @@ List releases for a repository.
 
 https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
 */
-func (c *Client) ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...RequestOption) (*ReposListReleasesResponse, error) {
-	return ReposListReleases(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...RequestOption) (*ReposListReleasesResponse, error) {
+	return ReposListReleases(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15287,8 +15287,8 @@ List statuses for a specific ref.
 
 https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
 */
-func (c *Client) ReposListStatusesForRef(ctx context.Context, req *ReposListStatusesForRefReq, opt ...RequestOption) (*ReposListStatusesForRefResponse, error) {
-	return ReposListStatusesForRef(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListStatusesForRef(ctx context.Context, req *ReposListStatusesForRefReq, opt ...RequestOption) (*ReposListStatusesForRefResponse, error) {
+	return ReposListStatusesForRef(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15430,8 +15430,8 @@ List tags.
 
 https://developer.github.com/v3/repos/#list-tags
 */
-func (c *Client) ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOption) (*ReposListTagsResponse, error) {
-	return ReposListTags(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOption) (*ReposListTagsResponse, error) {
+	return ReposListTags(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15572,8 +15572,8 @@ List teams.
 
 https://developer.github.com/v3/repos/#list-teams
 */
-func (c *Client) ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestOption) (*ReposListTeamsResponse, error) {
-	return ReposListTeams(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestOption) (*ReposListTeamsResponse, error) {
+	return ReposListTeams(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15714,8 +15714,8 @@ Perform a merge.
 
 https://developer.github.com/v3/repos/merging/#perform-a-merge
 */
-func (c *Client) ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (*ReposMergeResponse, error) {
-	return ReposMerge(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (*ReposMergeResponse, error) {
+	return ReposMerge(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15864,8 +15864,8 @@ Ping a hook.
 
 https://developer.github.com/v3/repos/hooks/#ping-a-hook
 */
-func (c *Client) ReposPingHook(ctx context.Context, req *ReposPingHookReq, opt ...RequestOption) (*ReposPingHookResponse, error) {
-	return ReposPingHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposPingHook(ctx context.Context, req *ReposPingHookReq, opt ...RequestOption) (*ReposPingHookResponse, error) {
+	return ReposPingHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -15984,8 +15984,8 @@ Remove branch protection.
 
 https://developer.github.com/v3/repos/branches/#remove-branch-protection
 */
-func (c *Client) ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProtectionReq, opt ...RequestOption) (*ReposRemoveBranchProtectionResponse, error) {
-	return ReposRemoveBranchProtection(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProtectionReq, opt ...RequestOption) (*ReposRemoveBranchProtectionResponse, error) {
+	return ReposRemoveBranchProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16104,8 +16104,8 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
 */
-func (c *Client) ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorReq, opt ...RequestOption) (*ReposRemoveCollaboratorResponse, error) {
-	return ReposRemoveCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorReq, opt ...RequestOption) (*ReposRemoveCollaboratorResponse, error) {
+	return ReposRemoveCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16224,8 +16224,8 @@ Remove a deploy key.
 
 https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
 */
-func (c *Client) ReposRemoveDeployKey(ctx context.Context, req *ReposRemoveDeployKeyReq, opt ...RequestOption) (*ReposRemoveDeployKeyResponse, error) {
-	return ReposRemoveDeployKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveDeployKey(ctx context.Context, req *ReposRemoveDeployKeyReq, opt ...RequestOption) (*ReposRemoveDeployKeyResponse, error) {
+	return ReposRemoveDeployKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16344,8 +16344,8 @@ Remove admin enforcement of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchAdminEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAdminEnforcementResponse, error) {
-	return ReposRemoveProtectedBranchAdminEnforcement(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchAdminEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAdminEnforcementResponse, error) {
+	return ReposRemoveProtectedBranchAdminEnforcement(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16465,8 +16465,8 @@ Remove app restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchAppRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAppRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchAppRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchAppRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAppRestrictionsResponse, error) {
+	return ReposRemoveProtectedBranchAppRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16603,8 +16603,8 @@ Remove pull request review enforcement of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	return ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse, error) {
+	return ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16723,8 +16723,8 @@ Remove required signatures of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchRequiredSignatures(ctx context.Context, req *ReposRemoveProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredSignaturesResponse, error) {
-	return ReposRemoveProtectedBranchRequiredSignatures(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchRequiredSignatures(ctx context.Context, req *ReposRemoveProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredSignaturesResponse, error) {
+	return ReposRemoveProtectedBranchRequiredSignatures(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16858,8 +16858,8 @@ Remove required status checks of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksResponse, error) {
-	return ReposRemoveProtectedBranchRequiredStatusChecks(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksResponse, error) {
+	return ReposRemoveProtectedBranchRequiredStatusChecks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -16979,8 +16979,8 @@ Remove required status checks contexts of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	return ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17115,8 +17115,8 @@ Remove restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRestrictionsResponse, error) {
+	return ReposRemoveProtectedBranchRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17236,8 +17236,8 @@ Remove team restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchTeamRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchTeamRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchTeamRestrictionsResponse, error) {
+	return ReposRemoveProtectedBranchTeamRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17375,8 +17375,8 @@ Remove user restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
 */
-func (c *Client) ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchUserRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchUserRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchUserRestrictionsResponse, error) {
+	return ReposRemoveProtectedBranchUserRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17514,8 +17514,8 @@ Replace all repository topics.
 
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
-func (c *Client) ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, opt ...RequestOption) (*ReposReplaceAllTopicsResponse, error) {
-	return ReposReplaceAllTopics(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, opt ...RequestOption) (*ReposReplaceAllTopicsResponse, error) {
+	return ReposReplaceAllTopics(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17674,8 +17674,8 @@ Replace app restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
 */
-func (c *Client) ReposReplaceProtectedBranchAppRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchAppRestrictionsResponse, error) {
-	return ReposReplaceProtectedBranchAppRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposReplaceProtectedBranchAppRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchAppRestrictionsResponse, error) {
+	return ReposReplaceProtectedBranchAppRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17813,8 +17813,8 @@ Replace required status checks contexts of protected branch.
 
 https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
 */
-func (c *Client) ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse, error) {
+	return ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -17950,8 +17950,8 @@ Replace team restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
 */
-func (c *Client) ReposReplaceProtectedBranchTeamRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchTeamRestrictionsResponse, error) {
-	return ReposReplaceProtectedBranchTeamRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposReplaceProtectedBranchTeamRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchTeamRestrictionsResponse, error) {
+	return ReposReplaceProtectedBranchTeamRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -18089,8 +18089,8 @@ Replace user restrictions of protected branch.
 
 https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
 */
-func (c *Client) ReposReplaceProtectedBranchUserRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchUserRestrictionsResponse, error) {
-	return ReposReplaceProtectedBranchUserRestrictions(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposReplaceProtectedBranchUserRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchUserRestrictionsResponse, error) {
+	return ReposReplaceProtectedBranchUserRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -18228,8 +18228,8 @@ Request a page build.
 
 https://developer.github.com/v3/repos/pages/#request-a-page-build
 */
-func (c *Client) ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, opt ...RequestOption) (*ReposRequestPageBuildResponse, error) {
-	return ReposRequestPageBuild(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, opt ...RequestOption) (*ReposRequestPageBuildResponse, error) {
+	return ReposRequestPageBuild(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -18358,8 +18358,8 @@ Retrieve community profile metrics.
 
 https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
 */
-func (c *Client) ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetrieveCommunityProfileMetricsReq, opt ...RequestOption) (*ReposRetrieveCommunityProfileMetricsResponse, error) {
-	return ReposRetrieveCommunityProfileMetrics(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetrieveCommunityProfileMetricsReq, opt ...RequestOption) (*ReposRetrieveCommunityProfileMetricsResponse, error) {
+	return ReposRetrieveCommunityProfileMetrics(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -18487,8 +18487,8 @@ Test a push hook.
 
 https://developer.github.com/v3/repos/hooks/#test-a-push-hook
 */
-func (c *Client) ReposTestPushHook(ctx context.Context, req *ReposTestPushHookReq, opt ...RequestOption) (*ReposTestPushHookResponse, error) {
-	return ReposTestPushHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposTestPushHook(ctx context.Context, req *ReposTestPushHookReq, opt ...RequestOption) (*ReposTestPushHookResponse, error) {
+	return ReposTestPushHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -18608,8 +18608,8 @@ Transfer a repository.
 
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
-func (c *Client) ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...RequestOption) (*ReposTransferResponse, error) {
-	return ReposTransfer(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...RequestOption) (*ReposTransferResponse, error) {
+	return ReposTransfer(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -18759,8 +18759,8 @@ Update a repository.
 
 https://developer.github.com/v3/repos/#update-a-repository
 */
-func (c *Client) ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...RequestOption) (*ReposUpdateResponse, error) {
-	return ReposUpdate(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...RequestOption) (*ReposUpdateResponse, error) {
+	return ReposUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -19011,8 +19011,8 @@ Update branch protection.
 
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
-func (c *Client) ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProtectionReq, opt ...RequestOption) (*ReposUpdateBranchProtectionResponse, error) {
-	return ReposUpdateBranchProtection(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProtectionReq, opt ...RequestOption) (*ReposUpdateBranchProtectionResponse, error) {
+	return ReposUpdateBranchProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -19279,8 +19279,8 @@ Update a commit comment.
 
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
-func (c *Client) ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitCommentReq, opt ...RequestOption) (*ReposUpdateCommitCommentResponse, error) {
-	return ReposUpdateCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitCommentReq, opt ...RequestOption) (*ReposUpdateCommitCommentResponse, error) {
+	return ReposUpdateCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -19422,8 +19422,8 @@ Edit a hook.
 
 https://developer.github.com/v3/repos/hooks/#edit-a-hook
 */
-func (c *Client) ReposUpdateHook(ctx context.Context, req *ReposUpdateHookReq, opt ...RequestOption) (*ReposUpdateHookResponse, error) {
-	return ReposUpdateHook(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateHook(ctx context.Context, req *ReposUpdateHookReq, opt ...RequestOption) (*ReposUpdateHookResponse, error) {
+	return ReposUpdateHook(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -19621,8 +19621,8 @@ Update information about a Pages site.
 
 https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
 */
-func (c *Client) ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateInformationAboutPagesSiteReq, opt ...RequestOption) (*ReposUpdateInformationAboutPagesSiteResponse, error) {
-	return ReposUpdateInformationAboutPagesSite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateInformationAboutPagesSiteReq, opt ...RequestOption) (*ReposUpdateInformationAboutPagesSiteResponse, error) {
+	return ReposUpdateInformationAboutPagesSite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -19765,8 +19765,8 @@ Update a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
-func (c *Client) ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, opt ...RequestOption) (*ReposUpdateInvitationResponse, error) {
-	return ReposUpdateInvitation(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, opt ...RequestOption) (*ReposUpdateInvitationResponse, error) {
+	return ReposUpdateInvitation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -19911,8 +19911,8 @@ Update pull request review enforcement of protected branch.
 
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
 */
-func (c *Client) ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	return ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse, error) {
+	return ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -20100,8 +20100,8 @@ Update required status checks of protected branch.
 
 https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
 */
-func (c *Client) ReposUpdateProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposUpdateProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposUpdateProtectedBranchRequiredStatusChecksResponse, error) {
-	return ReposUpdateProtectedBranchRequiredStatusChecks(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposUpdateProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposUpdateProtectedBranchRequiredStatusChecksResponse, error) {
+	return ReposUpdateProtectedBranchRequiredStatusChecks(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -20246,8 +20246,8 @@ Edit a release.
 
 https://developer.github.com/v3/repos/releases/#edit-a-release
 */
-func (c *Client) ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...RequestOption) (*ReposUpdateReleaseResponse, error) {
-	return ReposUpdateRelease(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...RequestOption) (*ReposUpdateReleaseResponse, error) {
+	return ReposUpdateRelease(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -20411,8 +20411,8 @@ Edit a release asset.
 
 https://developer.github.com/v3/repos/releases/#edit-a-release-asset
 */
-func (c *Client) ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetReq, opt ...RequestOption) (*ReposUpdateReleaseAssetResponse, error) {
-	return ReposUpdateReleaseAsset(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetReq, opt ...RequestOption) (*ReposUpdateReleaseAssetResponse, error) {
+	return ReposUpdateReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -20557,8 +20557,8 @@ Upload a release asset.
 
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
-func (c *Client) ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetReq, opt ...RequestOption) (*ReposUploadReleaseAssetResponse, error) {
-	return ReposUploadReleaseAsset(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetReq, opt ...RequestOption) (*ReposUploadReleaseAssetResponse, error) {
+	return ReposUploadReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
 /*

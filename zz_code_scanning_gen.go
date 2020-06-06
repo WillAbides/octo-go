@@ -48,8 +48,8 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-func (c *Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
-	return CodeScanningGetAlert(ctx, req, append(c.opts, opt...)...)
+func (c Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+	return CodeScanningGetAlert(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -179,8 +179,8 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-func (c *Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
-	return CodeScanningListAlertsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+	return CodeScanningListAlertsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*

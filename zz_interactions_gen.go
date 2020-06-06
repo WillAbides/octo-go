@@ -48,8 +48,8 @@ Add or update interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
-func (c *Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
-	return InteractionsAddOrUpdateRestrictionsForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
+	return InteractionsAddOrUpdateRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -207,8 +207,8 @@ Add or update interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
-func (c *Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
-	return InteractionsAddOrUpdateRestrictionsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
+	return InteractionsAddOrUpdateRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -367,8 +367,8 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-func (c *Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
-	return InteractionsGetRestrictionsForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
+	return InteractionsGetRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -510,8 +510,8 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-func (c *Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
-	return InteractionsGetRestrictionsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
+	return InteractionsGetRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -653,8 +653,8 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
-func (c *Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
-	return InteractionsRemoveRestrictionsForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+	return InteractionsRemoveRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -785,8 +785,8 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
-func (c *Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
-	return InteractionsRemoveRestrictionsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+	return InteractionsRemoveRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*

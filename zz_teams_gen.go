@@ -49,8 +49,8 @@ Add or update team membership.
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
-func (c *Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
-	return TeamsAddOrUpdateMembershipInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
+	return TeamsAddOrUpdateMembershipInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -197,8 +197,8 @@ Add or update team project.
 
 https://developer.github.com/v3/teams/#add-or-update-team-project
 */
-func (c *Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
-	return TeamsAddOrUpdateProjectInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
+	return TeamsAddOrUpdateProjectInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -354,8 +354,8 @@ Add or update team repository.
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository
 */
-func (c *Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
-	return TeamsAddOrUpdateRepoInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
+	return TeamsAddOrUpdateRepoInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -506,8 +506,8 @@ Check if a team manages a repository.
 
 https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
 */
-func (c *Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
-	return TeamsCheckManagesRepoInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
+	return TeamsCheckManagesRepoInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -629,8 +629,8 @@ Create team.
 
 https://developer.github.com/v3/teams/#create-team
 */
-func (c *Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
-	return TeamsCreate(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
+	return TeamsCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -809,8 +809,8 @@ Create a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
-func (c *Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
-	return TeamsCreateDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
+	return TeamsCreateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -966,8 +966,8 @@ Create a discussion.
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-func (c *Client) TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionInOrgResponse, error) {
-	return TeamsCreateDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionInOrgResponse, error) {
+	return TeamsCreateDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1132,8 +1132,8 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func (c *Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
-	return TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
+	return TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1290,8 +1290,8 @@ Delete a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
 */
-func (c *Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
-	return TeamsDeleteDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
+	return TeamsDeleteDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1411,8 +1411,8 @@ Delete a discussion.
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
-func (c *Client) TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionInOrgResponse, error) {
-	return TeamsDeleteDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionInOrgResponse, error) {
+	return TeamsDeleteDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1531,8 +1531,8 @@ Delete team.
 
 https://developer.github.com/v3/teams/#delete-team
 */
-func (c *Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
-	return TeamsDeleteInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
+	return TeamsDeleteInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1651,8 +1651,8 @@ Get team by name.
 
 https://developer.github.com/v3/teams/#get-team-by-name
 */
-func (c *Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
-	return TeamsGetByName(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
+	return TeamsGetByName(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1781,8 +1781,8 @@ Get a single comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
 */
-func (c *Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
-	return TeamsGetDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
+	return TeamsGetDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1927,8 +1927,8 @@ Get a single discussion.
 
 https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
-func (c *Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
-	return TeamsGetDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
+	return TeamsGetDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2072,8 +2072,8 @@ Get team membership.
 
 https://developer.github.com/v3/teams/members/#get-team-membership
 */
-func (c *Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
-	return TeamsGetMembershipInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
+	return TeamsGetMembershipInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2203,8 +2203,8 @@ List teams.
 
 https://developer.github.com/v3/teams/#list-teams
 */
-func (c *Client) TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*TeamsListResponse, error) {
-	return TeamsList(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*TeamsListResponse, error) {
+	return TeamsList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2344,8 +2344,8 @@ List child teams.
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
-func (c *Client) TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt ...RequestOption) (*TeamsListChildInOrgResponse, error) {
-	return TeamsListChildInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt ...RequestOption) (*TeamsListChildInOrgResponse, error) {
+	return TeamsListChildInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2486,8 +2486,8 @@ List comments.
 
 https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
-func (c *Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
-	return TeamsListDiscussionCommentsInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
+	return TeamsListDiscussionCommentsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2652,8 +2652,8 @@ List discussions.
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
-func (c *Client) TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionsInOrgResponse, error) {
-	return TeamsListDiscussionsInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionsInOrgResponse, error) {
+	return TeamsListDiscussionsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2817,8 +2817,8 @@ List user teams.
 
 https://developer.github.com/v3/teams/#list-user-teams
 */
-func (c *Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
-	return TeamsListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
+	return TeamsListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2957,8 +2957,8 @@ List IdP groups in an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
 */
-func (c *Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
-	return TeamsListIdPGroupsForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
+	return TeamsListIdPGroupsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3098,8 +3098,8 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func (c *Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
-	return TeamsListIdPGroupsInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
+	return TeamsListIdPGroupsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3228,8 +3228,8 @@ List team members.
 
 https://developer.github.com/v3/teams/members/#list-team-members
 */
-func (c *Client) TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, opt ...RequestOption) (*TeamsListMembersInOrgResponse, error) {
-	return TeamsListMembersInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, opt ...RequestOption) (*TeamsListMembersInOrgResponse, error) {
+	return TeamsListMembersInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3381,8 +3381,8 @@ List pending team invitations.
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
-func (c *Client) TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPendingInvitationsInOrgReq, opt ...RequestOption) (*TeamsListPendingInvitationsInOrgResponse, error) {
-	return TeamsListPendingInvitationsInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPendingInvitationsInOrgReq, opt ...RequestOption) (*TeamsListPendingInvitationsInOrgResponse, error) {
+	return TeamsListPendingInvitationsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3523,8 +3523,8 @@ List team projects.
 
 https://developer.github.com/v3/teams/#list-team-projects
 */
-func (c *Client) TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq, opt ...RequestOption) (*TeamsListProjectsInOrgResponse, error) {
-	return TeamsListProjectsInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq, opt ...RequestOption) (*TeamsListProjectsInOrgResponse, error) {
+	return TeamsListProjectsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3680,8 +3680,8 @@ List team repos.
 
 https://developer.github.com/v3/teams/#list-team-repos
 */
-func (c *Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
-	return TeamsListReposInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
+	return TeamsListReposInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3821,8 +3821,8 @@ Remove team membership.
 
 https://developer.github.com/v3/teams/members/#remove-team-membership
 */
-func (c *Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
-	return TeamsRemoveMembershipInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
+	return TeamsRemoveMembershipInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3941,8 +3941,8 @@ Remove team project.
 
 https://developer.github.com/v3/teams/#remove-team-project
 */
-func (c *Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
-	return TeamsRemoveProjectInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
+	return TeamsRemoveProjectInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4061,8 +4061,8 @@ Remove team repository.
 
 https://developer.github.com/v3/teams/#remove-team-repository
 */
-func (c *Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
-	return TeamsRemoveRepoInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
+	return TeamsRemoveRepoInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4183,8 +4183,8 @@ Review a team project.
 
 https://developer.github.com/v3/teams/#review-a-team-project
 */
-func (c *Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
-	return TeamsReviewProjectInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
+	return TeamsReviewProjectInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4329,8 +4329,8 @@ Edit a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
-func (c *Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
-	return TeamsUpdateDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
+	return TeamsUpdateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4487,8 +4487,8 @@ Edit a discussion.
 
 https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
-func (c *Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
-	return TeamsUpdateDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
+	return TeamsUpdateDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4647,8 +4647,8 @@ Edit team.
 
 https://developer.github.com/v3/teams/#edit-team
 */
-func (c *Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
-	return TeamsUpdateInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
+	return TeamsUpdateInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*

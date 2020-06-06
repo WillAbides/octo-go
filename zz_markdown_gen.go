@@ -47,8 +47,8 @@ Render an arbitrary Markdown document.
 
 https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
-func (c *Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
-	return MarkdownRender(ctx, req, append(c.opts, opt...)...)
+func (c Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+	return MarkdownRender(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -192,8 +192,8 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
-func (c *Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
-	return MarkdownRenderRaw(ctx, req, append(c.opts, opt...)...)
+func (c Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+	return MarkdownRenderRaw(ctx, req, append(c, opt...)...)
 }
 
 /*

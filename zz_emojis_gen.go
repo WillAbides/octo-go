@@ -46,8 +46,8 @@ Get.
 
 https://developer.github.com/v3/emojis/#emojis
 */
-func (c *Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
-	return EmojisGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+	return EmojisGet(ctx, req, append(c, opt...)...)
 }
 
 /*

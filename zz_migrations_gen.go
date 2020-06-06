@@ -48,8 +48,8 @@ Cancel an import.
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
-func (c *Client) MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...RequestOption) (*MigrationsCancelImportResponse, error) {
-	return MigrationsCancelImport(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...RequestOption) (*MigrationsCancelImportResponse, error) {
+	return MigrationsCancelImport(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -167,8 +167,8 @@ Delete a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
-func (c *Client) MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
-	return MigrationsDeleteArchiveForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
+	return MigrationsDeleteArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -294,8 +294,8 @@ Delete an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
-func (c *Client) MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...RequestOption) (*MigrationsDeleteArchiveForOrgResponse, error) {
-	return MigrationsDeleteArchiveForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...RequestOption) (*MigrationsDeleteArchiveForOrgResponse, error) {
+	return MigrationsDeleteArchiveForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -422,8 +422,8 @@ Download an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
-func (c *Client) MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...RequestOption) (*MigrationsDownloadArchiveForOrgResponse, error) {
-	return MigrationsDownloadArchiveForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...RequestOption) (*MigrationsDownloadArchiveForOrgResponse, error) {
+	return MigrationsDownloadArchiveForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -550,8 +550,8 @@ Download a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
-func (c *Client) MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
-	return MigrationsGetArchiveForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
+	return MigrationsGetArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -678,8 +678,8 @@ Get commit authors.
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
-func (c *Client) MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...RequestOption) (*MigrationsGetCommitAuthorsResponse, error) {
-	return MigrationsGetCommitAuthors(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...RequestOption) (*MigrationsGetCommitAuthorsResponse, error) {
+	return MigrationsGetCommitAuthors(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -818,8 +818,8 @@ Get import progress.
 
 https://developer.github.com/v3/migrations/source_imports/#get-import-progress
 */
-func (c *Client) MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportProgressReq, opt ...RequestOption) (*MigrationsGetImportProgressResponse, error) {
-	return MigrationsGetImportProgress(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportProgressReq, opt ...RequestOption) (*MigrationsGetImportProgressResponse, error) {
+	return MigrationsGetImportProgress(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -948,8 +948,8 @@ Get large files.
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
-func (c *Client) MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...RequestOption) (*MigrationsGetLargeFilesResponse, error) {
-	return MigrationsGetLargeFiles(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...RequestOption) (*MigrationsGetLargeFilesResponse, error) {
+	return MigrationsGetLargeFiles(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1078,8 +1078,8 @@ Get the status of a user migration.
 
 https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 */
-func (c *Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
-	return MigrationsGetStatusForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
+	return MigrationsGetStatusForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1216,8 +1216,8 @@ Get the status of an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
 */
-func (c *Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
-	return MigrationsGetStatusForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
+	return MigrationsGetStatusForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1355,8 +1355,8 @@ List user migrations.
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-func (c *Client) MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsListForAuthenticatedUserResponse, error) {
-	return MigrationsListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsListForAuthenticatedUserResponse, error) {
+	return MigrationsListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1504,8 +1504,8 @@ List organization migrations.
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-func (c *Client) MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...RequestOption) (*MigrationsListForOrgResponse, error) {
-	return MigrationsListForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...RequestOption) (*MigrationsListForOrgResponse, error) {
+	return MigrationsListForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1654,8 +1654,8 @@ List repositories in an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
-func (c *Client) MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...RequestOption) (*MigrationsListReposForOrgResponse, error) {
-	return MigrationsListReposForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...RequestOption) (*MigrationsListReposForOrgResponse, error) {
+	return MigrationsListReposForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1805,8 +1805,8 @@ List repositories for a user migration.
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-func (c *Client) MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...RequestOption) (*MigrationsListReposForUserResponse, error) {
-	return MigrationsListReposForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...RequestOption) (*MigrationsListReposForUserResponse, error) {
+	return MigrationsListReposForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1955,8 +1955,8 @@ Map a commit author.
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-func (c *Client) MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...RequestOption) (*MigrationsMapCommitAuthorResponse, error) {
-	return MigrationsMapCommitAuthor(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...RequestOption) (*MigrationsMapCommitAuthorResponse, error) {
+	return MigrationsMapCommitAuthor(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2101,8 +2101,8 @@ Set Git LFS preference.
 
 https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
 */
-func (c *Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
-	return MigrationsSetLfsPreference(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
+	return MigrationsSetLfsPreference(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2246,8 +2246,8 @@ Start a user migration.
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-func (c *Client) MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsStartForAuthenticatedUserResponse, error) {
-	return MigrationsStartForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsStartForAuthenticatedUserResponse, error) {
+	return MigrationsStartForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2399,8 +2399,8 @@ Start an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-func (c *Client) MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...RequestOption) (*MigrationsStartForOrgResponse, error) {
-	return MigrationsStartForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...RequestOption) (*MigrationsStartForOrgResponse, error) {
+	return MigrationsStartForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2552,8 +2552,8 @@ Start an import.
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-func (c *Client) MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...RequestOption) (*MigrationsStartImportResponse, error) {
-	return MigrationsStartImport(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...RequestOption) (*MigrationsStartImportResponse, error) {
+	return MigrationsStartImport(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2710,8 +2710,8 @@ Unlock a user repository.
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
-func (c *Client) MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
-	return MigrationsUnlockRepoForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
+	return MigrationsUnlockRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2838,8 +2838,8 @@ Unlock an organization repository.
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
-func (c *Client) MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...RequestOption) (*MigrationsUnlockRepoForOrgResponse, error) {
-	return MigrationsUnlockRepoForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...RequestOption) (*MigrationsUnlockRepoForOrgResponse, error) {
+	return MigrationsUnlockRepoForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2968,8 +2968,8 @@ Update existing import.
 
 https://developer.github.com/v3/migrations/source_imports/#update-existing-import
 */
-func (c *Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
-	return MigrationsUpdateImport(ctx, req, append(c.opts, opt...)...)
+func (c Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
+	return MigrationsUpdateImport(ctx, req, append(c, opt...)...)
 }
 
 /*

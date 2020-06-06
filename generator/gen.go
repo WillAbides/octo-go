@@ -62,7 +62,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		endpoint.Path,
 		endpoint.DocsURL,
 	)
-	file.Func().Params(jen.Id("c").Op("*").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
+	file.Func().Params(jen.Id("c").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
 		jen.Id("opt ...RequestOption"),
@@ -74,7 +74,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 			jen.Id(toExportedName(endpoint.ID)).Call(
 				jen.Id("ctx"),
 				jen.Id("req"),
-				jen.Id("append(c.opts, opt...)..."),
+				jen.Id("append(c, opt...)..."),
 			),
 		),
 	)

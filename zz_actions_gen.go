@@ -48,8 +48,8 @@ Add selected repository to an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
-func (c *Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
-	return ActionsAddSelectedRepoToOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+	return ActionsAddSelectedRepoToOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -168,8 +168,8 @@ Cancel a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
-func (c *Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
-	return ActionsCancelWorkflowRun(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
+	return ActionsCancelWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -288,8 +288,8 @@ Create or update an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
-func (c *Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
-	return ActionsCreateOrUpdateOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+	return ActionsCreateOrUpdateOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -451,8 +451,8 @@ Create or update a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
-func (c *Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
-	return ActionsCreateOrUpdateRepoSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+	return ActionsCreateOrUpdateRepoSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -593,8 +593,8 @@ Create a registration token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-func (c *Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
-	return ActionsCreateRegistrationTokenForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+	return ActionsCreateRegistrationTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -722,8 +722,8 @@ Create a registration token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-func (c *Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
-	return ActionsCreateRegistrationTokenForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+	return ActionsCreateRegistrationTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -852,8 +852,8 @@ Create a remove token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-func (c *Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
-	return ActionsCreateRemoveTokenForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+	return ActionsCreateRemoveTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -981,8 +981,8 @@ Create a remove token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-func (c *Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
-	return ActionsCreateRemoveTokenForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+	return ActionsCreateRemoveTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1110,8 +1110,8 @@ Delete an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
-func (c *Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
-	return ActionsDeleteArtifact(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
+	return ActionsDeleteArtifact(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1230,8 +1230,8 @@ Delete an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
-func (c *Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
-	return ActionsDeleteOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
+	return ActionsDeleteOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1349,8 +1349,8 @@ Delete a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
-func (c *Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
-	return ActionsDeleteRepoSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
+	return ActionsDeleteRepoSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1469,8 +1469,8 @@ Delete a self-hosted runner from an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
-func (c *Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
-	return ActionsDeleteSelfHostedRunnerFromOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+	return ActionsDeleteSelfHostedRunnerFromOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1588,8 +1588,8 @@ Delete a self-hosted runner from a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
-func (c *Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
-	return ActionsDeleteSelfHostedRunnerFromRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+	return ActionsDeleteSelfHostedRunnerFromRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1708,8 +1708,8 @@ Delete workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
-func (c *Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
-	return ActionsDeleteWorkflowRunLogs(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+	return ActionsDeleteWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1828,8 +1828,8 @@ Download an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
-func (c *Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
-	return ActionsDownloadArtifact(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
+	return ActionsDownloadArtifact(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1949,8 +1949,8 @@ Download workflow job logs.
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
 */
-func (c *Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
-	return ActionsDownloadWorkflowJobLogs(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
+	return ActionsDownloadWorkflowJobLogs(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2069,8 +2069,8 @@ Download workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
-func (c *Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
-	return ActionsDownloadWorkflowRunLogs(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+	return ActionsDownloadWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2190,8 +2190,8 @@ Get an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-func (c *Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
-	return ActionsGetArtifact(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
+	return ActionsGetArtifact(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2321,8 +2321,8 @@ Get an organization public key.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-func (c *Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
-	return ActionsGetOrgPublicKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
+	return ActionsGetOrgPublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2450,8 +2450,8 @@ Get an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-func (c *Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
-	return ActionsGetOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
+	return ActionsGetOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2580,8 +2580,8 @@ Get a repository public key.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-func (c *Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
-	return ActionsGetRepoPublicKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
+	return ActionsGetRepoPublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2710,8 +2710,8 @@ Get a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-func (c *Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
-	return ActionsGetRepoSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
+	return ActionsGetRepoSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2841,8 +2841,8 @@ Get a self-hosted runner for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-func (c *Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
-	return ActionsGetSelfHostedRunnerForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+	return ActionsGetSelfHostedRunnerForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2971,8 +2971,8 @@ Get a self-hosted runner for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-func (c *Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
-	return ActionsGetSelfHostedRunnerForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+	return ActionsGetSelfHostedRunnerForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3102,8 +3102,8 @@ Get a workflow.
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-func (c *Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
-	return ActionsGetWorkflow(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
+	return ActionsGetWorkflow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3233,8 +3233,8 @@ Get a workflow job.
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
 */
-func (c *Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
-	return ActionsGetWorkflowJob(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
+	return ActionsGetWorkflowJob(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3364,8 +3364,8 @@ Get a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-func (c *Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
-	return ActionsGetWorkflowRun(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
+	return ActionsGetWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3495,8 +3495,8 @@ Get workflow run usage.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-func (c *Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
-	return ActionsGetWorkflowRunUsage(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
+	return ActionsGetWorkflowRunUsage(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3626,8 +3626,8 @@ Get workflow usage.
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-func (c *Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
-	return ActionsGetWorkflowUsage(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
+	return ActionsGetWorkflowUsage(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3757,8 +3757,8 @@ List artifacts for a repository.
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
-func (c *Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
-	return ActionsListArtifactsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
+	return ActionsListArtifactsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3902,8 +3902,8 @@ List jobs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
-func (c *Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
-	return ActionsListJobsForWorkflowRun(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
+	return ActionsListJobsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4059,8 +4059,8 @@ List organization secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
-func (c *Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
-	return ActionsListOrgSecrets(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
+	return ActionsListOrgSecrets(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4203,8 +4203,8 @@ List repository secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
-func (c *Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
-	return ActionsListRepoSecrets(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
+	return ActionsListRepoSecrets(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4348,8 +4348,8 @@ List repository workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
 */
-func (c *Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
-	return ActionsListRepoWorkflowRuns(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
+	return ActionsListRepoWorkflowRuns(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4534,8 +4534,8 @@ List repository workflows.
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
-func (c *Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
-	return ActionsListRepoWorkflows(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
+	return ActionsListRepoWorkflows(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4679,8 +4679,8 @@ List runner applications for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-func (c *Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
-	return ActionsListRunnerApplicationsForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+	return ActionsListRunnerApplicationsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4808,8 +4808,8 @@ List runner applications for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-func (c *Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
-	return ActionsListRunnerApplicationsForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+	return ActionsListRunnerApplicationsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4938,8 +4938,8 @@ List selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
-func (c *Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
-	return ActionsListSelectedReposForOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+	return ActionsListSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5071,8 +5071,8 @@ List self-hosted runners for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-func (c *Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
-	return ActionsListSelfHostedRunnersForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+	return ActionsListSelfHostedRunnersForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5215,8 +5215,8 @@ List self-hosted runners for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
-func (c *Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
-	return ActionsListSelfHostedRunnersForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+	return ActionsListSelfHostedRunnersForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5360,8 +5360,8 @@ List workflow run artifacts.
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
-func (c *Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
-	return ActionsListWorkflowRunArtifacts(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
+	return ActionsListWorkflowRunArtifacts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5506,8 +5506,8 @@ List workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
-func (c *Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
-	return ActionsListWorkflowRuns(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
+	return ActionsListWorkflowRuns(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5692,8 +5692,8 @@ Re-run a workflow.
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
-func (c *Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
-	return ActionsReRunWorkflow(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
+	return ActionsReRunWorkflow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5812,8 +5812,8 @@ Remove selected repository from an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-func (c *Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
-	return ActionsRemoveSelectedRepoFromOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+	return ActionsRemoveSelectedRepoFromOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5932,8 +5932,8 @@ Set selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
-func (c *Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
-	return ActionsSetSelectedReposForOrgSecret(ctx, req, append(c.opts, opt...)...)
+func (c Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+	return ActionsSetSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*

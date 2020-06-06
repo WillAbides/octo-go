@@ -49,8 +49,8 @@ Add email address(es).
 
 https://developer.github.com/v3/users/emails/#add-email-addresses
 */
-func (c *Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
-	return UsersAddEmails(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
+	return UsersAddEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -193,8 +193,8 @@ Block a user.
 
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
-func (c *Client) UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (*UsersBlockResponse, error) {
-	return UsersBlock(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (*UsersBlockResponse, error) {
+	return UsersBlock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -315,8 +315,8 @@ Check whether you've blocked a user.
 
 https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 */
-func (c *Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
-	return UsersCheckBlocked(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
+	return UsersCheckBlocked(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -438,8 +438,8 @@ Check if you are following a user.
 
 https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 */
-func (c *Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
-	return UsersCheckFollowing(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
+	return UsersCheckFollowing(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -561,8 +561,8 @@ Check if one user follows another.
 
 https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
 */
-func (c *Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
-	return UsersCheckFollowingForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
+	return UsersCheckFollowingForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -682,8 +682,8 @@ Create a GPG key.
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
-func (c *Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
-	return UsersCreateGpgKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
+	return UsersCreateGpgKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -826,8 +826,8 @@ Create a public key.
 
 https://developer.github.com/v3/users/keys/#create-a-public-key
 */
-func (c *Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
-	return UsersCreatePublicKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
+	return UsersCreatePublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -976,8 +976,8 @@ Delete email address(es).
 
 https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
-func (c *Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
-	return UsersDeleteEmails(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
+	return UsersDeleteEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1110,8 +1110,8 @@ Delete a GPG key.
 
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 */
-func (c *Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
-	return UsersDeleteGpgKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
+	return UsersDeleteGpgKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1228,8 +1228,8 @@ Delete a public key.
 
 https://developer.github.com/v3/users/keys/#delete-a-public-key
 */
-func (c *Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
-	return UsersDeletePublicKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
+	return UsersDeletePublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1346,8 +1346,8 @@ Follow a user.
 
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
-func (c *Client) UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption) (*UsersFollowResponse, error) {
-	return UsersFollow(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption) (*UsersFollowResponse, error) {
+	return UsersFollow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1465,8 +1465,8 @@ Get the authenticated user.
 
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
-func (c *Client) UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, opt ...RequestOption) (*UsersGetAuthenticatedResponse, error) {
-	return UsersGetAuthenticated(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, opt ...RequestOption) (*UsersGetAuthenticatedResponse, error) {
+	return UsersGetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1593,8 +1593,8 @@ Get a single user.
 
 https://developer.github.com/v3/users/#get-a-single-user
 */
-func (c *Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
-	return UsersGetByUsername(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
+	return UsersGetByUsername(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1722,8 +1722,8 @@ Get contextual information about a user.
 
 https://developer.github.com/v3/users/#get-contextual-information-about-a-user
 */
-func (c *Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
-	return UsersGetContextForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
+	return UsersGetContextForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1870,8 +1870,8 @@ Get a single GPG key.
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
-func (c *Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
-	return UsersGetGpgKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
+	return UsersGetGpgKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1999,8 +1999,8 @@ Get a single public key.
 
 https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
-func (c *Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
-	return UsersGetPublicKey(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
+	return UsersGetPublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2128,8 +2128,8 @@ Get all users.
 
 https://developer.github.com/v3/users/#get-all-users
 */
-func (c *Client) UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
-	return UsersList(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
+	return UsersList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2262,8 +2262,8 @@ List blocked users.
 
 https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
-func (c *Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
-	return UsersListBlocked(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
+	return UsersListBlocked(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2390,8 +2390,8 @@ List email addresses for a user.
 
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
-func (c *Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
-	return UsersListEmails(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
+	return UsersListEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2530,8 +2530,8 @@ List users followed by the authenticated user.
 
 https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
 */
-func (c *Client) UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
-	return UsersListFollowedByAuthenticated(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
+	return UsersListFollowedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2670,8 +2670,8 @@ List followers of the authenticated user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
-func (c *Client) UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListFollowersForAuthenticatedUserReq, opt ...RequestOption) (*UsersListFollowersForAuthenticatedUserResponse, error) {
-	return UsersListFollowersForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListFollowersForAuthenticatedUserReq, opt ...RequestOption) (*UsersListFollowersForAuthenticatedUserResponse, error) {
+	return UsersListFollowersForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2810,8 +2810,8 @@ List followers of a user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
-func (c *Client) UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUserReq, opt ...RequestOption) (*UsersListFollowersForUserResponse, error) {
-	return UsersListFollowersForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUserReq, opt ...RequestOption) (*UsersListFollowersForUserResponse, error) {
+	return UsersListFollowersForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2951,8 +2951,8 @@ List users followed by another user.
 
 https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
-func (c *Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
-	return UsersListFollowingForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
+	return UsersListFollowingForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3092,8 +3092,8 @@ List your GPG keys.
 
 https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
-func (c *Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
-	return UsersListGpgKeys(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
+	return UsersListGpgKeys(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3232,8 +3232,8 @@ List GPG keys for a user.
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
-func (c *Client) UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserReq, opt ...RequestOption) (*UsersListGpgKeysForUserResponse, error) {
-	return UsersListGpgKeysForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserReq, opt ...RequestOption) (*UsersListGpgKeysForUserResponse, error) {
+	return UsersListGpgKeysForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3373,8 +3373,8 @@ List public email addresses for a user.
 
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
-func (c *Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
-	return UsersListPublicEmails(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
+	return UsersListPublicEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3513,8 +3513,8 @@ List your public keys.
 
 https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
-func (c *Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
-	return UsersListPublicKeys(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
+	return UsersListPublicKeys(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3653,8 +3653,8 @@ List public keys for a user.
 
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
-func (c *Client) UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysForUserReq, opt ...RequestOption) (*UsersListPublicKeysForUserResponse, error) {
-	return UsersListPublicKeysForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysForUserReq, opt ...RequestOption) (*UsersListPublicKeysForUserResponse, error) {
+	return UsersListPublicKeysForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3794,8 +3794,8 @@ Toggle primary email visibility.
 
 https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
-func (c *Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
-	return UsersTogglePrimaryEmailVisibility(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
+	return UsersTogglePrimaryEmailVisibility(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3939,8 +3939,8 @@ Unblock a user.
 
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
-func (c *Client) UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOption) (*UsersUnblockResponse, error) {
-	return UsersUnblock(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOption) (*UsersUnblockResponse, error) {
+	return UsersUnblock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4057,8 +4057,8 @@ Unfollow a user.
 
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
-func (c *Client) UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOption) (*UsersUnfollowResponse, error) {
-	return UsersUnfollow(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOption) (*UsersUnfollowResponse, error) {
+	return UsersUnfollow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4176,8 +4176,8 @@ Update the authenticated user.
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
-func (c *Client) UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticatedReq, opt ...RequestOption) (*UsersUpdateAuthenticatedResponse, error) {
-	return UsersUpdateAuthenticated(ctx, req, append(c.opts, opt...)...)
+func (c Client) UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticatedReq, opt ...RequestOption) (*UsersUpdateAuthenticatedResponse, error) {
+	return UsersUpdateAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*

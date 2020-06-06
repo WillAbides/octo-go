@@ -49,8 +49,8 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-func (c *Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
-	return ReactionsCreateForCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+	return ReactionsCreateForCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -212,8 +212,8 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-func (c *Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
-	return ReactionsCreateForIssue(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+	return ReactionsCreateForIssue(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -375,8 +375,8 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-func (c *Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
-	return ReactionsCreateForIssueComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+	return ReactionsCreateForIssueComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -538,8 +538,8 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-func (c *Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
-	return ReactionsCreateForPullRequestReviewComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+	return ReactionsCreateForPullRequestReviewComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -701,8 +701,8 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-func (c *Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
-	return ReactionsCreateForTeamDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+	return ReactionsCreateForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -865,8 +865,8 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-func (c *Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
-	return ReactionsCreateForTeamDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+	return ReactionsCreateForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1027,8 +1027,8 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
-func (c *Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
-	return ReactionsDeleteForCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+	return ReactionsDeleteForCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1165,8 +1165,8 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
-func (c *Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
-	return ReactionsDeleteForIssue(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+	return ReactionsDeleteForIssue(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1303,8 +1303,8 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
-func (c *Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
-	return ReactionsDeleteForIssueComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+	return ReactionsDeleteForIssueComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1441,8 +1441,8 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
-func (c *Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
-	return ReactionsDeleteForPullRequestComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+	return ReactionsDeleteForPullRequestComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1579,8 +1579,8 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
-func (c *Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
-	return ReactionsDeleteForTeamDiscussion(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+	return ReactionsDeleteForTeamDiscussion(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1717,8 +1717,8 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
-func (c *Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
-	return ReactionsDeleteForTeamDiscussionComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+	return ReactionsDeleteForTeamDiscussionComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1857,8 +1857,8 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-func (c *Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
-	return ReactionsListForCommitComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+	return ReactionsListForCommitComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2027,8 +2027,8 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-func (c *Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
-	return ReactionsListForIssue(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+	return ReactionsListForIssue(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2197,8 +2197,8 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-func (c *Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
-	return ReactionsListForIssueComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+	return ReactionsListForIssueComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2367,8 +2367,8 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-func (c *Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
-	return ReactionsListForPullRequestReviewComment(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+	return ReactionsListForPullRequestReviewComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2537,8 +2537,8 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-func (c *Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
-	return ReactionsListForTeamDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+	return ReactionsListForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2708,8 +2708,8 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-func (c *Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
-	return ReactionsListForTeamDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+	return ReactionsListForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*

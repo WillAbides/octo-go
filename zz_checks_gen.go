@@ -49,8 +49,8 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-func (c *Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
-	return ChecksCreate(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+	return ChecksCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -388,8 +388,8 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-func (c *Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
-	return ChecksCreateSuite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+	return ChecksCreateSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -545,8 +545,8 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-func (c *Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
-	return ChecksGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+	return ChecksGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -691,8 +691,8 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-func (c *Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
-	return ChecksGetSuite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+	return ChecksGetSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -837,8 +837,8 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-func (c *Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
-	return ChecksListAnnotations(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+	return ChecksListAnnotations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -995,8 +995,8 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
-func (c *Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
-	return ChecksListForRef(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+	return ChecksListForRef(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1180,8 +1180,8 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-func (c *Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
-	return ChecksListForSuite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+	return ChecksListForSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1365,8 +1365,8 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
-func (c *Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
-	return ChecksListSuitesForRef(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+	return ChecksListSuitesForRef(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1540,8 +1540,8 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
-func (c *Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
-	return ChecksRerequestSuite(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+	return ChecksRerequestSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1676,8 +1676,8 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-func (c *Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
-	return ChecksSetSuitesPreferences(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+	return ChecksSetSuitesPreferences(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1851,8 +1851,8 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-func (c *Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
-	return ChecksUpdate(ctx, req, append(c.opts, opt...)...)
+func (c Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+	return ChecksUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*

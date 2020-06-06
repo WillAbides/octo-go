@@ -48,8 +48,8 @@ Get an individual license.
 
 https://developer.github.com/v3/licenses/#get-an-individual-license
 */
-func (c *Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
-	return LicensesGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
+	return LicensesGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -177,8 +177,8 @@ Get the contents of a repository's license.
 
 https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
 */
-func (c *Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
-	return LicensesGetForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
+	return LicensesGetForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -307,8 +307,8 @@ List commonly used licenses.
 
 https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
-func (c *Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
-	return LicensesListCommonlyUsed(ctx, req, append(c.opts, opt...)...)
+func (c Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
+	return LicensesListCommonlyUsed(ctx, req, append(c, opt...)...)
 }
 
 /*

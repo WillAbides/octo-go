@@ -48,8 +48,8 @@ Add user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
-func (c *Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
-	return ProjectsAddCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+	return ProjectsAddCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -203,8 +203,8 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-func (c *Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
-	return ProjectsCreateCard(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+	return ProjectsCreateCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -379,8 +379,8 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-func (c *Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
-	return ProjectsCreateColumn(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+	return ProjectsCreateColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -525,8 +525,8 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-func (c *Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
-	return ProjectsCreateForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+	return ProjectsCreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -683,8 +683,8 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-func (c *Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
-	return ProjectsCreateForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+	return ProjectsCreateForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -842,8 +842,8 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-func (c *Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
-	return ProjectsCreateForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+	return ProjectsCreateForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1001,8 +1001,8 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
-func (c *Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
-	return ProjectsDelete(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+	return ProjectsDelete(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1134,8 +1134,8 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
-func (c *Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
-	return ProjectsDeleteCard(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+	return ProjectsDeleteCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1267,8 +1267,8 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
-func (c *Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
-	return ProjectsDeleteColumn(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+	return ProjectsDeleteColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1401,8 +1401,8 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-func (c *Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
-	return ProjectsGet(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+	return ProjectsGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1544,8 +1544,8 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-func (c *Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
-	return ProjectsGetCard(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+	return ProjectsGetCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1677,8 +1677,8 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-func (c *Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
-	return ProjectsGetColumn(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+	return ProjectsGetColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1811,8 +1811,8 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-func (c *Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
-	return ProjectsListCards(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+	return ProjectsListCards(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1976,8 +1976,8 @@ List collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
-func (c *Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
-	return ProjectsListCollaborators(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+	return ProjectsListCollaborators(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2145,8 +2145,8 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-func (c *Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
-	return ProjectsListColumns(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+	return ProjectsListColumns(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2301,8 +2301,8 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-func (c *Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
-	return ProjectsListForOrg(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+	return ProjectsListForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2466,8 +2466,8 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-func (c *Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
-	return ProjectsListForRepo(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+	return ProjectsListForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2632,8 +2632,8 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-func (c *Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
-	return ProjectsListForUser(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+	return ProjectsListForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2796,8 +2796,8 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
-func (c *Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
-	return ProjectsMoveCard(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+	return ProjectsMoveCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2948,8 +2948,8 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
-func (c *Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
-	return ProjectsMoveColumn(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+	return ProjectsMoveColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3096,8 +3096,8 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
-func (c *Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
-	return ProjectsRemoveCollaborator(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+	return ProjectsRemoveCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3231,8 +3231,8 @@ Review a user's permission level.
 
 https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
-func (c *Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
-	return ProjectsReviewUserPermissionLevel(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
+	return ProjectsReviewUserPermissionLevel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3376,8 +3376,8 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-func (c *Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
-	return ProjectsUpdate(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+	return ProjectsUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3575,8 +3575,8 @@ Update a project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-func (c *Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
-	return ProjectsUpdateCard(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+	return ProjectsUpdateCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3730,8 +3730,8 @@ Update a project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-func (c *Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
-	return ProjectsUpdateColumn(ctx, req, append(c.opts, opt...)...)
+func (c Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+	return ProjectsUpdateColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
