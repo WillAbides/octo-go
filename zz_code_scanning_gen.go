@@ -19,12 +19,12 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-func (c *Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
 	if req == nil {
 		req = new(CodeScanningGetAlertReq)
 	}
 	resp := &CodeScanningGetAlertResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetA
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+CodeScanningGetAlert performs requests for "code-scanning/get-alert"
+
+Get a code scanning alert.
+
+  GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_id}
+
+https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
+*/
+func (c *Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+	return CodeScanningGetAlert(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -137,12 +150,12 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-func (c *Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
 	if req == nil {
 		req = new(CodeScanningListAlertsForRepoReq)
 	}
 	resp := &CodeScanningListAlertsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -155,6 +168,19 @@ func (c *Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeSca
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+CodeScanningListAlertsForRepo performs requests for "code-scanning/list-alerts-for-repo"
+
+List code scanning alerts for a repository.
+
+  GET /repos/{owner}/{repo}/code-scanning/alerts
+
+https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
+*/
+func (c *Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+	return CodeScanningListAlertsForRepo(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

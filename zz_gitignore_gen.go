@@ -19,12 +19,12 @@ Get a single template.
 
 https://developer.github.com/v3/gitignore/#get-a-single-template
 */
-func (c *Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
 	if req == nil {
 		req = new(GitignoreGetTemplateReq)
 	}
 	resp := &GitignoreGetTemplateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemp
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitignoreGetTemplate performs requests for "gitignore/get-template"
+
+Get a single template.
+
+  GET /gitignore/templates/{name}
+
+https://developer.github.com/v3/gitignore/#get-a-single-template
+*/
+func (c *Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+	return GitignoreGetTemplate(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -135,12 +148,12 @@ Listing available templates.
 
 https://developer.github.com/v3/gitignore/#listing-available-templates
 */
-func (c *Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
+func GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
 	if req == nil {
 		req = new(GitignoreListTemplatesReq)
 	}
 	resp := &GitignoreListTemplatesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -153,6 +166,19 @@ func (c *Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListT
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitignoreListTemplates performs requests for "gitignore/list-templates"
+
+Listing available templates.
+
+  GET /gitignore/templates
+
+https://developer.github.com/v3/gitignore/#listing-available-templates
+*/
+func (c *Client) GitignoreListTemplates(ctx context.Context, req *GitignoreListTemplatesReq, opt ...RequestOption) (*GitignoreListTemplatesResponse, error) {
+	return GitignoreListTemplates(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

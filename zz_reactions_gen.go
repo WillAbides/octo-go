@@ -20,12 +20,12 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-func (c *Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsCreateForCommitCommentReq)
 	}
 	resp := &ReactionsCreateForCommitCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) ReactionsCreateForCommitComment(ctx context.Context, req *React
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsCreateForCommitComment performs requests for "reactions/create-for-commit-comment"
+
+Create reaction for a commit comment.
+
+  POST /repos/{owner}/{repo}/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
+*/
+func (c *Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+	return ReactionsCreateForCommitComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -170,12 +183,12 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-func (c *Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
 	if req == nil {
 		req = new(ReactionsCreateForIssueReq)
 	}
 	resp := &ReactionsCreateForIssueResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -188,6 +201,19 @@ func (c *Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCrea
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsCreateForIssue performs requests for "reactions/create-for-issue"
+
+Create reaction for an issue.
+
+  POST /repos/{owner}/{repo}/issues/{issue_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
+*/
+func (c *Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+	return ReactionsCreateForIssue(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -320,12 +346,12 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-func (c *Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsCreateForIssueCommentReq)
 	}
 	resp := &ReactionsCreateForIssueCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -338,6 +364,19 @@ func (c *Client) ReactionsCreateForIssueComment(ctx context.Context, req *Reacti
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsCreateForIssueComment performs requests for "reactions/create-for-issue-comment"
+
+Create reaction for an issue comment.
+
+  POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
+*/
+func (c *Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+	return ReactionsCreateForIssueComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -470,12 +509,12 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-func (c *Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsCreateForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsCreateForPullRequestReviewCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -488,6 +527,19 @@ func (c *Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsCreateForPullRequestReviewComment performs requests for "reactions/create-for-pull-request-review-comment"
+
+Create reaction for a pull request review comment.
+
+  POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
+*/
+func (c *Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+	return ReactionsCreateForPullRequestReviewComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -620,12 +672,12 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-func (c *Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
 	if req == nil {
 		req = new(ReactionsCreateForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -638,6 +690,19 @@ func (c *Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Contex
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentInOrg performs requests for "reactions/create-for-team-discussion-comment-in-org"
+
+Create reaction for a team discussion comment.
+
+  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
+*/
+func (c *Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+	return ReactionsCreateForTeamDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -771,12 +836,12 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-func (c *Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
 	if req == nil {
 		req = new(ReactionsCreateForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -789,6 +854,19 @@ func (c *Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsCreateForTeamDiscussionInOrg performs requests for "reactions/create-for-team-discussion-in-org"
+
+Create reaction for a team discussion.
+
+  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
+*/
+func (c *Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+	return ReactionsCreateForTeamDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -921,12 +999,12 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
-func (c *Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+func ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsDeleteForCommitCommentReq)
 	}
 	resp := &ReactionsDeleteForCommitCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -938,6 +1016,19 @@ func (c *Client) ReactionsDeleteForCommitComment(ctx context.Context, req *React
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsDeleteForCommitComment performs requests for "reactions/delete-for-commit-comment"
+
+Delete a commit comment reaction.
+
+  DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
+*/
+func (c *Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+	return ReactionsDeleteForCommitComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1046,12 +1137,12 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
-func (c *Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+func ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
 	if req == nil {
 		req = new(ReactionsDeleteForIssueReq)
 	}
 	resp := &ReactionsDeleteForIssueResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1063,6 +1154,19 @@ func (c *Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDele
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsDeleteForIssue performs requests for "reactions/delete-for-issue"
+
+Delete an issue reaction.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-an-issue-reaction
+*/
+func (c *Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+	return ReactionsDeleteForIssue(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1171,12 +1275,12 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
-func (c *Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+func ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsDeleteForIssueCommentReq)
 	}
 	resp := &ReactionsDeleteForIssueCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1188,6 +1292,19 @@ func (c *Client) ReactionsDeleteForIssueComment(ctx context.Context, req *Reacti
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsDeleteForIssueComment performs requests for "reactions/delete-for-issue-comment"
+
+Delete an issue comment reaction.
+
+  DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
+*/
+func (c *Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+	return ReactionsDeleteForIssueComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1296,12 +1413,12 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
-func (c *Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+func ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsDeleteForPullRequestCommentReq)
 	}
 	resp := &ReactionsDeleteForPullRequestCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1313,6 +1430,19 @@ func (c *Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsDeleteForPullRequestComment performs requests for "reactions/delete-for-pull-request-comment"
+
+Delete a pull request comment reaction.
+
+  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
+*/
+func (c *Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+	return ReactionsDeleteForPullRequestComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1421,12 +1551,12 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
-func (c *Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+func ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
 	if req == nil {
 		req = new(ReactionsDeleteForTeamDiscussionReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1438,6 +1568,19 @@ func (c *Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *Reac
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsDeleteForTeamDiscussion performs requests for "reactions/delete-for-team-discussion"
+
+Delete team discussion reaction.
+
+  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
+*/
+func (c *Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+	return ReactionsDeleteForTeamDiscussion(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1546,12 +1689,12 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
-func (c *Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+func ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsDeleteForTeamDiscussionCommentReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1563,6 +1706,19 @@ func (c *Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsDeleteForTeamDiscussionComment performs requests for "reactions/delete-for-team-discussion-comment"
+
+Delete team discussion comment reaction.
+
+  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
+*/
+func (c *Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+	return ReactionsDeleteForTeamDiscussionComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1672,12 +1828,12 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-func (c *Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsListForCommitCommentReq)
 	}
 	resp := &ReactionsListForCommitCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1690,6 +1846,19 @@ func (c *Client) ReactionsListForCommitComment(ctx context.Context, req *Reactio
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsListForCommitComment performs requests for "reactions/list-for-commit-comment"
+
+List reactions for a commit comment.
+
+  GET /repos/{owner}/{repo}/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
+*/
+func (c *Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+	return ReactionsListForCommitComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1829,12 +1998,12 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-func (c *Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
 	if req == nil {
 		req = new(ReactionsListForIssueReq)
 	}
 	resp := &ReactionsListForIssueResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1847,6 +2016,19 @@ func (c *Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListFo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsListForIssue performs requests for "reactions/list-for-issue"
+
+List reactions for an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
+*/
+func (c *Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+	return ReactionsListForIssue(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1986,12 +2168,12 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-func (c *Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsListForIssueCommentReq)
 	}
 	resp := &ReactionsListForIssueCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2004,6 +2186,19 @@ func (c *Client) ReactionsListForIssueComment(ctx context.Context, req *Reaction
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsListForIssueComment performs requests for "reactions/list-for-issue-comment"
+
+List reactions for an issue comment.
+
+  GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
+*/
+func (c *Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+	return ReactionsListForIssueComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2143,12 +2338,12 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-func (c *Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+func ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
 	if req == nil {
 		req = new(ReactionsListForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsListForPullRequestReviewCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2161,6 +2356,19 @@ func (c *Client) ReactionsListForPullRequestReviewComment(ctx context.Context, r
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsListForPullRequestReviewComment performs requests for "reactions/list-for-pull-request-review-comment"
+
+List reactions for a pull request review comment.
+
+  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
+*/
+func (c *Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+	return ReactionsListForPullRequestReviewComment(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2300,12 +2508,12 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-func (c *Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
 	if req == nil {
 		req = new(ReactionsListForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2318,6 +2526,19 @@ func (c *Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsListForTeamDiscussionCommentInOrg performs requests for "reactions/list-for-team-discussion-comment-in-org"
+
+List reactions for a team discussion comment.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
+*/
+func (c *Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+	return ReactionsListForTeamDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2458,12 +2679,12 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-func (c *Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
 	if req == nil {
 		req = new(ReactionsListForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2476,6 +2697,19 @@ func (c *Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *R
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ReactionsListForTeamDiscussionInOrg performs requests for "reactions/list-for-team-discussion-in-org"
+
+List reactions for a team discussion.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
+*/
+func (c *Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+	return ReactionsListForTeamDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

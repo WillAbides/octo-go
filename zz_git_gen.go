@@ -20,12 +20,12 @@ Create a blob.
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
-func (c *Client) GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOption) (*GitCreateBlobResponse, error) {
+func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOption) (*GitCreateBlobResponse, error) {
 	if req == nil {
 		req = new(GitCreateBlobReq)
 	}
 	resp := &GitCreateBlobResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitCreateBlob performs requests for "git/create-blob"
+
+Create a blob.
+
+  POST /repos/{owner}/{repo}/git/blobs
+
+https://developer.github.com/v3/git/blobs/#create-a-blob
+*/
+func (c *Client) GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOption) (*GitCreateBlobResponse, error) {
+	return GitCreateBlob(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -155,12 +168,12 @@ Create a commit.
 
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
-func (c *Client) GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...RequestOption) (*GitCreateCommitResponse, error) {
+func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...RequestOption) (*GitCreateCommitResponse, error) {
 	if req == nil {
 		req = new(GitCreateCommitReq)
 	}
 	resp := &GitCreateCommitResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -173,6 +186,19 @@ func (c *Client) GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitCreateCommit performs requests for "git/create-commit"
+
+Create a commit.
+
+  POST /repos/{owner}/{repo}/git/commits
+
+https://developer.github.com/v3/git/commits/#create-a-commit
+*/
+func (c *Client) GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...RequestOption) (*GitCreateCommitResponse, error) {
+	return GitCreateCommit(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -356,12 +382,12 @@ Create a reference.
 
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
-func (c *Client) GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOption) (*GitCreateRefResponse, error) {
+func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOption) (*GitCreateRefResponse, error) {
 	if req == nil {
 		req = new(GitCreateRefReq)
 	}
 	resp := &GitCreateRefResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -374,6 +400,19 @@ func (c *Client) GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitCreateRef performs requests for "git/create-ref"
+
+Create a reference.
+
+  POST /repos/{owner}/{repo}/git/refs
+
+https://developer.github.com/v3/git/refs/#create-a-reference
+*/
+func (c *Client) GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOption) (*GitCreateRefResponse, error) {
+	return GitCreateRef(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -491,12 +530,12 @@ Create a tag object.
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
-func (c *Client) GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOption) (*GitCreateTagResponse, error) {
+func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOption) (*GitCreateTagResponse, error) {
 	if req == nil {
 		req = new(GitCreateTagReq)
 	}
 	resp := &GitCreateTagResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -509,6 +548,19 @@ func (c *Client) GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitCreateTag performs requests for "git/create-tag"
+
+Create a tag object.
+
+  POST /repos/{owner}/{repo}/git/tags
+
+https://developer.github.com/v3/git/tags/#create-a-tag-object
+*/
+func (c *Client) GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOption) (*GitCreateTagResponse, error) {
+	return GitCreateTag(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -651,12 +703,12 @@ Create a tree.
 
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
-func (c *Client) GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOption) (*GitCreateTreeResponse, error) {
+func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOption) (*GitCreateTreeResponse, error) {
 	if req == nil {
 		req = new(GitCreateTreeReq)
 	}
 	resp := &GitCreateTreeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -669,6 +721,19 @@ func (c *Client) GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitCreateTree performs requests for "git/create-tree"
+
+Create a tree.
+
+  POST /repos/{owner}/{repo}/git/trees
+
+https://developer.github.com/v3/git/trees/#create-a-tree
+*/
+func (c *Client) GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOption) (*GitCreateTreeResponse, error) {
+	return GitCreateTree(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -822,12 +887,12 @@ Delete a reference.
 
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
-func (c *Client) GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...RequestOption) (*GitDeleteRefResponse, error) {
+func GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...RequestOption) (*GitDeleteRefResponse, error) {
 	if req == nil {
 		req = new(GitDeleteRefReq)
 	}
 	resp := &GitDeleteRefResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -839,6 +904,19 @@ func (c *Client) GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitDeleteRef performs requests for "git/delete-ref"
+
+Delete a reference.
+
+  DELETE /repos/{owner}/{repo}/git/refs/{ref}
+
+https://developer.github.com/v3/git/refs/#delete-a-reference
+*/
+func (c *Client) GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...RequestOption) (*GitDeleteRefResponse, error) {
+	return GitDeleteRef(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -929,12 +1007,12 @@ Get a blob.
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
-func (c *Client) GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (*GitGetBlobResponse, error) {
+func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (*GitGetBlobResponse, error) {
 	if req == nil {
 		req = new(GitGetBlobReq)
 	}
 	resp := &GitGetBlobResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -947,6 +1025,19 @@ func (c *Client) GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitGetBlob performs requests for "git/get-blob"
+
+Get a blob.
+
+  GET /repos/{owner}/{repo}/git/blobs/{file_sha}
+
+https://developer.github.com/v3/git/blobs/#get-a-blob
+*/
+func (c *Client) GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (*GitGetBlobResponse, error) {
+	return GitGetBlob(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1047,12 +1138,12 @@ Get a commit.
 
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
-func (c *Client) GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOption) (*GitGetCommitResponse, error) {
+func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOption) (*GitGetCommitResponse, error) {
 	if req == nil {
 		req = new(GitGetCommitReq)
 	}
 	resp := &GitGetCommitResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1065,6 +1156,19 @@ func (c *Client) GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitGetCommit performs requests for "git/get-commit"
+
+Get a commit.
+
+  GET /repos/{owner}/{repo}/git/commits/{commit_sha}
+
+https://developer.github.com/v3/git/commits/#get-a-commit
+*/
+func (c *Client) GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOption) (*GitGetCommitResponse, error) {
+	return GitGetCommit(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1165,12 +1269,12 @@ Get a single reference.
 
 https://developer.github.com/v3/git/refs/#get-a-single-reference
 */
-func (c *Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
+func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
 	if req == nil {
 		req = new(GitGetRefReq)
 	}
 	resp := &GitGetRefResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1183,6 +1287,19 @@ func (c *Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitGetRef performs requests for "git/get-ref"
+
+Get a single reference.
+
+  GET /repos/{owner}/{repo}/git/ref/{ref}
+
+https://developer.github.com/v3/git/refs/#get-a-single-reference
+*/
+func (c *Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
+	return GitGetRef(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1283,12 +1400,12 @@ Get a tag.
 
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
-func (c *Client) GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*GitGetTagResponse, error) {
+func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*GitGetTagResponse, error) {
 	if req == nil {
 		req = new(GitGetTagReq)
 	}
 	resp := &GitGetTagResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1301,6 +1418,19 @@ func (c *Client) GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitGetTag performs requests for "git/get-tag"
+
+Get a tag.
+
+  GET /repos/{owner}/{repo}/git/tags/{tag_sha}
+
+https://developer.github.com/v3/git/tags/#get-a-tag
+*/
+func (c *Client) GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*GitGetTagResponse, error) {
+	return GitGetTag(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1401,12 +1531,12 @@ Get a tree.
 
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
-func (c *Client) GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (*GitGetTreeResponse, error) {
+func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (*GitGetTreeResponse, error) {
 	if req == nil {
 		req = new(GitGetTreeReq)
 	}
 	resp := &GitGetTreeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1419,6 +1549,19 @@ func (c *Client) GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitGetTree performs requests for "git/get-tree"
+
+Get a tree.
+
+  GET /repos/{owner}/{repo}/git/trees/{tree_sha}
+
+https://developer.github.com/v3/git/trees/#get-a-tree
+*/
+func (c *Client) GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (*GitGetTreeResponse, error) {
+	return GitGetTree(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1531,12 +1674,12 @@ List matching references.
 
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
-func (c *Client) GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt ...RequestOption) (*GitListMatchingRefsResponse, error) {
+func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt ...RequestOption) (*GitListMatchingRefsResponse, error) {
 	if req == nil {
 		req = new(GitListMatchingRefsReq)
 	}
 	resp := &GitListMatchingRefsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1549,6 +1692,19 @@ func (c *Client) GitListMatchingRefs(ctx context.Context, req *GitListMatchingRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitListMatchingRefs performs requests for "git/list-matching-refs"
+
+List matching references.
+
+  GET /repos/{owner}/{repo}/git/matching-refs/{ref}
+
+https://developer.github.com/v3/git/refs/#list-matching-references
+*/
+func (c *Client) GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt ...RequestOption) (*GitListMatchingRefsResponse, error) {
+	return GitListMatchingRefs(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1661,12 +1817,12 @@ Update a reference.
 
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
-func (c *Client) GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOption) (*GitUpdateRefResponse, error) {
+func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOption) (*GitUpdateRefResponse, error) {
 	if req == nil {
 		req = new(GitUpdateRefReq)
 	}
 	resp := &GitUpdateRefResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1679,6 +1835,19 @@ func (c *Client) GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+GitUpdateRef performs requests for "git/update-ref"
+
+Update a reference.
+
+  PATCH /repos/{owner}/{repo}/git/refs/{ref}
+
+https://developer.github.com/v3/git/refs/#update-a-reference
+*/
+func (c *Client) GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOption) (*GitUpdateRefResponse, error) {
+	return GitUpdateRef(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

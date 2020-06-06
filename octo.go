@@ -277,3 +277,43 @@ func Bool(b bool) *bool {
 func Int64(i int64) *int64 {
 	return &i
 }
+
+func doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
+	req, err := requester.httpRequest(ctx, opt...)
+	if err != nil {
+		return nil, err
+	}
+	ro, err := buildRequestOptions(opt)
+	if err != nil {
+		return nil, err
+	}
+	if ro.authProvider != nil {
+		var authHeader string
+		authHeader, err = ro.authProvider.AuthorizationHeader(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("error setting authorization header: %v", err)
+		}
+		req.Header.Set("Authorization", authHeader)
+	}
+	httpClient := ro.httpClient
+	if httpClient == nil {
+		httpClient = http.DefaultClient
+	}
+	httpResponse, err := httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &response{
+		httpResponse:  httpResponse,
+		httpRequester: requester,
+		opts:          ro,
+	}
+
+	err = errorCheck(resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}

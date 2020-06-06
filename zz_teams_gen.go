@@ -20,12 +20,12 @@ Add or update team membership.
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership
 */
-func (c *Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
+func TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsAddOrUpdateMembershipInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateMembershipInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *Teams
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateMembershipInOrg performs requests for "teams/add-or-update-membership-in-org"
+
+Add or update team membership.
+
+  PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+*/
+func (c *Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
+	return TeamsAddOrUpdateMembershipInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -156,12 +169,12 @@ Add or update team project.
 
 https://developer.github.com/v3/teams/#add-or-update-team-project
 */
-func (c *Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
+func TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsAddOrUpdateProjectInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateProjectInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -173,6 +186,19 @@ func (c *Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAdd
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateProjectInOrg performs requests for "teams/add-or-update-project-in-org"
+
+Add or update team project.
+
+  PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#add-or-update-team-project
+*/
+func (c *Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
+	return TeamsAddOrUpdateProjectInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -300,12 +326,12 @@ Add or update team repository.
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository
 */
-func (c *Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
+func TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsAddOrUpdateRepoInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateRepoInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -317,6 +343,19 @@ func (c *Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrU
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateRepoInOrg performs requests for "teams/add-or-update-repo-in-org"
+
+Add or update team repository.
+
+  PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository
+*/
+func (c *Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
+	return TeamsAddOrUpdateRepoInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -435,12 +474,12 @@ Check if a team manages a repository.
 
 https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
 */
-func (c *Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
+func TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsCheckManagesRepoInOrgReq)
 	}
 	resp := &TeamsCheckManagesRepoInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -456,6 +495,19 @@ func (c *Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheck
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsCheckManagesRepoInOrg performs requests for "teams/check-manages-repo-in-org"
+
+Check if a team manages a repository.
+
+  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+*/
+func (c *Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
+	return TeamsCheckManagesRepoInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -548,12 +600,12 @@ Create team.
 
 https://developer.github.com/v3/teams/#create-team
 */
-func (c *Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
+func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
 	if req == nil {
 		req = new(TeamsCreateReq)
 	}
 	resp := &TeamsCreateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -566,6 +618,19 @@ func (c *Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsCreate performs requests for "teams/create"
+
+Create team.
+
+  POST /orgs/{org}/teams
+
+https://developer.github.com/v3/teams/#create-team
+*/
+func (c *Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
+	return TeamsCreate(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -715,12 +780,12 @@ Create a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
 */
-func (c *Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
+func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsCreateDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsCreateDiscussionCommentInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -733,6 +798,19 @@ func (c *Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *Tea
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsCreateDiscussionCommentInOrg performs requests for "teams/create-discussion-comment-in-org"
+
+Create a comment.
+
+  POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+*/
+func (c *Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
+	return TeamsCreateDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -859,12 +937,12 @@ Create a discussion.
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-func (c *Client) TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionInOrgResponse, error) {
+func TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsCreateDiscussionInOrgReq)
 	}
 	resp := &TeamsCreateDiscussionInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -877,6 +955,19 @@ func (c *Client) TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreat
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsCreateDiscussionInOrg performs requests for "teams/create-discussion-in-org"
+
+Create a discussion.
+
+  POST /orgs/{org}/teams/{team_slug}/discussions
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion
+*/
+func (c *Client) TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionInOrgResponse, error) {
+	return TeamsCreateDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1012,12 +1103,12 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func (c *Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
+func TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq)
 	}
 	resp := &TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1030,6 +1121,19 @@ func (c *Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
+
+Create or update IdP group connections.
+
+  PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+*/
+func (c *Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
+	return TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1158,12 +1262,12 @@ Delete a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
 */
-func (c *Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
+func TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsDeleteDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsDeleteDiscussionCommentInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1175,6 +1279,19 @@ func (c *Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *Tea
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsDeleteDiscussionCommentInOrg performs requests for "teams/delete-discussion-comment-in-org"
+
+Delete a comment.
+
+  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+*/
+func (c *Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
+	return TeamsDeleteDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1266,12 +1383,12 @@ Delete a discussion.
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
-func (c *Client) TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionInOrgResponse, error) {
+func TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsDeleteDiscussionInOrgReq)
 	}
 	resp := &TeamsDeleteDiscussionInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1283,6 +1400,19 @@ func (c *Client) TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDelet
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsDeleteDiscussionInOrg performs requests for "teams/delete-discussion-in-org"
+
+Delete a discussion.
+
+  DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion
+*/
+func (c *Client) TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionInOrgResponse, error) {
+	return TeamsDeleteDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1373,12 +1503,12 @@ Delete team.
 
 https://developer.github.com/v3/teams/#delete-team
 */
-func (c *Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
+func TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsDeleteInOrgReq)
 	}
 	resp := &TeamsDeleteInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1390,6 +1520,19 @@ func (c *Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsDeleteInOrg performs requests for "teams/delete-in-org"
+
+Delete team.
+
+  DELETE /orgs/{org}/teams/{team_slug}
+
+https://developer.github.com/v3/teams/#delete-team
+*/
+func (c *Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
+	return TeamsDeleteInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1479,12 +1622,12 @@ Get team by name.
 
 https://developer.github.com/v3/teams/#get-team-by-name
 */
-func (c *Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
+func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
 	if req == nil {
 		req = new(TeamsGetByNameReq)
 	}
 	resp := &TeamsGetByNameResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1497,6 +1640,19 @@ func (c *Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsGetByName performs requests for "teams/get-by-name"
+
+Get team by name.
+
+  GET /orgs/{org}/teams/{team_slug}
+
+https://developer.github.com/v3/teams/#get-team-by-name
+*/
+func (c *Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
+	return TeamsGetByName(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1596,12 +1752,12 @@ Get a single comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
 */
-func (c *Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
+func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsGetDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsGetDiscussionCommentInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1614,6 +1770,19 @@ func (c *Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsG
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsGetDiscussionCommentInOrg performs requests for "teams/get-discussion-comment-in-org"
+
+Get a single comment.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+*/
+func (c *Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
+	return TeamsGetDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1729,12 +1898,12 @@ Get a single discussion.
 
 https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
 */
-func (c *Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
+func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsGetDiscussionInOrgReq)
 	}
 	resp := &TeamsGetDiscussionInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1747,6 +1916,19 @@ func (c *Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscu
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsGetDiscussionInOrg performs requests for "teams/get-discussion-in-org"
+
+Get a single discussion.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+*/
+func (c *Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
+	return TeamsGetDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1861,12 +2043,12 @@ Get team membership.
 
 https://developer.github.com/v3/teams/members/#get-team-membership
 */
-func (c *Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
+func TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsGetMembershipInOrgReq)
 	}
 	resp := &TeamsGetMembershipInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1879,6 +2061,19 @@ func (c *Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsGetMembershipInOrg performs requests for "teams/get-membership-in-org"
+
+Get team membership.
+
+  GET /orgs/{org}/teams/{team_slug}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-membership
+*/
+func (c *Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
+	return TeamsGetMembershipInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1979,12 +2174,12 @@ List teams.
 
 https://developer.github.com/v3/teams/#list-teams
 */
-func (c *Client) TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*TeamsListResponse, error) {
+func TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*TeamsListResponse, error) {
 	if req == nil {
 		req = new(TeamsListReq)
 	}
 	resp := &TeamsListResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1997,6 +2192,19 @@ func (c *Client) TeamsList(ctx context.Context, req *TeamsListReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsList performs requests for "teams/list"
+
+List teams.
+
+  GET /orgs/{org}/teams
+
+https://developer.github.com/v3/teams/#list-teams
+*/
+func (c *Client) TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*TeamsListResponse, error) {
+	return TeamsList(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2107,12 +2315,12 @@ List child teams.
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
-func (c *Client) TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt ...RequestOption) (*TeamsListChildInOrgResponse, error) {
+func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt ...RequestOption) (*TeamsListChildInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListChildInOrgReq)
 	}
 	resp := &TeamsListChildInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2125,6 +2333,19 @@ func (c *Client) TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInO
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListChildInOrg performs requests for "teams/list-child-in-org"
+
+List child teams.
+
+  GET /orgs/{org}/teams/{team_slug}/teams
+
+https://developer.github.com/v3/teams/#list-child-teams
+*/
+func (c *Client) TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt ...RequestOption) (*TeamsListChildInOrgResponse, error) {
+	return TeamsListChildInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2236,12 +2457,12 @@ List comments.
 
 https://developer.github.com/v3/teams/discussion_comments/#list-comments
 */
-func (c *Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
+func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListDiscussionCommentsInOrgReq)
 	}
 	resp := &TeamsListDiscussionCommentsInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2254,6 +2475,19 @@ func (c *Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *Team
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListDiscussionCommentsInOrg performs requests for "teams/list-discussion-comments-in-org"
+
+List comments.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#list-comments
+*/
+func (c *Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
+	return TeamsListDiscussionCommentsInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2389,12 +2623,12 @@ List discussions.
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
-func (c *Client) TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionsInOrgResponse, error) {
+func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionsInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListDiscussionsInOrgReq)
 	}
 	resp := &TeamsListDiscussionsInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2407,6 +2641,19 @@ func (c *Client) TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListDiscussionsInOrg performs requests for "teams/list-discussions-in-org"
+
+List discussions.
+
+  GET /orgs/{org}/teams/{team_slug}/discussions
+
+https://developer.github.com/v3/teams/discussions/#list-discussions
+*/
+func (c *Client) TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionsInOrgResponse, error) {
+	return TeamsListDiscussionsInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2541,12 +2788,12 @@ List user teams.
 
 https://developer.github.com/v3/teams/#list-user-teams
 */
-func (c *Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
+func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(TeamsListForAuthenticatedUserReq)
 	}
 	resp := &TeamsListForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2559,6 +2806,19 @@ func (c *Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsLi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListForAuthenticatedUser performs requests for "teams/list-for-authenticated-user"
+
+List user teams.
+
+  GET /user/teams
+
+https://developer.github.com/v3/teams/#list-user-teams
+*/
+func (c *Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
+	return TeamsListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2668,12 +2928,12 @@ List IdP groups in an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
 */
-func (c *Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
+func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListIdPGroupsForOrgReq)
 	}
 	resp := &TeamsListIdPGroupsForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2686,6 +2946,19 @@ func (c *Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdP
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
+
+List IdP groups in an organization.
+
+  GET /orgs/{org}/team-sync/groups
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+*/
+func (c *Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
+	return TeamsListIdPGroupsForOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2796,12 +3069,12 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func (c *Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
+func TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListIdPGroupsInOrgReq)
 	}
 	resp := &TeamsListIdPGroupsInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2814,6 +3087,19 @@ func (c *Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPG
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListIdPGroupsInOrg performs requests for "teams/list-id-p-groups-in-org"
+
+List IdP groups for a team.
+
+  GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+*/
+func (c *Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
+	return TeamsListIdPGroupsInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2913,12 +3199,12 @@ List team members.
 
 https://developer.github.com/v3/teams/members/#list-team-members
 */
-func (c *Client) TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, opt ...RequestOption) (*TeamsListMembersInOrgResponse, error) {
+func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, opt ...RequestOption) (*TeamsListMembersInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListMembersInOrgReq)
 	}
 	resp := &TeamsListMembersInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2931,6 +3217,19 @@ func (c *Client) TeamsListMembersInOrg(ctx context.Context, req *TeamsListMember
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListMembersInOrg performs requests for "teams/list-members-in-org"
+
+List team members.
+
+  GET /orgs/{org}/teams/{team_slug}/members
+
+https://developer.github.com/v3/teams/members/#list-team-members
+*/
+func (c *Client) TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, opt ...RequestOption) (*TeamsListMembersInOrgResponse, error) {
+	return TeamsListMembersInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3053,12 +3352,12 @@ List pending team invitations.
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
-func (c *Client) TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPendingInvitationsInOrgReq, opt ...RequestOption) (*TeamsListPendingInvitationsInOrgResponse, error) {
+func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPendingInvitationsInOrgReq, opt ...RequestOption) (*TeamsListPendingInvitationsInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListPendingInvitationsInOrgReq)
 	}
 	resp := &TeamsListPendingInvitationsInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3071,6 +3370,19 @@ func (c *Client) TeamsListPendingInvitationsInOrg(ctx context.Context, req *Team
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListPendingInvitationsInOrg performs requests for "teams/list-pending-invitations-in-org"
+
+List pending team invitations.
+
+  GET /orgs/{org}/teams/{team_slug}/invitations
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+*/
+func (c *Client) TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPendingInvitationsInOrgReq, opt ...RequestOption) (*TeamsListPendingInvitationsInOrgResponse, error) {
+	return TeamsListPendingInvitationsInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3182,12 +3494,12 @@ List team projects.
 
 https://developer.github.com/v3/teams/#list-team-projects
 */
-func (c *Client) TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq, opt ...RequestOption) (*TeamsListProjectsInOrgResponse, error) {
+func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq, opt ...RequestOption) (*TeamsListProjectsInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListProjectsInOrgReq)
 	}
 	resp := &TeamsListProjectsInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3200,6 +3512,19 @@ func (c *Client) TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProje
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListProjectsInOrg performs requests for "teams/list-projects-in-org"
+
+List team projects.
+
+  GET /orgs/{org}/teams/{team_slug}/projects
+
+https://developer.github.com/v3/teams/#list-team-projects
+*/
+func (c *Client) TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq, opt ...RequestOption) (*TeamsListProjectsInOrgResponse, error) {
+	return TeamsListProjectsInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3326,12 +3651,12 @@ List team repos.
 
 https://developer.github.com/v3/teams/#list-team-repos
 */
-func (c *Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
+func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsListReposInOrgReq)
 	}
 	resp := &TeamsListReposInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3344,6 +3669,19 @@ func (c *Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInO
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsListReposInOrg performs requests for "teams/list-repos-in-org"
+
+List team repos.
+
+  GET /orgs/{org}/teams/{team_slug}/repos
+
+https://developer.github.com/v3/teams/#list-team-repos
+*/
+func (c *Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
+	return TeamsListReposInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3455,12 +3793,12 @@ Remove team membership.
 
 https://developer.github.com/v3/teams/members/#remove-team-membership
 */
-func (c *Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
+func TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsRemoveMembershipInOrgReq)
 	}
 	resp := &TeamsRemoveMembershipInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3472,6 +3810,19 @@ func (c *Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemov
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsRemoveMembershipInOrg performs requests for "teams/remove-membership-in-org"
+
+Remove team membership.
+
+  DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-membership
+*/
+func (c *Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
+	return TeamsRemoveMembershipInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3562,12 +3913,12 @@ Remove team project.
 
 https://developer.github.com/v3/teams/#remove-team-project
 */
-func (c *Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
+func TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsRemoveProjectInOrgReq)
 	}
 	resp := &TeamsRemoveProjectInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3579,6 +3930,19 @@ func (c *Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemovePr
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsRemoveProjectInOrg performs requests for "teams/remove-project-in-org"
+
+Remove team project.
+
+  DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#remove-team-project
+*/
+func (c *Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
+	return TeamsRemoveProjectInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3669,12 +4033,12 @@ Remove team repository.
 
 https://developer.github.com/v3/teams/#remove-team-repository
 */
-func (c *Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
+func TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsRemoveRepoInOrgReq)
 	}
 	resp := &TeamsRemoveRepoInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3686,6 +4050,19 @@ func (c *Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoI
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsRemoveRepoInOrg performs requests for "teams/remove-repo-in-org"
+
+Remove team repository.
+
+  DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#remove-team-repository
+*/
+func (c *Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
+	return TeamsRemoveRepoInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3777,12 +4154,12 @@ Review a team project.
 
 https://developer.github.com/v3/teams/#review-a-team-project
 */
-func (c *Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
+func TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsReviewProjectInOrgReq)
 	}
 	resp := &TeamsReviewProjectInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3795,6 +4172,19 @@ func (c *Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewPr
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsReviewProjectInOrg performs requests for "teams/review-project-in-org"
+
+Review a team project.
+
+  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#review-a-team-project
+*/
+func (c *Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
+	return TeamsReviewProjectInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3910,12 +4300,12 @@ Edit a comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
 */
-func (c *Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
+func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsUpdateDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsUpdateDiscussionCommentInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3928,6 +4318,19 @@ func (c *Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *Tea
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsUpdateDiscussionCommentInOrg performs requests for "teams/update-discussion-comment-in-org"
+
+Edit a comment.
+
+  PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+*/
+func (c *Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
+	return TeamsUpdateDiscussionCommentInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -4055,12 +4458,12 @@ Edit a discussion.
 
 https://developer.github.com/v3/teams/discussions/#edit-a-discussion
 */
-func (c *Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
+func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsUpdateDiscussionInOrgReq)
 	}
 	resp := &TeamsUpdateDiscussionInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4073,6 +4476,19 @@ func (c *Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdat
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsUpdateDiscussionInOrg performs requests for "teams/update-discussion-in-org"
+
+Edit a discussion.
+
+  PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+*/
+func (c *Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
+	return TeamsUpdateDiscussionInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -4202,12 +4618,12 @@ Edit team.
 
 https://developer.github.com/v3/teams/#edit-team
 */
-func (c *Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
+func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
 	if req == nil {
 		req = new(TeamsUpdateInOrgReq)
 	}
 	resp := &TeamsUpdateInOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4220,6 +4636,19 @@ func (c *Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+TeamsUpdateInOrg performs requests for "teams/update-in-org"
+
+Edit team.
+
+  PATCH /orgs/{org}/teams/{team_slug}
+
+https://developer.github.com/v3/teams/#edit-team
+*/
+func (c *Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
+	return TeamsUpdateInOrg(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

@@ -19,12 +19,12 @@ List all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
-func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
 	if req == nil {
 		req = new(CodesOfConductGetAllCodesOfConductReq)
 	}
 	resp := &CodesOfConductGetAllCodesOfConductResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *Co
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+CodesOfConductGetAllCodesOfConduct performs requests for "codes-of-conduct/get-all-codes-of-conduct"
+
+List all codes of conduct.
+
+  GET /codes_of_conduct
+
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+*/
+func (c *Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+	return CodesOfConductGetAllCodesOfConduct(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -147,12 +160,12 @@ Get an individual code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
-func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
 	if req == nil {
 		req = new(CodesOfConductGetConductCodeReq)
 	}
 	resp := &CodesOfConductGetConductCodeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -165,6 +178,19 @@ func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfC
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+CodesOfConductGetConductCode performs requests for "codes-of-conduct/get-conduct-code"
+
+Get an individual code of conduct.
+
+  GET /codes_of_conduct/{key}
+
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+*/
+func (c *Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+	return CodesOfConductGetConductCode(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -276,12 +302,12 @@ Get the contents of a repository's code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
 */
-func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
 	if req == nil {
 		req = new(CodesOfConductGetForRepoReq)
 	}
 	resp := &CodesOfConductGetForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -294,6 +320,19 @@ func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfCondu
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+CodesOfConductGetForRepo performs requests for "codes-of-conduct/get-for-repo"
+
+Get the contents of a repository's code of conduct.
+
+  GET /repos/{owner}/{repo}/community/code_of_conduct
+
+https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+*/
+func (c *Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+	return CodesOfConductGetForRepo(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

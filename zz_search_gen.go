@@ -20,12 +20,12 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
-func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
 	if req == nil {
 		req = new(SearchCodeReq)
 	}
 	resp := &SearchCodeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchCode performs requests for "search/code"
+
+Search code.
+
+  GET /search/code
+
+https://developer.github.com/v3/search/#search-code
+*/
+func (c *Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+	return SearchCode(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -185,12 +198,12 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
-func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
 	if req == nil {
 		req = new(SearchCommitsReq)
 	}
 	resp := &SearchCommitsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -203,6 +216,19 @@ func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchCommits performs requests for "search/commits"
+
+Search commits.
+
+  GET /search/commits
+
+https://developer.github.com/v3/search/#search-commits
+*/
+func (c *Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+	return SearchCommits(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -365,12 +391,12 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
-func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
 	if req == nil {
 		req = new(SearchIssuesAndPullRequestsReq)
 	}
 	resp := &SearchIssuesAndPullRequestsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -383,6 +409,19 @@ func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIss
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchIssuesAndPullRequests performs requests for "search/issues-and-pull-requests"
+
+Search issues and pull requests.
+
+  GET /search/issues
+
+https://developer.github.com/v3/search/#search-issues-and-pull-requests
+*/
+func (c *Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+	return SearchIssuesAndPullRequests(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -533,12 +572,12 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
-func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
 	if req == nil {
 		req = new(SearchLabelsReq)
 	}
 	resp := &SearchLabelsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -551,6 +590,19 @@ func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchLabels performs requests for "search/labels"
+
+Search labels.
+
+  GET /search/labels
+
+https://developer.github.com/v3/search/#search-labels
+*/
+func (c *Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+	return SearchLabels(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -688,12 +740,12 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
-func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
 	if req == nil {
 		req = new(SearchReposReq)
 	}
 	resp := &SearchReposResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -706,6 +758,19 @@ func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchRepos performs requests for "search/repos"
+
+Search repositories.
+
+  GET /search/repositories
+
+https://developer.github.com/v3/search/#search-repositories
+*/
+func (c *Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+	return SearchRepos(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -864,12 +929,12 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
-func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
 	if req == nil {
 		req = new(SearchTopicsReq)
 	}
 	resp := &SearchTopicsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -882,6 +947,19 @@ func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchTopics performs requests for "search/topics"
+
+Search topics.
+
+  GET /search/topics
+
+https://developer.github.com/v3/search/#search-topics
+*/
+func (c *Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+	return SearchTopics(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1005,12 +1083,12 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
-func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
 	if req == nil {
 		req = new(SearchUsersReq)
 	}
 	resp := &SearchUsersResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1023,6 +1101,19 @@ func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+SearchUsers performs requests for "search/users"
+
+Search users.
+
+  GET /search/users
+
+https://developer.github.com/v3/search/#search-users
+*/
+func (c *Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+	return SearchUsers(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

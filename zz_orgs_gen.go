@@ -20,12 +20,12 @@ Add or update organization membership.
 
 https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
 */
-func (c *Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
+func OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsAddOrUpdateMembershipReq)
 	}
 	resp := &OrgsAddOrUpdateMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUp
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsAddOrUpdateMembership performs requests for "orgs/add-or-update-membership"
+
+Add or update organization membership.
+
+  PUT /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
+*/
+func (c *Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
+	return OrgsAddOrUpdateMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -153,12 +166,12 @@ Block a user.
 
 https://developer.github.com/v3/orgs/blocking/#block-a-user
 */
-func (c *Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
+func OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
 	if req == nil {
 		req = new(OrgsBlockUserReq)
 	}
 	resp := &OrgsBlockUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -170,6 +183,19 @@ func (c *Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsBlockUser performs requests for "orgs/block-user"
+
+Block a user.
+
+  PUT /orgs/{org}/blocks/{username}
+
+https://developer.github.com/v3/orgs/blocking/#block-a-user
+*/
+func (c *Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
+	return OrgsBlockUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -259,12 +285,12 @@ Check whether a user is blocked from an organization.
 
 https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
 */
-func (c *Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
+func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
 	if req == nil {
 		req = new(OrgsCheckBlockedUserReq)
 	}
 	resp := &OrgsCheckBlockedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -280,6 +306,19 @@ func (c *Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlocked
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsCheckBlockedUser performs requests for "orgs/check-blocked-user"
+
+Check whether a user is blocked from an organization.
+
+  GET /orgs/{org}/blocks/{username}
+
+https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
+*/
+func (c *Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
+	return OrgsCheckBlockedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -370,12 +409,12 @@ Check membership.
 
 https://developer.github.com/v3/orgs/members/#check-membership
 */
-func (c *Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
+func OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsCheckMembershipReq)
 	}
 	resp := &OrgsCheckMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -387,6 +426,19 @@ func (c *Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembersh
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsCheckMembership performs requests for "orgs/check-membership"
+
+Check membership.
+
+  GET /orgs/{org}/members/{username}
+
+https://developer.github.com/v3/orgs/members/#check-membership
+*/
+func (c *Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
+	return OrgsCheckMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -476,12 +528,12 @@ Check public membership.
 
 https://developer.github.com/v3/orgs/members/#check-public-membership
 */
-func (c *Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
+func OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsCheckPublicMembershipReq)
 	}
 	resp := &OrgsCheckPublicMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -497,6 +549,19 @@ func (c *Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPu
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsCheckPublicMembership performs requests for "orgs/check-public-membership"
+
+Check public membership.
+
+  GET /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#check-public-membership
+*/
+func (c *Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
+	return OrgsCheckPublicMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -587,12 +652,12 @@ Conceal a user's membership.
 
 https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
 */
-func (c *Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
+func OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsConcealMembershipReq)
 	}
 	resp := &OrgsConcealMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -604,6 +669,19 @@ func (c *Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMemb
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsConcealMembership performs requests for "orgs/conceal-membership"
+
+Conceal a user's membership.
+
+  DELETE /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
+*/
+func (c *Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
+	return OrgsConcealMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -693,12 +771,12 @@ Convert member to outside collaborator.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
 */
-func (c *Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
+func OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
 	if req == nil {
 		req = new(OrgsConvertMemberToOutsideCollaboratorReq)
 	}
 	resp := &OrgsConvertMemberToOutsideCollaboratorResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -710,6 +788,19 @@ func (c *Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsConvertMemberToOutsideCollaborator performs requests for "orgs/convert-member-to-outside-collaborator"
+
+Convert member to outside collaborator.
+
+  PUT /orgs/{org}/outside_collaborators/{username}
+
+https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
+*/
+func (c *Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
+	return OrgsConvertMemberToOutsideCollaborator(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -799,12 +890,12 @@ Create a hook.
 
 https://developer.github.com/v3/orgs/hooks/#create-a-hook
 */
-func (c *Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
+func OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
 	if req == nil {
 		req = new(OrgsCreateHookReq)
 	}
 	resp := &OrgsCreateHookResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -817,6 +908,19 @@ func (c *Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsCreateHook performs requests for "orgs/create-hook"
+
+Create a hook.
+
+  POST /orgs/{org}/hooks
+
+https://developer.github.com/v3/orgs/hooks/#create-a-hook
+*/
+func (c *Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
+	return OrgsCreateHook(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -975,12 +1079,12 @@ Create organization invitation.
 
 https://developer.github.com/v3/orgs/members/#create-organization-invitation
 */
-func (c *Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
+func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
 	if req == nil {
 		req = new(OrgsCreateInvitationReq)
 	}
 	resp := &OrgsCreateInvitationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -993,6 +1097,19 @@ func (c *Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvita
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsCreateInvitation performs requests for "orgs/create-invitation"
+
+Create organization invitation.
+
+  POST /orgs/{org}/invitations
+
+https://developer.github.com/v3/orgs/members/#create-organization-invitation
+*/
+func (c *Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
+	return OrgsCreateInvitation(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1126,12 +1243,12 @@ Delete a hook.
 
 https://developer.github.com/v3/orgs/hooks/#delete-a-hook
 */
-func (c *Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
+func OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
 	if req == nil {
 		req = new(OrgsDeleteHookReq)
 	}
 	resp := &OrgsDeleteHookResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1143,6 +1260,19 @@ func (c *Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsDeleteHook performs requests for "orgs/delete-hook"
+
+Delete a hook.
+
+  DELETE /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#delete-a-hook
+*/
+func (c *Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
+	return OrgsDeleteHook(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1232,12 +1362,12 @@ Get an organization.
 
 https://developer.github.com/v3/orgs/#get-an-organization
 */
-func (c *Client) OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsGetResponse, error) {
+func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsGetResponse, error) {
 	if req == nil {
 		req = new(OrgsGetReq)
 	}
 	resp := &OrgsGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1250,6 +1380,19 @@ func (c *Client) OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOpt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsGet performs requests for "orgs/get"
+
+Get an organization.
+
+  GET /orgs/{org}
+
+https://developer.github.com/v3/orgs/#get-an-organization
+*/
+func (c *Client) OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsGetResponse, error) {
+	return OrgsGet(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1366,12 +1509,12 @@ Get single hook.
 
 https://developer.github.com/v3/orgs/hooks/#get-single-hook
 */
-func (c *Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
+func OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
 	if req == nil {
 		req = new(OrgsGetHookReq)
 	}
 	resp := &OrgsGetHookResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1384,6 +1527,19 @@ func (c *Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsGetHook performs requests for "orgs/get-hook"
+
+Get single hook.
+
+  GET /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#get-single-hook
+*/
+func (c *Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
+	return OrgsGetHook(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1483,12 +1639,12 @@ Get organization membership.
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership
 */
-func (c *Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
+func OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsGetMembershipReq)
 	}
 	resp := &OrgsGetMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1501,6 +1657,19 @@ func (c *Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsGetMembership performs requests for "orgs/get-membership"
+
+Get organization membership.
+
+  GET /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#get-organization-membership
+*/
+func (c *Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
+	return OrgsGetMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1600,12 +1769,12 @@ Get your organization membership.
 
 https://developer.github.com/v3/orgs/members/#get-your-organization-membership
 */
-func (c *Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
+func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(OrgsGetMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsGetMembershipForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1618,6 +1787,19 @@ func (c *Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsGetMembershipForAuthenticatedUser performs requests for "orgs/get-membership-for-authenticated-user"
+
+Get your organization membership.
+
+  GET /user/memberships/orgs/{org}
+
+https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+*/
+func (c *Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
+	return OrgsGetMembershipForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1716,12 +1898,12 @@ List all organizations.
 
 https://developer.github.com/v3/orgs/#list-all-organizations
 */
-func (c *Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
+func OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
 	if req == nil {
 		req = new(OrgsListReq)
 	}
 	resp := &OrgsListResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1734,6 +1916,19 @@ func (c *Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestO
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsList performs requests for "orgs/list"
+
+List all organizations.
+
+  GET /organizations
+
+https://developer.github.com/v3/orgs/#list-all-organizations
+*/
+func (c *Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
+	return OrgsList(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1837,12 +2032,12 @@ List blocked users.
 
 https://developer.github.com/v3/orgs/blocking/#list-blocked-users
 */
-func (c *Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
+func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
 	if req == nil {
 		req = new(OrgsListBlockedUsersReq)
 	}
 	resp := &OrgsListBlockedUsersResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1855,6 +2050,19 @@ func (c *Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedU
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListBlockedUsers performs requests for "orgs/list-blocked-users"
+
+List blocked users.
+
+  GET /orgs/{org}/blocks
+
+https://developer.github.com/v3/orgs/blocking/#list-blocked-users
+*/
+func (c *Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
+	return OrgsListBlockedUsers(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1953,12 +2161,12 @@ List credential authorizations for an organization.
 
 https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
 */
-func (c *Client) OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
+func OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
 	if req == nil {
 		req = new(OrgsListCredentialAuthorizationsReq)
 	}
 	resp := &OrgsListCredentialAuthorizationsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1971,6 +2179,19 @@ func (c *Client) OrgsListCredentialAuthorizations(ctx context.Context, req *Orgs
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListCredentialAuthorizations performs requests for "orgs/list-credential-authorizations"
+
+List credential authorizations for an organization.
+
+  GET /orgs/{org}/credential-authorizations
+
+https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
+*/
+func (c *Client) OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
+	return OrgsListCredentialAuthorizations(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2069,12 +2290,12 @@ List your organizations.
 
 https://developer.github.com/v3/orgs/#list-your-organizations
 */
-func (c *Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
+func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(OrgsListForAuthenticatedUserReq)
 	}
 	resp := &OrgsListForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2087,6 +2308,19 @@ func (c *Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsList
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListForAuthenticatedUser performs requests for "orgs/list-for-authenticated-user"
+
+List your organizations.
+
+  GET /user/orgs
+
+https://developer.github.com/v3/orgs/#list-your-organizations
+*/
+func (c *Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
+	return OrgsListForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2196,12 +2430,12 @@ List user organizations.
 
 https://developer.github.com/v3/orgs/#list-user-organizations
 */
-func (c *Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
+func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
 	if req == nil {
 		req = new(OrgsListForUserReq)
 	}
 	resp := &OrgsListForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2214,6 +2448,19 @@ func (c *Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListForUser performs requests for "orgs/list-for-user"
+
+List user organizations.
+
+  GET /users/{username}/orgs
+
+https://developer.github.com/v3/orgs/#list-user-organizations
+*/
+func (c *Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
+	return OrgsListForUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2324,12 +2571,12 @@ List hooks.
 
 https://developer.github.com/v3/orgs/hooks/#list-hooks
 */
-func (c *Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
+func OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
 	if req == nil {
 		req = new(OrgsListHooksReq)
 	}
 	resp := &OrgsListHooksResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2342,6 +2589,19 @@ func (c *Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListHooks performs requests for "orgs/list-hooks"
+
+List hooks.
+
+  GET /orgs/{org}/hooks
+
+https://developer.github.com/v3/orgs/hooks/#list-hooks
+*/
+func (c *Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
+	return OrgsListHooks(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2452,12 +2712,12 @@ List installations for an organization.
 
 https://developer.github.com/v3/orgs/#list-installations-for-an-organization
 */
-func (c *Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
+func OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
 	if req == nil {
 		req = new(OrgsListInstallationsReq)
 	}
 	resp := &OrgsListInstallationsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2470,6 +2730,19 @@ func (c *Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstall
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListInstallations performs requests for "orgs/list-installations"
+
+List installations for an organization.
+
+  GET /orgs/{org}/installations
+
+https://developer.github.com/v3/orgs/#list-installations-for-an-organization
+*/
+func (c *Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
+	return OrgsListInstallations(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2595,12 +2868,12 @@ List organization invitation teams.
 
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
-func (c *Client) OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsReq, opt ...RequestOption) (*OrgsListInvitationTeamsResponse, error) {
+func OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsReq, opt ...RequestOption) (*OrgsListInvitationTeamsResponse, error) {
 	if req == nil {
 		req = new(OrgsListInvitationTeamsReq)
 	}
 	resp := &OrgsListInvitationTeamsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2613,6 +2886,19 @@ func (c *Client) OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvit
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListInvitationTeams performs requests for "orgs/list-invitation-teams"
+
+List organization invitation teams.
+
+  GET /orgs/{org}/invitations/{invitation_id}/teams
+
+https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
+*/
+func (c *Client) OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsReq, opt ...RequestOption) (*OrgsListInvitationTeamsResponse, error) {
+	return OrgsListInvitationTeams(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2724,12 +3010,12 @@ Members list.
 
 https://developer.github.com/v3/orgs/members/#members-list
 */
-func (c *Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
+func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
 	if req == nil {
 		req = new(OrgsListMembersReq)
 	}
 	resp := &OrgsListMembersResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2742,6 +3028,19 @@ func (c *Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListMembers performs requests for "orgs/list-members"
+
+Members list.
+
+  GET /orgs/{org}/members
+
+https://developer.github.com/v3/orgs/members/#members-list
+*/
+func (c *Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
+	return OrgsListMembers(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2875,12 +3174,12 @@ List your organization memberships.
 
 https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
-func (c *Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
+func OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
 	if req == nil {
 		req = new(OrgsListMembershipsReq)
 	}
 	resp := &OrgsListMembershipsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2893,6 +3192,19 @@ func (c *Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListMemberships performs requests for "orgs/list-memberships"
+
+List your organization memberships.
+
+  GET /user/memberships/orgs
+
+https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
+*/
+func (c *Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
+	return OrgsListMemberships(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3012,12 +3324,12 @@ List outside collaborators.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
 */
-func (c *Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
+func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
 	if req == nil {
 		req = new(OrgsListOutsideCollaboratorsReq)
 	}
 	resp := &OrgsListOutsideCollaboratorsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3030,6 +3342,19 @@ func (c *Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsList
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListOutsideCollaborators performs requests for "orgs/list-outside-collaborators"
+
+List outside collaborators.
+
+  GET /orgs/{org}/outside_collaborators
+
+https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
+*/
+func (c *Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
+	return OrgsListOutsideCollaborators(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3151,12 +3476,12 @@ List pending organization invitations.
 
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
-func (c *Client) OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitationsReq, opt ...RequestOption) (*OrgsListPendingInvitationsResponse, error) {
+func OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitationsReq, opt ...RequestOption) (*OrgsListPendingInvitationsResponse, error) {
 	if req == nil {
 		req = new(OrgsListPendingInvitationsReq)
 	}
 	resp := &OrgsListPendingInvitationsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3169,6 +3494,19 @@ func (c *Client) OrgsListPendingInvitations(ctx context.Context, req *OrgsListPe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListPendingInvitations performs requests for "orgs/list-pending-invitations"
+
+List pending organization invitations.
+
+  GET /orgs/{org}/invitations
+
+https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
+*/
+func (c *Client) OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitationsReq, opt ...RequestOption) (*OrgsListPendingInvitationsResponse, error) {
+	return OrgsListPendingInvitations(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3279,12 +3617,12 @@ Public members list.
 
 https://developer.github.com/v3/orgs/members/#public-members-list
 */
-func (c *Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
+func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
 	if req == nil {
 		req = new(OrgsListPublicMembersReq)
 	}
 	resp := &OrgsListPublicMembersResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3297,6 +3635,19 @@ func (c *Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicM
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsListPublicMembers performs requests for "orgs/list-public-members"
+
+Public members list.
+
+  GET /orgs/{org}/public_members
+
+https://developer.github.com/v3/orgs/members/#public-members-list
+*/
+func (c *Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
+	return OrgsListPublicMembers(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3407,12 +3758,12 @@ Ping a hook.
 
 https://developer.github.com/v3/orgs/hooks/#ping-a-hook
 */
-func (c *Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
+func OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
 	if req == nil {
 		req = new(OrgsPingHookReq)
 	}
 	resp := &OrgsPingHookResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3424,6 +3775,19 @@ func (c *Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsPingHook performs requests for "orgs/ping-hook"
+
+Ping a hook.
+
+  POST /orgs/{org}/hooks/{hook_id}/pings
+
+https://developer.github.com/v3/orgs/hooks/#ping-a-hook
+*/
+func (c *Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
+	return OrgsPingHook(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3513,12 +3877,12 @@ Publicize a user's membership.
 
 https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
 */
-func (c *Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
+func OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsPublicizeMembershipReq)
 	}
 	resp := &OrgsPublicizeMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3530,6 +3894,19 @@ func (c *Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicize
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsPublicizeMembership performs requests for "orgs/publicize-membership"
+
+Publicize a user's membership.
+
+  PUT /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
+*/
+func (c *Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
+	return OrgsPublicizeMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3619,12 +3996,12 @@ Remove a credential authorization for an organization.
 
 https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
 */
-func (c *Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
+func OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
 	if req == nil {
 		req = new(OrgsRemoveCredentialAuthorizationReq)
 	}
 	resp := &OrgsRemoveCredentialAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3636,6 +4013,19 @@ func (c *Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *Org
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsRemoveCredentialAuthorization performs requests for "orgs/remove-credential-authorization"
+
+Remove a credential authorization for an organization.
+
+  DELETE /orgs/{org}/credential-authorizations/{credential_id}
+
+https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
+*/
+func (c *Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
+	return OrgsRemoveCredentialAuthorization(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3725,12 +4115,12 @@ Remove a member.
 
 https://developer.github.com/v3/orgs/members/#remove-a-member
 */
-func (c *Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
+func OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
 	if req == nil {
 		req = new(OrgsRemoveMemberReq)
 	}
 	resp := &OrgsRemoveMemberResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3742,6 +4132,19 @@ func (c *Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsRemoveMember performs requests for "orgs/remove-member"
+
+Remove a member.
+
+  DELETE /orgs/{org}/members/{username}
+
+https://developer.github.com/v3/orgs/members/#remove-a-member
+*/
+func (c *Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
+	return OrgsRemoveMember(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3831,12 +4234,12 @@ Remove organization membership.
 
 https://developer.github.com/v3/orgs/members/#remove-organization-membership
 */
-func (c *Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
+func OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsRemoveMembershipReq)
 	}
 	resp := &OrgsRemoveMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3848,6 +4251,19 @@ func (c *Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMember
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsRemoveMembership performs requests for "orgs/remove-membership"
+
+Remove organization membership.
+
+  DELETE /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#remove-organization-membership
+*/
+func (c *Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
+	return OrgsRemoveMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3937,12 +4353,12 @@ Remove outside collaborator.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
 */
-func (c *Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
+func OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
 	if req == nil {
 		req = new(OrgsRemoveOutsideCollaboratorReq)
 	}
 	resp := &OrgsRemoveOutsideCollaboratorResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3954,6 +4370,19 @@ func (c *Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRem
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsRemoveOutsideCollaborator performs requests for "orgs/remove-outside-collaborator"
+
+Remove outside collaborator.
+
+  DELETE /orgs/{org}/outside_collaborators/{username}
+
+https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
+*/
+func (c *Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
+	return OrgsRemoveOutsideCollaborator(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -4043,12 +4472,12 @@ Unblock a user.
 
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user
 */
-func (c *Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
+func OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
 	if req == nil {
 		req = new(OrgsUnblockUserReq)
 	}
 	resp := &OrgsUnblockUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4060,6 +4489,19 @@ func (c *Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsUnblockUser performs requests for "orgs/unblock-user"
+
+Unblock a user.
+
+  DELETE /orgs/{org}/blocks/{username}
+
+https://developer.github.com/v3/orgs/blocking/#unblock-a-user
+*/
+func (c *Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
+	return OrgsUnblockUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -4149,12 +4591,12 @@ Edit an organization.
 
 https://developer.github.com/v3/orgs/#edit-an-organization
 */
-func (c *Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
+func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
 	if req == nil {
 		req = new(OrgsUpdateReq)
 	}
 	resp := &OrgsUpdateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4167,6 +4609,19 @@ func (c *Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsUpdate performs requests for "orgs/update"
+
+Edit an organization.
+
+  PATCH /orgs/{org}
+
+https://developer.github.com/v3/orgs/#edit-an-organization
+*/
+func (c *Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
+	return OrgsUpdate(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -4395,12 +4850,12 @@ Edit a hook.
 
 https://developer.github.com/v3/orgs/hooks/#edit-a-hook
 */
-func (c *Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
+func OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
 	if req == nil {
 		req = new(OrgsUpdateHookReq)
 	}
 	resp := &OrgsUpdateHookResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4413,6 +4868,19 @@ func (c *Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsUpdateHook performs requests for "orgs/update-hook"
+
+Edit a hook.
+
+  PATCH /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+*/
+func (c *Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
+	return OrgsUpdateHook(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -4569,12 +5037,12 @@ Edit your organization membership.
 
 https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
 */
-func (c *Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
+func OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
 	if req == nil {
 		req = new(OrgsUpdateMembershipReq)
 	}
 	resp := &OrgsUpdateMembershipResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4587,6 +5055,19 @@ func (c *Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMember
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OrgsUpdateMembership performs requests for "orgs/update-membership"
+
+Edit your organization membership.
+
+  PATCH /user/memberships/orgs/{org}
+
+https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
+*/
+func (c *Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
+	return OrgsUpdateMembership(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

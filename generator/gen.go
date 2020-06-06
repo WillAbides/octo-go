@@ -8,7 +8,7 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func addClientMethod(file *jen.File, endpoint model.Endpoint) {
+func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,
@@ -17,7 +17,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		endpoint.Path,
 		endpoint.DocsURL,
 	)
-	file.Func().Params(jen.Id("c").Op("*").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
+	file.Func().Id(toExportedName(endpoint.ID)).Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
 		jen.Id("opt ...RequestOption"),
@@ -31,7 +31,7 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
 			jen.Id("request"): jen.Id("req"),
 		})
-		group.Id("r, err := c.doRequest(ctx, req, opt...)")
+		group.Id("r, err := doRequest(ctx, req, opt...)")
 		group.If(jen.Id("r != nil")).Block(
 			jen.Id("resp.response = *r"),
 		)
@@ -51,6 +51,33 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 		group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 		group.Return(jen.Id("resp, nil"))
 	})
+}
+
+func addClientMethod(file *jen.File, endpoint model.Endpoint) {
+	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
+		toExportedName(endpoint.ID),
+		endpoint.ID,
+		endpoint.Summary,
+		endpoint.Method,
+		endpoint.Path,
+		endpoint.DocsURL,
+	)
+	file.Func().Params(jen.Id("c").Op("*").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
+		jen.Id("ctx").Qual("context", "Context"),
+		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
+		jen.Id("opt ...RequestOption"),
+	).Params(
+		jen.Op("*").Id(respStructName(endpoint)),
+		jen.Id("error"),
+	).Block(
+		jen.Return(
+			jen.Id(toExportedName(endpoint.ID)).Call(
+				jen.Id("ctx"),
+				jen.Id("req"),
+				jen.Id("append(c.opts, opt...)..."),
+			),
+		),
+	)
 }
 
 func toExportedName(in string) string {

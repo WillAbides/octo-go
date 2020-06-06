@@ -19,12 +19,12 @@ Get.
 
 https://developer.github.com/v3/meta/#meta
 */
-func (c *Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
 	if req == nil {
 		req = new(MetaGetReq)
 	}
 	resp := &MetaGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOpt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+MetaGet performs requests for "meta/get"
+
+Get.
+
+  GET /meta
+
+https://developer.github.com/v3/meta/#meta
+*/
+func (c *Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+	return MetaGet(ctx, req, append(c.opts, opt...)...)
 }
 
 /*

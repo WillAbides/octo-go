@@ -20,12 +20,12 @@ Check if a repository is starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
-func (c *Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityCheckRepoIsStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -41,6 +41,19 @@ func (c *Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Conte
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityCheckRepoIsStarredByAuthenticatedUser performs requests for "activity/check-repo-is-starred-by-authenticated-user"
+
+Check if a repository is starred by the authenticated user.
+
+  GET /user/starred/{owner}/{repo}
+
+https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+*/
+func (c *Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+	return ActivityCheckRepoIsStarredByAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -131,12 +144,12 @@ Delete a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
-func (c *Client) ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
+func ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
 	if req == nil {
 		req = new(ActivityDeleteRepoSubscriptionReq)
 	}
 	resp := &ActivityDeleteRepoSubscriptionResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -148,6 +161,19 @@ func (c *Client) ActivityDeleteRepoSubscription(ctx context.Context, req *Activi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityDeleteRepoSubscription performs requests for "activity/delete-repo-subscription"
+
+Delete a repository subscription.
+
+  DELETE /repos/{owner}/{repo}/subscription
+
+https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
+*/
+func (c *Client) ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
+	return ActivityDeleteRepoSubscription(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -237,12 +263,12 @@ Delete a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
-func (c *Client) ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
+func ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
 	if req == nil {
 		req = new(ActivityDeleteThreadSubscriptionReq)
 	}
 	resp := &ActivityDeleteThreadSubscriptionResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -254,6 +280,19 @@ func (c *Client) ActivityDeleteThreadSubscription(ctx context.Context, req *Acti
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityDeleteThreadSubscription performs requests for "activity/delete-thread-subscription"
+
+Delete a thread subscription.
+
+  DELETE /notifications/threads/{thread_id}/subscription
+
+https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
+*/
+func (c *Client) ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
+	return ActivityDeleteThreadSubscription(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -342,12 +381,12 @@ Get feeds.
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-func (c *Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
+func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
 	if req == nil {
 		req = new(ActivityGetFeedsReq)
 	}
 	resp := &ActivityGetFeedsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -360,6 +399,19 @@ func (c *Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityGetFeeds performs requests for "activity/get-feeds"
+
+Get feeds.
+
+  GET /feeds
+
+https://developer.github.com/v3/activity/feeds/#get-feeds
+*/
+func (c *Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
+	return ActivityGetFeeds(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -457,12 +509,12 @@ Get a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
-func (c *Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
+func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
 	if req == nil {
 		req = new(ActivityGetRepoSubscriptionReq)
 	}
 	resp := &ActivityGetRepoSubscriptionResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -475,6 +527,19 @@ func (c *Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityG
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityGetRepoSubscription performs requests for "activity/get-repo-subscription"
+
+Get a repository subscription.
+
+  GET /repos/{owner}/{repo}/subscription
+
+https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
+*/
+func (c *Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
+	return ActivityGetRepoSubscription(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -574,12 +639,12 @@ Get a thread.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
-func (c *Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
+func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
 	if req == nil {
 		req = new(ActivityGetThreadReq)
 	}
 	resp := &ActivityGetThreadResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -592,6 +657,19 @@ func (c *Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityGetThread performs requests for "activity/get-thread"
+
+Get a thread.
+
+  GET /notifications/threads/{thread_id}
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread
+*/
+func (c *Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
+	return ActivityGetThread(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -690,12 +768,12 @@ Get a thread subscription for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
-func (c *Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityGetThreadSubscriptionForAuthenticatedUserReq)
 	}
 	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -708,6 +786,19 @@ func (c *Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.C
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityGetThreadSubscriptionForAuthenticatedUser performs requests for "activity/get-thread-subscription-for-authenticated-user"
+
+Get a thread subscription for the authenticated user.
+
+  GET /notifications/threads/{thread_id}/subscription
+
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+*/
+func (c *Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+	return ActivityGetThreadSubscriptionForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -806,12 +897,12 @@ List events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
-func (c *Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListEventsForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -823,6 +914,19 @@ func (c *Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListEventsForAuthenticatedUser performs requests for "activity/list-events-for-authenticated-user"
+
+List events for the authenticated user.
+
+  GET /users/{username}/events
+
+https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
+*/
+func (c *Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+	return ActivityListEventsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -923,12 +1027,12 @@ List notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
-func (c *Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -941,6 +1045,19 @@ func (c *Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Conte
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListNotificationsForAuthenticatedUser performs requests for "activity/list-notifications-for-authenticated-user"
+
+List notifications for the authenticated user.
+
+  GET /notifications
+
+https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+*/
+func (c *Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+	return ActivityListNotificationsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1085,12 +1202,12 @@ List organization events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
-func (c *Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListOrgEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1102,6 +1219,19 @@ func (c *Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListOrgEventsForAuthenticatedUser performs requests for "activity/list-org-events-for-authenticated-user"
+
+List organization events for the authenticated user.
+
+  GET /users/{username}/events/orgs/{org}
+
+https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
+*/
+func (c *Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+	return ActivityListOrgEventsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1203,12 +1333,12 @@ List public events.
 
 https://developer.github.com/v3/activity/events/#list-public-events
 */
-func (c *Client) ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
+func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
 	if req == nil {
 		req = new(ActivityListPublicEventsReq)
 	}
 	resp := &ActivityListPublicEventsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1220,6 +1350,19 @@ func (c *Client) ActivityListPublicEvents(ctx context.Context, req *ActivityList
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListPublicEvents performs requests for "activity/list-public-events"
+
+List public events.
+
+  GET /events
+
+https://developer.github.com/v3/activity/events/#list-public-events
+*/
+func (c *Client) ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
+	return ActivityListPublicEvents(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1319,12 +1462,12 @@ List public events for a network of repositories.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
-func (c *Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
 	if req == nil {
 		req = new(ActivityListPublicEventsForRepoNetworkReq)
 	}
 	resp := &ActivityListPublicEventsForRepoNetworkResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1336,6 +1479,19 @@ func (c *Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListPublicEventsForRepoNetwork performs requests for "activity/list-public-events-for-repo-network"
+
+List public events for a network of repositories.
+
+  GET /networks/{owner}/{repo}/events
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
+*/
+func (c *Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+	return ActivityListPublicEventsForRepoNetwork(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1437,12 +1593,12 @@ List public events for a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
-func (c *Client) ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
+func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListPublicEventsForUserReq)
 	}
 	resp := &ActivityListPublicEventsForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1454,6 +1610,19 @@ func (c *Client) ActivityListPublicEventsForUser(ctx context.Context, req *Activ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListPublicEventsForUser performs requests for "activity/list-public-events-for-user"
+
+List public events for a user.
+
+  GET /users/{username}/events/public
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
+*/
+func (c *Client) ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
+	return ActivityListPublicEventsForUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1554,12 +1723,12 @@ List public organization events.
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
-func (c *Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
+func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
 	if req == nil {
 		req = new(ActivityListPublicOrgEventsReq)
 	}
 	resp := &ActivityListPublicOrgEventsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1571,6 +1740,19 @@ func (c *Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityL
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListPublicOrgEvents performs requests for "activity/list-public-org-events"
+
+List public organization events.
+
+  GET /orgs/{org}/events
+
+https://developer.github.com/v3/activity/events/#list-public-organization-events
+*/
+func (c *Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
+	return ActivityListPublicOrgEvents(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1671,12 +1853,12 @@ List events received by the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
-func (c *Client) ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
+func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListReceivedEventsForUserReq)
 	}
 	resp := &ActivityListReceivedEventsForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1688,6 +1870,19 @@ func (c *Client) ActivityListReceivedEventsForUser(ctx context.Context, req *Act
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListReceivedEventsForUser performs requests for "activity/list-received-events-for-user"
+
+List events received by the authenticated user.
+
+  GET /users/{username}/received_events
+
+https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
+*/
+func (c *Client) ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
+	return ActivityListReceivedEventsForUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1788,12 +1983,12 @@ List public events received by a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
-func (c *Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListReceivedPublicEventsForUserReq)
 	}
 	resp := &ActivityListReceivedPublicEventsForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1805,6 +2000,19 @@ func (c *Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListReceivedPublicEventsForUser performs requests for "activity/list-received-public-events-for-user"
+
+List public events received by a user.
+
+  GET /users/{username}/received_events/public
+
+https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
+*/
+func (c *Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+	return ActivityListReceivedPublicEventsForUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -1905,12 +2113,12 @@ List repository events.
 
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
-func (c *Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
+func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
 	if req == nil {
 		req = new(ActivityListRepoEventsReq)
 	}
 	resp := &ActivityListRepoEventsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1922,6 +2130,19 @@ func (c *Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListRepoEvents performs requests for "activity/list-repo-events"
+
+List repository events.
+
+  GET /repos/{owner}/{repo}/events
+
+https://developer.github.com/v3/activity/events/#list-repository-events
+*/
+func (c *Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
+	return ActivityListRepoEvents(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2023,12 +2244,12 @@ List repository notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
-func (c *Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListRepoNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2041,6 +2262,19 @@ func (c *Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.C
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListRepoNotificationsForAuthenticatedUser performs requests for "activity/list-repo-notifications-for-authenticated-user"
+
+List repository notifications for the authenticated user.
+
+  GET /repos/{owner}/{repo}/notifications
+
+https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
+*/
+func (c *Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+	return ActivityListRepoNotificationsForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2187,12 +2421,12 @@ List repositories starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-func (c *Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListReposStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityListReposStarredByAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2205,6 +2439,19 @@ func (c *Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListReposStarredByAuthenticatedUser performs requests for "activity/list-repos-starred-by-authenticated-user"
+
+List repositories starred by the authenticated user.
+
+  GET /user/starred
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+*/
+func (c *Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+	return ActivityListReposStarredByAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2329,12 +2576,12 @@ List repositories starred by a user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-func (c *Client) ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
+func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListReposStarredByUserReq)
 	}
 	resp := &ActivityListReposStarredByUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2347,6 +2594,19 @@ func (c *Client) ActivityListReposStarredByUser(ctx context.Context, req *Activi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListReposStarredByUser performs requests for "activity/list-repos-starred-by-user"
+
+List repositories starred by a user.
+
+  GET /users/{username}/starred
+
+https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
+*/
+func (c *Client) ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
+	return ActivityListReposStarredByUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2472,12 +2732,12 @@ List repositories watched by a user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
-func (c *Client) ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
+func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListReposWatchedByUserReq)
 	}
 	resp := &ActivityListReposWatchedByUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2490,6 +2750,19 @@ func (c *Client) ActivityListReposWatchedByUser(ctx context.Context, req *Activi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListReposWatchedByUser performs requests for "activity/list-repos-watched-by-user"
+
+List repositories watched by a user.
+
+  GET /users/{username}/subscriptions
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
+*/
+func (c *Client) ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
+	return ActivityListReposWatchedByUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2600,12 +2873,12 @@ List stargazers.
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-func (c *Client) ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
+func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
 	if req == nil {
 		req = new(ActivityListStargazersForRepoReq)
 	}
 	resp := &ActivityListStargazersForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2618,6 +2891,19 @@ func (c *Client) ActivityListStargazersForRepo(ctx context.Context, req *Activit
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListStargazersForRepo performs requests for "activity/list-stargazers-for-repo"
+
+List stargazers.
+
+  GET /repos/{owner}/{repo}/stargazers
+
+https://developer.github.com/v3/activity/starring/#list-stargazers
+*/
+func (c *Client) ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
+	return ActivityListStargazersForRepo(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2729,12 +3015,12 @@ List repositories watched by the authenticated user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
-func (c *Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityListWatchedReposForAuthenticatedUserReq)
 	}
 	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2747,6 +3033,19 @@ func (c *Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Contex
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListWatchedReposForAuthenticatedUser performs requests for "activity/list-watched-repos-for-authenticated-user"
+
+List repositories watched by the authenticated user.
+
+  GET /user/subscriptions
+
+https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+*/
+func (c *Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+	return ActivityListWatchedReposForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2856,12 +3155,12 @@ List watchers.
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
-func (c *Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
+func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
 	if req == nil {
 		req = new(ActivityListWatchersForRepoReq)
 	}
 	resp := &ActivityListWatchersForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2874,6 +3173,19 @@ func (c *Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityL
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityListWatchersForRepo performs requests for "activity/list-watchers-for-repo"
+
+List watchers.
+
+  GET /repos/{owner}/{repo}/subscribers
+
+https://developer.github.com/v3/activity/watching/#list-watchers
+*/
+func (c *Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
+	return ActivityListWatchersForRepo(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -2985,12 +3297,12 @@ Mark notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
-func (c *Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
+func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
 	if req == nil {
 		req = new(ActivityMarkNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkNotificationsAsReadResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3002,6 +3314,19 @@ func (c *Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *Activ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityMarkNotificationsAsRead performs requests for "activity/mark-notifications-as-read"
+
+Mark notifications as read.
+
+  PUT /notifications
+
+https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+*/
+func (c *Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
+	return ActivityMarkNotificationsAsRead(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3107,12 +3432,12 @@ Mark repository notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
-func (c *Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+func ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
 	if req == nil {
 		req = new(ActivityMarkRepoNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkRepoNotificationsAsReadResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3124,6 +3449,19 @@ func (c *Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *A
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityMarkRepoNotificationsAsRead performs requests for "activity/mark-repo-notifications-as-read"
+
+Mark repository notifications as read.
+
+  PUT /repos/{owner}/{repo}/notifications
+
+https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
+*/
+func (c *Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+	return ActivityMarkRepoNotificationsAsRead(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3231,12 +3569,12 @@ Mark a thread as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
-func (c *Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
+func ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
 	if req == nil {
 		req = new(ActivityMarkThreadAsReadReq)
 	}
 	resp := &ActivityMarkThreadAsReadResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3248,6 +3586,19 @@ func (c *Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMark
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityMarkThreadAsRead performs requests for "activity/mark-thread-as-read"
+
+Mark a thread as read.
+
+  PATCH /notifications/threads/{thread_id}
+
+https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
+*/
+func (c *Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
+	return ActivityMarkThreadAsRead(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3336,12 +3687,12 @@ Set a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-func (c *Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
+func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
 	if req == nil {
 		req = new(ActivitySetRepoSubscriptionReq)
 	}
 	resp := &ActivitySetRepoSubscriptionResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3354,6 +3705,19 @@ func (c *Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivityS
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivitySetRepoSubscription performs requests for "activity/set-repo-subscription"
+
+Set a repository subscription.
+
+  PUT /repos/{owner}/{repo}/subscription
+
+https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+*/
+func (c *Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
+	return ActivitySetRepoSubscription(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3468,12 +3832,12 @@ Set a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-func (c *Client) ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
+func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
 	if req == nil {
 		req = new(ActivitySetThreadSubscriptionReq)
 	}
 	resp := &ActivitySetThreadSubscriptionResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3486,6 +3850,19 @@ func (c *Client) ActivitySetThreadSubscription(ctx context.Context, req *Activit
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivitySetThreadSubscription performs requests for "activity/set-thread-subscription"
+
+Set a thread subscription.
+
+  PUT /notifications/threads/{thread_id}/subscription
+
+https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
+*/
+func (c *Client) ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
+	return ActivitySetThreadSubscription(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3599,12 +3976,12 @@ Star a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
-func (c *Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+func ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityStarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityStarRepoForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3616,6 +3993,19 @@ func (c *Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityStarRepoForAuthenticatedUser performs requests for "activity/star-repo-for-authenticated-user"
+
+Star a repository for the authenticated user.
+
+  PUT /user/starred/{owner}/{repo}
+
+https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+*/
+func (c *Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+	return ActivityStarRepoForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
@@ -3705,12 +4095,12 @@ Unstar a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
-func (c *Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+func ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ActivityUnstarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3722,6 +4112,19 @@ func (c *Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActivityUnstarRepoForAuthenticatedUser performs requests for "activity/unstar-repo-for-authenticated-user"
+
+Unstar a repository for the authenticated user.
+
+  DELETE /user/starred/{owner}/{repo}
+
+https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+*/
+func (c *Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+	return ActivityUnstarRepoForAuthenticatedUser(ctx, req, append(c.opts, opt...)...)
 }
 
 /*
