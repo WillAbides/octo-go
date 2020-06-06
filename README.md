@@ -20,26 +20,19 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/willabides/octo-go"
-	"golang.org/x/oauth2"
 )
 
 func main() {
 	ctx := context.Background()
 
-	oauthClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
-	))
-
-	client := octo.NewClient(oauthClient)
-
-	issue, err := client.IssuesGet(ctx, &octo.IssuesGetReq{
+	issue, err := octo.IssuesGet(ctx, &octo.IssuesGetReq{
 		Owner:       "golang",
 		Repo:        "go",
 		IssueNumber: 1,
 	})
+
 	if err != nil {
 		log.Fatal(err)
 	}

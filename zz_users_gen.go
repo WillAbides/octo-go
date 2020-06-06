@@ -20,12 +20,12 @@ Add email address(es).
 
 https://developer.github.com/v3/users/emails/#add-email-addresses
 */
-func (c *Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
+func UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
 	if req == nil {
 		req = new(UsersAddEmailsReq)
 	}
 	resp := &UsersAddEmailsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersAddEmails performs requests for "users/add-emails"
+
+Add email address(es).
+
+  POST /user/emails
+
+https://developer.github.com/v3/users/emails/#add-email-addresses
+*/
+func (c Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
+	return UsersAddEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -152,12 +165,12 @@ Block a user.
 
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
-func (c *Client) UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (*UsersBlockResponse, error) {
+func UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (*UsersBlockResponse, error) {
 	if req == nil {
 		req = new(UsersBlockReq)
 	}
 	resp := &UsersBlockResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -169,6 +182,19 @@ func (c *Client) UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersBlock performs requests for "users/block"
+
+Block a user.
+
+  PUT /user/blocks/{username}
+
+https://developer.github.com/v3/users/blocking/#block-a-user
+*/
+func (c Client) UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (*UsersBlockResponse, error) {
+	return UsersBlock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -257,12 +283,12 @@ Check whether you've blocked a user.
 
 https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 */
-func (c *Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
+func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
 	if req == nil {
 		req = new(UsersCheckBlockedReq)
 	}
 	resp := &UsersCheckBlockedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -278,6 +304,19 @@ func (c *Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersCheckBlocked performs requests for "users/check-blocked"
+
+Check whether you've blocked a user.
+
+  GET /user/blocks/{username}
+
+https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
+*/
+func (c Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
+	return UsersCheckBlocked(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -367,12 +406,12 @@ Check if you are following a user.
 
 https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 */
-func (c *Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
+func UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
 	if req == nil {
 		req = new(UsersCheckFollowingReq)
 	}
 	resp := &UsersCheckFollowingResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -388,6 +427,19 @@ func (c *Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersCheckFollowing performs requests for "users/check-following"
+
+Check if you are following a user.
+
+  GET /user/following/{username}
+
+https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
+*/
+func (c Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
+	return UsersCheckFollowing(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -477,12 +529,12 @@ Check if one user follows another.
 
 https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
 */
-func (c *Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
+func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
 	if req == nil {
 		req = new(UsersCheckFollowingForUserReq)
 	}
 	resp := &UsersCheckFollowingForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -498,6 +550,19 @@ func (c *Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheck
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersCheckFollowingForUser performs requests for "users/check-following-for-user"
+
+Check if one user follows another.
+
+  GET /users/{username}/following/{target_user}
+
+https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
+*/
+func (c Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
+	return UsersCheckFollowingForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -588,12 +653,12 @@ Create a GPG key.
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
-func (c *Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
+func UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
 	if req == nil {
 		req = new(UsersCreateGpgKeyReq)
 	}
 	resp := &UsersCreateGpgKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -606,6 +671,19 @@ func (c *Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersCreateGpgKey performs requests for "users/create-gpg-key"
+
+Create a GPG key.
+
+  POST /user/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+*/
+func (c Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
+	return UsersCreateGpgKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -719,12 +797,12 @@ Create a public key.
 
 https://developer.github.com/v3/users/keys/#create-a-public-key
 */
-func (c *Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
+func UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
 	if req == nil {
 		req = new(UsersCreatePublicKeyReq)
 	}
 	resp := &UsersCreatePublicKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -737,6 +815,19 @@ func (c *Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePubli
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersCreatePublicKey performs requests for "users/create-public-key"
+
+Create a public key.
+
+  POST /user/keys
+
+https://developer.github.com/v3/users/keys/#create-a-public-key
+*/
+func (c Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
+	return UsersCreatePublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -857,12 +948,12 @@ Delete email address(es).
 
 https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
-func (c *Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
+func UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
 	if req == nil {
 		req = new(UsersDeleteEmailsReq)
 	}
 	resp := &UsersDeleteEmailsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -874,6 +965,19 @@ func (c *Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersDeleteEmails performs requests for "users/delete-emails"
+
+Delete email address(es).
+
+  DELETE /user/emails
+
+https://developer.github.com/v3/users/emails/#delete-email-addresses
+*/
+func (c Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
+	return UsersDeleteEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -978,12 +1082,12 @@ Delete a GPG key.
 
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 */
-func (c *Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
+func UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
 	if req == nil {
 		req = new(UsersDeleteGpgKeyReq)
 	}
 	resp := &UsersDeleteGpgKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -995,6 +1099,19 @@ func (c *Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersDeleteGpgKey performs requests for "users/delete-gpg-key"
+
+Delete a GPG key.
+
+  DELETE /user/gpg_keys/{gpg_key_id}
+
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
+*/
+func (c Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
+	return UsersDeleteGpgKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1083,12 +1200,12 @@ Delete a public key.
 
 https://developer.github.com/v3/users/keys/#delete-a-public-key
 */
-func (c *Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
+func UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
 	if req == nil {
 		req = new(UsersDeletePublicKeyReq)
 	}
 	resp := &UsersDeletePublicKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1100,6 +1217,19 @@ func (c *Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePubli
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersDeletePublicKey performs requests for "users/delete-public-key"
+
+Delete a public key.
+
+  DELETE /user/keys/{key_id}
+
+https://developer.github.com/v3/users/keys/#delete-a-public-key
+*/
+func (c Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
+	return UsersDeletePublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1188,12 +1318,12 @@ Follow a user.
 
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
-func (c *Client) UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption) (*UsersFollowResponse, error) {
+func UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption) (*UsersFollowResponse, error) {
 	if req == nil {
 		req = new(UsersFollowReq)
 	}
 	resp := &UsersFollowResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1205,6 +1335,19 @@ func (c *Client) UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersFollow performs requests for "users/follow"
+
+Follow a user.
+
+  PUT /user/following/{username}
+
+https://developer.github.com/v3/users/followers/#follow-a-user
+*/
+func (c Client) UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption) (*UsersFollowResponse, error) {
+	return UsersFollow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1293,12 +1436,12 @@ Get the authenticated user.
 
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
-func (c *Client) UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, opt ...RequestOption) (*UsersGetAuthenticatedResponse, error) {
+func UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, opt ...RequestOption) (*UsersGetAuthenticatedResponse, error) {
 	if req == nil {
 		req = new(UsersGetAuthenticatedReq)
 	}
 	resp := &UsersGetAuthenticatedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1311,6 +1454,19 @@ func (c *Client) UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthent
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersGetAuthenticated performs requests for "users/get-authenticated"
+
+Get the authenticated user.
+
+  GET /user
+
+https://developer.github.com/v3/users/#get-the-authenticated-user
+*/
+func (c Client) UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, opt ...RequestOption) (*UsersGetAuthenticatedResponse, error) {
+	return UsersGetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1408,12 +1564,12 @@ Get a single user.
 
 https://developer.github.com/v3/users/#get-a-single-user
 */
-func (c *Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
+func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
 	if req == nil {
 		req = new(UsersGetByUsernameReq)
 	}
 	resp := &UsersGetByUsernameResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1426,6 +1582,19 @@ func (c *Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsername
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersGetByUsername performs requests for "users/get-by-username"
+
+Get a single user.
+
+  GET /users/{username}
+
+https://developer.github.com/v3/users/#get-a-single-user
+*/
+func (c Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
+	return UsersGetByUsername(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1524,12 +1693,12 @@ Get contextual information about a user.
 
 https://developer.github.com/v3/users/#get-contextual-information-about-a-user
 */
-func (c *Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
+func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
 	if req == nil {
 		req = new(UsersGetContextForUserReq)
 	}
 	resp := &UsersGetContextForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1542,6 +1711,19 @@ func (c *Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContex
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersGetContextForUser performs requests for "users/get-context-for-user"
+
+Get contextual information about a user.
+
+  GET /users/{username}/hovercard
+
+https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+*/
+func (c Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
+	return UsersGetContextForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1659,12 +1841,12 @@ Get a single GPG key.
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
-func (c *Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
+func UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
 	if req == nil {
 		req = new(UsersGetGpgKeyReq)
 	}
 	resp := &UsersGetGpgKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1677,6 +1859,19 @@ func (c *Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersGetGpgKey performs requests for "users/get-gpg-key"
+
+Get a single GPG key.
+
+  GET /user/gpg_keys/{gpg_key_id}
+
+https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
+*/
+func (c Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
+	return UsersGetGpgKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1775,12 +1970,12 @@ Get a single public key.
 
 https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
-func (c *Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
+func UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
 	if req == nil {
 		req = new(UsersGetPublicKeyReq)
 	}
 	resp := &UsersGetPublicKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1793,6 +1988,19 @@ func (c *Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersGetPublicKey performs requests for "users/get-public-key"
+
+Get a single public key.
+
+  GET /user/keys/{key_id}
+
+https://developer.github.com/v3/users/keys/#get-a-single-public-key
+*/
+func (c Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
+	return UsersGetPublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1891,12 +2099,12 @@ Get all users.
 
 https://developer.github.com/v3/users/#get-all-users
 */
-func (c *Client) UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
+func UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
 	if req == nil {
 		req = new(UsersListReq)
 	}
 	resp := &UsersListResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1909,6 +2117,19 @@ func (c *Client) UsersList(ctx context.Context, req *UsersListReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersList performs requests for "users/list"
+
+Get all users.
+
+  GET /users
+
+https://developer.github.com/v3/users/#get-all-users
+*/
+func (c Client) UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
+	return UsersList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2012,12 +2233,12 @@ List blocked users.
 
 https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
-func (c *Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
+func UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
 	if req == nil {
 		req = new(UsersListBlockedReq)
 	}
 	resp := &UsersListBlockedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2030,6 +2251,19 @@ func (c *Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListBlocked performs requests for "users/list-blocked"
+
+List blocked users.
+
+  GET /user/blocks
+
+https://developer.github.com/v3/users/blocking/#list-blocked-users
+*/
+func (c Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
+	return UsersListBlocked(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2127,12 +2361,12 @@ List email addresses for a user.
 
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
-func (c *Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
+func UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
 	if req == nil {
 		req = new(UsersListEmailsReq)
 	}
 	resp := &UsersListEmailsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2145,6 +2379,19 @@ func (c *Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListEmails performs requests for "users/list-emails"
+
+List email addresses for a user.
+
+  GET /user/emails
+
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+*/
+func (c Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
+	return UsersListEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2254,12 +2501,12 @@ List users followed by the authenticated user.
 
 https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
 */
-func (c *Client) UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
+func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
 	if req == nil {
 		req = new(UsersListFollowedByAuthenticatedReq)
 	}
 	resp := &UsersListFollowedByAuthenticatedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2272,6 +2519,19 @@ func (c *Client) UsersListFollowedByAuthenticated(ctx context.Context, req *User
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListFollowedByAuthenticated performs requests for "users/list-followed-by-authenticated"
+
+List users followed by the authenticated user.
+
+  GET /user/following
+
+https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+*/
+func (c Client) UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
+	return UsersListFollowedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2381,12 +2641,12 @@ List followers of the authenticated user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
-func (c *Client) UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListFollowersForAuthenticatedUserReq, opt ...RequestOption) (*UsersListFollowersForAuthenticatedUserResponse, error) {
+func UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListFollowersForAuthenticatedUserReq, opt ...RequestOption) (*UsersListFollowersForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(UsersListFollowersForAuthenticatedUserReq)
 	}
 	resp := &UsersListFollowersForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2399,6 +2659,19 @@ func (c *Client) UsersListFollowersForAuthenticatedUser(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListFollowersForAuthenticatedUser performs requests for "users/list-followers-for-authenticated-user"
+
+List followers of the authenticated user.
+
+  GET /user/followers
+
+https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+*/
+func (c Client) UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListFollowersForAuthenticatedUserReq, opt ...RequestOption) (*UsersListFollowersForAuthenticatedUserResponse, error) {
+	return UsersListFollowersForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2508,12 +2781,12 @@ List followers of a user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
-func (c *Client) UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUserReq, opt ...RequestOption) (*UsersListFollowersForUserResponse, error) {
+func UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUserReq, opt ...RequestOption) (*UsersListFollowersForUserResponse, error) {
 	if req == nil {
 		req = new(UsersListFollowersForUserReq)
 	}
 	resp := &UsersListFollowersForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2526,6 +2799,19 @@ func (c *Client) UsersListFollowersForUser(ctx context.Context, req *UsersListFo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListFollowersForUser performs requests for "users/list-followers-for-user"
+
+List followers of a user.
+
+  GET /users/{username}/followers
+
+https://developer.github.com/v3/users/followers/#list-followers-of-a-user
+*/
+func (c Client) UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUserReq, opt ...RequestOption) (*UsersListFollowersForUserResponse, error) {
+	return UsersListFollowersForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2636,12 +2922,12 @@ List users followed by another user.
 
 https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
-func (c *Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
+func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
 	if req == nil {
 		req = new(UsersListFollowingForUserReq)
 	}
 	resp := &UsersListFollowingForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2654,6 +2940,19 @@ func (c *Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListFollowingForUser performs requests for "users/list-following-for-user"
+
+List users followed by another user.
+
+  GET /users/{username}/following
+
+https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+*/
+func (c Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
+	return UsersListFollowingForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2764,12 +3063,12 @@ List your GPG keys.
 
 https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
-func (c *Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
+func UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
 	if req == nil {
 		req = new(UsersListGpgKeysReq)
 	}
 	resp := &UsersListGpgKeysResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2782,6 +3081,19 @@ func (c *Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListGpgKeys performs requests for "users/list-gpg-keys"
+
+List your GPG keys.
+
+  GET /user/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+*/
+func (c Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
+	return UsersListGpgKeys(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2891,12 +3203,12 @@ List GPG keys for a user.
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
-func (c *Client) UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserReq, opt ...RequestOption) (*UsersListGpgKeysForUserResponse, error) {
+func UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserReq, opt ...RequestOption) (*UsersListGpgKeysForUserResponse, error) {
 	if req == nil {
 		req = new(UsersListGpgKeysForUserReq)
 	}
 	resp := &UsersListGpgKeysForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2909,6 +3221,19 @@ func (c *Client) UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgK
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListGpgKeysForUser performs requests for "users/list-gpg-keys-for-user"
+
+List GPG keys for a user.
+
+  GET /users/{username}/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
+*/
+func (c Client) UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserReq, opt ...RequestOption) (*UsersListGpgKeysForUserResponse, error) {
+	return UsersListGpgKeysForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3019,12 +3344,12 @@ List public email addresses for a user.
 
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
-func (c *Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
+func UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
 	if req == nil {
 		req = new(UsersListPublicEmailsReq)
 	}
 	resp := &UsersListPublicEmailsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3037,6 +3362,19 @@ func (c *Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublic
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListPublicEmails performs requests for "users/list-public-emails"
+
+List public email addresses for a user.
+
+  GET /user/public_emails
+
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
+*/
+func (c Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
+	return UsersListPublicEmails(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3146,12 +3484,12 @@ List your public keys.
 
 https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
-func (c *Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
+func UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
 	if req == nil {
 		req = new(UsersListPublicKeysReq)
 	}
 	resp := &UsersListPublicKeysResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3164,6 +3502,19 @@ func (c *Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListPublicKeys performs requests for "users/list-public-keys"
+
+List your public keys.
+
+  GET /user/keys
+
+https://developer.github.com/v3/users/keys/#list-your-public-keys
+*/
+func (c Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
+	return UsersListPublicKeys(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3273,12 +3624,12 @@ List public keys for a user.
 
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
-func (c *Client) UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysForUserReq, opt ...RequestOption) (*UsersListPublicKeysForUserResponse, error) {
+func UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysForUserReq, opt ...RequestOption) (*UsersListPublicKeysForUserResponse, error) {
 	if req == nil {
 		req = new(UsersListPublicKeysForUserReq)
 	}
 	resp := &UsersListPublicKeysForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3291,6 +3642,19 @@ func (c *Client) UsersListPublicKeysForUser(ctx context.Context, req *UsersListP
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersListPublicKeysForUser performs requests for "users/list-public-keys-for-user"
+
+List public keys for a user.
+
+  GET /users/{username}/keys
+
+https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
+*/
+func (c Client) UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysForUserReq, opt ...RequestOption) (*UsersListPublicKeysForUserResponse, error) {
+	return UsersListPublicKeysForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3401,12 +3765,12 @@ Toggle primary email visibility.
 
 https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
-func (c *Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
+func UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
 	if req == nil {
 		req = new(UsersTogglePrimaryEmailVisibilityReq)
 	}
 	resp := &UsersTogglePrimaryEmailVisibilityResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3419,6 +3783,19 @@ func (c *Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *Use
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersTogglePrimaryEmailVisibility performs requests for "users/toggle-primary-email-visibility"
+
+Toggle primary email visibility.
+
+  PATCH /user/email/visibility
+
+https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+*/
+func (c Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
+	return UsersTogglePrimaryEmailVisibility(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3534,12 +3911,12 @@ Unblock a user.
 
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
-func (c *Client) UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOption) (*UsersUnblockResponse, error) {
+func UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOption) (*UsersUnblockResponse, error) {
 	if req == nil {
 		req = new(UsersUnblockReq)
 	}
 	resp := &UsersUnblockResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3551,6 +3928,19 @@ func (c *Client) UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersUnblock performs requests for "users/unblock"
+
+Unblock a user.
+
+  DELETE /user/blocks/{username}
+
+https://developer.github.com/v3/users/blocking/#unblock-a-user
+*/
+func (c Client) UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOption) (*UsersUnblockResponse, error) {
+	return UsersUnblock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3639,12 +4029,12 @@ Unfollow a user.
 
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
-func (c *Client) UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOption) (*UsersUnfollowResponse, error) {
+func UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOption) (*UsersUnfollowResponse, error) {
 	if req == nil {
 		req = new(UsersUnfollowReq)
 	}
 	resp := &UsersUnfollowResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3656,6 +4046,19 @@ func (c *Client) UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersUnfollow performs requests for "users/unfollow"
+
+Unfollow a user.
+
+  DELETE /user/following/{username}
+
+https://developer.github.com/v3/users/followers/#unfollow-a-user
+*/
+func (c Client) UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOption) (*UsersUnfollowResponse, error) {
+	return UsersUnfollow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3744,12 +4147,12 @@ Update the authenticated user.
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
-func (c *Client) UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticatedReq, opt ...RequestOption) (*UsersUpdateAuthenticatedResponse, error) {
+func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticatedReq, opt ...RequestOption) (*UsersUpdateAuthenticatedResponse, error) {
 	if req == nil {
 		req = new(UsersUpdateAuthenticatedReq)
 	}
 	resp := &UsersUpdateAuthenticatedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3762,6 +4165,19 @@ func (c *Client) UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateA
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+UsersUpdateAuthenticated performs requests for "users/update-authenticated"
+
+Update the authenticated user.
+
+  PATCH /user
+
+https://developer.github.com/v3/users/#update-the-authenticated-user
+*/
+func (c Client) UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticatedReq, opt ...RequestOption) (*UsersUpdateAuthenticatedResponse, error) {
+	return UsersUpdateAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*

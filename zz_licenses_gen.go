@@ -19,12 +19,12 @@ Get an individual license.
 
 https://developer.github.com/v3/licenses/#get-an-individual-license
 */
-func (c *Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
+func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
 	if req == nil {
 		req = new(LicensesGetReq)
 	}
 	resp := &LicensesGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+LicensesGet performs requests for "licenses/get"
+
+Get an individual license.
+
+  GET /licenses/{license}
+
+https://developer.github.com/v3/licenses/#get-an-individual-license
+*/
+func (c Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
+	return LicensesGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -135,12 +148,12 @@ Get the contents of a repository's license.
 
 https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
 */
-func (c *Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
+func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
 	if req == nil {
 		req = new(LicensesGetForRepoReq)
 	}
 	resp := &LicensesGetForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -153,6 +166,19 @@ func (c *Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+LicensesGetForRepo performs requests for "licenses/get-for-repo"
+
+Get the contents of a repository's license.
+
+  GET /repos/{owner}/{repo}/license
+
+https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+*/
+func (c Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
+	return LicensesGetForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -252,12 +278,12 @@ List commonly used licenses.
 
 https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
-func (c *Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
+func LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
 	if req == nil {
 		req = new(LicensesListCommonlyUsedReq)
 	}
 	resp := &LicensesListCommonlyUsedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -270,6 +296,19 @@ func (c *Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesList
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+LicensesListCommonlyUsed performs requests for "licenses/list-commonly-used"
+
+List commonly used licenses.
+
+  GET /licenses
+
+https://developer.github.com/v3/licenses/#list-commonly-used-licenses
+*/
+func (c Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
+	return LicensesListCommonlyUsed(ctx, req, append(c, opt...)...)
 }
 
 /*

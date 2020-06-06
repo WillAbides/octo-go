@@ -19,12 +19,12 @@ Render an arbitrary Markdown document.
 
 https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
-func (c *Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
 	if req == nil {
 		req = new(MarkdownRenderReq)
 	}
 	resp := &MarkdownRenderResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -36,6 +36,19 @@ func (c *Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+MarkdownRender performs requests for "markdown/render"
+
+Render an arbitrary Markdown document.
+
+  POST /markdown
+
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+*/
+func (c Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+	return MarkdownRender(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -151,12 +164,12 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
-func (c *Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+func MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
 	if req == nil {
 		req = new(MarkdownRenderRawReq)
 	}
 	resp := &MarkdownRenderRawResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -168,6 +181,19 @@ func (c *Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+MarkdownRenderRaw performs requests for "markdown/render-raw"
+
+Render a Markdown document in raw mode.
+
+  POST /markdown/raw
+
+https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
+*/
+func (c Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+	return MarkdownRenderRaw(ctx, req, append(c, opt...)...)
 }
 
 /*

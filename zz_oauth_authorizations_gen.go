@@ -20,12 +20,12 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-func (c *Client) OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
+func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsCreateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsCreateAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) OauthAuthorizationsCreateAuthorization(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsCreateAuthorization performs requests for "oauth-authorizations/create-authorization"
+
+Create a new authorization.
+
+  POST /authorizations
+
+https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+*/
+func (c Client) OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
+	return OauthAuthorizationsCreateAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -169,12 +182,12 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
-func (c *Client) OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
+func OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsDeleteAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsDeleteAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -186,6 +199,19 @@ func (c *Client) OauthAuthorizationsDeleteAuthorization(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsDeleteAuthorization performs requests for "oauth-authorizations/delete-authorization"
+
+Delete an authorization.
+
+  DELETE /authorizations/{authorization_id}
+
+https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+*/
+func (c Client) OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
+	return OauthAuthorizationsDeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -274,12 +300,12 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
-func (c *Client) OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...RequestOption) (*OauthAuthorizationsDeleteGrantResponse, error) {
+func OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...RequestOption) (*OauthAuthorizationsDeleteGrantResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsDeleteGrantReq)
 	}
 	resp := &OauthAuthorizationsDeleteGrantResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -291,6 +317,19 @@ func (c *Client) OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthA
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsDeleteGrant performs requests for "oauth-authorizations/delete-grant"
+
+Delete a grant.
+
+  DELETE /applications/grants/{grant_id}
+
+https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+*/
+func (c Client) OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...RequestOption) (*OauthAuthorizationsDeleteGrantResponse, error) {
+	return OauthAuthorizationsDeleteGrant(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -379,12 +418,12 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-func (c *Client) OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsGetAuthorizationResponse, error) {
+func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsGetAuthorizationResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsGetAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsGetAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -397,6 +436,19 @@ func (c *Client) OauthAuthorizationsGetAuthorization(ctx context.Context, req *O
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetAuthorization performs requests for "oauth-authorizations/get-authorization"
+
+Get a single authorization.
+
+  GET /authorizations/{authorization_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+*/
+func (c Client) OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsGetAuthorizationResponse, error) {
+	return OauthAuthorizationsGetAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -495,12 +547,12 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
-func (c *Client) OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...RequestOption) (*OauthAuthorizationsGetGrantResponse, error) {
+func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...RequestOption) (*OauthAuthorizationsGetGrantResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsGetGrantReq)
 	}
 	resp := &OauthAuthorizationsGetGrantResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -513,6 +565,19 @@ func (c *Client) OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuth
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetGrant performs requests for "oauth-authorizations/get-grant"
+
+Get a single grant.
+
+  GET /applications/grants/{grant_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+*/
+func (c Client) OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...RequestOption) (*OauthAuthorizationsGetGrantResponse, error) {
+	return OauthAuthorizationsGetGrant(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -611,12 +676,12 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-func (c *Client) OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
+func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -629,6 +694,19 @@ func (c *Client) OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.C
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForApp performs requests for "oauth-authorizations/get-or-create-authorization-for-app"
+
+Get-or-create an authorization for a specific app.
+
+  PUT /authorizations/clients/{client_id}
+
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+*/
+func (c Client) OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
+	return OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -759,12 +837,12 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-func (c *Client) OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -777,6 +855,19 @@ func (c *Client) OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint performs requests for "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint"
+
+Get-or-create an authorization for a specific app and fingerprint.
+
+  PUT /authorizations/clients/{client_id}/{fingerprint}
+
+https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+*/
+func (c Client) OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+	return OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -900,12 +991,12 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-func (c *Client) OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...RequestOption) (*OauthAuthorizationsListAuthorizationsResponse, error) {
+func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...RequestOption) (*OauthAuthorizationsListAuthorizationsResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsListAuthorizationsReq)
 	}
 	resp := &OauthAuthorizationsListAuthorizationsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -918,6 +1009,19 @@ func (c *Client) OauthAuthorizationsListAuthorizations(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsListAuthorizations performs requests for "oauth-authorizations/list-authorizations"
+
+List your authorizations.
+
+  GET /authorizations
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+*/
+func (c Client) OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...RequestOption) (*OauthAuthorizationsListAuthorizationsResponse, error) {
+	return OauthAuthorizationsListAuthorizations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1027,12 +1131,12 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
-func (c *Client) OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...RequestOption) (*OauthAuthorizationsListGrantsResponse, error) {
+func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...RequestOption) (*OauthAuthorizationsListGrantsResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsListGrantsReq)
 	}
 	resp := &OauthAuthorizationsListGrantsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1045,6 +1149,19 @@ func (c *Client) OauthAuthorizationsListGrants(ctx context.Context, req *OauthAu
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsListGrants performs requests for "oauth-authorizations/list-grants"
+
+List your grants.
+
+  GET /applications/grants
+
+https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+*/
+func (c Client) OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...RequestOption) (*OauthAuthorizationsListGrantsResponse, error) {
+	return OauthAuthorizationsListGrants(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1154,12 +1271,12 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-func (c *Client) OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
+func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
 	if req == nil {
 		req = new(OauthAuthorizationsUpdateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsUpdateAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1172,6 +1289,19 @@ func (c *Client) OauthAuthorizationsUpdateAuthorization(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+OauthAuthorizationsUpdateAuthorization performs requests for "oauth-authorizations/update-authorization"
+
+Update an existing authorization.
+
+  PATCH /authorizations/{authorization_id}
+
+https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+*/
+func (c Client) OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
+	return OauthAuthorizationsUpdateAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*

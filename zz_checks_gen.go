@@ -20,12 +20,12 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-func (c *Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
 	if req == nil {
 		req = new(ChecksCreateReq)
 	}
 	resp := &ChecksCreateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksCreate performs requests for "checks/create"
+
+Create a check run.
+
+  POST /repos/{owner}/{repo}/check-runs
+
+https://developer.github.com/v3/checks/runs/#create-a-check-run
+*/
+func (c Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+	return ChecksCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -346,12 +359,12 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-func (c *Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
 	if req == nil {
 		req = new(ChecksCreateSuiteReq)
 	}
 	resp := &ChecksCreateSuiteResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -364,6 +377,19 @@ func (c *Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksCreateSuite performs requests for "checks/create-suite"
+
+Create a check suite.
+
+  POST /repos/{owner}/{repo}/check-suites
+
+https://developer.github.com/v3/checks/suites/#create-a-check-suite
+*/
+func (c Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+	return ChecksCreateSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -490,12 +516,12 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-func (c *Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
 	if req == nil {
 		req = new(ChecksGetReq)
 	}
 	resp := &ChecksGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -508,6 +534,19 @@ func (c *Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksGet performs requests for "checks/get"
+
+Get a check run.
+
+  GET /repos/{owner}/{repo}/check-runs/{check_run_id}
+
+https://developer.github.com/v3/checks/runs/#get-a-check-run
+*/
+func (c Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+	return ChecksGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -623,12 +662,12 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-func (c *Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
 	if req == nil {
 		req = new(ChecksGetSuiteReq)
 	}
 	resp := &ChecksGetSuiteResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -641,6 +680,19 @@ func (c *Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksGetSuite performs requests for "checks/get-suite"
+
+Get a check suite.
+
+  GET /repos/{owner}/{repo}/check-suites/{check_suite_id}
+
+https://developer.github.com/v3/checks/suites/#get-a-check-suite
+*/
+func (c Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+	return ChecksGetSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -756,12 +808,12 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-func (c *Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
 	if req == nil {
 		req = new(ChecksListAnnotationsReq)
 	}
 	resp := &ChecksListAnnotationsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -774,6 +826,19 @@ func (c *Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnot
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksListAnnotations performs requests for "checks/list-annotations"
+
+List check run annotations.
+
+  GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations
+
+https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+*/
+func (c Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+	return ChecksListAnnotations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -901,12 +966,12 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
-func (c *Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
 	if req == nil {
 		req = new(ChecksListForRefReq)
 	}
 	resp := &ChecksListForRefResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -919,6 +984,19 @@ func (c *Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksListForRef performs requests for "checks/list-for-ref"
+
+List check runs for a Git reference.
+
+  GET /repos/{owner}/{repo}/commits/{ref}/check-runs
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+*/
+func (c Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+	return ChecksListForRef(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1073,12 +1151,12 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-func (c *Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
 	if req == nil {
 		req = new(ChecksListForSuiteReq)
 	}
 	resp := &ChecksListForSuiteResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1091,6 +1169,19 @@ func (c *Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuite
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksListForSuite performs requests for "checks/list-for-suite"
+
+List check runs in a check suite.
+
+  GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs
+
+https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+*/
+func (c Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+	return ChecksListForSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1245,12 +1336,12 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
-func (c *Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
 	if req == nil {
 		req = new(ChecksListSuitesForRefReq)
 	}
 	resp := &ChecksListSuitesForRefResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1263,6 +1354,19 @@ func (c *Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuit
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksListSuitesForRef performs requests for "checks/list-suites-for-ref"
+
+List check suites for a Git reference.
+
+  GET /repos/{owner}/{repo}/commits/{ref}/check-suites
+
+https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+*/
+func (c Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+	return ChecksListSuitesForRef(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1408,12 +1512,12 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
-func (c *Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+func ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
 	if req == nil {
 		req = new(ChecksRerequestSuiteReq)
 	}
 	resp := &ChecksRerequestSuiteResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1425,6 +1529,19 @@ func (c *Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestS
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksRerequestSuite performs requests for "checks/rerequest-suite"
+
+Rerequest a check suite.
+
+  POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest
+
+https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
+*/
+func (c Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+	return ChecksRerequestSuite(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1530,12 +1647,12 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-func (c *Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
 	if req == nil {
 		req = new(ChecksSetSuitesPreferencesReq)
 	}
 	resp := &ChecksSetSuitesPreferencesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1548,6 +1665,19 @@ func (c *Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetS
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksSetSuitesPreferences performs requests for "checks/set-suites-preferences"
+
+Update repository preferences for check suites.
+
+  PATCH /repos/{owner}/{repo}/check-suites/preferences
+
+https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+*/
+func (c Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+	return ChecksSetSuitesPreferences(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1692,12 +1822,12 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-func (c *Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
 	if req == nil {
 		req = new(ChecksUpdateReq)
 	}
 	resp := &ChecksUpdateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1710,6 +1840,19 @@ func (c *Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ChecksUpdate performs requests for "checks/update"
+
+Update a check run.
+
+  PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}
+
+https://developer.github.com/v3/checks/runs/#update-a-check-run
+*/
+func (c Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+	return ChecksUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*

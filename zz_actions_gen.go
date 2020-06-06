@@ -20,12 +20,12 @@ Add selected repository to an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
-func (c *Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+func ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsAddSelectedRepoToOrgSecretReq)
 	}
 	resp := &ActionsAddSelectedRepoToOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *Act
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsAddSelectedRepoToOrgSecret performs requests for "actions/add-selected-repo-to-org-secret"
+
+Add selected repository to an organization secret.
+
+  PUT /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
+
+https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
+*/
+func (c Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+	return ActionsAddSelectedRepoToOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -127,12 +140,12 @@ Cancel a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
-func (c *Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
+func ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
 	if req == nil {
 		req = new(ActionsCancelWorkflowRunReq)
 	}
 	resp := &ActionsCancelWorkflowRunResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -144,6 +157,19 @@ func (c *Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCance
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCancelWorkflowRun performs requests for "actions/cancel-workflow-run"
+
+Cancel a workflow run.
+
+  POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
+
+https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
+*/
+func (c Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
+	return ActionsCancelWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -234,12 +260,12 @@ Create or update an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
-func (c *Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+func ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsCreateOrUpdateOrgSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -251,6 +277,19 @@ func (c *Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *Action
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCreateOrUpdateOrgSecret performs requests for "actions/create-or-update-org-secret"
+
+Create or update an organization secret.
+
+  PUT /orgs/{org}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
+*/
+func (c Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+	return ActionsCreateOrUpdateOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -384,12 +423,12 @@ Create or update a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
-func (c *Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+func ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsCreateOrUpdateRepoSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateRepoSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -401,6 +440,19 @@ func (c *Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *Actio
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCreateOrUpdateRepoSecret performs requests for "actions/create-or-update-repo-secret"
+
+Create or update a repository secret.
+
+  PUT /repos/{owner}/{repo}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
+*/
+func (c Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+	return ActionsCreateOrUpdateRepoSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -512,12 +564,12 @@ Create a registration token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-func (c *Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
 	if req == nil {
 		req = new(ActionsCreateRegistrationTokenForOrgReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -530,6 +582,19 @@ func (c *Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCreateRegistrationTokenForOrg performs requests for "actions/create-registration-token-for-org"
+
+Create a registration token for an organization.
+
+  POST /orgs/{org}/actions/runners/registration-token
+
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
+*/
+func (c Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+	return ActionsCreateRegistrationTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -628,12 +693,12 @@ Create a registration token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-func (c *Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsCreateRegistrationTokenForRepoReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -646,6 +711,19 @@ func (c *Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCreateRegistrationTokenForRepo performs requests for "actions/create-registration-token-for-repo"
+
+Create a registration token for a repository.
+
+  POST /repos/{owner}/{repo}/actions/runners/registration-token
+
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
+*/
+func (c Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+	return ActionsCreateRegistrationTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -745,12 +823,12 @@ Create a remove token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-func (c *Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
 	if req == nil {
 		req = new(ActionsCreateRemoveTokenForOrgReq)
 	}
 	resp := &ActionsCreateRemoveTokenForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -763,6 +841,19 @@ func (c *Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *Action
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCreateRemoveTokenForOrg performs requests for "actions/create-remove-token-for-org"
+
+Create a remove token for an organization.
+
+  POST /orgs/{org}/actions/runners/remove-token
+
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
+*/
+func (c Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+	return ActionsCreateRemoveTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -861,12 +952,12 @@ Create a remove token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-func (c *Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsCreateRemoveTokenForRepoReq)
 	}
 	resp := &ActionsCreateRemoveTokenForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -879,6 +970,19 @@ func (c *Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *Actio
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsCreateRemoveTokenForRepo performs requests for "actions/create-remove-token-for-repo"
+
+Create a remove token for a repository.
+
+  POST /repos/{owner}/{repo}/actions/runners/remove-token
+
+https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
+*/
+func (c Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+	return ActionsCreateRemoveTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -978,12 +1082,12 @@ Delete an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
-func (c *Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
+func ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
 	if req == nil {
 		req = new(ActionsDeleteArtifactReq)
 	}
 	resp := &ActionsDeleteArtifactResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -995,6 +1099,19 @@ func (c *Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteAr
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDeleteArtifact performs requests for "actions/delete-artifact"
+
+Delete an artifact.
+
+  DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
+
+https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
+*/
+func (c Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
+	return ActionsDeleteArtifact(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1085,12 +1202,12 @@ Delete an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
-func (c *Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
+func ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsDeleteOrgSecretReq)
 	}
 	resp := &ActionsDeleteOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1102,6 +1219,19 @@ func (c *Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteO
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDeleteOrgSecret performs requests for "actions/delete-org-secret"
+
+Delete an organization secret.
+
+  DELETE /orgs/{org}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
+*/
+func (c Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
+	return ActionsDeleteOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1191,12 +1321,12 @@ Delete a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
-func (c *Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
+func ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsDeleteRepoSecretReq)
 	}
 	resp := &ActionsDeleteRepoSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1208,6 +1338,19 @@ func (c *Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDelete
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDeleteRepoSecret performs requests for "actions/delete-repo-secret"
+
+Delete a repository secret.
+
+  DELETE /repos/{owner}/{repo}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
+*/
+func (c Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
+	return ActionsDeleteRepoSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1298,12 +1441,12 @@ Delete a self-hosted runner from an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
-func (c *Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+func ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
 	if req == nil {
 		req = new(ActionsDeleteSelfHostedRunnerFromOrgReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1315,6 +1458,19 @@ func (c *Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDeleteSelfHostedRunnerFromOrg performs requests for "actions/delete-self-hosted-runner-from-org"
+
+Delete a self-hosted runner from an organization.
+
+  DELETE /orgs/{org}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
+*/
+func (c Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+	return ActionsDeleteSelfHostedRunnerFromOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1404,12 +1560,12 @@ Delete a self-hosted runner from a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
-func (c *Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+func ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsDeleteSelfHostedRunnerFromRepoReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1421,6 +1577,19 @@ func (c *Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDeleteSelfHostedRunnerFromRepo performs requests for "actions/delete-self-hosted-runner-from-repo"
+
+Delete a self-hosted runner from a repository.
+
+  DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
+*/
+func (c Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+	return ActionsDeleteSelfHostedRunnerFromRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1511,12 +1680,12 @@ Delete workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
-func (c *Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+func ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
 	if req == nil {
 		req = new(ActionsDeleteWorkflowRunLogsReq)
 	}
 	resp := &ActionsDeleteWorkflowRunLogsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1528,6 +1697,19 @@ func (c *Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsD
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDeleteWorkflowRunLogs performs requests for "actions/delete-workflow-run-logs"
+
+Delete workflow run logs.
+
+  DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs
+
+https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
+*/
+func (c Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+	return ActionsDeleteWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1618,12 +1800,12 @@ Download an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
-func (c *Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
+func ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
 	if req == nil {
 		req = new(ActionsDownloadArtifactReq)
 	}
 	resp := &ActionsDownloadArtifactResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1635,6 +1817,19 @@ func (c *Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownlo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDownloadArtifact performs requests for "actions/download-artifact"
+
+Download an artifact.
+
+  GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}
+
+https://developer.github.com/v3/actions/artifacts/#download-an-artifact
+*/
+func (c Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
+	return ActionsDownloadArtifact(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1726,12 +1921,12 @@ Download workflow job logs.
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
 */
-func (c *Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
+func ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
 	if req == nil {
 		req = new(ActionsDownloadWorkflowJobLogsReq)
 	}
 	resp := &ActionsDownloadWorkflowJobLogsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1743,6 +1938,19 @@ func (c *Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *Action
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDownloadWorkflowJobLogs performs requests for "actions/download-workflow-job-logs"
+
+Download workflow job logs.
+
+  GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs
+
+https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+*/
+func (c Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
+	return ActionsDownloadWorkflowJobLogs(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1833,12 +2041,12 @@ Download workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
-func (c *Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+func ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
 	if req == nil {
 		req = new(ActionsDownloadWorkflowRunLogsReq)
 	}
 	resp := &ActionsDownloadWorkflowRunLogsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1850,6 +2058,19 @@ func (c *Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *Action
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsDownloadWorkflowRunLogs performs requests for "actions/download-workflow-run-logs"
+
+Download workflow run logs.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs
+
+https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
+*/
+func (c Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+	return ActionsDownloadWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1940,12 +2161,12 @@ Get an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-func (c *Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
+func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
 	if req == nil {
 		req = new(ActionsGetArtifactReq)
 	}
 	resp := &ActionsGetArtifactResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1958,6 +2179,19 @@ func (c *Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifact
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetArtifact performs requests for "actions/get-artifact"
+
+Get an artifact.
+
+  GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
+
+https://developer.github.com/v3/actions/artifacts/#get-an-artifact
+*/
+func (c Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
+	return ActionsGetArtifact(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2058,12 +2292,12 @@ Get an organization public key.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-func (c *Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
+func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
 	if req == nil {
 		req = new(ActionsGetOrgPublicKeyReq)
 	}
 	resp := &ActionsGetOrgPublicKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2076,6 +2310,19 @@ func (c *Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgP
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetOrgPublicKey performs requests for "actions/get-org-public-key"
+
+Get an organization public key.
+
+  GET /orgs/{org}/actions/secrets/public-key
+
+https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
+*/
+func (c Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
+	return ActionsGetOrgPublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2174,12 +2421,12 @@ Get an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-func (c *Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
+func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsGetOrgSecretReq)
 	}
 	resp := &ActionsGetOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2192,6 +2439,19 @@ func (c *Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecr
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetOrgSecret performs requests for "actions/get-org-secret"
+
+Get an organization secret.
+
+  GET /orgs/{org}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
+*/
+func (c Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
+	return ActionsGetOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2291,12 +2551,12 @@ Get a repository public key.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-func (c *Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
+func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
 	if req == nil {
 		req = new(ActionsGetRepoPublicKeyReq)
 	}
 	resp := &ActionsGetRepoPublicKeyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2309,6 +2569,19 @@ func (c *Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRep
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetRepoPublicKey performs requests for "actions/get-repo-public-key"
+
+Get a repository public key.
+
+  GET /repos/{owner}/{repo}/actions/secrets/public-key
+
+https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
+*/
+func (c Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
+	return ActionsGetRepoPublicKey(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2408,12 +2681,12 @@ Get a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-func (c *Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
+func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsGetRepoSecretReq)
 	}
 	resp := &ActionsGetRepoSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2426,6 +2699,19 @@ func (c *Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetRepoSecret performs requests for "actions/get-repo-secret"
+
+Get a repository secret.
+
+  GET /repos/{owner}/{repo}/actions/secrets/{secret_name}
+
+https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
+*/
+func (c Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
+	return ActionsGetRepoSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2526,12 +2812,12 @@ Get a self-hosted runner for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-func (c *Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
 	if req == nil {
 		req = new(ActionsGetSelfHostedRunnerForOrgReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2544,6 +2830,19 @@ func (c *Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *Acti
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetSelfHostedRunnerForOrg performs requests for "actions/get-self-hosted-runner-for-org"
+
+Get a self-hosted runner for an organization.
+
+  GET /orgs/{org}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
+*/
+func (c Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+	return ActionsGetSelfHostedRunnerForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2643,12 +2942,12 @@ Get a self-hosted runner for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-func (c *Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsGetSelfHostedRunnerForRepoReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2661,6 +2960,19 @@ func (c *Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *Act
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetSelfHostedRunnerForRepo performs requests for "actions/get-self-hosted-runner-for-repo"
+
+Get a self-hosted runner for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runners/{runner_id}
+
+https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
+*/
+func (c Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+	return ActionsGetSelfHostedRunnerForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2761,12 +3073,12 @@ Get a workflow.
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-func (c *Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
+func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
 	if req == nil {
 		req = new(ActionsGetWorkflowReq)
 	}
 	resp := &ActionsGetWorkflowResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2779,6 +3091,19 @@ func (c *Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflow
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetWorkflow performs requests for "actions/get-workflow"
+
+Get a workflow.
+
+  GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}
+
+https://developer.github.com/v3/actions/workflows/#get-a-workflow
+*/
+func (c Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
+	return ActionsGetWorkflow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2879,12 +3204,12 @@ Get a workflow job.
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
 */
-func (c *Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
+func ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
 	if req == nil {
 		req = new(ActionsGetWorkflowJobReq)
 	}
 	resp := &ActionsGetWorkflowJobResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2897,6 +3222,19 @@ func (c *Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkf
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetWorkflowJob performs requests for "actions/get-workflow-job"
+
+Get a workflow job.
+
+  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
+*/
+func (c Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
+	return ActionsGetWorkflowJob(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2997,12 +3335,12 @@ Get a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-func (c *Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
+func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
 	if req == nil {
 		req = new(ActionsGetWorkflowRunReq)
 	}
 	resp := &ActionsGetWorkflowRunResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3015,6 +3353,19 @@ func (c *Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkf
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetWorkflowRun performs requests for "actions/get-workflow-run"
+
+Get a workflow run.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}
+
+https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
+*/
+func (c Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
+	return ActionsGetWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3115,12 +3466,12 @@ Get workflow run usage.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-func (c *Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
+func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
 	if req == nil {
 		req = new(ActionsGetWorkflowRunUsageReq)
 	}
 	resp := &ActionsGetWorkflowRunUsageResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3133,6 +3484,19 @@ func (c *Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGet
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetWorkflowRunUsage performs requests for "actions/get-workflow-run-usage"
+
+Get workflow run usage.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing
+
+https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
+*/
+func (c Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
+	return ActionsGetWorkflowRunUsage(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3233,12 +3597,12 @@ Get workflow usage.
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-func (c *Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
+func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
 	if req == nil {
 		req = new(ActionsGetWorkflowUsageReq)
 	}
 	resp := &ActionsGetWorkflowUsageResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3251,6 +3615,19 @@ func (c *Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWor
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsGetWorkflowUsage performs requests for "actions/get-workflow-usage"
+
+Get workflow usage.
+
+  GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing
+
+https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+*/
+func (c Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
+	return ActionsGetWorkflowUsage(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3351,12 +3728,12 @@ List artifacts for a repository.
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
-func (c *Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
+func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsListArtifactsForRepoReq)
 	}
 	resp := &ActionsListArtifactsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3369,6 +3746,19 @@ func (c *Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsLi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListArtifactsForRepo performs requests for "actions/list-artifacts-for-repo"
+
+List artifacts for a repository.
+
+  GET /repos/{owner}/{repo}/actions/artifacts
+
+https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
+*/
+func (c Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
+	return ActionsListArtifactsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3483,12 +3873,12 @@ List jobs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
-func (c *Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
+func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
 	if req == nil {
 		req = new(ActionsListJobsForWorkflowRunReq)
 	}
 	resp := &ActionsListJobsForWorkflowRunResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3501,6 +3891,19 @@ func (c *Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *Actions
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListJobsForWorkflowRun performs requests for "actions/list-jobs-for-workflow-run"
+
+List jobs for a workflow run.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs
+
+https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
+*/
+func (c Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
+	return ActionsListJobsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3627,12 +4030,12 @@ List organization secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
-func (c *Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
+func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
 	if req == nil {
 		req = new(ActionsListOrgSecretsReq)
 	}
 	resp := &ActionsListOrgSecretsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3645,6 +4048,19 @@ func (c *Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgS
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListOrgSecrets performs requests for "actions/list-org-secrets"
+
+List organization secrets.
+
+  GET /orgs/{org}/actions/secrets
+
+https://developer.github.com/v3/actions/secrets/#list-organization-secrets
+*/
+func (c Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
+	return ActionsListOrgSecrets(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3758,12 +4174,12 @@ List repository secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
-func (c *Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
+func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
 	if req == nil {
 		req = new(ActionsListRepoSecretsReq)
 	}
 	resp := &ActionsListRepoSecretsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3776,6 +4192,19 @@ func (c *Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRep
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListRepoSecrets performs requests for "actions/list-repo-secrets"
+
+List repository secrets.
+
+  GET /repos/{owner}/{repo}/actions/secrets
+
+https://developer.github.com/v3/actions/secrets/#list-repository-secrets
+*/
+func (c Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
+	return ActionsListRepoSecrets(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3890,12 +4319,12 @@ List repository workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
 */
-func (c *Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
+func ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
 	if req == nil {
 		req = new(ActionsListRepoWorkflowRunsReq)
 	}
 	resp := &ActionsListRepoWorkflowRunsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3908,6 +4337,19 @@ func (c *Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsLi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListRepoWorkflowRuns performs requests for "actions/list-repo-workflow-runs"
+
+List repository workflow runs.
+
+  GET /repos/{owner}/{repo}/actions/runs
+
+https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
+*/
+func (c Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
+	return ActionsListRepoWorkflowRuns(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4063,12 +4505,12 @@ List repository workflows.
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
-func (c *Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
+func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
 	if req == nil {
 		req = new(ActionsListRepoWorkflowsReq)
 	}
 	resp := &ActionsListRepoWorkflowsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4081,6 +4523,19 @@ func (c *Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListR
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListRepoWorkflows performs requests for "actions/list-repo-workflows"
+
+List repository workflows.
+
+  GET /repos/{owner}/{repo}/actions/workflows
+
+https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+*/
+func (c Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
+	return ActionsListRepoWorkflows(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4195,12 +4650,12 @@ List runner applications for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-func (c *Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
 	if req == nil {
 		req = new(ActionsListRunnerApplicationsForOrgReq)
 	}
 	resp := &ActionsListRunnerApplicationsForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4213,6 +4668,19 @@ func (c *Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *A
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListRunnerApplicationsForOrg performs requests for "actions/list-runner-applications-for-org"
+
+List runner applications for an organization.
+
+  GET /orgs/{org}/actions/runners/downloads
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
+*/
+func (c Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+	return ActionsListRunnerApplicationsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4311,12 +4779,12 @@ List runner applications for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-func (c *Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsListRunnerApplicationsForRepoReq)
 	}
 	resp := &ActionsListRunnerApplicationsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4329,6 +4797,19 @@ func (c *Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListRunnerApplicationsForRepo performs requests for "actions/list-runner-applications-for-repo"
+
+List runner applications for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runners/downloads
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
+*/
+func (c Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+	return ActionsListRunnerApplicationsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4428,12 +4909,12 @@ List selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
-func (c *Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsListSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsListSelectedReposForOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4446,6 +4927,19 @@ func (c *Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListSelectedReposForOrgSecret performs requests for "actions/list-selected-repos-for-org-secret"
+
+List selected repositories for an organization secret.
+
+  GET /orgs/{org}/actions/secrets/{secret_name}/repositories
+
+https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
+*/
+func (c Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+	return ActionsListSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4548,12 +5042,12 @@ List self-hosted runners for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-func (c *Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
 	if req == nil {
 		req = new(ActionsListSelfHostedRunnersForOrgReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4566,6 +5060,19 @@ func (c *Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *Ac
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListSelfHostedRunnersForOrg performs requests for "actions/list-self-hosted-runners-for-org"
+
+List self-hosted runners for an organization.
+
+  GET /orgs/{org}/actions/runners
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
+*/
+func (c Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+	return ActionsListSelfHostedRunnersForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4679,12 +5186,12 @@ List self-hosted runners for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
-func (c *Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
 	if req == nil {
 		req = new(ActionsListSelfHostedRunnersForRepoReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4697,6 +5204,19 @@ func (c *Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *A
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListSelfHostedRunnersForRepo performs requests for "actions/list-self-hosted-runners-for-repo"
+
+List self-hosted runners for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runners
+
+https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
+*/
+func (c Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+	return ActionsListSelfHostedRunnersForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4811,12 +5331,12 @@ List workflow run artifacts.
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
-func (c *Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
+func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
 	if req == nil {
 		req = new(ActionsListWorkflowRunArtifactsReq)
 	}
 	resp := &ActionsListWorkflowRunArtifactsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4829,6 +5349,19 @@ func (c *Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *Actio
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListWorkflowRunArtifacts performs requests for "actions/list-workflow-run-artifacts"
+
+List workflow run artifacts.
+
+  GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts
+
+https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+*/
+func (c Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
+	return ActionsListWorkflowRunArtifacts(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4944,12 +5477,12 @@ List workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
-func (c *Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
+func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
 	if req == nil {
 		req = new(ActionsListWorkflowRunsReq)
 	}
 	resp := &ActionsListWorkflowRunsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4962,6 +5495,19 @@ func (c *Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsListWorkflowRuns performs requests for "actions/list-workflow-runs"
+
+List workflow runs.
+
+  GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs
+
+https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+*/
+func (c Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
+	return ActionsListWorkflowRuns(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5118,12 +5664,12 @@ Re-run a workflow.
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
-func (c *Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
+func ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
 	if req == nil {
 		req = new(ActionsReRunWorkflowReq)
 	}
 	resp := &ActionsReRunWorkflowResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5135,6 +5681,19 @@ func (c *Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWork
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsReRunWorkflow performs requests for "actions/re-run-workflow"
+
+Re-run a workflow.
+
+  POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun
+
+https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
+*/
+func (c Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
+	return ActionsReRunWorkflow(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5225,12 +5784,12 @@ Remove selected repository from an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-func (c *Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+func ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsRemoveSelectedRepoFromOrgSecretReq)
 	}
 	resp := &ActionsRemoveSelectedRepoFromOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5242,6 +5801,19 @@ func (c *Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsRemoveSelectedRepoFromOrgSecret performs requests for "actions/remove-selected-repo-from-org-secret"
+
+Remove selected repository from an organization secret.
+
+  DELETE /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
+
+https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
+*/
+func (c Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+	return ActionsRemoveSelectedRepoFromOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5332,12 +5904,12 @@ Set selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
-func (c *Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+func ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
 	if req == nil {
 		req = new(ActionsSetSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsSetSelectedReposForOrgSecretResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5349,6 +5921,19 @@ func (c *Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *A
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ActionsSetSelectedReposForOrgSecret performs requests for "actions/set-selected-repos-for-org-secret"
+
+Set selected repositories for an organization secret.
+
+  PUT /orgs/{org}/actions/secrets/{secret_name}/repositories
+
+https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
+*/
+func (c Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+	return ActionsSetSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
 /*

@@ -20,12 +20,12 @@ Get if a pull request has been merged.
 
 https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
 */
-func (c *Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
+func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
 	if req == nil {
 		req = new(PullsCheckIfMergedReq)
 	}
 	resp := &PullsCheckIfMergedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -41,6 +41,19 @@ func (c *Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMerged
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsCheckIfMerged performs requests for "pulls/check-if-merged"
+
+Get if a pull request has been merged.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/merge
+
+https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+*/
+func (c Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
+	return PullsCheckIfMerged(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -132,12 +145,12 @@ Create a pull request.
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
-func (c *Client) PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption) (*PullsCreateResponse, error) {
+func PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption) (*PullsCreateResponse, error) {
 	if req == nil {
 		req = new(PullsCreateReq)
 	}
 	resp := &PullsCreateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -150,6 +163,19 @@ func (c *Client) PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsCreate performs requests for "pulls/create"
+
+Create a pull request.
+
+  POST /repos/{owner}/{repo}/pulls
+
+https://developer.github.com/v3/pulls/#create-a-pull-request
+*/
+func (c Client) PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption) (*PullsCreateResponse, error) {
+	return PullsCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -305,12 +331,12 @@ Create a comment.
 
 https://developer.github.com/v3/pulls/comments/#create-a-comment
 */
-func (c *Client) PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
+func PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
 	if req == nil {
 		req = new(PullsCreateCommentReq)
 	}
 	resp := &PullsCreateCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -323,6 +349,19 @@ func (c *Client) PullsCreateComment(ctx context.Context, req *PullsCreateComment
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsCreateComment performs requests for "pulls/create-comment"
+
+Create a comment.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
+
+https://developer.github.com/v3/pulls/comments/#create-a-comment
+*/
+func (c Client) PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
+	return PullsCreateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -502,12 +541,12 @@ Create a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
 */
-func (c *Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
+func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
 	if req == nil {
 		req = new(PullsCreateReviewReq)
 	}
 	resp := &PullsCreateReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -520,6 +559,19 @@ func (c *Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsCreateReview performs requests for "pulls/create-review"
+
+Create a pull request review.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews
+
+https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+*/
+func (c Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
+	return PullsCreateReview(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -675,12 +727,12 @@ Create a review comment reply.
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
 */
-func (c *Client) PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
+func PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
 	if req == nil {
 		req = new(PullsCreateReviewCommentReplyReq)
 	}
 	resp := &PullsCreateReviewCommentReplyResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -693,6 +745,19 @@ func (c *Client) PullsCreateReviewCommentReply(ctx context.Context, req *PullsCr
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsCreateReviewCommentReply performs requests for "pulls/create-review-comment-reply"
+
+Create a review comment reply.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
+
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+*/
+func (c Client) PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
+	return PullsCreateReviewCommentReply(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -806,12 +871,12 @@ Create a review request.
 
 https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
 */
-func (c *Client) PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
+func PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
 	if req == nil {
 		req = new(PullsCreateReviewRequestReq)
 	}
 	resp := &PullsCreateReviewRequestResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -824,6 +889,19 @@ func (c *Client) PullsCreateReviewRequest(ctx context.Context, req *PullsCreateR
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsCreateReviewRequest performs requests for "pulls/create-review-request"
+
+Create a review request.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+*/
+func (c Client) PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
+	return PullsCreateReviewRequest(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -939,12 +1017,12 @@ Delete a comment.
 
 https://developer.github.com/v3/pulls/comments/#delete-a-comment
 */
-func (c *Client) PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
+func PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
 	if req == nil {
 		req = new(PullsDeleteCommentReq)
 	}
 	resp := &PullsDeleteCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -956,6 +1034,19 @@ func (c *Client) PullsDeleteComment(ctx context.Context, req *PullsDeleteComment
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsDeleteComment performs requests for "pulls/delete-comment"
+
+Delete a comment.
+
+  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#delete-a-comment
+*/
+func (c Client) PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
+	return PullsDeleteComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1046,12 +1137,12 @@ Delete a pending review.
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
 */
-func (c *Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
+func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
 	if req == nil {
 		req = new(PullsDeletePendingReviewReq)
 	}
 	resp := &PullsDeletePendingReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1064,6 +1155,19 @@ func (c *Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeleteP
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsDeletePendingReview performs requests for "pulls/delete-pending-review"
+
+Delete a pending review.
+
+  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
+
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+*/
+func (c Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
+	return PullsDeletePendingReview(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1165,12 +1269,12 @@ Delete a review request.
 
 https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
 */
-func (c *Client) PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
+func PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
 	if req == nil {
 		req = new(PullsDeleteReviewRequestReq)
 	}
 	resp := &PullsDeleteReviewRequestResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1182,6 +1286,19 @@ func (c *Client) PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteR
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsDeleteReviewRequest performs requests for "pulls/delete-review-request"
+
+Delete a review request.
+
+  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+*/
+func (c Client) PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
+	return PullsDeleteReviewRequest(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1287,12 +1404,12 @@ Dismiss a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
 */
-func (c *Client) PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
+func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
 	if req == nil {
 		req = new(PullsDismissReviewReq)
 	}
 	resp := &PullsDismissReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1305,6 +1422,19 @@ func (c *Client) PullsDismissReview(ctx context.Context, req *PullsDismissReview
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsDismissReview performs requests for "pulls/dismiss-review"
+
+Dismiss a pull request review.
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals
+
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+*/
+func (c Client) PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
+	return PullsDismissReview(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1418,12 +1548,12 @@ Get a single pull request.
 
 https://developer.github.com/v3/pulls/#get-a-single-pull-request
 */
-func (c *Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
+func PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
 	if req == nil {
 		req = new(PullsGetReq)
 	}
 	resp := &PullsGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1436,6 +1566,19 @@ func (c *Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestO
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsGet performs requests for "pulls/get"
+
+Get a single pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}
+
+https://developer.github.com/v3/pulls/#get-a-single-pull-request
+*/
+func (c Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
+	return PullsGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1549,12 +1692,12 @@ Get a single comment.
 
 https://developer.github.com/v3/pulls/comments/#get-a-single-comment
 */
-func (c *Client) PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
+func PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
 	if req == nil {
 		req = new(PullsGetCommentReq)
 	}
 	resp := &PullsGetCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1567,6 +1710,19 @@ func (c *Client) PullsGetComment(ctx context.Context, req *PullsGetCommentReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsGetComment performs requests for "pulls/get-comment"
+
+Get a single comment.
+
+  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#get-a-single-comment
+*/
+func (c Client) PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
+	return PullsGetComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1692,12 +1848,12 @@ Get comments for a single review.
 
 https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
 */
-func (c *Client) PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
+func PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
 	if req == nil {
 		req = new(PullsGetCommentsForReviewReq)
 	}
 	resp := &PullsGetCommentsForReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1710,6 +1866,19 @@ func (c *Client) PullsGetCommentsForReview(ctx context.Context, req *PullsGetCom
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsGetCommentsForReview performs requests for "pulls/get-comments-for-review"
+
+Get comments for a single review.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
+
+https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
+*/
+func (c Client) PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
+	return PullsGetCommentsForReview(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1823,12 +1992,12 @@ Get a single review.
 
 https://developer.github.com/v3/pulls/reviews/#get-a-single-review
 */
-func (c *Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
+func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
 	if req == nil {
 		req = new(PullsGetReviewReq)
 	}
 	resp := &PullsGetReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1841,6 +2010,19 @@ func (c *Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsGetReview performs requests for "pulls/get-review"
+
+Get a single review.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
+
+https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+*/
+func (c Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
+	return PullsGetReview(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1942,12 +2124,12 @@ List pull requests.
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
-func (c *Client) PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*PullsListResponse, error) {
+func PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*PullsListResponse, error) {
 	if req == nil {
 		req = new(PullsListReq)
 	}
 	resp := &PullsListResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1960,6 +2142,19 @@ func (c *Client) PullsList(ctx context.Context, req *PullsListReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsList performs requests for "pulls/list"
+
+List pull requests.
+
+  GET /repos/{owner}/{repo}/pulls
+
+https://developer.github.com/v3/pulls/#list-pull-requests
+*/
+func (c Client) PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*PullsListResponse, error) {
+	return PullsList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2125,12 +2320,12 @@ List comments on a pull request.
 
 https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
 */
-func (c *Client) PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
+func PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
 	if req == nil {
 		req = new(PullsListCommentsReq)
 	}
 	resp := &PullsListCommentsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2143,6 +2338,19 @@ func (c *Client) PullsListComments(ctx context.Context, req *PullsListCommentsRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsListComments performs requests for "pulls/list-comments"
+
+List comments on a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+*/
+func (c Client) PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
+	return PullsListComments(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2302,12 +2510,12 @@ List comments in a repository.
 
 https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
 */
-func (c *Client) PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
+func PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
 	if req == nil {
 		req = new(PullsListCommentsForRepoReq)
 	}
 	resp := &PullsListCommentsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2320,6 +2528,19 @@ func (c *Client) PullsListCommentsForRepo(ctx context.Context, req *PullsListCom
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsListCommentsForRepo performs requests for "pulls/list-comments-for-repo"
+
+List comments in a repository.
+
+  GET /repos/{owner}/{repo}/pulls/comments
+
+https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+*/
+func (c Client) PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
+	return PullsListCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2478,12 +2699,12 @@ List commits on a pull request.
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
-func (c *Client) PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...RequestOption) (*PullsListCommitsResponse, error) {
+func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...RequestOption) (*PullsListCommitsResponse, error) {
 	if req == nil {
 		req = new(PullsListCommitsReq)
 	}
 	resp := &PullsListCommitsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2496,6 +2717,19 @@ func (c *Client) PullsListCommits(ctx context.Context, req *PullsListCommitsReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsListCommits performs requests for "pulls/list-commits"
+
+List commits on a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/commits
+
+https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
+*/
+func (c Client) PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...RequestOption) (*PullsListCommitsResponse, error) {
+	return PullsListCommits(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2608,12 +2842,12 @@ List pull requests files.
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
-func (c *Client) PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestOption) (*PullsListFilesResponse, error) {
+func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestOption) (*PullsListFilesResponse, error) {
 	if req == nil {
 		req = new(PullsListFilesReq)
 	}
 	resp := &PullsListFilesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2626,6 +2860,19 @@ func (c *Client) PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsListFiles performs requests for "pulls/list-files"
+
+List pull requests files.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/files
+
+https://developer.github.com/v3/pulls/#list-pull-requests-files
+*/
+func (c Client) PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestOption) (*PullsListFilesResponse, error) {
+	return PullsListFiles(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2738,12 +2985,12 @@ List review requests.
 
 https://developer.github.com/v3/pulls/review_requests/#list-review-requests
 */
-func (c *Client) PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
+func PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
 	if req == nil {
 		req = new(PullsListReviewRequestsReq)
 	}
 	resp := &PullsListReviewRequestsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2756,6 +3003,19 @@ func (c *Client) PullsListReviewRequests(ctx context.Context, req *PullsListRevi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsListReviewRequests performs requests for "pulls/list-review-requests"
+
+List review requests.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+*/
+func (c Client) PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
+	return PullsListReviewRequests(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2868,12 +3128,12 @@ List reviews on a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
 */
-func (c *Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
+func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
 	if req == nil {
 		req = new(PullsListReviewsReq)
 	}
 	resp := &PullsListReviewsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2886,6 +3146,19 @@ func (c *Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsListReviews performs requests for "pulls/list-reviews"
+
+List reviews on a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
+
+https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+*/
+func (c Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
+	return PullsListReviews(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2998,12 +3271,12 @@ Merge a pull request (Merge Button).
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
 */
-func (c *Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
+func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
 	if req == nil {
 		req = new(PullsMergeReq)
 	}
 	resp := &PullsMergeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3016,6 +3289,19 @@ func (c *Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsMerge performs requests for "pulls/merge"
+
+Merge a pull request (Merge Button).
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
+
+https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+*/
+func (c Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
+	return PullsMerge(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3140,12 +3426,12 @@ Submit a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
 */
-func (c *Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
+func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
 	if req == nil {
 		req = new(PullsSubmitReviewReq)
 	}
 	resp := &PullsSubmitReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3158,6 +3444,19 @@ func (c *Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsSubmitReview performs requests for "pulls/submit-review"
+
+Submit a pull request review.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events
+
+https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+*/
+func (c Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
+	return PullsSubmitReview(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3280,12 +3579,12 @@ Update a pull request.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
-func (c *Client) PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption) (*PullsUpdateResponse, error) {
+func PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption) (*PullsUpdateResponse, error) {
 	if req == nil {
 		req = new(PullsUpdateReq)
 	}
 	resp := &PullsUpdateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3298,6 +3597,19 @@ func (c *Client) PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsUpdate performs requests for "pulls/update"
+
+Update a pull request.
+
+  PATCH /repos/{owner}/{repo}/pulls/{pull_number}
+
+https://developer.github.com/v3/pulls/#update-a-pull-request
+*/
+func (c Client) PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption) (*PullsUpdateResponse, error) {
+	return PullsUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3443,12 +3755,12 @@ Update a pull request branch.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
-func (c *Client) PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...RequestOption) (*PullsUpdateBranchResponse, error) {
+func PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...RequestOption) (*PullsUpdateBranchResponse, error) {
 	if req == nil {
 		req = new(PullsUpdateBranchReq)
 	}
 	resp := &PullsUpdateBranchResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3461,6 +3773,19 @@ func (c *Client) PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsUpdateBranch performs requests for "pulls/update-branch"
+
+Update a pull request branch.
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch
+
+https://developer.github.com/v3/pulls/#update-a-pull-request-branch
+*/
+func (c Client) PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...RequestOption) (*PullsUpdateBranchResponse, error) {
+	return PullsUpdateBranch(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3595,12 +3920,12 @@ Edit a comment.
 
 https://developer.github.com/v3/pulls/comments/#edit-a-comment
 */
-func (c *Client) PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
+func PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
 	if req == nil {
 		req = new(PullsUpdateCommentReq)
 	}
 	resp := &PullsUpdateCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3613,6 +3938,19 @@ func (c *Client) PullsUpdateComment(ctx context.Context, req *PullsUpdateComment
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsUpdateComment performs requests for "pulls/update-comment"
+
+Edit a comment.
+
+  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#edit-a-comment
+*/
+func (c Client) PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
+	return PullsUpdateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3735,12 +4073,12 @@ Update a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
 */
-func (c *Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
+func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
 	if req == nil {
 		req = new(PullsUpdateReviewReq)
 	}
 	resp := &PullsUpdateReviewResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3753,6 +4091,19 @@ func (c *Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+PullsUpdateReview performs requests for "pulls/update-review"
+
+Update a pull request review.
+
+  PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
+
+https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+*/
+func (c Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
+	return PullsUpdateReview(ctx, req, append(c, opt...)...)
 }
 
 /*

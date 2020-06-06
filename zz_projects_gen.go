@@ -20,12 +20,12 @@ Add user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
-func (c *Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
 	if req == nil {
 		req = new(ProjectsAddCollaboratorReq)
 	}
 	resp := &ProjectsAddCollaboratorResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsAddCollaborator performs requests for "projects/add-collaborator"
+
+Add user as a collaborator.
+
+  PUT /projects/{project_id}/collaborators/{username}
+
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+*/
+func (c Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+	return ProjectsAddCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -161,12 +174,12 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-func (c *Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
 	if req == nil {
 		req = new(ProjectsCreateCardReq)
 	}
 	resp := &ProjectsCreateCardResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -179,6 +192,19 @@ func (c *Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCard
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsCreateCard performs requests for "projects/create-card"
+
+Create a project card.
+
+  POST /projects/columns/{column_id}/cards
+
+https://developer.github.com/v3/projects/cards/#create-a-project-card
+*/
+func (c Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+	return ProjectsCreateCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -325,12 +351,12 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-func (c *Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
 	if req == nil {
 		req = new(ProjectsCreateColumnReq)
 	}
 	resp := &ProjectsCreateColumnResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -342,6 +368,19 @@ func (c *Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateCo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsCreateColumn performs requests for "projects/create-column"
+
+Create a project column.
+
+  POST /projects/{project_id}/columns
+
+https://developer.github.com/v3/projects/columns/#create-a-project-column
+*/
+func (c Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+	return ProjectsCreateColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -457,12 +496,12 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-func (c *Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(ProjectsCreateForAuthenticatedUserReq)
 	}
 	resp := &ProjectsCreateForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -475,6 +514,19 @@ func (c *Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *Pr
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsCreateForAuthenticatedUser performs requests for "projects/create-for-authenticated-user"
+
+Create a user project.
+
+  POST /user/projects
+
+https://developer.github.com/v3/projects/#create-a-user-project
+*/
+func (c Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+	return ProjectsCreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -602,12 +654,12 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-func (c *Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
 	if req == nil {
 		req = new(ProjectsCreateForOrgReq)
 	}
 	resp := &ProjectsCreateForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -620,6 +672,19 @@ func (c *Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateFo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsCreateForOrg performs requests for "projects/create-for-org"
+
+Create an organization project.
+
+  POST /orgs/{org}/projects
+
+https://developer.github.com/v3/projects/#create-an-organization-project
+*/
+func (c Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+	return ProjectsCreateForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -748,12 +813,12 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-func (c *Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
 	if req == nil {
 		req = new(ProjectsCreateForRepoReq)
 	}
 	resp := &ProjectsCreateForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -766,6 +831,19 @@ func (c *Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateF
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsCreateForRepo performs requests for "projects/create-for-repo"
+
+Create a repository project.
+
+  POST /repos/{owner}/{repo}/projects
+
+https://developer.github.com/v3/projects/#create-a-repository-project
+*/
+func (c Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+	return ProjectsCreateForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -895,12 +973,12 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
-func (c *Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+func ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
 	if req == nil {
 		req = new(ProjectsDeleteReq)
 	}
 	resp := &ProjectsDeleteResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -912,6 +990,19 @@ func (c *Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsDelete performs requests for "projects/delete"
+
+Delete a project.
+
+  DELETE /projects/{project_id}
+
+https://developer.github.com/v3/projects/#delete-a-project
+*/
+func (c Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+	return ProjectsDelete(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1015,12 +1106,12 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
-func (c *Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+func ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
 	if req == nil {
 		req = new(ProjectsDeleteCardReq)
 	}
 	resp := &ProjectsDeleteCardResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1032,6 +1123,19 @@ func (c *Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCard
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsDeleteCard performs requests for "projects/delete-card"
+
+Delete a project card.
+
+  DELETE /projects/columns/cards/{card_id}
+
+https://developer.github.com/v3/projects/cards/#delete-a-project-card
+*/
+func (c Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+	return ProjectsDeleteCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1135,12 +1239,12 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
-func (c *Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+func ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
 	if req == nil {
 		req = new(ProjectsDeleteColumnReq)
 	}
 	resp := &ProjectsDeleteColumnResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1152,6 +1256,19 @@ func (c *Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteCo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsDeleteColumn performs requests for "projects/delete-column"
+
+Delete a project column.
+
+  DELETE /projects/columns/{column_id}
+
+https://developer.github.com/v3/projects/columns/#delete-a-project-column
+*/
+func (c Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+	return ProjectsDeleteColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1255,12 +1372,12 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-func (c *Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
 	if req == nil {
 		req = new(ProjectsGetReq)
 	}
 	resp := &ProjectsGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1273,6 +1390,19 @@ func (c *Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsGet performs requests for "projects/get"
+
+Get a project.
+
+  GET /projects/{project_id}
+
+https://developer.github.com/v3/projects/#get-a-project
+*/
+func (c Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+	return ProjectsGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1386,12 +1516,12 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-func (c *Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
 	if req == nil {
 		req = new(ProjectsGetCardReq)
 	}
 	resp := &ProjectsGetCardResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1403,6 +1533,19 @@ func (c *Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsGetCard performs requests for "projects/get-card"
+
+Get a project card.
+
+  GET /projects/columns/cards/{card_id}
+
+https://developer.github.com/v3/projects/cards/#get-a-project-card
+*/
+func (c Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+	return ProjectsGetCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1506,12 +1649,12 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-func (c *Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
 	if req == nil {
 		req = new(ProjectsGetColumnReq)
 	}
 	resp := &ProjectsGetColumnResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1523,6 +1666,19 @@ func (c *Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsGetColumn performs requests for "projects/get-column"
+
+Get a project column.
+
+  GET /projects/columns/{column_id}
+
+https://developer.github.com/v3/projects/columns/#get-a-project-column
+*/
+func (c Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+	return ProjectsGetColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1626,12 +1782,12 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-func (c *Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
 	if req == nil {
 		req = new(ProjectsListCardsReq)
 	}
 	resp := &ProjectsListCardsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1644,6 +1800,19 @@ func (c *Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsListCards performs requests for "projects/list-cards"
+
+List project cards.
+
+  GET /projects/columns/{column_id}/cards
+
+https://developer.github.com/v3/projects/cards/#list-project-cards
+*/
+func (c Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+	return ProjectsListCards(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1778,12 +1947,12 @@ List collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
-func (c *Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
 	if req == nil {
 		req = new(ProjectsListCollaboratorsReq)
 	}
 	resp := &ProjectsListCollaboratorsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1796,6 +1965,19 @@ func (c *Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsLis
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsListCollaborators performs requests for "projects/list-collaborators"
+
+List collaborators.
+
+  GET /projects/{project_id}/collaborators
+
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
+*/
+func (c Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+	return ProjectsListCollaborators(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1934,12 +2116,12 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-func (c *Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
 	if req == nil {
 		req = new(ProjectsListColumnsReq)
 	}
 	resp := &ProjectsListColumnsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1952,6 +2134,19 @@ func (c *Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColum
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsListColumns performs requests for "projects/list-columns"
+
+List project columns.
+
+  GET /projects/{project_id}/columns
+
+https://developer.github.com/v3/projects/columns/#list-project-columns
+*/
+func (c Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+	return ProjectsListColumns(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2077,12 +2272,12 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-func (c *Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
 	if req == nil {
 		req = new(ProjectsListForOrgReq)
 	}
 	resp := &ProjectsListForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2095,6 +2290,19 @@ func (c *Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrg
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsListForOrg performs requests for "projects/list-for-org"
+
+List organization projects.
+
+  GET /orgs/{org}/projects
+
+https://developer.github.com/v3/projects/#list-organization-projects
+*/
+func (c Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+	return ProjectsListForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2229,12 +2437,12 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-func (c *Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
 	if req == nil {
 		req = new(ProjectsListForRepoReq)
 	}
 	resp := &ProjectsListForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2247,6 +2455,19 @@ func (c *Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsListForRepo performs requests for "projects/list-for-repo"
+
+List repository projects.
+
+  GET /repos/{owner}/{repo}/projects
+
+https://developer.github.com/v3/projects/#list-repository-projects
+*/
+func (c Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+	return ProjectsListForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2382,12 +2603,12 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-func (c *Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
 	if req == nil {
 		req = new(ProjectsListForUserReq)
 	}
 	resp := &ProjectsListForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2400,6 +2621,19 @@ func (c *Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUs
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsListForUser performs requests for "projects/list-for-user"
+
+List user projects.
+
+  GET /users/{username}/projects
+
+https://developer.github.com/v3/projects/#list-user-projects
+*/
+func (c Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+	return ProjectsListForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2534,12 +2768,12 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
-func (c *Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+func ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
 	if req == nil {
 		req = new(ProjectsMoveCardReq)
 	}
 	resp := &ProjectsMoveCardResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2551,6 +2785,19 @@ func (c *Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsMoveCard performs requests for "projects/move-card"
+
+Move a project card.
+
+  POST /projects/columns/cards/{card_id}/moves
+
+https://developer.github.com/v3/projects/cards/#move-a-project-card
+*/
+func (c Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+	return ProjectsMoveCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2673,12 +2920,12 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
-func (c *Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+func ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
 	if req == nil {
 		req = new(ProjectsMoveColumnReq)
 	}
 	resp := &ProjectsMoveColumnResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2690,6 +2937,19 @@ func (c *Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumn
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsMoveColumn performs requests for "projects/move-column"
+
+Move a project column.
+
+  POST /projects/columns/{column_id}/moves
+
+https://developer.github.com/v3/projects/columns/#move-a-project-column
+*/
+func (c Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+	return ProjectsMoveColumn(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2808,12 +3068,12 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
-func (c *Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
 	if req == nil {
 		req = new(ProjectsRemoveCollaboratorReq)
 	}
 	resp := &ProjectsRemoveCollaboratorResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2825,6 +3085,19 @@ func (c *Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsRemoveCollaborator performs requests for "projects/remove-collaborator"
+
+Remove user as a collaborator.
+
+  DELETE /projects/{project_id}/collaborators/{username}
+
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+*/
+func (c Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+	return ProjectsRemoveCollaborator(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2929,12 +3202,12 @@ Review a user's permission level.
 
 https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
-func (c *Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
+func ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
 	if req == nil {
 		req = new(ProjectsReviewUserPermissionLevelReq)
 	}
 	resp := &ProjectsReviewUserPermissionLevelResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2947,6 +3220,19 @@ func (c *Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *Pro
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsReviewUserPermissionLevel performs requests for "projects/review-user-permission-level"
+
+Review a user's permission level.
+
+  GET /projects/{project_id}/collaborators/{username}/permission
+
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
+*/
+func (c Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
+	return ProjectsReviewUserPermissionLevel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3061,12 +3347,12 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-func (c *Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
 	if req == nil {
 		req = new(ProjectsUpdateReq)
 	}
 	resp := &ProjectsUpdateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3079,6 +3365,19 @@ func (c *Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsUpdate performs requests for "projects/update"
+
+Update a project.
+
+  PATCH /projects/{project_id}
+
+https://developer.github.com/v3/projects/#update-a-project
+*/
+func (c Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+	return ProjectsUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3248,12 +3547,12 @@ Update a project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-func (c *Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
 	if req == nil {
 		req = new(ProjectsUpdateCardReq)
 	}
 	resp := &ProjectsUpdateCardResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3265,6 +3564,19 @@ func (c *Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCard
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsUpdateCard performs requests for "projects/update-card"
+
+Update a project card.
+
+  PATCH /projects/columns/cards/{card_id}
+
+https://developer.github.com/v3/projects/cards/#update-a-project-card
+*/
+func (c Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+	return ProjectsUpdateCard(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3390,12 +3702,12 @@ Update a project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-func (c *Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
 	if req == nil {
 		req = new(ProjectsUpdateColumnReq)
 	}
 	resp := &ProjectsUpdateColumnResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3407,6 +3719,19 @@ func (c *Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateCo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ProjectsUpdateColumn performs requests for "projects/update-column"
+
+Update a project column.
+
+  PATCH /projects/columns/{column_id}
+
+https://developer.github.com/v3/projects/columns/#update-a-project-column
+*/
+func (c Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+	return ProjectsUpdateColumn(ctx, req, append(c, opt...)...)
 }
 
 /*

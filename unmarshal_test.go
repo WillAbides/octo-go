@@ -20,6 +20,9 @@ type unmarshalResponseBodyTest struct {
 var unmarshalResponseBodyTests []unmarshalResponseBodyTest
 
 func TestUnmarshalResponseBody(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	for _, test := range unmarshalResponseBodyTests {
 		t.Run(fmt.Sprintf("%s_%d", test.name, test.httpStatusCode), func(t *testing.T) {
 			examples := responseExamples(t, test.endpointPath, test.httpMethod, test.httpStatusCode)

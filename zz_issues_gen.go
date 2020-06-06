@@ -20,12 +20,12 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-func (c *Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
 	if req == nil {
 		req = new(IssuesAddAssigneesReq)
 	}
 	resp := &IssuesAddAssigneesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssignees
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesAddAssignees performs requests for "issues/add-assignees"
+
+Add assignees to an issue.
+
+  POST /repos/{owner}/{repo}/issues/{issue_number}/assignees
+
+https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+*/
+func (c Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+	return IssuesAddAssignees(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -153,12 +166,12 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-func (c *Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
 	if req == nil {
 		req = new(IssuesAddLabelsReq)
 	}
 	resp := &IssuesAddLabelsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -171,6 +184,19 @@ func (c *Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesAddLabels performs requests for "issues/add-labels"
+
+Add labels to an issue.
+
+  POST /repos/{owner}/{repo}/issues/{issue_number}/labels
+
+https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+*/
+func (c Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+	return IssuesAddLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -288,12 +314,12 @@ Check assignee.
 
 https://developer.github.com/v3/issues/assignees/#check-assignee
 */
-func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+func IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
 	if req == nil {
 		req = new(IssuesCheckAssigneeReq)
 	}
 	resp := &IssuesCheckAssigneeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -309,6 +335,19 @@ func (c *Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssign
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesCheckAssignee performs requests for "issues/check-assignee"
+
+Check assignee.
+
+  GET /repos/{owner}/{repo}/assignees/{assignee}
+
+https://developer.github.com/v3/issues/assignees/#check-assignee
+*/
+func (c Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+	return IssuesCheckAssignee(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -400,12 +439,12 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-func (c *Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
 	if req == nil {
 		req = new(IssuesCreateReq)
 	}
 	resp := &IssuesCreateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -418,6 +457,19 @@ func (c *Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesCreate performs requests for "issues/create"
+
+Create an issue.
+
+  POST /repos/{owner}/{repo}/issues
+
+https://developer.github.com/v3/issues/#create-an-issue
+*/
+func (c Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+	return IssuesCreate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -558,12 +610,12 @@ Create a comment.
 
 https://developer.github.com/v3/issues/comments/#create-a-comment
 */
-func (c *Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
 	if req == nil {
 		req = new(IssuesCreateCommentReq)
 	}
 	resp := &IssuesCreateCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -576,6 +628,19 @@ func (c *Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateComme
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesCreateComment performs requests for "issues/create-comment"
+
+Create a comment.
+
+  POST /repos/{owner}/{repo}/issues/{issue_number}/comments
+
+https://developer.github.com/v3/issues/comments/#create-a-comment
+*/
+func (c Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+	return IssuesCreateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -688,12 +753,12 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-func (c *Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
 	if req == nil {
 		req = new(IssuesCreateLabelReq)
 	}
 	resp := &IssuesCreateLabelResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -706,6 +771,19 @@ func (c *Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesCreateLabel performs requests for "issues/create-label"
+
+Create a label.
+
+  POST /repos/{owner}/{repo}/labels
+
+https://developer.github.com/v3/issues/labels/#create-a-label
+*/
+func (c Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+	return IssuesCreateLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -833,12 +911,12 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-func (c *Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
 	if req == nil {
 		req = new(IssuesCreateMilestoneReq)
 	}
 	resp := &IssuesCreateMilestoneResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -851,6 +929,19 @@ func (c *Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMil
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesCreateMilestone performs requests for "issues/create-milestone"
+
+Create a milestone.
+
+  POST /repos/{owner}/{repo}/milestones
+
+https://developer.github.com/v3/issues/milestones/#create-a-milestone
+*/
+func (c Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+	return IssuesCreateMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -974,12 +1065,12 @@ Delete a comment.
 
 https://developer.github.com/v3/issues/comments/#delete-a-comment
 */
-func (c *Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
 	if req == nil {
 		req = new(IssuesDeleteCommentReq)
 	}
 	resp := &IssuesDeleteCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -991,6 +1082,19 @@ func (c *Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteComme
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesDeleteComment performs requests for "issues/delete-comment"
+
+Delete a comment.
+
+  DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}
+
+https://developer.github.com/v3/issues/comments/#delete-a-comment
+*/
+func (c Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+	return IssuesDeleteComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1081,12 +1185,12 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
-func (c *Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+func IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
 	if req == nil {
 		req = new(IssuesDeleteLabelReq)
 	}
 	resp := &IssuesDeleteLabelResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1098,6 +1202,19 @@ func (c *Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesDeleteLabel performs requests for "issues/delete-label"
+
+Delete a label.
+
+  DELETE /repos/{owner}/{repo}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#delete-a-label
+*/
+func (c Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+	return IssuesDeleteLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1188,12 +1305,12 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
-func (c *Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
 	if req == nil {
 		req = new(IssuesDeleteMilestoneReq)
 	}
 	resp := &IssuesDeleteMilestoneResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1205,6 +1322,19 @@ func (c *Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMil
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesDeleteMilestone performs requests for "issues/delete-milestone"
+
+Delete a milestone.
+
+  DELETE /repos/{owner}/{repo}/milestones/{milestone_number}
+
+https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+*/
+func (c Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+	return IssuesDeleteMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1295,12 +1425,12 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-func (c *Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
 	if req == nil {
 		req = new(IssuesGetReq)
 	}
 	resp := &IssuesGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1313,6 +1443,19 @@ func (c *Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesGet performs requests for "issues/get"
+
+Get an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}
+
+https://developer.github.com/v3/issues/#get-an-issue
+*/
+func (c Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+	return IssuesGet(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1427,12 +1570,12 @@ Get a single comment.
 
 https://developer.github.com/v3/issues/comments/#get-a-single-comment
 */
-func (c *Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
 	if req == nil {
 		req = new(IssuesGetCommentReq)
 	}
 	resp := &IssuesGetCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1445,6 +1588,19 @@ func (c *Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesGetComment performs requests for "issues/get-comment"
+
+Get a single comment.
+
+  GET /repos/{owner}/{repo}/issues/comments/{comment_id}
+
+https://developer.github.com/v3/issues/comments/#get-a-single-comment
+*/
+func (c Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+	return IssuesGetComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1569,12 +1725,12 @@ Get a single event.
 
 https://developer.github.com/v3/issues/events/#get-a-single-event
 */
-func (c *Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
 	if req == nil {
 		req = new(IssuesGetEventReq)
 	}
 	resp := &IssuesGetEventResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1587,6 +1743,19 @@ func (c *Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesGetEvent performs requests for "issues/get-event"
+
+Get a single event.
+
+  GET /repos/{owner}/{repo}/issues/events/{event_id}
+
+https://developer.github.com/v3/issues/events/#get-a-single-event
+*/
+func (c Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+	return IssuesGetEvent(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1724,12 +1893,12 @@ Get a single label.
 
 https://developer.github.com/v3/issues/labels/#get-a-single-label
 */
-func (c *Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
 	if req == nil {
 		req = new(IssuesGetLabelReq)
 	}
 	resp := &IssuesGetLabelResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1742,6 +1911,19 @@ func (c *Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesGetLabel performs requests for "issues/get-label"
+
+Get a single label.
+
+  GET /repos/{owner}/{repo}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#get-a-single-label
+*/
+func (c Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+	return IssuesGetLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1842,12 +2024,12 @@ Get a single milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 */
-func (c *Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
 	if req == nil {
 		req = new(IssuesGetMilestoneReq)
 	}
 	resp := &IssuesGetMilestoneResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1860,6 +2042,19 @@ func (c *Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestone
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesGetMilestone performs requests for "issues/get-milestone"
+
+Get a single milestone.
+
+  GET /repos/{owner}/{repo}/milestones/{milestone_number}
+
+https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+*/
+func (c Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+	return IssuesGetMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1960,12 +2155,12 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-func (c *Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+func IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
 	if req == nil {
 		req = new(IssuesListReq)
 	}
 	resp := &IssuesListResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1978,6 +2173,19 @@ func (c *Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesList performs requests for "issues/list"
+
+List issues assigned to the authenticated user.
+
+  GET /issues
+
+https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+*/
+func (c Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+	return IssuesList(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2162,12 +2370,12 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-func (c *Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
 	if req == nil {
 		req = new(IssuesListAssigneesReq)
 	}
 	resp := &IssuesListAssigneesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2180,6 +2388,19 @@ func (c *Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigne
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListAssignees performs requests for "issues/list-assignees"
+
+List assignees.
+
+  GET /repos/{owner}/{repo}/assignees
+
+https://developer.github.com/v3/issues/assignees/#list-assignees
+*/
+func (c Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+	return IssuesListAssignees(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2291,12 +2512,12 @@ List comments on an issue.
 
 https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
 */
-func (c *Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
 	if req == nil {
 		req = new(IssuesListCommentsReq)
 	}
 	resp := &IssuesListCommentsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2309,6 +2530,19 @@ func (c *Client) IssuesListComments(ctx context.Context, req *IssuesListComments
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListComments performs requests for "issues/list-comments"
+
+List comments on an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/comments
+
+https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+*/
+func (c Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+	return IssuesListComments(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2445,12 +2679,12 @@ List comments in a repository.
 
 https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
 */
-func (c *Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
 	if req == nil {
 		req = new(IssuesListCommentsForRepoReq)
 	}
 	resp := &IssuesListCommentsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2463,6 +2697,19 @@ func (c *Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListC
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListCommentsForRepo performs requests for "issues/list-comments-for-repo"
+
+List comments in a repository.
+
+  GET /repos/{owner}/{repo}/issues/comments
+
+https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+*/
+func (c Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+	return IssuesListCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2610,12 +2857,12 @@ List events for an issue.
 
 https://developer.github.com/v3/issues/events/#list-events-for-an-issue
 */
-func (c *Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
 	if req == nil {
 		req = new(IssuesListEventsReq)
 	}
 	resp := &IssuesListEventsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2628,6 +2875,19 @@ func (c *Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListEvents performs requests for "issues/list-events"
+
+List events for an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/events
+
+https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+*/
+func (c Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+	return IssuesListEvents(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2769,12 +3029,12 @@ List events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-events-for-a-repository
 */
-func (c *Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
 	if req == nil {
 		req = new(IssuesListEventsForRepoReq)
 	}
 	resp := &IssuesListEventsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2787,6 +3047,19 @@ func (c *Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEve
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListEventsForRepo performs requests for "issues/list-events-for-repo"
+
+List events for a repository.
+
+  GET /repos/{owner}/{repo}/issues/events
+
+https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+*/
+func (c Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+	return IssuesListEventsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2927,12 +3200,12 @@ List events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
 */
-func (c *Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
 	if req == nil {
 		req = new(IssuesListEventsForTimelineReq)
 	}
 	resp := &IssuesListEventsForTimelineResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2945,6 +3218,19 @@ func (c *Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesLis
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListEventsForTimeline performs requests for "issues/list-events-for-timeline"
+
+List events for an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
+
+https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+*/
+func (c Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+	return IssuesListEventsForTimeline(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3088,12 +3374,12 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-func (c *Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(IssuesListForAuthenticatedUserReq)
 	}
 	resp := &IssuesListForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3106,6 +3392,19 @@ func (c *Client) IssuesListForAuthenticatedUser(ctx context.Context, req *Issues
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListForAuthenticatedUser performs requests for "issues/list-for-authenticated-user"
+
+List user account issues assigned to the authenticated user.
+
+  GET /user/issues
+
+https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+*/
+func (c Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+	return IssuesListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3290,12 +3589,12 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-func (c *Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
 	if req == nil {
 		req = new(IssuesListForOrgReq)
 	}
 	resp := &IssuesListForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3308,6 +3607,19 @@ func (c *Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListForOrg performs requests for "issues/list-for-org"
+
+List organization issues assigned to the authenticated user.
+
+  GET /orgs/{org}/issues
+
+https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+*/
+func (c Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+	return IssuesListForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3493,12 +3805,12 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-func (c *Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
 	if req == nil {
 		req = new(IssuesListForRepoReq)
 	}
 	resp := &IssuesListForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3511,6 +3823,19 @@ func (c *Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListForRepo performs requests for "issues/list-for-repo"
+
+List repository issues.
+
+  GET /repos/{owner}/{repo}/issues
+
+https://developer.github.com/v3/issues/#list-repository-issues
+*/
+func (c Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+	return IssuesListForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3714,12 +4039,12 @@ Get labels for every issue in a milestone.
 
 https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 */
-func (c *Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
 	if req == nil {
 		req = new(IssuesListLabelsForMilestoneReq)
 	}
 	resp := &IssuesListLabelsForMilestoneResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3732,6 +4057,19 @@ func (c *Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesLi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListLabelsForMilestone performs requests for "issues/list-labels-for-milestone"
+
+Get labels for every issue in a milestone.
+
+  GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels
+
+https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+*/
+func (c Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+	return IssuesListLabelsForMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3844,12 +4182,12 @@ List all labels for this repository.
 
 https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
 */
-func (c *Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
 	if req == nil {
 		req = new(IssuesListLabelsForRepoReq)
 	}
 	resp := &IssuesListLabelsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3862,6 +4200,19 @@ func (c *Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLab
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListLabelsForRepo performs requests for "issues/list-labels-for-repo"
+
+List all labels for this repository.
+
+  GET /repos/{owner}/{repo}/labels
+
+https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+*/
+func (c Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+	return IssuesListLabelsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3973,12 +4324,12 @@ List labels on an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 */
-func (c *Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
 	if req == nil {
 		req = new(IssuesListLabelsOnIssueReq)
 	}
 	resp := &IssuesListLabelsOnIssueResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3991,6 +4342,19 @@ func (c *Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLab
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListLabelsOnIssue performs requests for "issues/list-labels-on-issue"
+
+List labels on an issue.
+
+  GET /repos/{owner}/{repo}/issues/{issue_number}/labels
+
+https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+*/
+func (c Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+	return IssuesListLabelsOnIssue(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4103,12 +4467,12 @@ List milestones for a repository.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 */
-func (c *Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+func IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
 	if req == nil {
 		req = new(IssuesListMilestonesForRepoReq)
 	}
 	resp := &IssuesListMilestonesForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4121,6 +4485,19 @@ func (c *Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesLis
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesListMilestonesForRepo performs requests for "issues/list-milestones-for-repo"
+
+List milestones for a repository.
+
+  GET /repos/{owner}/{repo}/milestones
+
+https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+*/
+func (c Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+	return IssuesListMilestonesForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4250,12 +4627,12 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
-func (c *Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+func IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
 	if req == nil {
 		req = new(IssuesLockReq)
 	}
 	resp := &IssuesLockResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4267,6 +4644,19 @@ func (c *Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesLock performs requests for "issues/lock"
+
+Lock an issue.
+
+  PUT /repos/{owner}/{repo}/issues/{issue_number}/lock
+
+https://developer.github.com/v3/issues/#lock-an-issue
+*/
+func (c Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+	return IssuesLock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4389,12 +4779,12 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-func (c *Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+func IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
 	if req == nil {
 		req = new(IssuesRemoveAllLabelsReq)
 	}
 	resp := &IssuesRemoveAllLabelsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4406,6 +4796,19 @@ func (c *Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAll
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesRemoveAllLabels performs requests for "issues/remove-all-labels"
+
+Remove all labels from an issue.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels
+
+https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
+*/
+func (c Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+	return IssuesRemoveAllLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4496,12 +4899,12 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-func (c *Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
 	if req == nil {
 		req = new(IssuesRemoveAssigneesReq)
 	}
 	resp := &IssuesRemoveAssigneesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4514,6 +4917,19 @@ func (c *Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAss
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesRemoveAssignees performs requests for "issues/remove-assignees"
+
+Remove assignees from an issue.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees
+
+https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+*/
+func (c Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+	return IssuesRemoveAssignees(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4630,12 +5046,12 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-func (c *Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
 	if req == nil {
 		req = new(IssuesRemoveLabelReq)
 	}
 	resp := &IssuesRemoveLabelResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4648,6 +5064,19 @@ func (c *Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesRemoveLabel performs requests for "issues/remove-label"
+
+Remove a label from an issue.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+*/
+func (c Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+	return IssuesRemoveLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4749,12 +5178,12 @@ Replace all labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 */
-func (c *Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+func IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
 	if req == nil {
 		req = new(IssuesReplaceAllLabelsReq)
 	}
 	resp := &IssuesReplaceAllLabelsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4767,6 +5196,19 @@ func (c *Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceA
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesReplaceAllLabels performs requests for "issues/replace-all-labels"
+
+Replace all labels for an issue.
+
+  PUT /repos/{owner}/{repo}/issues/{issue_number}/labels
+
+https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+*/
+func (c Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+	return IssuesReplaceAllLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4884,12 +5326,12 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
-func (c *Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+func IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
 	if req == nil {
 		req = new(IssuesUnlockReq)
 	}
 	resp := &IssuesUnlockResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4901,6 +5343,19 @@ func (c *Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesUnlock performs requests for "issues/unlock"
+
+Unlock an issue.
+
+  DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock
+
+https://developer.github.com/v3/issues/#unlock-an-issue
+*/
+func (c Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+	return IssuesUnlock(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4991,12 +5446,12 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-func (c *Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
 	if req == nil {
 		req = new(IssuesUpdateReq)
 	}
 	resp := &IssuesUpdateResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5009,6 +5464,19 @@ func (c *Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesUpdate performs requests for "issues/update"
+
+Update an issue.
+
+  PATCH /repos/{owner}/{repo}/issues/{issue_number}
+
+https://developer.github.com/v3/issues/#update-an-issue
+*/
+func (c Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+	return IssuesUpdate(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5156,12 +5624,12 @@ Edit a comment.
 
 https://developer.github.com/v3/issues/comments/#edit-a-comment
 */
-func (c *Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
 	if req == nil {
 		req = new(IssuesUpdateCommentReq)
 	}
 	resp := &IssuesUpdateCommentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5174,6 +5642,19 @@ func (c *Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateComme
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesUpdateComment performs requests for "issues/update-comment"
+
+Edit a comment.
+
+  PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}
+
+https://developer.github.com/v3/issues/comments/#edit-a-comment
+*/
+func (c Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+	return IssuesUpdateComment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5286,12 +5767,12 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-func (c *Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
 	if req == nil {
 		req = new(IssuesUpdateLabelReq)
 	}
 	resp := &IssuesUpdateLabelResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5304,6 +5785,19 @@ func (c *Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesUpdateLabel performs requests for "issues/update-label"
+
+Update a label.
+
+  PATCH /repos/{owner}/{repo}/labels/{name}
+
+https://developer.github.com/v3/issues/labels/#update-a-label
+*/
+func (c Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+	return IssuesUpdateLabel(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -5432,12 +5926,12 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-func (c *Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
 	if req == nil {
 		req = new(IssuesUpdateMilestoneReq)
 	}
 	resp := &IssuesUpdateMilestoneResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5450,6 +5944,19 @@ func (c *Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMil
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+IssuesUpdateMilestone performs requests for "issues/update-milestone"
+
+Update a milestone.
+
+  PATCH /repos/{owner}/{repo}/milestones/{milestone_number}
+
+https://developer.github.com/v3/issues/milestones/#update-a-milestone
+*/
+func (c Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+	return IssuesUpdateMilestone(ctx, req, append(c, opt...)...)
 }
 
 /*

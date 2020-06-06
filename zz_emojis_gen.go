@@ -18,12 +18,12 @@ Get.
 
 https://developer.github.com/v3/emojis/#emojis
 */
-func (c *Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
 	if req == nil {
 		req = new(EmojisGetReq)
 	}
 	resp := &EmojisGetResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -35,6 +35,19 @@ func (c *Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+EmojisGet performs requests for "emojis/get"
+
+Get.
+
+  GET /emojis
+
+https://developer.github.com/v3/emojis/#emojis
+*/
+func (c Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+	return EmojisGet(ctx, req, append(c, opt...)...)
 }
 
 /*

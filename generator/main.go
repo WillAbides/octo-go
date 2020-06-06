@@ -124,6 +124,7 @@ func addEndpointToConcernFiles(endpoint model.Endpoint, concernFiles map[string]
 		concernFiles[endpoint.Concern] = cf
 	}
 	file := concernFiles[endpoint.Concern]
+	addRequestFunc(file, endpoint)
 	addClientMethod(file, endpoint)
 	addRequestStruct(file, endpoint)
 	addRequestBody(file, endpoint)

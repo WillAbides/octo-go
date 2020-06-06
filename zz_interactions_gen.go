@@ -19,12 +19,12 @@ Add or update interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
 */
-func (c *Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
+func InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
 	if req == nil {
 		req = new(InteractionsAddOrUpdateRestrictionsForOrgReq)
 	}
 	resp := &InteractionsAddOrUpdateRestrictionsForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+InteractionsAddOrUpdateRestrictionsForOrg performs requests for "interactions/add-or-update-restrictions-for-org"
+
+Add or update interaction restrictions for an organization.
+
+  PUT /orgs/{org}/interaction-limits
+
+https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
+*/
+func (c Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
+	return InteractionsAddOrUpdateRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -165,12 +178,12 @@ Add or update interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
 */
-func (c *Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
+func InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
 	if req == nil {
 		req = new(InteractionsAddOrUpdateRestrictionsForRepoReq)
 	}
 	resp := &InteractionsAddOrUpdateRestrictionsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -183,6 +196,19 @@ func (c *Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context,
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+InteractionsAddOrUpdateRestrictionsForRepo performs requests for "interactions/add-or-update-restrictions-for-repo"
+
+Add or update interaction restrictions for a repository.
+
+  PUT /repos/{owner}/{repo}/interaction-limits
+
+https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
+*/
+func (c Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
+	return InteractionsAddOrUpdateRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -312,12 +338,12 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-func (c *Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
+func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
 	if req == nil {
 		req = new(InteractionsGetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsGetRestrictionsForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -330,6 +356,19 @@ func (c *Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *Int
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+InteractionsGetRestrictionsForOrg performs requests for "interactions/get-restrictions-for-org"
+
+Get interaction restrictions for an organization.
+
+  GET /orgs/{org}/interaction-limits
+
+https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+*/
+func (c Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
+	return InteractionsGetRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -442,12 +481,12 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-func (c *Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
+func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
 	if req == nil {
 		req = new(InteractionsGetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsGetRestrictionsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -460,6 +499,19 @@ func (c *Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *In
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+InteractionsGetRestrictionsForRepo performs requests for "interactions/get-restrictions-for-repo"
+
+Get interaction restrictions for a repository.
+
+  GET /repos/{owner}/{repo}/interaction-limits
+
+https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+*/
+func (c Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
+	return InteractionsGetRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -573,12 +625,12 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
-func (c *Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+func InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
 	if req == nil {
 		req = new(InteractionsRemoveRestrictionsForOrgReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -590,6 +642,19 @@ func (c *Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+InteractionsRemoveRestrictionsForOrg performs requests for "interactions/remove-restrictions-for-org"
+
+Remove interaction restrictions for an organization.
+
+  DELETE /orgs/{org}/interaction-limits
+
+https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
+*/
+func (c Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+	return InteractionsRemoveRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -692,12 +757,12 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
-func (c *Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+func InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
 	if req == nil {
 		req = new(InteractionsRemoveRestrictionsForRepoReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForRepoResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -709,6 +774,19 @@ func (c *Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+InteractionsRemoveRestrictionsForRepo performs requests for "interactions/remove-restrictions-for-repo"
+
+Remove interaction restrictions for a repository.
+
+  DELETE /repos/{owner}/{repo}/interaction-limits
+
+https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
+*/
+func (c Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+	return InteractionsRemoveRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*

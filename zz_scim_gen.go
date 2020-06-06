@@ -20,12 +20,12 @@ Get provisioning details for a single user.
 
 https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
-func (c *Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
+func ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
 	if req == nil {
 		req = new(ScimGetProvisioningDetailsForUserReq)
 	}
 	resp := &ScimGetProvisioningDetailsForUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -38,6 +38,19 @@ func (c *Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *Sci
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ScimGetProvisioningDetailsForUser performs requests for "scim/get-provisioning-details-for-user"
+
+Get provisioning details for a single user.
+
+  GET /scim/v2/organizations/{org}/Users/{scim_user_id}
+
+https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
+*/
+func (c Client) ScimGetProvisioningDetailsForUser(ctx context.Context, req *ScimGetProvisioningDetailsForUserReq, opt ...RequestOption) (*ScimGetProvisioningDetailsForUserResponse, error) {
+	return ScimGetProvisioningDetailsForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -137,12 +150,12 @@ Get a list of provisioned identities.
 
 https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
-func (c *Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
 	if req == nil {
 		req = new(ScimListProvisionedIdentitiesReq)
 	}
 	resp := &ScimListProvisionedIdentitiesResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -155,6 +168,19 @@ func (c *Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimLis
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ScimListProvisionedIdentities performs requests for "scim/list-provisioned-identities"
+
+Get a list of provisioned identities.
+
+  GET /scim/v2/organizations/{org}/Users
+
+https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
+*/
+func (c Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+	return ScimListProvisionedIdentities(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -276,12 +302,12 @@ Provision and invite users.
 
 https://developer.github.com/v3/scim/#provision-and-invite-users
 */
-func (c *Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
+func ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
 	if req == nil {
 		req = new(ScimProvisionAndInviteUsersReq)
 	}
 	resp := &ScimProvisionAndInviteUsersResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -294,6 +320,19 @@ func (c *Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ScimProvisionAndInviteUsers performs requests for "scim/provision-and-invite-users"
+
+Provision and invite users.
+
+  POST /scim/v2/organizations/{org}/Users
+
+https://developer.github.com/v3/scim/#provision-and-invite-users
+*/
+func (c Client) ScimProvisionAndInviteUsers(ctx context.Context, req *ScimProvisionAndInviteUsersReq, opt ...RequestOption) (*ScimProvisionAndInviteUsersResponse, error) {
+	return ScimProvisionAndInviteUsers(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -392,12 +431,12 @@ Remove a user from the organization.
 
 https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
-func (c *Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
+func ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
 	if req == nil {
 		req = new(ScimRemoveUserFromOrgReq)
 	}
 	resp := &ScimRemoveUserFromOrgResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -409,6 +448,19 @@ func (c *Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserF
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ScimRemoveUserFromOrg performs requests for "scim/remove-user-from-org"
+
+Remove a user from the organization.
+
+  DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}
+
+https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
+*/
+func (c Client) ScimRemoveUserFromOrg(ctx context.Context, req *ScimRemoveUserFromOrgReq, opt ...RequestOption) (*ScimRemoveUserFromOrgResponse, error) {
+	return ScimRemoveUserFromOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -498,12 +550,12 @@ Replace a provisioned user's information.
 
 https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
-func (c *Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
+func ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
 	if req == nil {
 		req = new(ScimReplaceProvisionedUserInformationReq)
 	}
 	resp := &ScimReplaceProvisionedUserInformationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -516,6 +568,19 @@ func (c *Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ScimReplaceProvisionedUserInformation performs requests for "scim/replace-provisioned-user-information"
+
+Replace a provisioned user's information.
+
+  PUT /scim/v2/organizations/{org}/Users/{scim_user_id}
+
+https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
+*/
+func (c Client) ScimReplaceProvisionedUserInformation(ctx context.Context, req *ScimReplaceProvisionedUserInformationReq, opt ...RequestOption) (*ScimReplaceProvisionedUserInformationResponse, error) {
+	return ScimReplaceProvisionedUserInformation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -615,12 +680,12 @@ Update a user attribute.
 
 https://developer.github.com/v3/scim/#update-a-user-attribute
 */
-func (c *Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
+func ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
 	if req == nil {
 		req = new(ScimUpdateUserAttributeReq)
 	}
 	resp := &ScimUpdateUserAttributeResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -633,6 +698,19 @@ func (c *Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUse
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+ScimUpdateUserAttribute performs requests for "scim/update-user-attribute"
+
+Update a user attribute.
+
+  PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}
+
+https://developer.github.com/v3/scim/#update-a-user-attribute
+*/
+func (c Client) ScimUpdateUserAttribute(ctx context.Context, req *ScimUpdateUserAttributeReq, opt ...RequestOption) (*ScimUpdateUserAttributeResponse, error) {
+	return ScimUpdateUserAttribute(ctx, req, append(c, opt...)...)
 }
 
 /*

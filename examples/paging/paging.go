@@ -13,10 +13,6 @@ import (
 func main() {
 	ctx := context.Background()
 
-	client := octo.NewClient(
-		octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN")),
-	)
-
 	req := &octo.IssuesListCommentsReq{
 		Owner:       "golang",
 		Repo:        "go",
@@ -25,10 +21,12 @@ func main() {
 		PerPage:     octo.Int64(4),
 	}
 
+	ghAuth := octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN"))
+
 	fmt.Println("Comments from golang/go's first GitHub issue:")
 	ok := true
 	for ok {
-		resp, err := client.IssuesListComments(ctx, req)
+		resp, err := octo.IssuesListComments(ctx, req, ghAuth)
 		if err != nil {
 			log.Fatal(err)
 		}

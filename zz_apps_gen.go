@@ -20,12 +20,12 @@ Add repository to installation.
 
 https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
-func (c *Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsAddRepoToInstallationReq)
 	}
 	resp := &AppsAddRepoToInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -37,6 +37,19 @@ func (c *Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepo
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsAddRepoToInstallation performs requests for "apps/add-repo-to-installation"
+
+Add repository to installation.
+
+  PUT /user/installations/{installation_id}/repositories/{repository_id}
+
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+*/
+func (c Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+	return AppsAddRepoToInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -138,12 +151,12 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-func (c *Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
 	if req == nil {
 		req = new(AppsCheckAuthorizationReq)
 	}
 	resp := &AppsCheckAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -156,6 +169,19 @@ func (c *Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAutho
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsCheckAuthorization performs requests for "apps/check-authorization"
+
+Check an authorization.
+
+  GET /applications/{client_id}/tokens/{access_token}
+
+https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+*/
+func (c Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+	return AppsCheckAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -255,12 +281,12 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-func (c *Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
 	if req == nil {
 		req = new(AppsCheckTokenReq)
 	}
 	resp := &AppsCheckTokenResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -273,6 +299,19 @@ func (c *Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsCheckToken performs requests for "apps/check-token"
+
+Check a token.
+
+  POST /applications/{client_id}/token
+
+https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+*/
+func (c Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+	return AppsCheckToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -383,12 +422,12 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-func (c *Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
 	if req == nil {
 		req = new(AppsCreateContentAttachmentReq)
 	}
 	resp := &AppsCreateContentAttachmentResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -401,6 +440,19 @@ func (c *Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreat
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsCreateContentAttachment performs requests for "apps/create-content-attachment"
+
+Create a content attachment.
+
+  POST /content_references/{content_reference_id}/attachments
+
+https://developer.github.com/v3/apps/installations/#create-a-content-attachment
+*/
+func (c Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+	return AppsCreateContentAttachment(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -532,12 +584,12 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-func (c *Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
 	if req == nil {
 		req = new(AppsCreateFromManifestReq)
 	}
 	resp := &AppsCreateFromManifestResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -550,6 +602,19 @@ func (c *Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFrom
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsCreateFromManifest performs requests for "apps/create-from-manifest"
+
+Create a GitHub App from a manifest.
+
+  POST /app-manifests/{code}/conversions
+
+https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
+*/
+func (c Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+	return AppsCreateFromManifest(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -648,12 +713,12 @@ Create a new installation token.
 
 https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
-func (c *Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
+func AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
 	if req == nil {
 		req = new(AppsCreateInstallationTokenReq)
 	}
 	resp := &AppsCreateInstallationTokenResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -666,6 +731,19 @@ func (c *Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreat
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsCreateInstallationToken performs requests for "apps/create-installation-token"
+
+Create a new installation token.
+
+  POST /app/installations/{installation_id}/access_tokens
+
+https://developer.github.com/v3/apps/#create-a-new-installation-token
+*/
+func (c Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
+	return AppsCreateInstallationToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -804,12 +882,12 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
-func (c *Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+func AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
 	if req == nil {
 		req = new(AppsDeleteAuthorizationReq)
 	}
 	resp := &AppsDeleteAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -821,6 +899,19 @@ func (c *Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAut
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsDeleteAuthorization performs requests for "apps/delete-authorization"
+
+Delete an app authorization.
+
+  DELETE /applications/{client_id}/grant
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+*/
+func (c Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+	return AppsDeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -921,12 +1012,12 @@ Delete an installation.
 
 https://developer.github.com/v3/apps/#delete-an-installation
 */
-func (c *Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsDeleteInstallationReq)
 	}
 	resp := &AppsDeleteInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -938,6 +1029,19 @@ func (c *Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInst
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsDeleteInstallation performs requests for "apps/delete-installation"
+
+Delete an installation.
+
+  DELETE /app/installations/{installation_id}
+
+https://developer.github.com/v3/apps/#delete-an-installation
+*/
+func (c Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+	return AppsDeleteInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1038,12 +1142,12 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
-func (c *Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+func AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
 	if req == nil {
 		req = new(AppsDeleteTokenReq)
 	}
 	resp := &AppsDeleteTokenResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1055,6 +1159,19 @@ func (c *Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, o
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsDeleteToken performs requests for "apps/delete-token"
+
+Delete an app token.
+
+  DELETE /applications/{client_id}/token
+
+https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+*/
+func (c Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+	return AppsDeleteToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1155,12 +1272,12 @@ Get the authenticated GitHub App.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
-func (c *Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
 	if req == nil {
 		req = new(AppsGetAuthenticatedReq)
 	}
 	resp := &AppsGetAuthenticatedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1173,6 +1290,19 @@ func (c *Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthentic
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetAuthenticated performs requests for "apps/get-authenticated"
+
+Get the authenticated GitHub App.
+
+  GET /app
+
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+*/
+func (c Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+	return AppsGetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1282,12 +1412,12 @@ Get a single GitHub App.
 
 https://developer.github.com/v3/apps/#get-a-single-github-app
 */
-func (c *Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
 	if req == nil {
 		req = new(AppsGetBySlugReq)
 	}
 	resp := &AppsGetBySlugResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1300,6 +1430,19 @@ func (c *Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetBySlug performs requests for "apps/get-by-slug"
+
+Get a single GitHub App.
+
+  GET /apps/{app_slug}
+
+https://developer.github.com/v3/apps/#get-a-single-github-app
+*/
+func (c Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+	return AppsGetBySlug(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1410,12 +1553,12 @@ Get an installation.
 
 https://developer.github.com/v3/apps/#get-an-installation
 */
-func (c *Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsGetInstallationReq)
 	}
 	resp := &AppsGetInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1428,6 +1571,19 @@ func (c *Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallati
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetInstallation performs requests for "apps/get-installation"
+
+Get an installation.
+
+  GET /app/installations/{installation_id}
+
+https://developer.github.com/v3/apps/#get-an-installation
+*/
+func (c Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+	return AppsGetInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1538,12 +1694,12 @@ Get an organization installation.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation
 */
-func (c *Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsGetOrgInstallationReq)
 	}
 	resp := &AppsGetOrgInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1556,6 +1712,19 @@ func (c *Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInst
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetOrgInstallation performs requests for "apps/get-org-installation"
+
+Get an organization installation.
+
+  GET /orgs/{org}/installation
+
+https://developer.github.com/v3/apps/#get-an-organization-installation
+*/
+func (c Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+	return AppsGetOrgInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1666,12 +1835,12 @@ Get a repository installation.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation
 */
-func (c *Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsGetRepoInstallationReq)
 	}
 	resp := &AppsGetRepoInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1684,6 +1853,19 @@ func (c *Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoIn
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetRepoInstallation performs requests for "apps/get-repo-installation"
+
+Get a repository installation.
+
+  GET /repos/{owner}/{repo}/installation
+
+https://developer.github.com/v3/apps/#get-a-repository-installation
+*/
+func (c Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+	return AppsGetRepoInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1795,12 +1977,12 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-func (c *Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
 	if req == nil {
 		req = new(AppsGetSubscriptionPlanForAccountReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1813,6 +1995,19 @@ func (c *Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *App
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetSubscriptionPlanForAccount performs requests for "apps/get-subscription-plan-for-account"
+
+Get a subscription plan for an account.
+
+  GET /marketplace_listing/accounts/{account_id}
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+*/
+func (c Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+	return AppsGetSubscriptionPlanForAccount(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -1911,12 +2106,12 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-func (c *Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
 	if req == nil {
 		req = new(AppsGetSubscriptionPlanForAccountStubbedReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1929,6 +2124,19 @@ func (c *Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, r
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetSubscriptionPlanForAccountStubbed performs requests for "apps/get-subscription-plan-for-account-stubbed"
+
+Get a subscription plan for an account (stubbed).
+
+  GET /marketplace_listing/stubbed/accounts/{account_id}
+
+https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+*/
+func (c Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+	return AppsGetSubscriptionPlanForAccountStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2027,12 +2235,12 @@ Get a user installation.
 
 https://developer.github.com/v3/apps/#get-a-user-installation
 */
-func (c *Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsGetUserInstallationReq)
 	}
 	resp := &AppsGetUserInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2045,6 +2253,19 @@ func (c *Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserIn
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsGetUserInstallation performs requests for "apps/get-user-installation"
+
+Get a user installation.
+
+  GET /users/{username}/installation
+
+https://developer.github.com/v3/apps/#get-a-user-installation
+*/
+func (c Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+	return AppsGetUserInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2155,12 +2376,12 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-func (c *Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
 	if req == nil {
 		req = new(AppsListAccountsForPlanReq)
 	}
 	resp := &AppsListAccountsForPlanResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2173,6 +2394,19 @@ func (c *Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccou
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListAccountsForPlan performs requests for "apps/list-accounts-for-plan"
+
+List accounts for a plan.
+
+  GET /marketplace_listing/plans/{plan_id}/accounts
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+*/
+func (c Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+	return AppsListAccountsForPlan(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2301,12 +2535,12 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-func (c *Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
 	if req == nil {
 		req = new(AppsListAccountsForPlanStubbedReq)
 	}
 	resp := &AppsListAccountsForPlanStubbedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2319,6 +2553,19 @@ func (c *Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsLi
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListAccountsForPlanStubbed performs requests for "apps/list-accounts-for-plan-stubbed"
+
+List accounts for a plan (stubbed).
+
+  GET /marketplace_listing/stubbed/plans/{plan_id}/accounts
+
+https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+*/
+func (c Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+	return AppsListAccountsForPlanStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2447,12 +2694,12 @@ List repositories accessible to the user for an installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
-func (c *Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(AppsListInstallationReposForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationReposForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2465,6 +2712,19 @@ func (c *Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Conte
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListInstallationReposForAuthenticatedUser performs requests for "apps/list-installation-repos-for-authenticated-user"
+
+List repositories accessible to the user for an installation.
+
+  GET /user/installations/{installation_id}/repositories
+
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+*/
+func (c Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+	return AppsListInstallationReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2601,12 +2861,12 @@ List installations.
 
 https://developer.github.com/v3/apps/#list-installations
 */
-func (c *Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
 	if req == nil {
 		req = new(AppsListInstallationsReq)
 	}
 	resp := &AppsListInstallationsResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2619,6 +2879,19 @@ func (c *Client) AppsListInstallations(ctx context.Context, req *AppsListInstall
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListInstallations performs requests for "apps/list-installations"
+
+List installations.
+
+  GET /app/installations
+
+https://developer.github.com/v3/apps/#list-installations
+*/
+func (c Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+	return AppsListInstallations(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2740,12 +3013,12 @@ List installations for a user.
 
 https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
 */
-func (c *Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(AppsListInstallationsForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationsForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2758,6 +3031,19 @@ func (c *Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListInstallationsForAuthenticatedUser performs requests for "apps/list-installations-for-authenticated-user"
+
+List installations for a user.
+
+  GET /user/installations
+
+https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+*/
+func (c Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+	return AppsListInstallationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -2882,12 +3168,12 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-func (c *Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
 	if req == nil {
 		req = new(AppsListPlansReq)
 	}
 	resp := &AppsListPlansResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2900,6 +3186,19 @@ func (c *Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListPlans performs requests for "apps/list-plans"
+
+List plans.
+
+  GET /marketplace_listing/plans
+
+https://developer.github.com/v3/apps/marketplace/#list-plans
+*/
+func (c Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+	return AppsListPlans(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3009,12 +3308,12 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-func (c *Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
 	if req == nil {
 		req = new(AppsListPlansStubbedReq)
 	}
 	resp := &AppsListPlansStubbedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3027,6 +3326,19 @@ func (c *Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStu
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListPlansStubbed performs requests for "apps/list-plans-stubbed"
+
+List plans (stubbed).
+
+  GET /marketplace_listing/stubbed/plans
+
+https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+*/
+func (c Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+	return AppsListPlansStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3136,12 +3448,12 @@ List repositories.
 
 https://developer.github.com/v3/apps/installations/#list-repositories
 */
-func (c *Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
+func AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
 	if req == nil {
 		req = new(AppsListReposReq)
 	}
 	resp := &AppsListReposResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3154,6 +3466,19 @@ func (c *Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt .
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListRepos performs requests for "apps/list-repos"
+
+List repositories.
+
+  GET /installation/repositories
+
+https://developer.github.com/v3/apps/installations/#list-repositories
+*/
+func (c Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
+	return AppsListRepos(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3289,12 +3614,12 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-func (c *Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
 	if req == nil {
 		req = new(AppsListSubscriptionsForAuthenticatedUserReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3307,6 +3632,19 @@ func (c *Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUser performs requests for "apps/list-subscriptions-for-authenticated-user"
+
+List subscriptions for the authenticated user.
+
+  GET /user/marketplace_purchases
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+*/
+func (c Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+	return AppsListSubscriptionsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3416,12 +3754,12 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-func (c *Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
 	if req == nil {
 		req = new(AppsListSubscriptionsForAuthenticatedUserStubbedReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3434,6 +3772,19 @@ func (c *Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Co
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsListSubscriptionsForAuthenticatedUserStubbed performs requests for "apps/list-subscriptions-for-authenticated-user-stubbed"
+
+List subscriptions for the authenticated user (stubbed).
+
+  GET /user/marketplace_purchases/stubbed
+
+https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+*/
+func (c Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	return AppsListSubscriptionsForAuthenticatedUserStubbed(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3543,12 +3894,12 @@ Remove repository from installation.
 
 https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
-func (c *Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsRemoveRepoFromInstallationReq)
 	}
 	resp := &AppsRemoveRepoFromInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3560,6 +3911,19 @@ func (c *Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsRemoveRepoFromInstallation performs requests for "apps/remove-repo-from-installation"
+
+Remove repository from installation.
+
+  DELETE /user/installations/{installation_id}/repositories/{repository_id}
+
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+*/
+func (c Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+	return AppsRemoveRepoFromInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3661,12 +4025,12 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-func (c *Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
 	if req == nil {
 		req = new(AppsResetAuthorizationReq)
 	}
 	resp := &AppsResetAuthorizationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3679,6 +4043,19 @@ func (c *Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAutho
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsResetAuthorization performs requests for "apps/reset-authorization"
+
+Reset an authorization.
+
+  POST /applications/{client_id}/tokens/{access_token}
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+*/
+func (c Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+	return AppsResetAuthorization(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3778,12 +4155,12 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-func (c *Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
 	if req == nil {
 		req = new(AppsResetTokenReq)
 	}
 	resp := &AppsResetTokenResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3796,6 +4173,19 @@ func (c *Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsResetToken performs requests for "apps/reset-token"
+
+Reset a token.
+
+  PATCH /applications/{client_id}/token
+
+https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+*/
+func (c Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+	return AppsResetToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -3906,12 +4296,12 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
-func (c *Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+func AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
 	if req == nil {
 		req = new(AppsRevokeAuthorizationForApplicationReq)
 	}
 	resp := &AppsRevokeAuthorizationForApplicationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3923,6 +4313,19 @@ func (c *Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsRevokeAuthorizationForApplication performs requests for "apps/revoke-authorization-for-application"
+
+Revoke an authorization for an application.
+
+  DELETE /applications/{client_id}/tokens/{access_token}
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+*/
+func (c Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+	return AppsRevokeAuthorizationForApplication(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4012,12 +4415,12 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-func (c *Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+func AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
 	if req == nil {
 		req = new(AppsRevokeGrantForApplicationReq)
 	}
 	resp := &AppsRevokeGrantForApplicationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4029,6 +4432,19 @@ func (c *Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRev
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsRevokeGrantForApplication performs requests for "apps/revoke-grant-for-application"
+
+Revoke a grant for an application.
+
+  DELETE /applications/{client_id}/grants/{access_token}
+
+https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+*/
+func (c Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+	return AppsRevokeGrantForApplication(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4118,12 +4534,12 @@ Revoke an installation token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
 */
-func (c *Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
+func AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
 	if req == nil {
 		req = new(AppsRevokeInstallationTokenReq)
 	}
 	resp := &AppsRevokeInstallationTokenResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4135,6 +4551,19 @@ func (c *Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevok
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsRevokeInstallationToken performs requests for "apps/revoke-installation-token"
+
+Revoke an installation token.
+
+  DELETE /installation/token
+
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+*/
+func (c Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
+	return AppsRevokeInstallationToken(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4222,12 +4651,12 @@ Suspend an installation.
 
 https://developer.github.com/v3/apps/#suspend-an-installation
 */
-func (c *Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsSuspendInstallationReq)
 	}
 	resp := &AppsSuspendInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4239,6 +4668,19 @@ func (c *Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendIn
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsSuspendInstallation performs requests for "apps/suspend-installation"
+
+Suspend an installation.
+
+  PUT /app/installations/{installation_id}/suspended
+
+https://developer.github.com/v3/apps/#suspend-an-installation
+*/
+func (c Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+	return AppsSuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
@@ -4327,12 +4769,12 @@ Unsuspend an installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-installation
 */
-func (c *Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
 	if req == nil {
 		req = new(AppsUnsuspendInstallationReq)
 	}
 	resp := &AppsUnsuspendInstallationResponse{request: req}
-	r, err := c.doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4344,6 +4786,19 @@ func (c *Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspe
 		return nil, err
 	}
 	return resp, nil
+}
+
+/*
+AppsUnsuspendInstallation performs requests for "apps/unsuspend-installation"
+
+Unsuspend an installation.
+
+  DELETE /app/installations/{installation_id}/suspended
+
+https://developer.github.com/v3/apps/#unsuspend-an-installation
+*/
+func (c Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+	return AppsUnsuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*

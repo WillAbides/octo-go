@@ -55,10 +55,10 @@ type appInstallationAuthProvider struct {
 	tkn            string
 	tknExpiry      time.Time
 	tknMux         sync.Mutex
-	tokenClient    *Client
+	tokenClient    Client
 }
 
-func (a *appInstallationAuthProvider) getTokenClient() *Client {
+func (a *appInstallationAuthProvider) getTokenClient() Client {
 	if a.tokenClient != nil {
 		return a.tokenClient
 	}
