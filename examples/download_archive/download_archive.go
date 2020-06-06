@@ -18,16 +18,14 @@ func main() {
 
 	ctx := context.Background()
 
-	client := octo.NewClient(
-		octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN")),
-	)
+	ghAuth := octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN"))
 
-	resp, err := client.ReposGetArchiveLink(ctx, &octo.ReposGetArchiveLinkReq{
+	resp, err := octo.ReposGetArchiveLink(ctx, &octo.ReposGetArchiveLinkReq{
 		Owner:         "WillAbides",
 		Repo:          "octo-go",
 		ArchiveFormat: "tarball",
 		Ref:           "master",
-	})
+	}, ghAuth)
 
 	if err != nil {
 		log.Fatal(err)

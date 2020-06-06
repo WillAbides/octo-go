@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/willabides/octo-go"
 )
@@ -12,15 +11,12 @@ import (
 func main() {
 	ctx := context.Background()
 
-	client := octo.NewClient(
-		octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN")),
-	)
-
-	issue, err := client.IssuesGet(ctx, &octo.IssuesGetReq{
+	issue, err := octo.IssuesGet(ctx, &octo.IssuesGetReq{
 		Owner:       "golang",
 		Repo:        "go",
 		IssueNumber: 1,
 	})
+
 	if err != nil {
 		log.Fatal(err)
 	}
