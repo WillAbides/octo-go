@@ -317,3 +317,11 @@ func doRequest(ctx context.Context, requester httpRequester, opt ...RequestOptio
 
 	return resp, nil
 }
+
+// Client is a set of options to apply to requests
+type Client []RequestOption
+
+// NewClient returns a new Client
+func NewClient(opt ...RequestOption) Client {
+	return Client(opt)
+}
