@@ -15,6 +15,7 @@ func main() {
 
 	client := octo.NewClient(
 		octo.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
+		octo.WithUserAgent("octo-go examples"),
 	)
 
 	createResp, err := client.GistsCreate(ctx, &octo.GistsCreateReq{

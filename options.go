@@ -11,8 +11,8 @@ import (
 // RequestOption is an option for building an http request
 type RequestOption func(opts *requestOpts) error
 
-// RequestBaseURL set the baseURL to use. Default is https://api.github.com
-func RequestBaseURL(baseURL url.URL) RequestOption {
+// WithBaseURL set the baseURL to use. Default is https://api.github.com
+func WithBaseURL(baseURL url.URL) RequestOption {
 	return func(opts *requestOpts) error {
 		opts.baseURL = baseURL
 		return nil
@@ -47,6 +47,14 @@ func PreserveResponseBody() RequestOption {
 func WithHTTPClient(client *http.Client) RequestOption {
 	return func(opts *requestOpts) error {
 		opts.httpClient = client
+		return nil
+	}
+}
+
+// WithUserAgent sets the User-Agent header in requests
+func WithUserAgent(userAgent string) RequestOption {
+	return func(opts *requestOpts) error {
+		opts.userAgent = userAgent
 		return nil
 	}
 }

@@ -11,6 +11,11 @@ This is WIP. Don't depend on it.
 
 Until I write more about it, you can get an idea of how it works in "./examples".
 
+## User Agent
+
+GitHub requires all requests have a User-Agent header set. Octo-go sets it to `octo-go` by default, but please set it
+ to the name of your program instead. Do that with the option `octo.WithUserAgent("my wonderful computer program")`.
+
 ## Authentication
 
 In most situations, octo-go can handle the authentication, but you can also provide your own transport to set the
