@@ -11,32 +11,66 @@ This is WIP. Don't depend on it.
 
 Until I write more about it, you can get an idea of how it works in "./examples".
 
-Here is the simple example:
+## Authentication
+
+In most situations, octo-go can handle the authentication, but you can also provide your own transport to set the
+ Authentication header if you want.
+ 
+### Personal Access Token
+
+This is the simplest and most common way to authenticate.
 
 ```go
-package main
+myToken := os.Getenv("GITHUB_TOKEN") // or however you want to provide your token
 
-import (
-	"context"
-	"fmt"
-	"log"
+client := octo.NewClient(octo.WithPATAuth(myToken))
+```
 
-	"github.com/willabides/octo-go"
-)
+### GitHub App
 
-func main() {
-	ctx := context.Background()
+If you want to authenticate as a GitHub App, octo can do that for you too. You need to provide the app's private key
+ in PEM format along with your app's ID.
 
-	issue, err := octo.IssuesGet(ctx, &octo.IssuesGetReq{
-		Owner:       "golang",
-		Repo:        "go",
-		IssueNumber: 1,
-	})
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("golang/go's first issue is titled %q and has received %d comments\n", issue.Data.Title, issue.Data.Comments)
+```go
+appID := int64(1)
+key, err := ioutil.ReadFile("appsecretkey.pem")
+if err != nil {
+    log.Fatal(err)
 }
+client := octo.NewClient(octo.WithAppAuth(appID, key))
+```
+
+### GitHub App Installation
+
+To authenticate as a GitHub App Installation, you need the installation's ID along with the app's ID and private key.
+
+```go
+appID := int64(1)
+installationID := int64(99)
+key, err := ioutil.ReadFile("appsecretkey.pem")
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+When authenticating as an App Installation, you can also limit the token's authorization to specific repositories and
+ scopes by setting the request body used to create the token.
+ 
+```go
+appID := int64(1)
+installationID := int64(99)
+repoID := int64(12)
+key, err := ioutil.ReadFile("appsecretkey.pem")
+if err != nil {
+    log.Fatal(err)
+}
+
+auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreateInstallationTokenReqBody{
+    Permissions: map[string]string{
+        "deployments": "write",
+        "content":     "read",
+    },
+    RepositoryIds: []int64{repoID},
+})
+client := octo.NewClient(auth)
 ```
