@@ -74,3 +74,19 @@ auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreat
 })
 client := octo.NewClient(auth)
 ```
+
+## Rate Limits
+
+The GitHub API has a general rate limit of 5,000 requests per hour for most authenticated requests and 60 per hour per
+ ip address for unauthenticated requests. More details are in the API documention
+
+To check your rate limit status, these methods are available on all octo-go responses (`resp`):
+
+`resp.RateLimitRemaining()` - returns the number of requests remaining (or -1 if the header is missing)
+
+`resp.RateLimitReset()` - returns the time when the rate limit will reset (or zero value if the header is missing)
+
+`resp.RateLimit()` - returns the rate limit (or -1 if the header is missing)
+
+You can also explicitly get your rate limit status with `octo.RateLimitGet()`
+
