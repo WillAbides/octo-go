@@ -83,100 +83,49 @@ client := octo.NewClient(auth)
 ## Pagination
 
 The GitHub API supports paging through result sets using relative links in the Link header. Octo-go makes use of
- these headers to enable paging. Every request has a `Rel()` method that will update the request to point to the
+ these headers to enable paging. Every response has the methods `RelLink(lnk RelName)` and `HasRelLink(lnk RelName)` 
+ to get relative links. You can call this with `RelNext` for the next page of results, `RelPrev` for the previous
+ page. `RelFirst` and `RelLast` point the first and last page of results.
+ 
+Every request has a `Rel(lnk RelName, resp *ResponseType)` method that will update the request to point to a response's
  relative link.
  
-Let me demonstrate with a contrived example `GetMilestoneIssueTitles`. Stick around for a more concise version at
- afterward.
+Let me demonstrate with an example. `getReleaseBlockers` will page through all open golang/go issues that are labeled
+ "release-blocker" and return their titles.
 
 ```go
-// GetMilestoneIssueTitles returns the titles of all golang/go issues with a given milestone
-func GetMilestoneIssueTitles(ctx context.Context, client octo.Client, milestone string) ([]string, error) {
+func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, error) {
 	var result []string
 
-	// a request to get all golang issues with the given milestone should have enough 
-	// results to require paging
+	// Build the initial request.
 	req := &octo.IssuesListForRepoReq{
-		Owner:     "golang",
-		Repo:      "go",
-		Milestone: &milestone,
-	}
-	
-	// do the request and get the first page of results
-	resp, err := client.IssuesListForRepo(ctx, req)
-	if err != nil {
-		return nil, err
+		Owner:   "golang",
+		Repo:    "go",
+		Labels:  octo.String("release-blocker"),
 	}
 
-	// add the first page of titles to the result
-	for _, issue := range *resp.Data {
-		result = append(result, issue.Title)
-	}
-
-	// set req to point to the next page of results
-	// ok will be false if there is no "next" link on the previous response
-	ok := req.Rel(octo.RelNext, resp)
-	
-	// maybe there was just one page after all
-	if !ok {
-		return result, nil
-	}
-	
-	// get the second page of results
-	resp, err = client.IssuesListForRepo(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	for _, issue := range *resp.Data {
-		result = append(result, issue.Title)
-	}
-	
-	// this is getting tiresome. let's handle the rest of the pages in a loop
-	for req.Rel(octo.RelNext, resp) {
-		resp, err = client.IssuesListForRepo(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		for _, issue := range *resp.Data {
-			result = append(result, issue.Title)
-		}
-	}
-	
-	return result, nil
-}
-```
-
-`GetMilestoneIssueTitles` was overly verbose for the sake of explanation. `GetMilestoneIssueTitles2` is more like
- what you should really be writing.
-
-```go
-// GetMilestoneIssueTitles2 does the same as GetMilestoneIssueTitles with a tighter loop
-func GetMilestoneIssueTitles2(ctx context.Context, client octo.Client, milestone string) ([]string, error) {
-	var result []string
-	
-	req := &octo.IssuesListForRepoReq{
-		Owner:     "golang",
-		Repo:      "go",
-		Milestone: &milestone,
-	}
-	
+	// ok will be true as long as there is a next page.
 	ok := true
+
 	for ok {
+		// Get a page of issues.
 		resp, err := client.IssuesListForRepo(ctx, req)
 		if err != nil {
 			return nil, err
 		}
+
+		// Add issue titles to the result.
 		for _, issue := range *resp.Data {
 			result = append(result, issue.Title)
 		}
+
+		// Update req to point to the next page of results.
+		// If there is no next page, req.Rel will return false and break the loop
 		ok = req.Rel(octo.RelNext, resp)
 	}
 	return result, nil
 }
 ```
-
-In addition to `RelNext` to get the next page, you can also use `RelPrev` to get the next page. `RelFirst` and
- `RelLast` get the first and last page of results.
 
 ## Rate Limits
 

@@ -5,36 +5,59 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/willabides/octo-go"
 )
 
 func main() {
 	ctx := context.Background()
+	client := octo.NewClient(
+		octo.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
+	)
 
-	req := &octo.IssuesListCommentsReq{
-		Owner:       "golang",
-		Repo:        "go",
-		IssueNumber: 1,
-		Since:       octo.ISOTimeString(time.Now().AddDate(-20, 0, 0)),
-		PerPage:     octo.Int64(4),
+	blockers, err := getReleaseBlockers(ctx, client)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	ghAuth := octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
+	if len(blockers) == 0 {
+		fmt.Println("there are no open release blockers")
+		return
+	}
+	fmt.Println("these are the open release blockers")
+	for _, title := range blockers {
+		fmt.Println(title)
+	}
+}
 
-	fmt.Println("Comments from golang/go's first GitHub issue:")
+func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, error) {
+	var result []string
+
+	// Build the initial request.
+	req := &octo.IssuesListForRepoReq{
+		Owner:   "golang",
+		Repo:    "go",
+		Labels:  octo.String("release-blocker"),
+	}
+
+	// ok will be true as long as there is a next page.
 	ok := true
+
 	for ok {
-		resp, err := octo.IssuesListComments(ctx, req, ghAuth)
+		// Get a page of issues.
+		resp, err := client.IssuesListForRepo(ctx, req)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
-		if resp.Data != nil {
-			for _, r := range *resp.Data {
-				fmt.Printf("%s commented at %s: %s\n", r.User.Login, r.CreatedAt, r.HtmlUrl)
-			}
+
+		// Add issue titles to the result.
+		for _, issue := range *resp.Data {
+			result = append(result, issue.Title)
 		}
+
+		// Update req to point to the next page of results.
+		// If there is no next page, req.Rel will return false and break the loop
 		ok = req.Rel(octo.RelNext, resp)
 	}
+	return result, nil
 }
