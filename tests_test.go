@@ -42,7 +42,7 @@ func init() {
 }
 
 func patAuth() octo.RequestOption {
-	return octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN"))
+	return octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 }
 
 func appAuth(t *testing.T) octo.RequestOption {
@@ -50,7 +50,7 @@ func appAuth(t *testing.T) octo.RequestOption {
 	if key == nil {
 		return nil
 	}
-	return octo.RequestAppAuth(appID, key)
+	return octo.WithAppAuth(appID, key)
 }
 
 func appInstallationAuth(t *testing.T) octo.RequestOption {
@@ -58,7 +58,7 @@ func appInstallationAuth(t *testing.T) octo.RequestOption {
 	if key == nil {
 		return nil
 	}
-	return octo.RequestAppInstallationAuth(appID, appInstallationID, key, nil)
+	return octo.WithAppInstallationAuth(appID, appInstallationID, key, nil)
 }
 
 func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) octo.Client {
@@ -75,7 +75,7 @@ func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) octo.Client
 		require.NoError(t, r.Stop())
 	})
 
-	return octo.NewClient(append(opts, octo.RequestHTTPClient(&http.Client{
+	return octo.NewClient(append(opts, octo.WithHTTPClient(&http.Client{
 		Transport: r,
 	}))...)
 }

@@ -62,11 +62,11 @@ func (a *appInstallationAuthProvider) getTokenClient() Client {
 	if a.tokenClient != nil {
 		return a.tokenClient
 	}
-	opts := append(a.requestOptions, RequestAuthProvider(&appAuthProvider{
+	opts := append(a.requestOptions, WithAuthProvider(&appAuthProvider{
 		appID:      a.appID,
 		privateKey: a.privateKey,
 	}))
-	a.tokenClient = NewClient(append(opts, RequestEnableRequirePreviews())...)
+	a.tokenClient = NewClient(append(opts, WithRequiredPreviews())...)
 	return a.tokenClient
 }
 

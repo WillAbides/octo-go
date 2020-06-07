@@ -18,7 +18,7 @@ func main() {
 
 	ctx := context.Background()
 
-	ghAuth := octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN"))
+	ghAuth := octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 
 	resp, err := octo.ReposGetArchiveLink(ctx, &octo.ReposGetArchiveLinkReq{
 		Owner:         "WillAbides",
