@@ -83,8 +83,7 @@ client := octo.NewClient(auth)
 ## Rate Limits
 
 The GitHub API has a general rate limit of 5,000 requests per hour for most authenticated requests and 60 per hour per
- ip address for unauthenticated requests. More details are in the [API documentation](https://developer.github.com/v3
- /#rate-limiting).
+ ip address for unauthenticated requests. More details are in the [API documentation](https://developer.github.com/v3/#rate-limiting).
 
 To check your rate limit status, these methods are available on all octo-go responses (`resp`):
 
