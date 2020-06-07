@@ -118,8 +118,8 @@ func (r *ProjectsAddCollaboratorReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsAddCollaboratorReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -272,8 +272,8 @@ func (r *ProjectsCreateCardReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsCreateCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -448,8 +448,8 @@ func (r *ProjectsCreateColumnReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsCreateColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -593,8 +593,8 @@ func (r *ProjectsCreateForAuthenticatedUserReq) endpointAttributes() []endpointA
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsCreateForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -752,8 +752,8 @@ func (r *ProjectsCreateForOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsCreateForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -912,8 +912,8 @@ func (r *ProjectsCreateForRepoReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsCreateForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1069,8 +1069,8 @@ func (r *ProjectsDeleteReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsDeleteReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1202,8 +1202,8 @@ func (r *ProjectsDeleteCardReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsDeleteCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1335,8 +1335,8 @@ func (r *ProjectsDeleteColumnReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsDeleteColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1469,8 +1469,8 @@ func (r *ProjectsGetReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1612,8 +1612,8 @@ func (r *ProjectsGetCardReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsGetCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1745,8 +1745,8 @@ func (r *ProjectsGetColumnReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsGetColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1900,8 +1900,8 @@ func (r *ProjectsListCardsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsListCardsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2069,8 +2069,8 @@ func (r *ProjectsListCollaboratorsReq) endpointAttributes() []endpointAttribute 
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsListCollaboratorsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2225,8 +2225,8 @@ func (r *ProjectsListColumnsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsListColumnsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2390,8 +2390,8 @@ func (r *ProjectsListForOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsListForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2556,8 +2556,8 @@ func (r *ProjectsListForRepoReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsListForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2721,8 +2721,8 @@ func (r *ProjectsListForUserReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsListForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2865,8 +2865,8 @@ func (r *ProjectsMoveCardReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsMoveCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3017,8 +3017,8 @@ func (r *ProjectsMoveColumnReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsMoveColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3165,8 +3165,8 @@ func (r *ProjectsRemoveCollaboratorReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsRemoveCollaboratorReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3300,8 +3300,8 @@ func (r *ProjectsReviewUserPermissionLevelReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsReviewUserPermissionLevelReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3445,8 +3445,8 @@ func (r *ProjectsUpdateReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsUpdateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3644,8 +3644,8 @@ func (r *ProjectsUpdateCardReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsUpdateCardReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3799,8 +3799,8 @@ func (r *ProjectsUpdateColumnReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ProjectsUpdateColumnReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

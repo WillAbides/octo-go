@@ -106,8 +106,8 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) endpointAttributes() 
 	return []endpointAttribute{attrBoolean}
 }
 
-// httpRequest creates an http request
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -226,8 +226,8 @@ func (r *ActivityDeleteRepoSubscriptionReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityDeleteRepoSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -344,8 +344,8 @@ func (r *ActivityDeleteThreadSubscriptionReq) endpointAttributes() []endpointAtt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityDeleteThreadSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -462,8 +462,8 @@ func (r *ActivityGetFeedsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityGetFeedsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -592,8 +592,8 @@ func (r *ActivityGetRepoSubscriptionReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityGetRepoSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -721,8 +721,8 @@ func (r *ActivityGetThreadReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityGetThreadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -850,8 +850,8 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -990,8 +990,8 @@ func (r *ActivityListEventsForAuthenticatedUserReq) endpointAttributes() []endpo
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListEventsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1155,8 +1155,8 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) endpointAttributes() 
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListNotificationsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1296,8 +1296,8 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) endpointAttributes() []en
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1425,8 +1425,8 @@ func (r *ActivityListPublicEventsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListPublicEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1556,8 +1556,8 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) endpointAttributes() []endpo
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListPublicEventsForRepoNetworkReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1686,8 +1686,8 @@ func (r *ActivityListPublicEventsForUserReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListPublicEventsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1816,8 +1816,8 @@ func (r *ActivityListPublicOrgEventsReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListPublicOrgEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1946,8 +1946,8 @@ func (r *ActivityListReceivedEventsForUserReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListReceivedEventsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2076,8 +2076,8 @@ func (r *ActivityListReceivedPublicEventsForUserReq) endpointAttributes() []endp
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListReceivedPublicEventsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2207,8 +2207,8 @@ func (r *ActivityListRepoEventsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListRepoEventsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2374,8 +2374,8 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2529,8 +2529,8 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) endpointAttributes() []
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListReposStarredByAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2685,8 +2685,8 @@ func (r *ActivityListReposStarredByUserReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListReposStarredByUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2826,8 +2826,8 @@ func (r *ActivityListReposWatchedByUserReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListReposWatchedByUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2968,8 +2968,8 @@ func (r *ActivityListStargazersForRepoReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListStargazersForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3108,8 +3108,8 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) endpointAttributes() [
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3250,8 +3250,8 @@ func (r *ActivityListWatchersForRepoReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityListWatchersForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3378,8 +3378,8 @@ func (r *ActivityMarkNotificationsAsReadReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActivityMarkNotificationsAsReadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3515,8 +3515,8 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) endpointAttributes() []endpoint
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActivityMarkRepoNotificationsAsReadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3650,8 +3650,8 @@ func (r *ActivityMarkThreadAsReadReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityMarkThreadAsReadReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3771,8 +3771,8 @@ func (r *ActivitySetRepoSubscriptionReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActivitySetRepoSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3915,8 +3915,8 @@ func (r *ActivitySetThreadSubscriptionReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActivitySetThreadSubscriptionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4058,8 +4058,8 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityStarRepoForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4177,8 +4177,8 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) endpointAttributes() []endpo
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

@@ -116,8 +116,8 @@ func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []en
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -276,8 +276,8 @@ func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []e
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -434,8 +434,8 @@ func (r *InteractionsGetRestrictionsForOrgReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *InteractionsGetRestrictionsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -578,8 +578,8 @@ func (r *InteractionsGetRestrictionsForRepoReq) endpointAttributes() []endpointA
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *InteractionsGetRestrictionsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -720,8 +720,8 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *InteractionsRemoveRestrictionsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -853,8 +853,8 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) endpointAttributes() []endpoi
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *InteractionsRemoveRestrictionsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

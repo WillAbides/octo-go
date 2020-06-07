@@ -147,8 +147,8 @@ func (r *SearchCodeReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchCodeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -340,8 +340,8 @@ func (r *SearchCommitsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchCommitsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -521,8 +521,8 @@ func (r *SearchIssuesAndPullRequestsReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchIssuesAndPullRequestsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -689,8 +689,8 @@ func (r *SearchLabelsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchLabelsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -878,8 +878,8 @@ func (r *SearchReposReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchReposReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1032,8 +1032,8 @@ func (r *SearchTopicsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchTopicsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1210,8 +1210,8 @@ func (r *SearchUsersReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *SearchUsersReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

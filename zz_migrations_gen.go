@@ -102,8 +102,8 @@ func (r *MigrationsCancelImportReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsCancelImportReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -229,8 +229,8 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) endpointAttributes() []
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -357,8 +357,8 @@ func (r *MigrationsDeleteArchiveForOrgReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsDeleteArchiveForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -485,8 +485,8 @@ func (r *MigrationsDownloadArchiveForOrgReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{attrRedirectOnly}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsDownloadArchiveForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -612,8 +612,8 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointAttributes() []end
 	return []endpointAttribute{attrRedirectOnly}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -742,8 +742,8 @@ func (r *MigrationsGetCommitAuthorsReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsGetCommitAuthorsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -872,8 +872,8 @@ func (r *MigrationsGetImportProgressReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsGetImportProgressReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1002,8 +1002,8 @@ func (r *MigrationsGetLargeFilesReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsGetLargeFilesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1140,8 +1140,8 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) endpointAttributes() []endp
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsGetStatusForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1279,8 +1279,8 @@ func (r *MigrationsGetStatusForOrgReq) endpointAttributes() []endpointAttribute 
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsGetStatusForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1428,8 +1428,8 @@ func (r *MigrationsListForAuthenticatedUserReq) endpointAttributes() []endpointA
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsListForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1578,8 +1578,8 @@ func (r *MigrationsListForOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsListForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1729,8 +1729,8 @@ func (r *MigrationsListReposForOrgReq) endpointAttributes() []endpointAttribute 
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsListReposForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1879,8 +1879,8 @@ func (r *MigrationsListReposForUserReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsListReposForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2011,8 +2011,8 @@ func (r *MigrationsMapCommitAuthorReq) endpointAttributes() []endpointAttribute 
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsMapCommitAuthorReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2156,8 +2156,8 @@ func (r *MigrationsSetLfsPreferenceReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsSetLfsPreferenceReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2299,8 +2299,8 @@ func (r *MigrationsStartForAuthenticatedUserReq) endpointAttributes() []endpoint
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsStartForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2453,8 +2453,8 @@ func (r *MigrationsStartForOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsStartForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2607,8 +2607,8 @@ func (r *MigrationsStartImportReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsStartImportReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2773,8 +2773,8 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) endpointAttributes() []end
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2902,8 +2902,8 @@ func (r *MigrationsUnlockRepoForOrgReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsUnlockRepoForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3023,8 +3023,8 @@ func (r *MigrationsUpdateImportReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MigrationsUpdateImportReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

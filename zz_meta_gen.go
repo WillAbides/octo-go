@@ -100,8 +100,8 @@ func (r *MetaGetReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *MetaGetReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

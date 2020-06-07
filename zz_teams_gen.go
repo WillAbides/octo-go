@@ -105,8 +105,8 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsAddOrUpdateMembershipInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -268,8 +268,8 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) endpointAttributes() []endpointAttribu
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsAddOrUpdateProjectInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -411,8 +411,8 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) endpointAttributes() []endpointAttribute 
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsAddOrUpdateRepoInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -562,8 +562,8 @@ func (r *TeamsCheckManagesRepoInOrgReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{attrBoolean}
 }
 
-// httpRequest creates an http request
-func (r *TeamsCheckManagesRepoInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -683,8 +683,8 @@ func (r *TeamsCreateReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsCreateReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -879,8 +879,8 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsCreateDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1035,8 +1035,8 @@ func (r *TeamsCreateDiscussionInOrgReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsCreateDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1187,8 +1187,8 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointAttributes() []
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1346,8 +1346,8 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsDeleteDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsDeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1466,8 +1466,8 @@ func (r *TeamsDeleteDiscussionInOrgReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsDeleteDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsDeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1585,8 +1585,8 @@ func (r *TeamsDeleteInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsDeleteInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsDeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1705,8 +1705,8 @@ func (r *TeamsGetByNameReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsGetByNameReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetByNameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1851,8 +1851,8 @@ func (r *TeamsGetDiscussionCommentInOrgReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsGetDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1996,8 +1996,8 @@ func (r *TeamsGetDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsGetDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2127,8 +2127,8 @@ func (r *TeamsGetMembershipInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsGetMembershipInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2268,8 +2268,8 @@ func (r *TeamsListReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2410,8 +2410,8 @@ func (r *TeamsListChildInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListChildInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2576,8 +2576,8 @@ func (r *TeamsListDiscussionCommentsInOrgReq) endpointAttributes() []endpointAtt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListDiscussionCommentsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2741,8 +2741,8 @@ func (r *TeamsListDiscussionsInOrgReq) endpointAttributes() []endpointAttribute 
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListDiscussionsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2881,8 +2881,8 @@ func (r *TeamsListForAuthenticatedUserReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListForAuthenticatedUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3022,8 +3022,8 @@ func (r *TeamsListIdPGroupsForOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListIdPGroupsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3152,8 +3152,8 @@ func (r *TeamsListIdPGroupsInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListIdPGroupsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3305,8 +3305,8 @@ func (r *TeamsListMembersInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListMembersInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3447,8 +3447,8 @@ func (r *TeamsListPendingInvitationsInOrgReq) endpointAttributes() []endpointAtt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListPendingInvitationsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3604,8 +3604,8 @@ func (r *TeamsListProjectsInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListProjectsInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3746,8 +3746,8 @@ func (r *TeamsListReposInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsListReposInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3876,8 +3876,8 @@ func (r *TeamsRemoveMembershipInOrgReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsRemoveMembershipInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3996,8 +3996,8 @@ func (r *TeamsRemoveProjectInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsRemoveProjectInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4117,8 +4117,8 @@ func (r *TeamsRemoveRepoInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsRemoveRepoInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4253,8 +4253,8 @@ func (r *TeamsReviewProjectInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *TeamsReviewProjectInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4400,8 +4400,8 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsUpdateDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsUpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4557,8 +4557,8 @@ func (r *TeamsUpdateDiscussionInOrgReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsUpdateDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsUpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4702,8 +4702,8 @@ func (r *TeamsUpdateInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *TeamsUpdateInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *TeamsUpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

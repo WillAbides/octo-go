@@ -103,8 +103,8 @@ func (r *CodeScanningGetAlertReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *CodeScanningGetAlertReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -248,8 +248,8 @@ func (r *CodeScanningListAlertsForRepoReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *CodeScanningListAlertsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *CodeScanningListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
