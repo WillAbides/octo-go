@@ -14,7 +14,7 @@ func main() {
 	ctx := context.Background()
 
 	client := octo.NewClient(
-		octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN")),
+		octo.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
 	)
 
 	createResp, err := client.GistsCreate(ctx, &octo.GistsCreateReq{

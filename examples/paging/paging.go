@@ -21,7 +21,7 @@ func main() {
 		PerPage:     octo.Int64(4),
 	}
 
-	ghAuth := octo.RequestPATAuth(os.Getenv("GITHUB_TOKEN"))
+	ghAuth := octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 
 	fmt.Println("Comments from golang/go's first GitHub issue:")
 	ok := true

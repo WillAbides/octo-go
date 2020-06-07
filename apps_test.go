@@ -10,14 +10,14 @@ import (
 
 func TestAppsCreateInstallationToken(t *testing.T) {
 	ctx := context.Background()
-	client := vcrClient(t, t.Name(), appAuth(t), octo.RequestEnableRequirePreviews())
+	client := vcrClient(t, t.Name(), appAuth(t), octo.WithRequiredPreviews())
 	token, err := client.AppsCreateInstallationToken(ctx, &octo.AppsCreateInstallationTokenReq{
 		InstallationId: appInstallationID,
 	})
 	require.NoError(t, err)
 
 	// revoke the token so that we don't inadvertently commit a valid token to git
-	_, err = client.AppsRevokeInstallationToken(ctx, nil, octo.RequestPATAuth(token.Data.Token))
+	_, err = client.AppsRevokeInstallationToken(ctx, nil, octo.WithPATAuth(token.Data.Token))
 	require.NoError(t, err)
 }
 
