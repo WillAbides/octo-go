@@ -80,6 +80,104 @@ auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreat
 client := octo.NewClient(auth)
 ```
 
+## Pagination
+
+The GitHub API supports paging through result sets using relative links in the Link header. Octo-go makes use of
+ these headers to enable paging. Every request has a `Rel()` method that will update the request to point to the
+ relative link.
+ 
+Let me demonstrate with a contrived example `GetMilestoneIssueTitles`. Stick around for a more concise version at
+ afterward.
+
+```go
+// GetMilestoneIssueTitles returns the titles of all golang/go issues with a given milestone
+func GetMilestoneIssueTitles(ctx context.Context, client octo.Client, milestone string) ([]string, error) {
+	var result []string
+
+	// a request to get all golang issues with the given milestone should have enough 
+	// results to require paging
+	req := &octo.IssuesListForRepoReq{
+		Owner:     "golang",
+		Repo:      "go",
+		Milestone: &milestone,
+	}
+	
+	// do the request and get the first page of results
+	resp, err := client.IssuesListForRepo(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	// add the first page of titles to the result
+	for _, issue := range *resp.Data {
+		result = append(result, issue.Title)
+	}
+
+	// set req to point to the next page of results
+	// ok will be false if there is no "next" link on the previous response
+	ok := req.Rel(octo.RelNext, resp)
+	
+	// maybe there was just one page after all
+	if !ok {
+		return result, nil
+	}
+	
+	// get the second page of results
+	resp, err = client.IssuesListForRepo(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	for _, issue := range *resp.Data {
+		result = append(result, issue.Title)
+	}
+	
+	// this is getting tiresome. let's handle the rest of the pages in a loop
+	for req.Rel(octo.RelNext, resp) {
+		resp, err = client.IssuesListForRepo(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		for _, issue := range *resp.Data {
+			result = append(result, issue.Title)
+		}
+	}
+	
+	return result, nil
+}
+```
+
+`GetMilestoneIssueTitles` was overly verbose for the sake of explanation. `GetMilestoneIssueTitles2` is more like
+ what you should really be writing.
+
+```go
+// GetMilestoneIssueTitles2 does the same as GetMilestoneIssueTitles with a tighter loop
+func GetMilestoneIssueTitles2(ctx context.Context, client octo.Client, milestone string) ([]string, error) {
+	var result []string
+	
+	req := &octo.IssuesListForRepoReq{
+		Owner:     "golang",
+		Repo:      "go",
+		Milestone: &milestone,
+	}
+	
+	ok := true
+	for ok {
+		resp, err := client.IssuesListForRepo(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		for _, issue := range *resp.Data {
+			result = append(result, issue.Title)
+		}
+		ok = req.Rel(octo.RelNext, resp)
+	}
+	return result, nil
+}
+```
+
+In addition to `RelNext` to get the next page, you can also use `RelPrev` to get the next page. `RelFirst` and
+ `RelLast` get the first and last page of results.
+
 ## Rate Limits
 
 The GitHub API has a general rate limit of 5,000 requests per hour for most authenticated requests and 60 per hour per
