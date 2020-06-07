@@ -195,8 +195,8 @@ func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
 
 func reqHTTPRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
-	file.Comment("httpRequest creates an http request")
-	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("httpRequest").Params(
+	file.Comment("HTTPRequest builds an *http.Request")
+	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("opt ...RequestOption"),
 	).Params(

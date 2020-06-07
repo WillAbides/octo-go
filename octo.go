@@ -154,7 +154,7 @@ func (r *response) RateLimitReset() time.Time {
 }
 
 type httpRequester interface {
-	httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error)
+	HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error)
 	requestBuilder
 }
 
@@ -279,7 +279,7 @@ func Int64(i int64) *int64 {
 }
 
 func doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
-	req, err := requester.httpRequest(ctx, opt...)
+	req, err := requester.HTTPRequest(ctx, opt...)
 	if err != nil {
 		return nil, err
 	}

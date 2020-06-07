@@ -113,8 +113,8 @@ func (r *CodesOfConductGetAllCodesOfConductReq) endpointAttributes() []endpointA
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *CodesOfConductGetAllCodesOfConductReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -255,8 +255,8 @@ func (r *CodesOfConductGetConductCodeReq) endpointAttributes() []endpointAttribu
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *CodesOfConductGetConductCodeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -398,8 +398,8 @@ func (r *CodesOfConductGetForRepoReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *CodesOfConductGetForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

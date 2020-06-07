@@ -103,8 +103,8 @@ func (r *ScimGetProvisioningDetailsForUserReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ScimGetProvisioningDetailsForUserReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ScimGetProvisioningDetailsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -255,8 +255,8 @@ func (r *ScimListProvisionedIdentitiesReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ScimListProvisionedIdentitiesReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -384,8 +384,8 @@ func (r *ScimProvisionAndInviteUsersReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ScimProvisionAndInviteUsersReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ScimProvisionAndInviteUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -513,8 +513,8 @@ func (r *ScimRemoveUserFromOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ScimRemoveUserFromOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ScimRemoveUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -633,8 +633,8 @@ func (r *ScimReplaceProvisionedUserInformationReq) endpointAttributes() []endpoi
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ScimReplaceProvisionedUserInformationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ScimReplaceProvisionedUserInformationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -763,8 +763,8 @@ func (r *ScimUpdateUserAttributeReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ScimUpdateUserAttributeReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ScimUpdateUserAttributeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

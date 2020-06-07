@@ -122,8 +122,8 @@ func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsCreateForCommitCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -285,8 +285,8 @@ func (r *ReactionsCreateForIssueReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsCreateForIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -448,8 +448,8 @@ func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsCreateForIssueCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -611,8 +611,8 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []e
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsCreateForPullRequestReviewCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -775,8 +775,8 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointAttributes() [
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -938,8 +938,8 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointAttributes() []endpoi
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1100,8 +1100,8 @@ func (r *ReactionsDeleteForCommitCommentReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsDeleteForCommitCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1238,8 +1238,8 @@ func (r *ReactionsDeleteForIssueReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsDeleteForIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1376,8 +1376,8 @@ func (r *ReactionsDeleteForIssueCommentReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsDeleteForIssueCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1514,8 +1514,8 @@ func (r *ReactionsDeleteForPullRequestCommentReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsDeleteForPullRequestCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1652,8 +1652,8 @@ func (r *ReactionsDeleteForTeamDiscussionReq) endpointAttributes() []endpointAtt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsDeleteForTeamDiscussionReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1791,8 +1791,8 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) endpointAttributes() []endp
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1951,8 +1951,8 @@ func (r *ReactionsListForCommitCommentReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsListForCommitCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2121,8 +2121,8 @@ func (r *ReactionsListForIssueReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsListForIssueReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2291,8 +2291,8 @@ func (r *ReactionsListForIssueCommentReq) endpointAttributes() []endpointAttribu
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsListForIssueCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2461,8 +2461,8 @@ func (r *ReactionsListForPullRequestReviewCommentReq) endpointAttributes() []end
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsListForPullRequestReviewCommentReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2632,8 +2632,8 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) endpointAttributes() []e
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2802,8 +2802,8 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) endpointAttributes() []endpoint
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ReactionsListForTeamDiscussionInOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

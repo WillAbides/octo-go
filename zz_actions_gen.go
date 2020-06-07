@@ -103,8 +103,8 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsAddSelectedRepoToOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -223,8 +223,8 @@ func (r *ActionsCancelWorkflowRunReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCancelWorkflowRunReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -343,8 +343,8 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCreateOrUpdateOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -507,8 +507,8 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCreateOrUpdateRepoSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -646,8 +646,8 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCreateRegistrationTokenForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -776,8 +776,8 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) endpointAttributes() []endpoi
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCreateRegistrationTokenForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -905,8 +905,8 @@ func (r *ActionsCreateRemoveTokenForOrgReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCreateRemoveTokenForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1035,8 +1035,8 @@ func (r *ActionsCreateRemoveTokenForRepoReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsCreateRemoveTokenForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1165,8 +1165,8 @@ func (r *ActionsDeleteArtifactReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDeleteArtifactReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1284,8 +1284,8 @@ func (r *ActionsDeleteOrgSecretReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDeleteOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1404,8 +1404,8 @@ func (r *ActionsDeleteRepoSecretReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDeleteRepoSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1523,8 +1523,8 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1643,8 +1643,8 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) endpointAttributes() []endpoi
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1763,8 +1763,8 @@ func (r *ActionsDeleteWorkflowRunLogsReq) endpointAttributes() []endpointAttribu
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDeleteWorkflowRunLogsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1884,8 +1884,8 @@ func (r *ActionsDownloadArtifactReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrRedirectOnly}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDownloadArtifactReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2004,8 +2004,8 @@ func (r *ActionsDownloadWorkflowJobLogsReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{attrRedirectOnly}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDownloadWorkflowJobLogsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2124,8 +2124,8 @@ func (r *ActionsDownloadWorkflowRunLogsReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{attrRedirectOnly}
 }
 
-// httpRequest creates an http request
-func (r *ActionsDownloadWorkflowRunLogsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2245,8 +2245,8 @@ func (r *ActionsGetArtifactReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetArtifactReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2374,8 +2374,8 @@ func (r *ActionsGetOrgPublicKeyReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetOrgPublicKeyReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2504,8 +2504,8 @@ func (r *ActionsGetOrgSecretReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2634,8 +2634,8 @@ func (r *ActionsGetRepoPublicKeyReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetRepoPublicKeyReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2765,8 +2765,8 @@ func (r *ActionsGetRepoSecretReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetRepoSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2895,8 +2895,8 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) endpointAttributes() []endpointAtt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetSelfHostedRunnerForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3026,8 +3026,8 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) endpointAttributes() []endpointAt
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetSelfHostedRunnerForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3157,8 +3157,8 @@ func (r *ActionsGetWorkflowReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetWorkflowReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3288,8 +3288,8 @@ func (r *ActionsGetWorkflowJobReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetWorkflowJobReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3419,8 +3419,8 @@ func (r *ActionsGetWorkflowRunReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetWorkflowRunReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3550,8 +3550,8 @@ func (r *ActionsGetWorkflowRunUsageReq) endpointAttributes() []endpointAttribute
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetWorkflowRunUsageReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3681,8 +3681,8 @@ func (r *ActionsGetWorkflowUsageReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsGetWorkflowUsageReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3823,8 +3823,8 @@ func (r *ActionsListArtifactsForRepoReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListArtifactsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3980,8 +3980,8 @@ func (r *ActionsListJobsForWorkflowRunReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListJobsForWorkflowRunReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4124,8 +4124,8 @@ func (r *ActionsListOrgSecretsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListOrgSecretsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4269,8 +4269,8 @@ func (r *ActionsListRepoSecretsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListRepoSecretsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4455,8 +4455,8 @@ func (r *ActionsListRepoWorkflowRunsReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListRepoWorkflowRunsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4600,8 +4600,8 @@ func (r *ActionsListRepoWorkflowsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListRepoWorkflowsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4732,8 +4732,8 @@ func (r *ActionsListRunnerApplicationsForOrgReq) endpointAttributes() []endpoint
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListRunnerApplicationsForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4862,8 +4862,8 @@ func (r *ActionsListRunnerApplicationsForRepoReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListRunnerApplicationsForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4992,8 +4992,8 @@ func (r *ActionsListSelectedReposForOrgSecretReq) endpointAttributes() []endpoin
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListSelectedReposForOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5136,8 +5136,8 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) endpointAttributes() []endpointA
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListSelfHostedRunnersForOrgReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5281,8 +5281,8 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) endpointAttributes() []endpoint
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListSelfHostedRunnersForRepoReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5427,8 +5427,8 @@ func (r *ActionsListWorkflowRunArtifactsReq) endpointAttributes() []endpointAttr
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListWorkflowRunArtifactsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5614,8 +5614,8 @@ func (r *ActionsListWorkflowRunsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsListWorkflowRunsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5747,8 +5747,8 @@ func (r *ActionsReRunWorkflowReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsReRunWorkflowReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5867,8 +5867,8 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) endpointAttributes() []endpo
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5987,8 +5987,8 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) endpointAttributes() []endpoint
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *ActionsSetSelectedReposForOrgSecretReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

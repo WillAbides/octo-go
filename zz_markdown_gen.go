@@ -100,8 +100,8 @@ func (r *MarkdownRenderReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *MarkdownRenderReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -250,8 +250,8 @@ func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrBodyUploader}
 }
 
-// httpRequest creates an http request
-func (r *MarkdownRenderRawReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 

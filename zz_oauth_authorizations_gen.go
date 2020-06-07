@@ -102,8 +102,8 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttributes() []endpo
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsCreateAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -263,8 +263,8 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttributes() []endpo
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsDeleteAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -381,8 +381,8 @@ func (r *OauthAuthorizationsDeleteGrantReq) endpointAttributes() []endpointAttri
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsDeleteGrantReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -500,8 +500,8 @@ func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttributes() []endpoint
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsGetAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -629,8 +629,8 @@ func (r *OauthAuthorizationsGetGrantReq) endpointAttributes() []endpointAttribut
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsGetGrantReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -759,8 +759,8 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttribute
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -921,8 +921,8 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) end
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1084,8 +1084,8 @@ func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttributes() []endpoi
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsListAuthorizationsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1224,8 +1224,8 @@ func (r *OauthAuthorizationsListGrantsReq) endpointAttributes() []endpointAttrib
 	return []endpointAttribute{}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsListGrantsReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1354,8 +1354,8 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttributes() []endpo
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
-// httpRequest creates an http request
-func (r *OauthAuthorizationsUpdateAuthorizationReq) httpRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
