@@ -13,11 +13,11 @@ import (
 /*
 LicensesGet performs requests for "licenses/get"
 
-Get an individual license.
+Get a license.
 
   GET /licenses/{license}
 
-https://developer.github.com/v3/licenses/#get-an-individual-license
+https://developer.github.com/v3/licenses/#get-a-license
 */
 func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
 	if req == nil {
@@ -42,11 +42,11 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption)
 /*
 LicensesGet performs requests for "licenses/get"
 
-Get an individual license.
+Get a license.
 
   GET /licenses/{license}
 
-https://developer.github.com/v3/licenses/#get-an-individual-license
+https://developer.github.com/v3/licenses/#get-a-license
 */
 func (c Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
 	return LicensesGet(ctx, req, append(c, opt...)...)
@@ -55,7 +55,7 @@ func (c Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...Req
 /*
 LicensesGetReq is request data for Client.LicensesGet
 
-https://developer.github.com/v3/licenses/#get-an-individual-license
+https://developer.github.com/v3/licenses/#get-a-license
 */
 type LicensesGetReq struct {
 	_url    string
@@ -122,7 +122,7 @@ func (r *LicensesGetReq) Rel(link RelName, resp *LicensesGetResponse) bool {
 /*
 LicensesGetResponseBody is a response body for LicensesGet
 
-https://developer.github.com/v3/licenses/#get-an-individual-license
+https://developer.github.com/v3/licenses/#get-a-license
 */
 type LicensesGetResponseBody struct {
 	components.License
@@ -131,7 +131,7 @@ type LicensesGetResponseBody struct {
 /*
 LicensesGetResponse is a response for LicensesGet
 
-https://developer.github.com/v3/licenses/#get-an-individual-license
+https://developer.github.com/v3/licenses/#get-a-license
 */
 type LicensesGetResponse struct {
 	response
@@ -140,13 +140,141 @@ type LicensesGetResponse struct {
 }
 
 /*
+LicensesGetAllCommonlyUsed performs requests for "licenses/get-all-commonly-used"
+
+Get all commonly used licenses.
+
+  GET /licenses
+
+https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+*/
+func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonlyUsedReq, opt ...RequestOption) (*LicensesGetAllCommonlyUsedResponse, error) {
+	if req == nil {
+		req = new(LicensesGetAllCommonlyUsedReq)
+	}
+	resp := &LicensesGetAllCommonlyUsedResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(LicensesGetAllCommonlyUsedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+LicensesGetAllCommonlyUsed performs requests for "licenses/get-all-commonly-used"
+
+Get all commonly used licenses.
+
+  GET /licenses
+
+https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+*/
+func (c Client) LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonlyUsedReq, opt ...RequestOption) (*LicensesGetAllCommonlyUsedResponse, error) {
+	return LicensesGetAllCommonlyUsed(ctx, req, append(c, opt...)...)
+}
+
+/*
+LicensesGetAllCommonlyUsedReq is request data for Client.LicensesGetAllCommonlyUsed
+
+https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+*/
+type LicensesGetAllCommonlyUsedReq struct {
+	_url string
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) url() string {
+	return r._url
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) urlPath() string {
+	return fmt.Sprintf("/licenses")
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) method() string {
+	return "GET"
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) body() interface{} {
+	return nil
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *LicensesGetAllCommonlyUsedReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *LicensesGetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *LicensesGetAllCommonlyUsedReq) Rel(link RelName, resp *LicensesGetAllCommonlyUsedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+LicensesGetAllCommonlyUsedResponseBody is a response body for LicensesGetAllCommonlyUsed
+
+https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+*/
+type LicensesGetAllCommonlyUsedResponseBody []struct {
+	components.LicenseSimple
+}
+
+/*
+LicensesGetAllCommonlyUsedResponse is a response for LicensesGetAllCommonlyUsed
+
+https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+*/
+type LicensesGetAllCommonlyUsedResponse struct {
+	response
+	request *LicensesGetAllCommonlyUsedReq
+	Data    *LicensesGetAllCommonlyUsedResponseBody
+}
+
+/*
 LicensesGetForRepo performs requests for "licenses/get-for-repo"
 
-Get the contents of a repository's license.
+Get the license for a repository.
 
   GET /repos/{owner}/{repo}/license
 
-https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
 	if req == nil {
@@ -171,11 +299,11 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 /*
 LicensesGetForRepo performs requests for "licenses/get-for-repo"
 
-Get the contents of a repository's license.
+Get the license for a repository.
 
   GET /repos/{owner}/{repo}/license
 
-https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 func (c Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
 	return LicensesGetForRepo(ctx, req, append(c, opt...)...)
@@ -184,7 +312,7 @@ func (c Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoR
 /*
 LicensesGetForRepoReq is request data for Client.LicensesGetForRepo
 
-https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoReq struct {
 	_url  string
@@ -252,7 +380,7 @@ func (r *LicensesGetForRepoReq) Rel(link RelName, resp *LicensesGetForRepoRespon
 /*
 LicensesGetForRepoResponseBody is a response body for LicensesGetForRepo
 
-https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoResponseBody struct {
 	components.LicenseContent
@@ -261,138 +389,10 @@ type LicensesGetForRepoResponseBody struct {
 /*
 LicensesGetForRepoResponse is a response for LicensesGetForRepo
 
-https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoResponse struct {
 	response
 	request *LicensesGetForRepoReq
 	Data    *LicensesGetForRepoResponseBody
-}
-
-/*
-LicensesListCommonlyUsed performs requests for "licenses/list-commonly-used"
-
-List commonly used licenses.
-
-  GET /licenses
-
-https://developer.github.com/v3/licenses/#list-commonly-used-licenses
-*/
-func LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
-	if req == nil {
-		req = new(LicensesListCommonlyUsedReq)
-	}
-	resp := &LicensesListCommonlyUsedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(LicensesListCommonlyUsedResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-LicensesListCommonlyUsed performs requests for "licenses/list-commonly-used"
-
-List commonly used licenses.
-
-  GET /licenses
-
-https://developer.github.com/v3/licenses/#list-commonly-used-licenses
-*/
-func (c Client) LicensesListCommonlyUsed(ctx context.Context, req *LicensesListCommonlyUsedReq, opt ...RequestOption) (*LicensesListCommonlyUsedResponse, error) {
-	return LicensesListCommonlyUsed(ctx, req, append(c, opt...)...)
-}
-
-/*
-LicensesListCommonlyUsedReq is request data for Client.LicensesListCommonlyUsed
-
-https://developer.github.com/v3/licenses/#list-commonly-used-licenses
-*/
-type LicensesListCommonlyUsedReq struct {
-	_url string
-}
-
-func (r *LicensesListCommonlyUsedReq) url() string {
-	return r._url
-}
-
-func (r *LicensesListCommonlyUsedReq) urlPath() string {
-	return fmt.Sprintf("/licenses")
-}
-
-func (r *LicensesListCommonlyUsedReq) method() string {
-	return "GET"
-}
-
-func (r *LicensesListCommonlyUsedReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *LicensesListCommonlyUsedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *LicensesListCommonlyUsedReq) body() interface{} {
-	return nil
-}
-
-func (r *LicensesListCommonlyUsedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *LicensesListCommonlyUsedReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *LicensesListCommonlyUsedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *LicensesListCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *LicensesListCommonlyUsedReq) Rel(link RelName, resp *LicensesListCommonlyUsedResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-LicensesListCommonlyUsedResponseBody is a response body for LicensesListCommonlyUsed
-
-https://developer.github.com/v3/licenses/#list-commonly-used-licenses
-*/
-type LicensesListCommonlyUsedResponseBody []struct {
-	components.LicenseSimple
-}
-
-/*
-LicensesListCommonlyUsedResponse is a response for LicensesListCommonlyUsed
-
-https://developer.github.com/v3/licenses/#list-commonly-used-licenses
-*/
-type LicensesListCommonlyUsedResponse struct {
-	response
-	request *LicensesListCommonlyUsedReq
-	Data    *LicensesListCommonlyUsedResponseBody
 }

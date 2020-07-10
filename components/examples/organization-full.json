@@ -41,6 +41,7 @@
   "public_repos": 2,
   "repos_url": "https://api.github.com/orgs/github/repos",
   "total_private_repos": 100,
+  "twitter_username": "github",
   "two_factor_requirement_enabled": true,
   "type": "Organization",
   "url": "https://api.github.com/orgs/github"

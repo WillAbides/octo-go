@@ -14,11 +14,11 @@ import (
 /*
 ProjectsAddCollaborator performs requests for "projects/add-collaborator"
 
-Add user as a collaborator.
+Add project collaborator.
 
   PUT /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
 	if req == nil {
@@ -42,11 +42,11 @@ func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorRe
 /*
 ProjectsAddCollaborator performs requests for "projects/add-collaborator"
 
-Add user as a collaborator.
+Add project collaborator.
 
   PUT /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 func (c Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
 	return ProjectsAddCollaborator(ctx, req, append(c, opt...)...)
@@ -55,7 +55,7 @@ func (c Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCol
 /*
 ProjectsAddCollaboratorReq is request data for Client.ProjectsAddCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorReq struct {
 	_url        string
@@ -139,7 +139,7 @@ func (r *ProjectsAddCollaboratorReq) Rel(link RelName, resp *ProjectsAddCollabor
 /*
 ProjectsAddCollaboratorReqBody is a request body for projects/add-collaborator
 
-https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorReqBody struct {
 
@@ -158,7 +158,7 @@ type ProjectsAddCollaboratorReqBody struct {
 /*
 ProjectsAddCollaboratorResponse is a response for ProjectsAddCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorResponse struct {
 	response
@@ -1774,6 +1774,151 @@ type ProjectsGetColumnResponse struct {
 }
 
 /*
+ProjectsGetPermissionForUser performs requests for "projects/get-permission-for-user"
+
+Get project permission for a user.
+
+  GET /projects/{project_id}/collaborators/{username}/permission
+
+https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+*/
+func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissionForUserReq, opt ...RequestOption) (*ProjectsGetPermissionForUserResponse, error) {
+	if req == nil {
+		req = new(ProjectsGetPermissionForUserReq)
+	}
+	resp := &ProjectsGetPermissionForUserResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ProjectsGetPermissionForUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ProjectsGetPermissionForUser performs requests for "projects/get-permission-for-user"
+
+Get project permission for a user.
+
+  GET /projects/{project_id}/collaborators/{username}/permission
+
+https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+*/
+func (c Client) ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissionForUserReq, opt ...RequestOption) (*ProjectsGetPermissionForUserResponse, error) {
+	return ProjectsGetPermissionForUser(ctx, req, append(c, opt...)...)
+}
+
+/*
+ProjectsGetPermissionForUserReq is request data for Client.ProjectsGetPermissionForUser
+
+https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+*/
+type ProjectsGetPermissionForUserReq struct {
+	_url      string
+	ProjectId int64
+	Username  string
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r *ProjectsGetPermissionForUserReq) url() string {
+	return r._url
+}
+
+func (r *ProjectsGetPermissionForUserReq) urlPath() string {
+	return fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username)
+}
+
+func (r *ProjectsGetPermissionForUserReq) method() string {
+	return "GET"
+}
+
+func (r *ProjectsGetPermissionForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ProjectsGetPermissionForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ProjectsGetPermissionForUserReq) body() interface{} {
+	return nil
+}
+
+func (r *ProjectsGetPermissionForUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsGetPermissionForUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ProjectsGetPermissionForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ProjectsGetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ProjectsGetPermissionForUserReq) Rel(link RelName, resp *ProjectsGetPermissionForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ProjectsGetPermissionForUserResponseBody is a response body for ProjectsGetPermissionForUser
+
+https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+*/
+type ProjectsGetPermissionForUserResponseBody struct {
+	components.RepositoryCollaboratorPermission
+}
+
+/*
+ProjectsGetPermissionForUserResponse is a response for ProjectsGetPermissionForUser
+
+https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+*/
+type ProjectsGetPermissionForUserResponse struct {
+	response
+	request *ProjectsGetPermissionForUserReq
+	Data    *ProjectsGetPermissionForUserResponseBody
+}
+
+/*
 ProjectsListCards performs requests for "projects/list-cards"
 
 List project cards.
@@ -1941,11 +2086,11 @@ type ProjectsListCardsResponse struct {
 /*
 ProjectsListCollaborators performs requests for "projects/list-collaborators"
 
-List collaborators.
+List project collaborators.
 
   GET /projects/{project_id}/collaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
 	if req == nil {
@@ -1970,11 +2115,11 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 /*
 ProjectsListCollaborators performs requests for "projects/list-collaborators"
 
-List collaborators.
+List project collaborators.
 
   GET /projects/{project_id}/collaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 func (c Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
 	return ProjectsListCollaborators(ctx, req, append(c, opt...)...)
@@ -1983,7 +2128,7 @@ func (c Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsList
 /*
 ProjectsListCollaboratorsReq is request data for Client.ProjectsListCollaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsReq struct {
 	_url      string
@@ -2090,7 +2235,7 @@ func (r *ProjectsListCollaboratorsReq) Rel(link RelName, resp *ProjectsListColla
 /*
 ProjectsListCollaboratorsResponseBody is a response body for ProjectsListCollaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsResponseBody []struct {
 	components.SimpleUser
@@ -2099,7 +2244,7 @@ type ProjectsListCollaboratorsResponseBody []struct {
 /*
 ProjectsListCollaboratorsResponse is a response for ProjectsListCollaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsResponse struct {
 	response
@@ -3062,11 +3207,11 @@ type ProjectsMoveColumnResponse struct {
 /*
 ProjectsRemoveCollaborator performs requests for "projects/remove-collaborator"
 
-Remove user as a collaborator.
+Remove project collaborator.
 
   DELETE /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
 	if req == nil {
@@ -3090,11 +3235,11 @@ func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollabor
 /*
 ProjectsRemoveCollaborator performs requests for "projects/remove-collaborator"
 
-Remove user as a collaborator.
+Remove project collaborator.
 
   DELETE /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 func (c Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
 	return ProjectsRemoveCollaborator(ctx, req, append(c, opt...)...)
@@ -3103,7 +3248,7 @@ func (c Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRem
 /*
 ProjectsRemoveCollaboratorReq is request data for Client.ProjectsRemoveCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type ProjectsRemoveCollaboratorReq struct {
 	_url      string
@@ -3186,156 +3331,11 @@ func (r *ProjectsRemoveCollaboratorReq) Rel(link RelName, resp *ProjectsRemoveCo
 /*
 ProjectsRemoveCollaboratorResponse is a response for ProjectsRemoveCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type ProjectsRemoveCollaboratorResponse struct {
 	response
 	request *ProjectsRemoveCollaboratorReq
-}
-
-/*
-ProjectsReviewUserPermissionLevel performs requests for "projects/review-user-permission-level"
-
-Review a user's permission level.
-
-  GET /projects/{project_id}/collaborators/{username}/permission
-
-https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-func ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
-	if req == nil {
-		req = new(ProjectsReviewUserPermissionLevelReq)
-	}
-	resp := &ProjectsReviewUserPermissionLevelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ProjectsReviewUserPermissionLevelResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ProjectsReviewUserPermissionLevel performs requests for "projects/review-user-permission-level"
-
-Review a user's permission level.
-
-  GET /projects/{project_id}/collaborators/{username}/permission
-
-https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-func (c Client) ProjectsReviewUserPermissionLevel(ctx context.Context, req *ProjectsReviewUserPermissionLevelReq, opt ...RequestOption) (*ProjectsReviewUserPermissionLevelResponse, error) {
-	return ProjectsReviewUserPermissionLevel(ctx, req, append(c, opt...)...)
-}
-
-/*
-ProjectsReviewUserPermissionLevelReq is request data for Client.ProjectsReviewUserPermissionLevel
-
-https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-type ProjectsReviewUserPermissionLevelReq struct {
-	_url      string
-	ProjectId int64
-	Username  string
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username)
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsReviewUserPermissionLevelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsReviewUserPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ProjectsReviewUserPermissionLevelReq) Rel(link RelName, resp *ProjectsReviewUserPermissionLevelResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ProjectsReviewUserPermissionLevelResponseBody is a response body for ProjectsReviewUserPermissionLevel
-
-https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-type ProjectsReviewUserPermissionLevelResponseBody struct {
-	components.RepositoryCollaboratorPermission
-}
-
-/*
-ProjectsReviewUserPermissionLevelResponse is a response for ProjectsReviewUserPermissionLevel
-
-https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
-*/
-type ProjectsReviewUserPermissionLevelResponse struct {
-	response
-	request *ProjectsReviewUserPermissionLevelReq
-	Data    *ProjectsReviewUserPermissionLevelResponseBody
 }
 
 /*
@@ -3483,10 +3483,10 @@ type ProjectsUpdateReqBody struct {
 	   organization member belongs to a team with a higher level of access or is a
 	   collaborator with a higher level of access, their permission level is not
 	   lowered by `organization_permission`. For information on changing access for a
-	   team or collaborator, see [Add or update team
-	   project](https://developer.github.com/v3/teams/#add-or-update-team-project) or
-	   [Add user as a
-	   collaborator](https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator).
+	   team or collaborator, see [Add or update team project
+	   permissions](https://developer.github.com/v3/teams/#add-or-update-team-project-permissions)
+	   or [Add project
+	   collaborator](https://developer.github.com/v3/projects/collaborators/#add-project-collaborator).
 
 	   **Note:** Updating a project's `organization_permission` requires `admin` access
 	   to the project.

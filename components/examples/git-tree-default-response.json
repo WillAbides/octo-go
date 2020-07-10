@@ -1,0 +1,30 @@
+{
+  "sha": "9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
+  "tree": [
+    {
+      "mode": "100644",
+      "path": "file.rb",
+      "sha": "44b4fc6d56897b048c772eb4087f854f46256132",
+      "size": 30,
+      "type": "blob",
+      "url": "https://api.github.com/repos/octocat/Hello-World/git/blobs/44b4fc6d56897b048c772eb4087f854f46256132"
+    },
+    {
+      "mode": "040000",
+      "path": "subdir",
+      "sha": "f484d249c660418515fb01c2b9662073663c242e",
+      "type": "tree",
+      "url": "https://api.github.com/repos/octocat/Hello-World/git/blobs/f484d249c660418515fb01c2b9662073663c242e"
+    },
+    {
+      "mode": "100755",
+      "path": "exec_file",
+      "sha": "45b983be36b73c0788dc9cbcb76cbb80fc7bb057",
+      "size": 75,
+      "type": "blob",
+      "url": "https://api.github.com/repos/octocat/Hello-World/git/blobs/45b983be36b73c0788dc9cbcb76cbb80fc7bb057"
+    }
+  ],
+  "truncated": false,
+  "url": "https://api.github.com/repos/octocat/Hello-World/trees/9fb037999f264ba9a7fc6274d15fa3ae2ab98312"
+}

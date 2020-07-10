@@ -23,10 +23,9 @@
     "html_url": "https://github.com/organizations/github/settings/installations/1",
     "id": 1,
     "permissions": {
+      "checks": "write",
       "contents": "read",
-      "issues": "write",
-      "metadata": "read",
-      "single_file": "write"
+      "metadata": "read"
     },
     "repositories_url": "https://api.github.com/installation/repositories",
     "repository_selection": "selected",

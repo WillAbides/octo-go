@@ -12,19 +12,19 @@ import (
 )
 
 /*
-UsersAddEmails performs requests for "users/add-emails"
+UsersAddEmailForAuthenticated performs requests for "users/add-email-for-authenticated"
 
-Add email address(es).
+Add an email address for the authenticated user.
 
   POST /user/emails
 
-https://developer.github.com/v3/users/emails/#add-email-addresses
+https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-func UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
+func UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAuthenticatedReq, opt ...RequestOption) (*UsersAddEmailForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersAddEmailsReq)
+		req = new(UsersAddEmailForAuthenticatedReq)
 	}
-	resp := &UsersAddEmailsResponse{request: req}
+	resp := &UsersAddEmailForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -32,7 +32,7 @@ func UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersAddEmailsResponseBody)
+	resp.Data = new(UsersAddEmailForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -41,69 +41,69 @@ func UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestO
 }
 
 /*
-UsersAddEmails performs requests for "users/add-emails"
+UsersAddEmailForAuthenticated performs requests for "users/add-email-for-authenticated"
 
-Add email address(es).
+Add an email address for the authenticated user.
 
   POST /user/emails
 
-https://developer.github.com/v3/users/emails/#add-email-addresses
+https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-func (c Client) UsersAddEmails(ctx context.Context, req *UsersAddEmailsReq, opt ...RequestOption) (*UsersAddEmailsResponse, error) {
-	return UsersAddEmails(ctx, req, append(c, opt...)...)
+func (c Client) UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAuthenticatedReq, opt ...RequestOption) (*UsersAddEmailForAuthenticatedResponse, error) {
+	return UsersAddEmailForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersAddEmailsReq is request data for Client.UsersAddEmails
+UsersAddEmailForAuthenticatedReq is request data for Client.UsersAddEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#add-email-addresses
+https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-type UsersAddEmailsReq struct {
+type UsersAddEmailForAuthenticatedReq struct {
 	_url        string
-	RequestBody UsersAddEmailsReqBody
+	RequestBody UsersAddEmailForAuthenticatedReqBody
 }
 
-func (r *UsersAddEmailsReq) url() string {
+func (r *UsersAddEmailForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersAddEmailsReq) urlPath() string {
+func (r *UsersAddEmailForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/emails")
 }
 
-func (r *UsersAddEmailsReq) method() string {
+func (r *UsersAddEmailForAuthenticatedReq) method() string {
 	return "POST"
 }
 
-func (r *UsersAddEmailsReq) urlQuery() url.Values {
+func (r *UsersAddEmailForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersAddEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersAddEmailForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersAddEmailsReq) body() interface{} {
+func (r *UsersAddEmailForAuthenticatedReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *UsersAddEmailsReq) dataStatuses() []int {
+func (r *UsersAddEmailForAuthenticatedReq) dataStatuses() []int {
 	return []int{201}
 }
 
-func (r *UsersAddEmailsReq) validStatuses() []int {
+func (r *UsersAddEmailForAuthenticatedReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *UsersAddEmailsReq) endpointAttributes() []endpointAttribute {
+func (r *UsersAddEmailForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersAddEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersAddEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -111,7 +111,7 @@ func (r *UsersAddEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOptio
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersAddEmailsReq) Rel(link RelName, resp *UsersAddEmailsResponse) bool {
+func (r *UsersAddEmailForAuthenticatedReq) Rel(link RelName, resp *UsersAddEmailForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -121,11 +121,11 @@ func (r *UsersAddEmailsReq) Rel(link RelName, resp *UsersAddEmailsResponse) bool
 }
 
 /*
-UsersAddEmailsReqBody is a request body for users/add-emails
+UsersAddEmailForAuthenticatedReqBody is a request body for users/add-email-for-authenticated
 
-https://developer.github.com/v3/users/emails/#add-email-addresses
+https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-type UsersAddEmailsReqBody struct {
+type UsersAddEmailForAuthenticatedReqBody struct {
 
 	/*
 	   Adds one or more email addresses to your GitHub account. Must contain at least
@@ -137,23 +137,23 @@ type UsersAddEmailsReqBody struct {
 }
 
 /*
-UsersAddEmailsResponseBody is a response body for UsersAddEmails
+UsersAddEmailForAuthenticatedResponseBody is a response body for UsersAddEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#add-email-addresses
+https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-type UsersAddEmailsResponseBody []struct {
+type UsersAddEmailForAuthenticatedResponseBody []struct {
 	components.Email
 }
 
 /*
-UsersAddEmailsResponse is a response for UsersAddEmails
+UsersAddEmailForAuthenticatedResponse is a response for UsersAddEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#add-email-addresses
+https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-type UsersAddEmailsResponse struct {
+type UsersAddEmailForAuthenticatedResponse struct {
 	response
-	request *UsersAddEmailsReq
-	Data    *UsersAddEmailsResponseBody
+	request *UsersAddEmailForAuthenticatedReq
+	Data    *UsersAddEmailForAuthenticatedResponseBody
 }
 
 /*
@@ -277,11 +277,11 @@ type UsersBlockResponse struct {
 /*
 UsersCheckBlocked performs requests for "users/check-blocked"
 
-Check whether you've blocked a user.
+Check if a user is blocked by the authenticated user.
 
   GET /user/blocks/{username}
 
-https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
+https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
 	if req == nil {
@@ -309,11 +309,11 @@ func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...Re
 /*
 UsersCheckBlocked performs requests for "users/check-blocked"
 
-Check whether you've blocked a user.
+Check if a user is blocked by the authenticated user.
 
   GET /user/blocks/{username}
 
-https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
+https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 func (c Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...RequestOption) (*UsersCheckBlockedResponse, error) {
 	return UsersCheckBlocked(ctx, req, append(c, opt...)...)
@@ -322,7 +322,7 @@ func (c Client) UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq
 /*
 UsersCheckBlockedReq is request data for Client.UsersCheckBlocked
 
-https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
+https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 type UsersCheckBlockedReq struct {
 	_url     string
@@ -389,7 +389,7 @@ func (r *UsersCheckBlockedReq) Rel(link RelName, resp *UsersCheckBlockedResponse
 /*
 UsersCheckBlockedResponse is a response for UsersCheckBlocked
 
-https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
+https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 type UsersCheckBlockedResponse struct {
 	response
@@ -398,136 +398,13 @@ type UsersCheckBlockedResponse struct {
 }
 
 /*
-UsersCheckFollowing performs requests for "users/check-following"
-
-Check if you are following a user.
-
-  GET /user/following/{username}
-
-https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
-*/
-func UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
-	if req == nil {
-		req = new(UsersCheckFollowingReq)
-	}
-	resp := &UsersCheckFollowingResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.setBoolResult(&resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-UsersCheckFollowing performs requests for "users/check-following"
-
-Check if you are following a user.
-
-  GET /user/following/{username}
-
-https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
-*/
-func (c Client) UsersCheckFollowing(ctx context.Context, req *UsersCheckFollowingReq, opt ...RequestOption) (*UsersCheckFollowingResponse, error) {
-	return UsersCheckFollowing(ctx, req, append(c, opt...)...)
-}
-
-/*
-UsersCheckFollowingReq is request data for Client.UsersCheckFollowing
-
-https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
-*/
-type UsersCheckFollowingReq struct {
-	_url     string
-	Username string
-}
-
-func (r *UsersCheckFollowingReq) url() string {
-	return r._url
-}
-
-func (r *UsersCheckFollowingReq) urlPath() string {
-	return fmt.Sprintf("/user/following/%v", r.Username)
-}
-
-func (r *UsersCheckFollowingReq) method() string {
-	return "GET"
-}
-
-func (r *UsersCheckFollowingReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *UsersCheckFollowingReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *UsersCheckFollowingReq) body() interface{} {
-	return nil
-}
-
-func (r *UsersCheckFollowingReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *UsersCheckFollowingReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *UsersCheckFollowingReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *UsersCheckFollowingReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *UsersCheckFollowingReq) Rel(link RelName, resp *UsersCheckFollowingResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-UsersCheckFollowingResponse is a response for UsersCheckFollowing
-
-https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
-*/
-type UsersCheckFollowingResponse struct {
-	response
-	request *UsersCheckFollowingReq
-	Data    bool
-}
-
-/*
 UsersCheckFollowingForUser performs requests for "users/check-following-for-user"
 
-Check if one user follows another.
+Check if a user follows another user.
 
   GET /users/{username}/following/{target_user}
 
-https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
+https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
 	if req == nil {
@@ -555,11 +432,11 @@ func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingFor
 /*
 UsersCheckFollowingForUser performs requests for "users/check-following-for-user"
 
-Check if one user follows another.
+Check if a user follows another user.
 
   GET /users/{username}/following/{target_user}
 
-https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
+https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 func (c Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingForUserReq, opt ...RequestOption) (*UsersCheckFollowingForUserResponse, error) {
 	return UsersCheckFollowingForUser(ctx, req, append(c, opt...)...)
@@ -568,7 +445,7 @@ func (c Client) UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckF
 /*
 UsersCheckFollowingForUserReq is request data for Client.UsersCheckFollowingForUser
 
-https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
+https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 type UsersCheckFollowingForUserReq struct {
 	_url       string
@@ -636,7 +513,7 @@ func (r *UsersCheckFollowingForUserReq) Rel(link RelName, resp *UsersCheckFollow
 /*
 UsersCheckFollowingForUserResponse is a response for UsersCheckFollowingForUser
 
-https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
+https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 type UsersCheckFollowingForUserResponse struct {
 	response
@@ -645,19 +522,19 @@ type UsersCheckFollowingForUserResponse struct {
 }
 
 /*
-UsersCreateGpgKey performs requests for "users/create-gpg-key"
+UsersCheckPersonIsFollowedByAuthenticated performs requests for "users/check-person-is-followed-by-authenticated"
 
-Create a GPG key.
+Check if a person is followed by the authenticated user.
 
-  POST /user/gpg_keys
+  GET /user/following/{username}
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
-func UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
+func UsersCheckPersonIsFollowedByAuthenticated(ctx context.Context, req *UsersCheckPersonIsFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersCheckPersonIsFollowedByAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersCreateGpgKeyReq)
+		req = new(UsersCheckPersonIsFollowedByAuthenticatedReq)
 	}
-	resp := &UsersCreateGpgKeyResponse{request: req}
+	resp := &UsersCheckPersonIsFollowedByAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -665,8 +542,11 @@ func UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersCreateGpgKeyResponseBody)
-	err = r.decodeBody(resp.Data)
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
 	}
@@ -674,69 +554,69 @@ func UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...Re
 }
 
 /*
-UsersCreateGpgKey performs requests for "users/create-gpg-key"
+UsersCheckPersonIsFollowedByAuthenticated performs requests for "users/check-person-is-followed-by-authenticated"
 
-Create a GPG key.
+Check if a person is followed by the authenticated user.
 
-  POST /user/gpg_keys
+  GET /user/following/{username}
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
-func (c Client) UsersCreateGpgKey(ctx context.Context, req *UsersCreateGpgKeyReq, opt ...RequestOption) (*UsersCreateGpgKeyResponse, error) {
-	return UsersCreateGpgKey(ctx, req, append(c, opt...)...)
+func (c Client) UsersCheckPersonIsFollowedByAuthenticated(ctx context.Context, req *UsersCheckPersonIsFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersCheckPersonIsFollowedByAuthenticatedResponse, error) {
+	return UsersCheckPersonIsFollowedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersCreateGpgKeyReq is request data for Client.UsersCreateGpgKey
+UsersCheckPersonIsFollowedByAuthenticatedReq is request data for Client.UsersCheckPersonIsFollowedByAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
-type UsersCreateGpgKeyReq struct {
-	_url        string
-	RequestBody UsersCreateGpgKeyReqBody
+type UsersCheckPersonIsFollowedByAuthenticatedReq struct {
+	_url     string
+	Username string
 }
 
-func (r *UsersCreateGpgKeyReq) url() string {
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersCreateGpgKeyReq) urlPath() string {
-	return fmt.Sprintf("/user/gpg_keys")
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) urlPath() string {
+	return fmt.Sprintf("/user/following/%v", r.Username)
 }
 
-func (r *UsersCreateGpgKeyReq) method() string {
-	return "POST"
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) method() string {
+	return "GET"
 }
 
-func (r *UsersCreateGpgKeyReq) urlQuery() url.Values {
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersCreateGpgKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersCreateGpgKeyReq) body() interface{} {
-	return r.RequestBody
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) body() interface{} {
+	return nil
 }
 
-func (r *UsersCreateGpgKeyReq) dataStatuses() []int {
-	return []int{201}
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) dataStatuses() []int {
+	return []int{}
 }
 
-func (r *UsersCreateGpgKeyReq) validStatuses() []int {
-	return []int{201}
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) validStatuses() []int {
+	return []int{204}
 }
 
-func (r *UsersCreateGpgKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersCreateGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -744,7 +624,7 @@ func (r *UsersCreateGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOp
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCreateGpgKeyReq) Rel(link RelName, resp *UsersCreateGpgKeyResponse) bool {
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) Rel(link RelName, resp *UsersCheckPersonIsFollowedByAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -754,11 +634,131 @@ func (r *UsersCreateGpgKeyReq) Rel(link RelName, resp *UsersCreateGpgKeyResponse
 }
 
 /*
-UsersCreateGpgKeyReqBody is a request body for users/create-gpg-key
+UsersCheckPersonIsFollowedByAuthenticatedResponse is a response for UsersCheckPersonIsFollowedByAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
-type UsersCreateGpgKeyReqBody struct {
+type UsersCheckPersonIsFollowedByAuthenticatedResponse struct {
+	response
+	request *UsersCheckPersonIsFollowedByAuthenticatedReq
+	Data    bool
+}
+
+/*
+UsersCreateGpgKeyForAuthenticated performs requests for "users/create-gpg-key-for-authenticated"
+
+Create a GPG key for the authenticated user.
+
+  POST /user/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+*/
+func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgKeyForAuthenticatedReq, opt ...RequestOption) (*UsersCreateGpgKeyForAuthenticatedResponse, error) {
+	if req == nil {
+		req = new(UsersCreateGpgKeyForAuthenticatedReq)
+	}
+	resp := &UsersCreateGpgKeyForAuthenticatedResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(UsersCreateGpgKeyForAuthenticatedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+UsersCreateGpgKeyForAuthenticated performs requests for "users/create-gpg-key-for-authenticated"
+
+Create a GPG key for the authenticated user.
+
+  POST /user/gpg_keys
+
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+*/
+func (c Client) UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgKeyForAuthenticatedReq, opt ...RequestOption) (*UsersCreateGpgKeyForAuthenticatedResponse, error) {
+	return UsersCreateGpgKeyForAuthenticated(ctx, req, append(c, opt...)...)
+}
+
+/*
+UsersCreateGpgKeyForAuthenticatedReq is request data for Client.UsersCreateGpgKeyForAuthenticated
+
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+*/
+type UsersCreateGpgKeyForAuthenticatedReq struct {
+	_url        string
+	RequestBody UsersCreateGpgKeyForAuthenticatedReqBody
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) url() string {
+	return r._url
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) urlPath() string {
+	return fmt.Sprintf("/user/gpg_keys")
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) method() string {
+	return "POST"
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *UsersCreateGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *UsersCreateGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *UsersCreateGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersCreateGpgKeyForAuthenticatedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+UsersCreateGpgKeyForAuthenticatedReqBody is a request body for users/create-gpg-key-for-authenticated
+
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+*/
+type UsersCreateGpgKeyForAuthenticatedReqBody struct {
 
 	/*
 	   Your GPG key, generated in ASCII-armored format. See "[Generating a new GPG
@@ -769,39 +769,39 @@ type UsersCreateGpgKeyReqBody struct {
 }
 
 /*
-UsersCreateGpgKeyResponseBody is a response body for UsersCreateGpgKey
+UsersCreateGpgKeyForAuthenticatedResponseBody is a response body for UsersCreateGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
-type UsersCreateGpgKeyResponseBody struct {
+type UsersCreateGpgKeyForAuthenticatedResponseBody struct {
 	components.GpgKey
 }
 
 /*
-UsersCreateGpgKeyResponse is a response for UsersCreateGpgKey
+UsersCreateGpgKeyForAuthenticatedResponse is a response for UsersCreateGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
-type UsersCreateGpgKeyResponse struct {
+type UsersCreateGpgKeyForAuthenticatedResponse struct {
 	response
-	request *UsersCreateGpgKeyReq
-	Data    *UsersCreateGpgKeyResponseBody
+	request *UsersCreateGpgKeyForAuthenticatedReq
+	Data    *UsersCreateGpgKeyForAuthenticatedResponseBody
 }
 
 /*
-UsersCreatePublicKey performs requests for "users/create-public-key"
+UsersCreatePublicSshKeyForAuthenticated performs requests for "users/create-public-ssh-key-for-authenticated"
 
-Create a public key.
+Create a public SSH key for the authenticated user.
 
   POST /user/keys
 
-https://developer.github.com/v3/users/keys/#create-a-public-key
+https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-func UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
+func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCreatePublicSshKeyForAuthenticatedReq, opt ...RequestOption) (*UsersCreatePublicSshKeyForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersCreatePublicKeyReq)
+		req = new(UsersCreatePublicSshKeyForAuthenticatedReq)
 	}
-	resp := &UsersCreatePublicKeyResponse{request: req}
+	resp := &UsersCreatePublicSshKeyForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -809,7 +809,7 @@ func UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersCreatePublicKeyResponseBody)
+	resp.Data = new(UsersCreatePublicSshKeyForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -818,69 +818,69 @@ func UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt
 }
 
 /*
-UsersCreatePublicKey performs requests for "users/create-public-key"
+UsersCreatePublicSshKeyForAuthenticated performs requests for "users/create-public-ssh-key-for-authenticated"
 
-Create a public key.
+Create a public SSH key for the authenticated user.
 
   POST /user/keys
 
-https://developer.github.com/v3/users/keys/#create-a-public-key
+https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-func (c Client) UsersCreatePublicKey(ctx context.Context, req *UsersCreatePublicKeyReq, opt ...RequestOption) (*UsersCreatePublicKeyResponse, error) {
-	return UsersCreatePublicKey(ctx, req, append(c, opt...)...)
+func (c Client) UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCreatePublicSshKeyForAuthenticatedReq, opt ...RequestOption) (*UsersCreatePublicSshKeyForAuthenticatedResponse, error) {
+	return UsersCreatePublicSshKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersCreatePublicKeyReq is request data for Client.UsersCreatePublicKey
+UsersCreatePublicSshKeyForAuthenticatedReq is request data for Client.UsersCreatePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-key
+https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersCreatePublicKeyReq struct {
+type UsersCreatePublicSshKeyForAuthenticatedReq struct {
 	_url        string
-	RequestBody UsersCreatePublicKeyReqBody
+	RequestBody UsersCreatePublicSshKeyForAuthenticatedReqBody
 }
 
-func (r *UsersCreatePublicKeyReq) url() string {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersCreatePublicKeyReq) urlPath() string {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/keys")
 }
 
-func (r *UsersCreatePublicKeyReq) method() string {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) method() string {
 	return "POST"
 }
 
-func (r *UsersCreatePublicKeyReq) urlQuery() url.Values {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersCreatePublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersCreatePublicKeyReq) body() interface{} {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *UsersCreatePublicKeyReq) dataStatuses() []int {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 	return []int{201}
 }
 
-func (r *UsersCreatePublicKeyReq) validStatuses() []int {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *UsersCreatePublicKeyReq) endpointAttributes() []endpointAttribute {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersCreatePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -888,7 +888,7 @@ func (r *UsersCreatePublicKeyReq) HTTPRequest(ctx context.Context, opt ...Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCreatePublicKeyReq) Rel(link RelName, resp *UsersCreatePublicKeyResponse) bool {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersCreatePublicSshKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -898,11 +898,11 @@ func (r *UsersCreatePublicKeyReq) Rel(link RelName, resp *UsersCreatePublicKeyRe
 }
 
 /*
-UsersCreatePublicKeyReqBody is a request body for users/create-public-key
+UsersCreatePublicSshKeyForAuthenticatedReqBody is a request body for users/create-public-ssh-key-for-authenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-key
+https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersCreatePublicKeyReqBody struct {
+type UsersCreatePublicSshKeyForAuthenticatedReqBody struct {
 
 	/*
 	   The public SSH key to add to your GitHub account. See "[Generating a new SSH
@@ -920,39 +920,39 @@ type UsersCreatePublicKeyReqBody struct {
 }
 
 /*
-UsersCreatePublicKeyResponseBody is a response body for UsersCreatePublicKey
+UsersCreatePublicSshKeyForAuthenticatedResponseBody is a response body for UsersCreatePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-key
+https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersCreatePublicKeyResponseBody struct {
+type UsersCreatePublicSshKeyForAuthenticatedResponseBody struct {
 	components.ActionsPublicKey
 }
 
 /*
-UsersCreatePublicKeyResponse is a response for UsersCreatePublicKey
+UsersCreatePublicSshKeyForAuthenticatedResponse is a response for UsersCreatePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-key
+https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersCreatePublicKeyResponse struct {
+type UsersCreatePublicSshKeyForAuthenticatedResponse struct {
 	response
-	request *UsersCreatePublicKeyReq
-	Data    *UsersCreatePublicKeyResponseBody
+	request *UsersCreatePublicSshKeyForAuthenticatedReq
+	Data    *UsersCreatePublicSshKeyForAuthenticatedResponseBody
 }
 
 /*
-UsersDeleteEmails performs requests for "users/delete-emails"
+UsersDeleteEmailForAuthenticated performs requests for "users/delete-email-for-authenticated"
 
-Delete email address(es).
+Delete an email address for the authenticated user.
 
   DELETE /user/emails
 
-https://developer.github.com/v3/users/emails/#delete-email-addresses
+https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-func UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
+func UsersDeleteEmailForAuthenticated(ctx context.Context, req *UsersDeleteEmailForAuthenticatedReq, opt ...RequestOption) (*UsersDeleteEmailForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersDeleteEmailsReq)
+		req = new(UsersDeleteEmailForAuthenticatedReq)
 	}
-	resp := &UsersDeleteEmailsResponse{request: req}
+	resp := &UsersDeleteEmailForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -968,69 +968,69 @@ func UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...Re
 }
 
 /*
-UsersDeleteEmails performs requests for "users/delete-emails"
+UsersDeleteEmailForAuthenticated performs requests for "users/delete-email-for-authenticated"
 
-Delete email address(es).
+Delete an email address for the authenticated user.
 
   DELETE /user/emails
 
-https://developer.github.com/v3/users/emails/#delete-email-addresses
+https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-func (c Client) UsersDeleteEmails(ctx context.Context, req *UsersDeleteEmailsReq, opt ...RequestOption) (*UsersDeleteEmailsResponse, error) {
-	return UsersDeleteEmails(ctx, req, append(c, opt...)...)
+func (c Client) UsersDeleteEmailForAuthenticated(ctx context.Context, req *UsersDeleteEmailForAuthenticatedReq, opt ...RequestOption) (*UsersDeleteEmailForAuthenticatedResponse, error) {
+	return UsersDeleteEmailForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersDeleteEmailsReq is request data for Client.UsersDeleteEmails
+UsersDeleteEmailForAuthenticatedReq is request data for Client.UsersDeleteEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#delete-email-addresses
+https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-type UsersDeleteEmailsReq struct {
+type UsersDeleteEmailForAuthenticatedReq struct {
 	_url        string
-	RequestBody UsersDeleteEmailsReqBody
+	RequestBody UsersDeleteEmailForAuthenticatedReqBody
 }
 
-func (r *UsersDeleteEmailsReq) url() string {
+func (r *UsersDeleteEmailForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersDeleteEmailsReq) urlPath() string {
+func (r *UsersDeleteEmailForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/emails")
 }
 
-func (r *UsersDeleteEmailsReq) method() string {
+func (r *UsersDeleteEmailForAuthenticatedReq) method() string {
 	return "DELETE"
 }
 
-func (r *UsersDeleteEmailsReq) urlQuery() url.Values {
+func (r *UsersDeleteEmailForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersDeleteEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersDeleteEmailForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersDeleteEmailsReq) body() interface{} {
+func (r *UsersDeleteEmailForAuthenticatedReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *UsersDeleteEmailsReq) dataStatuses() []int {
+func (r *UsersDeleteEmailForAuthenticatedReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *UsersDeleteEmailsReq) validStatuses() []int {
+func (r *UsersDeleteEmailForAuthenticatedReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *UsersDeleteEmailsReq) endpointAttributes() []endpointAttribute {
+func (r *UsersDeleteEmailForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersDeleteEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersDeleteEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1038,7 +1038,7 @@ func (r *UsersDeleteEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOp
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersDeleteEmailsReq) Rel(link RelName, resp *UsersDeleteEmailsResponse) bool {
+func (r *UsersDeleteEmailForAuthenticatedReq) Rel(link RelName, resp *UsersDeleteEmailForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1048,11 +1048,11 @@ func (r *UsersDeleteEmailsReq) Rel(link RelName, resp *UsersDeleteEmailsResponse
 }
 
 /*
-UsersDeleteEmailsReqBody is a request body for users/delete-emails
+UsersDeleteEmailForAuthenticatedReqBody is a request body for users/delete-email-for-authenticated
 
-https://developer.github.com/v3/users/emails/#delete-email-addresses
+https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-type UsersDeleteEmailsReqBody struct {
+type UsersDeleteEmailForAuthenticatedReqBody struct {
 
 	/*
 	   Deletes one or more email addresses from your GitHub account. Must contain at
@@ -1064,29 +1064,29 @@ type UsersDeleteEmailsReqBody struct {
 }
 
 /*
-UsersDeleteEmailsResponse is a response for UsersDeleteEmails
+UsersDeleteEmailForAuthenticatedResponse is a response for UsersDeleteEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#delete-email-addresses
+https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-type UsersDeleteEmailsResponse struct {
+type UsersDeleteEmailForAuthenticatedResponse struct {
 	response
-	request *UsersDeleteEmailsReq
+	request *UsersDeleteEmailForAuthenticatedReq
 }
 
 /*
-UsersDeleteGpgKey performs requests for "users/delete-gpg-key"
+UsersDeleteGpgKeyForAuthenticated performs requests for "users/delete-gpg-key-for-authenticated"
 
-Delete a GPG key.
+Delete a GPG key for the authenticated user.
 
   DELETE /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
-func UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
+func UsersDeleteGpgKeyForAuthenticated(ctx context.Context, req *UsersDeleteGpgKeyForAuthenticatedReq, opt ...RequestOption) (*UsersDeleteGpgKeyForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersDeleteGpgKeyReq)
+		req = new(UsersDeleteGpgKeyForAuthenticatedReq)
 	}
-	resp := &UsersDeleteGpgKeyResponse{request: req}
+	resp := &UsersDeleteGpgKeyForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1102,69 +1102,69 @@ func UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...Re
 }
 
 /*
-UsersDeleteGpgKey performs requests for "users/delete-gpg-key"
+UsersDeleteGpgKeyForAuthenticated performs requests for "users/delete-gpg-key-for-authenticated"
 
-Delete a GPG key.
+Delete a GPG key for the authenticated user.
 
   DELETE /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
-func (c Client) UsersDeleteGpgKey(ctx context.Context, req *UsersDeleteGpgKeyReq, opt ...RequestOption) (*UsersDeleteGpgKeyResponse, error) {
-	return UsersDeleteGpgKey(ctx, req, append(c, opt...)...)
+func (c Client) UsersDeleteGpgKeyForAuthenticated(ctx context.Context, req *UsersDeleteGpgKeyForAuthenticatedReq, opt ...RequestOption) (*UsersDeleteGpgKeyForAuthenticatedResponse, error) {
+	return UsersDeleteGpgKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersDeleteGpgKeyReq is request data for Client.UsersDeleteGpgKey
+UsersDeleteGpgKeyForAuthenticatedReq is request data for Client.UsersDeleteGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
-type UsersDeleteGpgKeyReq struct {
+type UsersDeleteGpgKeyForAuthenticatedReq struct {
 	_url     string
 	GpgKeyId int64
 }
 
-func (r *UsersDeleteGpgKeyReq) url() string {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersDeleteGpgKeyReq) urlPath() string {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId)
 }
 
-func (r *UsersDeleteGpgKeyReq) method() string {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) method() string {
 	return "DELETE"
 }
 
-func (r *UsersDeleteGpgKeyReq) urlQuery() url.Values {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersDeleteGpgKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersDeleteGpgKeyReq) body() interface{} {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersDeleteGpgKeyReq) dataStatuses() []int {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *UsersDeleteGpgKeyReq) validStatuses() []int {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *UsersDeleteGpgKeyReq) endpointAttributes() []endpointAttribute {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersDeleteGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1172,7 +1172,7 @@ func (r *UsersDeleteGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOp
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersDeleteGpgKeyReq) Rel(link RelName, resp *UsersDeleteGpgKeyResponse) bool {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersDeleteGpgKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1182,29 +1182,29 @@ func (r *UsersDeleteGpgKeyReq) Rel(link RelName, resp *UsersDeleteGpgKeyResponse
 }
 
 /*
-UsersDeleteGpgKeyResponse is a response for UsersDeleteGpgKey
+UsersDeleteGpgKeyForAuthenticatedResponse is a response for UsersDeleteGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
-type UsersDeleteGpgKeyResponse struct {
+type UsersDeleteGpgKeyForAuthenticatedResponse struct {
 	response
-	request *UsersDeleteGpgKeyReq
+	request *UsersDeleteGpgKeyForAuthenticatedReq
 }
 
 /*
-UsersDeletePublicKey performs requests for "users/delete-public-key"
+UsersDeletePublicSshKeyForAuthenticated performs requests for "users/delete-public-ssh-key-for-authenticated"
 
-Delete a public key.
+Delete a public SSH key for the authenticated user.
 
   DELETE /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#delete-a-public-key
+https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
-func UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
+func UsersDeletePublicSshKeyForAuthenticated(ctx context.Context, req *UsersDeletePublicSshKeyForAuthenticatedReq, opt ...RequestOption) (*UsersDeletePublicSshKeyForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersDeletePublicKeyReq)
+		req = new(UsersDeletePublicSshKeyForAuthenticatedReq)
 	}
-	resp := &UsersDeletePublicKeyResponse{request: req}
+	resp := &UsersDeletePublicSshKeyForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1220,69 +1220,69 @@ func UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt
 }
 
 /*
-UsersDeletePublicKey performs requests for "users/delete-public-key"
+UsersDeletePublicSshKeyForAuthenticated performs requests for "users/delete-public-ssh-key-for-authenticated"
 
-Delete a public key.
+Delete a public SSH key for the authenticated user.
 
   DELETE /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#delete-a-public-key
+https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
-func (c Client) UsersDeletePublicKey(ctx context.Context, req *UsersDeletePublicKeyReq, opt ...RequestOption) (*UsersDeletePublicKeyResponse, error) {
-	return UsersDeletePublicKey(ctx, req, append(c, opt...)...)
+func (c Client) UsersDeletePublicSshKeyForAuthenticated(ctx context.Context, req *UsersDeletePublicSshKeyForAuthenticatedReq, opt ...RequestOption) (*UsersDeletePublicSshKeyForAuthenticatedResponse, error) {
+	return UsersDeletePublicSshKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersDeletePublicKeyReq is request data for Client.UsersDeletePublicKey
+UsersDeletePublicSshKeyForAuthenticatedReq is request data for Client.UsersDeletePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#delete-a-public-key
+https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersDeletePublicKeyReq struct {
+type UsersDeletePublicSshKeyForAuthenticatedReq struct {
 	_url  string
 	KeyId int64
 }
 
-func (r *UsersDeletePublicKeyReq) url() string {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersDeletePublicKeyReq) urlPath() string {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/keys/%v", r.KeyId)
 }
 
-func (r *UsersDeletePublicKeyReq) method() string {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) method() string {
 	return "DELETE"
 }
 
-func (r *UsersDeletePublicKeyReq) urlQuery() url.Values {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersDeletePublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersDeletePublicKeyReq) body() interface{} {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersDeletePublicKeyReq) dataStatuses() []int {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *UsersDeletePublicKeyReq) validStatuses() []int {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *UsersDeletePublicKeyReq) endpointAttributes() []endpointAttribute {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersDeletePublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1290,7 +1290,7 @@ func (r *UsersDeletePublicKeyReq) HTTPRequest(ctx context.Context, opt ...Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersDeletePublicKeyReq) Rel(link RelName, resp *UsersDeletePublicKeyResponse) bool {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersDeletePublicSshKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1300,13 +1300,13 @@ func (r *UsersDeletePublicKeyReq) Rel(link RelName, resp *UsersDeletePublicKeyRe
 }
 
 /*
-UsersDeletePublicKeyResponse is a response for UsersDeletePublicKey
+UsersDeletePublicSshKeyForAuthenticatedResponse is a response for UsersDeletePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#delete-a-public-key
+https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersDeletePublicKeyResponse struct {
+type UsersDeletePublicSshKeyForAuthenticatedResponse struct {
 	response
-	request *UsersDeletePublicKeyReq
+	request *UsersDeletePublicSshKeyForAuthenticatedReq
 }
 
 /*
@@ -1558,11 +1558,11 @@ type UsersGetAuthenticatedResponse struct {
 /*
 UsersGetByUsername performs requests for "users/get-by-username"
 
-Get a single user.
+Get a user.
 
   GET /users/{username}
 
-https://developer.github.com/v3/users/#get-a-single-user
+https://developer.github.com/v3/users/#get-a-user
 */
 func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
 	if req == nil {
@@ -1587,11 +1587,11 @@ func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...
 /*
 UsersGetByUsername performs requests for "users/get-by-username"
 
-Get a single user.
+Get a user.
 
   GET /users/{username}
 
-https://developer.github.com/v3/users/#get-a-single-user
+https://developer.github.com/v3/users/#get-a-user
 */
 func (c Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...RequestOption) (*UsersGetByUsernameResponse, error) {
 	return UsersGetByUsername(ctx, req, append(c, opt...)...)
@@ -1600,7 +1600,7 @@ func (c Client) UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameR
 /*
 UsersGetByUsernameReq is request data for Client.UsersGetByUsername
 
-https://developer.github.com/v3/users/#get-a-single-user
+https://developer.github.com/v3/users/#get-a-user
 */
 type UsersGetByUsernameReq struct {
 	_url     string
@@ -1667,7 +1667,7 @@ func (r *UsersGetByUsernameReq) Rel(link RelName, resp *UsersGetByUsernameRespon
 /*
 UsersGetByUsernameResponseBody is a response body for UsersGetByUsername
 
-https://developer.github.com/v3/users/#get-a-single-user
+https://developer.github.com/v3/users/#get-a-user
 */
 type UsersGetByUsernameResponseBody struct {
 	components.PublicUser
@@ -1676,7 +1676,7 @@ type UsersGetByUsernameResponseBody struct {
 /*
 UsersGetByUsernameResponse is a response for UsersGetByUsername
 
-https://developer.github.com/v3/users/#get-a-single-user
+https://developer.github.com/v3/users/#get-a-user
 */
 type UsersGetByUsernameResponse struct {
 	response
@@ -1687,11 +1687,11 @@ type UsersGetByUsernameResponse struct {
 /*
 UsersGetContextForUser performs requests for "users/get-context-for-user"
 
-Get contextual information about a user.
+Get contextual information for a user.
 
   GET /users/{username}/hovercard
 
-https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
 	if req == nil {
@@ -1716,11 +1716,11 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 /*
 UsersGetContextForUser performs requests for "users/get-context-for-user"
 
-Get contextual information about a user.
+Get contextual information for a user.
 
   GET /users/{username}/hovercard
 
-https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 func (c Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq, opt ...RequestOption) (*UsersGetContextForUserResponse, error) {
 	return UsersGetContextForUser(ctx, req, append(c, opt...)...)
@@ -1729,7 +1729,7 @@ func (c Client) UsersGetContextForUser(ctx context.Context, req *UsersGetContext
 /*
 UsersGetContextForUserReq is request data for Client.UsersGetContextForUser
 
-https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type UsersGetContextForUserReq struct {
 	_url     string
@@ -1815,7 +1815,7 @@ func (r *UsersGetContextForUserReq) Rel(link RelName, resp *UsersGetContextForUs
 /*
 UsersGetContextForUserResponseBody is a response body for UsersGetContextForUser
 
-https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type UsersGetContextForUserResponseBody struct {
 	components.Hovercard
@@ -1824,7 +1824,7 @@ type UsersGetContextForUserResponseBody struct {
 /*
 UsersGetContextForUserResponse is a response for UsersGetContextForUser
 
-https://developer.github.com/v3/users/#get-contextual-information-about-a-user
+https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type UsersGetContextForUserResponse struct {
 	response
@@ -1833,19 +1833,19 @@ type UsersGetContextForUserResponse struct {
 }
 
 /*
-UsersGetGpgKey performs requests for "users/get-gpg-key"
+UsersGetGpgKeyForAuthenticated performs requests for "users/get-gpg-key-for-authenticated"
 
-Get a single GPG key.
+Get a GPG key for the authenticated user.
 
   GET /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-func UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
+func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForAuthenticatedReq, opt ...RequestOption) (*UsersGetGpgKeyForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersGetGpgKeyReq)
+		req = new(UsersGetGpgKeyForAuthenticatedReq)
 	}
-	resp := &UsersGetGpgKeyResponse{request: req}
+	resp := &UsersGetGpgKeyForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1853,7 +1853,7 @@ func UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersGetGpgKeyResponseBody)
+	resp.Data = new(UsersGetGpgKeyForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -1862,69 +1862,69 @@ func UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestO
 }
 
 /*
-UsersGetGpgKey performs requests for "users/get-gpg-key"
+UsersGetGpgKeyForAuthenticated performs requests for "users/get-gpg-key-for-authenticated"
 
-Get a single GPG key.
+Get a GPG key for the authenticated user.
 
   GET /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-func (c Client) UsersGetGpgKey(ctx context.Context, req *UsersGetGpgKeyReq, opt ...RequestOption) (*UsersGetGpgKeyResponse, error) {
-	return UsersGetGpgKey(ctx, req, append(c, opt...)...)
+func (c Client) UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForAuthenticatedReq, opt ...RequestOption) (*UsersGetGpgKeyForAuthenticatedResponse, error) {
+	return UsersGetGpgKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersGetGpgKeyReq is request data for Client.UsersGetGpgKey
+UsersGetGpgKeyForAuthenticatedReq is request data for Client.UsersGetGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-type UsersGetGpgKeyReq struct {
+type UsersGetGpgKeyForAuthenticatedReq struct {
 	_url     string
 	GpgKeyId int64
 }
 
-func (r *UsersGetGpgKeyReq) url() string {
+func (r *UsersGetGpgKeyForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersGetGpgKeyReq) urlPath() string {
+func (r *UsersGetGpgKeyForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId)
 }
 
-func (r *UsersGetGpgKeyReq) method() string {
+func (r *UsersGetGpgKeyForAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r *UsersGetGpgKeyReq) urlQuery() url.Values {
+func (r *UsersGetGpgKeyForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersGetGpgKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersGetGpgKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersGetGpgKeyReq) body() interface{} {
+func (r *UsersGetGpgKeyForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersGetGpgKeyReq) dataStatuses() []int {
+func (r *UsersGetGpgKeyForAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersGetGpgKeyReq) validStatuses() []int {
+func (r *UsersGetGpgKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersGetGpgKeyReq) endpointAttributes() []endpointAttribute {
+func (r *UsersGetGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersGetGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersGetGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1932,7 +1932,7 @@ func (r *UsersGetGpgKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOptio
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetGpgKeyReq) Rel(link RelName, resp *UsersGetGpgKeyResponse) bool {
+func (r *UsersGetGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersGetGpgKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1942,39 +1942,39 @@ func (r *UsersGetGpgKeyReq) Rel(link RelName, resp *UsersGetGpgKeyResponse) bool
 }
 
 /*
-UsersGetGpgKeyResponseBody is a response body for UsersGetGpgKey
+UsersGetGpgKeyForAuthenticatedResponseBody is a response body for UsersGetGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-type UsersGetGpgKeyResponseBody struct {
+type UsersGetGpgKeyForAuthenticatedResponseBody struct {
 	components.GpgKey
 }
 
 /*
-UsersGetGpgKeyResponse is a response for UsersGetGpgKey
+UsersGetGpgKeyForAuthenticatedResponse is a response for UsersGetGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
+https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-type UsersGetGpgKeyResponse struct {
+type UsersGetGpgKeyForAuthenticatedResponse struct {
 	response
-	request *UsersGetGpgKeyReq
-	Data    *UsersGetGpgKeyResponseBody
+	request *UsersGetGpgKeyForAuthenticatedReq
+	Data    *UsersGetGpgKeyForAuthenticatedResponseBody
 }
 
 /*
-UsersGetPublicKey performs requests for "users/get-public-key"
+UsersGetPublicSshKeyForAuthenticated performs requests for "users/get-public-ssh-key-for-authenticated"
 
-Get a single public key.
+Get a public SSH key for the authenticated user.
 
   GET /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#get-a-single-public-key
+https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-func UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
+func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPublicSshKeyForAuthenticatedReq, opt ...RequestOption) (*UsersGetPublicSshKeyForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersGetPublicKeyReq)
+		req = new(UsersGetPublicSshKeyForAuthenticatedReq)
 	}
-	resp := &UsersGetPublicKeyResponse{request: req}
+	resp := &UsersGetPublicSshKeyForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1982,7 +1982,7 @@ func UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersGetPublicKeyResponseBody)
+	resp.Data = new(UsersGetPublicSshKeyForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -1991,69 +1991,69 @@ func UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...Re
 }
 
 /*
-UsersGetPublicKey performs requests for "users/get-public-key"
+UsersGetPublicSshKeyForAuthenticated performs requests for "users/get-public-ssh-key-for-authenticated"
 
-Get a single public key.
+Get a public SSH key for the authenticated user.
 
   GET /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#get-a-single-public-key
+https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-func (c Client) UsersGetPublicKey(ctx context.Context, req *UsersGetPublicKeyReq, opt ...RequestOption) (*UsersGetPublicKeyResponse, error) {
-	return UsersGetPublicKey(ctx, req, append(c, opt...)...)
+func (c Client) UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPublicSshKeyForAuthenticatedReq, opt ...RequestOption) (*UsersGetPublicSshKeyForAuthenticatedResponse, error) {
+	return UsersGetPublicSshKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersGetPublicKeyReq is request data for Client.UsersGetPublicKey
+UsersGetPublicSshKeyForAuthenticatedReq is request data for Client.UsersGetPublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#get-a-single-public-key
+https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersGetPublicKeyReq struct {
+type UsersGetPublicSshKeyForAuthenticatedReq struct {
 	_url  string
 	KeyId int64
 }
 
-func (r *UsersGetPublicKeyReq) url() string {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersGetPublicKeyReq) urlPath() string {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/keys/%v", r.KeyId)
 }
 
-func (r *UsersGetPublicKeyReq) method() string {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r *UsersGetPublicKeyReq) urlQuery() url.Values {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersGetPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersGetPublicKeyReq) body() interface{} {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersGetPublicKeyReq) dataStatuses() []int {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersGetPublicKeyReq) validStatuses() []int {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersGetPublicKeyReq) endpointAttributes() []endpointAttribute {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersGetPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2061,7 +2061,7 @@ func (r *UsersGetPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOp
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetPublicKeyReq) Rel(link RelName, resp *UsersGetPublicKeyResponse) bool {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersGetPublicSshKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2071,33 +2071,33 @@ func (r *UsersGetPublicKeyReq) Rel(link RelName, resp *UsersGetPublicKeyResponse
 }
 
 /*
-UsersGetPublicKeyResponseBody is a response body for UsersGetPublicKey
+UsersGetPublicSshKeyForAuthenticatedResponseBody is a response body for UsersGetPublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#get-a-single-public-key
+https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersGetPublicKeyResponseBody struct {
+type UsersGetPublicSshKeyForAuthenticatedResponseBody struct {
 	components.ActionsPublicKey
 }
 
 /*
-UsersGetPublicKeyResponse is a response for UsersGetPublicKey
+UsersGetPublicSshKeyForAuthenticatedResponse is a response for UsersGetPublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#get-a-single-public-key
+https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersGetPublicKeyResponse struct {
+type UsersGetPublicSshKeyForAuthenticatedResponse struct {
 	response
-	request *UsersGetPublicKeyReq
-	Data    *UsersGetPublicKeyResponseBody
+	request *UsersGetPublicSshKeyForAuthenticatedReq
+	Data    *UsersGetPublicSshKeyForAuthenticatedResponseBody
 }
 
 /*
 UsersList performs requests for "users/list"
 
-Get all users.
+List users.
 
   GET /users
 
-https://developer.github.com/v3/users/#get-all-users
+https://developer.github.com/v3/users/#list-users
 */
 func UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
 	if req == nil {
@@ -2122,11 +2122,11 @@ func UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*U
 /*
 UsersList performs requests for "users/list"
 
-Get all users.
+List users.
 
   GET /users
 
-https://developer.github.com/v3/users/#get-all-users
+https://developer.github.com/v3/users/#list-users
 */
 func (c Client) UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*UsersListResponse, error) {
 	return UsersList(ctx, req, append(c, opt...)...)
@@ -2135,7 +2135,7 @@ func (c Client) UsersList(ctx context.Context, req *UsersListReq, opt ...Request
 /*
 UsersListReq is request data for Client.UsersList
 
-https://developer.github.com/v3/users/#get-all-users
+https://developer.github.com/v3/users/#list-users
 */
 type UsersListReq struct {
 	_url string
@@ -2207,7 +2207,7 @@ func (r *UsersListReq) Rel(link RelName, resp *UsersListResponse) bool {
 /*
 UsersListResponseBody is a response body for UsersList
 
-https://developer.github.com/v3/users/#get-all-users
+https://developer.github.com/v3/users/#list-users
 */
 type UsersListResponseBody []struct {
 	components.SimpleUser
@@ -2216,7 +2216,7 @@ type UsersListResponseBody []struct {
 /*
 UsersListResponse is a response for UsersList
 
-https://developer.github.com/v3/users/#get-all-users
+https://developer.github.com/v3/users/#list-users
 */
 type UsersListResponse struct {
 	response
@@ -2225,19 +2225,19 @@ type UsersListResponse struct {
 }
 
 /*
-UsersListBlocked performs requests for "users/list-blocked"
+UsersListBlockedByAuthenticated performs requests for "users/list-blocked-by-authenticated"
 
-List blocked users.
+List users blocked by the authenticated user.
 
   GET /user/blocks
 
-https://developer.github.com/v3/users/blocking/#list-blocked-users
+https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-func UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
+func UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedByAuthenticatedReq, opt ...RequestOption) (*UsersListBlockedByAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersListBlockedReq)
+		req = new(UsersListBlockedByAuthenticatedReq)
 	}
-	resp := &UsersListBlockedResponse{request: req}
+	resp := &UsersListBlockedByAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2245,7 +2245,7 @@ func UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersListBlockedResponseBody)
+	resp.Data = new(UsersListBlockedByAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -2254,68 +2254,68 @@ func UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...Requ
 }
 
 /*
-UsersListBlocked performs requests for "users/list-blocked"
+UsersListBlockedByAuthenticated performs requests for "users/list-blocked-by-authenticated"
 
-List blocked users.
+List users blocked by the authenticated user.
 
   GET /user/blocks
 
-https://developer.github.com/v3/users/blocking/#list-blocked-users
+https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-func (c Client) UsersListBlocked(ctx context.Context, req *UsersListBlockedReq, opt ...RequestOption) (*UsersListBlockedResponse, error) {
-	return UsersListBlocked(ctx, req, append(c, opt...)...)
+func (c Client) UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedByAuthenticatedReq, opt ...RequestOption) (*UsersListBlockedByAuthenticatedResponse, error) {
+	return UsersListBlockedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersListBlockedReq is request data for Client.UsersListBlocked
+UsersListBlockedByAuthenticatedReq is request data for Client.UsersListBlockedByAuthenticated
 
-https://developer.github.com/v3/users/blocking/#list-blocked-users
+https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-type UsersListBlockedReq struct {
+type UsersListBlockedByAuthenticatedReq struct {
 	_url string
 }
 
-func (r *UsersListBlockedReq) url() string {
+func (r *UsersListBlockedByAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersListBlockedReq) urlPath() string {
+func (r *UsersListBlockedByAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/blocks")
 }
 
-func (r *UsersListBlockedReq) method() string {
+func (r *UsersListBlockedByAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r *UsersListBlockedReq) urlQuery() url.Values {
+func (r *UsersListBlockedByAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *UsersListBlockedReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersListBlockedByAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersListBlockedReq) body() interface{} {
+func (r *UsersListBlockedByAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersListBlockedReq) dataStatuses() []int {
+func (r *UsersListBlockedByAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListBlockedReq) validStatuses() []int {
+func (r *UsersListBlockedByAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListBlockedReq) endpointAttributes() []endpointAttribute {
+func (r *UsersListBlockedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersListBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersListBlockedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2323,7 +2323,7 @@ func (r *UsersListBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOpt
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListBlockedReq) Rel(link RelName, resp *UsersListBlockedResponse) bool {
+func (r *UsersListBlockedByAuthenticatedReq) Rel(link RelName, resp *UsersListBlockedByAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2333,39 +2333,39 @@ func (r *UsersListBlockedReq) Rel(link RelName, resp *UsersListBlockedResponse) 
 }
 
 /*
-UsersListBlockedResponseBody is a response body for UsersListBlocked
+UsersListBlockedByAuthenticatedResponseBody is a response body for UsersListBlockedByAuthenticated
 
-https://developer.github.com/v3/users/blocking/#list-blocked-users
+https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-type UsersListBlockedResponseBody []struct {
+type UsersListBlockedByAuthenticatedResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-UsersListBlockedResponse is a response for UsersListBlocked
+UsersListBlockedByAuthenticatedResponse is a response for UsersListBlockedByAuthenticated
 
-https://developer.github.com/v3/users/blocking/#list-blocked-users
+https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-type UsersListBlockedResponse struct {
+type UsersListBlockedByAuthenticatedResponse struct {
 	response
-	request *UsersListBlockedReq
-	Data    *UsersListBlockedResponseBody
+	request *UsersListBlockedByAuthenticatedReq
+	Data    *UsersListBlockedByAuthenticatedResponseBody
 }
 
 /*
-UsersListEmails performs requests for "users/list-emails"
+UsersListEmailsForAuthenticated performs requests for "users/list-emails-for-authenticated"
 
-List email addresses for a user.
+List email addresses for the authenticated user.
 
   GET /user/emails
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-func UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
+func UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsForAuthenticatedReq, opt ...RequestOption) (*UsersListEmailsForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersListEmailsReq)
+		req = new(UsersListEmailsForAuthenticatedReq)
 	}
-	resp := &UsersListEmailsResponse{request: req}
+	resp := &UsersListEmailsForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2373,7 +2373,7 @@ func UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersListEmailsResponseBody)
+	resp.Data = new(UsersListEmailsForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -2382,24 +2382,24 @@ func UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...Reques
 }
 
 /*
-UsersListEmails performs requests for "users/list-emails"
+UsersListEmailsForAuthenticated performs requests for "users/list-emails-for-authenticated"
 
-List email addresses for a user.
+List email addresses for the authenticated user.
 
   GET /user/emails
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-func (c Client) UsersListEmails(ctx context.Context, req *UsersListEmailsReq, opt ...RequestOption) (*UsersListEmailsResponse, error) {
-	return UsersListEmails(ctx, req, append(c, opt...)...)
+func (c Client) UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsForAuthenticatedReq, opt ...RequestOption) (*UsersListEmailsForAuthenticatedResponse, error) {
+	return UsersListEmailsForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersListEmailsReq is request data for Client.UsersListEmails
+UsersListEmailsForAuthenticatedReq is request data for Client.UsersListEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-type UsersListEmailsReq struct {
+type UsersListEmailsForAuthenticatedReq struct {
 	_url string
 
 	// Results per page (max 100)
@@ -2409,19 +2409,19 @@ type UsersListEmailsReq struct {
 	Page *int64
 }
 
-func (r *UsersListEmailsReq) url() string {
+func (r *UsersListEmailsForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersListEmailsReq) urlPath() string {
+func (r *UsersListEmailsForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/emails")
 }
 
-func (r *UsersListEmailsReq) method() string {
+func (r *UsersListEmailsForAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r *UsersListEmailsReq) urlQuery() url.Values {
+func (r *UsersListEmailsForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2432,30 +2432,30 @@ func (r *UsersListEmailsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *UsersListEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersListEmailsForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersListEmailsReq) body() interface{} {
+func (r *UsersListEmailsForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersListEmailsReq) dataStatuses() []int {
+func (r *UsersListEmailsForAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListEmailsReq) validStatuses() []int {
+func (r *UsersListEmailsForAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListEmailsReq) endpointAttributes() []endpointAttribute {
+func (r *UsersListEmailsForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersListEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersListEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2463,7 +2463,7 @@ func (r *UsersListEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOpti
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListEmailsReq) Rel(link RelName, resp *UsersListEmailsResponse) bool {
+func (r *UsersListEmailsForAuthenticatedReq) Rel(link RelName, resp *UsersListEmailsForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2473,33 +2473,33 @@ func (r *UsersListEmailsReq) Rel(link RelName, resp *UsersListEmailsResponse) bo
 }
 
 /*
-UsersListEmailsResponseBody is a response body for UsersListEmails
+UsersListEmailsForAuthenticatedResponseBody is a response body for UsersListEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-type UsersListEmailsResponseBody []struct {
+type UsersListEmailsForAuthenticatedResponseBody []struct {
 	components.Email
 }
 
 /*
-UsersListEmailsResponse is a response for UsersListEmails
+UsersListEmailsForAuthenticatedResponse is a response for UsersListEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-type UsersListEmailsResponse struct {
+type UsersListEmailsForAuthenticatedResponse struct {
 	response
-	request *UsersListEmailsReq
-	Data    *UsersListEmailsResponseBody
+	request *UsersListEmailsForAuthenticatedReq
+	Data    *UsersListEmailsForAuthenticatedResponseBody
 }
 
 /*
 UsersListFollowedByAuthenticated performs requests for "users/list-followed-by-authenticated"
 
-List users followed by the authenticated user.
+List the people the authenticated user follows.
 
   GET /user/following
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
 	if req == nil {
@@ -2524,11 +2524,11 @@ func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowe
 /*
 UsersListFollowedByAuthenticated performs requests for "users/list-followed-by-authenticated"
 
-List users followed by the authenticated user.
+List the people the authenticated user follows.
 
   GET /user/following
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 func (c Client) UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowedByAuthenticatedReq, opt ...RequestOption) (*UsersListFollowedByAuthenticatedResponse, error) {
 	return UsersListFollowedByAuthenticated(ctx, req, append(c, opt...)...)
@@ -2537,7 +2537,7 @@ func (c Client) UsersListFollowedByAuthenticated(ctx context.Context, req *Users
 /*
 UsersListFollowedByAuthenticatedReq is request data for Client.UsersListFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 type UsersListFollowedByAuthenticatedReq struct {
 	_url string
@@ -2615,7 +2615,7 @@ func (r *UsersListFollowedByAuthenticatedReq) Rel(link RelName, resp *UsersListF
 /*
 UsersListFollowedByAuthenticatedResponseBody is a response body for UsersListFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 type UsersListFollowedByAuthenticatedResponseBody []struct {
 	components.SimpleUser
@@ -2624,7 +2624,7 @@ type UsersListFollowedByAuthenticatedResponseBody []struct {
 /*
 UsersListFollowedByAuthenticatedResponse is a response for UsersListFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 type UsersListFollowedByAuthenticatedResponse struct {
 	response
@@ -2916,11 +2916,11 @@ type UsersListFollowersForUserResponse struct {
 /*
 UsersListFollowingForUser performs requests for "users/list-following-for-user"
 
-List users followed by another user.
+List the people a user follows.
 
   GET /users/{username}/following
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
 	if req == nil {
@@ -2945,11 +2945,11 @@ func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUs
 /*
 UsersListFollowingForUser performs requests for "users/list-following-for-user"
 
-List users followed by another user.
+List the people a user follows.
 
   GET /users/{username}/following
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 func (c Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUserReq, opt ...RequestOption) (*UsersListFollowingForUserResponse, error) {
 	return UsersListFollowingForUser(ctx, req, append(c, opt...)...)
@@ -2958,7 +2958,7 @@ func (c Client) UsersListFollowingForUser(ctx context.Context, req *UsersListFol
 /*
 UsersListFollowingForUserReq is request data for Client.UsersListFollowingForUser
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type UsersListFollowingForUserReq struct {
 	_url     string
@@ -3037,7 +3037,7 @@ func (r *UsersListFollowingForUserReq) Rel(link RelName, resp *UsersListFollowin
 /*
 UsersListFollowingForUserResponseBody is a response body for UsersListFollowingForUser
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type UsersListFollowingForUserResponseBody []struct {
 	components.SimpleUser
@@ -3046,7 +3046,7 @@ type UsersListFollowingForUserResponseBody []struct {
 /*
 UsersListFollowingForUserResponse is a response for UsersListFollowingForUser
 
-https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
+https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type UsersListFollowingForUserResponse struct {
 	response
@@ -3055,19 +3055,19 @@ type UsersListFollowingForUserResponse struct {
 }
 
 /*
-UsersListGpgKeys performs requests for "users/list-gpg-keys"
+UsersListGpgKeysForAuthenticated performs requests for "users/list-gpg-keys-for-authenticated"
 
-List your GPG keys.
+List GPG keys for the authenticated user.
 
   GET /user/gpg_keys
 
-https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-func UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
+func UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeysForAuthenticatedReq, opt ...RequestOption) (*UsersListGpgKeysForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersListGpgKeysReq)
+		req = new(UsersListGpgKeysForAuthenticatedReq)
 	}
-	resp := &UsersListGpgKeysResponse{request: req}
+	resp := &UsersListGpgKeysForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3075,7 +3075,7 @@ func UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersListGpgKeysResponseBody)
+	resp.Data = new(UsersListGpgKeysForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3084,24 +3084,24 @@ func UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...Requ
 }
 
 /*
-UsersListGpgKeys performs requests for "users/list-gpg-keys"
+UsersListGpgKeysForAuthenticated performs requests for "users/list-gpg-keys-for-authenticated"
 
-List your GPG keys.
+List GPG keys for the authenticated user.
 
   GET /user/gpg_keys
 
-https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-func (c Client) UsersListGpgKeys(ctx context.Context, req *UsersListGpgKeysReq, opt ...RequestOption) (*UsersListGpgKeysResponse, error) {
-	return UsersListGpgKeys(ctx, req, append(c, opt...)...)
+func (c Client) UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeysForAuthenticatedReq, opt ...RequestOption) (*UsersListGpgKeysForAuthenticatedResponse, error) {
+	return UsersListGpgKeysForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersListGpgKeysReq is request data for Client.UsersListGpgKeys
+UsersListGpgKeysForAuthenticatedReq is request data for Client.UsersListGpgKeysForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-type UsersListGpgKeysReq struct {
+type UsersListGpgKeysForAuthenticatedReq struct {
 	_url string
 
 	// Results per page (max 100)
@@ -3111,19 +3111,19 @@ type UsersListGpgKeysReq struct {
 	Page *int64
 }
 
-func (r *UsersListGpgKeysReq) url() string {
+func (r *UsersListGpgKeysForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersListGpgKeysReq) urlPath() string {
+func (r *UsersListGpgKeysForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/gpg_keys")
 }
 
-func (r *UsersListGpgKeysReq) method() string {
+func (r *UsersListGpgKeysForAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r *UsersListGpgKeysReq) urlQuery() url.Values {
+func (r *UsersListGpgKeysForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3134,30 +3134,30 @@ func (r *UsersListGpgKeysReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *UsersListGpgKeysReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersListGpgKeysForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersListGpgKeysReq) body() interface{} {
+func (r *UsersListGpgKeysForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersListGpgKeysReq) dataStatuses() []int {
+func (r *UsersListGpgKeysForAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListGpgKeysReq) validStatuses() []int {
+func (r *UsersListGpgKeysForAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListGpgKeysReq) endpointAttributes() []endpointAttribute {
+func (r *UsersListGpgKeysForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersListGpgKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersListGpgKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3165,7 +3165,7 @@ func (r *UsersListGpgKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOpt
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListGpgKeysReq) Rel(link RelName, resp *UsersListGpgKeysResponse) bool {
+func (r *UsersListGpgKeysForAuthenticatedReq) Rel(link RelName, resp *UsersListGpgKeysForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3175,23 +3175,23 @@ func (r *UsersListGpgKeysReq) Rel(link RelName, resp *UsersListGpgKeysResponse) 
 }
 
 /*
-UsersListGpgKeysResponseBody is a response body for UsersListGpgKeys
+UsersListGpgKeysForAuthenticatedResponseBody is a response body for UsersListGpgKeysForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-type UsersListGpgKeysResponseBody []struct {
+type UsersListGpgKeysForAuthenticatedResponseBody []struct {
 	components.GpgKey
 }
 
 /*
-UsersListGpgKeysResponse is a response for UsersListGpgKeys
+UsersListGpgKeysForAuthenticatedResponse is a response for UsersListGpgKeysForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
+https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-type UsersListGpgKeysResponse struct {
+type UsersListGpgKeysForAuthenticatedResponse struct {
 	response
-	request *UsersListGpgKeysReq
-	Data    *UsersListGpgKeysResponseBody
+	request *UsersListGpgKeysForAuthenticatedReq
+	Data    *UsersListGpgKeysForAuthenticatedResponseBody
 }
 
 /*
@@ -3336,19 +3336,19 @@ type UsersListGpgKeysForUserResponse struct {
 }
 
 /*
-UsersListPublicEmails performs requests for "users/list-public-emails"
+UsersListPublicEmailsForAuthenticated performs requests for "users/list-public-emails-for-authenticated"
 
-List public email addresses for a user.
+List public email addresses for the authenticated user.
 
   GET /user/public_emails
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-func UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
+func UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPublicEmailsForAuthenticatedReq, opt ...RequestOption) (*UsersListPublicEmailsForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersListPublicEmailsReq)
+		req = new(UsersListPublicEmailsForAuthenticatedReq)
 	}
-	resp := &UsersListPublicEmailsResponse{request: req}
+	resp := &UsersListPublicEmailsForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3356,7 +3356,7 @@ func UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersListPublicEmailsResponseBody)
+	resp.Data = new(UsersListPublicEmailsForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3365,24 +3365,24 @@ func UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, o
 }
 
 /*
-UsersListPublicEmails performs requests for "users/list-public-emails"
+UsersListPublicEmailsForAuthenticated performs requests for "users/list-public-emails-for-authenticated"
 
-List public email addresses for a user.
+List public email addresses for the authenticated user.
 
   GET /user/public_emails
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-func (c Client) UsersListPublicEmails(ctx context.Context, req *UsersListPublicEmailsReq, opt ...RequestOption) (*UsersListPublicEmailsResponse, error) {
-	return UsersListPublicEmails(ctx, req, append(c, opt...)...)
+func (c Client) UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPublicEmailsForAuthenticatedReq, opt ...RequestOption) (*UsersListPublicEmailsForAuthenticatedResponse, error) {
+	return UsersListPublicEmailsForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersListPublicEmailsReq is request data for Client.UsersListPublicEmails
+UsersListPublicEmailsForAuthenticatedReq is request data for Client.UsersListPublicEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-type UsersListPublicEmailsReq struct {
+type UsersListPublicEmailsForAuthenticatedReq struct {
 	_url string
 
 	// Results per page (max 100)
@@ -3392,19 +3392,19 @@ type UsersListPublicEmailsReq struct {
 	Page *int64
 }
 
-func (r *UsersListPublicEmailsReq) url() string {
+func (r *UsersListPublicEmailsForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersListPublicEmailsReq) urlPath() string {
+func (r *UsersListPublicEmailsForAuthenticatedReq) urlPath() string {
 	return fmt.Sprintf("/user/public_emails")
 }
 
-func (r *UsersListPublicEmailsReq) method() string {
+func (r *UsersListPublicEmailsForAuthenticatedReq) method() string {
 	return "GET"
 }
 
-func (r *UsersListPublicEmailsReq) urlQuery() url.Values {
+func (r *UsersListPublicEmailsForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3415,30 +3415,30 @@ func (r *UsersListPublicEmailsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *UsersListPublicEmailsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersListPublicEmailsForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersListPublicEmailsReq) body() interface{} {
+func (r *UsersListPublicEmailsForAuthenticatedReq) body() interface{} {
 	return nil
 }
 
-func (r *UsersListPublicEmailsReq) dataStatuses() []int {
+func (r *UsersListPublicEmailsForAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListPublicEmailsReq) validStatuses() []int {
+func (r *UsersListPublicEmailsForAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListPublicEmailsReq) endpointAttributes() []endpointAttribute {
+func (r *UsersListPublicEmailsForAuthenticatedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersListPublicEmailsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersListPublicEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3446,7 +3446,7 @@ func (r *UsersListPublicEmailsReq) HTTPRequest(ctx context.Context, opt ...Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListPublicEmailsReq) Rel(link RelName, resp *UsersListPublicEmailsResponse) bool {
+func (r *UsersListPublicEmailsForAuthenticatedReq) Rel(link RelName, resp *UsersListPublicEmailsForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3456,163 +3456,23 @@ func (r *UsersListPublicEmailsReq) Rel(link RelName, resp *UsersListPublicEmails
 }
 
 /*
-UsersListPublicEmailsResponseBody is a response body for UsersListPublicEmails
+UsersListPublicEmailsForAuthenticatedResponseBody is a response body for UsersListPublicEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-type UsersListPublicEmailsResponseBody []struct {
+type UsersListPublicEmailsForAuthenticatedResponseBody []struct {
 	components.Email
 }
 
 /*
-UsersListPublicEmailsResponse is a response for UsersListPublicEmails
+UsersListPublicEmailsForAuthenticatedResponse is a response for UsersListPublicEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-type UsersListPublicEmailsResponse struct {
+type UsersListPublicEmailsForAuthenticatedResponse struct {
 	response
-	request *UsersListPublicEmailsReq
-	Data    *UsersListPublicEmailsResponseBody
-}
-
-/*
-UsersListPublicKeys performs requests for "users/list-public-keys"
-
-List your public keys.
-
-  GET /user/keys
-
-https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-func UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
-	if req == nil {
-		req = new(UsersListPublicKeysReq)
-	}
-	resp := &UsersListPublicKeysResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(UsersListPublicKeysResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-UsersListPublicKeys performs requests for "users/list-public-keys"
-
-List your public keys.
-
-  GET /user/keys
-
-https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-func (c Client) UsersListPublicKeys(ctx context.Context, req *UsersListPublicKeysReq, opt ...RequestOption) (*UsersListPublicKeysResponse, error) {
-	return UsersListPublicKeys(ctx, req, append(c, opt...)...)
-}
-
-/*
-UsersListPublicKeysReq is request data for Client.UsersListPublicKeys
-
-https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-type UsersListPublicKeysReq struct {
-	_url string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *UsersListPublicKeysReq) url() string {
-	return r._url
-}
-
-func (r *UsersListPublicKeysReq) urlPath() string {
-	return fmt.Sprintf("/user/keys")
-}
-
-func (r *UsersListPublicKeysReq) method() string {
-	return "GET"
-}
-
-func (r *UsersListPublicKeysReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *UsersListPublicKeysReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *UsersListPublicKeysReq) body() interface{} {
-	return nil
-}
-
-func (r *UsersListPublicKeysReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *UsersListPublicKeysReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *UsersListPublicKeysReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *UsersListPublicKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *UsersListPublicKeysReq) Rel(link RelName, resp *UsersListPublicKeysResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-UsersListPublicKeysResponseBody is a response body for UsersListPublicKeys
-
-https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-type UsersListPublicKeysResponseBody []struct {
-	components.ActionsPublicKey
-}
-
-/*
-UsersListPublicKeysResponse is a response for UsersListPublicKeys
-
-https://developer.github.com/v3/users/keys/#list-your-public-keys
-*/
-type UsersListPublicKeysResponse struct {
-	response
-	request *UsersListPublicKeysReq
-	Data    *UsersListPublicKeysResponseBody
+	request *UsersListPublicEmailsForAuthenticatedReq
+	Data    *UsersListPublicEmailsForAuthenticatedResponseBody
 }
 
 /*
@@ -3757,19 +3617,19 @@ type UsersListPublicKeysForUserResponse struct {
 }
 
 /*
-UsersTogglePrimaryEmailVisibility performs requests for "users/toggle-primary-email-visibility"
+UsersListPublicSshKeysForAuthenticated performs requests for "users/list-public-ssh-keys-for-authenticated"
 
-Toggle primary email visibility.
+List public SSH keys for the authenticated user.
 
-  PATCH /user/email/visibility
+  GET /user/keys
 
-https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-func UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
+func UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListPublicSshKeysForAuthenticatedReq, opt ...RequestOption) (*UsersListPublicSshKeysForAuthenticatedResponse, error) {
 	if req == nil {
-		req = new(UsersTogglePrimaryEmailVisibilityReq)
+		req = new(UsersListPublicSshKeysForAuthenticatedReq)
 	}
-	resp := &UsersTogglePrimaryEmailVisibilityResponse{request: req}
+	resp := &UsersListPublicSshKeysForAuthenticatedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3777,7 +3637,7 @@ func UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrim
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(UsersTogglePrimaryEmailVisibilityResponseBody)
+	resp.Data = new(UsersListPublicSshKeysForAuthenticatedResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3786,69 +3646,80 @@ func UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrim
 }
 
 /*
-UsersTogglePrimaryEmailVisibility performs requests for "users/toggle-primary-email-visibility"
+UsersListPublicSshKeysForAuthenticated performs requests for "users/list-public-ssh-keys-for-authenticated"
 
-Toggle primary email visibility.
+List public SSH keys for the authenticated user.
 
-  PATCH /user/email/visibility
+  GET /user/keys
 
-https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-func (c Client) UsersTogglePrimaryEmailVisibility(ctx context.Context, req *UsersTogglePrimaryEmailVisibilityReq, opt ...RequestOption) (*UsersTogglePrimaryEmailVisibilityResponse, error) {
-	return UsersTogglePrimaryEmailVisibility(ctx, req, append(c, opt...)...)
+func (c Client) UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListPublicSshKeysForAuthenticatedReq, opt ...RequestOption) (*UsersListPublicSshKeysForAuthenticatedResponse, error) {
+	return UsersListPublicSshKeysForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
 /*
-UsersTogglePrimaryEmailVisibilityReq is request data for Client.UsersTogglePrimaryEmailVisibility
+UsersListPublicSshKeysForAuthenticatedReq is request data for Client.UsersListPublicSshKeysForAuthenticated
 
-https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-type UsersTogglePrimaryEmailVisibilityReq struct {
-	_url        string
-	RequestBody UsersTogglePrimaryEmailVisibilityReqBody
+type UsersListPublicSshKeysForAuthenticatedReq struct {
+	_url string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) url() string {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) url() string {
 	return r._url
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) urlPath() string {
-	return fmt.Sprintf("/user/email/visibility")
+func (r *UsersListPublicSshKeysForAuthenticatedReq) urlPath() string {
+	return fmt.Sprintf("/user/keys")
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) method() string {
-	return "PATCH"
+func (r *UsersListPublicSshKeysForAuthenticatedReq) method() string {
+	return "GET"
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) urlQuery() url.Values {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
 	return query
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) body() interface{} {
-	return r.RequestBody
+func (r *UsersListPublicSshKeysForAuthenticatedReq) body() interface{} {
+	return nil
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) dataStatuses() []int {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) validStatuses() []int {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersTogglePrimaryEmailVisibilityReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
+func (r *UsersListPublicSshKeysForAuthenticatedReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersTogglePrimaryEmailVisibilityReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3856,7 +3727,7 @@ func (r *UsersTogglePrimaryEmailVisibilityReq) HTTPRequest(ctx context.Context, 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersTogglePrimaryEmailVisibilityReq) Rel(link RelName, resp *UsersTogglePrimaryEmailVisibilityResponse) bool {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) Rel(link RelName, resp *UsersListPublicSshKeysForAuthenticatedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3866,11 +3737,140 @@ func (r *UsersTogglePrimaryEmailVisibilityReq) Rel(link RelName, resp *UsersTogg
 }
 
 /*
-UsersTogglePrimaryEmailVisibilityReqBody is a request body for users/toggle-primary-email-visibility
+UsersListPublicSshKeysForAuthenticatedResponseBody is a response body for UsersListPublicSshKeysForAuthenticated
 
-https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-type UsersTogglePrimaryEmailVisibilityReqBody struct {
+type UsersListPublicSshKeysForAuthenticatedResponseBody []struct {
+	components.ActionsPublicKey
+}
+
+/*
+UsersListPublicSshKeysForAuthenticatedResponse is a response for UsersListPublicSshKeysForAuthenticated
+
+https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
+*/
+type UsersListPublicSshKeysForAuthenticatedResponse struct {
+	response
+	request *UsersListPublicSshKeysForAuthenticatedReq
+	Data    *UsersListPublicSshKeysForAuthenticatedResponseBody
+}
+
+/*
+UsersSetPrimaryEmailVisibilityForAuthenticated performs requests for "users/set-primary-email-visibility-for-authenticated"
+
+Set primary email visibility for the authenticated user.
+
+  PATCH /user/email/visibility
+
+https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+*/
+func UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *UsersSetPrimaryEmailVisibilityForAuthenticatedReq, opt ...RequestOption) (*UsersSetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
+	if req == nil {
+		req = new(UsersSetPrimaryEmailVisibilityForAuthenticatedReq)
+	}
+	resp := &UsersSetPrimaryEmailVisibilityForAuthenticatedResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+UsersSetPrimaryEmailVisibilityForAuthenticated performs requests for "users/set-primary-email-visibility-for-authenticated"
+
+Set primary email visibility for the authenticated user.
+
+  PATCH /user/email/visibility
+
+https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+*/
+func (c Client) UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *UsersSetPrimaryEmailVisibilityForAuthenticatedReq, opt ...RequestOption) (*UsersSetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
+	return UsersSetPrimaryEmailVisibilityForAuthenticated(ctx, req, append(c, opt...)...)
+}
+
+/*
+UsersSetPrimaryEmailVisibilityForAuthenticatedReq is request data for Client.UsersSetPrimaryEmailVisibilityForAuthenticated
+
+https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+*/
+type UsersSetPrimaryEmailVisibilityForAuthenticatedReq struct {
+	_url        string
+	RequestBody UsersSetPrimaryEmailVisibilityForAuthenticatedReqBody
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) url() string {
+	return r._url
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) urlPath() string {
+	return fmt.Sprintf("/user/email/visibility")
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) method() string {
+	return "PATCH"
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) Rel(link RelName, resp *UsersSetPrimaryEmailVisibilityForAuthenticatedResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+UsersSetPrimaryEmailVisibilityForAuthenticatedReqBody is a request body for users/set-primary-email-visibility-for-authenticated
+
+https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+*/
+type UsersSetPrimaryEmailVisibilityForAuthenticatedReqBody struct {
 
 	// Specify the _primary_ email address that needs a visibility change.
 	Email *string `json:"email"`
@@ -3883,23 +3883,23 @@ type UsersTogglePrimaryEmailVisibilityReqBody struct {
 }
 
 /*
-UsersTogglePrimaryEmailVisibilityResponseBody is a response body for UsersTogglePrimaryEmailVisibility
+UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody is a response body for UsersSetPrimaryEmailVisibilityForAuthenticated
 
-https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
-type UsersTogglePrimaryEmailVisibilityResponseBody []struct {
+type UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody []struct {
 	components.Email
 }
 
 /*
-UsersTogglePrimaryEmailVisibilityResponse is a response for UsersTogglePrimaryEmailVisibility
+UsersSetPrimaryEmailVisibilityForAuthenticatedResponse is a response for UsersSetPrimaryEmailVisibilityForAuthenticated
 
-https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
+https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
-type UsersTogglePrimaryEmailVisibilityResponse struct {
+type UsersSetPrimaryEmailVisibilityForAuthenticatedResponse struct {
 	response
-	request *UsersTogglePrimaryEmailVisibilityReq
-	Data    *UsersTogglePrimaryEmailVisibilityResponseBody
+	request *UsersSetPrimaryEmailVisibilityForAuthenticatedReq
+	Data    *UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody
 }
 
 /*
@@ -4274,6 +4274,9 @@ type UsersUpdateAuthenticatedReqBody struct {
 
 	// The new name of the user.
 	Name *string `json:"name,omitempty"`
+
+	// The new Twitter username of the user.
+	TwitterUsername *string `json:"twitter_username,omitempty"`
 }
 
 /*

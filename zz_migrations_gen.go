@@ -781,19 +781,19 @@ type MigrationsGetCommitAuthorsResponse struct {
 }
 
 /*
-MigrationsGetImportProgress performs requests for "migrations/get-import-progress"
+MigrationsGetImportStatus performs requests for "migrations/get-import-status"
 
-Get import progress.
+Get an import status.
 
   GET /repos/{owner}/{repo}/import
 
-https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-func MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportProgressReq, opt ...RequestOption) (*MigrationsGetImportProgressResponse, error) {
+func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStatusReq, opt ...RequestOption) (*MigrationsGetImportStatusResponse, error) {
 	if req == nil {
-		req = new(MigrationsGetImportProgressReq)
+		req = new(MigrationsGetImportStatusReq)
 	}
-	resp := &MigrationsGetImportProgressResponse{request: req}
+	resp := &MigrationsGetImportStatusResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -801,7 +801,7 @@ func MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportPr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsGetImportProgressResponseBody)
+	resp.Data = new(MigrationsGetImportStatusResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -810,70 +810,70 @@ func MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportPr
 }
 
 /*
-MigrationsGetImportProgress performs requests for "migrations/get-import-progress"
+MigrationsGetImportStatus performs requests for "migrations/get-import-status"
 
-Get import progress.
+Get an import status.
 
   GET /repos/{owner}/{repo}/import
 
-https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-func (c Client) MigrationsGetImportProgress(ctx context.Context, req *MigrationsGetImportProgressReq, opt ...RequestOption) (*MigrationsGetImportProgressResponse, error) {
-	return MigrationsGetImportProgress(ctx, req, append(c, opt...)...)
+func (c Client) MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStatusReq, opt ...RequestOption) (*MigrationsGetImportStatusResponse, error) {
+	return MigrationsGetImportStatus(ctx, req, append(c, opt...)...)
 }
 
 /*
-MigrationsGetImportProgressReq is request data for Client.MigrationsGetImportProgress
+MigrationsGetImportStatusReq is request data for Client.MigrationsGetImportStatus
 
-https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-type MigrationsGetImportProgressReq struct {
+type MigrationsGetImportStatusReq struct {
 	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *MigrationsGetImportProgressReq) url() string {
+func (r *MigrationsGetImportStatusReq) url() string {
 	return r._url
 }
 
-func (r *MigrationsGetImportProgressReq) urlPath() string {
+func (r *MigrationsGetImportStatusReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
 }
 
-func (r *MigrationsGetImportProgressReq) method() string {
+func (r *MigrationsGetImportStatusReq) method() string {
 	return "GET"
 }
 
-func (r *MigrationsGetImportProgressReq) urlQuery() url.Values {
+func (r *MigrationsGetImportStatusReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *MigrationsGetImportProgressReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *MigrationsGetImportStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *MigrationsGetImportProgressReq) body() interface{} {
+func (r *MigrationsGetImportStatusReq) body() interface{} {
 	return nil
 }
 
-func (r *MigrationsGetImportProgressReq) dataStatuses() []int {
+func (r *MigrationsGetImportStatusReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetImportProgressReq) validStatuses() []int {
+func (r *MigrationsGetImportStatusReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetImportProgressReq) endpointAttributes() []endpointAttribute {
+func (r *MigrationsGetImportStatusReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *MigrationsGetImportStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -881,7 +881,7 @@ func (r *MigrationsGetImportProgressReq) HTTPRequest(ctx context.Context, opt ..
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetImportProgressReq) Rel(link RelName, resp *MigrationsGetImportProgressResponse) bool {
+func (r *MigrationsGetImportStatusReq) Rel(link RelName, resp *MigrationsGetImportStatusResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -891,23 +891,23 @@ func (r *MigrationsGetImportProgressReq) Rel(link RelName, resp *MigrationsGetIm
 }
 
 /*
-MigrationsGetImportProgressResponseBody is a response body for MigrationsGetImportProgress
+MigrationsGetImportStatusResponseBody is a response body for MigrationsGetImportStatus
 
-https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-type MigrationsGetImportProgressResponseBody struct {
+type MigrationsGetImportStatusResponseBody struct {
 	components.Import
 }
 
 /*
-MigrationsGetImportProgressResponse is a response for MigrationsGetImportProgress
+MigrationsGetImportStatusResponse is a response for MigrationsGetImportStatus
 
-https://developer.github.com/v3/migrations/source_imports/#get-import-progress
+https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-type MigrationsGetImportProgressResponse struct {
+type MigrationsGetImportStatusResponse struct {
 	response
-	request *MigrationsGetImportProgressReq
-	Data    *MigrationsGetImportProgressResponseBody
+	request *MigrationsGetImportStatusReq
+	Data    *MigrationsGetImportStatusResponseBody
 }
 
 /*
@@ -1043,11 +1043,11 @@ type MigrationsGetLargeFilesResponse struct {
 /*
 MigrationsGetStatusForAuthenticatedUser performs requests for "migrations/get-status-for-authenticated-user"
 
-Get the status of a user migration.
+Get a user migration status.
 
   GET /user/migrations/{migration_id}
 
-https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -1072,11 +1072,11 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 /*
 MigrationsGetStatusForAuthenticatedUser performs requests for "migrations/get-status-for-authenticated-user"
 
-Get the status of a user migration.
+Get a user migration status.
 
   GET /user/migrations/{migration_id}
 
-https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 func (c Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
 	return MigrationsGetStatusForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -1085,7 +1085,7 @@ func (c Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req
 /*
 MigrationsGetStatusForAuthenticatedUserReq is request data for Client.MigrationsGetStatusForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type MigrationsGetStatusForAuthenticatedUserReq struct {
 	_url        string
@@ -1161,7 +1161,7 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) Rel(link RelName, resp *Mig
 /*
 MigrationsGetStatusForAuthenticatedUserResponseBody is a response body for MigrationsGetStatusForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type MigrationsGetStatusForAuthenticatedUserResponseBody struct {
 	components.Migration
@@ -1170,7 +1170,7 @@ type MigrationsGetStatusForAuthenticatedUserResponseBody struct {
 /*
 MigrationsGetStatusForAuthenticatedUserResponse is a response for MigrationsGetStatusForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
+https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type MigrationsGetStatusForAuthenticatedUserResponse struct {
 	response
@@ -1181,11 +1181,11 @@ type MigrationsGetStatusForAuthenticatedUserResponse struct {
 /*
 MigrationsGetStatusForOrg performs requests for "migrations/get-status-for-org"
 
-Get the status of an organization migration.
+Get an organization migration status.
 
   GET /orgs/{org}/migrations/{migration_id}
 
-https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
 	if req == nil {
@@ -1210,11 +1210,11 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 /*
 MigrationsGetStatusForOrg performs requests for "migrations/get-status-for-org"
 
-Get the status of an organization migration.
+Get an organization migration status.
 
   GET /orgs/{org}/migrations/{migration_id}
 
-https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 func (c Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
 	return MigrationsGetStatusForOrg(ctx, req, append(c, opt...)...)
@@ -1223,7 +1223,7 @@ func (c Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGe
 /*
 MigrationsGetStatusForOrgReq is request data for Client.MigrationsGetStatusForOrg
 
-https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type MigrationsGetStatusForOrgReq struct {
 	_url        string
@@ -1300,7 +1300,7 @@ func (r *MigrationsGetStatusForOrgReq) Rel(link RelName, resp *MigrationsGetStat
 /*
 MigrationsGetStatusForOrgResponseBody is a response body for MigrationsGetStatusForOrg
 
-https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type MigrationsGetStatusForOrgResponseBody struct {
 	components.MigrationWithShortOrg
@@ -1309,7 +1309,7 @@ type MigrationsGetStatusForOrgResponseBody struct {
 /*
 MigrationsGetStatusForOrgResponse is a response for MigrationsGetStatusForOrg
 
-https://developer.github.com/v3/migrations/orgs/#get-the-status-of-an-organization-migration
+https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type MigrationsGetStatusForOrgResponse struct {
 	response
@@ -2066,11 +2066,11 @@ type MigrationsMapCommitAuthorResponse struct {
 /*
 MigrationsSetLfsPreference performs requests for "migrations/set-lfs-preference"
 
-Set Git LFS preference.
+Update Git LFS preference.
 
   PATCH /repos/{owner}/{repo}/import/lfs
 
-https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
+https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
 	if req == nil {
@@ -2095,11 +2095,11 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 /*
 MigrationsSetLfsPreference performs requests for "migrations/set-lfs-preference"
 
-Set Git LFS preference.
+Update Git LFS preference.
 
   PATCH /repos/{owner}/{repo}/import/lfs
 
-https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
+https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 func (c Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
 	return MigrationsSetLfsPreference(ctx, req, append(c, opt...)...)
@@ -2108,7 +2108,7 @@ func (c Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsS
 /*
 MigrationsSetLfsPreferenceReq is request data for Client.MigrationsSetLfsPreference
 
-https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
+https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceReq struct {
 	_url        string
@@ -2177,7 +2177,7 @@ func (r *MigrationsSetLfsPreferenceReq) Rel(link RelName, resp *MigrationsSetLfs
 /*
 MigrationsSetLfsPreferenceReqBody is a request body for migrations/set-lfs-preference
 
-https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
+https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceReqBody struct {
 
@@ -2191,7 +2191,7 @@ type MigrationsSetLfsPreferenceReqBody struct {
 /*
 MigrationsSetLfsPreferenceResponseBody is a response body for MigrationsSetLfsPreference
 
-https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
+https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceResponseBody struct {
 	components.Import
@@ -2200,7 +2200,7 @@ type MigrationsSetLfsPreferenceResponseBody struct {
 /*
 MigrationsSetLfsPreferenceResponse is a response for MigrationsSetLfsPreference
 
-https://developer.github.com/v3/migrations/source_imports/#set-git-lfs-preference
+https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceResponse struct {
 	response
@@ -2933,11 +2933,11 @@ type MigrationsUnlockRepoForOrgResponse struct {
 /*
 MigrationsUpdateImport performs requests for "migrations/update-import"
 
-Update existing import.
+Update an import.
 
   PATCH /repos/{owner}/{repo}/import
 
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
 	if req == nil {
@@ -2962,11 +2962,11 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 /*
 MigrationsUpdateImport performs requests for "migrations/update-import"
 
-Update existing import.
+Update an import.
 
   PATCH /repos/{owner}/{repo}/import
 
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 func (c Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
 	return MigrationsUpdateImport(ctx, req, append(c, opt...)...)
@@ -2975,7 +2975,7 @@ func (c Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdat
 /*
 MigrationsUpdateImportReq is request data for Client.MigrationsUpdateImport
 
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportReq struct {
 	_url        string
@@ -3044,7 +3044,7 @@ func (r *MigrationsUpdateImportReq) Rel(link RelName, resp *MigrationsUpdateImpo
 /*
 MigrationsUpdateImportReqBody is a request body for migrations/update-import
 
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportReqBody struct {
 
@@ -3058,7 +3058,7 @@ type MigrationsUpdateImportReqBody struct {
 /*
 MigrationsUpdateImportResponseBody is a response body for MigrationsUpdateImport
 
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportResponseBody struct {
 	components.Import3
@@ -3067,7 +3067,7 @@ type MigrationsUpdateImportResponseBody struct {
 /*
 MigrationsUpdateImportResponse is a response for MigrationsUpdateImport
 
-https://developer.github.com/v3/migrations/source_imports/#update-existing-import
+https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportResponse struct {
 	response

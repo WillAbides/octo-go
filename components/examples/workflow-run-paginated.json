@@ -170,7 +170,8 @@
       "status": "queued",
       "updated_at": "2020-01-22T19:33:08Z",
       "url": "https://api.github.com/repos/octo-org/octo-repo/actions/runs/30433642",
-      "workflow_url": "https://api.github.com/repos/octo-org/octo-repo/actions/workflows/30433642"
+      "workflow_id": 159038,
+      "workflow_url": "https://api.github.com/repos/octo-org/octo-repo/actions/workflows/159038"
     }
   ]
 }

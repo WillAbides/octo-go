@@ -293,11 +293,11 @@ type GistsCreateResponse struct {
 /*
 GistsCreateComment performs requests for "gists/create-comment"
 
-Create a comment.
+Create a gist comment.
 
   POST /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#create-a-comment
+https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
 	if req == nil {
@@ -322,11 +322,11 @@ func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...
 /*
 GistsCreateComment performs requests for "gists/create-comment"
 
-Create a comment.
+Create a gist comment.
 
   POST /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#create-a-comment
+https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 func (c Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
 	return GistsCreateComment(ctx, req, append(c, opt...)...)
@@ -335,7 +335,7 @@ func (c Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentR
 /*
 GistsCreateCommentReq is request data for Client.GistsCreateComment
 
-https://developer.github.com/v3/gists/comments/#create-a-comment
+https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentReq struct {
 	_url        string
@@ -403,7 +403,7 @@ func (r *GistsCreateCommentReq) Rel(link RelName, resp *GistsCreateCommentRespon
 /*
 GistsCreateCommentReqBody is a request body for gists/create-comment
 
-https://developer.github.com/v3/gists/comments/#create-a-comment
+https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentReqBody struct {
 
@@ -414,7 +414,7 @@ type GistsCreateCommentReqBody struct {
 /*
 GistsCreateCommentResponseBody is a response body for GistsCreateComment
 
-https://developer.github.com/v3/gists/comments/#create-a-comment
+https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentResponseBody struct {
 	components.GistComment
@@ -423,7 +423,7 @@ type GistsCreateCommentResponseBody struct {
 /*
 GistsCreateCommentResponse is a response for GistsCreateComment
 
-https://developer.github.com/v3/gists/comments/#create-a-comment
+https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentResponse struct {
 	response
@@ -552,11 +552,11 @@ type GistsDeleteResponse struct {
 /*
 GistsDeleteComment performs requests for "gists/delete-comment"
 
-Delete a comment.
+Delete a gist comment.
 
   DELETE /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#delete-a-comment
+https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
 	if req == nil {
@@ -580,11 +580,11 @@ func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...
 /*
 GistsDeleteComment performs requests for "gists/delete-comment"
 
-Delete a comment.
+Delete a gist comment.
 
   DELETE /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#delete-a-comment
+https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 func (c Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
 	return GistsDeleteComment(ctx, req, append(c, opt...)...)
@@ -593,7 +593,7 @@ func (c Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentR
 /*
 GistsDeleteCommentReq is request data for Client.GistsDeleteComment
 
-https://developer.github.com/v3/gists/comments/#delete-a-comment
+https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type GistsDeleteCommentReq struct {
 	_url      string
@@ -661,7 +661,7 @@ func (r *GistsDeleteCommentReq) Rel(link RelName, resp *GistsDeleteCommentRespon
 /*
 GistsDeleteCommentResponse is a response for GistsDeleteComment
 
-https://developer.github.com/v3/gists/comments/#delete-a-comment
+https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type GistsDeleteCommentResponse struct {
 	response
@@ -929,11 +929,11 @@ type GistsGetResponse struct {
 /*
 GistsGetComment performs requests for "gists/get-comment"
 
-Get a single comment.
+Get a gist comment.
 
   GET /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#get-a-single-comment
+https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
 	if req == nil {
@@ -958,11 +958,11 @@ func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...Reques
 /*
 GistsGetComment performs requests for "gists/get-comment"
 
-Get a single comment.
+Get a gist comment.
 
   GET /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#get-a-single-comment
+https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 func (c Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
 	return GistsGetComment(ctx, req, append(c, opt...)...)
@@ -971,7 +971,7 @@ func (c Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, op
 /*
 GistsGetCommentReq is request data for Client.GistsGetComment
 
-https://developer.github.com/v3/gists/comments/#get-a-single-comment
+https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GistsGetCommentReq struct {
 	_url      string
@@ -1039,7 +1039,7 @@ func (r *GistsGetCommentReq) Rel(link RelName, resp *GistsGetCommentResponse) bo
 /*
 GistsGetCommentResponseBody is a response body for GistsGetComment
 
-https://developer.github.com/v3/gists/comments/#get-a-single-comment
+https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GistsGetCommentResponseBody struct {
 	components.GistComment
@@ -1048,7 +1048,7 @@ type GistsGetCommentResponseBody struct {
 /*
 GistsGetCommentResponse is a response for GistsGetComment
 
-https://developer.github.com/v3/gists/comments/#get-a-single-comment
+https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GistsGetCommentResponse struct {
 	response
@@ -1059,11 +1059,11 @@ type GistsGetCommentResponse struct {
 /*
 GistsGetRevision performs requests for "gists/get-revision"
 
-Get a specific revision of a gist.
+Get a gist revision.
 
   GET /gists/{gist_id}/{sha}
 
-https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
 	if req == nil {
@@ -1088,11 +1088,11 @@ func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...Requ
 /*
 GistsGetRevision performs requests for "gists/get-revision"
 
-Get a specific revision of a gist.
+Get a gist revision.
 
   GET /gists/{gist_id}/{sha}
 
-https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 func (c Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
 	return GistsGetRevision(ctx, req, append(c, opt...)...)
@@ -1101,7 +1101,7 @@ func (c Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, 
 /*
 GistsGetRevisionReq is request data for Client.GistsGetRevision
 
-https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GistsGetRevisionReq struct {
 	_url   string
@@ -1169,7 +1169,7 @@ func (r *GistsGetRevisionReq) Rel(link RelName, resp *GistsGetRevisionResponse) 
 /*
 GistsGetRevisionResponseBody is a response body for GistsGetRevision
 
-https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GistsGetRevisionResponseBody struct {
 	components.Gist
@@ -1178,7 +1178,7 @@ type GistsGetRevisionResponseBody struct {
 /*
 GistsGetRevisionResponse is a response for GistsGetRevision
 
-https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GistsGetRevisionResponse struct {
 	response
@@ -1339,11 +1339,11 @@ type GistsListResponse struct {
 /*
 GistsListComments performs requests for "gists/list-comments"
 
-List comments on a gist.
+List gist comments.
 
   GET /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
 	if req == nil {
@@ -1368,11 +1368,11 @@ func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...Re
 /*
 GistsListComments performs requests for "gists/list-comments"
 
-List comments on a gist.
+List gist comments.
 
   GET /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 func (c Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
 	return GistsListComments(ctx, req, append(c, opt...)...)
@@ -1381,7 +1381,7 @@ func (c Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq
 /*
 GistsListCommentsReq is request data for Client.GistsListComments
 
-https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type GistsListCommentsReq struct {
 	_url   string
@@ -1460,7 +1460,7 @@ func (r *GistsListCommentsReq) Rel(link RelName, resp *GistsListCommentsResponse
 /*
 GistsListCommentsResponseBody is a response body for GistsListComments
 
-https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type GistsListCommentsResponseBody []struct {
 	components.GistComment
@@ -1469,7 +1469,7 @@ type GistsListCommentsResponseBody []struct {
 /*
 GistsListCommentsResponse is a response for GistsListComments
 
-https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type GistsListCommentsResponse struct {
 	response
@@ -2606,11 +2606,11 @@ type GistsUpdateResponse struct {
 /*
 GistsUpdateComment performs requests for "gists/update-comment"
 
-Edit a comment.
+Update a gist comment.
 
   PATCH /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#edit-a-comment
+https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
 	if req == nil {
@@ -2635,11 +2635,11 @@ func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...
 /*
 GistsUpdateComment performs requests for "gists/update-comment"
 
-Edit a comment.
+Update a gist comment.
 
   PATCH /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#edit-a-comment
+https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 func (c Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
 	return GistsUpdateComment(ctx, req, append(c, opt...)...)
@@ -2648,7 +2648,7 @@ func (c Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentR
 /*
 GistsUpdateCommentReq is request data for Client.GistsUpdateComment
 
-https://developer.github.com/v3/gists/comments/#edit-a-comment
+https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentReq struct {
 	_url        string
@@ -2717,7 +2717,7 @@ func (r *GistsUpdateCommentReq) Rel(link RelName, resp *GistsUpdateCommentRespon
 /*
 GistsUpdateCommentReqBody is a request body for gists/update-comment
 
-https://developer.github.com/v3/gists/comments/#edit-a-comment
+https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentReqBody struct {
 
@@ -2728,7 +2728,7 @@ type GistsUpdateCommentReqBody struct {
 /*
 GistsUpdateCommentResponseBody is a response body for GistsUpdateComment
 
-https://developer.github.com/v3/gists/comments/#edit-a-comment
+https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentResponseBody struct {
 	components.GistComment
@@ -2737,7 +2737,7 @@ type GistsUpdateCommentResponseBody struct {
 /*
 GistsUpdateCommentResponse is a response for GistsUpdateComment
 
-https://developer.github.com/v3/gists/comments/#edit-a-comment
+https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentResponse struct {
 	response

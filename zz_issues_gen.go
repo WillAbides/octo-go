@@ -306,19 +306,19 @@ type IssuesAddLabelsResponse struct {
 }
 
 /*
-IssuesCheckAssignee performs requests for "issues/check-assignee"
+IssuesCheckUserCanBeAssigned performs requests for "issues/check-user-can-be-assigned"
 
-Check assignee.
+Check if a user can be assigned.
 
   GET /repos/{owner}/{repo}/assignees/{assignee}
 
-https://developer.github.com/v3/issues/assignees/#check-assignee
+https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-func IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
+func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBeAssignedReq, opt ...RequestOption) (*IssuesCheckUserCanBeAssignedResponse, error) {
 	if req == nil {
-		req = new(IssuesCheckAssigneeReq)
+		req = new(IssuesCheckUserCanBeAssignedReq)
 	}
-	resp := &IssuesCheckAssigneeResponse{request: req}
+	resp := &IssuesCheckUserCanBeAssignedResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -338,71 +338,71 @@ func IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt .
 }
 
 /*
-IssuesCheckAssignee performs requests for "issues/check-assignee"
+IssuesCheckUserCanBeAssigned performs requests for "issues/check-user-can-be-assigned"
 
-Check assignee.
+Check if a user can be assigned.
 
   GET /repos/{owner}/{repo}/assignees/{assignee}
 
-https://developer.github.com/v3/issues/assignees/#check-assignee
+https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-func (c Client) IssuesCheckAssignee(ctx context.Context, req *IssuesCheckAssigneeReq, opt ...RequestOption) (*IssuesCheckAssigneeResponse, error) {
-	return IssuesCheckAssignee(ctx, req, append(c, opt...)...)
+func (c Client) IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBeAssignedReq, opt ...RequestOption) (*IssuesCheckUserCanBeAssignedResponse, error) {
+	return IssuesCheckUserCanBeAssigned(ctx, req, append(c, opt...)...)
 }
 
 /*
-IssuesCheckAssigneeReq is request data for Client.IssuesCheckAssignee
+IssuesCheckUserCanBeAssignedReq is request data for Client.IssuesCheckUserCanBeAssigned
 
-https://developer.github.com/v3/issues/assignees/#check-assignee
+https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-type IssuesCheckAssigneeReq struct {
+type IssuesCheckUserCanBeAssignedReq struct {
 	_url     string
 	Owner    string
 	Repo     string
 	Assignee string
 }
 
-func (r *IssuesCheckAssigneeReq) url() string {
+func (r *IssuesCheckUserCanBeAssignedReq) url() string {
 	return r._url
 }
 
-func (r *IssuesCheckAssigneeReq) urlPath() string {
+func (r *IssuesCheckUserCanBeAssignedReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee)
 }
 
-func (r *IssuesCheckAssigneeReq) method() string {
+func (r *IssuesCheckUserCanBeAssignedReq) method() string {
 	return "GET"
 }
 
-func (r *IssuesCheckAssigneeReq) urlQuery() url.Values {
+func (r *IssuesCheckUserCanBeAssignedReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *IssuesCheckAssigneeReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *IssuesCheckUserCanBeAssignedReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *IssuesCheckAssigneeReq) body() interface{} {
+func (r *IssuesCheckUserCanBeAssignedReq) body() interface{} {
 	return nil
 }
 
-func (r *IssuesCheckAssigneeReq) dataStatuses() []int {
+func (r *IssuesCheckUserCanBeAssignedReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *IssuesCheckAssigneeReq) validStatuses() []int {
+func (r *IssuesCheckUserCanBeAssignedReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesCheckAssigneeReq) endpointAttributes() []endpointAttribute {
+func (r *IssuesCheckUserCanBeAssignedReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *IssuesCheckAssigneeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesCheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -410,7 +410,7 @@ func (r *IssuesCheckAssigneeReq) HTTPRequest(ctx context.Context, opt ...Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesCheckAssigneeReq) Rel(link RelName, resp *IssuesCheckAssigneeResponse) bool {
+func (r *IssuesCheckUserCanBeAssignedReq) Rel(link RelName, resp *IssuesCheckUserCanBeAssignedResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -420,13 +420,13 @@ func (r *IssuesCheckAssigneeReq) Rel(link RelName, resp *IssuesCheckAssigneeResp
 }
 
 /*
-IssuesCheckAssigneeResponse is a response for IssuesCheckAssignee
+IssuesCheckUserCanBeAssignedResponse is a response for IssuesCheckUserCanBeAssigned
 
-https://developer.github.com/v3/issues/assignees/#check-assignee
+https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-type IssuesCheckAssigneeResponse struct {
+type IssuesCheckUserCanBeAssignedResponse struct {
 	response
-	request *IssuesCheckAssigneeReq
+	request *IssuesCheckUserCanBeAssignedReq
 	Data    bool
 }
 
@@ -604,11 +604,11 @@ type IssuesCreateResponse struct {
 /*
 IssuesCreateComment performs requests for "issues/create-comment"
 
-Create a comment.
+Create an issue comment.
 
   POST /repos/{owner}/{repo}/issues/{issue_number}/comments
 
-https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
 	if req == nil {
@@ -633,11 +633,11 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 /*
 IssuesCreateComment performs requests for "issues/create-comment"
 
-Create a comment.
+Create an issue comment.
 
   POST /repos/{owner}/{repo}/issues/{issue_number}/comments
 
-https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 func (c Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
 	return IssuesCreateComment(ctx, req, append(c, opt...)...)
@@ -646,7 +646,7 @@ func (c Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommen
 /*
 IssuesCreateCommentReq is request data for Client.IssuesCreateComment
 
-https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentReq struct {
 	_url        string
@@ -716,7 +716,7 @@ func (r *IssuesCreateCommentReq) Rel(link RelName, resp *IssuesCreateCommentResp
 /*
 IssuesCreateCommentReqBody is a request body for issues/create-comment
 
-https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentReqBody struct {
 
@@ -727,7 +727,7 @@ type IssuesCreateCommentReqBody struct {
 /*
 IssuesCreateCommentResponseBody is a response body for IssuesCreateComment
 
-https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentResponseBody struct {
 	components.IssueComment
@@ -736,7 +736,7 @@ type IssuesCreateCommentResponseBody struct {
 /*
 IssuesCreateCommentResponse is a response for IssuesCreateComment
 
-https://developer.github.com/v3/issues/comments/#create-a-comment
+https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentResponse struct {
 	response
@@ -1059,11 +1059,11 @@ type IssuesCreateMilestoneResponse struct {
 /*
 IssuesDeleteComment performs requests for "issues/delete-comment"
 
-Delete a comment.
+Delete an issue comment.
 
   DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}
 
-https://developer.github.com/v3/issues/comments/#delete-a-comment
+https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
 	if req == nil {
@@ -1087,11 +1087,11 @@ func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt .
 /*
 IssuesDeleteComment performs requests for "issues/delete-comment"
 
-Delete a comment.
+Delete an issue comment.
 
   DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}
 
-https://developer.github.com/v3/issues/comments/#delete-a-comment
+https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 func (c Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
 	return IssuesDeleteComment(ctx, req, append(c, opt...)...)
@@ -1100,7 +1100,7 @@ func (c Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommen
 /*
 IssuesDeleteCommentReq is request data for Client.IssuesDeleteComment
 
-https://developer.github.com/v3/issues/comments/#delete-a-comment
+https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type IssuesDeleteCommentReq struct {
 	_url      string
@@ -1169,7 +1169,7 @@ func (r *IssuesDeleteCommentReq) Rel(link RelName, resp *IssuesDeleteCommentResp
 /*
 IssuesDeleteCommentResponse is a response for IssuesDeleteComment
 
-https://developer.github.com/v3/issues/comments/#delete-a-comment
+https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type IssuesDeleteCommentResponse struct {
 	response
@@ -1564,11 +1564,11 @@ type IssuesGetResponse struct {
 /*
 IssuesGetComment performs requests for "issues/get-comment"
 
-Get a single comment.
+Get an issue comment.
 
   GET /repos/{owner}/{repo}/issues/comments/{comment_id}
 
-https://developer.github.com/v3/issues/comments/#get-a-single-comment
+https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
 	if req == nil {
@@ -1593,11 +1593,11 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...Requ
 /*
 IssuesGetComment performs requests for "issues/get-comment"
 
-Get a single comment.
+Get an issue comment.
 
   GET /repos/{owner}/{repo}/issues/comments/{comment_id}
 
-https://developer.github.com/v3/issues/comments/#get-a-single-comment
+https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 func (c Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
 	return IssuesGetComment(ctx, req, append(c, opt...)...)
@@ -1606,7 +1606,7 @@ func (c Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, 
 /*
 IssuesGetCommentReq is request data for Client.IssuesGetComment
 
-https://developer.github.com/v3/issues/comments/#get-a-single-comment
+https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentReq struct {
 	_url      string
@@ -1699,7 +1699,7 @@ func (r *IssuesGetCommentReq) Rel(link RelName, resp *IssuesGetCommentResponse) 
 /*
 IssuesGetCommentResponseBody is a response body for IssuesGetComment
 
-https://developer.github.com/v3/issues/comments/#get-a-single-comment
+https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentResponseBody struct {
 	components.IssueComment
@@ -1708,7 +1708,7 @@ type IssuesGetCommentResponseBody struct {
 /*
 IssuesGetCommentResponse is a response for IssuesGetComment
 
-https://developer.github.com/v3/issues/comments/#get-a-single-comment
+https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentResponse struct {
 	response
@@ -1719,11 +1719,11 @@ type IssuesGetCommentResponse struct {
 /*
 IssuesGetEvent performs requests for "issues/get-event"
 
-Get a single event.
+Get an issue event.
 
   GET /repos/{owner}/{repo}/issues/events/{event_id}
 
-https://developer.github.com/v3/issues/events/#get-a-single-event
+https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
 	if req == nil {
@@ -1748,11 +1748,11 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestO
 /*
 IssuesGetEvent performs requests for "issues/get-event"
 
-Get a single event.
+Get an issue event.
 
   GET /repos/{owner}/{repo}/issues/events/{event_id}
 
-https://developer.github.com/v3/issues/events/#get-a-single-event
+https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 func (c Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
 	return IssuesGetEvent(ctx, req, append(c, opt...)...)
@@ -1761,7 +1761,7 @@ func (c Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt 
 /*
 IssuesGetEventReq is request data for Client.IssuesGetEvent
 
-https://developer.github.com/v3/issues/events/#get-a-single-event
+https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventReq struct {
 	_url    string
@@ -1867,7 +1867,7 @@ func (r *IssuesGetEventReq) Rel(link RelName, resp *IssuesGetEventResponse) bool
 /*
 IssuesGetEventResponseBody is a response body for IssuesGetEvent
 
-https://developer.github.com/v3/issues/events/#get-a-single-event
+https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventResponseBody struct {
 	components.IssueEvent
@@ -1876,7 +1876,7 @@ type IssuesGetEventResponseBody struct {
 /*
 IssuesGetEventResponse is a response for IssuesGetEvent
 
-https://developer.github.com/v3/issues/events/#get-a-single-event
+https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventResponse struct {
 	response
@@ -1887,11 +1887,11 @@ type IssuesGetEventResponse struct {
 /*
 IssuesGetLabel performs requests for "issues/get-label"
 
-Get a single label.
+Get a label.
 
   GET /repos/{owner}/{repo}/labels/{name}
 
-https://developer.github.com/v3/issues/labels/#get-a-single-label
+https://developer.github.com/v3/issues/labels/#get-a-label
 */
 func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
 	if req == nil {
@@ -1916,11 +1916,11 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestO
 /*
 IssuesGetLabel performs requests for "issues/get-label"
 
-Get a single label.
+Get a label.
 
   GET /repos/{owner}/{repo}/labels/{name}
 
-https://developer.github.com/v3/issues/labels/#get-a-single-label
+https://developer.github.com/v3/issues/labels/#get-a-label
 */
 func (c Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
 	return IssuesGetLabel(ctx, req, append(c, opt...)...)
@@ -1929,7 +1929,7 @@ func (c Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt 
 /*
 IssuesGetLabelReq is request data for Client.IssuesGetLabel
 
-https://developer.github.com/v3/issues/labels/#get-a-single-label
+https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelReq struct {
 	_url  string
@@ -1998,7 +1998,7 @@ func (r *IssuesGetLabelReq) Rel(link RelName, resp *IssuesGetLabelResponse) bool
 /*
 IssuesGetLabelResponseBody is a response body for IssuesGetLabel
 
-https://developer.github.com/v3/issues/labels/#get-a-single-label
+https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelResponseBody struct {
 	components.Label
@@ -2007,7 +2007,7 @@ type IssuesGetLabelResponseBody struct {
 /*
 IssuesGetLabelResponse is a response for IssuesGetLabel
 
-https://developer.github.com/v3/issues/labels/#get-a-single-label
+https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelResponse struct {
 	response
@@ -2018,11 +2018,11 @@ type IssuesGetLabelResponse struct {
 /*
 IssuesGetMilestone performs requests for "issues/get-milestone"
 
-Get a single milestone.
+Get a milestone.
 
   GET /repos/{owner}/{repo}/milestones/{milestone_number}
 
-https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
 	if req == nil {
@@ -2047,11 +2047,11 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 /*
 IssuesGetMilestone performs requests for "issues/get-milestone"
 
-Get a single milestone.
+Get a milestone.
 
   GET /repos/{owner}/{repo}/milestones/{milestone_number}
 
-https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 func (c Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
 	return IssuesGetMilestone(ctx, req, append(c, opt...)...)
@@ -2060,7 +2060,7 @@ func (c Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneR
 /*
 IssuesGetMilestoneReq is request data for Client.IssuesGetMilestone
 
-https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneReq struct {
 	_url            string
@@ -2129,7 +2129,7 @@ func (r *IssuesGetMilestoneReq) Rel(link RelName, resp *IssuesGetMilestoneRespon
 /*
 IssuesGetMilestoneResponseBody is a response body for IssuesGetMilestone
 
-https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneResponseBody struct {
 	components.Milestone
@@ -2138,7 +2138,7 @@ type IssuesGetMilestoneResponseBody struct {
 /*
 IssuesGetMilestoneResponse is a response for IssuesGetMilestone
 
-https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneResponse struct {
 	response
@@ -2506,11 +2506,11 @@ type IssuesListAssigneesResponse struct {
 /*
 IssuesListComments performs requests for "issues/list-comments"
 
-List comments on an issue.
+List issue comments.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/comments
 
-https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
 	if req == nil {
@@ -2535,11 +2535,11 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 /*
 IssuesListComments performs requests for "issues/list-comments"
 
-List comments on an issue.
+List issue comments.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/comments
 
-https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 func (c Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
 	return IssuesListComments(ctx, req, append(c, opt...)...)
@@ -2548,7 +2548,7 @@ func (c Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsR
 /*
 IssuesListCommentsReq is request data for Client.IssuesListComments
 
-https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsReq struct {
 	_url        string
@@ -2653,7 +2653,7 @@ func (r *IssuesListCommentsReq) Rel(link RelName, resp *IssuesListCommentsRespon
 /*
 IssuesListCommentsResponseBody is a response body for IssuesListComments
 
-https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsResponseBody []struct {
 	components.IssueComment
@@ -2662,7 +2662,7 @@ type IssuesListCommentsResponseBody []struct {
 /*
 IssuesListCommentsResponse is a response for IssuesListComments
 
-https://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsResponse struct {
 	response
@@ -2673,11 +2673,11 @@ type IssuesListCommentsResponse struct {
 /*
 IssuesListCommentsForRepo performs requests for "issues/list-comments-for-repo"
 
-List comments in a repository.
+List issue comments for a repository.
 
   GET /repos/{owner}/{repo}/issues/comments
 
-https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
 	if req == nil {
@@ -2702,11 +2702,11 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 /*
 IssuesListCommentsForRepo performs requests for "issues/list-comments-for-repo"
 
-List comments in a repository.
+List issue comments for a repository.
 
   GET /repos/{owner}/{repo}/issues/comments
 
-https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 func (c Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
 	return IssuesListCommentsForRepo(ctx, req, append(c, opt...)...)
@@ -2715,7 +2715,7 @@ func (c Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCo
 /*
 IssuesListCommentsForRepoReq is request data for Client.IssuesListCommentsForRepo
 
-https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoReq struct {
 	_url  string
@@ -2831,7 +2831,7 @@ func (r *IssuesListCommentsForRepoReq) Rel(link RelName, resp *IssuesListComment
 /*
 IssuesListCommentsForRepoResponseBody is a response body for IssuesListCommentsForRepo
 
-https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoResponseBody []struct {
 	components.IssueComment
@@ -2840,7 +2840,7 @@ type IssuesListCommentsForRepoResponseBody []struct {
 /*
 IssuesListCommentsForRepoResponse is a response for IssuesListCommentsForRepo
 
-https://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoResponse struct {
 	response
@@ -2851,11 +2851,11 @@ type IssuesListCommentsForRepoResponse struct {
 /*
 IssuesListEvents performs requests for "issues/list-events"
 
-List events for an issue.
+List issue events.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/events
 
-https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+https://developer.github.com/v3/issues/events/#list-issue-events
 */
 func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
 	if req == nil {
@@ -2880,11 +2880,11 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...Requ
 /*
 IssuesListEvents performs requests for "issues/list-events"
 
-List events for an issue.
+List issue events.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/events
 
-https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+https://developer.github.com/v3/issues/events/#list-issue-events
 */
 func (c Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
 	return IssuesListEvents(ctx, req, append(c, opt...)...)
@@ -2893,7 +2893,7 @@ func (c Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, 
 /*
 IssuesListEventsReq is request data for Client.IssuesListEvents
 
-https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsReq struct {
 	_url        string
@@ -3003,7 +3003,7 @@ func (r *IssuesListEventsReq) Rel(link RelName, resp *IssuesListEventsResponse) 
 /*
 IssuesListEventsResponseBody is a response body for IssuesListEvents
 
-https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsResponseBody []struct {
 	components.IssueEventForIssue
@@ -3012,7 +3012,7 @@ type IssuesListEventsResponseBody []struct {
 /*
 IssuesListEventsResponse is a response for IssuesListEvents
 
-https://developer.github.com/v3/issues/events/#list-events-for-an-issue
+https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsResponse struct {
 	response
@@ -3023,11 +3023,11 @@ type IssuesListEventsResponse struct {
 /*
 IssuesListEventsForRepo performs requests for "issues/list-events-for-repo"
 
-List events for a repository.
+List issue events for a repository.
 
   GET /repos/{owner}/{repo}/issues/events
 
-https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
 	if req == nil {
@@ -3052,11 +3052,11 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 /*
 IssuesListEventsForRepo performs requests for "issues/list-events-for-repo"
 
-List events for a repository.
+List issue events for a repository.
 
   GET /repos/{owner}/{repo}/issues/events
 
-https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 func (c Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
 	return IssuesListEventsForRepo(ctx, req, append(c, opt...)...)
@@ -3065,7 +3065,7 @@ func (c Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEven
 /*
 IssuesListEventsForRepoReq is request data for Client.IssuesListEventsForRepo
 
-https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoReq struct {
 	_url  string
@@ -3174,7 +3174,7 @@ func (r *IssuesListEventsForRepoReq) Rel(link RelName, resp *IssuesListEventsFor
 /*
 IssuesListEventsForRepoResponseBody is a response body for IssuesListEventsForRepo
 
-https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoResponseBody []struct {
 	components.IssueEvent
@@ -3183,7 +3183,7 @@ type IssuesListEventsForRepoResponseBody []struct {
 /*
 IssuesListEventsForRepoResponse is a response for IssuesListEventsForRepo
 
-https://developer.github.com/v3/issues/events/#list-events-for-a-repository
+https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoResponse struct {
 	response
@@ -3194,11 +3194,11 @@ type IssuesListEventsForRepoResponse struct {
 /*
 IssuesListEventsForTimeline performs requests for "issues/list-events-for-timeline"
 
-List events for an issue.
+List timeline events for an issue.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
 
-https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
 	if req == nil {
@@ -3223,11 +3223,11 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 /*
 IssuesListEventsForTimeline performs requests for "issues/list-events-for-timeline"
 
-List events for an issue.
+List timeline events for an issue.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
 
-https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 func (c Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
 	return IssuesListEventsForTimeline(ctx, req, append(c, opt...)...)
@@ -3236,7 +3236,7 @@ func (c Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesList
 /*
 IssuesListEventsForTimelineReq is request data for Client.IssuesListEventsForTimeline
 
-https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineReq struct {
 	_url        string
@@ -3348,7 +3348,7 @@ func (r *IssuesListEventsForTimelineReq) Rel(link RelName, resp *IssuesListEvent
 /*
 IssuesListEventsForTimelineResponseBody is a response body for IssuesListEventsForTimeline
 
-https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineResponseBody []struct {
 	components.IssueEventForIssue
@@ -3357,7 +3357,7 @@ type IssuesListEventsForTimelineResponseBody []struct {
 /*
 IssuesListEventsForTimelineResponse is a response for IssuesListEventsForTimeline
 
-https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
+https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineResponse struct {
 	response
@@ -4033,11 +4033,11 @@ type IssuesListForRepoResponse struct {
 /*
 IssuesListLabelsForMilestone performs requests for "issues/list-labels-for-milestone"
 
-Get labels for every issue in a milestone.
+List labels for issues in a milestone.
 
   GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels
 
-https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
 	if req == nil {
@@ -4062,11 +4062,11 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 /*
 IssuesListLabelsForMilestone performs requests for "issues/list-labels-for-milestone"
 
-Get labels for every issue in a milestone.
+List labels for issues in a milestone.
 
   GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels
 
-https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 func (c Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
 	return IssuesListLabelsForMilestone(ctx, req, append(c, opt...)...)
@@ -4075,7 +4075,7 @@ func (c Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesLis
 /*
 IssuesListLabelsForMilestoneReq is request data for Client.IssuesListLabelsForMilestone
 
-https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneReq struct {
 	_url            string
@@ -4156,7 +4156,7 @@ func (r *IssuesListLabelsForMilestoneReq) Rel(link RelName, resp *IssuesListLabe
 /*
 IssuesListLabelsForMilestoneResponseBody is a response body for IssuesListLabelsForMilestone
 
-https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneResponseBody []struct {
 	components.Label
@@ -4165,7 +4165,7 @@ type IssuesListLabelsForMilestoneResponseBody []struct {
 /*
 IssuesListLabelsForMilestoneResponse is a response for IssuesListLabelsForMilestone
 
-https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
+https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneResponse struct {
 	response
@@ -4176,11 +4176,11 @@ type IssuesListLabelsForMilestoneResponse struct {
 /*
 IssuesListLabelsForRepo performs requests for "issues/list-labels-for-repo"
 
-List all labels for this repository.
+List labels for a repository.
 
   GET /repos/{owner}/{repo}/labels
 
-https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
 	if req == nil {
@@ -4205,11 +4205,11 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 /*
 IssuesListLabelsForRepo performs requests for "issues/list-labels-for-repo"
 
-List all labels for this repository.
+List labels for a repository.
 
   GET /repos/{owner}/{repo}/labels
 
-https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 func (c Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
 	return IssuesListLabelsForRepo(ctx, req, append(c, opt...)...)
@@ -4218,7 +4218,7 @@ func (c Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabe
 /*
 IssuesListLabelsForRepoReq is request data for Client.IssuesListLabelsForRepo
 
-https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoReq struct {
 	_url  string
@@ -4298,7 +4298,7 @@ func (r *IssuesListLabelsForRepoReq) Rel(link RelName, resp *IssuesListLabelsFor
 /*
 IssuesListLabelsForRepoResponseBody is a response body for IssuesListLabelsForRepo
 
-https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoResponseBody []struct {
 	components.Label
@@ -4307,7 +4307,7 @@ type IssuesListLabelsForRepoResponseBody []struct {
 /*
 IssuesListLabelsForRepoResponse is a response for IssuesListLabelsForRepo
 
-https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
+https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoResponse struct {
 	response
@@ -4318,11 +4318,11 @@ type IssuesListLabelsForRepoResponse struct {
 /*
 IssuesListLabelsOnIssue performs requests for "issues/list-labels-on-issue"
 
-List labels on an issue.
+List labels for an issue.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
 	if req == nil {
@@ -4347,11 +4347,11 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 /*
 IssuesListLabelsOnIssue performs requests for "issues/list-labels-on-issue"
 
-List labels on an issue.
+List labels for an issue.
 
   GET /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 func (c Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
 	return IssuesListLabelsOnIssue(ctx, req, append(c, opt...)...)
@@ -4360,7 +4360,7 @@ func (c Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabe
 /*
 IssuesListLabelsOnIssueReq is request data for Client.IssuesListLabelsOnIssue
 
-https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueReq struct {
 	_url        string
@@ -4441,7 +4441,7 @@ func (r *IssuesListLabelsOnIssueReq) Rel(link RelName, resp *IssuesListLabelsOnI
 /*
 IssuesListLabelsOnIssueResponseBody is a response body for IssuesListLabelsOnIssue
 
-https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueResponseBody []struct {
 	components.Label
@@ -4450,7 +4450,7 @@ type IssuesListLabelsOnIssueResponseBody []struct {
 /*
 IssuesListLabelsOnIssueResponse is a response for IssuesListLabelsOnIssue
 
-https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
+https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueResponse struct {
 	response
@@ -4459,19 +4459,19 @@ type IssuesListLabelsOnIssueResponse struct {
 }
 
 /*
-IssuesListMilestonesForRepo performs requests for "issues/list-milestones-for-repo"
+IssuesListMilestones performs requests for "issues/list-milestones"
 
-List milestones for a repository.
+List milestones.
 
   GET /repos/{owner}/{repo}/milestones
 
-https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-func IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
+func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt ...RequestOption) (*IssuesListMilestonesResponse, error) {
 	if req == nil {
-		req = new(IssuesListMilestonesForRepoReq)
+		req = new(IssuesListMilestonesReq)
 	}
-	resp := &IssuesListMilestonesForRepoResponse{request: req}
+	resp := &IssuesListMilestonesResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -4479,7 +4479,7 @@ func IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesF
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListMilestonesForRepoResponseBody)
+	resp.Data = new(IssuesListMilestonesResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -4488,24 +4488,24 @@ func IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesF
 }
 
 /*
-IssuesListMilestonesForRepo performs requests for "issues/list-milestones-for-repo"
+IssuesListMilestones performs requests for "issues/list-milestones"
 
-List milestones for a repository.
+List milestones.
 
   GET /repos/{owner}/{repo}/milestones
 
-https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-func (c Client) IssuesListMilestonesForRepo(ctx context.Context, req *IssuesListMilestonesForRepoReq, opt ...RequestOption) (*IssuesListMilestonesForRepoResponse, error) {
-	return IssuesListMilestonesForRepo(ctx, req, append(c, opt...)...)
+func (c Client) IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt ...RequestOption) (*IssuesListMilestonesResponse, error) {
+	return IssuesListMilestones(ctx, req, append(c, opt...)...)
 }
 
 /*
-IssuesListMilestonesForRepoReq is request data for Client.IssuesListMilestonesForRepo
+IssuesListMilestonesReq is request data for Client.IssuesListMilestones
 
-https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-type IssuesListMilestonesForRepoReq struct {
+type IssuesListMilestonesReq struct {
 	_url  string
 	Owner string
 	Repo  string
@@ -4526,19 +4526,19 @@ type IssuesListMilestonesForRepoReq struct {
 	Page *int64
 }
 
-func (r *IssuesListMilestonesForRepoReq) url() string {
+func (r *IssuesListMilestonesReq) url() string {
 	return r._url
 }
 
-func (r *IssuesListMilestonesForRepoReq) urlPath() string {
+func (r *IssuesListMilestonesReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
 }
 
-func (r *IssuesListMilestonesForRepoReq) method() string {
+func (r *IssuesListMilestonesReq) method() string {
 	return "GET"
 }
 
-func (r *IssuesListMilestonesForRepoReq) urlQuery() url.Values {
+func (r *IssuesListMilestonesReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -4558,30 +4558,30 @@ func (r *IssuesListMilestonesForRepoReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *IssuesListMilestonesForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *IssuesListMilestonesReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *IssuesListMilestonesForRepoReq) body() interface{} {
+func (r *IssuesListMilestonesReq) body() interface{} {
 	return nil
 }
 
-func (r *IssuesListMilestonesForRepoReq) dataStatuses() []int {
+func (r *IssuesListMilestonesReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListMilestonesForRepoReq) validStatuses() []int {
+func (r *IssuesListMilestonesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListMilestonesForRepoReq) endpointAttributes() []endpointAttribute {
+func (r *IssuesListMilestonesReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesListMilestonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4589,7 +4589,7 @@ func (r *IssuesListMilestonesForRepoReq) HTTPRequest(ctx context.Context, opt ..
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListMilestonesForRepoReq) Rel(link RelName, resp *IssuesListMilestonesForRepoResponse) bool {
+func (r *IssuesListMilestonesReq) Rel(link RelName, resp *IssuesListMilestonesResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -4599,23 +4599,23 @@ func (r *IssuesListMilestonesForRepoReq) Rel(link RelName, resp *IssuesListMiles
 }
 
 /*
-IssuesListMilestonesForRepoResponseBody is a response body for IssuesListMilestonesForRepo
+IssuesListMilestonesResponseBody is a response body for IssuesListMilestones
 
-https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-type IssuesListMilestonesForRepoResponseBody []struct {
+type IssuesListMilestonesResponseBody []struct {
 	components.Milestone
 }
 
 /*
-IssuesListMilestonesForRepoResponse is a response for IssuesListMilestonesForRepo
+IssuesListMilestonesResponse is a response for IssuesListMilestones
 
-https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-type IssuesListMilestonesForRepoResponse struct {
+type IssuesListMilestonesResponse struct {
 	response
-	request *IssuesListMilestonesForRepoReq
-	Data    *IssuesListMilestonesForRepoResponseBody
+	request *IssuesListMilestonesReq
+	Data    *IssuesListMilestonesResponseBody
 }
 
 /*
@@ -5170,19 +5170,19 @@ type IssuesRemoveLabelResponse struct {
 }
 
 /*
-IssuesReplaceAllLabels performs requests for "issues/replace-all-labels"
+IssuesSetLabels performs requests for "issues/set-labels"
 
-Replace all labels for an issue.
+Set labels for an issue.
 
   PUT /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-func IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
+func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...RequestOption) (*IssuesSetLabelsResponse, error) {
 	if req == nil {
-		req = new(IssuesReplaceAllLabelsReq)
+		req = new(IssuesSetLabelsReq)
 	}
-	resp := &IssuesReplaceAllLabelsResponse{request: req}
+	resp := &IssuesSetLabelsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -5190,7 +5190,7 @@ func IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesReplaceAllLabelsResponseBody)
+	resp.Data = new(IssuesSetLabelsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -5199,72 +5199,72 @@ func IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq,
 }
 
 /*
-IssuesReplaceAllLabels performs requests for "issues/replace-all-labels"
+IssuesSetLabels performs requests for "issues/set-labels"
 
-Replace all labels for an issue.
+Set labels for an issue.
 
   PUT /repos/{owner}/{repo}/issues/{issue_number}/labels
 
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-func (c Client) IssuesReplaceAllLabels(ctx context.Context, req *IssuesReplaceAllLabelsReq, opt ...RequestOption) (*IssuesReplaceAllLabelsResponse, error) {
-	return IssuesReplaceAllLabels(ctx, req, append(c, opt...)...)
+func (c Client) IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...RequestOption) (*IssuesSetLabelsResponse, error) {
+	return IssuesSetLabels(ctx, req, append(c, opt...)...)
 }
 
 /*
-IssuesReplaceAllLabelsReq is request data for Client.IssuesReplaceAllLabels
+IssuesSetLabelsReq is request data for Client.IssuesSetLabels
 
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-type IssuesReplaceAllLabelsReq struct {
+type IssuesSetLabelsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	IssueNumber int64
-	RequestBody IssuesReplaceAllLabelsReqBody
+	RequestBody IssuesSetLabelsReqBody
 }
 
-func (r *IssuesReplaceAllLabelsReq) url() string {
+func (r *IssuesSetLabelsReq) url() string {
 	return r._url
 }
 
-func (r *IssuesReplaceAllLabelsReq) urlPath() string {
+func (r *IssuesSetLabelsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
 }
 
-func (r *IssuesReplaceAllLabelsReq) method() string {
+func (r *IssuesSetLabelsReq) method() string {
 	return "PUT"
 }
 
-func (r *IssuesReplaceAllLabelsReq) urlQuery() url.Values {
+func (r *IssuesSetLabelsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *IssuesReplaceAllLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *IssuesSetLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *IssuesReplaceAllLabelsReq) body() interface{} {
+func (r *IssuesSetLabelsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *IssuesReplaceAllLabelsReq) dataStatuses() []int {
+func (r *IssuesSetLabelsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesReplaceAllLabelsReq) validStatuses() []int {
+func (r *IssuesSetLabelsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesReplaceAllLabelsReq) endpointAttributes() []endpointAttribute {
+func (r *IssuesSetLabelsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *IssuesSetLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5272,7 +5272,7 @@ func (r *IssuesReplaceAllLabelsReq) HTTPRequest(ctx context.Context, opt ...Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesReplaceAllLabelsReq) Rel(link RelName, resp *IssuesReplaceAllLabelsResponse) bool {
+func (r *IssuesSetLabelsReq) Rel(link RelName, resp *IssuesSetLabelsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -5282,11 +5282,11 @@ func (r *IssuesReplaceAllLabelsReq) Rel(link RelName, resp *IssuesReplaceAllLabe
 }
 
 /*
-IssuesReplaceAllLabelsReqBody is a request body for issues/replace-all-labels
+IssuesSetLabelsReqBody is a request body for issues/set-labels
 
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-type IssuesReplaceAllLabelsReqBody struct {
+type IssuesSetLabelsReqBody struct {
 
 	/*
 	   The names of the labels to add to the issue. You can pass an empty array to
@@ -5298,23 +5298,23 @@ type IssuesReplaceAllLabelsReqBody struct {
 }
 
 /*
-IssuesReplaceAllLabelsResponseBody is a response body for IssuesReplaceAllLabels
+IssuesSetLabelsResponseBody is a response body for IssuesSetLabels
 
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-type IssuesReplaceAllLabelsResponseBody []struct {
+type IssuesSetLabelsResponseBody []struct {
 	components.Label
 }
 
 /*
-IssuesReplaceAllLabelsResponse is a response for IssuesReplaceAllLabels
+IssuesSetLabelsResponse is a response for IssuesSetLabels
 
-https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
+https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-type IssuesReplaceAllLabelsResponse struct {
+type IssuesSetLabelsResponse struct {
 	response
-	request *IssuesReplaceAllLabelsReq
-	Data    *IssuesReplaceAllLabelsResponseBody
+	request *IssuesSetLabelsReq
+	Data    *IssuesSetLabelsResponseBody
 }
 
 /*
@@ -5618,11 +5618,11 @@ type IssuesUpdateResponse struct {
 /*
 IssuesUpdateComment performs requests for "issues/update-comment"
 
-Edit a comment.
+Update an issue comment.
 
   PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}
 
-https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
 	if req == nil {
@@ -5647,11 +5647,11 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 /*
 IssuesUpdateComment performs requests for "issues/update-comment"
 
-Edit a comment.
+Update an issue comment.
 
   PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}
 
-https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 func (c Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
 	return IssuesUpdateComment(ctx, req, append(c, opt...)...)
@@ -5660,7 +5660,7 @@ func (c Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommen
 /*
 IssuesUpdateCommentReq is request data for Client.IssuesUpdateComment
 
-https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentReq struct {
 	_url        string
@@ -5730,7 +5730,7 @@ func (r *IssuesUpdateCommentReq) Rel(link RelName, resp *IssuesUpdateCommentResp
 /*
 IssuesUpdateCommentReqBody is a request body for issues/update-comment
 
-https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentReqBody struct {
 
@@ -5741,7 +5741,7 @@ type IssuesUpdateCommentReqBody struct {
 /*
 IssuesUpdateCommentResponseBody is a response body for IssuesUpdateComment
 
-https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentResponseBody struct {
 	components.IssueComment
@@ -5750,7 +5750,7 @@ type IssuesUpdateCommentResponseBody struct {
 /*
 IssuesUpdateCommentResponse is a response for IssuesUpdateComment
 
-https://developer.github.com/v3/issues/comments/#edit-a-comment
+https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentResponse struct {
 	response

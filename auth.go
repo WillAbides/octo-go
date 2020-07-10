@@ -51,7 +51,7 @@ type appInstallationAuthProvider struct {
 	installationID int64
 	privateKey     *rsa.PrivateKey
 	requestOptions []RequestOption
-	requestBody    *AppsCreateInstallationTokenReqBody
+	requestBody    *AppsCreateInstallationAccessTokenReqBody
 	tkn            string
 	tknExpiry      time.Time
 	tknMux         sync.Mutex
@@ -78,13 +78,13 @@ func (a *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (
 		return a.tkn, nil
 	}
 	tokenClient := a.getTokenClient()
-	req := &AppsCreateInstallationTokenReq{
+	req := &AppsCreateInstallationAccessTokenReq{
 		InstallationId: a.installationID,
 	}
 	if a.requestBody != nil {
 		req.RequestBody = *a.requestBody
 	}
-	resp, err := tokenClient.AppsCreateInstallationToken(ctx, req)
+	resp, err := tokenClient.AppsCreateInstallationAccessToken(ctx, req)
 	if err != nil {
 		return "", fmt.Errorf("error getting installation token: %v", err)
 	}

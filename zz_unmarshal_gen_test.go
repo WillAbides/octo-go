@@ -58,6 +58,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ActionsGetArtifactResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ActionsGetJobForWorkflowRunResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/actions/jobs/{job_id}",
+	httpMethod:     "GET",
+	httpStatusCode: 202,
+	name:           "ActionsGetJobForWorkflowRunResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ActionsGetOrgPublicKeyResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -121,15 +130,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ActionsGetWorkflowResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActionsGetWorkflowJobResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/actions/jobs/{job_id}",
-	httpMethod:     "GET",
-	httpStatusCode: 202,
-	name:           "ActionsGetWorkflowJobResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ActionsGetWorkflowRunResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -191,15 +191,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ActionsListRepoSecretsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ActionsListRepoWorkflowRunsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/actions/runs",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ActionsListRepoWorkflowRunsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ActionsListRepoWorkflowsResponseBody{}
@@ -272,6 +263,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ActionsListWorkflowRunsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ActionsListWorkflowRunsForRepoResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/actions/runs",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ActionsListWorkflowRunsForRepoResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ActivityGetFeedsResponseBody{}
@@ -436,13 +436,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "AppsCreateFromManifestResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsCreateInstallationTokenResponseBody{}
+		target := octo.AppsCreateInstallationAccessTokenResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/app/installations/{installation_id}/access_tokens",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "AppsCreateInstallationTokenResponseBody",
+	name:           "AppsCreateInstallationAccessTokenResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.AppsGetAuthenticatedResponseBody{}
@@ -580,13 +580,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "AppsListPlansStubbedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListReposResponseBody{}
+		target := octo.AppsListReposAccessibleToInstallationResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/installation/repositories",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "AppsListReposResponseBody",
+	name:           "AppsListReposAccessibleToInstallationResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.AppsListSubscriptionsForAuthenticatedUserResponseBody{}
@@ -1003,6 +1003,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "GitUpdateRefResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.GitignoreGetAllTemplatesResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/gitignore/templates",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "GitignoreGetAllTemplatesResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.GitignoreGetTemplateResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1010,33 +1019,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "GitignoreGetTemplateResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.GitignoreListTemplatesResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/gitignore/templates",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "GitignoreListTemplatesResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.InteractionsAddOrUpdateRestrictionsForOrgResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/interaction-limits",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "InteractionsAddOrUpdateRestrictionsForOrgResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.InteractionsAddOrUpdateRestrictionsForRepoResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/interaction-limits",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "InteractionsAddOrUpdateRestrictionsForRepoResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.InteractionsGetRestrictionsForOrgResponseBody{}
@@ -1055,6 +1037,24 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "InteractionsGetRestrictionsForRepoResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.InteractionsSetRestrictionsForOrgResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/interaction-limits",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "InteractionsSetRestrictionsForOrgResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.InteractionsSetRestrictionsForRepoResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/interaction-limits",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "InteractionsSetRestrictionsForRepoResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.IssuesAddAssigneesResponseBody{}
@@ -1273,13 +1273,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "IssuesListLabelsOnIssueResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListMilestonesForRepoResponseBody{}
+		target := octo.IssuesListMilestonesResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/milestones",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "IssuesListMilestonesForRepoResponseBody",
+	name:           "IssuesListMilestonesResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.IssuesRemoveAssigneesResponseBody{}
@@ -1300,13 +1300,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "IssuesRemoveLabelResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesReplaceAllLabelsResponseBody{}
+		target := octo.IssuesSetLabelsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/labels",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "IssuesReplaceAllLabelsResponseBody",
+	name:           "IssuesSetLabelsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.IssuesUpdateResponseBody{}
@@ -1354,6 +1354,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "LicensesGetResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.LicensesGetAllCommonlyUsedResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/licenses",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "LicensesGetAllCommonlyUsedResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.LicensesGetForRepoResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1361,15 +1370,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "LicensesGetForRepoResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.LicensesListCommonlyUsedResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/licenses",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "LicensesListCommonlyUsedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.MetaGetResponseBody{}
@@ -1390,13 +1390,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "MigrationsGetCommitAuthorsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsGetImportProgressResponseBody{}
+		target := octo.MigrationsGetImportStatusResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/import",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "MigrationsGetImportProgressResponseBody",
+	name:           "MigrationsGetImportStatusResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.MigrationsGetLargeFilesResponseBody{}
@@ -1606,24 +1606,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OauthAuthorizationsUpdateAuthorizationResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsAddOrUpdateMembershipResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/memberships/{username}",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "OrgsAddOrUpdateMembershipResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsCreateHookResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/hooks",
-	httpMethod:     "POST",
-	httpStatusCode: 201,
-	name:           "OrgsCreateHookResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsCreateInvitationResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1631,6 +1613,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "POST",
 	httpStatusCode: 201,
 	name:           "OrgsCreateInvitationResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsCreateWebhookResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/hooks",
+	httpMethod:     "POST",
+	httpStatusCode: 201,
+	name:           "OrgsCreateWebhookResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsGetResponseBody{}
@@ -1642,24 +1633,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OrgsGetResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsGetHookResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/hooks/{hook_id}",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "OrgsGetHookResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsGetMembershipResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/memberships/{username}",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "OrgsGetMembershipResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsGetMembershipForAuthenticatedUserResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1667,6 +1640,24 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "OrgsGetMembershipForAuthenticatedUserResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsGetMembershipForUserResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/memberships/{username}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "OrgsGetMembershipForUserResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsGetWebhookResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/hooks/{hook_id}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "OrgsGetWebhookResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsListResponseBody{}
@@ -1678,6 +1669,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OrgsListResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsListAppInstallationsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/installations",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "OrgsListAppInstallationsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsListBlockedUsersResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1685,15 +1685,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "OrgsListBlockedUsersResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListCredentialAuthorizationsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/credential-authorizations",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "OrgsListCredentialAuthorizationsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsListForAuthenticatedUserResponseBody{}
@@ -1714,24 +1705,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OrgsListForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListHooksResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/hooks",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "OrgsListHooksResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListInstallationsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/installations",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "OrgsListInstallationsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsListInvitationTeamsResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1750,13 +1723,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OrgsListMembersResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListMembershipsResponseBody{}
+		target := octo.OrgsListMembershipsForAuthenticatedUserResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/memberships/orgs",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "OrgsListMembershipsResponseBody",
+	name:           "OrgsListMembershipsForAuthenticatedUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsListOutsideCollaboratorsResponseBody{}
@@ -1786,6 +1759,33 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OrgsListPublicMembersResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsListSamlSsoAuthorizationsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/credential-authorizations",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "OrgsListSamlSsoAuthorizationsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsListWebhooksResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/hooks",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "OrgsListWebhooksResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsSetMembershipForUserResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/memberships/{username}",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "OrgsSetMembershipForUserResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.OrgsUpdateResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1795,22 +1795,22 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "OrgsUpdateResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsUpdateHookResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/hooks/{hook_id}",
-	httpMethod:     "PATCH",
-	httpStatusCode: 200,
-	name:           "OrgsUpdateHookResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsUpdateMembershipResponseBody{}
+		target := octo.OrgsUpdateMembershipForAuthenticatedUserResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/memberships/orgs/{org}",
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
-	name:           "OrgsUpdateMembershipResponseBody",
+	name:           "OrgsUpdateMembershipForAuthenticatedUserResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.OrgsUpdateWebhookResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/hooks/{hook_id}",
+	httpMethod:     "PATCH",
+	httpStatusCode: 200,
+	name:           "OrgsUpdateWebhookResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ProjectsCreateCardResponseBody{}
@@ -1856,6 +1856,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ProjectsGetResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ProjectsGetPermissionForUserResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/projects/{project_id}/collaborators/{username}/permission",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ProjectsGetPermissionForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ProjectsListCardsResponseBody{}
@@ -1912,15 +1921,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ProjectsListForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsReviewUserPermissionLevelResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/projects/{project_id}/collaborators/{username}/permission",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ProjectsReviewUserPermissionLevelResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ProjectsUpdateResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1939,13 +1939,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "PullsCreateResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsCreateCommentResponseBody{}
+		target := octo.PullsCreateReplyForReviewCommentResponseBody{}
 		return decoder.Decode(&target)
 	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
+	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "PullsCreateCommentResponseBody",
+	name:           "PullsCreateReplyForReviewCommentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsCreateReviewResponseBody{}
@@ -1957,22 +1957,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "PullsCreateReviewResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsCreateReviewCommentReplyResponseBody{}
+		target := octo.PullsCreateReviewCommentResponseBody{}
 		return decoder.Decode(&target)
 	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies",
+	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "PullsCreateReviewCommentReplyResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsCreateReviewRequestResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
-	httpMethod:     "POST",
-	httpStatusCode: 201,
-	name:           "PullsCreateReviewRequestResponseBody",
+	name:           "PullsCreateReviewCommentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsDeletePendingReviewResponseBody{}
@@ -2002,24 +1993,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "PullsGetResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsGetCommentResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "PullsGetCommentResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsGetCommentsForReviewResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "PullsGetCommentsForReviewResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsGetReviewResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2027,6 +2000,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "PullsGetReviewResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.PullsGetReviewCommentResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "PullsGetReviewCommentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsListResponseBody{}
@@ -2038,22 +2020,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "PullsListResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListCommentsResponseBody{}
+		target := octo.PullsListCommentsForReviewResponseBody{}
 		return decoder.Decode(&target)
 	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
+	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "PullsListCommentsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListCommentsForRepoResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/comments",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "PullsListCommentsForRepoResponseBody",
+	name:           "PullsListCommentsForReviewResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsListCommitsResponseBody{}
@@ -2074,13 +2047,31 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "PullsListFilesResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListReviewRequestsResponseBody{}
+		target := octo.PullsListRequestedReviewersResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "PullsListReviewRequestsResponseBody",
+	name:           "PullsListRequestedReviewersResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.PullsListReviewCommentsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "PullsListReviewCommentsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.PullsListReviewCommentsForRepoResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/pulls/comments",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "PullsListReviewCommentsForRepoResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsListReviewsResponseBody{}
@@ -2099,6 +2090,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
 	name:           "PullsMergeResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.PullsRequestReviewersResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
+	httpMethod:     "POST",
+	httpStatusCode: 201,
+	name:           "PullsRequestReviewersResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsSubmitReviewResponseBody{}
@@ -2128,15 +2128,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "PullsUpdateBranchResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsUpdateCommentResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
-	httpMethod:     "PATCH",
-	httpStatusCode: 200,
-	name:           "PullsUpdateCommentResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsUpdateReviewResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2144,6 +2135,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
 	name:           "PullsUpdateReviewResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.PullsUpdateReviewCommentResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
+	httpMethod:     "PATCH",
+	httpStatusCode: 200,
+	name:           "PullsUpdateReviewCommentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.RateLimitGetResponseBody{}
@@ -2263,6 +2263,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReactionsListForTeamDiscussionInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposAddAppAccessRestrictionsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
+	httpMethod:     "POST",
+	httpStatusCode: 200,
+	name:           "ReposAddAppAccessRestrictionsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposAddCollaboratorResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2272,67 +2281,31 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposAddCollaboratorResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddDeployKeyResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/keys",
-	httpMethod:     "POST",
-	httpStatusCode: 201,
-	name:           "ReposAddDeployKeyResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddProtectedBranchAdminEnforcementResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins",
-	httpMethod:     "POST",
-	httpStatusCode: 200,
-	name:           "ReposAddProtectedBranchAdminEnforcementResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddProtectedBranchAppRestrictionsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
-	httpMethod:     "POST",
-	httpStatusCode: 200,
-	name:           "ReposAddProtectedBranchAppRestrictionsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddProtectedBranchRequiredSignaturesResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
-	httpMethod:     "POST",
-	httpStatusCode: 200,
-	name:           "ReposAddProtectedBranchRequiredSignaturesResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody{}
+		target := octo.ReposAddStatusCheckContextsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody",
+	name:           "ReposAddStatusCheckContextsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddProtectedBranchTeamRestrictionsResponseBody{}
+		target := octo.ReposAddTeamAccessRestrictionsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "ReposAddProtectedBranchTeamRestrictionsResponseBody",
+	name:           "ReposAddTeamAccessRestrictionsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddProtectedBranchUserRestrictionsResponseBody{}
+		target := octo.ReposAddUserAccessRestrictionsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "ReposAddProtectedBranchUserRestrictionsResponseBody",
+	name:           "ReposAddUserAccessRestrictionsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposCompareCommitsResponseBody{}
@@ -2351,6 +2324,33 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "POST",
 	httpStatusCode: 201,
 	name:           "ReposCreateCommitCommentResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposCreateCommitSignatureProtectionResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
+	httpMethod:     "POST",
+	httpStatusCode: 200,
+	name:           "ReposCreateCommitSignatureProtectionResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposCreateCommitStatusResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/statuses/{sha}",
+	httpMethod:     "POST",
+	httpStatusCode: 201,
+	name:           "ReposCreateCommitStatusResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposCreateDeployKeyResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/keys",
+	httpMethod:     "POST",
+	httpStatusCode: 201,
+	name:           "ReposCreateDeployKeyResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposCreateDeploymentResponseBody{}
@@ -2389,15 +2389,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposCreateForkResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposCreateHookResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/hooks",
-	httpMethod:     "POST",
-	httpStatusCode: 201,
-	name:           "ReposCreateHookResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposCreateInOrgResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2407,22 +2398,31 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposCreateInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposCreateOrUpdateFileResponseBody{}
+		target := octo.ReposCreateOrUpdateFileContentsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/contents/{path}",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "ReposCreateOrUpdateFileResponseBody",
+	name:           "ReposCreateOrUpdateFileContentsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposCreateOrUpdateFileResponseBody{}
+		target := octo.ReposCreateOrUpdateFileContentsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/contents/{path}",
 	httpMethod:     "PUT",
 	httpStatusCode: 201,
-	name:           "ReposCreateOrUpdateFileResponseBody",
+	name:           "ReposCreateOrUpdateFileContentsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposCreatePagesSiteResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/pages",
+	httpMethod:     "POST",
+	httpStatusCode: 201,
+	name:           "ReposCreatePagesSiteResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposCreateReleaseResponseBody{}
@@ -2434,15 +2434,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposCreateReleaseResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposCreateStatusResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/statuses/{sha}",
-	httpMethod:     "POST",
-	httpStatusCode: 201,
-	name:           "ReposCreateStatusResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposCreateUsingTemplateResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2450,6 +2441,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "POST",
 	httpStatusCode: 201,
 	name:           "ReposCreateUsingTemplateResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposCreateWebhookResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/hooks",
+	httpMethod:     "POST",
+	httpStatusCode: 201,
+	name:           "ReposCreateWebhookResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposDeleteFileResponseBody{}
@@ -2461,15 +2461,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposDeleteFileResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposEnablePagesSiteResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/pages",
-	httpMethod:     "POST",
-	httpStatusCode: 201,
-	name:           "ReposEnablePagesSiteResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2477,6 +2468,33 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ReposGetResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetAccessRestrictionsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetAccessRestrictionsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetAdminBranchProtectionResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetAdminBranchProtectionResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetAllStatusCheckContextsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetAllStatusCheckContextsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetAllTopicsResponseBody{}
@@ -2578,13 +2596,31 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposGetCommitCommentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetContentsResponseBody{}
+		target := octo.ReposGetCommitSignatureProtectionResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetCommitSignatureProtectionResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetCommunityProfileMetricsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/community/profile",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetCommunityProfileMetricsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetContentResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/contents/{path}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "ReposGetContentsResponseBody",
+	name:           "ReposGetContentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetContributorsStatsResponseBody{}
@@ -2621,24 +2657,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ReposGetDeploymentStatusResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetDownloadResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/downloads/{download_id}",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposGetDownloadResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetHookResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/hooks/{hook_id}",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposGetHookResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetLatestPagesBuildResponseBody{}
@@ -2686,42 +2704,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposGetParticipationStatsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetProtectedBranchAdminEnforcementResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposGetProtectedBranchAdminEnforcementResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetProtectedBranchRequiredSignaturesResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposGetProtectedBranchRequiredSignaturesResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetProtectedBranchRequiredStatusChecksResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposGetProtectedBranchRequiredStatusChecksResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetProtectedBranchRestrictionsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposGetProtectedBranchRestrictionsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetPunchCardStatsResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2765,6 +2747,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ReposGetReleaseByTagResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetStatusChecksProtectionResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetStatusChecksProtectionResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetTeamsWithAccessToProtectedBranchResponseBody{}
@@ -2812,13 +2803,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposGetViewsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListAssetsForReleaseResponseBody{}
+		target := octo.ReposGetWebhookResponseBody{}
 		return decoder.Decode(&target)
 	},
-	endpointPath:   "/repos/{owner}/{repo}/releases/{release_id}/assets",
+	endpointPath:   "/repos/{owner}/{repo}/hooks/{hook_id}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "ReposListAssetsForReleaseResponseBody",
+	name:           "ReposGetWebhookResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListBranchesResponseBody{}
@@ -2857,13 +2848,22 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposListCommentsForCommitResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListCommitCommentsResponseBody{}
+		target := octo.ReposListCommitCommentsForRepoResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "ReposListCommitCommentsResponseBody",
+	name:           "ReposListCommitCommentsForRepoResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposListCommitStatusesForRefResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/commits/{ref}/statuses",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposListCommitStatusesForRefResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListCommitsResponseBody{}
@@ -2911,15 +2911,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposListDeploymentsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListDownloadsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/downloads",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposListDownloadsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListForOrgResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -2936,15 +2927,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ReposListForksResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListHooksResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/hooks",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposListHooksResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListInvitationsResponseBody{}
@@ -2983,15 +2965,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposListPagesBuildsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListProtectedBranchRequiredStatusChecksContextsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposListProtectedBranchRequiredStatusChecksContextsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListPublicResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3010,6 +2983,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposListPullRequestsAssociatedWithCommitResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposListReleaseAssetsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/releases/{release_id}/assets",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposListReleaseAssetsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListReleasesResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3017,15 +2999,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ReposListReleasesResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListStatusesForRefResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/commits/{ref}/statuses",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "ReposListStatusesForRefResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposListTagsResponseBody{}
@@ -3046,6 +3019,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposListTeamsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposListWebhooksResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/hooks",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposListWebhooksResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposMergeResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3055,40 +3037,40 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposMergeResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveProtectedBranchAppRestrictionsResponseBody{}
+		target := octo.ReposRemoveAppAccessRestrictionsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "ReposRemoveProtectedBranchAppRestrictionsResponseBody",
+	name:           "ReposRemoveAppAccessRestrictionsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody{}
+		target := octo.ReposRemoveStatusCheckContextsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody",
+	name:           "ReposRemoveStatusCheckContextsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveProtectedBranchTeamRestrictionsResponseBody{}
+		target := octo.ReposRemoveTeamAccessRestrictionsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "ReposRemoveProtectedBranchTeamRestrictionsResponseBody",
+	name:           "ReposRemoveTeamAccessRestrictionsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveProtectedBranchUserRestrictionsResponseBody{}
+		target := octo.ReposRemoveUserAccessRestrictionsResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "ReposRemoveProtectedBranchUserRestrictionsResponseBody",
+	name:           "ReposRemoveUserAccessRestrictionsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposReplaceAllTopicsResponseBody{}
@@ -3100,58 +3082,58 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposReplaceAllTopicsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposReplaceProtectedBranchAppRestrictionsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "ReposReplaceProtectedBranchAppRestrictionsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposReplaceProtectedBranchTeamRestrictionsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "ReposReplaceProtectedBranchTeamRestrictionsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposReplaceProtectedBranchUserRestrictionsResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
-	httpMethod:     "PUT",
-	httpStatusCode: 200,
-	name:           "ReposReplaceProtectedBranchUserRestrictionsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRequestPageBuildResponseBody{}
+		target := octo.ReposRequestPagesBuildResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pages/builds",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "ReposRequestPageBuildResponseBody",
+	name:           "ReposRequestPagesBuildResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRetrieveCommunityProfileMetricsResponseBody{}
+		target := octo.ReposSetAdminBranchProtectionResponseBody{}
 		return decoder.Decode(&target)
 	},
-	endpointPath:   "/repos/{owner}/{repo}/community/profile",
-	httpMethod:     "GET",
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins",
+	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "ReposRetrieveCommunityProfileMetricsResponseBody",
+	name:           "ReposSetAdminBranchProtectionResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposSetAppAccessRestrictionsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "ReposSetAppAccessRestrictionsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposSetStatusCheckContextsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "ReposSetStatusCheckContextsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposSetTeamAccessRestrictionsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "ReposSetTeamAccessRestrictionsResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposSetUserAccessRestrictionsResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
+	httpMethod:     "PUT",
+	httpStatusCode: 200,
+	name:           "ReposSetUserAccessRestrictionsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposTransferResponseBody{}
@@ -3190,15 +3172,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposUpdateCommitCommentResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposUpdateHookResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/hooks/{hook_id}",
-	httpMethod:     "PATCH",
-	httpStatusCode: 200,
-	name:           "ReposUpdateHookResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposUpdateInvitationResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3208,22 +3181,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposUpdateInvitationResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody{}
+		target := octo.ReposUpdatePullRequestReviewProtectionResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews",
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
-	name:           "ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposUpdateProtectedBranchRequiredStatusChecksResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks",
-	httpMethod:     "PATCH",
-	httpStatusCode: 200,
-	name:           "ReposUpdateProtectedBranchRequiredStatusChecksResponseBody",
+	name:           "ReposUpdatePullRequestReviewProtectionResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposUpdateReleaseResponseBody{}
@@ -3244,6 +3208,24 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposUpdateReleaseAssetResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposUpdateStatusCheckPotectionResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks",
+	httpMethod:     "PATCH",
+	httpStatusCode: 200,
+	name:           "ReposUpdateStatusCheckPotectionResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposUpdateWebhookResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/hooks/{hook_id}",
+	httpMethod:     "PATCH",
+	httpStatusCode: 200,
+	name:           "ReposUpdateWebhookResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposUploadReleaseAssetResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3253,13 +3235,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposUploadReleaseAssetResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ScimGetProvisioningDetailsForUserResponseBody{}
+		target := octo.ScimGetProvisioningInformationForUserResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/scim/v2/organizations/{org}/Users/{scim_user_id}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "ScimGetProvisioningDetailsForUserResponseBody",
+	name:           "ScimGetProvisioningInformationForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ScimListProvisionedIdentitiesResponseBody{}
@@ -3271,31 +3253,31 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ScimListProvisionedIdentitiesResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ScimProvisionAndInviteUsersResponseBody{}
+		target := octo.ScimProvisionAndInviteUserResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/scim/v2/organizations/{org}/Users",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "ScimProvisionAndInviteUsersResponseBody",
+	name:           "ScimProvisionAndInviteUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ScimReplaceProvisionedUserInformationResponseBody{}
+		target := octo.ScimSetInformationForProvisionedUserResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/scim/v2/organizations/{org}/Users/{scim_user_id}",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "ScimReplaceProvisionedUserInformationResponseBody",
+	name:           "ScimSetInformationForProvisionedUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ScimUpdateUserAttributeResponseBody{}
+		target := octo.ScimUpdateAttributeForUserResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/scim/v2/organizations/{org}/Users/{scim_user_id}",
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
-	name:           "ScimUpdateUserAttributeResponseBody",
+	name:           "ScimUpdateAttributeForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.SearchCodeResponseBody{}
@@ -3361,13 +3343,22 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "SearchUsersResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsAddOrUpdateMembershipInOrgResponseBody{}
+		target := octo.TeamsAddOrUpdateMembershipForUserInOrgResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/memberships/{username}",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "TeamsAddOrUpdateMembershipInOrgResponseBody",
+	name:           "TeamsAddOrUpdateMembershipForUserInOrgResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.TeamsCheckPermissionsForProjectInOrgResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/teams/{team_slug}/projects/{project_id}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "TeamsCheckPermissionsForProjectInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.TeamsCreateResponseBody{}
@@ -3433,13 +3424,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "TeamsGetDiscussionInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsGetMembershipInOrgResponseBody{}
+		target := octo.TeamsGetMembershipForUserInOrgResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/memberships/{username}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "TeamsGetMembershipInOrgResponseBody",
+	name:           "TeamsGetMembershipForUserInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.TeamsListResponseBody{}
@@ -3541,15 +3532,6 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "TeamsListReposInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsReviewProjectInOrgResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/orgs/{org}/teams/{team_slug}/projects/{project_id}",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "TeamsReviewProjectInOrgResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
 		target := octo.TeamsUpdateDiscussionCommentInOrgResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3577,31 +3559,31 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "TeamsUpdateInOrgResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersAddEmailsResponseBody{}
+		target := octo.UsersAddEmailForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/emails",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "UsersAddEmailsResponseBody",
+	name:           "UsersAddEmailForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersCreateGpgKeyResponseBody{}
+		target := octo.UsersCreateGpgKeyForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/gpg_keys",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "UsersCreateGpgKeyResponseBody",
+	name:           "UsersCreateGpgKeyForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersCreatePublicKeyResponseBody{}
+		target := octo.UsersCreatePublicSshKeyForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/keys",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "UsersCreatePublicKeyResponseBody",
+	name:           "UsersCreatePublicSshKeyForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.UsersGetAuthenticatedResponseBody{}
@@ -3631,22 +3613,22 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "UsersGetContextForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersGetGpgKeyResponseBody{}
+		target := octo.UsersGetGpgKeyForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/gpg_keys/{gpg_key_id}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "UsersGetGpgKeyResponseBody",
+	name:           "UsersGetGpgKeyForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersGetPublicKeyResponseBody{}
+		target := octo.UsersGetPublicSshKeyForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/keys/{key_id}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "UsersGetPublicKeyResponseBody",
+	name:           "UsersGetPublicSshKeyForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.UsersListResponseBody{}
@@ -3658,22 +3640,22 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "UsersListResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListBlockedResponseBody{}
+		target := octo.UsersListBlockedByAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/blocks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "UsersListBlockedResponseBody",
+	name:           "UsersListBlockedByAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListEmailsResponseBody{}
+		target := octo.UsersListEmailsForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/emails",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "UsersListEmailsResponseBody",
+	name:           "UsersListEmailsForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.UsersListFollowedByAuthenticatedResponseBody{}
@@ -3712,13 +3694,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "UsersListFollowingForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListGpgKeysResponseBody{}
+		target := octo.UsersListGpgKeysForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/gpg_keys",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "UsersListGpgKeysResponseBody",
+	name:           "UsersListGpgKeysForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.UsersListGpgKeysForUserResponseBody{}
@@ -3730,22 +3712,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "UsersListGpgKeysForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListPublicEmailsResponseBody{}
+		target := octo.UsersListPublicEmailsForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/public_emails",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "UsersListPublicEmailsResponseBody",
-}, {
-	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListPublicKeysResponseBody{}
-		return decoder.Decode(&target)
-	},
-	endpointPath:   "/user/keys",
-	httpMethod:     "GET",
-	httpStatusCode: 200,
-	name:           "UsersListPublicKeysResponseBody",
+	name:           "UsersListPublicEmailsForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.UsersListPublicKeysForUserResponseBody{}
@@ -3757,13 +3730,22 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "UsersListPublicKeysForUserResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersTogglePrimaryEmailVisibilityResponseBody{}
+		target := octo.UsersListPublicSshKeysForAuthenticatedResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/user/keys",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "UsersListPublicSshKeysForAuthenticatedResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/email/visibility",
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
-	name:           "UsersTogglePrimaryEmailVisibilityResponseBody",
+	name:           "UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.UsersUpdateAuthenticatedResponseBody{}

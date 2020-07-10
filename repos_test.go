@@ -10,12 +10,12 @@ import (
 	"github.com/willabides/octo-go"
 )
 
-func TestReposGetContents(t *testing.T) {
+func TestReposGetContent(t *testing.T) {
 	t.Run("file", func(t *testing.T) {
 		ctx := context.Background()
 		client := vcrClient(t, t.Name(), patAuth())
 
-		response, err := client.ReposGetContents(ctx, &octo.ReposGetContentsReq{
+		response, err := client.ReposGetContent(ctx, &octo.ReposGetContentReq{
 			Owner: "WillAbides",
 			Repo:  "octo-go",
 			Path:  "generator/main.go",
@@ -28,7 +28,7 @@ func TestReposGetContents(t *testing.T) {
 		ctx := context.Background()
 		client := vcrClient(t, t.Name(), patAuth())
 
-		response, err := client.ReposGetContents(ctx, &octo.ReposGetContentsReq{
+		response, err := client.ReposGetContent(ctx, &octo.ReposGetContentReq{
 			Owner: "WillAbides",
 			Repo:  "octo-go",
 			Path:  "generator",
@@ -38,11 +38,11 @@ func TestReposGetContents(t *testing.T) {
 	})
 }
 
-func TestReposGetArchiveLink(t *testing.T) {
+func TestReposDownloadArchive(t *testing.T) {
 	ctx := context.Background()
 	client := vcrClient(t, t.Name(), patAuth())
 
-	resp, err := client.ReposGetArchiveLink(ctx, &octo.ReposGetArchiveLinkReq{
+	resp, err := client.ReposDownloadArchive(ctx, &octo.ReposDownloadArchiveReq{
 		Owner:         "octocat",
 		Repo:          "Hello-World",
 		ArchiveFormat: "tarball",

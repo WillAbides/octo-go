@@ -11,7 +11,7 @@ import (
 var overrideAddAttrs = map[string][]endpointAttribute{
 	"teams/check-manages-repo-in-org": {attrBoolean},
 	"repos/upload-release-asset":      {attrExplicitURL},
-	"repos/get-contents":              {attrForceArrayResponse},
+	"repos/get-content":               {attrForceArrayResponse},
 }
 
 func endpointWithOverrides(endpoint model.Endpoint) model.Endpoint {

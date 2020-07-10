@@ -14,11 +14,11 @@ import (
 /*
 PullsCheckIfMerged performs requests for "pulls/check-if-merged"
 
-Get if a pull request has been merged.
+Check if a pull request has been merged.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/merge
 
-https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
 	if req == nil {
@@ -46,11 +46,11 @@ func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...
 /*
 PullsCheckIfMerged performs requests for "pulls/check-if-merged"
 
-Get if a pull request has been merged.
+Check if a pull request has been merged.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/merge
 
-https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 func (c Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...RequestOption) (*PullsCheckIfMergedResponse, error) {
 	return PullsCheckIfMerged(ctx, req, append(c, opt...)...)
@@ -59,7 +59,7 @@ func (c Client) PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedR
 /*
 PullsCheckIfMergedReq is request data for Client.PullsCheckIfMerged
 
-https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 type PullsCheckIfMergedReq struct {
 	_url       string
@@ -128,7 +128,7 @@ func (r *PullsCheckIfMergedReq) Rel(link RelName, resp *PullsCheckIfMergedRespon
 /*
 PullsCheckIfMergedResponse is a response for PullsCheckIfMerged
 
-https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
+https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 type PullsCheckIfMergedResponse struct {
 	response
@@ -323,19 +323,19 @@ type PullsCreateResponse struct {
 }
 
 /*
-PullsCreateComment performs requests for "pulls/create-comment"
+PullsCreateReplyForReviewComment performs requests for "pulls/create-reply-for-review-comment"
 
-Create a comment.
+Create a reply for a review comment.
 
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
 
-https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-func PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
+func PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReplyForReviewCommentReq, opt ...RequestOption) (*PullsCreateReplyForReviewCommentResponse, error) {
 	if req == nil {
-		req = new(PullsCreateCommentReq)
+		req = new(PullsCreateReplyForReviewCommentReq)
 	}
-	resp := &PullsCreateCommentResponse{request: req}
+	resp := &PullsCreateReplyForReviewCommentResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -343,7 +343,7 @@ func PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsCreateCommentResponseBody)
+	resp.Data = new(PullsCreateReplyForReviewCommentResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -352,82 +352,73 @@ func PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...
 }
 
 /*
-PullsCreateComment performs requests for "pulls/create-comment"
+PullsCreateReplyForReviewComment performs requests for "pulls/create-reply-for-review-comment"
 
-Create a comment.
+Create a reply for a review comment.
 
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
 
-https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-func (c Client) PullsCreateComment(ctx context.Context, req *PullsCreateCommentReq, opt ...RequestOption) (*PullsCreateCommentResponse, error) {
-	return PullsCreateComment(ctx, req, append(c, opt...)...)
+func (c Client) PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReplyForReviewCommentReq, opt ...RequestOption) (*PullsCreateReplyForReviewCommentResponse, error) {
+	return PullsCreateReplyForReviewComment(ctx, req, append(c, opt...)...)
 }
 
 /*
-PullsCreateCommentReq is request data for Client.PullsCreateComment
+PullsCreateReplyForReviewCommentReq is request data for Client.PullsCreateReplyForReviewComment
 
-https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-type PullsCreateCommentReq struct {
+type PullsCreateReplyForReviewCommentReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
-	RequestBody PullsCreateCommentReqBody
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
+	CommentId   int64
+	RequestBody PullsCreateReplyForReviewCommentReqBody
 }
 
-func (r *PullsCreateCommentReq) url() string {
+func (r *PullsCreateReplyForReviewCommentReq) url() string {
 	return r._url
 }
 
-func (r *PullsCreateCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
+func (r *PullsCreateReplyForReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId)
 }
 
-func (r *PullsCreateCommentReq) method() string {
+func (r *PullsCreateReplyForReviewCommentReq) method() string {
 	return "POST"
 }
 
-func (r *PullsCreateCommentReq) urlQuery() url.Values {
+func (r *PullsCreateReplyForReviewCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *PullsCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *PullsCreateReplyForReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
-	if allPreviews {
-		previewVals["comfort-fade"] = true
-	}
+	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *PullsCreateCommentReq) body() interface{} {
+func (r *PullsCreateReplyForReviewCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *PullsCreateCommentReq) dataStatuses() []int {
+func (r *PullsCreateReplyForReviewCommentReq) dataStatuses() []int {
 	return []int{201}
 }
 
-func (r *PullsCreateCommentReq) validStatuses() []int {
+func (r *PullsCreateReplyForReviewCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *PullsCreateCommentReq) endpointAttributes() []endpointAttribute {
+func (r *PullsCreateReplyForReviewCommentReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PullsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -435,7 +426,7 @@ func (r *PullsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestO
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCreateCommentReq) Rel(link RelName, resp *PullsCreateCommentResponse) bool {
+func (r *PullsCreateReplyForReviewCommentReq) Rel(link RelName, resp *PullsCreateReplyForReviewCommentResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -445,101 +436,44 @@ func (r *PullsCreateCommentReq) Rel(link RelName, resp *PullsCreateCommentRespon
 }
 
 /*
-PullsCreateCommentReqBody is a request body for pulls/create-comment
+PullsCreateReplyForReviewCommentReqBody is a request body for pulls/create-reply-for-review-comment
 
-https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-type PullsCreateCommentReqBody struct {
+type PullsCreateReplyForReviewCommentReqBody struct {
 
 	// The text of the review comment.
 	Body *string `json:"body"`
-
-	/*
-	   The SHA of the commit needing a comment. Not using the latest commit SHA may
-	   render your comment outdated if a subsequent commit modifies the line you
-	   specify as the `position`.
-	*/
-	CommitId *string `json:"commit_id"`
-
-	/*
-	   **Required with `comfort-fade` preview**. The line of the blob in the pull
-	   request diff that the comment applies to. For a multi-line comment, the last
-	   line of the range that your comment applies to.
-	*/
-	Line *int64 `json:"line,omitempty"`
-
-	// The relative path to the file that necessitates a comment.
-	Path *string `json:"path"`
-
-	/*
-	   **Required without `comfort-fade` preview**. The position in the diff where you
-	   want to add a review comment. Note this value is not the same as the line number
-	   in the file. For help finding the position value, read the note above.
-	*/
-	Position *int64 `json:"position,omitempty"`
-
-	/*
-	   **Required with `comfort-fade` preview**. In a split diff view, the side of the
-	   diff that the pull request's changes appear on. Can be `LEFT` or `RIGHT`. Use
-	   `LEFT` for deletions that appear in red. Use `RIGHT` for additions that appear
-	   in green or unchanged lines that appear in white and are shown for context. For
-	   a multi-line comment, side represents whether the last line of the comment range
-	   is a deletion or addition. For more information, see "[Diff view
-	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)"
-	   in the GitHub Help documentation.
-	*/
-	Side *string `json:"side,omitempty"`
-
-	/*
-	   **Required when using multi-line comments**. To create multi-line comments, you
-	   must use the `comfort-fade` preview header. The `start_line` is the first line
-	   in the pull request diff that your multi-line comment applies to. To learn more
-	   about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
-	   in the GitHub Help documentation.
-	*/
-	StartLine *int64 `json:"start_line,omitempty"`
-
-	/*
-	   **Required when using multi-line comments**. To create multi-line comments, you
-	   must use the `comfort-fade` preview header. The `start_side` is the starting
-	   side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
-	   more about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
-	   in the GitHub Help documentation. See `side` in this table for additional
-	   context.
-	*/
-	StartSide *string `json:"start_side,omitempty"`
 }
 
 /*
-PullsCreateCommentResponseBody is a response body for PullsCreateComment
+PullsCreateReplyForReviewCommentResponseBody is a response body for PullsCreateReplyForReviewComment
 
-https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-type PullsCreateCommentResponseBody struct {
+type PullsCreateReplyForReviewCommentResponseBody struct {
 	components.PullRequestReviewComment
 }
 
 /*
-PullsCreateCommentResponse is a response for PullsCreateComment
+PullsCreateReplyForReviewCommentResponse is a response for PullsCreateReplyForReviewComment
 
-https://developer.github.com/v3/pulls/comments/#create-a-comment
+https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-type PullsCreateCommentResponse struct {
+type PullsCreateReplyForReviewCommentResponse struct {
 	response
-	request *PullsCreateCommentReq
-	Data    *PullsCreateCommentResponseBody
+	request *PullsCreateReplyForReviewCommentReq
+	Data    *PullsCreateReplyForReviewCommentResponseBody
 }
 
 /*
 PullsCreateReview performs requests for "pulls/create-review"
 
-Create a pull request review.
+Create a review for a pull request.
 
   POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews
 
-https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
 	if req == nil {
@@ -564,11 +498,11 @@ func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...Re
 /*
 PullsCreateReview performs requests for "pulls/create-review"
 
-Create a pull request review.
+Create a review for a pull request.
 
   POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews
 
-https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 func (c Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...RequestOption) (*PullsCreateReviewResponse, error) {
 	return PullsCreateReview(ctx, req, append(c, opt...)...)
@@ -577,7 +511,7 @@ func (c Client) PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq
 /*
 PullsCreateReviewReq is request data for Client.PullsCreateReview
 
-https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewReq struct {
 	_url        string
@@ -664,7 +598,7 @@ type PullsCreateReviewReqBodyComments struct {
 /*
 PullsCreateReviewReqBody is a request body for pulls/create-review
 
-https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewReqBody struct {
 
@@ -692,7 +626,7 @@ type PullsCreateReviewReqBody struct {
 	   The review action you want to perform. The review actions include: `APPROVE`,
 	   `REQUEST_CHANGES`, or `COMMENT`. By leaving this blank, you set the review
 	   action state to `PENDING`, which means you will need to [submit the pull request
-	   review](https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review)
+	   review](https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request)
 	   when you are ready.
 	*/
 	Event *string `json:"event,omitempty"`
@@ -701,7 +635,7 @@ type PullsCreateReviewReqBody struct {
 /*
 PullsCreateReviewResponseBody is a response body for PullsCreateReview
 
-https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewResponseBody struct {
 	components.PullRequestReview
@@ -710,7 +644,7 @@ type PullsCreateReviewResponseBody struct {
 /*
 PullsCreateReviewResponse is a response for PullsCreateReview
 
-https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewResponse struct {
 	response
@@ -719,19 +653,19 @@ type PullsCreateReviewResponse struct {
 }
 
 /*
-PullsCreateReviewCommentReply performs requests for "pulls/create-review-comment-reply"
+PullsCreateReviewComment performs requests for "pulls/create-review-comment"
 
-Create a review comment reply.
+Create a review comment for a pull request.
 
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
 
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-func PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
+func PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewCommentReq, opt ...RequestOption) (*PullsCreateReviewCommentResponse, error) {
 	if req == nil {
-		req = new(PullsCreateReviewCommentReplyReq)
+		req = new(PullsCreateReviewCommentReq)
 	}
-	resp := &PullsCreateReviewCommentReplyResponse{request: req}
+	resp := &PullsCreateReviewCommentResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -739,7 +673,7 @@ func PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsCreateReviewCommentReplyResponseBody)
+	resp.Data = new(PullsCreateReviewCommentResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -748,73 +682,82 @@ func PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCo
 }
 
 /*
-PullsCreateReviewCommentReply performs requests for "pulls/create-review-comment-reply"
+PullsCreateReviewComment performs requests for "pulls/create-review-comment"
 
-Create a review comment reply.
+Create a review comment for a pull request.
 
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/comments
 
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-func (c Client) PullsCreateReviewCommentReply(ctx context.Context, req *PullsCreateReviewCommentReplyReq, opt ...RequestOption) (*PullsCreateReviewCommentReplyResponse, error) {
-	return PullsCreateReviewCommentReply(ctx, req, append(c, opt...)...)
+func (c Client) PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewCommentReq, opt ...RequestOption) (*PullsCreateReviewCommentResponse, error) {
+	return PullsCreateReviewComment(ctx, req, append(c, opt...)...)
 }
 
 /*
-PullsCreateReviewCommentReplyReq is request data for Client.PullsCreateReviewCommentReply
+PullsCreateReviewCommentReq is request data for Client.PullsCreateReviewComment
 
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-type PullsCreateReviewCommentReplyReq struct {
+type PullsCreateReviewCommentReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	PullNumber  int64
-	CommentId   int64
-	RequestBody PullsCreateReviewCommentReplyReqBody
+	RequestBody PullsCreateReviewCommentReqBody
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
 }
 
-func (r *PullsCreateReviewCommentReplyReq) url() string {
+func (r *PullsCreateReviewCommentReq) url() string {
 	return r._url
 }
 
-func (r *PullsCreateReviewCommentReplyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId)
+func (r *PullsCreateReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
 }
 
-func (r *PullsCreateReviewCommentReplyReq) method() string {
+func (r *PullsCreateReviewCommentReq) method() string {
 	return "POST"
 }
 
-func (r *PullsCreateReviewCommentReplyReq) urlQuery() url.Values {
+func (r *PullsCreateReviewCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *PullsCreateReviewCommentReplyReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *PullsCreateReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
+	if allPreviews {
+		previewVals["comfort-fade"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *PullsCreateReviewCommentReplyReq) body() interface{} {
+func (r *PullsCreateReviewCommentReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *PullsCreateReviewCommentReplyReq) dataStatuses() []int {
+func (r *PullsCreateReviewCommentReq) dataStatuses() []int {
 	return []int{201}
 }
 
-func (r *PullsCreateReviewCommentReplyReq) validStatuses() []int {
+func (r *PullsCreateReviewCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *PullsCreateReviewCommentReplyReq) endpointAttributes() []endpointAttribute {
+func (r *PullsCreateReviewCommentReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PullsCreateReviewCommentReplyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsCreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -822,7 +765,7 @@ func (r *PullsCreateReviewCommentReplyReq) HTTPRequest(ctx context.Context, opt 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCreateReviewCommentReplyReq) Rel(link RelName, resp *PullsCreateReviewCommentReplyResponse) bool {
+func (r *PullsCreateReviewCommentReq) Rel(link RelName, resp *PullsCreateReviewCommentResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -832,310 +775,101 @@ func (r *PullsCreateReviewCommentReplyReq) Rel(link RelName, resp *PullsCreateRe
 }
 
 /*
-PullsCreateReviewCommentReplyReqBody is a request body for pulls/create-review-comment-reply
+PullsCreateReviewCommentReqBody is a request body for pulls/create-review-comment
 
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-type PullsCreateReviewCommentReplyReqBody struct {
+type PullsCreateReviewCommentReqBody struct {
 
 	// The text of the review comment.
 	Body *string `json:"body"`
+
+	/*
+	   The SHA of the commit needing a comment. Not using the latest commit SHA may
+	   render your comment outdated if a subsequent commit modifies the line you
+	   specify as the `position`.
+	*/
+	CommitId *string `json:"commit_id"`
+
+	/*
+	   **Required with `comfort-fade` preview**. The line of the blob in the pull
+	   request diff that the comment applies to. For a multi-line comment, the last
+	   line of the range that your comment applies to.
+	*/
+	Line *int64 `json:"line,omitempty"`
+
+	// The relative path to the file that necessitates a comment.
+	Path *string `json:"path"`
+
+	/*
+	   **Required without `comfort-fade` preview**. The position in the diff where you
+	   want to add a review comment. Note this value is not the same as the line number
+	   in the file. For help finding the position value, read the note above.
+	*/
+	Position *int64 `json:"position,omitempty"`
+
+	/*
+	   **Required with `comfort-fade` preview**. In a split diff view, the side of the
+	   diff that the pull request's changes appear on. Can be `LEFT` or `RIGHT`. Use
+	   `LEFT` for deletions that appear in red. Use `RIGHT` for additions that appear
+	   in green or unchanged lines that appear in white and are shown for context. For
+	   a multi-line comment, side represents whether the last line of the comment range
+	   is a deletion or addition. For more information, see "[Diff view
+	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)"
+	   in the GitHub Help documentation.
+	*/
+	Side *string `json:"side,omitempty"`
+
+	/*
+	   **Required when using multi-line comments**. To create multi-line comments, you
+	   must use the `comfort-fade` preview header. The `start_line` is the first line
+	   in the pull request diff that your multi-line comment applies to. To learn more
+	   about multi-line comments, see "[Commenting on a pull
+	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
+	   in the GitHub Help documentation.
+	*/
+	StartLine *int64 `json:"start_line,omitempty"`
+
+	/*
+	   **Required when using multi-line comments**. To create multi-line comments, you
+	   must use the `comfort-fade` preview header. The `start_side` is the starting
+	   side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
+	   more about multi-line comments, see "[Commenting on a pull
+	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
+	   in the GitHub Help documentation. See `side` in this table for additional
+	   context.
+	*/
+	StartSide *string `json:"start_side,omitempty"`
 }
 
 /*
-PullsCreateReviewCommentReplyResponseBody is a response body for PullsCreateReviewCommentReply
+PullsCreateReviewCommentResponseBody is a response body for PullsCreateReviewComment
 
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-type PullsCreateReviewCommentReplyResponseBody struct {
-	components.PullRequestReviewComment2
+type PullsCreateReviewCommentResponseBody struct {
+	components.PullRequestReviewComment
 }
 
 /*
-PullsCreateReviewCommentReplyResponse is a response for PullsCreateReviewCommentReply
+PullsCreateReviewCommentResponse is a response for PullsCreateReviewComment
 
-https://developer.github.com/v3/pulls/comments/#create-a-review-comment-reply
+https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-type PullsCreateReviewCommentReplyResponse struct {
+type PullsCreateReviewCommentResponse struct {
 	response
-	request *PullsCreateReviewCommentReplyReq
-	Data    *PullsCreateReviewCommentReplyResponseBody
-}
-
-/*
-PullsCreateReviewRequest performs requests for "pulls/create-review-request"
-
-Create a review request.
-
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-func PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
-	if req == nil {
-		req = new(PullsCreateReviewRequestReq)
-	}
-	resp := &PullsCreateReviewRequestResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(PullsCreateReviewRequestResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-PullsCreateReviewRequest performs requests for "pulls/create-review-request"
-
-Create a review request.
-
-  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-func (c Client) PullsCreateReviewRequest(ctx context.Context, req *PullsCreateReviewRequestReq, opt ...RequestOption) (*PullsCreateReviewRequestResponse, error) {
-	return PullsCreateReviewRequest(ctx, req, append(c, opt...)...)
-}
-
-/*
-PullsCreateReviewRequestReq is request data for Client.PullsCreateReviewRequest
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsCreateReviewRequestReqBody
-}
-
-func (r *PullsCreateReviewRequestReq) url() string {
-	return r._url
-}
-
-func (r *PullsCreateReviewRequestReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
-}
-
-func (r *PullsCreateReviewRequestReq) method() string {
-	return "POST"
-}
-
-func (r *PullsCreateReviewRequestReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *PullsCreateReviewRequestReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *PullsCreateReviewRequestReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *PullsCreateReviewRequestReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *PullsCreateReviewRequestReq) validStatuses() []int {
-	return []int{201}
-}
-
-func (r *PullsCreateReviewRequestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *PullsCreateReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *PullsCreateReviewRequestReq) Rel(link RelName, resp *PullsCreateReviewRequestResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-PullsCreateReviewRequestReqBody is a request body for pulls/create-review-request
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestReqBody struct {
-
-	// An array of user `login`s that will be requested.
-	Reviewers []string `json:"reviewers,omitempty"`
-
-	// An array of team `slug`s that will be requested.
-	TeamReviewers []string `json:"team_reviewers,omitempty"`
-}
-
-/*
-PullsCreateReviewRequestResponseBody is a response body for PullsCreateReviewRequest
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestResponseBody struct {
-	components.PullRequestReviewRequest
-}
-
-/*
-PullsCreateReviewRequestResponse is a response for PullsCreateReviewRequest
-
-https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
-*/
-type PullsCreateReviewRequestResponse struct {
-	response
-	request *PullsCreateReviewRequestReq
-	Data    *PullsCreateReviewRequestResponseBody
-}
-
-/*
-PullsDeleteComment performs requests for "pulls/delete-comment"
-
-Delete a comment.
-
-  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#delete-a-comment
-*/
-func PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
-	if req == nil {
-		req = new(PullsDeleteCommentReq)
-	}
-	resp := &PullsDeleteCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-PullsDeleteComment performs requests for "pulls/delete-comment"
-
-Delete a comment.
-
-  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#delete-a-comment
-*/
-func (c Client) PullsDeleteComment(ctx context.Context, req *PullsDeleteCommentReq, opt ...RequestOption) (*PullsDeleteCommentResponse, error) {
-	return PullsDeleteComment(ctx, req, append(c, opt...)...)
-}
-
-/*
-PullsDeleteCommentReq is request data for Client.PullsDeleteComment
-
-https://developer.github.com/v3/pulls/comments/#delete-a-comment
-*/
-type PullsDeleteCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
-	CommentId int64
-}
-
-func (r *PullsDeleteCommentReq) url() string {
-	return r._url
-}
-
-func (r *PullsDeleteCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *PullsDeleteCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *PullsDeleteCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *PullsDeleteCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *PullsDeleteCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *PullsDeleteCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *PullsDeleteCommentReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *PullsDeleteCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *PullsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *PullsDeleteCommentReq) Rel(link RelName, resp *PullsDeleteCommentResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-PullsDeleteCommentResponse is a response for PullsDeleteComment
-
-https://developer.github.com/v3/pulls/comments/#delete-a-comment
-*/
-type PullsDeleteCommentResponse struct {
-	response
-	request *PullsDeleteCommentReq
+	request *PullsCreateReviewCommentReq
+	Data    *PullsCreateReviewCommentResponseBody
 }
 
 /*
 PullsDeletePendingReview performs requests for "pulls/delete-pending-review"
 
-Delete a pending review.
+Delete a pending review for a pull request.
 
   DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
 
-https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
 	if req == nil {
@@ -1160,11 +894,11 @@ func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReview
 /*
 PullsDeletePendingReview performs requests for "pulls/delete-pending-review"
 
-Delete a pending review.
+Delete a pending review for a pull request.
 
   DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
 
-https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 func (c Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReviewReq, opt ...RequestOption) (*PullsDeletePendingReviewResponse, error) {
 	return PullsDeletePendingReview(ctx, req, append(c, opt...)...)
@@ -1173,7 +907,7 @@ func (c Client) PullsDeletePendingReview(ctx context.Context, req *PullsDeletePe
 /*
 PullsDeletePendingReviewReq is request data for Client.PullsDeletePendingReview
 
-https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type PullsDeletePendingReviewReq struct {
 	_url       string
@@ -1243,16 +977,16 @@ func (r *PullsDeletePendingReviewReq) Rel(link RelName, resp *PullsDeletePending
 /*
 PullsDeletePendingReviewResponseBody is a response body for PullsDeletePendingReview
 
-https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type PullsDeletePendingReviewResponseBody struct {
-	components.PullRequestReview
+	components.PullRequestReview2
 }
 
 /*
 PullsDeletePendingReviewResponse is a response for PullsDeletePendingReview
 
-https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review
+https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type PullsDeletePendingReviewResponse struct {
 	response
@@ -1261,19 +995,19 @@ type PullsDeletePendingReviewResponse struct {
 }
 
 /*
-PullsDeleteReviewRequest performs requests for "pulls/delete-review-request"
+PullsDeleteReviewComment performs requests for "pulls/delete-review-comment"
 
-Delete a review request.
+Delete a review comment for a pull request.
 
-  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
 
-https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
-func PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
+func PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewCommentReq, opt ...RequestOption) (*PullsDeleteReviewCommentResponse, error) {
 	if req == nil {
-		req = new(PullsDeleteReviewRequestReq)
+		req = new(PullsDeleteReviewCommentReq)
 	}
-	resp := &PullsDeleteReviewRequestResponse{request: req}
+	resp := &PullsDeleteReviewCommentResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1289,72 +1023,71 @@ func PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequest
 }
 
 /*
-PullsDeleteReviewRequest performs requests for "pulls/delete-review-request"
+PullsDeleteReviewComment performs requests for "pulls/delete-review-comment"
 
-Delete a review request.
+Delete a review comment for a pull request.
 
-  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+  DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}
 
-https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
-func (c Client) PullsDeleteReviewRequest(ctx context.Context, req *PullsDeleteReviewRequestReq, opt ...RequestOption) (*PullsDeleteReviewRequestResponse, error) {
-	return PullsDeleteReviewRequest(ctx, req, append(c, opt...)...)
+func (c Client) PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewCommentReq, opt ...RequestOption) (*PullsDeleteReviewCommentResponse, error) {
+	return PullsDeleteReviewComment(ctx, req, append(c, opt...)...)
 }
 
 /*
-PullsDeleteReviewRequestReq is request data for Client.PullsDeleteReviewRequest
+PullsDeleteReviewCommentReq is request data for Client.PullsDeleteReviewComment
 
-https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
-type PullsDeleteReviewRequestReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	PullNumber  int64
-	RequestBody PullsDeleteReviewRequestReqBody
+type PullsDeleteReviewCommentReq struct {
+	_url      string
+	Owner     string
+	Repo      string
+	CommentId int64
 }
 
-func (r *PullsDeleteReviewRequestReq) url() string {
+func (r *PullsDeleteReviewCommentReq) url() string {
 	return r._url
 }
 
-func (r *PullsDeleteReviewRequestReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
+func (r *PullsDeleteReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
 }
 
-func (r *PullsDeleteReviewRequestReq) method() string {
+func (r *PullsDeleteReviewCommentReq) method() string {
 	return "DELETE"
 }
 
-func (r *PullsDeleteReviewRequestReq) urlQuery() url.Values {
+func (r *PullsDeleteReviewCommentReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *PullsDeleteReviewRequestReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *PullsDeleteReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *PullsDeleteReviewRequestReq) body() interface{} {
-	return r.RequestBody
+func (r *PullsDeleteReviewCommentReq) body() interface{} {
+	return nil
 }
 
-func (r *PullsDeleteReviewRequestReq) dataStatuses() []int {
+func (r *PullsDeleteReviewCommentReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *PullsDeleteReviewRequestReq) validStatuses() []int {
-	return []int{200}
+func (r *PullsDeleteReviewCommentReq) validStatuses() []int {
+	return []int{204}
 }
 
-func (r *PullsDeleteReviewRequestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
+func (r *PullsDeleteReviewCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PullsDeleteReviewRequestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsDeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1362,7 +1095,7 @@ func (r *PullsDeleteReviewRequestReq) HTTPRequest(ctx context.Context, opt ...Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsDeleteReviewRequestReq) Rel(link RelName, resp *PullsDeleteReviewRequestResponse) bool {
+func (r *PullsDeleteReviewCommentReq) Rel(link RelName, resp *PullsDeleteReviewCommentResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1372,37 +1105,23 @@ func (r *PullsDeleteReviewRequestReq) Rel(link RelName, resp *PullsDeleteReviewR
 }
 
 /*
-PullsDeleteReviewRequestReqBody is a request body for pulls/delete-review-request
+PullsDeleteReviewCommentResponse is a response for PullsDeleteReviewComment
 
-https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
+https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
-type PullsDeleteReviewRequestReqBody struct {
-
-	// An array of user `login`s that will be removed.
-	Reviewers []string `json:"reviewers,omitempty"`
-
-	// An array of team `slug`s that will be removed.
-	TeamReviewers []string `json:"team_reviewers,omitempty"`
-}
-
-/*
-PullsDeleteReviewRequestResponse is a response for PullsDeleteReviewRequest
-
-https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
-*/
-type PullsDeleteReviewRequestResponse struct {
+type PullsDeleteReviewCommentResponse struct {
 	response
-	request *PullsDeleteReviewRequestReq
+	request *PullsDeleteReviewCommentReq
 }
 
 /*
 PullsDismissReview performs requests for "pulls/dismiss-review"
 
-Dismiss a pull request review.
+Dismiss a review for a pull request.
 
   PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals
 
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
 	if req == nil {
@@ -1427,11 +1146,11 @@ func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...
 /*
 PullsDismissReview performs requests for "pulls/dismiss-review"
 
-Dismiss a pull request review.
+Dismiss a review for a pull request.
 
   PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals
 
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 func (c Client) PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...RequestOption) (*PullsDismissReviewResponse, error) {
 	return PullsDismissReview(ctx, req, append(c, opt...)...)
@@ -1440,7 +1159,7 @@ func (c Client) PullsDismissReview(ctx context.Context, req *PullsDismissReviewR
 /*
 PullsDismissReviewReq is request data for Client.PullsDismissReview
 
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewReq struct {
 	_url        string
@@ -1511,7 +1230,7 @@ func (r *PullsDismissReviewReq) Rel(link RelName, resp *PullsDismissReviewRespon
 /*
 PullsDismissReviewReqBody is a request body for pulls/dismiss-review
 
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewReqBody struct {
 
@@ -1522,7 +1241,7 @@ type PullsDismissReviewReqBody struct {
 /*
 PullsDismissReviewResponseBody is a response body for PullsDismissReview
 
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewResponseBody struct {
 	components.PullRequestReview
@@ -1531,7 +1250,7 @@ type PullsDismissReviewResponseBody struct {
 /*
 PullsDismissReviewResponse is a response for PullsDismissReview
 
-https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewResponse struct {
 	response
@@ -1542,11 +1261,11 @@ type PullsDismissReviewResponse struct {
 /*
 PullsGet performs requests for "pulls/get"
 
-Get a single pull request.
+Get a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}
 
-https://developer.github.com/v3/pulls/#get-a-single-pull-request
+https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 func PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
 	if req == nil {
@@ -1571,11 +1290,11 @@ func PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*Pul
 /*
 PullsGet performs requests for "pulls/get"
 
-Get a single pull request.
+Get a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}
 
-https://developer.github.com/v3/pulls/#get-a-single-pull-request
+https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 func (c Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*PullsGetResponse, error) {
 	return PullsGet(ctx, req, append(c, opt...)...)
@@ -1584,7 +1303,7 @@ func (c Client) PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOp
 /*
 PullsGetReq is request data for Client.PullsGet
 
-https://developer.github.com/v3/pulls/#get-a-single-pull-request
+https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type PullsGetReq struct {
 	_url       string
@@ -1666,7 +1385,7 @@ func (r *PullsGetReq) Rel(link RelName, resp *PullsGetResponse) bool {
 /*
 PullsGetResponseBody is a response body for PullsGet
 
-https://developer.github.com/v3/pulls/#get-a-single-pull-request
+https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type PullsGetResponseBody struct {
 	components.PullRequest
@@ -1675,7 +1394,7 @@ type PullsGetResponseBody struct {
 /*
 PullsGetResponse is a response for PullsGet
 
-https://developer.github.com/v3/pulls/#get-a-single-pull-request
+https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type PullsGetResponse struct {
 	response
@@ -1684,313 +1403,13 @@ type PullsGetResponse struct {
 }
 
 /*
-PullsGetComment performs requests for "pulls/get-comment"
-
-Get a single comment.
-
-  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-func PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
-	if req == nil {
-		req = new(PullsGetCommentReq)
-	}
-	resp := &PullsGetCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(PullsGetCommentResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-PullsGetComment performs requests for "pulls/get-comment"
-
-Get a single comment.
-
-  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-func (c Client) PullsGetComment(ctx context.Context, req *PullsGetCommentReq, opt ...RequestOption) (*PullsGetCommentResponse, error) {
-	return PullsGetComment(ctx, req, append(c, opt...)...)
-}
-
-/*
-PullsGetCommentReq is request data for Client.PullsGetComment
-
-https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-type PullsGetCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
-	CommentId int64
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-
-	/*
-	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *PullsGetCommentReq) url() string {
-	return r._url
-}
-
-func (r *PullsGetCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *PullsGetCommentReq) method() string {
-	return "GET"
-}
-
-func (r *PullsGetCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *PullsGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"comfort-fade":  r.ComfortFadePreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	if allPreviews {
-		previewVals["comfort-fade"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *PullsGetCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *PullsGetCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsGetCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsGetCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *PullsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *PullsGetCommentReq) Rel(link RelName, resp *PullsGetCommentResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-PullsGetCommentResponseBody is a response body for PullsGetComment
-
-https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-type PullsGetCommentResponseBody struct {
-	components.PullRequestReviewComment
-}
-
-/*
-PullsGetCommentResponse is a response for PullsGetComment
-
-https://developer.github.com/v3/pulls/comments/#get-a-single-comment
-*/
-type PullsGetCommentResponse struct {
-	response
-	request *PullsGetCommentReq
-	Data    *PullsGetCommentResponseBody
-}
-
-/*
-PullsGetCommentsForReview performs requests for "pulls/get-comments-for-review"
-
-Get comments for a single review.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
-
-https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-func PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
-	if req == nil {
-		req = new(PullsGetCommentsForReviewReq)
-	}
-	resp := &PullsGetCommentsForReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(PullsGetCommentsForReviewResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-PullsGetCommentsForReview performs requests for "pulls/get-comments-for-review"
-
-Get comments for a single review.
-
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
-
-https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-func (c Client) PullsGetCommentsForReview(ctx context.Context, req *PullsGetCommentsForReviewReq, opt ...RequestOption) (*PullsGetCommentsForReviewResponse, error) {
-	return PullsGetCommentsForReview(ctx, req, append(c, opt...)...)
-}
-
-/*
-PullsGetCommentsForReviewReq is request data for Client.PullsGetCommentsForReview
-
-https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-type PullsGetCommentsForReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
-	PullNumber int64
-	ReviewId   int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *PullsGetCommentsForReviewReq) url() string {
-	return r._url
-}
-
-func (r *PullsGetCommentsForReviewReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/comments", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
-}
-
-func (r *PullsGetCommentsForReviewReq) method() string {
-	return "GET"
-}
-
-func (r *PullsGetCommentsForReviewReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *PullsGetCommentsForReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *PullsGetCommentsForReviewReq) body() interface{} {
-	return nil
-}
-
-func (r *PullsGetCommentsForReviewReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsGetCommentsForReviewReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsGetCommentsForReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *PullsGetCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *PullsGetCommentsForReviewReq) Rel(link RelName, resp *PullsGetCommentsForReviewResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-PullsGetCommentsForReviewResponseBody is a response body for PullsGetCommentsForReview
-
-https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-type PullsGetCommentsForReviewResponseBody []struct {
-	components.LegacyReviewComment
-}
-
-/*
-PullsGetCommentsForReviewResponse is a response for PullsGetCommentsForReview
-
-https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review
-*/
-type PullsGetCommentsForReviewResponse struct {
-	response
-	request *PullsGetCommentsForReviewReq
-	Data    *PullsGetCommentsForReviewResponseBody
-}
-
-/*
 PullsGetReview performs requests for "pulls/get-review"
 
-Get a single review.
+Get a review for a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
 
-https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
 	if req == nil {
@@ -2015,11 +1434,11 @@ func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestO
 /*
 PullsGetReview performs requests for "pulls/get-review"
 
-Get a single review.
+Get a review for a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
 
-https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 func (c Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestOption) (*PullsGetReviewResponse, error) {
 	return PullsGetReview(ctx, req, append(c, opt...)...)
@@ -2028,7 +1447,7 @@ func (c Client) PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt 
 /*
 PullsGetReviewReq is request data for Client.PullsGetReview
 
-https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type PullsGetReviewReq struct {
 	_url       string
@@ -2098,21 +1517,177 @@ func (r *PullsGetReviewReq) Rel(link RelName, resp *PullsGetReviewResponse) bool
 /*
 PullsGetReviewResponseBody is a response body for PullsGetReview
 
-https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type PullsGetReviewResponseBody struct {
-	components.PullRequestReview2
+	components.PullRequestReview
 }
 
 /*
 PullsGetReviewResponse is a response for PullsGetReview
 
-https://developer.github.com/v3/pulls/reviews/#get-a-single-review
+https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type PullsGetReviewResponse struct {
 	response
 	request *PullsGetReviewReq
 	Data    *PullsGetReviewResponseBody
+}
+
+/*
+PullsGetReviewComment performs requests for "pulls/get-review-comment"
+
+Get a review comment for a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
+*/
+func PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, opt ...RequestOption) (*PullsGetReviewCommentResponse, error) {
+	if req == nil {
+		req = new(PullsGetReviewCommentReq)
+	}
+	resp := &PullsGetReviewCommentResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(PullsGetReviewCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsGetReviewComment performs requests for "pulls/get-review-comment"
+
+Get a review comment for a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
+*/
+func (c Client) PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, opt ...RequestOption) (*PullsGetReviewCommentResponse, error) {
+	return PullsGetReviewComment(ctx, req, append(c, opt...)...)
+}
+
+/*
+PullsGetReviewCommentReq is request data for Client.PullsGetReviewComment
+
+https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
+*/
+type PullsGetReviewCommentReq struct {
+	_url      string
+	Owner     string
+	Repo      string
+	CommentId int64
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *PullsGetReviewCommentReq) url() string {
+	return r._url
+}
+
+func (r *PullsGetReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r *PullsGetReviewCommentReq) method() string {
+	return "GET"
+}
+
+func (r *PullsGetReviewCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *PullsGetReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"comfort-fade":  r.ComfortFadePreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	if allPreviews {
+		previewVals["comfort-fade"] = true
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *PullsGetReviewCommentReq) body() interface{} {
+	return nil
+}
+
+func (r *PullsGetReviewCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetReviewCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsGetReviewCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *PullsGetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsGetReviewCommentReq) Rel(link RelName, resp *PullsGetReviewCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+PullsGetReviewCommentResponseBody is a response body for PullsGetReviewComment
+
+https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
+*/
+type PullsGetReviewCommentResponseBody struct {
+	components.PullRequestReviewComment
+}
+
+/*
+PullsGetReviewCommentResponse is a response for PullsGetReviewComment
+
+https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
+*/
+type PullsGetReviewCommentResponse struct {
+	response
+	request *PullsGetReviewCommentReq
+	Data    *PullsGetReviewCommentResponseBody
 }
 
 /*
@@ -2312,19 +1887,19 @@ type PullsListResponse struct {
 }
 
 /*
-PullsListComments performs requests for "pulls/list-comments"
+PullsListCommentsForReview performs requests for "pulls/list-comments-for-review"
 
-List comments on a pull request.
+List comments for a pull request review.
 
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
 
-https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-func PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
+func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForReviewReq, opt ...RequestOption) (*PullsListCommentsForReviewResponse, error) {
 	if req == nil {
-		req = new(PullsListCommentsReq)
+		req = new(PullsListCommentsForReviewReq)
 	}
-	resp := &PullsListCommentsResponse{request: req}
+	resp := &PullsListCommentsForReviewResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2332,7 +1907,7 @@ func PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListCommentsResponseBody)
+	resp.Data = new(PullsListCommentsForReviewResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -2341,90 +1916,51 @@ func PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...Re
 }
 
 /*
-PullsListComments performs requests for "pulls/list-comments"
+PullsListCommentsForReview performs requests for "pulls/list-comments-for-review"
 
-List comments on a pull request.
+List comments for a pull request review.
 
-  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments
 
-https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-func (c Client) PullsListComments(ctx context.Context, req *PullsListCommentsReq, opt ...RequestOption) (*PullsListCommentsResponse, error) {
-	return PullsListComments(ctx, req, append(c, opt...)...)
+func (c Client) PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForReviewReq, opt ...RequestOption) (*PullsListCommentsForReviewResponse, error) {
+	return PullsListCommentsForReview(ctx, req, append(c, opt...)...)
 }
 
 /*
-PullsListCommentsReq is request data for Client.PullsListComments
+PullsListCommentsForReviewReq is request data for Client.PullsListCommentsForReview
 
-https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-type PullsListCommentsReq struct {
+type PullsListCommentsForReviewReq struct {
 	_url       string
 	Owner      string
 	Repo       string
 	PullNumber int64
-
-	// Can be either `created` or `updated` comments.
-	Sort *string
-
-	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
-	Direction *string
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
-	time.
-	*/
-	Since *string
+	ReviewId   int64
 
 	// Results per page (max 100)
 	PerPage *int64
 
 	// Page number of the results to fetch.
 	Page *int64
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-
-	/*
-	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
 }
 
-func (r *PullsListCommentsReq) url() string {
+func (r *PullsListCommentsForReviewReq) url() string {
 	return r._url
 }
 
-func (r *PullsListCommentsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
+func (r *PullsListCommentsForReviewReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/comments", r.Owner, r.Repo, r.PullNumber, r.ReviewId)
 }
 
-func (r *PullsListCommentsReq) method() string {
+func (r *PullsListCommentsForReviewReq) method() string {
 	return "GET"
 }
 
-func (r *PullsListCommentsReq) urlQuery() url.Values {
+func (r *PullsListCommentsForReviewReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
@@ -2434,37 +1970,30 @@ func (r *PullsListCommentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *PullsListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *PullsListCommentsForReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"comfort-fade":  r.ComfortFadePreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	if allPreviews {
-		previewVals["comfort-fade"] = true
-		previewVals["squirrel-girl"] = true
-	}
+	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *PullsListCommentsReq) body() interface{} {
+func (r *PullsListCommentsForReviewReq) body() interface{} {
 	return nil
 }
 
-func (r *PullsListCommentsReq) dataStatuses() []int {
+func (r *PullsListCommentsForReviewReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListCommentsReq) validStatuses() []int {
+func (r *PullsListCommentsForReviewReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListCommentsReq) endpointAttributes() []endpointAttribute {
+func (r *PullsListCommentsForReviewReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PullsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2472,7 +2001,7 @@ func (r *PullsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOp
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListCommentsReq) Rel(link RelName, resp *PullsListCommentsResponse) bool {
+func (r *PullsListCommentsForReviewReq) Rel(link RelName, resp *PullsListCommentsForReviewResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2482,212 +2011,23 @@ func (r *PullsListCommentsReq) Rel(link RelName, resp *PullsListCommentsResponse
 }
 
 /*
-PullsListCommentsResponseBody is a response body for PullsListComments
+PullsListCommentsForReviewResponseBody is a response body for PullsListCommentsForReview
 
-https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-type PullsListCommentsResponseBody []struct {
-	components.PullRequestReviewComment
+type PullsListCommentsForReviewResponseBody []struct {
+	components.LegacyReviewComment
 }
 
 /*
-PullsListCommentsResponse is a response for PullsListComments
+PullsListCommentsForReviewResponse is a response for PullsListCommentsForReview
 
-https://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-type PullsListCommentsResponse struct {
+type PullsListCommentsForReviewResponse struct {
 	response
-	request *PullsListCommentsReq
-	Data    *PullsListCommentsResponseBody
-}
-
-/*
-PullsListCommentsForRepo performs requests for "pulls/list-comments-for-repo"
-
-List comments in a repository.
-
-  GET /repos/{owner}/{repo}/pulls/comments
-
-https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-func PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
-	if req == nil {
-		req = new(PullsListCommentsForRepoReq)
-	}
-	resp := &PullsListCommentsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(PullsListCommentsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-PullsListCommentsForRepo performs requests for "pulls/list-comments-for-repo"
-
-List comments in a repository.
-
-  GET /repos/{owner}/{repo}/pulls/comments
-
-https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-func (c Client) PullsListCommentsForRepo(ctx context.Context, req *PullsListCommentsForRepoReq, opt ...RequestOption) (*PullsListCommentsForRepoResponse, error) {
-	return PullsListCommentsForRepo(ctx, req, append(c, opt...)...)
-}
-
-/*
-PullsListCommentsForRepoReq is request data for Client.PullsListCommentsForRepo
-
-https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-type PullsListCommentsForRepoReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	// Can be either `created` or `updated` comments.
-	Sort *string
-
-	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
-	Direction *string
-
-	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
-	time.
-	*/
-	Since *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-
-	/*
-	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
-	full details.
-
-	To access the API you must set this to true.
-	*/
-	SquirrelGirlPreview bool
-}
-
-func (r *PullsListCommentsForRepoReq) url() string {
-	return r._url
-}
-
-func (r *PullsListCommentsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments", r.Owner, r.Repo)
-}
-
-func (r *PullsListCommentsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *PullsListCommentsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Sort != nil {
-		query.Set("sort", *r.Sort)
-	}
-	if r.Direction != nil {
-		query.Set("direction", *r.Direction)
-	}
-	if r.Since != nil {
-		query.Set("since", *r.Since)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *PullsListCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{
-		"comfort-fade":  r.ComfortFadePreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	if allPreviews {
-		previewVals["comfort-fade"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *PullsListCommentsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *PullsListCommentsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsListCommentsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsListCommentsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *PullsListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *PullsListCommentsForRepoReq) Rel(link RelName, resp *PullsListCommentsForRepoResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-PullsListCommentsForRepoResponseBody is a response body for PullsListCommentsForRepo
-
-https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-type PullsListCommentsForRepoResponseBody []struct {
-	components.PullRequestReviewComment
-}
-
-/*
-PullsListCommentsForRepoResponse is a response for PullsListCommentsForRepo
-
-https://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
-*/
-type PullsListCommentsForRepoResponse struct {
-	response
-	request *PullsListCommentsForRepoReq
-	Data    *PullsListCommentsForRepoResponseBody
+	request *PullsListCommentsForReviewReq
+	Data    *PullsListCommentsForReviewResponseBody
 }
 
 /*
@@ -2977,19 +2317,19 @@ type PullsListFilesResponse struct {
 }
 
 /*
-PullsListReviewRequests performs requests for "pulls/list-review-requests"
+PullsListRequestedReviewers performs requests for "pulls/list-requested-reviewers"
 
-List review requests.
+List requested reviewers for a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
 
-https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-func PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
+func PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedReviewersReq, opt ...RequestOption) (*PullsListRequestedReviewersResponse, error) {
 	if req == nil {
-		req = new(PullsListReviewRequestsReq)
+		req = new(PullsListRequestedReviewersReq)
 	}
-	resp := &PullsListReviewRequestsResponse{request: req}
+	resp := &PullsListRequestedReviewersResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2997,7 +2337,7 @@ func PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListReviewRequestsResponseBody)
+	resp.Data = new(PullsListRequestedReviewersResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3006,24 +2346,24 @@ func PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsRe
 }
 
 /*
-PullsListReviewRequests performs requests for "pulls/list-review-requests"
+PullsListRequestedReviewers performs requests for "pulls/list-requested-reviewers"
 
-List review requests.
+List requested reviewers for a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
 
-https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-func (c Client) PullsListReviewRequests(ctx context.Context, req *PullsListReviewRequestsReq, opt ...RequestOption) (*PullsListReviewRequestsResponse, error) {
-	return PullsListReviewRequests(ctx, req, append(c, opt...)...)
+func (c Client) PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedReviewersReq, opt ...RequestOption) (*PullsListRequestedReviewersResponse, error) {
+	return PullsListRequestedReviewers(ctx, req, append(c, opt...)...)
 }
 
 /*
-PullsListReviewRequestsReq is request data for Client.PullsListReviewRequests
+PullsListRequestedReviewersReq is request data for Client.PullsListRequestedReviewers
 
-https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-type PullsListReviewRequestsReq struct {
+type PullsListRequestedReviewersReq struct {
 	_url       string
 	Owner      string
 	Repo       string
@@ -3036,19 +2376,19 @@ type PullsListReviewRequestsReq struct {
 	Page *int64
 }
 
-func (r *PullsListReviewRequestsReq) url() string {
+func (r *PullsListRequestedReviewersReq) url() string {
 	return r._url
 }
 
-func (r *PullsListReviewRequestsReq) urlPath() string {
+func (r *PullsListRequestedReviewersReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
 }
 
-func (r *PullsListReviewRequestsReq) method() string {
+func (r *PullsListRequestedReviewersReq) method() string {
 	return "GET"
 }
 
-func (r *PullsListReviewRequestsReq) urlQuery() url.Values {
+func (r *PullsListRequestedReviewersReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3059,30 +2399,30 @@ func (r *PullsListReviewRequestsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *PullsListReviewRequestsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *PullsListRequestedReviewersReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *PullsListReviewRequestsReq) body() interface{} {
+func (r *PullsListRequestedReviewersReq) body() interface{} {
 	return nil
 }
 
-func (r *PullsListReviewRequestsReq) dataStatuses() []int {
+func (r *PullsListRequestedReviewersReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListReviewRequestsReq) validStatuses() []int {
+func (r *PullsListRequestedReviewersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListReviewRequestsReq) endpointAttributes() []endpointAttribute {
+func (r *PullsListRequestedReviewersReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PullsListReviewRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *PullsListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3090,7 +2430,7 @@ func (r *PullsListReviewRequestsReq) HTTPRequest(ctx context.Context, opt ...Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListReviewRequestsReq) Rel(link RelName, resp *PullsListReviewRequestsResponse) bool {
+func (r *PullsListRequestedReviewersReq) Rel(link RelName, resp *PullsListRequestedReviewersResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3100,33 +2440,412 @@ func (r *PullsListReviewRequestsReq) Rel(link RelName, resp *PullsListReviewRequ
 }
 
 /*
-PullsListReviewRequestsResponseBody is a response body for PullsListReviewRequests
+PullsListRequestedReviewersResponseBody is a response body for PullsListRequestedReviewers
 
-https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-type PullsListReviewRequestsResponseBody struct {
+type PullsListRequestedReviewersResponseBody struct {
 	components.SimplePullRequestReviewRequest
 }
 
 /*
-PullsListReviewRequestsResponse is a response for PullsListReviewRequests
+PullsListRequestedReviewersResponse is a response for PullsListRequestedReviewers
 
-https://developer.github.com/v3/pulls/review_requests/#list-review-requests
+https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-type PullsListReviewRequestsResponse struct {
+type PullsListRequestedReviewersResponse struct {
 	response
-	request *PullsListReviewRequestsReq
-	Data    *PullsListReviewRequestsResponseBody
+	request *PullsListRequestedReviewersReq
+	Data    *PullsListRequestedReviewersResponseBody
+}
+
+/*
+PullsListReviewComments performs requests for "pulls/list-review-comments"
+
+List review comments on a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
+*/
+func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsReq, opt ...RequestOption) (*PullsListReviewCommentsResponse, error) {
+	if req == nil {
+		req = new(PullsListReviewCommentsReq)
+	}
+	resp := &PullsListReviewCommentsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(PullsListReviewCommentsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListReviewComments performs requests for "pulls/list-review-comments"
+
+List review comments on a pull request.
+
+  GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
+*/
+func (c Client) PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsReq, opt ...RequestOption) (*PullsListReviewCommentsResponse, error) {
+	return PullsListReviewComments(ctx, req, append(c, opt...)...)
+}
+
+/*
+PullsListReviewCommentsReq is request data for Client.PullsListReviewComments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
+*/
+type PullsListReviewCommentsReq struct {
+	_url       string
+	Owner      string
+	Repo       string
+	PullNumber int64
+
+	// Can be either `created` or `updated` comments.
+	Sort *string
+
+	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
+	Direction *string
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
+	time.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *PullsListReviewCommentsReq) url() string {
+	return r._url
+}
+
+func (r *PullsListReviewCommentsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r *PullsListReviewCommentsReq) method() string {
+	return "GET"
+}
+
+func (r *PullsListReviewCommentsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *PullsListReviewCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"comfort-fade":  r.ComfortFadePreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	if allPreviews {
+		previewVals["comfort-fade"] = true
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *PullsListReviewCommentsReq) body() interface{} {
+	return nil
+}
+
+func (r *PullsListReviewCommentsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewCommentsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewCommentsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *PullsListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsListReviewCommentsReq) Rel(link RelName, resp *PullsListReviewCommentsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+PullsListReviewCommentsResponseBody is a response body for PullsListReviewComments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
+*/
+type PullsListReviewCommentsResponseBody []struct {
+	components.PullRequestReviewComment
+}
+
+/*
+PullsListReviewCommentsResponse is a response for PullsListReviewComments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
+*/
+type PullsListReviewCommentsResponse struct {
+	response
+	request *PullsListReviewCommentsReq
+	Data    *PullsListReviewCommentsResponseBody
+}
+
+/*
+PullsListReviewCommentsForRepo performs requests for "pulls/list-review-comments-for-repo"
+
+List review comments in a repository.
+
+  GET /repos/{owner}/{repo}/pulls/comments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
+*/
+func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCommentsForRepoReq, opt ...RequestOption) (*PullsListReviewCommentsForRepoResponse, error) {
+	if req == nil {
+		req = new(PullsListReviewCommentsForRepoReq)
+	}
+	resp := &PullsListReviewCommentsForRepoResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(PullsListReviewCommentsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsListReviewCommentsForRepo performs requests for "pulls/list-review-comments-for-repo"
+
+List review comments in a repository.
+
+  GET /repos/{owner}/{repo}/pulls/comments
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
+*/
+func (c Client) PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCommentsForRepoReq, opt ...RequestOption) (*PullsListReviewCommentsForRepoResponse, error) {
+	return PullsListReviewCommentsForRepo(ctx, req, append(c, opt...)...)
+}
+
+/*
+PullsListReviewCommentsForRepoReq is request data for Client.PullsListReviewCommentsForRepo
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
+*/
+type PullsListReviewCommentsForRepoReq struct {
+	_url  string
+	Owner string
+	Repo  string
+
+	// Can be either `created` or `updated` comments.
+	Sort *string
+
+	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
+	Direction *string
+
+	/*
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
+	time.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *PullsListReviewCommentsForRepoReq) url() string {
+	return r._url
+}
+
+func (r *PullsListReviewCommentsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments", r.Owner, r.Repo)
+}
+
+func (r *PullsListReviewCommentsForRepoReq) method() string {
+	return "GET"
+}
+
+func (r *PullsListReviewCommentsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Sort != nil {
+		query.Set("sort", *r.Sort)
+	}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *PullsListReviewCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{
+		"comfort-fade":  r.ComfortFadePreview,
+		"squirrel-girl": r.SquirrelGirlPreview,
+	}
+	if allPreviews {
+		previewVals["comfort-fade"] = true
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *PullsListReviewCommentsForRepoReq) body() interface{} {
+	return nil
+}
+
+func (r *PullsListReviewCommentsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewCommentsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsListReviewCommentsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *PullsListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsListReviewCommentsForRepoReq) Rel(link RelName, resp *PullsListReviewCommentsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+PullsListReviewCommentsForRepoResponseBody is a response body for PullsListReviewCommentsForRepo
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
+*/
+type PullsListReviewCommentsForRepoResponseBody []struct {
+	components.PullRequestReviewComment
+}
+
+/*
+PullsListReviewCommentsForRepoResponse is a response for PullsListReviewCommentsForRepo
+
+https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
+*/
+type PullsListReviewCommentsForRepoResponse struct {
+	response
+	request *PullsListReviewCommentsForRepoReq
+	Data    *PullsListReviewCommentsForRepoResponseBody
 }
 
 /*
 PullsListReviews performs requests for "pulls/list-reviews"
 
-List reviews on a pull request.
+List reviews for a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
 
-https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
 	if req == nil {
@@ -3151,11 +2870,11 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...Requ
 /*
 PullsListReviews performs requests for "pulls/list-reviews"
 
-List reviews on a pull request.
+List reviews for a pull request.
 
   GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
 
-https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 func (c Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...RequestOption) (*PullsListReviewsResponse, error) {
 	return PullsListReviews(ctx, req, append(c, opt...)...)
@@ -3164,7 +2883,7 @@ func (c Client) PullsListReviews(ctx context.Context, req *PullsListReviewsReq, 
 /*
 PullsListReviewsReq is request data for Client.PullsListReviews
 
-https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type PullsListReviewsReq struct {
 	_url       string
@@ -3245,16 +2964,16 @@ func (r *PullsListReviewsReq) Rel(link RelName, resp *PullsListReviewsResponse) 
 /*
 PullsListReviewsResponseBody is a response body for PullsListReviews
 
-https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type PullsListReviewsResponseBody []struct {
-	components.PullRequestReview2
+	components.PullRequestReview
 }
 
 /*
 PullsListReviewsResponse is a response for PullsListReviews
 
-https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type PullsListReviewsResponse struct {
 	response
@@ -3265,11 +2984,11 @@ type PullsListReviewsResponse struct {
 /*
 PullsMerge performs requests for "pulls/merge"
 
-Merge a pull request (Merge Button).
+Merge a pull request.
 
   PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
 
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
 	if req == nil {
@@ -3294,11 +3013,11 @@ func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (
 /*
 PullsMerge performs requests for "pulls/merge"
 
-Merge a pull request (Merge Button).
+Merge a pull request.
 
   PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge
 
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 func (c Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (*PullsMergeResponse, error) {
 	return PullsMerge(ctx, req, append(c, opt...)...)
@@ -3307,7 +3026,7 @@ func (c Client) PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...Reque
 /*
 PullsMergeReq is request data for Client.PullsMerge
 
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeReq struct {
 	_url        string
@@ -3377,7 +3096,7 @@ func (r *PullsMergeReq) Rel(link RelName, resp *PullsMergeResponse) bool {
 /*
 PullsMergeReqBody is a request body for pulls/merge
 
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeReqBody struct {
 
@@ -3400,7 +3119,7 @@ type PullsMergeReqBody struct {
 /*
 PullsMergeResponseBody is a response body for PullsMerge
 
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeResponseBody struct {
 	components.PullRequestMergeResult
@@ -3409,7 +3128,7 @@ type PullsMergeResponseBody struct {
 /*
 PullsMergeResponse is a response for PullsMerge
 
-https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeResponse struct {
 	response
@@ -3418,13 +3137,294 @@ type PullsMergeResponse struct {
 }
 
 /*
+PullsRemoveRequestedReviewers performs requests for "pulls/remove-requested-reviewers"
+
+Remove requested reviewers from a pull request.
+
+  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
+*/
+func PullsRemoveRequestedReviewers(ctx context.Context, req *PullsRemoveRequestedReviewersReq, opt ...RequestOption) (*PullsRemoveRequestedReviewersResponse, error) {
+	if req == nil {
+		req = new(PullsRemoveRequestedReviewersReq)
+	}
+	resp := &PullsRemoveRequestedReviewersResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsRemoveRequestedReviewers performs requests for "pulls/remove-requested-reviewers"
+
+Remove requested reviewers from a pull request.
+
+  DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
+*/
+func (c Client) PullsRemoveRequestedReviewers(ctx context.Context, req *PullsRemoveRequestedReviewersReq, opt ...RequestOption) (*PullsRemoveRequestedReviewersResponse, error) {
+	return PullsRemoveRequestedReviewers(ctx, req, append(c, opt...)...)
+}
+
+/*
+PullsRemoveRequestedReviewersReq is request data for Client.PullsRemoveRequestedReviewers
+
+https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
+*/
+type PullsRemoveRequestedReviewersReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsRemoveRequestedReviewersReqBody
+}
+
+func (r *PullsRemoveRequestedReviewersReq) url() string {
+	return r._url
+}
+
+func (r *PullsRemoveRequestedReviewersReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r *PullsRemoveRequestedReviewersReq) method() string {
+	return "DELETE"
+}
+
+func (r *PullsRemoveRequestedReviewersReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *PullsRemoveRequestedReviewersReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *PullsRemoveRequestedReviewersReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *PullsRemoveRequestedReviewersReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *PullsRemoveRequestedReviewersReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsRemoveRequestedReviewersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *PullsRemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsRemoveRequestedReviewersReq) Rel(link RelName, resp *PullsRemoveRequestedReviewersResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+PullsRemoveRequestedReviewersReqBody is a request body for pulls/remove-requested-reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
+*/
+type PullsRemoveRequestedReviewersReqBody struct {
+
+	// An array of user `login`s that will be removed.
+	Reviewers []string `json:"reviewers,omitempty"`
+
+	// An array of team `slug`s that will be removed.
+	TeamReviewers []string `json:"team_reviewers,omitempty"`
+}
+
+/*
+PullsRemoveRequestedReviewersResponse is a response for PullsRemoveRequestedReviewers
+
+https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
+*/
+type PullsRemoveRequestedReviewersResponse struct {
+	response
+	request *PullsRemoveRequestedReviewersReq
+}
+
+/*
+PullsRequestReviewers performs requests for "pulls/request-reviewers"
+
+Request reviewers for a pull request.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
+*/
+func PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, opt ...RequestOption) (*PullsRequestReviewersResponse, error) {
+	if req == nil {
+		req = new(PullsRequestReviewersReq)
+	}
+	resp := &PullsRequestReviewersResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(PullsRequestReviewersResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsRequestReviewers performs requests for "pulls/request-reviewers"
+
+Request reviewers for a pull request.
+
+  POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
+*/
+func (c Client) PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, opt ...RequestOption) (*PullsRequestReviewersResponse, error) {
+	return PullsRequestReviewers(ctx, req, append(c, opt...)...)
+}
+
+/*
+PullsRequestReviewersReq is request data for Client.PullsRequestReviewers
+
+https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
+*/
+type PullsRequestReviewersReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	PullNumber  int64
+	RequestBody PullsRequestReviewersReqBody
+}
+
+func (r *PullsRequestReviewersReq) url() string {
+	return r._url
+}
+
+func (r *PullsRequestReviewersReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber)
+}
+
+func (r *PullsRequestReviewersReq) method() string {
+	return "POST"
+}
+
+func (r *PullsRequestReviewersReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *PullsRequestReviewersReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *PullsRequestReviewersReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *PullsRequestReviewersReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsRequestReviewersReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *PullsRequestReviewersReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *PullsRequestReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsRequestReviewersReq) Rel(link RelName, resp *PullsRequestReviewersResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+PullsRequestReviewersReqBody is a request body for pulls/request-reviewers
+
+https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
+*/
+type PullsRequestReviewersReqBody struct {
+
+	// An array of user `login`s that will be requested.
+	Reviewers []string `json:"reviewers,omitempty"`
+
+	// An array of team `slug`s that will be requested.
+	TeamReviewers []string `json:"team_reviewers,omitempty"`
+}
+
+/*
+PullsRequestReviewersResponseBody is a response body for PullsRequestReviewers
+
+https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
+*/
+type PullsRequestReviewersResponseBody struct {
+	components.PullRequestReviewRequest
+}
+
+/*
+PullsRequestReviewersResponse is a response for PullsRequestReviewers
+
+https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
+*/
+type PullsRequestReviewersResponse struct {
+	response
+	request *PullsRequestReviewersReq
+	Data    *PullsRequestReviewersResponseBody
+}
+
+/*
 PullsSubmitReview performs requests for "pulls/submit-review"
 
-Submit a pull request review.
+Submit a review for a pull request.
 
   POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events
 
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
 	if req == nil {
@@ -3449,11 +3449,11 @@ func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...Re
 /*
 PullsSubmitReview performs requests for "pulls/submit-review"
 
-Submit a pull request review.
+Submit a review for a pull request.
 
   POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events
 
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 func (c Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...RequestOption) (*PullsSubmitReviewResponse, error) {
 	return PullsSubmitReview(ctx, req, append(c, opt...)...)
@@ -3462,7 +3462,7 @@ func (c Client) PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq
 /*
 PullsSubmitReviewReq is request data for Client.PullsSubmitReview
 
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewReq struct {
 	_url        string
@@ -3533,7 +3533,7 @@ func (r *PullsSubmitReviewReq) Rel(link RelName, resp *PullsSubmitReviewResponse
 /*
 PullsSubmitReviewReqBody is a request body for pulls/submit-review
 
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewReqBody struct {
 
@@ -3553,16 +3553,16 @@ type PullsSubmitReviewReqBody struct {
 /*
 PullsSubmitReviewResponseBody is a response body for PullsSubmitReview
 
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewResponseBody struct {
-	components.PullRequestReview2
+	components.PullRequestReview
 }
 
 /*
 PullsSubmitReviewResponse is a response for PullsSubmitReview
 
-https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewResponse struct {
 	response
@@ -3882,10 +3882,10 @@ type PullsUpdateBranchReqBody struct {
 	   The expected SHA of the pull request's HEAD ref. This is the most recent commit
 	   on the pull request's branch. If the expected SHA does not match the pull
 	   request's HEAD, you will receive a `422 Unprocessable Entity` status. You can
-	   use the "[List commits on a
-	   repository](https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository)"
-	   endpoint to find the most recent commit SHA. Default: SHA of the pull request's
-	   current HEAD ref.
+	   use the "[List
+	   commits](https://developer.github.com/v3/repos/commits/#list-commits)" endpoint
+	   to find the most recent commit SHA. Default: SHA of the pull request's current
+	   HEAD ref.
 	*/
 	ExpectedHeadSha *string `json:"expected_head_sha,omitempty"`
 }
@@ -3912,166 +3912,13 @@ type PullsUpdateBranchResponse struct {
 }
 
 /*
-PullsUpdateComment performs requests for "pulls/update-comment"
-
-Edit a comment.
-
-  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-func PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
-	if req == nil {
-		req = new(PullsUpdateCommentReq)
-	}
-	resp := &PullsUpdateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(PullsUpdateCommentResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-PullsUpdateComment performs requests for "pulls/update-comment"
-
-Edit a comment.
-
-  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-func (c Client) PullsUpdateComment(ctx context.Context, req *PullsUpdateCommentReq, opt ...RequestOption) (*PullsUpdateCommentResponse, error) {
-	return PullsUpdateComment(ctx, req, append(c, opt...)...)
-}
-
-/*
-PullsUpdateCommentReq is request data for Client.PullsUpdateComment
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	CommentId   int64
-	RequestBody PullsUpdateCommentReqBody
-
-	/*
-	Multi-line comments in a pull request diff is currently available for developers
-	to preview. To access the new response fields during the preview period, you
-	must set this to true.
-	*/
-	ComfortFadePreview bool
-}
-
-func (r *PullsUpdateCommentReq) url() string {
-	return r._url
-}
-
-func (r *PullsUpdateCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *PullsUpdateCommentReq) method() string {
-	return "PATCH"
-}
-
-func (r *PullsUpdateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *PullsUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
-	if allPreviews {
-		previewVals["comfort-fade"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *PullsUpdateCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *PullsUpdateCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsUpdateCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *PullsUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *PullsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *PullsUpdateCommentReq) Rel(link RelName, resp *PullsUpdateCommentResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-PullsUpdateCommentReqBody is a request body for pulls/update-comment
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentReqBody struct {
-
-	// The text of the reply to the review comment.
-	Body *string `json:"body"`
-}
-
-/*
-PullsUpdateCommentResponseBody is a response body for PullsUpdateComment
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentResponseBody struct {
-	components.PullRequestReviewComment
-}
-
-/*
-PullsUpdateCommentResponse is a response for PullsUpdateComment
-
-https://developer.github.com/v3/pulls/comments/#edit-a-comment
-*/
-type PullsUpdateCommentResponse struct {
-	response
-	request *PullsUpdateCommentReq
-	Data    *PullsUpdateCommentResponseBody
-}
-
-/*
 PullsUpdateReview performs requests for "pulls/update-review"
 
-Update a pull request review.
+Update a review for a pull request.
 
   PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
 
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
 	if req == nil {
@@ -4096,11 +3943,11 @@ func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...Re
 /*
 PullsUpdateReview performs requests for "pulls/update-review"
 
-Update a pull request review.
+Update a review for a pull request.
 
   PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}
 
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 func (c Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...RequestOption) (*PullsUpdateReviewResponse, error) {
 	return PullsUpdateReview(ctx, req, append(c, opt...)...)
@@ -4109,7 +3956,7 @@ func (c Client) PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq
 /*
 PullsUpdateReviewReq is request data for Client.PullsUpdateReview
 
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewReq struct {
 	_url        string
@@ -4180,7 +4027,7 @@ func (r *PullsUpdateReviewReq) Rel(link RelName, resp *PullsUpdateReviewResponse
 /*
 PullsUpdateReviewReqBody is a request body for pulls/update-review
 
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewReqBody struct {
 
@@ -4191,7 +4038,7 @@ type PullsUpdateReviewReqBody struct {
 /*
 PullsUpdateReviewResponseBody is a response body for PullsUpdateReview
 
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewResponseBody struct {
 	components.PullRequestReview
@@ -4200,10 +4047,163 @@ type PullsUpdateReviewResponseBody struct {
 /*
 PullsUpdateReviewResponse is a response for PullsUpdateReview
 
-https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
+https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewResponse struct {
 	response
 	request *PullsUpdateReviewReq
 	Data    *PullsUpdateReviewResponseBody
+}
+
+/*
+PullsUpdateReviewComment performs requests for "pulls/update-review-comment"
+
+Update a review comment for a pull request.
+
+  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
+*/
+func PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewCommentReq, opt ...RequestOption) (*PullsUpdateReviewCommentResponse, error) {
+	if req == nil {
+		req = new(PullsUpdateReviewCommentReq)
+	}
+	resp := &PullsUpdateReviewCommentResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(PullsUpdateReviewCommentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+PullsUpdateReviewComment performs requests for "pulls/update-review-comment"
+
+Update a review comment for a pull request.
+
+  PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}
+
+https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
+*/
+func (c Client) PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewCommentReq, opt ...RequestOption) (*PullsUpdateReviewCommentResponse, error) {
+	return PullsUpdateReviewComment(ctx, req, append(c, opt...)...)
+}
+
+/*
+PullsUpdateReviewCommentReq is request data for Client.PullsUpdateReviewComment
+
+https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
+*/
+type PullsUpdateReviewCommentReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	CommentId   int64
+	RequestBody PullsUpdateReviewCommentReqBody
+
+	/*
+	Multi-line comments in a pull request diff is currently available for developers
+	to preview. To access the new response fields during the preview period, you
+	must set this to true.
+	*/
+	ComfortFadePreview bool
+}
+
+func (r *PullsUpdateReviewCommentReq) url() string {
+	return r._url
+}
+
+func (r *PullsUpdateReviewCommentReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId)
+}
+
+func (r *PullsUpdateReviewCommentReq) method() string {
+	return "PATCH"
+}
+
+func (r *PullsUpdateReviewCommentReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *PullsUpdateReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
+	if allPreviews {
+		previewVals["comfort-fade"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *PullsUpdateReviewCommentReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *PullsUpdateReviewCommentReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateReviewCommentReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *PullsUpdateReviewCommentReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *PullsUpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *PullsUpdateReviewCommentReq) Rel(link RelName, resp *PullsUpdateReviewCommentResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+PullsUpdateReviewCommentReqBody is a request body for pulls/update-review-comment
+
+https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
+*/
+type PullsUpdateReviewCommentReqBody struct {
+
+	// The text of the reply to the review comment.
+	Body *string `json:"body"`
+}
+
+/*
+PullsUpdateReviewCommentResponseBody is a response body for PullsUpdateReviewComment
+
+https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
+*/
+type PullsUpdateReviewCommentResponseBody struct {
+	components.PullRequestReviewComment
+}
+
+/*
+PullsUpdateReviewCommentResponse is a response for PullsUpdateReviewComment
+
+https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
+*/
+type PullsUpdateReviewCommentResponse struct {
+	response
+	request *PullsUpdateReviewCommentReq
+	Data    *PullsUpdateReviewCommentResponseBody
 }

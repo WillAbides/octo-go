@@ -131,13 +131,152 @@ type ReposAcceptInvitationResponse struct {
 }
 
 /*
+ReposAddAppAccessRestrictions performs requests for "repos/add-app-access-restrictions"
+
+Add app access restrictions.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
+*/
+func ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRestrictionsReq, opt ...RequestOption) (*ReposAddAppAccessRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposAddAppAccessRestrictionsReq)
+	}
+	resp := &ReposAddAppAccessRestrictionsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposAddAppAccessRestrictionsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposAddAppAccessRestrictions performs requests for "repos/add-app-access-restrictions"
+
+Add app access restrictions.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
+*/
+func (c Client) ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRestrictionsReq, opt ...RequestOption) (*ReposAddAppAccessRestrictionsResponse, error) {
+	return ReposAddAppAccessRestrictions(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposAddAppAccessRestrictionsReq is request data for Client.ReposAddAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
+*/
+type ReposAddAppAccessRestrictionsReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposAddAppAccessRestrictionsReqBody
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) url() string {
+	return r._url
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) method() string {
+	return "POST"
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposAddAppAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposAddAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposAddAppAccessRestrictionsReq) Rel(link RelName, resp *ReposAddAppAccessRestrictionsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposAddAppAccessRestrictionsReqBody is a request body for repos/add-app-access-restrictions
+
+https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
+*/
+type ReposAddAppAccessRestrictionsReqBody []string
+
+/*
+ReposAddAppAccessRestrictionsResponseBody is a response body for ReposAddAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
+*/
+type ReposAddAppAccessRestrictionsResponseBody []struct {
+	components.Integration
+}
+
+/*
+ReposAddAppAccessRestrictionsResponse is a response for ReposAddAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
+*/
+type ReposAddAppAccessRestrictionsResponse struct {
+	response
+	request *ReposAddAppAccessRestrictionsReq
+	Data    *ReposAddAppAccessRestrictionsResponseBody
+}
+
+/*
 ReposAddCollaborator performs requests for "repos/add-collaborator"
 
-Add user as a collaborator.
+Add a repository collaborator.
 
   PUT /repos/{owner}/{repo}/collaborators/{username}
 
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt ...RequestOption) (*ReposAddCollaboratorResponse, error) {
 	if req == nil {
@@ -162,11 +301,11 @@ func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt
 /*
 ReposAddCollaborator performs requests for "repos/add-collaborator"
 
-Add user as a collaborator.
+Add a repository collaborator.
 
   PUT /repos/{owner}/{repo}/collaborators/{username}
 
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 func (c Client) ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt ...RequestOption) (*ReposAddCollaboratorResponse, error) {
 	return ReposAddCollaborator(ctx, req, append(c, opt...)...)
@@ -175,7 +314,7 @@ func (c Client) ReposAddCollaborator(ctx context.Context, req *ReposAddCollabora
 /*
 ReposAddCollaboratorReq is request data for Client.ReposAddCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorReq struct {
 	_url        string
@@ -245,7 +384,7 @@ func (r *ReposAddCollaboratorReq) Rel(link RelName, resp *ReposAddCollaboratorRe
 /*
 ReposAddCollaboratorReqBody is a request body for repos/add-collaborator
 
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorReqBody struct {
 
@@ -266,7 +405,7 @@ type ReposAddCollaboratorReqBody struct {
 /*
 ReposAddCollaboratorResponseBody is a response body for ReposAddCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorResponseBody struct {
 	components.RepositoryInvitation
@@ -275,7 +414,7 @@ type ReposAddCollaboratorResponseBody struct {
 /*
 ReposAddCollaboratorResponse is a response for ReposAddCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorResponse struct {
 	response
@@ -284,19 +423,19 @@ type ReposAddCollaboratorResponse struct {
 }
 
 /*
-ReposAddDeployKey performs requests for "repos/add-deploy-key"
+ReposAddStatusCheckContexts performs requests for "repos/add-status-check-contexts"
 
-Add a new deploy key.
+Add status check contexts.
 
-  POST /repos/{owner}/{repo}/keys
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
 
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
+https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-func ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...RequestOption) (*ReposAddDeployKeyResponse, error) {
+func ReposAddStatusCheckContexts(ctx context.Context, req *ReposAddStatusCheckContextsReq, opt ...RequestOption) (*ReposAddStatusCheckContextsResponse, error) {
 	if req == nil {
-		req = new(ReposAddDeployKeyReq)
+		req = new(ReposAddStatusCheckContextsReq)
 	}
-	resp := &ReposAddDeployKeyResponse{request: req}
+	resp := &ReposAddStatusCheckContextsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -304,7 +443,7 @@ func ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposAddDeployKeyResponseBody)
+	resp.Data = new(ReposAddStatusCheckContextsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -313,646 +452,72 @@ func ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...Re
 }
 
 /*
-ReposAddDeployKey performs requests for "repos/add-deploy-key"
+ReposAddStatusCheckContexts performs requests for "repos/add-status-check-contexts"
 
-Add a new deploy key.
+Add status check contexts.
 
-  POST /repos/{owner}/{repo}/keys
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
 
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
+https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-func (c Client) ReposAddDeployKey(ctx context.Context, req *ReposAddDeployKeyReq, opt ...RequestOption) (*ReposAddDeployKeyResponse, error) {
-	return ReposAddDeployKey(ctx, req, append(c, opt...)...)
+func (c Client) ReposAddStatusCheckContexts(ctx context.Context, req *ReposAddStatusCheckContextsReq, opt ...RequestOption) (*ReposAddStatusCheckContextsResponse, error) {
+	return ReposAddStatusCheckContexts(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposAddDeployKeyReq is request data for Client.ReposAddDeployKey
+ReposAddStatusCheckContextsReq is request data for Client.ReposAddStatusCheckContexts
 
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
+https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-type ReposAddDeployKeyReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	RequestBody ReposAddDeployKeyReqBody
-}
-
-func (r *ReposAddDeployKeyReq) url() string {
-	return r._url
-}
-
-func (r *ReposAddDeployKeyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
-}
-
-func (r *ReposAddDeployKeyReq) method() string {
-	return "POST"
-}
-
-func (r *ReposAddDeployKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposAddDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposAddDeployKeyReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposAddDeployKeyReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposAddDeployKeyReq) validStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposAddDeployKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposAddDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposAddDeployKeyReq) Rel(link RelName, resp *ReposAddDeployKeyResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposAddDeployKeyReqBody is a request body for repos/add-deploy-key
-
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
-*/
-type ReposAddDeployKeyReqBody struct {
-
-	// The contents of the key.
-	Key *string `json:"key"`
-
-	/*
-	   If `true`, the key will only be able to read repository contents. Otherwise, the
-	   key will be able to read and write.
-
-	   Deploy keys with write access can perform the same actions as an organization
-	   member with admin access, or a collaborator on a personal repository. For more
-	   information, see "[Repository permission levels for an
-	   organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
-	   and "[Permission levels for a user account
-	   repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
-	*/
-	ReadOnly *bool `json:"read_only,omitempty"`
-
-	// A name for the key.
-	Title *string `json:"title,omitempty"`
-}
-
-/*
-ReposAddDeployKeyResponseBody is a response body for ReposAddDeployKey
-
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
-*/
-type ReposAddDeployKeyResponseBody struct {
-	components.DeployKey
-}
-
-/*
-ReposAddDeployKeyResponse is a response for ReposAddDeployKey
-
-https://developer.github.com/v3/repos/keys/#add-a-new-deploy-key
-*/
-type ReposAddDeployKeyResponse struct {
-	response
-	request *ReposAddDeployKeyReq
-	Data    *ReposAddDeployKeyResponseBody
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcement performs requests for "repos/add-protected-branch-admin-enforcement"
-
-Add admin enforcement of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-func ReposAddProtectedBranchAdminEnforcement(ctx context.Context, req *ReposAddProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposAddProtectedBranchAdminEnforcementResponse, error) {
-	if req == nil {
-		req = new(ReposAddProtectedBranchAdminEnforcementReq)
-	}
-	resp := &ReposAddProtectedBranchAdminEnforcementResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposAddProtectedBranchAdminEnforcementResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcement performs requests for "repos/add-protected-branch-admin-enforcement"
-
-Add admin enforcement of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-func (c Client) ReposAddProtectedBranchAdminEnforcement(ctx context.Context, req *ReposAddProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposAddProtectedBranchAdminEnforcementResponse, error) {
-	return ReposAddProtectedBranchAdminEnforcement(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcementReq is request data for Client.ReposAddProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-type ReposAddProtectedBranchAdminEnforcementReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) url() string {
-	return r._url
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) method() string {
-	return "POST"
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposAddProtectedBranchAdminEnforcementReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposAddProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposAddProtectedBranchAdminEnforcementReq) Rel(link RelName, resp *ReposAddProtectedBranchAdminEnforcementResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcementResponseBody is a response body for ReposAddProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-type ReposAddProtectedBranchAdminEnforcementResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
-
-/*
-ReposAddProtectedBranchAdminEnforcementResponse is a response for ReposAddProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch
-*/
-type ReposAddProtectedBranchAdminEnforcementResponse struct {
-	response
-	request *ReposAddProtectedBranchAdminEnforcementReq
-	Data    *ReposAddProtectedBranchAdminEnforcementResponseBody
-}
-
-/*
-ReposAddProtectedBranchAppRestrictions performs requests for "repos/add-protected-branch-app-restrictions"
-
-Add app restrictions of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-func ReposAddProtectedBranchAppRestrictions(ctx context.Context, req *ReposAddProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchAppRestrictionsResponse, error) {
-	if req == nil {
-		req = new(ReposAddProtectedBranchAppRestrictionsReq)
-	}
-	resp := &ReposAddProtectedBranchAppRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposAddProtectedBranchAppRestrictionsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposAddProtectedBranchAppRestrictions performs requests for "repos/add-protected-branch-app-restrictions"
-
-Add app restrictions of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-func (c Client) ReposAddProtectedBranchAppRestrictions(ctx context.Context, req *ReposAddProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchAppRestrictionsResponse, error) {
-	return ReposAddProtectedBranchAppRestrictions(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposAddProtectedBranchAppRestrictionsReq is request data for Client.ReposAddProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsReq struct {
+type ReposAddStatusCheckContextsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposAddProtectedBranchAppRestrictionsReqBody
+	RequestBody ReposAddStatusCheckContextsReqBody
 }
 
-func (r *ReposAddProtectedBranchAppRestrictionsReq) url() string {
+func (r *ReposAddStatusCheckContextsReq) url() string {
 	return r._url
 }
 
-func (r *ReposAddProtectedBranchAppRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) method() string {
-	return "POST"
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposAddProtectedBranchAppRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposAddProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposAddProtectedBranchAppRestrictionsReq) Rel(link RelName, resp *ReposAddProtectedBranchAppRestrictionsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposAddProtectedBranchAppRestrictionsReqBody is a request body for repos/add-protected-branch-app-restrictions
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsReqBody []string
-
-/*
-ReposAddProtectedBranchAppRestrictionsResponseBody is a response body for ReposAddProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsResponseBody []struct {
-	components.Integration2
-}
-
-/*
-ReposAddProtectedBranchAppRestrictionsResponse is a response for ReposAddProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#add-app-restrictions-of-protected-branch
-*/
-type ReposAddProtectedBranchAppRestrictionsResponse struct {
-	response
-	request *ReposAddProtectedBranchAppRestrictionsReq
-	Data    *ReposAddProtectedBranchAppRestrictionsResponseBody
-}
-
-/*
-ReposAddProtectedBranchRequiredSignatures performs requests for "repos/add-protected-branch-required-signatures"
-
-Add required signatures of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-func ReposAddProtectedBranchRequiredSignatures(ctx context.Context, req *ReposAddProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredSignaturesResponse, error) {
-	if req == nil {
-		req = new(ReposAddProtectedBranchRequiredSignaturesReq)
-	}
-	resp := &ReposAddProtectedBranchRequiredSignaturesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposAddProtectedBranchRequiredSignaturesResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposAddProtectedBranchRequiredSignatures performs requests for "repos/add-protected-branch-required-signatures"
-
-Add required signatures of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-func (c Client) ReposAddProtectedBranchRequiredSignatures(ctx context.Context, req *ReposAddProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredSignaturesResponse, error) {
-	return ReposAddProtectedBranchRequiredSignatures(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposAddProtectedBranchRequiredSignaturesReq is request data for Client.ReposAddProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredSignaturesReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-
-	/*
-	Protected Branches API can now manage a setting for requiring signed commits.
-	This feature is currently available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	ZzzaxPreview bool
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) url() string {
-	return r._url
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) method() string {
-	return "POST"
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
-	if requiredPreviews {
-		previewVals["zzzax"] = true
-	}
-	if allPreviews {
-		previewVals["zzzax"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposAddProtectedBranchRequiredSignaturesReq) Rel(link RelName, resp *ReposAddProtectedBranchRequiredSignaturesResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposAddProtectedBranchRequiredSignaturesResponseBody is a response body for ReposAddProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredSignaturesResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
-
-/*
-ReposAddProtectedBranchRequiredSignaturesResponse is a response for ReposAddProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#add-required-signatures-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredSignaturesResponse struct {
-	response
-	request *ReposAddProtectedBranchRequiredSignaturesReq
-	Data    *ReposAddProtectedBranchRequiredSignaturesResponseBody
-}
-
-/*
-ReposAddProtectedBranchRequiredStatusChecksContexts performs requests for "repos/add-protected-branch-required-status-checks-contexts"
-
-Add required status checks contexts of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
-*/
-func ReposAddProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposAddProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	if req == nil {
-		req = new(ReposAddProtectedBranchRequiredStatusChecksContextsReq)
-	}
-	resp := &ReposAddProtectedBranchRequiredStatusChecksContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposAddProtectedBranchRequiredStatusChecksContexts performs requests for "repos/add-protected-branch-required-status-checks-contexts"
-
-Add required status checks contexts of protected branch.
-
-  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
-*/
-func (c Client) ReposAddProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposAddProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposAddProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposAddProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposAddProtectedBranchRequiredStatusChecksContextsReq is request data for Client.ReposAddProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
-*/
-type ReposAddProtectedBranchRequiredStatusChecksContextsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposAddProtectedBranchRequiredStatusChecksContextsReqBody
-}
-
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) url() string {
-	return r._url
-}
-
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+func (r *ReposAddStatusCheckContextsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) method() string {
+func (r *ReposAddStatusCheckContextsReq) method() string {
 	return "POST"
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+func (r *ReposAddStatusCheckContextsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposAddStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
+func (r *ReposAddStatusCheckContextsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) dataStatuses() []int {
+func (r *ReposAddStatusCheckContextsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) validStatuses() []int {
+func (r *ReposAddStatusCheckContextsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposAddStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposAddStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -960,7 +525,7 @@ func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelName, resp *ReposAddProtectedBranchRequiredStatusChecksContextsResponse) bool {
+func (r *ReposAddStatusCheckContextsReq) Rel(link RelName, resp *ReposAddStatusCheckContextsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -970,44 +535,44 @@ func (r *ReposAddProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelNam
 }
 
 /*
-ReposAddProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/add-protected-branch-required-status-checks-contexts
+ReposAddStatusCheckContextsReqBody is a request body for repos/add-status-check-contexts
 
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-type ReposAddProtectedBranchRequiredStatusChecksContextsReqBody []string
+type ReposAddStatusCheckContextsReqBody []string
 
 /*
-ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody is a response body for ReposAddProtectedBranchRequiredStatusChecksContexts
+ReposAddStatusCheckContextsResponseBody is a response body for ReposAddStatusCheckContexts
 
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-type ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody []string
+type ReposAddStatusCheckContextsResponseBody []string
 
 /*
-ReposAddProtectedBranchRequiredStatusChecksContextsResponse is a response for ReposAddProtectedBranchRequiredStatusChecksContexts
+ReposAddStatusCheckContextsResponse is a response for ReposAddStatusCheckContexts
 
-https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-type ReposAddProtectedBranchRequiredStatusChecksContextsResponse struct {
+type ReposAddStatusCheckContextsResponse struct {
 	response
-	request *ReposAddProtectedBranchRequiredStatusChecksContextsReq
-	Data    *ReposAddProtectedBranchRequiredStatusChecksContextsResponseBody
+	request *ReposAddStatusCheckContextsReq
+	Data    *ReposAddStatusCheckContextsResponseBody
 }
 
 /*
-ReposAddProtectedBranchTeamRestrictions performs requests for "repos/add-protected-branch-team-restrictions"
+ReposAddTeamAccessRestrictions performs requests for "repos/add-team-access-restrictions"
 
-Add team restrictions of protected branch.
+Add team access restrictions.
 
   POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
 
-https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-func ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchTeamRestrictionsResponse, error) {
+func ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccessRestrictionsReq, opt ...RequestOption) (*ReposAddTeamAccessRestrictionsResponse, error) {
 	if req == nil {
-		req = new(ReposAddProtectedBranchTeamRestrictionsReq)
+		req = new(ReposAddTeamAccessRestrictionsReq)
 	}
-	resp := &ReposAddProtectedBranchTeamRestrictionsResponse{request: req}
+	resp := &ReposAddTeamAccessRestrictionsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1015,7 +580,7 @@ func ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddP
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposAddProtectedBranchTeamRestrictionsResponseBody)
+	resp.Data = new(ReposAddTeamAccessRestrictionsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -1024,72 +589,72 @@ func ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddP
 }
 
 /*
-ReposAddProtectedBranchTeamRestrictions performs requests for "repos/add-protected-branch-team-restrictions"
+ReposAddTeamAccessRestrictions performs requests for "repos/add-team-access-restrictions"
 
-Add team restrictions of protected branch.
+Add team access restrictions.
 
   POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
 
-https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-func (c Client) ReposAddProtectedBranchTeamRestrictions(ctx context.Context, req *ReposAddProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchTeamRestrictionsResponse, error) {
-	return ReposAddProtectedBranchTeamRestrictions(ctx, req, append(c, opt...)...)
+func (c Client) ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccessRestrictionsReq, opt ...RequestOption) (*ReposAddTeamAccessRestrictionsResponse, error) {
+	return ReposAddTeamAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposAddProtectedBranchTeamRestrictionsReq is request data for Client.ReposAddProtectedBranchTeamRestrictions
+ReposAddTeamAccessRestrictionsReq is request data for Client.ReposAddTeamAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-type ReposAddProtectedBranchTeamRestrictionsReq struct {
+type ReposAddTeamAccessRestrictionsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposAddProtectedBranchTeamRestrictionsReqBody
+	RequestBody ReposAddTeamAccessRestrictionsReqBody
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) url() string {
+func (r *ReposAddTeamAccessRestrictionsReq) url() string {
 	return r._url
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) urlPath() string {
+func (r *ReposAddTeamAccessRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) method() string {
+func (r *ReposAddTeamAccessRestrictionsReq) method() string {
 	return "POST"
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
+func (r *ReposAddTeamAccessRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposAddTeamAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) body() interface{} {
+func (r *ReposAddTeamAccessRestrictionsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) dataStatuses() []int {
+func (r *ReposAddTeamAccessRestrictionsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) validStatuses() []int {
+func (r *ReposAddTeamAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposAddTeamAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposAddTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1097,7 +662,7 @@ func (r *ReposAddProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Con
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *ReposAddProtectedBranchTeamRestrictionsResponse) bool {
+func (r *ReposAddTeamAccessRestrictionsReq) Rel(link RelName, resp *ReposAddTeamAccessRestrictionsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1107,46 +672,46 @@ func (r *ReposAddProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *Rep
 }
 
 /*
-ReposAddProtectedBranchTeamRestrictionsReqBody is a request body for repos/add-protected-branch-team-restrictions
+ReposAddTeamAccessRestrictionsReqBody is a request body for repos/add-team-access-restrictions
 
-https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-type ReposAddProtectedBranchTeamRestrictionsReqBody []string
+type ReposAddTeamAccessRestrictionsReqBody []string
 
 /*
-ReposAddProtectedBranchTeamRestrictionsResponseBody is a response body for ReposAddProtectedBranchTeamRestrictions
+ReposAddTeamAccessRestrictionsResponseBody is a response body for ReposAddTeamAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-type ReposAddProtectedBranchTeamRestrictionsResponseBody []struct {
+type ReposAddTeamAccessRestrictionsResponseBody []struct {
 	components.Team
 }
 
 /*
-ReposAddProtectedBranchTeamRestrictionsResponse is a response for ReposAddProtectedBranchTeamRestrictions
+ReposAddTeamAccessRestrictionsResponse is a response for ReposAddTeamAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-type ReposAddProtectedBranchTeamRestrictionsResponse struct {
+type ReposAddTeamAccessRestrictionsResponse struct {
 	response
-	request *ReposAddProtectedBranchTeamRestrictionsReq
-	Data    *ReposAddProtectedBranchTeamRestrictionsResponseBody
+	request *ReposAddTeamAccessRestrictionsReq
+	Data    *ReposAddTeamAccessRestrictionsResponseBody
 }
 
 /*
-ReposAddProtectedBranchUserRestrictions performs requests for "repos/add-protected-branch-user-restrictions"
+ReposAddUserAccessRestrictions performs requests for "repos/add-user-access-restrictions"
 
-Add user restrictions of protected branch.
+Add user access restrictions.
 
   POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
 
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-func ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchUserRestrictionsResponse, error) {
+func ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccessRestrictionsReq, opt ...RequestOption) (*ReposAddUserAccessRestrictionsResponse, error) {
 	if req == nil {
-		req = new(ReposAddProtectedBranchUserRestrictionsReq)
+		req = new(ReposAddUserAccessRestrictionsReq)
 	}
-	resp := &ReposAddProtectedBranchUserRestrictionsResponse{request: req}
+	resp := &ReposAddUserAccessRestrictionsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1154,7 +719,7 @@ func ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddP
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposAddProtectedBranchUserRestrictionsResponseBody)
+	resp.Data = new(ReposAddUserAccessRestrictionsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -1163,72 +728,72 @@ func ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddP
 }
 
 /*
-ReposAddProtectedBranchUserRestrictions performs requests for "repos/add-protected-branch-user-restrictions"
+ReposAddUserAccessRestrictions performs requests for "repos/add-user-access-restrictions"
 
-Add user restrictions of protected branch.
+Add user access restrictions.
 
   POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
 
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-func (c Client) ReposAddProtectedBranchUserRestrictions(ctx context.Context, req *ReposAddProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposAddProtectedBranchUserRestrictionsResponse, error) {
-	return ReposAddProtectedBranchUserRestrictions(ctx, req, append(c, opt...)...)
+func (c Client) ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccessRestrictionsReq, opt ...RequestOption) (*ReposAddUserAccessRestrictionsResponse, error) {
+	return ReposAddUserAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposAddProtectedBranchUserRestrictionsReq is request data for Client.ReposAddProtectedBranchUserRestrictions
+ReposAddUserAccessRestrictionsReq is request data for Client.ReposAddUserAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-type ReposAddProtectedBranchUserRestrictionsReq struct {
+type ReposAddUserAccessRestrictionsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposAddProtectedBranchUserRestrictionsReqBody
+	RequestBody ReposAddUserAccessRestrictionsReqBody
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) url() string {
+func (r *ReposAddUserAccessRestrictionsReq) url() string {
 	return r._url
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) urlPath() string {
+func (r *ReposAddUserAccessRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) method() string {
+func (r *ReposAddUserAccessRestrictionsReq) method() string {
 	return "POST"
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+func (r *ReposAddUserAccessRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposAddUserAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) body() interface{} {
+func (r *ReposAddUserAccessRestrictionsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) dataStatuses() []int {
+func (r *ReposAddUserAccessRestrictionsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) validStatuses() []int {
+func (r *ReposAddUserAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddProtectedBranchUserRestrictionsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposAddUserAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposAddUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1236,7 +801,7 @@ func (r *ReposAddProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Con
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *ReposAddProtectedBranchUserRestrictionsResponse) bool {
+func (r *ReposAddUserAccessRestrictionsReq) Rel(link RelName, resp *ReposAddUserAccessRestrictionsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1246,40 +811,40 @@ func (r *ReposAddProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *Rep
 }
 
 /*
-ReposAddProtectedBranchUserRestrictionsReqBody is a request body for repos/add-protected-branch-user-restrictions
+ReposAddUserAccessRestrictionsReqBody is a request body for repos/add-user-access-restrictions
 
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-type ReposAddProtectedBranchUserRestrictionsReqBody []string
+type ReposAddUserAccessRestrictionsReqBody []string
 
 /*
-ReposAddProtectedBranchUserRestrictionsResponseBody is a response body for ReposAddProtectedBranchUserRestrictions
+ReposAddUserAccessRestrictionsResponseBody is a response body for ReposAddUserAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-type ReposAddProtectedBranchUserRestrictionsResponseBody []struct {
+type ReposAddUserAccessRestrictionsResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-ReposAddProtectedBranchUserRestrictionsResponse is a response for ReposAddProtectedBranchUserRestrictions
+ReposAddUserAccessRestrictionsResponse is a response for ReposAddUserAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-type ReposAddProtectedBranchUserRestrictionsResponse struct {
+type ReposAddUserAccessRestrictionsResponse struct {
 	response
-	request *ReposAddProtectedBranchUserRestrictionsReq
-	Data    *ReposAddProtectedBranchUserRestrictionsResponseBody
+	request *ReposAddUserAccessRestrictionsReq
+	Data    *ReposAddUserAccessRestrictionsResponseBody
 }
 
 /*
 ReposCheckCollaborator performs requests for "repos/check-collaborator"
 
-Check if a user is a collaborator.
+Check if a user is a repository collaborator.
 
   GET /repos/{owner}/{repo}/collaborators/{username}
 
-https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 func ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq, opt ...RequestOption) (*ReposCheckCollaboratorResponse, error) {
 	if req == nil {
@@ -1307,11 +872,11 @@ func ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq,
 /*
 ReposCheckCollaborator performs requests for "repos/check-collaborator"
 
-Check if a user is a collaborator.
+Check if a user is a repository collaborator.
 
   GET /repos/{owner}/{repo}/collaborators/{username}
 
-https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 func (c Client) ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq, opt ...RequestOption) (*ReposCheckCollaboratorResponse, error) {
 	return ReposCheckCollaborator(ctx, req, append(c, opt...)...)
@@ -1320,7 +885,7 @@ func (c Client) ReposCheckCollaborator(ctx context.Context, req *ReposCheckColla
 /*
 ReposCheckCollaboratorReq is request data for Client.ReposCheckCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 type ReposCheckCollaboratorReq struct {
 	_url     string
@@ -1389,7 +954,7 @@ func (r *ReposCheckCollaboratorReq) Rel(link RelName, resp *ReposCheckCollaborat
 /*
 ReposCheckCollaboratorResponse is a response for ReposCheckCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 type ReposCheckCollaboratorResponse struct {
 	response
@@ -1453,8 +1018,8 @@ type ReposCheckVulnerabilityAlertsReq struct {
 	Repo  string
 
 	/*
-	Enabling and disabling vulnerability alerts for a repository using the REST API
-	is currently available for developers to preview. To access these new endpoints
+	Enabling and disabling dependency alerts for a repository using the REST API is
+	currently available for developers to preview. To access these new endpoints
 	during the preview period, you must set this to true.
 	*/
 	DorianPreview bool
@@ -1819,6 +1384,471 @@ type ReposCreateCommitCommentResponse struct {
 	response
 	request *ReposCreateCommitCommentReq
 	Data    *ReposCreateCommitCommentResponseBody
+}
+
+/*
+ReposCreateCommitSignatureProtection performs requests for "repos/create-commit-signature-protection"
+
+Create commit signature protection.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
+*/
+func ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateCommitSignatureProtectionReq, opt ...RequestOption) (*ReposCreateCommitSignatureProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposCreateCommitSignatureProtectionReq)
+	}
+	resp := &ReposCreateCommitSignatureProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposCreateCommitSignatureProtectionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposCreateCommitSignatureProtection performs requests for "repos/create-commit-signature-protection"
+
+Create commit signature protection.
+
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
+*/
+func (c Client) ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateCommitSignatureProtectionReq, opt ...RequestOption) (*ReposCreateCommitSignatureProtectionResponse, error) {
+	return ReposCreateCommitSignatureProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposCreateCommitSignatureProtectionReq is request data for Client.ReposCreateCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
+*/
+type ReposCreateCommitSignatureProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	Protected Branches API can now manage a setting for requiring signed commits.
+	This feature is currently available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	ZzzaxPreview bool
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) method() string {
+	return "POST"
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	if requiredPreviews {
+		previewVals["zzzax"] = true
+	}
+	if allPreviews {
+		previewVals["zzzax"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposCreateCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposCreateCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposCreateCommitSignatureProtectionReq) Rel(link RelName, resp *ReposCreateCommitSignatureProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposCreateCommitSignatureProtectionResponseBody is a response body for ReposCreateCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
+*/
+type ReposCreateCommitSignatureProtectionResponseBody struct {
+	components.ProtectedBranchAdminEnforced
+}
+
+/*
+ReposCreateCommitSignatureProtectionResponse is a response for ReposCreateCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
+*/
+type ReposCreateCommitSignatureProtectionResponse struct {
+	response
+	request *ReposCreateCommitSignatureProtectionReq
+	Data    *ReposCreateCommitSignatureProtectionResponseBody
+}
+
+/*
+ReposCreateCommitStatus performs requests for "repos/create-commit-status"
+
+Create a commit status.
+
+  POST /repos/{owner}/{repo}/statuses/{sha}
+
+https://developer.github.com/v3/repos/statuses/#create-a-commit-status
+*/
+func ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusReq, opt ...RequestOption) (*ReposCreateCommitStatusResponse, error) {
+	if req == nil {
+		req = new(ReposCreateCommitStatusReq)
+	}
+	resp := &ReposCreateCommitStatusResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposCreateCommitStatusResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposCreateCommitStatus performs requests for "repos/create-commit-status"
+
+Create a commit status.
+
+  POST /repos/{owner}/{repo}/statuses/{sha}
+
+https://developer.github.com/v3/repos/statuses/#create-a-commit-status
+*/
+func (c Client) ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusReq, opt ...RequestOption) (*ReposCreateCommitStatusResponse, error) {
+	return ReposCreateCommitStatus(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposCreateCommitStatusReq is request data for Client.ReposCreateCommitStatus
+
+https://developer.github.com/v3/repos/statuses/#create-a-commit-status
+*/
+type ReposCreateCommitStatusReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Sha         string
+	RequestBody ReposCreateCommitStatusReqBody
+}
+
+func (r *ReposCreateCommitStatusReq) url() string {
+	return r._url
+}
+
+func (r *ReposCreateCommitStatusReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/statuses/%v", r.Owner, r.Repo, r.Sha)
+}
+
+func (r *ReposCreateCommitStatusReq) method() string {
+	return "POST"
+}
+
+func (r *ReposCreateCommitStatusReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposCreateCommitStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposCreateCommitStatusReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposCreateCommitStatusReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreateCommitStatusReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreateCommitStatusReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposCreateCommitStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposCreateCommitStatusReq) Rel(link RelName, resp *ReposCreateCommitStatusResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposCreateCommitStatusReqBody is a request body for repos/create-commit-status
+
+https://developer.github.com/v3/repos/statuses/#create-a-commit-status
+*/
+type ReposCreateCommitStatusReqBody struct {
+
+	// A string label to differentiate this status from the status of other systems.
+	Context *string `json:"context,omitempty"`
+
+	// A short description of the status.
+	Description *string `json:"description,omitempty"`
+
+	/*
+	   The state of the status. Can be one of `error`, `failure`, `pending`, or
+	   `success`.
+	*/
+	State *string `json:"state"`
+
+	/*
+	   The target URL to associate with this status. This URL will be linked from the
+	   GitHub UI to allow users to easily see the source of the status.
+	   For example, if your continuous integration system is posting build status, you
+	   would want to provide the deep link for the build output for this specific SHA:
+	   `http://ci.example.com/user/repo/build/sha`
+	*/
+	TargetUrl *string `json:"target_url,omitempty"`
+}
+
+/*
+ReposCreateCommitStatusResponseBody is a response body for ReposCreateCommitStatus
+
+https://developer.github.com/v3/repos/statuses/#create-a-commit-status
+*/
+type ReposCreateCommitStatusResponseBody struct {
+	components.Status
+}
+
+/*
+ReposCreateCommitStatusResponse is a response for ReposCreateCommitStatus
+
+https://developer.github.com/v3/repos/statuses/#create-a-commit-status
+*/
+type ReposCreateCommitStatusResponse struct {
+	response
+	request *ReposCreateCommitStatusReq
+	Data    *ReposCreateCommitStatusResponseBody
+}
+
+/*
+ReposCreateDeployKey performs requests for "repos/create-deploy-key"
+
+Create a deploy key.
+
+  POST /repos/{owner}/{repo}/keys
+
+https://developer.github.com/v3/repos/keys/#create-a-deploy-key
+*/
+func ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt ...RequestOption) (*ReposCreateDeployKeyResponse, error) {
+	if req == nil {
+		req = new(ReposCreateDeployKeyReq)
+	}
+	resp := &ReposCreateDeployKeyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposCreateDeployKeyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposCreateDeployKey performs requests for "repos/create-deploy-key"
+
+Create a deploy key.
+
+  POST /repos/{owner}/{repo}/keys
+
+https://developer.github.com/v3/repos/keys/#create-a-deploy-key
+*/
+func (c Client) ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt ...RequestOption) (*ReposCreateDeployKeyResponse, error) {
+	return ReposCreateDeployKey(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposCreateDeployKeyReq is request data for Client.ReposCreateDeployKey
+
+https://developer.github.com/v3/repos/keys/#create-a-deploy-key
+*/
+type ReposCreateDeployKeyReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	RequestBody ReposCreateDeployKeyReqBody
+}
+
+func (r *ReposCreateDeployKeyReq) url() string {
+	return r._url
+}
+
+func (r *ReposCreateDeployKeyReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/keys", r.Owner, r.Repo)
+}
+
+func (r *ReposCreateDeployKeyReq) method() string {
+	return "POST"
+}
+
+func (r *ReposCreateDeployKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposCreateDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposCreateDeployKeyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposCreateDeployKeyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreateDeployKeyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreateDeployKeyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposCreateDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposCreateDeployKeyReq) Rel(link RelName, resp *ReposCreateDeployKeyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposCreateDeployKeyReqBody is a request body for repos/create-deploy-key
+
+https://developer.github.com/v3/repos/keys/#create-a-deploy-key
+*/
+type ReposCreateDeployKeyReqBody struct {
+
+	// The contents of the key.
+	Key *string `json:"key"`
+
+	/*
+	   If `true`, the key will only be able to read repository contents. Otherwise, the
+	   key will be able to read and write.
+
+	   Deploy keys with write access can perform the same actions as an organization
+	   member with admin access, or a collaborator on a personal repository. For more
+	   information, see "[Repository permission levels for an
+	   organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
+	   and "[Permission levels for a user account
+	   repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
+	*/
+	ReadOnly *bool `json:"read_only,omitempty"`
+
+	// A name for the key.
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+ReposCreateDeployKeyResponseBody is a response body for ReposCreateDeployKey
+
+https://developer.github.com/v3/repos/keys/#create-a-deploy-key
+*/
+type ReposCreateDeployKeyResponseBody struct {
+	components.DeployKey
+}
+
+/*
+ReposCreateDeployKeyResponse is a response for ReposCreateDeployKey
+
+https://developer.github.com/v3/repos/keys/#create-a-deploy-key
+*/
+type ReposCreateDeployKeyResponse struct {
+	response
+	request *ReposCreateDeployKeyReq
+	Data    *ReposCreateDeployKeyResponseBody
 }
 
 /*
@@ -2236,7 +2266,8 @@ type ReposCreateDeploymentStatusReqBody struct {
 	   custom media type. To use the `in_progress` and `queued` states, you must
 	   provide the
 	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type.
+	   custom media type. When you set a transient deployment to `inactive`, the
+	   deployment will be shown as `destroyed` in GitHub.
 	*/
 	State *string `json:"state"`
 
@@ -2809,199 +2840,6 @@ type ReposCreateForkResponse struct {
 }
 
 /*
-ReposCreateHook performs requests for "repos/create-hook"
-
-Create a hook.
-
-  POST /repos/{owner}/{repo}/hooks
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-func ReposCreateHook(ctx context.Context, req *ReposCreateHookReq, opt ...RequestOption) (*ReposCreateHookResponse, error) {
-	if req == nil {
-		req = new(ReposCreateHookReq)
-	}
-	resp := &ReposCreateHookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposCreateHookResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposCreateHook performs requests for "repos/create-hook"
-
-Create a hook.
-
-  POST /repos/{owner}/{repo}/hooks
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-func (c Client) ReposCreateHook(ctx context.Context, req *ReposCreateHookReq, opt ...RequestOption) (*ReposCreateHookResponse, error) {
-	return ReposCreateHook(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposCreateHookReq is request data for Client.ReposCreateHook
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	RequestBody ReposCreateHookReqBody
-}
-
-func (r *ReposCreateHookReq) url() string {
-	return r._url
-}
-
-func (r *ReposCreateHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
-}
-
-func (r *ReposCreateHookReq) method() string {
-	return "POST"
-}
-
-func (r *ReposCreateHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposCreateHookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposCreateHookReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposCreateHookReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposCreateHookReq) validStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposCreateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposCreateHookReq) Rel(link RelName, resp *ReposCreateHookResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-// ReposCreateHookReqBodyConfig is a value for ReposCreateHookReqBody's Config field
-type ReposCreateHookReqBodyConfig struct {
-
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
-	ContentType *string `json:"content_type,omitempty"`
-
-	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
-	*/
-	InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
-	*/
-	Secret *string `json:"secret,omitempty"`
-
-	// The URL to which the payloads will be delivered.
-	Url *string `json:"url"`
-}
-
-/*
-ReposCreateHookReqBody is a request body for repos/create-hook
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookReqBody struct {
-
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
-	Active *bool `json:"active,omitempty"`
-
-	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
-	*/
-	Config *ReposCreateHookReqBodyConfig `json:"config"`
-
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for.
-	*/
-	Events []string `json:"events,omitempty"`
-
-	/*
-	   Use `web` to create a webhook. Default: `web`. This parameter only accepts the
-	   value `web`.
-	*/
-	Name *string `json:"name,omitempty"`
-}
-
-/*
-ReposCreateHookResponseBody is a response body for ReposCreateHook
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookResponseBody struct {
-	components.Hook
-}
-
-/*
-ReposCreateHookResponse is a response for ReposCreateHook
-
-https://developer.github.com/v3/repos/hooks/#create-a-hook
-*/
-type ReposCreateHookResponse struct {
-	response
-	request *ReposCreateHookReq
-	Data    *ReposCreateHookResponseBody
-}
-
-/*
 ReposCreateInOrg performs requests for "repos/create-in-org"
 
 Create an organization repository.
@@ -3260,19 +3098,19 @@ type ReposCreateInOrgResponse struct {
 }
 
 /*
-ReposCreateOrUpdateFile performs requests for "repos/create-or-update-file"
+ReposCreateOrUpdateFileContents performs requests for "repos/create-or-update-file-contents"
 
-Create or update a file.
+Create or update file contents.
 
   PUT /repos/{owner}/{repo}/contents/{path}
 
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-func ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileReq, opt ...RequestOption) (*ReposCreateOrUpdateFileResponse, error) {
+func ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpdateFileContentsReq, opt ...RequestOption) (*ReposCreateOrUpdateFileContentsResponse, error) {
 	if req == nil {
-		req = new(ReposCreateOrUpdateFileReq)
+		req = new(ReposCreateOrUpdateFileContentsReq)
 	}
-	resp := &ReposCreateOrUpdateFileResponse{request: req}
+	resp := &ReposCreateOrUpdateFileContentsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3280,7 +3118,7 @@ func ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposCreateOrUpdateFileResponseBody)
+	resp.Data = new(ReposCreateOrUpdateFileContentsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3289,72 +3127,72 @@ func ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileRe
 }
 
 /*
-ReposCreateOrUpdateFile performs requests for "repos/create-or-update-file"
+ReposCreateOrUpdateFileContents performs requests for "repos/create-or-update-file-contents"
 
-Create or update a file.
+Create or update file contents.
 
   PUT /repos/{owner}/{repo}/contents/{path}
 
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-func (c Client) ReposCreateOrUpdateFile(ctx context.Context, req *ReposCreateOrUpdateFileReq, opt ...RequestOption) (*ReposCreateOrUpdateFileResponse, error) {
-	return ReposCreateOrUpdateFile(ctx, req, append(c, opt...)...)
+func (c Client) ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpdateFileContentsReq, opt ...RequestOption) (*ReposCreateOrUpdateFileContentsResponse, error) {
+	return ReposCreateOrUpdateFileContents(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposCreateOrUpdateFileReq is request data for Client.ReposCreateOrUpdateFile
+ReposCreateOrUpdateFileContentsReq is request data for Client.ReposCreateOrUpdateFileContents
 
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-type ReposCreateOrUpdateFileReq struct {
+type ReposCreateOrUpdateFileContentsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Path        string
-	RequestBody ReposCreateOrUpdateFileReqBody
+	RequestBody ReposCreateOrUpdateFileContentsReqBody
 }
 
-func (r *ReposCreateOrUpdateFileReq) url() string {
+func (r *ReposCreateOrUpdateFileContentsReq) url() string {
 	return r._url
 }
 
-func (r *ReposCreateOrUpdateFileReq) urlPath() string {
+func (r *ReposCreateOrUpdateFileContentsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
 }
 
-func (r *ReposCreateOrUpdateFileReq) method() string {
+func (r *ReposCreateOrUpdateFileContentsReq) method() string {
 	return "PUT"
 }
 
-func (r *ReposCreateOrUpdateFileReq) urlQuery() url.Values {
+func (r *ReposCreateOrUpdateFileContentsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposCreateOrUpdateFileReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposCreateOrUpdateFileContentsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposCreateOrUpdateFileReq) body() interface{} {
+func (r *ReposCreateOrUpdateFileContentsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposCreateOrUpdateFileReq) dataStatuses() []int {
+func (r *ReposCreateOrUpdateFileContentsReq) dataStatuses() []int {
 	return []int{200, 201}
 }
 
-func (r *ReposCreateOrUpdateFileReq) validStatuses() []int {
+func (r *ReposCreateOrUpdateFileContentsReq) validStatuses() []int {
 	return []int{200, 201}
 }
 
-func (r *ReposCreateOrUpdateFileReq) endpointAttributes() []endpointAttribute {
+func (r *ReposCreateOrUpdateFileContentsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposCreateOrUpdateFileContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3362,7 +3200,7 @@ func (r *ReposCreateOrUpdateFileReq) HTTPRequest(ctx context.Context, opt ...Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateOrUpdateFileReq) Rel(link RelName, resp *ReposCreateOrUpdateFileResponse) bool {
+func (r *ReposCreateOrUpdateFileContentsReq) Rel(link RelName, resp *ReposCreateOrUpdateFileContentsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3371,8 +3209,8 @@ func (r *ReposCreateOrUpdateFileReq) Rel(link RelName, resp *ReposCreateOrUpdate
 	return true
 }
 
-// ReposCreateOrUpdateFileReqBodyAuthor is a value for ReposCreateOrUpdateFileReqBody's Author field
-type ReposCreateOrUpdateFileReqBodyAuthor struct {
+// ReposCreateOrUpdateFileContentsReqBodyAuthor is a value for ReposCreateOrUpdateFileContentsReqBody's Author field
+type ReposCreateOrUpdateFileContentsReqBodyAuthor struct {
 
 	/*
 	   The email of the author or committer of the commit. You'll receive a `422`
@@ -3387,8 +3225,8 @@ type ReposCreateOrUpdateFileReqBodyAuthor struct {
 	Name *string `json:"name"`
 }
 
-// ReposCreateOrUpdateFileReqBodyCommitter is a value for ReposCreateOrUpdateFileReqBody's Committer field
-type ReposCreateOrUpdateFileReqBodyCommitter struct {
+// ReposCreateOrUpdateFileContentsReqBodyCommitter is a value for ReposCreateOrUpdateFileContentsReqBody's Committer field
+type ReposCreateOrUpdateFileContentsReqBodyCommitter struct {
 
 	/*
 	   The email of the author or committer of the commit. You'll receive a `422`
@@ -3404,23 +3242,23 @@ type ReposCreateOrUpdateFileReqBodyCommitter struct {
 }
 
 /*
-ReposCreateOrUpdateFileReqBody is a request body for repos/create-or-update-file
+ReposCreateOrUpdateFileContentsReqBody is a request body for repos/create-or-update-file-contents
 
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-type ReposCreateOrUpdateFileReqBody struct {
+type ReposCreateOrUpdateFileContentsReqBody struct {
 
 	/*
 	   The author of the file. Default: The `committer` or the authenticated user if
 	   you omit `committer`.
 	*/
-	Author *ReposCreateOrUpdateFileReqBodyAuthor `json:"author,omitempty"`
+	Author *ReposCreateOrUpdateFileContentsReqBodyAuthor `json:"author,omitempty"`
 
 	// The branch name. Default: the repository’s default branch (usually `master`)
 	Branch *string `json:"branch,omitempty"`
 
 	// The person that committed the file. Default: the authenticated user.
-	Committer *ReposCreateOrUpdateFileReqBodyCommitter `json:"committer,omitempty"`
+	Committer *ReposCreateOrUpdateFileContentsReqBodyCommitter `json:"committer,omitempty"`
 
 	// The new file content, using Base64 encoding.
 	Content *string `json:"content"`
@@ -3436,23 +3274,196 @@ type ReposCreateOrUpdateFileReqBody struct {
 }
 
 /*
-ReposCreateOrUpdateFileResponseBody is a response body for ReposCreateOrUpdateFile
+ReposCreateOrUpdateFileContentsResponseBody is a response body for ReposCreateOrUpdateFileContents
 
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-type ReposCreateOrUpdateFileResponseBody struct {
+type ReposCreateOrUpdateFileContentsResponseBody struct {
 	components.FileCommit
 }
 
 /*
-ReposCreateOrUpdateFileResponse is a response for ReposCreateOrUpdateFile
+ReposCreateOrUpdateFileContentsResponse is a response for ReposCreateOrUpdateFileContents
 
-https://developer.github.com/v3/repos/contents/#create-or-update-a-file
+https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-type ReposCreateOrUpdateFileResponse struct {
+type ReposCreateOrUpdateFileContentsResponse struct {
 	response
-	request *ReposCreateOrUpdateFileReq
-	Data    *ReposCreateOrUpdateFileResponseBody
+	request *ReposCreateOrUpdateFileContentsReq
+	Data    *ReposCreateOrUpdateFileContentsResponseBody
+}
+
+/*
+ReposCreatePagesSite performs requests for "repos/create-pages-site"
+
+Create a GitHub Pages site.
+
+  POST /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
+*/
+func ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt ...RequestOption) (*ReposCreatePagesSiteResponse, error) {
+	if req == nil {
+		req = new(ReposCreatePagesSiteReq)
+	}
+	resp := &ReposCreatePagesSiteResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposCreatePagesSiteResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposCreatePagesSite performs requests for "repos/create-pages-site"
+
+Create a GitHub Pages site.
+
+  POST /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
+*/
+func (c Client) ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt ...RequestOption) (*ReposCreatePagesSiteResponse, error) {
+	return ReposCreatePagesSite(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposCreatePagesSiteReq is request data for Client.ReposCreatePagesSite
+
+https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
+*/
+type ReposCreatePagesSiteReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	RequestBody ReposCreatePagesSiteReqBody
+
+	/*
+	Enabling and disabling Pages in the Pages API is currently available for
+	developers to preview. See the [blog
+	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
+	preview for more details. To access the new endpoints during the preview period,
+	you must set this to true.
+	*/
+	SwitcherooPreview bool
+}
+
+func (r *ReposCreatePagesSiteReq) url() string {
+	return r._url
+}
+
+func (r *ReposCreatePagesSiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
+}
+
+func (r *ReposCreatePagesSiteReq) method() string {
+	return "POST"
+}
+
+func (r *ReposCreatePagesSiteReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposCreatePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
+	if requiredPreviews {
+		previewVals["switcheroo"] = true
+	}
+	if allPreviews {
+		previewVals["switcheroo"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposCreatePagesSiteReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposCreatePagesSiteReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreatePagesSiteReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreatePagesSiteReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposCreatePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposCreatePagesSiteReq) Rel(link RelName, resp *ReposCreatePagesSiteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+// ReposCreatePagesSiteReqBodySource is a value for ReposCreatePagesSiteReqBody's Source field
+type ReposCreatePagesSiteReqBodySource struct {
+
+	/*
+	   The repository branch used to publish your [site's source
+	   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
+	   Can be either `master` or `gh-pages`.
+	*/
+	Branch *string `json:"branch,omitempty"`
+
+	/*
+	   The repository directory that includes the source files for the Pages site. When
+	   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
+	   `gh-pages`, you are unable to specify a `path` other than `/`.
+	*/
+	Path *string `json:"path,omitempty"`
+}
+
+/*
+ReposCreatePagesSiteReqBody is a request body for repos/create-pages-site
+
+https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
+*/
+type ReposCreatePagesSiteReqBody struct {
+	Source *ReposCreatePagesSiteReqBodySource `json:"source,omitempty"`
+}
+
+/*
+ReposCreatePagesSiteResponseBody is a response body for ReposCreatePagesSite
+
+https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
+*/
+type ReposCreatePagesSiteResponseBody struct {
+	components.Page
+}
+
+/*
+ReposCreatePagesSiteResponse is a response for ReposCreatePagesSite
+
+https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
+*/
+type ReposCreatePagesSiteResponse struct {
+	response
+	request *ReposCreatePagesSiteReq
+	Data    *ReposCreatePagesSiteResponseBody
 }
 
 /*
@@ -3620,167 +3631,6 @@ type ReposCreateReleaseResponse struct {
 	response
 	request *ReposCreateReleaseReq
 	Data    *ReposCreateReleaseResponseBody
-}
-
-/*
-ReposCreateStatus performs requests for "repos/create-status"
-
-Create a status.
-
-  POST /repos/{owner}/{repo}/statuses/{sha}
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-func ReposCreateStatus(ctx context.Context, req *ReposCreateStatusReq, opt ...RequestOption) (*ReposCreateStatusResponse, error) {
-	if req == nil {
-		req = new(ReposCreateStatusReq)
-	}
-	resp := &ReposCreateStatusResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposCreateStatusResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposCreateStatus performs requests for "repos/create-status"
-
-Create a status.
-
-  POST /repos/{owner}/{repo}/statuses/{sha}
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-func (c Client) ReposCreateStatus(ctx context.Context, req *ReposCreateStatusReq, opt ...RequestOption) (*ReposCreateStatusResponse, error) {
-	return ReposCreateStatus(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposCreateStatusReq is request data for Client.ReposCreateStatus
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-type ReposCreateStatusReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Sha         string
-	RequestBody ReposCreateStatusReqBody
-}
-
-func (r *ReposCreateStatusReq) url() string {
-	return r._url
-}
-
-func (r *ReposCreateStatusReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/statuses/%v", r.Owner, r.Repo, r.Sha)
-}
-
-func (r *ReposCreateStatusReq) method() string {
-	return "POST"
-}
-
-func (r *ReposCreateStatusReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposCreateStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposCreateStatusReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposCreateStatusReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposCreateStatusReq) validStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposCreateStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposCreateStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposCreateStatusReq) Rel(link RelName, resp *ReposCreateStatusResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposCreateStatusReqBody is a request body for repos/create-status
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-type ReposCreateStatusReqBody struct {
-
-	// A string label to differentiate this status from the status of other systems.
-	Context *string `json:"context,omitempty"`
-
-	// A short description of the status.
-	Description *string `json:"description,omitempty"`
-
-	/*
-	   The state of the status. Can be one of `error`, `failure`, `pending`, or
-	   `success`.
-	*/
-	State *string `json:"state"`
-
-	/*
-	   The target URL to associate with this status. This URL will be linked from the
-	   GitHub UI to allow users to easily see the source of the status.
-	   For example, if your continuous integration system is posting build status, you
-	   would want to provide the deep link for the build output for this specific SHA:
-	   `http://ci.example.com/user/repo/build/sha`
-	*/
-	TargetUrl *string `json:"target_url,omitempty"`
-}
-
-/*
-ReposCreateStatusResponseBody is a response body for ReposCreateStatus
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-type ReposCreateStatusResponseBody struct {
-	components.Status
-}
-
-/*
-ReposCreateStatusResponse is a response for ReposCreateStatus
-
-https://developer.github.com/v3/repos/statuses/#create-a-status
-*/
-type ReposCreateStatusResponse struct {
-	response
-	request *ReposCreateStatusReq
-	Data    *ReposCreateStatusResponseBody
 }
 
 /*
@@ -3954,6 +3804,199 @@ type ReposCreateUsingTemplateResponse struct {
 	response
 	request *ReposCreateUsingTemplateReq
 	Data    *ReposCreateUsingTemplateResponseBody
+}
+
+/*
+ReposCreateWebhook performs requests for "repos/create-webhook"
+
+Create a repository webhook.
+
+  POST /repos/{owner}/{repo}/hooks
+
+https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
+*/
+func ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...RequestOption) (*ReposCreateWebhookResponse, error) {
+	if req == nil {
+		req = new(ReposCreateWebhookReq)
+	}
+	resp := &ReposCreateWebhookResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposCreateWebhookResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposCreateWebhook performs requests for "repos/create-webhook"
+
+Create a repository webhook.
+
+  POST /repos/{owner}/{repo}/hooks
+
+https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
+*/
+func (c Client) ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...RequestOption) (*ReposCreateWebhookResponse, error) {
+	return ReposCreateWebhook(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposCreateWebhookReq is request data for Client.ReposCreateWebhook
+
+https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
+*/
+type ReposCreateWebhookReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	RequestBody ReposCreateWebhookReqBody
+}
+
+func (r *ReposCreateWebhookReq) url() string {
+	return r._url
+}
+
+func (r *ReposCreateWebhookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
+}
+
+func (r *ReposCreateWebhookReq) method() string {
+	return "POST"
+}
+
+func (r *ReposCreateWebhookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposCreateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposCreateWebhookReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposCreateWebhookReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreateWebhookReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReposCreateWebhookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposCreateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposCreateWebhookReq) Rel(link RelName, resp *ReposCreateWebhookResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+// ReposCreateWebhookReqBodyConfig is a value for ReposCreateWebhookReqBody's Config field
+type ReposCreateWebhookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
+}
+
+/*
+ReposCreateWebhookReqBody is a request body for repos/create-webhook
+
+https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
+*/
+type ReposCreateWebhookReqBody struct {
+
+	/*
+	   Determines if notifications are sent when the webhook is triggered. Set to
+	   `true` to send notifications.
+	*/
+	Active *bool `json:"active,omitempty"`
+
+	/*
+	   Key/value pairs to provide settings for this webhook. [These are defined
+	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
+	*/
+	Config *ReposCreateWebhookReqBodyConfig `json:"config"`
+
+	/*
+	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
+	   the hook is triggered for.
+	*/
+	Events []string `json:"events,omitempty"`
+
+	/*
+	   Use `web` to create a webhook. Default: `web`. This parameter only accepts the
+	   value `web`.
+	*/
+	Name *string `json:"name,omitempty"`
+}
+
+/*
+ReposCreateWebhookResponseBody is a response body for ReposCreateWebhook
+
+https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
+*/
+type ReposCreateWebhookResponseBody struct {
+	components.Hook
+}
+
+/*
+ReposCreateWebhookResponse is a response for ReposCreateWebhook
+
+https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
+*/
+type ReposCreateWebhookResponse struct {
+	response
+	request *ReposCreateWebhookReq
+	Data    *ReposCreateWebhookResponseBody
 }
 
 /*
@@ -4194,6 +4237,366 @@ type ReposDeleteResponse struct {
 }
 
 /*
+ReposDeleteAccessRestrictions performs requests for "repos/delete-access-restrictions"
+
+Delete access restrictions.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+
+https://developer.github.com/v3/repos/branches/#delete-access-restrictions
+*/
+func ReposDeleteAccessRestrictions(ctx context.Context, req *ReposDeleteAccessRestrictionsReq, opt ...RequestOption) (*ReposDeleteAccessRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteAccessRestrictionsReq)
+	}
+	resp := &ReposDeleteAccessRestrictionsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeleteAccessRestrictions performs requests for "repos/delete-access-restrictions"
+
+Delete access restrictions.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+
+https://developer.github.com/v3/repos/branches/#delete-access-restrictions
+*/
+func (c Client) ReposDeleteAccessRestrictions(ctx context.Context, req *ReposDeleteAccessRestrictionsReq, opt ...RequestOption) (*ReposDeleteAccessRestrictionsResponse, error) {
+	return ReposDeleteAccessRestrictions(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeleteAccessRestrictionsReq is request data for Client.ReposDeleteAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#delete-access-restrictions
+*/
+type ReposDeleteAccessRestrictionsReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeleteAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeleteAccessRestrictionsReq) Rel(link RelName, resp *ReposDeleteAccessRestrictionsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeleteAccessRestrictionsResponse is a response for ReposDeleteAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#delete-access-restrictions
+*/
+type ReposDeleteAccessRestrictionsResponse struct {
+	response
+	request *ReposDeleteAccessRestrictionsReq
+}
+
+/*
+ReposDeleteAdminBranchProtection performs requests for "repos/delete-admin-branch-protection"
+
+Delete admin branch protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
+*/
+func ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdminBranchProtectionReq, opt ...RequestOption) (*ReposDeleteAdminBranchProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteAdminBranchProtectionReq)
+	}
+	resp := &ReposDeleteAdminBranchProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeleteAdminBranchProtection performs requests for "repos/delete-admin-branch-protection"
+
+Delete admin branch protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
+*/
+func (c Client) ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdminBranchProtectionReq, opt ...RequestOption) (*ReposDeleteAdminBranchProtectionResponse, error) {
+	return ReposDeleteAdminBranchProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeleteAdminBranchProtectionReq is request data for Client.ReposDeleteAdminBranchProtection
+
+https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
+*/
+type ReposDeleteAdminBranchProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeleteAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeleteAdminBranchProtectionReq) Rel(link RelName, resp *ReposDeleteAdminBranchProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeleteAdminBranchProtectionResponse is a response for ReposDeleteAdminBranchProtection
+
+https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
+*/
+type ReposDeleteAdminBranchProtectionResponse struct {
+	response
+	request *ReposDeleteAdminBranchProtectionReq
+}
+
+/*
+ReposDeleteBranchProtection performs requests for "repos/delete-branch-protection"
+
+Delete branch protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection
+
+https://developer.github.com/v3/repos/branches/#delete-branch-protection
+*/
+func ReposDeleteBranchProtection(ctx context.Context, req *ReposDeleteBranchProtectionReq, opt ...RequestOption) (*ReposDeleteBranchProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteBranchProtectionReq)
+	}
+	resp := &ReposDeleteBranchProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeleteBranchProtection performs requests for "repos/delete-branch-protection"
+
+Delete branch protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection
+
+https://developer.github.com/v3/repos/branches/#delete-branch-protection
+*/
+func (c Client) ReposDeleteBranchProtection(ctx context.Context, req *ReposDeleteBranchProtectionReq, opt ...RequestOption) (*ReposDeleteBranchProtectionResponse, error) {
+	return ReposDeleteBranchProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeleteBranchProtectionReq is request data for Client.ReposDeleteBranchProtection
+
+https://developer.github.com/v3/repos/branches/#delete-branch-protection
+*/
+type ReposDeleteBranchProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposDeleteBranchProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeleteBranchProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposDeleteBranchProtectionReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeleteBranchProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeleteBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeleteBranchProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeleteBranchProtectionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteBranchProtectionReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReposDeleteBranchProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeleteBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeleteBranchProtectionReq) Rel(link RelName, resp *ReposDeleteBranchProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeleteBranchProtectionResponse is a response for ReposDeleteBranchProtection
+
+https://developer.github.com/v3/repos/branches/#delete-branch-protection
+*/
+type ReposDeleteBranchProtectionResponse struct {
+	response
+	request *ReposDeleteBranchProtectionReq
+}
+
+/*
 ReposDeleteCommitComment performs requests for "repos/delete-commit-comment"
 
 Delete a commit comment.
@@ -4314,6 +4717,261 @@ type ReposDeleteCommitCommentResponse struct {
 }
 
 /*
+ReposDeleteCommitSignatureProtection performs requests for "repos/delete-commit-signature-protection"
+
+Delete commit signature protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
+*/
+func ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteCommitSignatureProtectionReq, opt ...RequestOption) (*ReposDeleteCommitSignatureProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteCommitSignatureProtectionReq)
+	}
+	resp := &ReposDeleteCommitSignatureProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeleteCommitSignatureProtection performs requests for "repos/delete-commit-signature-protection"
+
+Delete commit signature protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
+
+https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
+*/
+func (c Client) ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteCommitSignatureProtectionReq, opt ...RequestOption) (*ReposDeleteCommitSignatureProtectionResponse, error) {
+	return ReposDeleteCommitSignatureProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeleteCommitSignatureProtectionReq is request data for Client.ReposDeleteCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
+*/
+type ReposDeleteCommitSignatureProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	Protected Branches API can now manage a setting for requiring signed commits.
+	This feature is currently available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	ZzzaxPreview bool
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	if requiredPreviews {
+		previewVals["zzzax"] = true
+	}
+	if allPreviews {
+		previewVals["zzzax"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeleteCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeleteCommitSignatureProtectionReq) Rel(link RelName, resp *ReposDeleteCommitSignatureProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeleteCommitSignatureProtectionResponse is a response for ReposDeleteCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
+*/
+type ReposDeleteCommitSignatureProtectionResponse struct {
+	response
+	request *ReposDeleteCommitSignatureProtectionReq
+}
+
+/*
+ReposDeleteDeployKey performs requests for "repos/delete-deploy-key"
+
+Delete a deploy key.
+
+  DELETE /repos/{owner}/{repo}/keys/{key_id}
+
+https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
+*/
+func ReposDeleteDeployKey(ctx context.Context, req *ReposDeleteDeployKeyReq, opt ...RequestOption) (*ReposDeleteDeployKeyResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteDeployKeyReq)
+	}
+	resp := &ReposDeleteDeployKeyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeleteDeployKey performs requests for "repos/delete-deploy-key"
+
+Delete a deploy key.
+
+  DELETE /repos/{owner}/{repo}/keys/{key_id}
+
+https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
+*/
+func (c Client) ReposDeleteDeployKey(ctx context.Context, req *ReposDeleteDeployKeyReq, opt ...RequestOption) (*ReposDeleteDeployKeyResponse, error) {
+	return ReposDeleteDeployKey(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeleteDeployKeyReq is request data for Client.ReposDeleteDeployKey
+
+https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
+*/
+type ReposDeleteDeployKeyReq struct {
+	_url  string
+	Owner string
+	Repo  string
+	KeyId int64
+}
+
+func (r *ReposDeleteDeployKeyReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeleteDeployKeyReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
+}
+
+func (r *ReposDeleteDeployKeyReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeleteDeployKeyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeleteDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeleteDeployKeyReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeleteDeployKeyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteDeployKeyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReposDeleteDeployKeyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeleteDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeleteDeployKeyReq) Rel(link RelName, resp *ReposDeleteDeployKeyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeleteDeployKeyResponse is a response for ReposDeleteDeployKey
+
+https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
+*/
+type ReposDeleteDeployKeyResponse struct {
+	response
+	request *ReposDeleteDeployKeyReq
+}
+
+/*
 ReposDeleteDeployment performs requests for "repos/delete-deployment"
 
 Delete a deployment.
@@ -4431,126 +5089,6 @@ https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 type ReposDeleteDeploymentResponse struct {
 	response
 	request *ReposDeleteDeploymentReq
-}
-
-/*
-ReposDeleteDownload performs requests for "repos/delete-download"
-
-Delete a download.
-
-  DELETE /repos/{owner}/{repo}/downloads/{download_id}
-
-https://developer.github.com/v3/repos/downloads/#delete-a-download
-*/
-func ReposDeleteDownload(ctx context.Context, req *ReposDeleteDownloadReq, opt ...RequestOption) (*ReposDeleteDownloadResponse, error) {
-	if req == nil {
-		req = new(ReposDeleteDownloadReq)
-	}
-	resp := &ReposDeleteDownloadResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposDeleteDownload performs requests for "repos/delete-download"
-
-Delete a download.
-
-  DELETE /repos/{owner}/{repo}/downloads/{download_id}
-
-https://developer.github.com/v3/repos/downloads/#delete-a-download
-*/
-func (c Client) ReposDeleteDownload(ctx context.Context, req *ReposDeleteDownloadReq, opt ...RequestOption) (*ReposDeleteDownloadResponse, error) {
-	return ReposDeleteDownload(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposDeleteDownloadReq is request data for Client.ReposDeleteDownload
-
-https://developer.github.com/v3/repos/downloads/#delete-a-download
-*/
-type ReposDeleteDownloadReq struct {
-	_url       string
-	Owner      string
-	Repo       string
-	DownloadId int64
-}
-
-func (r *ReposDeleteDownloadReq) url() string {
-	return r._url
-}
-
-func (r *ReposDeleteDownloadReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
-}
-
-func (r *ReposDeleteDownloadReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposDeleteDownloadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposDeleteDownloadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposDeleteDownloadReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposDeleteDownloadReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposDeleteDownloadReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *ReposDeleteDownloadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposDeleteDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposDeleteDownloadReq) Rel(link RelName, resp *ReposDeleteDownloadResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposDeleteDownloadResponse is a response for ReposDeleteDownload
-
-https://developer.github.com/v3/repos/downloads/#delete-a-download
-*/
-type ReposDeleteDownloadResponse struct {
-	response
-	request *ReposDeleteDownloadReq
 }
 
 /*
@@ -4729,126 +5267,6 @@ type ReposDeleteFileResponse struct {
 }
 
 /*
-ReposDeleteHook performs requests for "repos/delete-hook"
-
-Delete a hook.
-
-  DELETE /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#delete-a-hook
-*/
-func ReposDeleteHook(ctx context.Context, req *ReposDeleteHookReq, opt ...RequestOption) (*ReposDeleteHookResponse, error) {
-	if req == nil {
-		req = new(ReposDeleteHookReq)
-	}
-	resp := &ReposDeleteHookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposDeleteHook performs requests for "repos/delete-hook"
-
-Delete a hook.
-
-  DELETE /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#delete-a-hook
-*/
-func (c Client) ReposDeleteHook(ctx context.Context, req *ReposDeleteHookReq, opt ...RequestOption) (*ReposDeleteHookResponse, error) {
-	return ReposDeleteHook(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposDeleteHookReq is request data for Client.ReposDeleteHook
-
-https://developer.github.com/v3/repos/hooks/#delete-a-hook
-*/
-type ReposDeleteHookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	HookId int64
-}
-
-func (r *ReposDeleteHookReq) url() string {
-	return r._url
-}
-
-func (r *ReposDeleteHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
-}
-
-func (r *ReposDeleteHookReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposDeleteHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposDeleteHookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposDeleteHookReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposDeleteHookReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposDeleteHookReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *ReposDeleteHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposDeleteHookReq) Rel(link RelName, resp *ReposDeleteHookResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposDeleteHookResponse is a response for ReposDeleteHook
-
-https://developer.github.com/v3/repos/hooks/#delete-a-hook
-*/
-type ReposDeleteHookResponse struct {
-	response
-	request *ReposDeleteHookReq
-}
-
-/*
 ReposDeleteInvitation performs requests for "repos/delete-invitation"
 
 Delete a repository invitation.
@@ -4966,6 +5384,260 @@ https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitatio
 type ReposDeleteInvitationResponse struct {
 	response
 	request *ReposDeleteInvitationReq
+}
+
+/*
+ReposDeletePagesSite performs requests for "repos/delete-pages-site"
+
+Delete a GitHub Pages site.
+
+  DELETE /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
+*/
+func ReposDeletePagesSite(ctx context.Context, req *ReposDeletePagesSiteReq, opt ...RequestOption) (*ReposDeletePagesSiteResponse, error) {
+	if req == nil {
+		req = new(ReposDeletePagesSiteReq)
+	}
+	resp := &ReposDeletePagesSiteResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeletePagesSite performs requests for "repos/delete-pages-site"
+
+Delete a GitHub Pages site.
+
+  DELETE /repos/{owner}/{repo}/pages
+
+https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
+*/
+func (c Client) ReposDeletePagesSite(ctx context.Context, req *ReposDeletePagesSiteReq, opt ...RequestOption) (*ReposDeletePagesSiteResponse, error) {
+	return ReposDeletePagesSite(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeletePagesSiteReq is request data for Client.ReposDeletePagesSite
+
+https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
+*/
+type ReposDeletePagesSiteReq struct {
+	_url  string
+	Owner string
+	Repo  string
+
+	/*
+	Enabling and disabling Pages in the Pages API is currently available for
+	developers to preview. See the [blog
+	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
+	preview for more details. To access the new endpoints during the preview period,
+	you must set this to true.
+	*/
+	SwitcherooPreview bool
+}
+
+func (r *ReposDeletePagesSiteReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeletePagesSiteReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
+}
+
+func (r *ReposDeletePagesSiteReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeletePagesSiteReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeletePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
+	if requiredPreviews {
+		previewVals["switcheroo"] = true
+	}
+	if allPreviews {
+		previewVals["switcheroo"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeletePagesSiteReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeletePagesSiteReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeletePagesSiteReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReposDeletePagesSiteReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeletePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeletePagesSiteReq) Rel(link RelName, resp *ReposDeletePagesSiteResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeletePagesSiteResponse is a response for ReposDeletePagesSite
+
+https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
+*/
+type ReposDeletePagesSiteResponse struct {
+	response
+	request *ReposDeletePagesSiteReq
+}
+
+/*
+ReposDeletePullRequestReviewProtection performs requests for "repos/delete-pull-request-review-protection"
+
+Delete pull request review protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
+
+https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
+*/
+func ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDeletePullRequestReviewProtectionReq, opt ...RequestOption) (*ReposDeletePullRequestReviewProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposDeletePullRequestReviewProtectionReq)
+	}
+	resp := &ReposDeletePullRequestReviewProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeletePullRequestReviewProtection performs requests for "repos/delete-pull-request-review-protection"
+
+Delete pull request review protection.
+
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
+
+https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
+*/
+func (c Client) ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDeletePullRequestReviewProtectionReq, opt ...RequestOption) (*ReposDeletePullRequestReviewProtectionResponse, error) {
+	return ReposDeletePullRequestReviewProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeletePullRequestReviewProtectionReq is request data for Client.ReposDeletePullRequestReviewProtection
+
+https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
+*/
+type ReposDeletePullRequestReviewProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) validStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeletePullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeletePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeletePullRequestReviewProtectionReq) Rel(link RelName, resp *ReposDeletePullRequestReviewProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeletePullRequestReviewProtectionResponse is a response for ReposDeletePullRequestReviewProtection
+
+https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
+*/
+type ReposDeletePullRequestReviewProtectionResponse struct {
+	response
+	request *ReposDeletePullRequestReviewProtectionReq
 }
 
 /*
@@ -5209,6 +5881,126 @@ type ReposDeleteReleaseAssetResponse struct {
 }
 
 /*
+ReposDeleteWebhook performs requests for "repos/delete-webhook"
+
+Delete a repository webhook.
+
+  DELETE /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
+*/
+func ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...RequestOption) (*ReposDeleteWebhookResponse, error) {
+	if req == nil {
+		req = new(ReposDeleteWebhookReq)
+	}
+	resp := &ReposDeleteWebhookResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDeleteWebhook performs requests for "repos/delete-webhook"
+
+Delete a repository webhook.
+
+  DELETE /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
+*/
+func (c Client) ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...RequestOption) (*ReposDeleteWebhookResponse, error) {
+	return ReposDeleteWebhook(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDeleteWebhookReq is request data for Client.ReposDeleteWebhook
+
+https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
+*/
+type ReposDeleteWebhookReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	HookId int64
+}
+
+func (r *ReposDeleteWebhookReq) url() string {
+	return r._url
+}
+
+func (r *ReposDeleteWebhookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
+}
+
+func (r *ReposDeleteWebhookReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReposDeleteWebhookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDeleteWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDeleteWebhookReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDeleteWebhookReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDeleteWebhookReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReposDeleteWebhookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDeleteWebhookReq) Rel(link RelName, resp *ReposDeleteWebhookResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDeleteWebhookResponse is a response for ReposDeleteWebhook
+
+https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
+*/
+type ReposDeleteWebhookResponse struct {
+	response
+	request *ReposDeleteWebhookReq
+}
+
+/*
 ReposDisableAutomatedSecurityFixes performs requests for "repos/disable-automated-security-fixes"
 
 Disable automated security fixes.
@@ -5341,140 +6133,6 @@ type ReposDisableAutomatedSecurityFixesResponse struct {
 }
 
 /*
-ReposDisablePagesSite performs requests for "repos/disable-pages-site"
-
-Disable a Pages site.
-
-  DELETE /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#disable-a-pages-site
-*/
-func ReposDisablePagesSite(ctx context.Context, req *ReposDisablePagesSiteReq, opt ...RequestOption) (*ReposDisablePagesSiteResponse, error) {
-	if req == nil {
-		req = new(ReposDisablePagesSiteReq)
-	}
-	resp := &ReposDisablePagesSiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposDisablePagesSite performs requests for "repos/disable-pages-site"
-
-Disable a Pages site.
-
-  DELETE /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#disable-a-pages-site
-*/
-func (c Client) ReposDisablePagesSite(ctx context.Context, req *ReposDisablePagesSiteReq, opt ...RequestOption) (*ReposDisablePagesSiteResponse, error) {
-	return ReposDisablePagesSite(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposDisablePagesSiteReq is request data for Client.ReposDisablePagesSite
-
-https://developer.github.com/v3/repos/pages/#disable-a-pages-site
-*/
-type ReposDisablePagesSiteReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	/*
-	Enabling and disabling Pages in the Pages API is currently available for
-	developers to preview. See the [blog
-	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
-	preview for more details. To access the new endpoints during the preview period,
-	you must set this to true.
-	*/
-	SwitcherooPreview bool
-}
-
-func (r *ReposDisablePagesSiteReq) url() string {
-	return r._url
-}
-
-func (r *ReposDisablePagesSiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
-}
-
-func (r *ReposDisablePagesSiteReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposDisablePagesSiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposDisablePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
-	if requiredPreviews {
-		previewVals["switcheroo"] = true
-	}
-	if allPreviews {
-		previewVals["switcheroo"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposDisablePagesSiteReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposDisablePagesSiteReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposDisablePagesSiteReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *ReposDisablePagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposDisablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposDisablePagesSiteReq) Rel(link RelName, resp *ReposDisablePagesSiteResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposDisablePagesSiteResponse is a response for ReposDisablePagesSite
-
-https://developer.github.com/v3/repos/pages/#disable-a-pages-site
-*/
-type ReposDisablePagesSiteResponse struct {
-	response
-	request *ReposDisablePagesSiteReq
-}
-
-/*
 ReposDisableVulnerabilityAlerts performs requests for "repos/disable-vulnerability-alerts"
 
 Disable vulnerability alerts.
@@ -5526,8 +6184,8 @@ type ReposDisableVulnerabilityAlertsReq struct {
 	Repo  string
 
 	/*
-	Enabling and disabling vulnerability alerts for a repository using the REST API
-	is currently available for developers to preview. To access these new endpoints
+	Enabling and disabling dependency alerts for a repository using the REST API is
+	currently available for developers to preview. To access these new endpoints
 	during the preview period, you must set this to true.
 	*/
 	DorianPreview bool
@@ -5604,6 +6262,127 @@ https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 type ReposDisableVulnerabilityAlertsResponse struct {
 	response
 	request *ReposDisableVulnerabilityAlertsReq
+}
+
+/*
+ReposDownloadArchive performs requests for "repos/download-archive"
+
+Download a repository archive.
+
+  GET /repos/{owner}/{repo}/{archive_format}/{ref}
+
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
+*/
+func ReposDownloadArchive(ctx context.Context, req *ReposDownloadArchiveReq, opt ...RequestOption) (*ReposDownloadArchiveResponse, error) {
+	if req == nil {
+		req = new(ReposDownloadArchiveReq)
+	}
+	resp := &ReposDownloadArchiveResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDownloadArchive performs requests for "repos/download-archive"
+
+Download a repository archive.
+
+  GET /repos/{owner}/{repo}/{archive_format}/{ref}
+
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
+*/
+func (c Client) ReposDownloadArchive(ctx context.Context, req *ReposDownloadArchiveReq, opt ...RequestOption) (*ReposDownloadArchiveResponse, error) {
+	return ReposDownloadArchive(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDownloadArchiveReq is request data for Client.ReposDownloadArchive
+
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
+*/
+type ReposDownloadArchiveReq struct {
+	_url          string
+	Owner         string
+	Repo          string
+	ArchiveFormat string
+	Ref           string
+}
+
+func (r *ReposDownloadArchiveReq) url() string {
+	return r._url
+}
+
+func (r *ReposDownloadArchiveReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/%v/%v", r.Owner, r.Repo, r.ArchiveFormat, r.Ref)
+}
+
+func (r *ReposDownloadArchiveReq) method() string {
+	return "GET"
+}
+
+func (r *ReposDownloadArchiveReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDownloadArchiveReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDownloadArchiveReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDownloadArchiveReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDownloadArchiveReq) validStatuses() []int {
+	return []int{302}
+}
+
+func (r *ReposDownloadArchiveReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirectOnly}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDownloadArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDownloadArchiveReq) Rel(link RelName, resp *ReposDownloadArchiveResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDownloadArchiveResponse is a response for ReposDownloadArchive
+
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
+*/
+type ReposDownloadArchiveResponse struct {
+	response
+	request *ReposDownloadArchiveReq
 }
 
 /*
@@ -5739,179 +6518,6 @@ type ReposEnableAutomatedSecurityFixesResponse struct {
 }
 
 /*
-ReposEnablePagesSite performs requests for "repos/enable-pages-site"
-
-Enable a Pages site.
-
-  POST /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-func ReposEnablePagesSite(ctx context.Context, req *ReposEnablePagesSiteReq, opt ...RequestOption) (*ReposEnablePagesSiteResponse, error) {
-	if req == nil {
-		req = new(ReposEnablePagesSiteReq)
-	}
-	resp := &ReposEnablePagesSiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposEnablePagesSiteResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposEnablePagesSite performs requests for "repos/enable-pages-site"
-
-Enable a Pages site.
-
-  POST /repos/{owner}/{repo}/pages
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-func (c Client) ReposEnablePagesSite(ctx context.Context, req *ReposEnablePagesSiteReq, opt ...RequestOption) (*ReposEnablePagesSiteResponse, error) {
-	return ReposEnablePagesSite(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposEnablePagesSiteReq is request data for Client.ReposEnablePagesSite
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	RequestBody ReposEnablePagesSiteReqBody
-
-	/*
-	Enabling and disabling Pages in the Pages API is currently available for
-	developers to preview. See the [blog
-	post](https://developer.github.com/changes/2019-03-14-enabling-disabling-pages/)
-	preview for more details. To access the new endpoints during the preview period,
-	you must set this to true.
-	*/
-	SwitcherooPreview bool
-}
-
-func (r *ReposEnablePagesSiteReq) url() string {
-	return r._url
-}
-
-func (r *ReposEnablePagesSiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pages", r.Owner, r.Repo)
-}
-
-func (r *ReposEnablePagesSiteReq) method() string {
-	return "POST"
-}
-
-func (r *ReposEnablePagesSiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposEnablePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
-	if requiredPreviews {
-		previewVals["switcheroo"] = true
-	}
-	if allPreviews {
-		previewVals["switcheroo"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposEnablePagesSiteReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposEnablePagesSiteReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposEnablePagesSiteReq) validStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReposEnablePagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposEnablePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposEnablePagesSiteReq) Rel(link RelName, resp *ReposEnablePagesSiteResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-// ReposEnablePagesSiteReqBodySource is a value for ReposEnablePagesSiteReqBody's Source field
-type ReposEnablePagesSiteReqBodySource struct {
-
-	/*
-	   The repository branch used to publish your [site's source
-	   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
-	   Can be either `master` or `gh-pages`.
-	*/
-	Branch *string `json:"branch,omitempty"`
-
-	/*
-	   The repository directory that includes the source files for the Pages site. When
-	   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
-	   `gh-pages`, you are unable to specify a `path` other than `/`.
-	*/
-	Path *string `json:"path,omitempty"`
-}
-
-/*
-ReposEnablePagesSiteReqBody is a request body for repos/enable-pages-site
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteReqBody struct {
-	Source *ReposEnablePagesSiteReqBodySource `json:"source,omitempty"`
-}
-
-/*
-ReposEnablePagesSiteResponseBody is a response body for ReposEnablePagesSite
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteResponseBody struct {
-	components.Page
-}
-
-/*
-ReposEnablePagesSiteResponse is a response for ReposEnablePagesSite
-
-https://developer.github.com/v3/repos/pages/#enable-a-pages-site
-*/
-type ReposEnablePagesSiteResponse struct {
-	response
-	request *ReposEnablePagesSiteReq
-	Data    *ReposEnablePagesSiteResponseBody
-}
-
-/*
 ReposEnableVulnerabilityAlerts performs requests for "repos/enable-vulnerability-alerts"
 
 Enable vulnerability alerts.
@@ -5963,8 +6569,8 @@ type ReposEnableVulnerabilityAlertsReq struct {
 	Repo  string
 
 	/*
-	Enabling and disabling vulnerability alerts for a repository using the REST API
-	is currently available for developers to preview. To access these new endpoints
+	Enabling and disabling dependency alerts for a repository using the REST API is
+	currently available for developers to preview. To access these new endpoints
 	during the preview period, you must set this to true.
 	*/
 	DorianPreview bool
@@ -6200,6 +6806,397 @@ type ReposGetResponse struct {
 }
 
 /*
+ReposGetAccessRestrictions performs requests for "repos/get-access-restrictions"
+
+Get access restrictions.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+
+https://developer.github.com/v3/repos/branches/#get-access-restrictions
+*/
+func ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrictionsReq, opt ...RequestOption) (*ReposGetAccessRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposGetAccessRestrictionsReq)
+	}
+	resp := &ReposGetAccessRestrictionsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposGetAccessRestrictionsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposGetAccessRestrictions performs requests for "repos/get-access-restrictions"
+
+Get access restrictions.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+
+https://developer.github.com/v3/repos/branches/#get-access-restrictions
+*/
+func (c Client) ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrictionsReq, opt ...RequestOption) (*ReposGetAccessRestrictionsResponse, error) {
+	return ReposGetAccessRestrictions(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposGetAccessRestrictionsReq is request data for Client.ReposGetAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#get-access-restrictions
+*/
+type ReposGetAccessRestrictionsReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposGetAccessRestrictionsReq) url() string {
+	return r._url
+}
+
+func (r *ReposGetAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposGetAccessRestrictionsReq) method() string {
+	return "GET"
+}
+
+func (r *ReposGetAccessRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposGetAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposGetAccessRestrictionsReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposGetAccessRestrictionsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetAccessRestrictionsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposGetAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposGetAccessRestrictionsReq) Rel(link RelName, resp *ReposGetAccessRestrictionsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposGetAccessRestrictionsResponseBody is a response body for ReposGetAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#get-access-restrictions
+*/
+type ReposGetAccessRestrictionsResponseBody struct {
+	components.BranchRestrictionPolicy
+}
+
+/*
+ReposGetAccessRestrictionsResponse is a response for ReposGetAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#get-access-restrictions
+*/
+type ReposGetAccessRestrictionsResponse struct {
+	response
+	request *ReposGetAccessRestrictionsReq
+	Data    *ReposGetAccessRestrictionsResponseBody
+}
+
+/*
+ReposGetAdminBranchProtection performs requests for "repos/get-admin-branch-protection"
+
+Get admin branch protection.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
+*/
+func ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranchProtectionReq, opt ...RequestOption) (*ReposGetAdminBranchProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposGetAdminBranchProtectionReq)
+	}
+	resp := &ReposGetAdminBranchProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposGetAdminBranchProtectionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposGetAdminBranchProtection performs requests for "repos/get-admin-branch-protection"
+
+Get admin branch protection.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+
+https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
+*/
+func (c Client) ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranchProtectionReq, opt ...RequestOption) (*ReposGetAdminBranchProtectionResponse, error) {
+	return ReposGetAdminBranchProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposGetAdminBranchProtectionReq is request data for Client.ReposGetAdminBranchProtection
+
+https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
+*/
+type ReposGetAdminBranchProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposGetAdminBranchProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposGetAdminBranchProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposGetAdminBranchProtectionReq) method() string {
+	return "GET"
+}
+
+func (r *ReposGetAdminBranchProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposGetAdminBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposGetAdminBranchProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposGetAdminBranchProtectionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetAdminBranchProtectionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposGetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposGetAdminBranchProtectionReq) Rel(link RelName, resp *ReposGetAdminBranchProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposGetAdminBranchProtectionResponseBody is a response body for ReposGetAdminBranchProtection
+
+https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
+*/
+type ReposGetAdminBranchProtectionResponseBody struct {
+	components.ProtectedBranchAdminEnforced
+}
+
+/*
+ReposGetAdminBranchProtectionResponse is a response for ReposGetAdminBranchProtection
+
+https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
+*/
+type ReposGetAdminBranchProtectionResponse struct {
+	response
+	request *ReposGetAdminBranchProtectionReq
+	Data    *ReposGetAdminBranchProtectionResponseBody
+}
+
+/*
+ReposGetAllStatusCheckContexts performs requests for "repos/get-all-status-check-contexts"
+
+Get all status check contexts.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
+*/
+func ReposGetAllStatusCheckContexts(ctx context.Context, req *ReposGetAllStatusCheckContextsReq, opt ...RequestOption) (*ReposGetAllStatusCheckContextsResponse, error) {
+	if req == nil {
+		req = new(ReposGetAllStatusCheckContextsReq)
+	}
+	resp := &ReposGetAllStatusCheckContextsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposGetAllStatusCheckContextsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposGetAllStatusCheckContexts performs requests for "repos/get-all-status-check-contexts"
+
+Get all status check contexts.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
+*/
+func (c Client) ReposGetAllStatusCheckContexts(ctx context.Context, req *ReposGetAllStatusCheckContextsReq, opt ...RequestOption) (*ReposGetAllStatusCheckContextsResponse, error) {
+	return ReposGetAllStatusCheckContexts(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposGetAllStatusCheckContextsReq is request data for Client.ReposGetAllStatusCheckContexts
+
+https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
+*/
+type ReposGetAllStatusCheckContextsReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) url() string {
+	return r._url
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) method() string {
+	return "GET"
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetAllStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposGetAllStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposGetAllStatusCheckContextsReq) Rel(link RelName, resp *ReposGetAllStatusCheckContextsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposGetAllStatusCheckContextsResponseBody is a response body for ReposGetAllStatusCheckContexts
+
+https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
+*/
+type ReposGetAllStatusCheckContextsResponseBody []string
+
+/*
+ReposGetAllStatusCheckContextsResponse is a response for ReposGetAllStatusCheckContexts
+
+https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
+*/
+type ReposGetAllStatusCheckContextsResponse struct {
+	response
+	request *ReposGetAllStatusCheckContextsReq
+	Data    *ReposGetAllStatusCheckContextsResponseBody
+}
+
+/*
 ReposGetAllTopics performs requests for "repos/get-all-topics"
 
 Get all repository topics.
@@ -6345,11 +7342,11 @@ type ReposGetAllTopicsResponse struct {
 /*
 ReposGetAppsWithAccessToProtectedBranch performs requests for "repos/get-apps-with-access-to-protected-branch"
 
-Get apps with access to protected branch.
+Get apps with access to the protected branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
 
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetAppsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetAppsWithAccessToProtectedBranchResponse, error) {
 	if req == nil {
@@ -6374,11 +7371,11 @@ func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetA
 /*
 ReposGetAppsWithAccessToProtectedBranch performs requests for "repos/get-apps-with-access-to-protected-branch"
 
-Get apps with access to protected branch.
+Get apps with access to the protected branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
 
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 func (c Client) ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetAppsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetAppsWithAccessToProtectedBranchResponse, error) {
 	return ReposGetAppsWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
@@ -6387,7 +7384,7 @@ func (c Client) ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req
 /*
 ReposGetAppsWithAccessToProtectedBranchReq is request data for Client.ReposGetAppsWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchReq struct {
 	_url   string
@@ -6456,16 +7453,16 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) Rel(link RelName, resp *Rep
 /*
 ReposGetAppsWithAccessToProtectedBranchResponseBody is a response body for ReposGetAppsWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchResponseBody []struct {
-	components.Integration2
+	components.Integration
 }
 
 /*
 ReposGetAppsWithAccessToProtectedBranchResponse is a response for ReposGetAppsWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchResponse struct {
 	response
@@ -6474,134 +7471,13 @@ type ReposGetAppsWithAccessToProtectedBranchResponse struct {
 }
 
 /*
-ReposGetArchiveLink performs requests for "repos/get-archive-link"
-
-Get archive link.
-
-  GET /repos/{owner}/{repo}/{archive_format}/{ref}
-
-https://developer.github.com/v3/repos/contents/#get-archive-link
-*/
-func ReposGetArchiveLink(ctx context.Context, req *ReposGetArchiveLinkReq, opt ...RequestOption) (*ReposGetArchiveLinkResponse, error) {
-	if req == nil {
-		req = new(ReposGetArchiveLinkReq)
-	}
-	resp := &ReposGetArchiveLinkResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetArchiveLink performs requests for "repos/get-archive-link"
-
-Get archive link.
-
-  GET /repos/{owner}/{repo}/{archive_format}/{ref}
-
-https://developer.github.com/v3/repos/contents/#get-archive-link
-*/
-func (c Client) ReposGetArchiveLink(ctx context.Context, req *ReposGetArchiveLinkReq, opt ...RequestOption) (*ReposGetArchiveLinkResponse, error) {
-	return ReposGetArchiveLink(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetArchiveLinkReq is request data for Client.ReposGetArchiveLink
-
-https://developer.github.com/v3/repos/contents/#get-archive-link
-*/
-type ReposGetArchiveLinkReq struct {
-	_url          string
-	Owner         string
-	Repo          string
-	ArchiveFormat string
-	Ref           string
-}
-
-func (r *ReposGetArchiveLinkReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetArchiveLinkReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/%v/%v", r.Owner, r.Repo, r.ArchiveFormat, r.Ref)
-}
-
-func (r *ReposGetArchiveLinkReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetArchiveLinkReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetArchiveLinkReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetArchiveLinkReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetArchiveLinkReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposGetArchiveLinkReq) validStatuses() []int {
-	return []int{302}
-}
-
-func (r *ReposGetArchiveLinkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetArchiveLinkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetArchiveLinkReq) Rel(link RelName, resp *ReposGetArchiveLinkResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetArchiveLinkResponse is a response for ReposGetArchiveLink
-
-https://developer.github.com/v3/repos/contents/#get-archive-link
-*/
-type ReposGetArchiveLinkResponse struct {
-	response
-	request *ReposGetArchiveLinkReq
-}
-
-/*
 ReposGetBranch performs requests for "repos/get-branch"
 
-Get branch.
+Get a branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}
 
-https://developer.github.com/v3/repos/branches/#get-branch
+https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestOption) (*ReposGetBranchResponse, error) {
 	if req == nil {
@@ -6626,11 +7502,11 @@ func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestO
 /*
 ReposGetBranch performs requests for "repos/get-branch"
 
-Get branch.
+Get a branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}
 
-https://developer.github.com/v3/repos/branches/#get-branch
+https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 func (c Client) ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestOption) (*ReposGetBranchResponse, error) {
 	return ReposGetBranch(ctx, req, append(c, opt...)...)
@@ -6639,7 +7515,7 @@ func (c Client) ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt 
 /*
 ReposGetBranchReq is request data for Client.ReposGetBranch
 
-https://developer.github.com/v3/repos/branches/#get-branch
+https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type ReposGetBranchReq struct {
 	_url   string
@@ -6708,7 +7584,7 @@ func (r *ReposGetBranchReq) Rel(link RelName, resp *ReposGetBranchResponse) bool
 /*
 ReposGetBranchResponseBody is a response body for ReposGetBranch
 
-https://developer.github.com/v3/repos/branches/#get-branch
+https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type ReposGetBranchResponseBody struct {
 	components.BranchWithProtection
@@ -6717,7 +7593,7 @@ type ReposGetBranchResponseBody struct {
 /*
 ReposGetBranchResponse is a response for ReposGetBranch
 
-https://developer.github.com/v3/repos/branches/#get-branch
+https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type ReposGetBranchResponse struct {
 	response
@@ -6872,11 +7748,11 @@ type ReposGetBranchProtectionResponse struct {
 /*
 ReposGetClones performs requests for "repos/get-clones"
 
-Clones.
+Get repository clones.
 
   GET /repos/{owner}/{repo}/traffic/clones
 
-https://developer.github.com/v3/repos/traffic/#clones
+https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestOption) (*ReposGetClonesResponse, error) {
 	if req == nil {
@@ -6901,11 +7777,11 @@ func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestO
 /*
 ReposGetClones performs requests for "repos/get-clones"
 
-Clones.
+Get repository clones.
 
   GET /repos/{owner}/{repo}/traffic/clones
 
-https://developer.github.com/v3/repos/traffic/#clones
+https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 func (c Client) ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestOption) (*ReposGetClonesResponse, error) {
 	return ReposGetClones(ctx, req, append(c, opt...)...)
@@ -6914,7 +7790,7 @@ func (c Client) ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt 
 /*
 ReposGetClonesReq is request data for Client.ReposGetClones
 
-https://developer.github.com/v3/repos/traffic/#clones
+https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type ReposGetClonesReq struct {
 	_url  string
@@ -6988,7 +7864,7 @@ func (r *ReposGetClonesReq) Rel(link RelName, resp *ReposGetClonesResponse) bool
 /*
 ReposGetClonesResponseBody is a response body for ReposGetClones
 
-https://developer.github.com/v3/repos/traffic/#clones
+https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type ReposGetClonesResponseBody struct {
 	components.CloneTraffic
@@ -6997,7 +7873,7 @@ type ReposGetClonesResponseBody struct {
 /*
 ReposGetClonesResponse is a response for ReposGetClones
 
-https://developer.github.com/v3/repos/traffic/#clones
+https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type ReposGetClonesResponse struct {
 	response
@@ -7008,11 +7884,11 @@ type ReposGetClonesResponse struct {
 /*
 ReposGetCodeFrequencyStats performs requests for "repos/get-code-frequency-stats"
 
-Get the number of additions and deletions per week.
+Get the weekly commit activity.
 
   GET /repos/{owner}/{repo}/stats/code_frequency
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyStatsReq, opt ...RequestOption) (*ReposGetCodeFrequencyStatsResponse, error) {
 	if req == nil {
@@ -7037,11 +7913,11 @@ func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyS
 /*
 ReposGetCodeFrequencyStats performs requests for "repos/get-code-frequency-stats"
 
-Get the number of additions and deletions per week.
+Get the weekly commit activity.
 
   GET /repos/{owner}/{repo}/stats/code_frequency
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 func (c Client) ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyStatsReq, opt ...RequestOption) (*ReposGetCodeFrequencyStatsResponse, error) {
 	return ReposGetCodeFrequencyStats(ctx, req, append(c, opt...)...)
@@ -7050,7 +7926,7 @@ func (c Client) ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCod
 /*
 ReposGetCodeFrequencyStatsReq is request data for Client.ReposGetCodeFrequencyStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type ReposGetCodeFrequencyStatsReq struct {
 	_url  string
@@ -7118,14 +7994,14 @@ func (r *ReposGetCodeFrequencyStatsReq) Rel(link RelName, resp *ReposGetCodeFreq
 /*
 ReposGetCodeFrequencyStatsResponseBody is a response body for ReposGetCodeFrequencyStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type ReposGetCodeFrequencyStatsResponseBody []components.CodeFrequencyStat
 
 /*
 ReposGetCodeFrequencyStatsResponse is a response for ReposGetCodeFrequencyStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type ReposGetCodeFrequencyStatsResponse struct {
 	response
@@ -7136,11 +8012,11 @@ type ReposGetCodeFrequencyStatsResponse struct {
 /*
 ReposGetCollaboratorPermissionLevel performs requests for "repos/get-collaborator-permission-level"
 
-Review a user's permission level.
+Get repository permissions for a user.
 
   GET /repos/{owner}/{repo}/collaborators/{username}/permission
 
-https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetCollaboratorPermissionLevelReq, opt ...RequestOption) (*ReposGetCollaboratorPermissionLevelResponse, error) {
 	if req == nil {
@@ -7165,11 +8041,11 @@ func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetColla
 /*
 ReposGetCollaboratorPermissionLevel performs requests for "repos/get-collaborator-permission-level"
 
-Review a user's permission level.
+Get repository permissions for a user.
 
   GET /repos/{owner}/{repo}/collaborators/{username}/permission
 
-https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 func (c Client) ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetCollaboratorPermissionLevelReq, opt ...RequestOption) (*ReposGetCollaboratorPermissionLevelResponse, error) {
 	return ReposGetCollaboratorPermissionLevel(ctx, req, append(c, opt...)...)
@@ -7178,7 +8054,7 @@ func (c Client) ReposGetCollaboratorPermissionLevel(ctx context.Context, req *Re
 /*
 ReposGetCollaboratorPermissionLevelReq is request data for Client.ReposGetCollaboratorPermissionLevel
 
-https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type ReposGetCollaboratorPermissionLevelReq struct {
 	_url     string
@@ -7247,7 +8123,7 @@ func (r *ReposGetCollaboratorPermissionLevelReq) Rel(link RelName, resp *ReposGe
 /*
 ReposGetCollaboratorPermissionLevelResponseBody is a response body for ReposGetCollaboratorPermissionLevel
 
-https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type ReposGetCollaboratorPermissionLevelResponseBody struct {
 	components.RepositoryCollaboratorPermission
@@ -7256,7 +8132,7 @@ type ReposGetCollaboratorPermissionLevelResponseBody struct {
 /*
 ReposGetCollaboratorPermissionLevelResponse is a response for ReposGetCollaboratorPermissionLevel
 
-https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
+https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type ReposGetCollaboratorPermissionLevelResponse struct {
 	response
@@ -7267,11 +8143,11 @@ type ReposGetCollaboratorPermissionLevelResponse struct {
 /*
 ReposGetCombinedStatusForRef performs requests for "repos/get-combined-status-for-ref"
 
-Get the combined status for a specific ref.
+Get the combined status for a specific reference.
 
   GET /repos/{owner}/{repo}/commits/{ref}/status
 
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStatusForRefReq, opt ...RequestOption) (*ReposGetCombinedStatusForRefResponse, error) {
 	if req == nil {
@@ -7296,11 +8172,11 @@ func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStat
 /*
 ReposGetCombinedStatusForRef performs requests for "repos/get-combined-status-for-ref"
 
-Get the combined status for a specific ref.
+Get the combined status for a specific reference.
 
   GET /repos/{owner}/{repo}/commits/{ref}/status
 
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 func (c Client) ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStatusForRefReq, opt ...RequestOption) (*ReposGetCombinedStatusForRefResponse, error) {
 	return ReposGetCombinedStatusForRef(ctx, req, append(c, opt...)...)
@@ -7309,7 +8185,7 @@ func (c Client) ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetC
 /*
 ReposGetCombinedStatusForRefReq is request data for Client.ReposGetCombinedStatusForRef
 
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type ReposGetCombinedStatusForRefReq struct {
 	_url  string
@@ -7378,7 +8254,7 @@ func (r *ReposGetCombinedStatusForRefReq) Rel(link RelName, resp *ReposGetCombin
 /*
 ReposGetCombinedStatusForRefResponseBody is a response body for ReposGetCombinedStatusForRef
 
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type ReposGetCombinedStatusForRefResponseBody struct {
 	components.CombinedCommitStatus
@@ -7387,7 +8263,7 @@ type ReposGetCombinedStatusForRefResponseBody struct {
 /*
 ReposGetCombinedStatusForRefResponse is a response for ReposGetCombinedStatusForRef
 
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
+https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type ReposGetCombinedStatusForRefResponse struct {
 	response
@@ -7398,11 +8274,11 @@ type ReposGetCombinedStatusForRefResponse struct {
 /*
 ReposGetCommit performs requests for "repos/get-commit"
 
-Get a single commit.
+Get a commit.
 
   GET /repos/{owner}/{repo}/commits/{ref}
 
-https://developer.github.com/v3/repos/commits/#get-a-single-commit
+https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestOption) (*ReposGetCommitResponse, error) {
 	if req == nil {
@@ -7427,11 +8303,11 @@ func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestO
 /*
 ReposGetCommit performs requests for "repos/get-commit"
 
-Get a single commit.
+Get a commit.
 
   GET /repos/{owner}/{repo}/commits/{ref}
 
-https://developer.github.com/v3/repos/commits/#get-a-single-commit
+https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 func (c Client) ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestOption) (*ReposGetCommitResponse, error) {
 	return ReposGetCommit(ctx, req, append(c, opt...)...)
@@ -7440,7 +8316,7 @@ func (c Client) ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt 
 /*
 ReposGetCommitReq is request data for Client.ReposGetCommit
 
-https://developer.github.com/v3/repos/commits/#get-a-single-commit
+https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type ReposGetCommitReq struct {
 	_url  string
@@ -7509,7 +8385,7 @@ func (r *ReposGetCommitReq) Rel(link RelName, resp *ReposGetCommitResponse) bool
 /*
 ReposGetCommitResponseBody is a response body for ReposGetCommit
 
-https://developer.github.com/v3/repos/commits/#get-a-single-commit
+https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type ReposGetCommitResponseBody struct {
 	components.Commit
@@ -7518,7 +8394,7 @@ type ReposGetCommitResponseBody struct {
 /*
 ReposGetCommitResponse is a response for ReposGetCommit
 
-https://developer.github.com/v3/repos/commits/#get-a-single-commit
+https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type ReposGetCommitResponse struct {
 	response
@@ -7529,11 +8405,11 @@ type ReposGetCommitResponse struct {
 /*
 ReposGetCommitActivityStats performs requests for "repos/get-commit-activity-stats"
 
-Get the last year of commit activity data.
+Get the last year of commit activity.
 
   GET /repos/{owner}/{repo}/stats/commit_activity
 
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivityStatsReq, opt ...RequestOption) (*ReposGetCommitActivityStatsResponse, error) {
 	if req == nil {
@@ -7558,11 +8434,11 @@ func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivit
 /*
 ReposGetCommitActivityStats performs requests for "repos/get-commit-activity-stats"
 
-Get the last year of commit activity data.
+Get the last year of commit activity.
 
   GET /repos/{owner}/{repo}/stats/commit_activity
 
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 func (c Client) ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivityStatsReq, opt ...RequestOption) (*ReposGetCommitActivityStatsResponse, error) {
 	return ReposGetCommitActivityStats(ctx, req, append(c, opt...)...)
@@ -7571,7 +8447,7 @@ func (c Client) ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCo
 /*
 ReposGetCommitActivityStatsReq is request data for Client.ReposGetCommitActivityStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type ReposGetCommitActivityStatsReq struct {
 	_url  string
@@ -7639,7 +8515,7 @@ func (r *ReposGetCommitActivityStatsReq) Rel(link RelName, resp *ReposGetCommitA
 /*
 ReposGetCommitActivityStatsResponseBody is a response body for ReposGetCommitActivityStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type ReposGetCommitActivityStatsResponseBody []struct {
 	components.CommitActivity
@@ -7648,7 +8524,7 @@ type ReposGetCommitActivityStatsResponseBody []struct {
 /*
 ReposGetCommitActivityStatsResponse is a response for ReposGetCommitActivityStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
+https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type ReposGetCommitActivityStatsResponse struct {
 	response
@@ -7659,11 +8535,11 @@ type ReposGetCommitActivityStatsResponse struct {
 /*
 ReposGetCommitComment performs requests for "repos/get-commit-comment"
 
-Get a single commit comment.
+Get a commit comment.
 
   GET /repos/{owner}/{repo}/comments/{comment_id}
 
-https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, opt ...RequestOption) (*ReposGetCommitCommentResponse, error) {
 	if req == nil {
@@ -7688,11 +8564,11 @@ func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, o
 /*
 ReposGetCommitComment performs requests for "repos/get-commit-comment"
 
-Get a single commit comment.
+Get a commit comment.
 
   GET /repos/{owner}/{repo}/comments/{comment_id}
 
-https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 func (c Client) ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, opt ...RequestOption) (*ReposGetCommitCommentResponse, error) {
 	return ReposGetCommitComment(ctx, req, append(c, opt...)...)
@@ -7701,7 +8577,7 @@ func (c Client) ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCo
 /*
 ReposGetCommitCommentReq is request data for Client.ReposGetCommitComment
 
-https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type ReposGetCommitCommentReq struct {
 	_url      string
@@ -7784,7 +8660,7 @@ func (r *ReposGetCommitCommentReq) Rel(link RelName, resp *ReposGetCommitComment
 /*
 ReposGetCommitCommentResponseBody is a response body for ReposGetCommitComment
 
-https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type ReposGetCommitCommentResponseBody struct {
 	components.CommitComment
@@ -7793,7 +8669,7 @@ type ReposGetCommitCommentResponseBody struct {
 /*
 ReposGetCommitCommentResponse is a response for ReposGetCommitComment
 
-https://developer.github.com/v3/repos/comments/#get-a-single-commit-comment
+https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type ReposGetCommitCommentResponse struct {
 	response
@@ -7802,19 +8678,19 @@ type ReposGetCommitCommentResponse struct {
 }
 
 /*
-ReposGetContents performs requests for "repos/get-contents"
+ReposGetCommitSignatureProtection performs requests for "repos/get-commit-signature-protection"
 
-Get contents.
+Get commit signature protection.
 
-  GET /repos/{owner}/{repo}/contents/{path}
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
 
-https://developer.github.com/v3/repos/contents/#get-contents
+https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
-func ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...RequestOption) (*ReposGetContentsResponse, error) {
+func ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitSignatureProtectionReq, opt ...RequestOption) (*ReposGetCommitSignatureProtectionResponse, error) {
 	if req == nil {
-		req = new(ReposGetContentsReq)
+		req = new(ReposGetCommitSignatureProtectionReq)
 	}
-	resp := &ReposGetContentsResponse{request: req}
+	resp := &ReposGetCommitSignatureProtectionResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -7822,7 +8698,7 @@ func ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposGetContentsResponseBody)
+	resp.Data = new(ReposGetCommitSignatureProtectionResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -7831,24 +8707,300 @@ func ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...Requ
 }
 
 /*
-ReposGetContents performs requests for "repos/get-contents"
+ReposGetCommitSignatureProtection performs requests for "repos/get-commit-signature-protection"
 
-Get contents.
+Get commit signature protection.
 
-  GET /repos/{owner}/{repo}/contents/{path}
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
 
-https://developer.github.com/v3/repos/contents/#get-contents
+https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
-func (c Client) ReposGetContents(ctx context.Context, req *ReposGetContentsReq, opt ...RequestOption) (*ReposGetContentsResponse, error) {
-	return ReposGetContents(ctx, req, append(c, opt...)...)
+func (c Client) ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitSignatureProtectionReq, opt ...RequestOption) (*ReposGetCommitSignatureProtectionResponse, error) {
+	return ReposGetCommitSignatureProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposGetContentsReq is request data for Client.ReposGetContents
+ReposGetCommitSignatureProtectionReq is request data for Client.ReposGetCommitSignatureProtection
 
-https://developer.github.com/v3/repos/contents/#get-contents
+https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
-type ReposGetContentsReq struct {
+type ReposGetCommitSignatureProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+
+	/*
+	Protected Branches API can now manage a setting for requiring signed commits.
+	This feature is currently available for developers to preview. See the [blog
+	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	ZzzaxPreview bool
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) method() string {
+	return "GET"
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
+	if requiredPreviews {
+		previewVals["zzzax"] = true
+	}
+	if allPreviews {
+		previewVals["zzzax"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposGetCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposGetCommitSignatureProtectionReq) Rel(link RelName, resp *ReposGetCommitSignatureProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposGetCommitSignatureProtectionResponseBody is a response body for ReposGetCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
+*/
+type ReposGetCommitSignatureProtectionResponseBody struct {
+	components.ProtectedBranchAdminEnforced
+}
+
+/*
+ReposGetCommitSignatureProtectionResponse is a response for ReposGetCommitSignatureProtection
+
+https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
+*/
+type ReposGetCommitSignatureProtectionResponse struct {
+	response
+	request *ReposGetCommitSignatureProtectionReq
+	Data    *ReposGetCommitSignatureProtectionResponseBody
+}
+
+/*
+ReposGetCommunityProfileMetrics performs requests for "repos/get-community-profile-metrics"
+
+Get community profile metrics.
+
+  GET /repos/{owner}/{repo}/community/profile
+
+https://developer.github.com/v3/repos/community/#get-community-profile-metrics
+*/
+func ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunityProfileMetricsReq, opt ...RequestOption) (*ReposGetCommunityProfileMetricsResponse, error) {
+	if req == nil {
+		req = new(ReposGetCommunityProfileMetricsReq)
+	}
+	resp := &ReposGetCommunityProfileMetricsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposGetCommunityProfileMetricsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposGetCommunityProfileMetrics performs requests for "repos/get-community-profile-metrics"
+
+Get community profile metrics.
+
+  GET /repos/{owner}/{repo}/community/profile
+
+https://developer.github.com/v3/repos/community/#get-community-profile-metrics
+*/
+func (c Client) ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunityProfileMetricsReq, opt ...RequestOption) (*ReposGetCommunityProfileMetricsResponse, error) {
+	return ReposGetCommunityProfileMetrics(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposGetCommunityProfileMetricsReq is request data for Client.ReposGetCommunityProfileMetrics
+
+https://developer.github.com/v3/repos/community/#get-community-profile-metrics
+*/
+type ReposGetCommunityProfileMetricsReq struct {
+	_url  string
+	Owner string
+	Repo  string
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) url() string {
+	return r._url
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/community/profile", r.Owner, r.Repo)
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) method() string {
+	return "GET"
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetCommunityProfileMetricsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposGetCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposGetCommunityProfileMetricsReq) Rel(link RelName, resp *ReposGetCommunityProfileMetricsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposGetCommunityProfileMetricsResponseBody is a response body for ReposGetCommunityProfileMetrics
+
+https://developer.github.com/v3/repos/community/#get-community-profile-metrics
+*/
+type ReposGetCommunityProfileMetricsResponseBody struct {
+	components.CommunityProfile
+}
+
+/*
+ReposGetCommunityProfileMetricsResponse is a response for ReposGetCommunityProfileMetrics
+
+https://developer.github.com/v3/repos/community/#get-community-profile-metrics
+*/
+type ReposGetCommunityProfileMetricsResponse struct {
+	response
+	request *ReposGetCommunityProfileMetricsReq
+	Data    *ReposGetCommunityProfileMetricsResponseBody
+}
+
+/*
+ReposGetContent performs requests for "repos/get-content"
+
+Get repository content.
+
+  GET /repos/{owner}/{repo}/contents/{path}
+
+https://developer.github.com/v3/repos/contents/#get-repository-content
+*/
+func ReposGetContent(ctx context.Context, req *ReposGetContentReq, opt ...RequestOption) (*ReposGetContentResponse, error) {
+	if req == nil {
+		req = new(ReposGetContentReq)
+	}
+	resp := &ReposGetContentResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposGetContentResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposGetContent performs requests for "repos/get-content"
+
+Get repository content.
+
+  GET /repos/{owner}/{repo}/contents/{path}
+
+https://developer.github.com/v3/repos/contents/#get-repository-content
+*/
+func (c Client) ReposGetContent(ctx context.Context, req *ReposGetContentReq, opt ...RequestOption) (*ReposGetContentResponse, error) {
+	return ReposGetContent(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposGetContentReq is request data for Client.ReposGetContent
+
+https://developer.github.com/v3/repos/contents/#get-repository-content
+*/
+type ReposGetContentReq struct {
 	_url  string
 	Owner string
 	Repo  string
@@ -7861,19 +9013,19 @@ type ReposGetContentsReq struct {
 	Ref *string
 }
 
-func (r *ReposGetContentsReq) url() string {
+func (r *ReposGetContentReq) url() string {
 	return r._url
 }
 
-func (r *ReposGetContentsReq) urlPath() string {
+func (r *ReposGetContentReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/contents/%v", r.Owner, r.Repo, r.Path)
 }
 
-func (r *ReposGetContentsReq) method() string {
+func (r *ReposGetContentReq) method() string {
 	return "GET"
 }
 
-func (r *ReposGetContentsReq) urlQuery() url.Values {
+func (r *ReposGetContentReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Ref != nil {
 		query.Set("ref", *r.Ref)
@@ -7881,30 +9033,30 @@ func (r *ReposGetContentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *ReposGetContentsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposGetContentReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposGetContentsReq) body() interface{} {
+func (r *ReposGetContentReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposGetContentsReq) dataStatuses() []int {
+func (r *ReposGetContentReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetContentsReq) validStatuses() []int {
+func (r *ReposGetContentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetContentsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposGetContentReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrForceArrayResponse}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposGetContentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -7912,7 +9064,7 @@ func (r *ReposGetContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOpt
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetContentsReq) Rel(link RelName, resp *ReposGetContentsResponse) bool {
+func (r *ReposGetContentReq) Rel(link RelName, resp *ReposGetContentResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -7922,33 +9074,33 @@ func (r *ReposGetContentsReq) Rel(link RelName, resp *ReposGetContentsResponse) 
 }
 
 /*
-ReposGetContentsResponseBody is a response body for ReposGetContents
+ReposGetContentResponseBody is a response body for ReposGetContent
 
-https://developer.github.com/v3/repos/contents/#get-contents
+https://developer.github.com/v3/repos/contents/#get-repository-content
 */
-type ReposGetContentsResponseBody []struct {
+type ReposGetContentResponseBody []struct {
 	components.ContentFile
 }
 
 /*
-ReposGetContentsResponse is a response for ReposGetContents
+ReposGetContentResponse is a response for ReposGetContent
 
-https://developer.github.com/v3/repos/contents/#get-contents
+https://developer.github.com/v3/repos/contents/#get-repository-content
 */
-type ReposGetContentsResponse struct {
+type ReposGetContentResponse struct {
 	response
-	request *ReposGetContentsReq
-	Data    *ReposGetContentsResponseBody
+	request *ReposGetContentReq
+	Data    *ReposGetContentResponseBody
 }
 
 /*
 ReposGetContributorsStats performs requests for "repos/get-contributors-stats"
 
-Get contributors list with additions, deletions, and commit counts.
+Get all contributor commit activity.
 
   GET /repos/{owner}/{repo}/stats/contributors
 
-https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsStatsReq, opt ...RequestOption) (*ReposGetContributorsStatsResponse, error) {
 	if req == nil {
@@ -7973,11 +9125,11 @@ func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsSta
 /*
 ReposGetContributorsStats performs requests for "repos/get-contributors-stats"
 
-Get contributors list with additions, deletions, and commit counts.
+Get all contributor commit activity.
 
   GET /repos/{owner}/{repo}/stats/contributors
 
-https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 func (c Client) ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsStatsReq, opt ...RequestOption) (*ReposGetContributorsStatsResponse, error) {
 	return ReposGetContributorsStats(ctx, req, append(c, opt...)...)
@@ -7986,7 +9138,7 @@ func (c Client) ReposGetContributorsStats(ctx context.Context, req *ReposGetCont
 /*
 ReposGetContributorsStatsReq is request data for Client.ReposGetContributorsStats
 
-https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type ReposGetContributorsStatsReq struct {
 	_url  string
@@ -8054,7 +9206,7 @@ func (r *ReposGetContributorsStatsReq) Rel(link RelName, resp *ReposGetContribut
 /*
 ReposGetContributorsStatsResponseBody is a response body for ReposGetContributorsStats
 
-https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type ReposGetContributorsStatsResponseBody []struct {
 	components.ContributorActivity
@@ -8063,7 +9215,7 @@ type ReposGetContributorsStatsResponseBody []struct {
 /*
 ReposGetContributorsStatsResponse is a response for ReposGetContributorsStats
 
-https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
+https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type ReposGetContributorsStatsResponse struct {
 	response
@@ -8205,11 +9357,11 @@ type ReposGetDeployKeyResponse struct {
 /*
 ReposGetDeployment performs requests for "repos/get-deployment"
 
-Get a single deployment.
+Get a deployment.
 
   GET /repos/{owner}/{repo}/deployments/{deployment_id}
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...RequestOption) (*ReposGetDeploymentResponse, error) {
 	if req == nil {
@@ -8234,11 +9386,11 @@ func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...
 /*
 ReposGetDeployment performs requests for "repos/get-deployment"
 
-Get a single deployment.
+Get a deployment.
 
   GET /repos/{owner}/{repo}/deployments/{deployment_id}
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 func (c Client) ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...RequestOption) (*ReposGetDeploymentResponse, error) {
 	return ReposGetDeployment(ctx, req, append(c, opt...)...)
@@ -8247,7 +9399,7 @@ func (c Client) ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentR
 /*
 ReposGetDeploymentReq is request data for Client.ReposGetDeployment
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type ReposGetDeploymentReq struct {
 	_url         string
@@ -8340,7 +9492,7 @@ func (r *ReposGetDeploymentReq) Rel(link RelName, resp *ReposGetDeploymentRespon
 /*
 ReposGetDeploymentResponseBody is a response body for ReposGetDeployment
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type ReposGetDeploymentResponseBody struct {
 	components.Deployment
@@ -8349,7 +9501,7 @@ type ReposGetDeploymentResponseBody struct {
 /*
 ReposGetDeploymentResponse is a response for ReposGetDeployment
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment
+https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type ReposGetDeploymentResponse struct {
 	response
@@ -8360,11 +9512,11 @@ type ReposGetDeploymentResponse struct {
 /*
 ReposGetDeploymentStatus performs requests for "repos/get-deployment-status"
 
-Get a single deployment status.
+Get a deployment status.
 
   GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatusReq, opt ...RequestOption) (*ReposGetDeploymentStatusResponse, error) {
 	if req == nil {
@@ -8389,11 +9541,11 @@ func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatus
 /*
 ReposGetDeploymentStatus performs requests for "repos/get-deployment-status"
 
-Get a single deployment status.
+Get a deployment status.
 
   GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 func (c Client) ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatusReq, opt ...RequestOption) (*ReposGetDeploymentStatusResponse, error) {
 	return ReposGetDeploymentStatus(ctx, req, append(c, opt...)...)
@@ -8402,7 +9554,7 @@ func (c Client) ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeplo
 /*
 ReposGetDeploymentStatusReq is request data for Client.ReposGetDeploymentStatus
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type ReposGetDeploymentStatusReq struct {
 	_url         string
@@ -8510,7 +9662,7 @@ func (r *ReposGetDeploymentStatusReq) Rel(link RelName, resp *ReposGetDeployment
 /*
 ReposGetDeploymentStatusResponseBody is a response body for ReposGetDeploymentStatus
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type ReposGetDeploymentStatusResponseBody struct {
 	components.DeploymentStatus
@@ -8519,274 +9671,12 @@ type ReposGetDeploymentStatusResponseBody struct {
 /*
 ReposGetDeploymentStatusResponse is a response for ReposGetDeploymentStatus
 
-https://developer.github.com/v3/repos/deployments/#get-a-single-deployment-status
+https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type ReposGetDeploymentStatusResponse struct {
 	response
 	request *ReposGetDeploymentStatusReq
 	Data    *ReposGetDeploymentStatusResponseBody
-}
-
-/*
-ReposGetDownload performs requests for "repos/get-download"
-
-Get a single download.
-
-  GET /repos/{owner}/{repo}/downloads/{download_id}
-
-https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-func ReposGetDownload(ctx context.Context, req *ReposGetDownloadReq, opt ...RequestOption) (*ReposGetDownloadResponse, error) {
-	if req == nil {
-		req = new(ReposGetDownloadReq)
-	}
-	resp := &ReposGetDownloadResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposGetDownloadResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetDownload performs requests for "repos/get-download"
-
-Get a single download.
-
-  GET /repos/{owner}/{repo}/downloads/{download_id}
-
-https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-func (c Client) ReposGetDownload(ctx context.Context, req *ReposGetDownloadReq, opt ...RequestOption) (*ReposGetDownloadResponse, error) {
-	return ReposGetDownload(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetDownloadReq is request data for Client.ReposGetDownload
-
-https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-type ReposGetDownloadReq struct {
-	_url       string
-	Owner      string
-	Repo       string
-	DownloadId int64
-}
-
-func (r *ReposGetDownloadReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetDownloadReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/downloads/%v", r.Owner, r.Repo, r.DownloadId)
-}
-
-func (r *ReposGetDownloadReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetDownloadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetDownloadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetDownloadReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetDownloadReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetDownloadReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetDownloadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetDownloadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetDownloadReq) Rel(link RelName, resp *ReposGetDownloadResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetDownloadResponseBody is a response body for ReposGetDownload
-
-https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-type ReposGetDownloadResponseBody struct {
-	components.Download
-}
-
-/*
-ReposGetDownloadResponse is a response for ReposGetDownload
-
-https://developer.github.com/v3/repos/downloads/#get-a-single-download
-*/
-type ReposGetDownloadResponse struct {
-	response
-	request *ReposGetDownloadReq
-	Data    *ReposGetDownloadResponseBody
-}
-
-/*
-ReposGetHook performs requests for "repos/get-hook"
-
-Get single hook.
-
-  GET /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-func ReposGetHook(ctx context.Context, req *ReposGetHookReq, opt ...RequestOption) (*ReposGetHookResponse, error) {
-	if req == nil {
-		req = new(ReposGetHookReq)
-	}
-	resp := &ReposGetHookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposGetHookResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetHook performs requests for "repos/get-hook"
-
-Get single hook.
-
-  GET /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-func (c Client) ReposGetHook(ctx context.Context, req *ReposGetHookReq, opt ...RequestOption) (*ReposGetHookResponse, error) {
-	return ReposGetHook(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetHookReq is request data for Client.ReposGetHook
-
-https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-type ReposGetHookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	HookId int64
-}
-
-func (r *ReposGetHookReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
-}
-
-func (r *ReposGetHookReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetHookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetHookReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetHookReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetHookReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetHookReq) Rel(link RelName, resp *ReposGetHookResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetHookResponseBody is a response body for ReposGetHook
-
-https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-type ReposGetHookResponseBody struct {
-	components.Hook
-}
-
-/*
-ReposGetHookResponse is a response for ReposGetHook
-
-https://developer.github.com/v3/repos/hooks/#get-single-hook
-*/
-type ReposGetHookResponse struct {
-	response
-	request *ReposGetHookReq
-	Data    *ReposGetHookResponseBody
 }
 
 /*
@@ -9052,11 +9942,11 @@ type ReposGetLatestReleaseResponse struct {
 /*
 ReposGetPages performs requests for "repos/get-pages"
 
-Get information about a Pages site.
+Get a GitHub Pages site.
 
   GET /repos/{owner}/{repo}/pages
 
-https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOption) (*ReposGetPagesResponse, error) {
 	if req == nil {
@@ -9081,11 +9971,11 @@ func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOpt
 /*
 ReposGetPages performs requests for "repos/get-pages"
 
-Get information about a Pages site.
+Get a GitHub Pages site.
 
   GET /repos/{owner}/{repo}/pages
 
-https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 func (c Client) ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOption) (*ReposGetPagesResponse, error) {
 	return ReposGetPages(ctx, req, append(c, opt...)...)
@@ -9094,7 +9984,7 @@ func (c Client) ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ..
 /*
 ReposGetPagesReq is request data for Client.ReposGetPages
 
-https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type ReposGetPagesReq struct {
 	_url  string
@@ -9162,7 +10052,7 @@ func (r *ReposGetPagesReq) Rel(link RelName, resp *ReposGetPagesResponse) bool {
 /*
 ReposGetPagesResponseBody is a response body for ReposGetPages
 
-https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type ReposGetPagesResponseBody struct {
 	components.Page
@@ -9171,7 +10061,7 @@ type ReposGetPagesResponseBody struct {
 /*
 ReposGetPagesResponse is a response for ReposGetPages
 
-https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type ReposGetPagesResponse struct {
 	response
@@ -9182,11 +10072,11 @@ type ReposGetPagesResponse struct {
 /*
 ReposGetPagesBuild performs requests for "repos/get-pages-build"
 
-Get a specific Pages build.
+Get GitHub Pages build.
 
   GET /repos/{owner}/{repo}/pages/builds/{build_id}
 
-https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...RequestOption) (*ReposGetPagesBuildResponse, error) {
 	if req == nil {
@@ -9211,11 +10101,11 @@ func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...
 /*
 ReposGetPagesBuild performs requests for "repos/get-pages-build"
 
-Get a specific Pages build.
+Get GitHub Pages build.
 
   GET /repos/{owner}/{repo}/pages/builds/{build_id}
 
-https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 func (c Client) ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...RequestOption) (*ReposGetPagesBuildResponse, error) {
 	return ReposGetPagesBuild(ctx, req, append(c, opt...)...)
@@ -9224,7 +10114,7 @@ func (c Client) ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildR
 /*
 ReposGetPagesBuildReq is request data for Client.ReposGetPagesBuild
 
-https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type ReposGetPagesBuildReq struct {
 	_url    string
@@ -9293,7 +10183,7 @@ func (r *ReposGetPagesBuildReq) Rel(link RelName, resp *ReposGetPagesBuildRespon
 /*
 ReposGetPagesBuildResponseBody is a response body for ReposGetPagesBuild
 
-https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type ReposGetPagesBuildResponseBody struct {
 	components.PageBuild
@@ -9302,7 +10192,7 @@ type ReposGetPagesBuildResponseBody struct {
 /*
 ReposGetPagesBuildResponse is a response for ReposGetPagesBuild
 
-https://developer.github.com/v3/repos/pages/#get-a-specific-pages-build
+https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type ReposGetPagesBuildResponse struct {
 	response
@@ -9313,11 +10203,11 @@ type ReposGetPagesBuildResponse struct {
 /*
 ReposGetParticipationStats performs requests for "repos/get-participation-stats"
 
-Get the weekly commit count for the repository owner and everyone else.
+Get the weekly commit count.
 
   GET /repos/{owner}/{repo}/stats/participation
 
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationStatsReq, opt ...RequestOption) (*ReposGetParticipationStatsResponse, error) {
 	if req == nil {
@@ -9342,11 +10232,11 @@ func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationS
 /*
 ReposGetParticipationStats performs requests for "repos/get-participation-stats"
 
-Get the weekly commit count for the repository owner and everyone else.
+Get the weekly commit count.
 
   GET /repos/{owner}/{repo}/stats/participation
 
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 func (c Client) ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationStatsReq, opt ...RequestOption) (*ReposGetParticipationStatsResponse, error) {
 	return ReposGetParticipationStats(ctx, req, append(c, opt...)...)
@@ -9355,7 +10245,7 @@ func (c Client) ReposGetParticipationStats(ctx context.Context, req *ReposGetPar
 /*
 ReposGetParticipationStatsReq is request data for Client.ReposGetParticipationStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type ReposGetParticipationStatsReq struct {
 	_url  string
@@ -9423,7 +10313,7 @@ func (r *ReposGetParticipationStatsReq) Rel(link RelName, resp *ReposGetParticip
 /*
 ReposGetParticipationStatsResponseBody is a response body for ReposGetParticipationStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type ReposGetParticipationStatsResponseBody struct {
 	components.ParticipationStats
@@ -9432,7 +10322,7 @@ type ReposGetParticipationStatsResponseBody struct {
 /*
 ReposGetParticipationStatsResponse is a response for ReposGetParticipationStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repository-owner-and-everyone-else
+https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type ReposGetParticipationStatsResponse struct {
 	response
@@ -9441,150 +10331,19 @@ type ReposGetParticipationStatsResponse struct {
 }
 
 /*
-ReposGetProtectedBranchAdminEnforcement performs requests for "repos/get-protected-branch-admin-enforcement"
+ReposGetPullRequestReviewProtection performs requests for "repos/get-pull-request-review-protection"
 
-Get admin enforcement of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-func ReposGetProtectedBranchAdminEnforcement(ctx context.Context, req *ReposGetProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchAdminEnforcementResponse, error) {
-	if req == nil {
-		req = new(ReposGetProtectedBranchAdminEnforcementReq)
-	}
-	resp := &ReposGetProtectedBranchAdminEnforcementResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposGetProtectedBranchAdminEnforcementResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetProtectedBranchAdminEnforcement performs requests for "repos/get-protected-branch-admin-enforcement"
-
-Get admin enforcement of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-func (c Client) ReposGetProtectedBranchAdminEnforcement(ctx context.Context, req *ReposGetProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchAdminEnforcementResponse, error) {
-	return ReposGetProtectedBranchAdminEnforcement(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetProtectedBranchAdminEnforcementReq is request data for Client.ReposGetProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-type ReposGetProtectedBranchAdminEnforcementReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchAdminEnforcementReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetProtectedBranchAdminEnforcementReq) Rel(link RelName, resp *ReposGetProtectedBranchAdminEnforcementResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetProtectedBranchAdminEnforcementResponseBody is a response body for ReposGetProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-type ReposGetProtectedBranchAdminEnforcementResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
-
-/*
-ReposGetProtectedBranchAdminEnforcementResponse is a response for ReposGetProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch
-*/
-type ReposGetProtectedBranchAdminEnforcementResponse struct {
-	response
-	request *ReposGetProtectedBranchAdminEnforcementReq
-	Data    *ReposGetProtectedBranchAdminEnforcementResponseBody
-}
-
-/*
-ReposGetProtectedBranchPullRequestReviewEnforcement performs requests for "repos/get-protected-branch-pull-request-review-enforcement"
-
-Get pull request review enforcement of protected branch.
+Get pull request review protection.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
 
-https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-func ReposGetProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposGetProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchPullRequestReviewEnforcementResponse, error) {
+func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullRequestReviewProtectionReq, opt ...RequestOption) (*ReposGetPullRequestReviewProtectionResponse, error) {
 	if req == nil {
-		req = new(ReposGetProtectedBranchPullRequestReviewEnforcementReq)
+		req = new(ReposGetPullRequestReviewProtectionReq)
 	}
-	resp := &ReposGetProtectedBranchPullRequestReviewEnforcementResponse{request: req}
+	resp := &ReposGetPullRequestReviewProtectionResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -9600,24 +10359,24 @@ func ReposGetProtectedBranchPullRequestReviewEnforcement(ctx context.Context, re
 }
 
 /*
-ReposGetProtectedBranchPullRequestReviewEnforcement performs requests for "repos/get-protected-branch-pull-request-review-enforcement"
+ReposGetPullRequestReviewProtection performs requests for "repos/get-pull-request-review-protection"
 
-Get pull request review enforcement of protected branch.
+Get pull request review protection.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
 
-https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-func (c Client) ReposGetProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposGetProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposGetProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	return ReposGetProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c, opt...)...)
+func (c Client) ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullRequestReviewProtectionReq, opt ...RequestOption) (*ReposGetPullRequestReviewProtectionResponse, error) {
+	return ReposGetPullRequestReviewProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposGetProtectedBranchPullRequestReviewEnforcementReq is request data for Client.ReposGetProtectedBranchPullRequestReviewEnforcement
+ReposGetPullRequestReviewProtectionReq is request data for Client.ReposGetPullRequestReviewProtection
 
-https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
+type ReposGetPullRequestReviewProtectionReq struct {
 	_url   string
 	Owner  string
 	Repo   string
@@ -9634,24 +10393,24 @@ type ReposGetProtectedBranchPullRequestReviewEnforcementReq struct {
 	LukeCagePreview bool
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) url() string {
+func (r *ReposGetPullRequestReviewProtectionReq) url() string {
 	return r._url
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+func (r *ReposGetPullRequestReviewProtectionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r *ReposGetPullRequestReviewProtectionReq) method() string {
 	return "GET"
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r *ReposGetPullRequestReviewProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposGetPullRequestReviewProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
 	if allPreviews {
@@ -9660,24 +10419,24 @@ func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) header(required
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) body() interface{} {
+func (r *ReposGetPullRequestReviewProtectionReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) dataStatuses() []int {
+func (r *ReposGetPullRequestReviewProtectionReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) validStatuses() []int {
+func (r *ReposGetPullRequestReviewProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) endpointAttributes() []endpointAttribute {
+func (r *ReposGetPullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposGetPullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -9685,7 +10444,7 @@ func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) Rel(link RelName, resp *ReposGetProtectedBranchPullRequestReviewEnforcementResponse) bool {
+func (r *ReposGetPullRequestReviewProtectionReq) Rel(link RelName, resp *ReposGetPullRequestReviewProtectionResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -9695,431 +10454,23 @@ func (r *ReposGetProtectedBranchPullRequestReviewEnforcementReq) Rel(link RelNam
 }
 
 /*
-ReposGetProtectedBranchPullRequestReviewEnforcementResponse is a response for ReposGetProtectedBranchPullRequestReviewEnforcement
+ReposGetPullRequestReviewProtectionResponse is a response for ReposGetPullRequestReviewProtection
 
-https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-type ReposGetProtectedBranchPullRequestReviewEnforcementResponse struct {
+type ReposGetPullRequestReviewProtectionResponse struct {
 	response
-	request *ReposGetProtectedBranchPullRequestReviewEnforcementReq
-}
-
-/*
-ReposGetProtectedBranchRequiredSignatures performs requests for "repos/get-protected-branch-required-signatures"
-
-Get required signatures of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-func ReposGetProtectedBranchRequiredSignatures(ctx context.Context, req *ReposGetProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredSignaturesResponse, error) {
-	if req == nil {
-		req = new(ReposGetProtectedBranchRequiredSignaturesReq)
-	}
-	resp := &ReposGetProtectedBranchRequiredSignaturesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposGetProtectedBranchRequiredSignaturesResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetProtectedBranchRequiredSignatures performs requests for "repos/get-protected-branch-required-signatures"
-
-Get required signatures of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-func (c Client) ReposGetProtectedBranchRequiredSignatures(ctx context.Context, req *ReposGetProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredSignaturesResponse, error) {
-	return ReposGetProtectedBranchRequiredSignatures(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetProtectedBranchRequiredSignaturesReq is request data for Client.ReposGetProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredSignaturesReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-
-	/*
-	Protected Branches API can now manage a setting for requiring signed commits.
-	This feature is currently available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	ZzzaxPreview bool
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
-	if requiredPreviews {
-		previewVals["zzzax"] = true
-	}
-	if allPreviews {
-		previewVals["zzzax"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetProtectedBranchRequiredSignaturesReq) Rel(link RelName, resp *ReposGetProtectedBranchRequiredSignaturesResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetProtectedBranchRequiredSignaturesResponseBody is a response body for ReposGetProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredSignaturesResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
-
-/*
-ReposGetProtectedBranchRequiredSignaturesResponse is a response for ReposGetProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#get-required-signatures-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredSignaturesResponse struct {
-	response
-	request *ReposGetProtectedBranchRequiredSignaturesReq
-	Data    *ReposGetProtectedBranchRequiredSignaturesResponseBody
-}
-
-/*
-ReposGetProtectedBranchRequiredStatusChecks performs requests for "repos/get-protected-branch-required-status-checks"
-
-Get required status checks of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
-
-https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
-*/
-func ReposGetProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposGetProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredStatusChecksResponse, error) {
-	if req == nil {
-		req = new(ReposGetProtectedBranchRequiredStatusChecksReq)
-	}
-	resp := &ReposGetProtectedBranchRequiredStatusChecksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposGetProtectedBranchRequiredStatusChecksResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetProtectedBranchRequiredStatusChecks performs requests for "repos/get-protected-branch-required-status-checks"
-
-Get required status checks of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
-
-https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
-*/
-func (c Client) ReposGetProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposGetProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposGetProtectedBranchRequiredStatusChecksResponse, error) {
-	return ReposGetProtectedBranchRequiredStatusChecks(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetProtectedBranchRequiredStatusChecksReq is request data for Client.ReposGetProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredStatusChecksReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetProtectedBranchRequiredStatusChecksReq) Rel(link RelName, resp *ReposGetProtectedBranchRequiredStatusChecksResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetProtectedBranchRequiredStatusChecksResponseBody is a response body for ReposGetProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredStatusChecksResponseBody struct {
-	components.StatusCheckPolicy
-}
-
-/*
-ReposGetProtectedBranchRequiredStatusChecksResponse is a response for ReposGetProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch
-*/
-type ReposGetProtectedBranchRequiredStatusChecksResponse struct {
-	response
-	request *ReposGetProtectedBranchRequiredStatusChecksReq
-	Data    *ReposGetProtectedBranchRequiredStatusChecksResponseBody
-}
-
-/*
-ReposGetProtectedBranchRestrictions performs requests for "repos/get-protected-branch-restrictions"
-
-Get restrictions of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
-
-https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-func ReposGetProtectedBranchRestrictions(ctx context.Context, req *ReposGetProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposGetProtectedBranchRestrictionsResponse, error) {
-	if req == nil {
-		req = new(ReposGetProtectedBranchRestrictionsReq)
-	}
-	resp := &ReposGetProtectedBranchRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposGetProtectedBranchRestrictionsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposGetProtectedBranchRestrictions performs requests for "repos/get-protected-branch-restrictions"
-
-Get restrictions of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
-
-https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-func (c Client) ReposGetProtectedBranchRestrictions(ctx context.Context, req *ReposGetProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposGetProtectedBranchRestrictionsResponse, error) {
-	return ReposGetProtectedBranchRestrictions(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposGetProtectedBranchRestrictionsReq is request data for Client.ReposGetProtectedBranchRestrictions
-
-https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-type ReposGetProtectedBranchRestrictionsReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) url() string {
-	return r._url
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) method() string {
-	return "GET"
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposGetProtectedBranchRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposGetProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposGetProtectedBranchRestrictionsReq) Rel(link RelName, resp *ReposGetProtectedBranchRestrictionsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposGetProtectedBranchRestrictionsResponseBody is a response body for ReposGetProtectedBranchRestrictions
-
-https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-type ReposGetProtectedBranchRestrictionsResponseBody struct {
-	components.BranchRestrictionPolicy
-}
-
-/*
-ReposGetProtectedBranchRestrictionsResponse is a response for ReposGetProtectedBranchRestrictions
-
-https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch
-*/
-type ReposGetProtectedBranchRestrictionsResponse struct {
-	response
-	request *ReposGetProtectedBranchRestrictionsReq
-	Data    *ReposGetProtectedBranchRestrictionsResponseBody
+	request *ReposGetPullRequestReviewProtectionReq
 }
 
 /*
 ReposGetPunchCardStats performs requests for "repos/get-punch-card-stats"
 
-Get the number of commits per hour in each day.
+Get the hourly commit count for each day.
 
   GET /repos/{owner}/{repo}/stats/punch_card
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq, opt ...RequestOption) (*ReposGetPunchCardStatsResponse, error) {
 	if req == nil {
@@ -10144,11 +10495,11 @@ func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq,
 /*
 ReposGetPunchCardStats performs requests for "repos/get-punch-card-stats"
 
-Get the number of commits per hour in each day.
+Get the hourly commit count for each day.
 
   GET /repos/{owner}/{repo}/stats/punch_card
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 func (c Client) ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq, opt ...RequestOption) (*ReposGetPunchCardStatsResponse, error) {
 	return ReposGetPunchCardStats(ctx, req, append(c, opt...)...)
@@ -10157,7 +10508,7 @@ func (c Client) ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCa
 /*
 ReposGetPunchCardStatsReq is request data for Client.ReposGetPunchCardStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type ReposGetPunchCardStatsReq struct {
 	_url  string
@@ -10225,14 +10576,14 @@ func (r *ReposGetPunchCardStatsReq) Rel(link RelName, resp *ReposGetPunchCardSta
 /*
 ReposGetPunchCardStatsResponseBody is a response body for ReposGetPunchCardStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type ReposGetPunchCardStatsResponseBody []components.CodeFrequencyStat
 
 /*
 ReposGetPunchCardStatsResponse is a response for ReposGetPunchCardStats
 
-https://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
+https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type ReposGetPunchCardStatsResponse struct {
 	response
@@ -10243,11 +10594,11 @@ type ReposGetPunchCardStatsResponse struct {
 /*
 ReposGetReadme performs requests for "repos/get-readme"
 
-Get the README.
+Get a repository README.
 
   GET /repos/{owner}/{repo}/readme
 
-https://developer.github.com/v3/repos/contents/#get-the-readme
+https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestOption) (*ReposGetReadmeResponse, error) {
 	if req == nil {
@@ -10272,11 +10623,11 @@ func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestO
 /*
 ReposGetReadme performs requests for "repos/get-readme"
 
-Get the README.
+Get a repository README.
 
   GET /repos/{owner}/{repo}/readme
 
-https://developer.github.com/v3/repos/contents/#get-the-readme
+https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 func (c Client) ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestOption) (*ReposGetReadmeResponse, error) {
 	return ReposGetReadme(ctx, req, append(c, opt...)...)
@@ -10285,7 +10636,7 @@ func (c Client) ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt 
 /*
 ReposGetReadmeReq is request data for Client.ReposGetReadme
 
-https://developer.github.com/v3/repos/contents/#get-the-readme
+https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type ReposGetReadmeReq struct {
 	_url  string
@@ -10362,7 +10713,7 @@ func (r *ReposGetReadmeReq) Rel(link RelName, resp *ReposGetReadmeResponse) bool
 /*
 ReposGetReadmeResponseBody is a response body for ReposGetReadme
 
-https://developer.github.com/v3/repos/contents/#get-the-readme
+https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type ReposGetReadmeResponseBody struct {
 	components.ContentFile
@@ -10371,7 +10722,7 @@ type ReposGetReadmeResponseBody struct {
 /*
 ReposGetReadmeResponse is a response for ReposGetReadme
 
-https://developer.github.com/v3/repos/contents/#get-the-readme
+https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type ReposGetReadmeResponse struct {
 	response
@@ -10382,11 +10733,11 @@ type ReposGetReadmeResponse struct {
 /*
 ReposGetRelease performs requests for "repos/get-release"
 
-Get a single release.
+Get a release.
 
   GET /repos/{owner}/{repo}/releases/{release_id}
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release
+https://developer.github.com/v3/repos/releases/#get-a-release
 */
 func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...RequestOption) (*ReposGetReleaseResponse, error) {
 	if req == nil {
@@ -10411,11 +10762,11 @@ func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...Reques
 /*
 ReposGetRelease performs requests for "repos/get-release"
 
-Get a single release.
+Get a release.
 
   GET /repos/{owner}/{repo}/releases/{release_id}
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release
+https://developer.github.com/v3/repos/releases/#get-a-release
 */
 func (c Client) ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...RequestOption) (*ReposGetReleaseResponse, error) {
 	return ReposGetRelease(ctx, req, append(c, opt...)...)
@@ -10424,7 +10775,7 @@ func (c Client) ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, op
 /*
 ReposGetReleaseReq is request data for Client.ReposGetRelease
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release
+https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type ReposGetReleaseReq struct {
 	_url      string
@@ -10493,7 +10844,7 @@ func (r *ReposGetReleaseReq) Rel(link RelName, resp *ReposGetReleaseResponse) bo
 /*
 ReposGetReleaseResponseBody is a response body for ReposGetRelease
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release
+https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type ReposGetReleaseResponseBody struct {
 	components.Release2
@@ -10502,7 +10853,7 @@ type ReposGetReleaseResponseBody struct {
 /*
 ReposGetReleaseResponse is a response for ReposGetRelease
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release
+https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type ReposGetReleaseResponse struct {
 	response
@@ -10513,11 +10864,11 @@ type ReposGetReleaseResponse struct {
 /*
 ReposGetReleaseAsset performs requests for "repos/get-release-asset"
 
-Get a single release asset.
+Get a release asset.
 
   GET /repos/{owner}/{repo}/releases/assets/{asset_id}
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
+https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt ...RequestOption) (*ReposGetReleaseAssetResponse, error) {
 	if req == nil {
@@ -10542,11 +10893,11 @@ func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt
 /*
 ReposGetReleaseAsset performs requests for "repos/get-release-asset"
 
-Get a single release asset.
+Get a release asset.
 
   GET /repos/{owner}/{repo}/releases/assets/{asset_id}
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
+https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 func (c Client) ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt ...RequestOption) (*ReposGetReleaseAssetResponse, error) {
 	return ReposGetReleaseAsset(ctx, req, append(c, opt...)...)
@@ -10555,7 +10906,7 @@ func (c Client) ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAs
 /*
 ReposGetReleaseAssetReq is request data for Client.ReposGetReleaseAsset
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
+https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type ReposGetReleaseAssetReq struct {
 	_url    string
@@ -10624,7 +10975,7 @@ func (r *ReposGetReleaseAssetReq) Rel(link RelName, resp *ReposGetReleaseAssetRe
 /*
 ReposGetReleaseAssetResponseBody is a response body for ReposGetReleaseAsset
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
+https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type ReposGetReleaseAssetResponseBody struct {
 	components.ReleaseAsset
@@ -10633,7 +10984,7 @@ type ReposGetReleaseAssetResponseBody struct {
 /*
 ReposGetReleaseAssetResponse is a response for ReposGetReleaseAsset
 
-https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
+https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type ReposGetReleaseAssetResponse struct {
 	response
@@ -10773,13 +11124,144 @@ type ReposGetReleaseByTagResponse struct {
 }
 
 /*
+ReposGetStatusChecksProtection performs requests for "repos/get-status-checks-protection"
+
+Get status checks protection.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
+
+https://developer.github.com/v3/repos/branches/#get-status-checks-protection
+*/
+func ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChecksProtectionReq, opt ...RequestOption) (*ReposGetStatusChecksProtectionResponse, error) {
+	if req == nil {
+		req = new(ReposGetStatusChecksProtectionReq)
+	}
+	resp := &ReposGetStatusChecksProtectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposGetStatusChecksProtectionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposGetStatusChecksProtection performs requests for "repos/get-status-checks-protection"
+
+Get status checks protection.
+
+  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
+
+https://developer.github.com/v3/repos/branches/#get-status-checks-protection
+*/
+func (c Client) ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChecksProtectionReq, opt ...RequestOption) (*ReposGetStatusChecksProtectionResponse, error) {
+	return ReposGetStatusChecksProtection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposGetStatusChecksProtectionReq is request data for Client.ReposGetStatusChecksProtection
+
+https://developer.github.com/v3/repos/branches/#get-status-checks-protection
+*/
+type ReposGetStatusChecksProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
+}
+
+func (r *ReposGetStatusChecksProtectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposGetStatusChecksProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposGetStatusChecksProtectionReq) method() string {
+	return "GET"
+}
+
+func (r *ReposGetStatusChecksProtectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposGetStatusChecksProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposGetStatusChecksProtectionReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposGetStatusChecksProtectionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetStatusChecksProtectionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposGetStatusChecksProtectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposGetStatusChecksProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposGetStatusChecksProtectionReq) Rel(link RelName, resp *ReposGetStatusChecksProtectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposGetStatusChecksProtectionResponseBody is a response body for ReposGetStatusChecksProtection
+
+https://developer.github.com/v3/repos/branches/#get-status-checks-protection
+*/
+type ReposGetStatusChecksProtectionResponseBody struct {
+	components.StatusCheckPolicy
+}
+
+/*
+ReposGetStatusChecksProtectionResponse is a response for ReposGetStatusChecksProtection
+
+https://developer.github.com/v3/repos/branches/#get-status-checks-protection
+*/
+type ReposGetStatusChecksProtectionResponse struct {
+	response
+	request *ReposGetStatusChecksProtectionReq
+	Data    *ReposGetStatusChecksProtectionResponseBody
+}
+
+/*
 ReposGetTeamsWithAccessToProtectedBranch performs requests for "repos/get-teams-with-access-to-protected-branch"
 
-Get teams with access to protected branch.
+Get teams with access to the protected branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
 
-https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetTeamsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetTeamsWithAccessToProtectedBranchResponse, error) {
 	if req == nil {
@@ -10804,11 +11286,11 @@ func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 /*
 ReposGetTeamsWithAccessToProtectedBranch performs requests for "repos/get-teams-with-access-to-protected-branch"
 
-Get teams with access to protected branch.
+Get teams with access to the protected branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
 
-https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 func (c Client) ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetTeamsWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetTeamsWithAccessToProtectedBranchResponse, error) {
 	return ReposGetTeamsWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
@@ -10817,7 +11299,7 @@ func (c Client) ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, re
 /*
 ReposGetTeamsWithAccessToProtectedBranchReq is request data for Client.ReposGetTeamsWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchReq struct {
 	_url   string
@@ -10886,7 +11368,7 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) Rel(link RelName, resp *Re
 /*
 ReposGetTeamsWithAccessToProtectedBranchResponseBody is a response body for ReposGetTeamsWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchResponseBody []struct {
 	components.Team
@@ -10895,7 +11377,7 @@ type ReposGetTeamsWithAccessToProtectedBranchResponseBody []struct {
 /*
 ReposGetTeamsWithAccessToProtectedBranchResponse is a response for ReposGetTeamsWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchResponse struct {
 	response
@@ -10906,11 +11388,11 @@ type ReposGetTeamsWithAccessToProtectedBranchResponse struct {
 /*
 ReposGetTopPaths performs requests for "repos/get-top-paths"
 
-List paths.
+Get top referral paths.
 
   GET /repos/{owner}/{repo}/traffic/popular/paths
 
-https://developer.github.com/v3/repos/traffic/#list-paths
+https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...RequestOption) (*ReposGetTopPathsResponse, error) {
 	if req == nil {
@@ -10935,11 +11417,11 @@ func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...Requ
 /*
 ReposGetTopPaths performs requests for "repos/get-top-paths"
 
-List paths.
+Get top referral paths.
 
   GET /repos/{owner}/{repo}/traffic/popular/paths
 
-https://developer.github.com/v3/repos/traffic/#list-paths
+https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 func (c Client) ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...RequestOption) (*ReposGetTopPathsResponse, error) {
 	return ReposGetTopPaths(ctx, req, append(c, opt...)...)
@@ -10948,7 +11430,7 @@ func (c Client) ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, 
 /*
 ReposGetTopPathsReq is request data for Client.ReposGetTopPaths
 
-https://developer.github.com/v3/repos/traffic/#list-paths
+https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type ReposGetTopPathsReq struct {
 	_url  string
@@ -11016,7 +11498,7 @@ func (r *ReposGetTopPathsReq) Rel(link RelName, resp *ReposGetTopPathsResponse) 
 /*
 ReposGetTopPathsResponseBody is a response body for ReposGetTopPaths
 
-https://developer.github.com/v3/repos/traffic/#list-paths
+https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type ReposGetTopPathsResponseBody []struct {
 	components.ContentTraffic
@@ -11025,7 +11507,7 @@ type ReposGetTopPathsResponseBody []struct {
 /*
 ReposGetTopPathsResponse is a response for ReposGetTopPaths
 
-https://developer.github.com/v3/repos/traffic/#list-paths
+https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type ReposGetTopPathsResponse struct {
 	response
@@ -11036,11 +11518,11 @@ type ReposGetTopPathsResponse struct {
 /*
 ReposGetTopReferrers performs requests for "repos/get-top-referrers"
 
-List referrers.
+Get top referral sources.
 
   GET /repos/{owner}/{repo}/traffic/popular/referrers
 
-https://developer.github.com/v3/repos/traffic/#list-referrers
+https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt ...RequestOption) (*ReposGetTopReferrersResponse, error) {
 	if req == nil {
@@ -11065,11 +11547,11 @@ func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt
 /*
 ReposGetTopReferrers performs requests for "repos/get-top-referrers"
 
-List referrers.
+Get top referral sources.
 
   GET /repos/{owner}/{repo}/traffic/popular/referrers
 
-https://developer.github.com/v3/repos/traffic/#list-referrers
+https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 func (c Client) ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt ...RequestOption) (*ReposGetTopReferrersResponse, error) {
 	return ReposGetTopReferrers(ctx, req, append(c, opt...)...)
@@ -11078,7 +11560,7 @@ func (c Client) ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferr
 /*
 ReposGetTopReferrersReq is request data for Client.ReposGetTopReferrers
 
-https://developer.github.com/v3/repos/traffic/#list-referrers
+https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type ReposGetTopReferrersReq struct {
 	_url  string
@@ -11146,7 +11628,7 @@ func (r *ReposGetTopReferrersReq) Rel(link RelName, resp *ReposGetTopReferrersRe
 /*
 ReposGetTopReferrersResponseBody is a response body for ReposGetTopReferrers
 
-https://developer.github.com/v3/repos/traffic/#list-referrers
+https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type ReposGetTopReferrersResponseBody []struct {
 	components.ReferrerTraffic
@@ -11155,7 +11637,7 @@ type ReposGetTopReferrersResponseBody []struct {
 /*
 ReposGetTopReferrersResponse is a response for ReposGetTopReferrers
 
-https://developer.github.com/v3/repos/traffic/#list-referrers
+https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type ReposGetTopReferrersResponse struct {
 	response
@@ -11166,11 +11648,11 @@ type ReposGetTopReferrersResponse struct {
 /*
 ReposGetUsersWithAccessToProtectedBranch performs requests for "repos/get-users-with-access-to-protected-branch"
 
-Get users with access to protected branch.
+Get users with access to the protected branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
 
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGetUsersWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetUsersWithAccessToProtectedBranchResponse, error) {
 	if req == nil {
@@ -11195,11 +11677,11 @@ func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 /*
 ReposGetUsersWithAccessToProtectedBranch performs requests for "repos/get-users-with-access-to-protected-branch"
 
-Get users with access to protected branch.
+Get users with access to the protected branch.
 
   GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
 
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 func (c Client) ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGetUsersWithAccessToProtectedBranchReq, opt ...RequestOption) (*ReposGetUsersWithAccessToProtectedBranchResponse, error) {
 	return ReposGetUsersWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
@@ -11208,7 +11690,7 @@ func (c Client) ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, re
 /*
 ReposGetUsersWithAccessToProtectedBranchReq is request data for Client.ReposGetUsersWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchReq struct {
 	_url   string
@@ -11277,7 +11759,7 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) Rel(link RelName, resp *Re
 /*
 ReposGetUsersWithAccessToProtectedBranchResponseBody is a response body for ReposGetUsersWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchResponseBody []struct {
 	components.SimpleUser
@@ -11286,7 +11768,7 @@ type ReposGetUsersWithAccessToProtectedBranchResponseBody []struct {
 /*
 ReposGetUsersWithAccessToProtectedBranchResponse is a response for ReposGetUsersWithAccessToProtectedBranch
 
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-protected-branch
+https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchResponse struct {
 	response
@@ -11297,11 +11779,11 @@ type ReposGetUsersWithAccessToProtectedBranchResponse struct {
 /*
 ReposGetViews performs requests for "repos/get-views"
 
-Views.
+Get page views.
 
   GET /repos/{owner}/{repo}/traffic/views
 
-https://developer.github.com/v3/repos/traffic/#views
+https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOption) (*ReposGetViewsResponse, error) {
 	if req == nil {
@@ -11326,11 +11808,11 @@ func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOpt
 /*
 ReposGetViews performs requests for "repos/get-views"
 
-Views.
+Get page views.
 
   GET /repos/{owner}/{repo}/traffic/views
 
-https://developer.github.com/v3/repos/traffic/#views
+https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 func (c Client) ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOption) (*ReposGetViewsResponse, error) {
 	return ReposGetViews(ctx, req, append(c, opt...)...)
@@ -11339,7 +11821,7 @@ func (c Client) ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ..
 /*
 ReposGetViewsReq is request data for Client.ReposGetViews
 
-https://developer.github.com/v3/repos/traffic/#views
+https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type ReposGetViewsReq struct {
 	_url  string
@@ -11413,7 +11895,7 @@ func (r *ReposGetViewsReq) Rel(link RelName, resp *ReposGetViewsResponse) bool {
 /*
 ReposGetViewsResponseBody is a response body for ReposGetViews
 
-https://developer.github.com/v3/repos/traffic/#views
+https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type ReposGetViewsResponseBody struct {
 	components.ViewTraffic
@@ -11422,7 +11904,7 @@ type ReposGetViewsResponseBody struct {
 /*
 ReposGetViewsResponse is a response for ReposGetViews
 
-https://developer.github.com/v3/repos/traffic/#views
+https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type ReposGetViewsResponse struct {
 	response
@@ -11431,19 +11913,19 @@ type ReposGetViewsResponse struct {
 }
 
 /*
-ReposListAssetsForRelease performs requests for "repos/list-assets-for-release"
+ReposGetWebhook performs requests for "repos/get-webhook"
 
-List assets for a release.
+Get a repository webhook.
 
-  GET /repos/{owner}/{repo}/releases/{release_id}/assets
+  GET /repos/{owner}/{repo}/hooks/{hook_id}
 
-https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-func ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForReleaseReq, opt ...RequestOption) (*ReposListAssetsForReleaseResponse, error) {
+func ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...RequestOption) (*ReposGetWebhookResponse, error) {
 	if req == nil {
-		req = new(ReposListAssetsForReleaseReq)
+		req = new(ReposGetWebhookReq)
 	}
-	resp := &ReposListAssetsForReleaseResponse{request: req}
+	resp := &ReposGetWebhookResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -11451,7 +11933,7 @@ func ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForRelea
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposListAssetsForReleaseResponseBody)
+	resp.Data = new(ReposGetWebhookResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -11460,83 +11942,71 @@ func ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForRelea
 }
 
 /*
-ReposListAssetsForRelease performs requests for "repos/list-assets-for-release"
+ReposGetWebhook performs requests for "repos/get-webhook"
 
-List assets for a release.
+Get a repository webhook.
 
-  GET /repos/{owner}/{repo}/releases/{release_id}/assets
+  GET /repos/{owner}/{repo}/hooks/{hook_id}
 
-https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-func (c Client) ReposListAssetsForRelease(ctx context.Context, req *ReposListAssetsForReleaseReq, opt ...RequestOption) (*ReposListAssetsForReleaseResponse, error) {
-	return ReposListAssetsForRelease(ctx, req, append(c, opt...)...)
+func (c Client) ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...RequestOption) (*ReposGetWebhookResponse, error) {
+	return ReposGetWebhook(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposListAssetsForReleaseReq is request data for Client.ReposListAssetsForRelease
+ReposGetWebhookReq is request data for Client.ReposGetWebhook
 
-https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-type ReposListAssetsForReleaseReq struct {
-	_url      string
-	Owner     string
-	Repo      string
-	ReleaseId int64
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
+type ReposGetWebhookReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	HookId int64
 }
 
-func (r *ReposListAssetsForReleaseReq) url() string {
+func (r *ReposGetWebhookReq) url() string {
 	return r._url
 }
 
-func (r *ReposListAssetsForReleaseReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
+func (r *ReposGetWebhookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
 }
 
-func (r *ReposListAssetsForReleaseReq) method() string {
+func (r *ReposGetWebhookReq) method() string {
 	return "GET"
 }
 
-func (r *ReposListAssetsForReleaseReq) urlQuery() url.Values {
+func (r *ReposGetWebhookReq) urlQuery() url.Values {
 	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
 	return query
 }
 
-func (r *ReposListAssetsForReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposGetWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposListAssetsForReleaseReq) body() interface{} {
+func (r *ReposGetWebhookReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposListAssetsForReleaseReq) dataStatuses() []int {
+func (r *ReposGetWebhookReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListAssetsForReleaseReq) validStatuses() []int {
+func (r *ReposGetWebhookReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListAssetsForReleaseReq) endpointAttributes() []endpointAttribute {
+func (r *ReposGetWebhookReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposGetWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -11544,7 +12014,7 @@ func (r *ReposListAssetsForReleaseReq) HTTPRequest(ctx context.Context, opt ...R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListAssetsForReleaseReq) Rel(link RelName, resp *ReposListAssetsForReleaseResponse) bool {
+func (r *ReposGetWebhookReq) Rel(link RelName, resp *ReposGetWebhookResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -11554,23 +12024,23 @@ func (r *ReposListAssetsForReleaseReq) Rel(link RelName, resp *ReposListAssetsFo
 }
 
 /*
-ReposListAssetsForReleaseResponseBody is a response body for ReposListAssetsForRelease
+ReposGetWebhookResponseBody is a response body for ReposGetWebhook
 
-https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-type ReposListAssetsForReleaseResponseBody []struct {
-	components.ReleaseAsset
+type ReposGetWebhookResponseBody struct {
+	components.Hook
 }
 
 /*
-ReposListAssetsForReleaseResponse is a response for ReposListAssetsForRelease
+ReposGetWebhookResponse is a response for ReposGetWebhook
 
-https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
+https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-type ReposListAssetsForReleaseResponse struct {
+type ReposGetWebhookResponse struct {
 	response
-	request *ReposListAssetsForReleaseReq
-	Data    *ReposListAssetsForReleaseResponseBody
+	request *ReposGetWebhookReq
+	Data    *ReposGetWebhookResponseBody
 }
 
 /*
@@ -11873,11 +12343,11 @@ type ReposListBranchesForHeadCommitResponse struct {
 /*
 ReposListCollaborators performs requests for "repos/list-collaborators"
 
-List collaborators.
+List repository collaborators.
 
   GET /repos/{owner}/{repo}/collaborators
 
-https://developer.github.com/v3/repos/collaborators/#list-collaborators
+https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq, opt ...RequestOption) (*ReposListCollaboratorsResponse, error) {
 	if req == nil {
@@ -11902,11 +12372,11 @@ func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq,
 /*
 ReposListCollaborators performs requests for "repos/list-collaborators"
 
-List collaborators.
+List repository collaborators.
 
   GET /repos/{owner}/{repo}/collaborators
 
-https://developer.github.com/v3/repos/collaborators/#list-collaborators
+https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 func (c Client) ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq, opt ...RequestOption) (*ReposListCollaboratorsResponse, error) {
 	return ReposListCollaborators(ctx, req, append(c, opt...)...)
@@ -11915,7 +12385,7 @@ func (c Client) ReposListCollaborators(ctx context.Context, req *ReposListCollab
 /*
 ReposListCollaboratorsReq is request data for Client.ReposListCollaborators
 
-https://developer.github.com/v3/repos/collaborators/#list-collaborators
+https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ReposListCollaboratorsReq struct {
 	_url  string
@@ -12007,7 +12477,7 @@ func (r *ReposListCollaboratorsReq) Rel(link RelName, resp *ReposListCollaborato
 /*
 ReposListCollaboratorsResponseBody is a response body for ReposListCollaborators
 
-https://developer.github.com/v3/repos/collaborators/#list-collaborators
+https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ReposListCollaboratorsResponseBody []struct {
 	components.Collaborator
@@ -12016,7 +12486,7 @@ type ReposListCollaboratorsResponseBody []struct {
 /*
 ReposListCollaboratorsResponse is a response for ReposListCollaborators
 
-https://developer.github.com/v3/repos/collaborators/#list-collaborators
+https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ReposListCollaboratorsResponse struct {
 	response
@@ -12027,11 +12497,11 @@ type ReposListCollaboratorsResponse struct {
 /*
 ReposListCommentsForCommit performs requests for "repos/list-comments-for-commit"
 
-List comments for a single commit.
+List commit comments.
 
   GET /repos/{owner}/{repo}/commits/{commit_sha}/comments
 
-https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCommitReq, opt ...RequestOption) (*ReposListCommentsForCommitResponse, error) {
 	if req == nil {
@@ -12056,11 +12526,11 @@ func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCo
 /*
 ReposListCommentsForCommit performs requests for "repos/list-comments-for-commit"
 
-List comments for a single commit.
+List commit comments.
 
   GET /repos/{owner}/{repo}/commits/{commit_sha}/comments
 
-https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 func (c Client) ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCommitReq, opt ...RequestOption) (*ReposListCommentsForCommitResponse, error) {
 	return ReposListCommentsForCommit(ctx, req, append(c, opt...)...)
@@ -12069,7 +12539,7 @@ func (c Client) ReposListCommentsForCommit(ctx context.Context, req *ReposListCo
 /*
 ReposListCommentsForCommitReq is request data for Client.ReposListCommentsForCommit
 
-https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ReposListCommentsForCommitReq struct {
 	_url      string
@@ -12164,7 +12634,7 @@ func (r *ReposListCommentsForCommitReq) Rel(link RelName, resp *ReposListComment
 /*
 ReposListCommentsForCommitResponseBody is a response body for ReposListCommentsForCommit
 
-https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ReposListCommentsForCommitResponseBody []struct {
 	components.CommitComment
@@ -12173,7 +12643,7 @@ type ReposListCommentsForCommitResponseBody []struct {
 /*
 ReposListCommentsForCommitResponse is a response for ReposListCommentsForCommit
 
-https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit
+https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ReposListCommentsForCommitResponse struct {
 	response
@@ -12182,7 +12652,7 @@ type ReposListCommentsForCommitResponse struct {
 }
 
 /*
-ReposListCommitComments performs requests for "repos/list-commit-comments"
+ReposListCommitCommentsForRepo performs requests for "repos/list-commit-comments-for-repo"
 
 List commit comments for a repository.
 
@@ -12190,11 +12660,11 @@ List commit comments for a repository.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-func ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsReq, opt ...RequestOption) (*ReposListCommitCommentsResponse, error) {
+func ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCommentsForRepoReq, opt ...RequestOption) (*ReposListCommitCommentsForRepoResponse, error) {
 	if req == nil {
-		req = new(ReposListCommitCommentsReq)
+		req = new(ReposListCommitCommentsForRepoReq)
 	}
-	resp := &ReposListCommitCommentsResponse{request: req}
+	resp := &ReposListCommitCommentsForRepoResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -12202,7 +12672,7 @@ func ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposListCommitCommentsResponseBody)
+	resp.Data = new(ReposListCommitCommentsForRepoResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -12211,7 +12681,7 @@ func ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsRe
 }
 
 /*
-ReposListCommitComments performs requests for "repos/list-commit-comments"
+ReposListCommitCommentsForRepo performs requests for "repos/list-commit-comments-for-repo"
 
 List commit comments for a repository.
 
@@ -12219,16 +12689,16 @@ List commit comments for a repository.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-func (c Client) ReposListCommitComments(ctx context.Context, req *ReposListCommitCommentsReq, opt ...RequestOption) (*ReposListCommitCommentsResponse, error) {
-	return ReposListCommitComments(ctx, req, append(c, opt...)...)
+func (c Client) ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCommentsForRepoReq, opt ...RequestOption) (*ReposListCommitCommentsForRepoResponse, error) {
+	return ReposListCommitCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposListCommitCommentsReq is request data for Client.ReposListCommitComments
+ReposListCommitCommentsForRepoReq is request data for Client.ReposListCommitCommentsForRepo
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-type ReposListCommitCommentsReq struct {
+type ReposListCommitCommentsForRepoReq struct {
 	_url  string
 	Owner string
 	Repo  string
@@ -12251,19 +12721,19 @@ type ReposListCommitCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReposListCommitCommentsReq) url() string {
+func (r *ReposListCommitCommentsForRepoReq) url() string {
 	return r._url
 }
 
-func (r *ReposListCommitCommentsReq) urlPath() string {
+func (r *ReposListCommitCommentsForRepoReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/comments", r.Owner, r.Repo)
 }
 
-func (r *ReposListCommitCommentsReq) method() string {
+func (r *ReposListCommitCommentsForRepoReq) method() string {
 	return "GET"
 }
 
-func (r *ReposListCommitCommentsReq) urlQuery() url.Values {
+func (r *ReposListCommitCommentsForRepoReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -12274,7 +12744,7 @@ func (r *ReposListCommitCommentsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *ReposListCommitCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposListCommitCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
@@ -12283,24 +12753,24 @@ func (r *ReposListCommitCommentsReq) header(requiredPreviews, allPreviews bool) 
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposListCommitCommentsReq) body() interface{} {
+func (r *ReposListCommitCommentsForRepoReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposListCommitCommentsReq) dataStatuses() []int {
+func (r *ReposListCommitCommentsForRepoReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListCommitCommentsReq) validStatuses() []int {
+func (r *ReposListCommitCommentsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListCommitCommentsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposListCommitCommentsForRepoReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposListCommitCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -12308,7 +12778,7 @@ func (r *ReposListCommitCommentsReq) HTTPRequest(ctx context.Context, opt ...Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListCommitCommentsReq) Rel(link RelName, resp *ReposListCommitCommentsResponse) bool {
+func (r *ReposListCommitCommentsForRepoReq) Rel(link RelName, resp *ReposListCommitCommentsForRepoResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -12318,33 +12788,176 @@ func (r *ReposListCommitCommentsReq) Rel(link RelName, resp *ReposListCommitComm
 }
 
 /*
-ReposListCommitCommentsResponseBody is a response body for ReposListCommitComments
+ReposListCommitCommentsForRepoResponseBody is a response body for ReposListCommitCommentsForRepo
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-type ReposListCommitCommentsResponseBody []struct {
+type ReposListCommitCommentsForRepoResponseBody []struct {
 	components.CommitComment
 }
 
 /*
-ReposListCommitCommentsResponse is a response for ReposListCommitComments
+ReposListCommitCommentsForRepoResponse is a response for ReposListCommitCommentsForRepo
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-type ReposListCommitCommentsResponse struct {
+type ReposListCommitCommentsForRepoResponse struct {
 	response
-	request *ReposListCommitCommentsReq
-	Data    *ReposListCommitCommentsResponseBody
+	request *ReposListCommitCommentsForRepoReq
+	Data    *ReposListCommitCommentsForRepoResponseBody
+}
+
+/*
+ReposListCommitStatusesForRef performs requests for "repos/list-commit-statuses-for-ref"
+
+List commit statuses for a reference.
+
+  GET /repos/{owner}/{repo}/commits/{ref}/statuses
+
+https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
+*/
+func ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStatusesForRefReq, opt ...RequestOption) (*ReposListCommitStatusesForRefResponse, error) {
+	if req == nil {
+		req = new(ReposListCommitStatusesForRefReq)
+	}
+	resp := &ReposListCommitStatusesForRefResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposListCommitStatusesForRefResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposListCommitStatusesForRef performs requests for "repos/list-commit-statuses-for-ref"
+
+List commit statuses for a reference.
+
+  GET /repos/{owner}/{repo}/commits/{ref}/statuses
+
+https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
+*/
+func (c Client) ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStatusesForRefReq, opt ...RequestOption) (*ReposListCommitStatusesForRefResponse, error) {
+	return ReposListCommitStatusesForRef(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposListCommitStatusesForRefReq is request data for Client.ReposListCommitStatusesForRef
+
+https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
+*/
+type ReposListCommitStatusesForRefReq struct {
+	_url  string
+	Owner string
+	Repo  string
+	Ref   string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *ReposListCommitStatusesForRefReq) url() string {
+	return r._url
+}
+
+func (r *ReposListCommitStatusesForRefReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/commits/%v/statuses", r.Owner, r.Repo, r.Ref)
+}
+
+func (r *ReposListCommitStatusesForRefReq) method() string {
+	return "GET"
+}
+
+func (r *ReposListCommitStatusesForRefReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *ReposListCommitStatusesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposListCommitStatusesForRefReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposListCommitStatusesForRefReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposListCommitStatusesForRefReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposListCommitStatusesForRefReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposListCommitStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposListCommitStatusesForRefReq) Rel(link RelName, resp *ReposListCommitStatusesForRefResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposListCommitStatusesForRefResponseBody is a response body for ReposListCommitStatusesForRef
+
+https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
+*/
+type ReposListCommitStatusesForRefResponseBody []struct {
+	components.Status
+}
+
+/*
+ReposListCommitStatusesForRefResponse is a response for ReposListCommitStatusesForRef
+
+https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
+*/
+type ReposListCommitStatusesForRefResponse struct {
+	response
+	request *ReposListCommitStatusesForRefReq
+	Data    *ReposListCommitStatusesForRefResponseBody
 }
 
 /*
 ReposListCommits performs requests for "repos/list-commits"
 
-List commits on a repository.
+List commits.
 
   GET /repos/{owner}/{repo}/commits
 
-https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
+https://developer.github.com/v3/repos/commits/#list-commits
 */
 func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...RequestOption) (*ReposListCommitsResponse, error) {
 	if req == nil {
@@ -12369,11 +12982,11 @@ func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...Requ
 /*
 ReposListCommits performs requests for "repos/list-commits"
 
-List commits on a repository.
+List commits.
 
   GET /repos/{owner}/{repo}/commits
 
-https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
+https://developer.github.com/v3/repos/commits/#list-commits
 */
 func (c Client) ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...RequestOption) (*ReposListCommitsResponse, error) {
 	return ReposListCommits(ctx, req, append(c, opt...)...)
@@ -12382,7 +12995,7 @@ func (c Client) ReposListCommits(ctx context.Context, req *ReposListCommitsReq, 
 /*
 ReposListCommitsReq is request data for Client.ReposListCommits
 
-https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
+https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ReposListCommitsReq struct {
 	_url  string
@@ -12501,7 +13114,7 @@ func (r *ReposListCommitsReq) Rel(link RelName, resp *ReposListCommitsResponse) 
 /*
 ReposListCommitsResponseBody is a response body for ReposListCommits
 
-https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
+https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ReposListCommitsResponseBody []struct {
 	components.SimpleCommit
@@ -12510,7 +13123,7 @@ type ReposListCommitsResponseBody []struct {
 /*
 ReposListCommitsResponse is a response for ReposListCommits
 
-https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
+https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ReposListCommitsResponse struct {
 	response
@@ -12521,11 +13134,11 @@ type ReposListCommitsResponse struct {
 /*
 ReposListContributors performs requests for "repos/list-contributors"
 
-List contributors.
+List repository contributors.
 
   GET /repos/{owner}/{repo}/contributors
 
-https://developer.github.com/v3/repos/#list-contributors
+https://developer.github.com/v3/repos/#list-repository-contributors
 */
 func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, opt ...RequestOption) (*ReposListContributorsResponse, error) {
 	if req == nil {
@@ -12550,11 +13163,11 @@ func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, o
 /*
 ReposListContributors performs requests for "repos/list-contributors"
 
-List contributors.
+List repository contributors.
 
   GET /repos/{owner}/{repo}/contributors
 
-https://developer.github.com/v3/repos/#list-contributors
+https://developer.github.com/v3/repos/#list-repository-contributors
 */
 func (c Client) ReposListContributors(ctx context.Context, req *ReposListContributorsReq, opt ...RequestOption) (*ReposListContributorsResponse, error) {
 	return ReposListContributors(ctx, req, append(c, opt...)...)
@@ -12563,7 +13176,7 @@ func (c Client) ReposListContributors(ctx context.Context, req *ReposListContrib
 /*
 ReposListContributorsReq is request data for Client.ReposListContributors
 
-https://developer.github.com/v3/repos/#list-contributors
+https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ReposListContributorsReq struct {
 	_url  string
@@ -12649,7 +13262,7 @@ func (r *ReposListContributorsReq) Rel(link RelName, resp *ReposListContributors
 /*
 ReposListContributorsResponseBody is a response body for ReposListContributors
 
-https://developer.github.com/v3/repos/#list-contributors
+https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ReposListContributorsResponseBody []struct {
 	components.Contributor
@@ -12658,7 +13271,7 @@ type ReposListContributorsResponseBody []struct {
 /*
 ReposListContributorsResponse is a response for ReposListContributors
 
-https://developer.github.com/v3/repos/#list-contributors
+https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ReposListContributorsResponse struct {
 	response
@@ -13162,148 +13775,6 @@ type ReposListDeploymentsResponse struct {
 	response
 	request *ReposListDeploymentsReq
 	Data    *ReposListDeploymentsResponseBody
-}
-
-/*
-ReposListDownloads performs requests for "repos/list-downloads"
-
-List downloads for a repository.
-
-  GET /repos/{owner}/{repo}/downloads
-
-https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
-*/
-func ReposListDownloads(ctx context.Context, req *ReposListDownloadsReq, opt ...RequestOption) (*ReposListDownloadsResponse, error) {
-	if req == nil {
-		req = new(ReposListDownloadsReq)
-	}
-	resp := &ReposListDownloadsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposListDownloadsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposListDownloads performs requests for "repos/list-downloads"
-
-List downloads for a repository.
-
-  GET /repos/{owner}/{repo}/downloads
-
-https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
-*/
-func (c Client) ReposListDownloads(ctx context.Context, req *ReposListDownloadsReq, opt ...RequestOption) (*ReposListDownloadsResponse, error) {
-	return ReposListDownloads(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposListDownloadsReq is request data for Client.ReposListDownloads
-
-https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
-*/
-type ReposListDownloadsReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *ReposListDownloadsReq) url() string {
-	return r._url
-}
-
-func (r *ReposListDownloadsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/downloads", r.Owner, r.Repo)
-}
-
-func (r *ReposListDownloadsReq) method() string {
-	return "GET"
-}
-
-func (r *ReposListDownloadsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *ReposListDownloadsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposListDownloadsReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposListDownloadsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListDownloadsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListDownloadsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposListDownloadsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposListDownloadsReq) Rel(link RelName, resp *ReposListDownloadsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposListDownloadsResponseBody is a response body for ReposListDownloads
-
-https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
-*/
-type ReposListDownloadsResponseBody []struct {
-	components.Download
-}
-
-/*
-ReposListDownloadsResponse is a response for ReposListDownloads
-
-https://developer.github.com/v3/repos/downloads/#list-downloads-for-a-repository
-*/
-type ReposListDownloadsResponse struct {
-	response
-	request *ReposListDownloadsReq
-	Data    *ReposListDownloadsResponseBody
 }
 
 /*
@@ -13993,155 +14464,13 @@ type ReposListForksResponse struct {
 }
 
 /*
-ReposListHooks performs requests for "repos/list-hooks"
-
-List hooks.
-
-  GET /repos/{owner}/{repo}/hooks
-
-https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-func ReposListHooks(ctx context.Context, req *ReposListHooksReq, opt ...RequestOption) (*ReposListHooksResponse, error) {
-	if req == nil {
-		req = new(ReposListHooksReq)
-	}
-	resp := &ReposListHooksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposListHooksResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposListHooks performs requests for "repos/list-hooks"
-
-List hooks.
-
-  GET /repos/{owner}/{repo}/hooks
-
-https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-func (c Client) ReposListHooks(ctx context.Context, req *ReposListHooksReq, opt ...RequestOption) (*ReposListHooksResponse, error) {
-	return ReposListHooks(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposListHooksReq is request data for Client.ReposListHooks
-
-https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-type ReposListHooksReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *ReposListHooksReq) url() string {
-	return r._url
-}
-
-func (r *ReposListHooksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
-}
-
-func (r *ReposListHooksReq) method() string {
-	return "GET"
-}
-
-func (r *ReposListHooksReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *ReposListHooksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposListHooksReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposListHooksReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListHooksReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListHooksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposListHooksReq) Rel(link RelName, resp *ReposListHooksResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposListHooksResponseBody is a response body for ReposListHooks
-
-https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-type ReposListHooksResponseBody []struct {
-	components.Hook
-}
-
-/*
-ReposListHooksResponse is a response for ReposListHooks
-
-https://developer.github.com/v3/repos/hooks/#list-hooks
-*/
-type ReposListHooksResponse struct {
-	response
-	request *ReposListHooksReq
-	Data    *ReposListHooksResponseBody
-}
-
-/*
 ReposListInvitations performs requests for "repos/list-invitations"
 
-List invitations for a repository.
+List repository invitations.
 
   GET /repos/{owner}/{repo}/invitations
 
-https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt ...RequestOption) (*ReposListInvitationsResponse, error) {
 	if req == nil {
@@ -14166,11 +14495,11 @@ func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt
 /*
 ReposListInvitations performs requests for "repos/list-invitations"
 
-List invitations for a repository.
+List repository invitations.
 
   GET /repos/{owner}/{repo}/invitations
 
-https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 func (c Client) ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt ...RequestOption) (*ReposListInvitationsResponse, error) {
 	return ReposListInvitations(ctx, req, append(c, opt...)...)
@@ -14179,7 +14508,7 @@ func (c Client) ReposListInvitations(ctx context.Context, req *ReposListInvitati
 /*
 ReposListInvitationsReq is request data for Client.ReposListInvitations
 
-https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ReposListInvitationsReq struct {
 	_url  string
@@ -14259,7 +14588,7 @@ func (r *ReposListInvitationsReq) Rel(link RelName, resp *ReposListInvitationsRe
 /*
 ReposListInvitationsResponseBody is a response body for ReposListInvitations
 
-https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ReposListInvitationsResponseBody []struct {
 	components.RepositoryInvitation
@@ -14268,7 +14597,7 @@ type ReposListInvitationsResponseBody []struct {
 /*
 ReposListInvitationsResponse is a response for ReposListInvitations
 
-https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ReposListInvitationsResponse struct {
 	response
@@ -14279,11 +14608,11 @@ type ReposListInvitationsResponse struct {
 /*
 ReposListInvitationsForAuthenticatedUser performs requests for "repos/list-invitations-for-authenticated-user"
 
-List a user's repository invitations.
+List repository invitations for the authenticated user.
 
   GET /user/repository_invitations
 
-https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposListInvitationsForAuthenticatedUserReq, opt ...RequestOption) (*ReposListInvitationsForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -14308,11 +14637,11 @@ func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposLis
 /*
 ReposListInvitationsForAuthenticatedUser performs requests for "repos/list-invitations-for-authenticated-user"
 
-List a user's repository invitations.
+List repository invitations for the authenticated user.
 
   GET /user/repository_invitations
 
-https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 func (c Client) ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposListInvitationsForAuthenticatedUserReq, opt ...RequestOption) (*ReposListInvitationsForAuthenticatedUserResponse, error) {
 	return ReposListInvitationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -14321,7 +14650,7 @@ func (c Client) ReposListInvitationsForAuthenticatedUser(ctx context.Context, re
 /*
 ReposListInvitationsForAuthenticatedUserReq is request data for Client.ReposListInvitationsForAuthenticatedUser
 
-https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 type ReposListInvitationsForAuthenticatedUserReq struct {
 	_url string
@@ -14399,7 +14728,7 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) Rel(link RelName, resp *Re
 /*
 ReposListInvitationsForAuthenticatedUserResponseBody is a response body for ReposListInvitationsForAuthenticatedUser
 
-https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 type ReposListInvitationsForAuthenticatedUserResponseBody []struct {
 	components.RepositoryInvitation
@@ -14408,7 +14737,7 @@ type ReposListInvitationsForAuthenticatedUserResponseBody []struct {
 /*
 ReposListInvitationsForAuthenticatedUserResponse is a response for ReposListInvitationsForAuthenticatedUser
 
-https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
+https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 type ReposListInvitationsForAuthenticatedUserResponse struct {
 	response
@@ -14419,11 +14748,11 @@ type ReposListInvitationsForAuthenticatedUserResponse struct {
 /*
 ReposListLanguages performs requests for "repos/list-languages"
 
-List languages.
+List repository languages.
 
   GET /repos/{owner}/{repo}/languages
 
-https://developer.github.com/v3/repos/#list-languages
+https://developer.github.com/v3/repos/#list-repository-languages
 */
 func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...RequestOption) (*ReposListLanguagesResponse, error) {
 	if req == nil {
@@ -14448,11 +14777,11 @@ func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...
 /*
 ReposListLanguages performs requests for "repos/list-languages"
 
-List languages.
+List repository languages.
 
   GET /repos/{owner}/{repo}/languages
 
-https://developer.github.com/v3/repos/#list-languages
+https://developer.github.com/v3/repos/#list-repository-languages
 */
 func (c Client) ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...RequestOption) (*ReposListLanguagesResponse, error) {
 	return ReposListLanguages(ctx, req, append(c, opt...)...)
@@ -14461,7 +14790,7 @@ func (c Client) ReposListLanguages(ctx context.Context, req *ReposListLanguagesR
 /*
 ReposListLanguagesReq is request data for Client.ReposListLanguages
 
-https://developer.github.com/v3/repos/#list-languages
+https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ReposListLanguagesReq struct {
 	_url  string
@@ -14529,14 +14858,14 @@ func (r *ReposListLanguagesReq) Rel(link RelName, resp *ReposListLanguagesRespon
 /*
 ReposListLanguagesResponseBody is a response body for ReposListLanguages
 
-https://developer.github.com/v3/repos/#list-languages
+https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ReposListLanguagesResponseBody map[string]int64
 
 /*
 ReposListLanguagesResponse is a response for ReposListLanguages
 
-https://developer.github.com/v3/repos/#list-languages
+https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ReposListLanguagesResponse struct {
 	response
@@ -14547,11 +14876,11 @@ type ReposListLanguagesResponse struct {
 /*
 ReposListPagesBuilds performs requests for "repos/list-pages-builds"
 
-List Pages builds.
+List GitHub Pages builds.
 
   GET /repos/{owner}/{repo}/pages/builds
 
-https://developer.github.com/v3/repos/pages/#list-pages-builds
+https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt ...RequestOption) (*ReposListPagesBuildsResponse, error) {
 	if req == nil {
@@ -14576,11 +14905,11 @@ func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt
 /*
 ReposListPagesBuilds performs requests for "repos/list-pages-builds"
 
-List Pages builds.
+List GitHub Pages builds.
 
   GET /repos/{owner}/{repo}/pages/builds
 
-https://developer.github.com/v3/repos/pages/#list-pages-builds
+https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 func (c Client) ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt ...RequestOption) (*ReposListPagesBuildsResponse, error) {
 	return ReposListPagesBuilds(ctx, req, append(c, opt...)...)
@@ -14589,7 +14918,7 @@ func (c Client) ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBui
 /*
 ReposListPagesBuildsReq is request data for Client.ReposListPagesBuilds
 
-https://developer.github.com/v3/repos/pages/#list-pages-builds
+https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ReposListPagesBuildsReq struct {
 	_url  string
@@ -14669,7 +14998,7 @@ func (r *ReposListPagesBuildsReq) Rel(link RelName, resp *ReposListPagesBuildsRe
 /*
 ReposListPagesBuildsResponseBody is a response body for ReposListPagesBuilds
 
-https://developer.github.com/v3/repos/pages/#list-pages-builds
+https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ReposListPagesBuildsResponseBody []struct {
 	components.PageBuild
@@ -14678,141 +15007,12 @@ type ReposListPagesBuildsResponseBody []struct {
 /*
 ReposListPagesBuildsResponse is a response for ReposListPagesBuilds
 
-https://developer.github.com/v3/repos/pages/#list-pages-builds
+https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ReposListPagesBuildsResponse struct {
 	response
 	request *ReposListPagesBuildsReq
 	Data    *ReposListPagesBuildsResponseBody
-}
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContexts performs requests for "repos/list-protected-branch-required-status-checks-contexts"
-
-List required status checks contexts of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-func ReposListProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposListProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposListProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	if req == nil {
-		req = new(ReposListProtectedBranchRequiredStatusChecksContextsReq)
-	}
-	resp := &ReposListProtectedBranchRequiredStatusChecksContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposListProtectedBranchRequiredStatusChecksContextsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContexts performs requests for "repos/list-protected-branch-required-status-checks-contexts"
-
-List required status checks contexts of protected branch.
-
-  GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-func (c Client) ReposListProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposListProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposListProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposListProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContextsReq is request data for Client.ReposListProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-type ReposListProtectedBranchRequiredStatusChecksContextsReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) url() string {
-	return r._url
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) method() string {
-	return "GET"
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposListProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelName, resp *ReposListProtectedBranchRequiredStatusChecksContextsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContextsResponseBody is a response body for ReposListProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-type ReposListProtectedBranchRequiredStatusChecksContextsResponseBody []string
-
-/*
-ReposListProtectedBranchRequiredStatusChecksContextsResponse is a response for ReposListProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch
-*/
-type ReposListProtectedBranchRequiredStatusChecksContextsResponse struct {
-	response
-	request *ReposListProtectedBranchRequiredStatusChecksContextsReq
-	Data    *ReposListProtectedBranchRequiredStatusChecksContextsResponseBody
 }
 
 /*
@@ -14952,11 +15152,11 @@ type ReposListPublicResponse struct {
 /*
 ReposListPullRequestsAssociatedWithCommit performs requests for "repos/list-pull-requests-associated-with-commit"
 
-List pull requests associated with commit.
+List pull requests associated with a commit.
 
   GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls
 
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposListPullRequestsAssociatedWithCommitReq, opt ...RequestOption) (*ReposListPullRequestsAssociatedWithCommitResponse, error) {
 	if req == nil {
@@ -14981,11 +15181,11 @@ func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposLi
 /*
 ReposListPullRequestsAssociatedWithCommit performs requests for "repos/list-pull-requests-associated-with-commit"
 
-List pull requests associated with commit.
+List pull requests associated with a commit.
 
   GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls
 
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 func (c Client) ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposListPullRequestsAssociatedWithCommitReq, opt ...RequestOption) (*ReposListPullRequestsAssociatedWithCommitResponse, error) {
 	return ReposListPullRequestsAssociatedWithCommit(ctx, req, append(c, opt...)...)
@@ -14994,7 +15194,7 @@ func (c Client) ReposListPullRequestsAssociatedWithCommit(ctx context.Context, r
 /*
 ReposListPullRequestsAssociatedWithCommitReq is request data for Client.ReposListPullRequestsAssociatedWithCommit
 
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ReposListPullRequestsAssociatedWithCommitReq struct {
 	_url      string
@@ -15090,7 +15290,7 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) Rel(link RelName, resp *R
 /*
 ReposListPullRequestsAssociatedWithCommitResponseBody is a response body for ReposListPullRequestsAssociatedWithCommit
 
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ReposListPullRequestsAssociatedWithCommitResponseBody []struct {
 	components.PullRequestSimple
@@ -15099,7 +15299,7 @@ type ReposListPullRequestsAssociatedWithCommitResponseBody []struct {
 /*
 ReposListPullRequestsAssociatedWithCommitResponse is a response for ReposListPullRequestsAssociatedWithCommit
 
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-commit
+https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ReposListPullRequestsAssociatedWithCommitResponse struct {
 	response
@@ -15108,13 +15308,156 @@ type ReposListPullRequestsAssociatedWithCommitResponse struct {
 }
 
 /*
+ReposListReleaseAssets performs requests for "repos/list-release-assets"
+
+List release assets.
+
+  GET /repos/{owner}/{repo}/releases/{release_id}/assets
+
+https://developer.github.com/v3/repos/releases/#list-release-assets
+*/
+func ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq, opt ...RequestOption) (*ReposListReleaseAssetsResponse, error) {
+	if req == nil {
+		req = new(ReposListReleaseAssetsReq)
+	}
+	resp := &ReposListReleaseAssetsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposListReleaseAssetsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposListReleaseAssets performs requests for "repos/list-release-assets"
+
+List release assets.
+
+  GET /repos/{owner}/{repo}/releases/{release_id}/assets
+
+https://developer.github.com/v3/repos/releases/#list-release-assets
+*/
+func (c Client) ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq, opt ...RequestOption) (*ReposListReleaseAssetsResponse, error) {
+	return ReposListReleaseAssets(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposListReleaseAssetsReq is request data for Client.ReposListReleaseAssets
+
+https://developer.github.com/v3/repos/releases/#list-release-assets
+*/
+type ReposListReleaseAssetsReq struct {
+	_url      string
+	Owner     string
+	Repo      string
+	ReleaseId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *ReposListReleaseAssetsReq) url() string {
+	return r._url
+}
+
+func (r *ReposListReleaseAssetsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/releases/%v/assets", r.Owner, r.Repo, r.ReleaseId)
+}
+
+func (r *ReposListReleaseAssetsReq) method() string {
+	return "GET"
+}
+
+func (r *ReposListReleaseAssetsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *ReposListReleaseAssetsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposListReleaseAssetsReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposListReleaseAssetsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposListReleaseAssetsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposListReleaseAssetsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposListReleaseAssetsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposListReleaseAssetsReq) Rel(link RelName, resp *ReposListReleaseAssetsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposListReleaseAssetsResponseBody is a response body for ReposListReleaseAssets
+
+https://developer.github.com/v3/repos/releases/#list-release-assets
+*/
+type ReposListReleaseAssetsResponseBody []struct {
+	components.ReleaseAsset
+}
+
+/*
+ReposListReleaseAssetsResponse is a response for ReposListReleaseAssets
+
+https://developer.github.com/v3/repos/releases/#list-release-assets
+*/
+type ReposListReleaseAssetsResponse struct {
+	response
+	request *ReposListReleaseAssetsReq
+	Data    *ReposListReleaseAssetsResponseBody
+}
+
+/*
 ReposListReleases performs requests for "repos/list-releases"
 
-List releases for a repository.
+List releases.
 
   GET /repos/{owner}/{repo}/releases
 
-https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+https://developer.github.com/v3/repos/releases/#list-releases
 */
 func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...RequestOption) (*ReposListReleasesResponse, error) {
 	if req == nil {
@@ -15139,11 +15482,11 @@ func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...Re
 /*
 ReposListReleases performs requests for "repos/list-releases"
 
-List releases for a repository.
+List releases.
 
   GET /repos/{owner}/{repo}/releases
 
-https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+https://developer.github.com/v3/repos/releases/#list-releases
 */
 func (c Client) ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...RequestOption) (*ReposListReleasesResponse, error) {
 	return ReposListReleases(ctx, req, append(c, opt...)...)
@@ -15152,7 +15495,7 @@ func (c Client) ReposListReleases(ctx context.Context, req *ReposListReleasesReq
 /*
 ReposListReleasesReq is request data for Client.ReposListReleases
 
-https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ReposListReleasesReq struct {
 	_url  string
@@ -15232,7 +15575,7 @@ func (r *ReposListReleasesReq) Rel(link RelName, resp *ReposListReleasesResponse
 /*
 ReposListReleasesResponseBody is a response body for ReposListReleases
 
-https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ReposListReleasesResponseBody []struct {
 	components.Release2
@@ -15241,7 +15584,7 @@ type ReposListReleasesResponseBody []struct {
 /*
 ReposListReleasesResponse is a response for ReposListReleases
 
-https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
+https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ReposListReleasesResponse struct {
 	response
@@ -15250,156 +15593,13 @@ type ReposListReleasesResponse struct {
 }
 
 /*
-ReposListStatusesForRef performs requests for "repos/list-statuses-for-ref"
-
-List statuses for a specific ref.
-
-  GET /repos/{owner}/{repo}/commits/{ref}/statuses
-
-https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
-*/
-func ReposListStatusesForRef(ctx context.Context, req *ReposListStatusesForRefReq, opt ...RequestOption) (*ReposListStatusesForRefResponse, error) {
-	if req == nil {
-		req = new(ReposListStatusesForRefReq)
-	}
-	resp := &ReposListStatusesForRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposListStatusesForRefResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposListStatusesForRef performs requests for "repos/list-statuses-for-ref"
-
-List statuses for a specific ref.
-
-  GET /repos/{owner}/{repo}/commits/{ref}/statuses
-
-https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
-*/
-func (c Client) ReposListStatusesForRef(ctx context.Context, req *ReposListStatusesForRefReq, opt ...RequestOption) (*ReposListStatusesForRefResponse, error) {
-	return ReposListStatusesForRef(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposListStatusesForRefReq is request data for Client.ReposListStatusesForRef
-
-https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
-*/
-type ReposListStatusesForRefReq struct {
-	_url  string
-	Owner string
-	Repo  string
-	Ref   string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *ReposListStatusesForRefReq) url() string {
-	return r._url
-}
-
-func (r *ReposListStatusesForRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/statuses", r.Owner, r.Repo, r.Ref)
-}
-
-func (r *ReposListStatusesForRefReq) method() string {
-	return "GET"
-}
-
-func (r *ReposListStatusesForRefReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *ReposListStatusesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposListStatusesForRefReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposListStatusesForRefReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListStatusesForRefReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposListStatusesForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposListStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposListStatusesForRefReq) Rel(link RelName, resp *ReposListStatusesForRefResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposListStatusesForRefResponseBody is a response body for ReposListStatusesForRef
-
-https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
-*/
-type ReposListStatusesForRefResponseBody []struct {
-	components.Status
-}
-
-/*
-ReposListStatusesForRefResponse is a response for ReposListStatusesForRef
-
-https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
-*/
-type ReposListStatusesForRefResponse struct {
-	response
-	request *ReposListStatusesForRefReq
-	Data    *ReposListStatusesForRefResponseBody
-}
-
-/*
 ReposListTags performs requests for "repos/list-tags"
 
-List tags.
+List repository tags.
 
   GET /repos/{owner}/{repo}/tags
 
-https://developer.github.com/v3/repos/#list-tags
+https://developer.github.com/v3/repos/#list-repository-tags
 */
 func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOption) (*ReposListTagsResponse, error) {
 	if req == nil {
@@ -15424,11 +15624,11 @@ func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOpt
 /*
 ReposListTags performs requests for "repos/list-tags"
 
-List tags.
+List repository tags.
 
   GET /repos/{owner}/{repo}/tags
 
-https://developer.github.com/v3/repos/#list-tags
+https://developer.github.com/v3/repos/#list-repository-tags
 */
 func (c Client) ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOption) (*ReposListTagsResponse, error) {
 	return ReposListTags(ctx, req, append(c, opt...)...)
@@ -15437,7 +15637,7 @@ func (c Client) ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ..
 /*
 ReposListTagsReq is request data for Client.ReposListTags
 
-https://developer.github.com/v3/repos/#list-tags
+https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ReposListTagsReq struct {
 	_url  string
@@ -15517,7 +15717,7 @@ func (r *ReposListTagsReq) Rel(link RelName, resp *ReposListTagsResponse) bool {
 /*
 ReposListTagsResponseBody is a response body for ReposListTags
 
-https://developer.github.com/v3/repos/#list-tags
+https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ReposListTagsResponseBody []struct {
 	components.Tag
@@ -15526,7 +15726,7 @@ type ReposListTagsResponseBody []struct {
 /*
 ReposListTagsResponse is a response for ReposListTags
 
-https://developer.github.com/v3/repos/#list-tags
+https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ReposListTagsResponse struct {
 	response
@@ -15537,11 +15737,11 @@ type ReposListTagsResponse struct {
 /*
 ReposListTeams performs requests for "repos/list-teams"
 
-List teams.
+List repository teams.
 
   GET /repos/{owner}/{repo}/teams
 
-https://developer.github.com/v3/repos/#list-teams
+https://developer.github.com/v3/repos/#list-repository-teams
 */
 func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestOption) (*ReposListTeamsResponse, error) {
 	if req == nil {
@@ -15566,11 +15766,11 @@ func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestO
 /*
 ReposListTeams performs requests for "repos/list-teams"
 
-List teams.
+List repository teams.
 
   GET /repos/{owner}/{repo}/teams
 
-https://developer.github.com/v3/repos/#list-teams
+https://developer.github.com/v3/repos/#list-repository-teams
 */
 func (c Client) ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestOption) (*ReposListTeamsResponse, error) {
 	return ReposListTeams(ctx, req, append(c, opt...)...)
@@ -15579,7 +15779,7 @@ func (c Client) ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt 
 /*
 ReposListTeamsReq is request data for Client.ReposListTeams
 
-https://developer.github.com/v3/repos/#list-teams
+https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ReposListTeamsReq struct {
 	_url  string
@@ -15659,7 +15859,7 @@ func (r *ReposListTeamsReq) Rel(link RelName, resp *ReposListTeamsResponse) bool
 /*
 ReposListTeamsResponseBody is a response body for ReposListTeams
 
-https://developer.github.com/v3/repos/#list-teams
+https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ReposListTeamsResponseBody []struct {
 	components.Team
@@ -15668,7 +15868,7 @@ type ReposListTeamsResponseBody []struct {
 /*
 ReposListTeamsResponse is a response for ReposListTeams
 
-https://developer.github.com/v3/repos/#list-teams
+https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ReposListTeamsResponse struct {
 	response
@@ -15677,13 +15877,155 @@ type ReposListTeamsResponse struct {
 }
 
 /*
+ReposListWebhooks performs requests for "repos/list-webhooks"
+
+List repository webhooks.
+
+  GET /repos/{owner}/{repo}/hooks
+
+https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
+*/
+func ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...RequestOption) (*ReposListWebhooksResponse, error) {
+	if req == nil {
+		req = new(ReposListWebhooksReq)
+	}
+	resp := &ReposListWebhooksResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposListWebhooksResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposListWebhooks performs requests for "repos/list-webhooks"
+
+List repository webhooks.
+
+  GET /repos/{owner}/{repo}/hooks
+
+https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
+*/
+func (c Client) ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...RequestOption) (*ReposListWebhooksResponse, error) {
+	return ReposListWebhooks(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposListWebhooksReq is request data for Client.ReposListWebhooks
+
+https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
+*/
+type ReposListWebhooksReq struct {
+	_url  string
+	Owner string
+	Repo  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *ReposListWebhooksReq) url() string {
+	return r._url
+}
+
+func (r *ReposListWebhooksReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks", r.Owner, r.Repo)
+}
+
+func (r *ReposListWebhooksReq) method() string {
+	return "GET"
+}
+
+func (r *ReposListWebhooksReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *ReposListWebhooksReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposListWebhooksReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposListWebhooksReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposListWebhooksReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposListWebhooksReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposListWebhooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposListWebhooksReq) Rel(link RelName, resp *ReposListWebhooksResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposListWebhooksResponseBody is a response body for ReposListWebhooks
+
+https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
+*/
+type ReposListWebhooksResponseBody []struct {
+	components.Hook
+}
+
+/*
+ReposListWebhooksResponse is a response for ReposListWebhooks
+
+https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
+*/
+type ReposListWebhooksResponse struct {
+	response
+	request *ReposListWebhooksReq
+	Data    *ReposListWebhooksResponseBody
+}
+
+/*
 ReposMerge performs requests for "repos/merge"
 
-Perform a merge.
+Merge a branch.
 
   POST /repos/{owner}/{repo}/merges
 
-https://developer.github.com/v3/repos/merging/#perform-a-merge
+https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (*ReposMergeResponse, error) {
 	if req == nil {
@@ -15708,11 +16050,11 @@ func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (
 /*
 ReposMerge performs requests for "repos/merge"
 
-Perform a merge.
+Merge a branch.
 
   POST /repos/{owner}/{repo}/merges
 
-https://developer.github.com/v3/repos/merging/#perform-a-merge
+https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 func (c Client) ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (*ReposMergeResponse, error) {
 	return ReposMerge(ctx, req, append(c, opt...)...)
@@ -15721,7 +16063,7 @@ func (c Client) ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...Reque
 /*
 ReposMergeReq is request data for Client.ReposMerge
 
-https://developer.github.com/v3/repos/merging/#perform-a-merge
+https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeReq struct {
 	_url        string
@@ -15790,7 +16132,7 @@ func (r *ReposMergeReq) Rel(link RelName, resp *ReposMergeResponse) bool {
 /*
 ReposMergeReqBody is a request body for repos/merge
 
-https://developer.github.com/v3/repos/merging/#perform-a-merge
+https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeReqBody struct {
 
@@ -15810,7 +16152,7 @@ type ReposMergeReqBody struct {
 /*
 ReposMergeResponseBody is a response body for ReposMerge
 
-https://developer.github.com/v3/repos/merging/#perform-a-merge
+https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeResponseBody struct {
 	components.SimpleCommit2
@@ -15819,7 +16161,7 @@ type ReposMergeResponseBody struct {
 /*
 ReposMergeResponse is a response for ReposMerge
 
-https://developer.github.com/v3/repos/merging/#perform-a-merge
+https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeResponse struct {
 	response
@@ -15828,19 +16170,19 @@ type ReposMergeResponse struct {
 }
 
 /*
-ReposPingHook performs requests for "repos/ping-hook"
+ReposPingWebhook performs requests for "repos/ping-webhook"
 
-Ping a hook.
+Ping a repository webhook.
 
   POST /repos/{owner}/{repo}/hooks/{hook_id}/pings
 
-https://developer.github.com/v3/repos/hooks/#ping-a-hook
+https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
-func ReposPingHook(ctx context.Context, req *ReposPingHookReq, opt ...RequestOption) (*ReposPingHookResponse, error) {
+func ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...RequestOption) (*ReposPingWebhookResponse, error) {
 	if req == nil {
-		req = new(ReposPingHookReq)
+		req = new(ReposPingWebhookReq)
 	}
-	resp := &ReposPingHookResponse{request: req}
+	resp := &ReposPingWebhookResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -15856,71 +16198,71 @@ func ReposPingHook(ctx context.Context, req *ReposPingHookReq, opt ...RequestOpt
 }
 
 /*
-ReposPingHook performs requests for "repos/ping-hook"
+ReposPingWebhook performs requests for "repos/ping-webhook"
 
-Ping a hook.
+Ping a repository webhook.
 
   POST /repos/{owner}/{repo}/hooks/{hook_id}/pings
 
-https://developer.github.com/v3/repos/hooks/#ping-a-hook
+https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
-func (c Client) ReposPingHook(ctx context.Context, req *ReposPingHookReq, opt ...RequestOption) (*ReposPingHookResponse, error) {
-	return ReposPingHook(ctx, req, append(c, opt...)...)
+func (c Client) ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...RequestOption) (*ReposPingWebhookResponse, error) {
+	return ReposPingWebhook(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposPingHookReq is request data for Client.ReposPingHook
+ReposPingWebhookReq is request data for Client.ReposPingWebhook
 
-https://developer.github.com/v3/repos/hooks/#ping-a-hook
+https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
-type ReposPingHookReq struct {
+type ReposPingWebhookReq struct {
 	_url   string
 	Owner  string
 	Repo   string
 	HookId int64
 }
 
-func (r *ReposPingHookReq) url() string {
+func (r *ReposPingWebhookReq) url() string {
 	return r._url
 }
 
-func (r *ReposPingHookReq) urlPath() string {
+func (r *ReposPingWebhookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v/pings", r.Owner, r.Repo, r.HookId)
 }
 
-func (r *ReposPingHookReq) method() string {
+func (r *ReposPingWebhookReq) method() string {
 	return "POST"
 }
 
-func (r *ReposPingHookReq) urlQuery() url.Values {
+func (r *ReposPingWebhookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposPingHookReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposPingWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposPingHookReq) body() interface{} {
+func (r *ReposPingWebhookReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposPingHookReq) dataStatuses() []int {
+func (r *ReposPingWebhookReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *ReposPingHookReq) validStatuses() []int {
+func (r *ReposPingWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposPingHookReq) endpointAttributes() []endpointAttribute {
+func (r *ReposPingWebhookReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposPingWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -15928,7 +16270,7 @@ func (r *ReposPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposPingHookReq) Rel(link RelName, resp *ReposPingHookResponse) bool {
+func (r *ReposPingWebhookReq) Rel(link RelName, resp *ReposPingWebhookResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -15938,29 +16280,29 @@ func (r *ReposPingHookReq) Rel(link RelName, resp *ReposPingHookResponse) bool {
 }
 
 /*
-ReposPingHookResponse is a response for ReposPingHook
+ReposPingWebhookResponse is a response for ReposPingWebhook
 
-https://developer.github.com/v3/repos/hooks/#ping-a-hook
+https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
-type ReposPingHookResponse struct {
+type ReposPingWebhookResponse struct {
 	response
-	request *ReposPingHookReq
+	request *ReposPingWebhookReq
 }
 
 /*
-ReposRemoveBranchProtection performs requests for "repos/remove-branch-protection"
+ReposRemoveAppAccessRestrictions performs requests for "repos/remove-app-access-restrictions"
 
-Remove branch protection.
+Remove app access restrictions.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
 
-https://developer.github.com/v3/repos/branches/#remove-branch-protection
+https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-func ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProtectionReq, opt ...RequestOption) (*ReposRemoveBranchProtectionResponse, error) {
+func ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAccessRestrictionsReq, opt ...RequestOption) (*ReposRemoveAppAccessRestrictionsResponse, error) {
 	if req == nil {
-		req = new(ReposRemoveBranchProtectionReq)
+		req = new(ReposRemoveAppAccessRestrictionsReq)
 	}
-	resp := &ReposRemoveBranchProtectionResponse{request: req}
+	resp := &ReposRemoveAppAccessRestrictionsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -15968,7 +16310,8 @@ func ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProt
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ReposRemoveAppAccessRestrictionsResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15976,71 +16319,72 @@ func ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProt
 }
 
 /*
-ReposRemoveBranchProtection performs requests for "repos/remove-branch-protection"
+ReposRemoveAppAccessRestrictions performs requests for "repos/remove-app-access-restrictions"
 
-Remove branch protection.
+Remove app access restrictions.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
 
-https://developer.github.com/v3/repos/branches/#remove-branch-protection
+https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-func (c Client) ReposRemoveBranchProtection(ctx context.Context, req *ReposRemoveBranchProtectionReq, opt ...RequestOption) (*ReposRemoveBranchProtectionResponse, error) {
-	return ReposRemoveBranchProtection(ctx, req, append(c, opt...)...)
+func (c Client) ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAccessRestrictionsReq, opt ...RequestOption) (*ReposRemoveAppAccessRestrictionsResponse, error) {
+	return ReposRemoveAppAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRemoveBranchProtectionReq is request data for Client.ReposRemoveBranchProtection
+ReposRemoveAppAccessRestrictionsReq is request data for Client.ReposRemoveAppAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-branch-protection
+https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-type ReposRemoveBranchProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
+type ReposRemoveAppAccessRestrictionsReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposRemoveAppAccessRestrictionsReqBody
 }
 
-func (r *ReposRemoveBranchProtectionReq) url() string {
+func (r *ReposRemoveAppAccessRestrictionsReq) url() string {
 	return r._url
 }
 
-func (r *ReposRemoveBranchProtectionReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection", r.Owner, r.Repo, r.Branch)
+func (r *ReposRemoveAppAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposRemoveBranchProtectionReq) method() string {
+func (r *ReposRemoveAppAccessRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r *ReposRemoveBranchProtectionReq) urlQuery() url.Values {
+func (r *ReposRemoveAppAccessRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRemoveBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposRemoveAppAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRemoveBranchProtectionReq) body() interface{} {
-	return nil
+func (r *ReposRemoveAppAccessRestrictionsReq) body() interface{} {
+	return r.RequestBody
 }
 
-func (r *ReposRemoveBranchProtectionReq) dataStatuses() []int {
-	return []int{}
+func (r *ReposRemoveAppAccessRestrictionsReq) dataStatuses() []int {
+	return []int{200}
 }
 
-func (r *ReposRemoveBranchProtectionReq) validStatuses() []int {
-	return []int{204}
+func (r *ReposRemoveAppAccessRestrictionsReq) validStatuses() []int {
+	return []int{200}
 }
 
-func (r *ReposRemoveBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+func (r *ReposRemoveAppAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRemoveBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposRemoveAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -16048,7 +16392,7 @@ func (r *ReposRemoveBranchProtectionReq) HTTPRequest(ctx context.Context, opt ..
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveBranchProtectionReq) Rel(link RelName, resp *ReposRemoveBranchProtectionResponse) bool {
+func (r *ReposRemoveAppAccessRestrictionsReq) Rel(link RelName, resp *ReposRemoveAppAccessRestrictionsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -16058,23 +16402,40 @@ func (r *ReposRemoveBranchProtectionReq) Rel(link RelName, resp *ReposRemoveBran
 }
 
 /*
-ReposRemoveBranchProtectionResponse is a response for ReposRemoveBranchProtection
+ReposRemoveAppAccessRestrictionsReqBody is a request body for repos/remove-app-access-restrictions
 
-https://developer.github.com/v3/repos/branches/#remove-branch-protection
+https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-type ReposRemoveBranchProtectionResponse struct {
+type ReposRemoveAppAccessRestrictionsReqBody []string
+
+/*
+ReposRemoveAppAccessRestrictionsResponseBody is a response body for ReposRemoveAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
+*/
+type ReposRemoveAppAccessRestrictionsResponseBody []struct {
+	components.Integration
+}
+
+/*
+ReposRemoveAppAccessRestrictionsResponse is a response for ReposRemoveAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
+*/
+type ReposRemoveAppAccessRestrictionsResponse struct {
 	response
-	request *ReposRemoveBranchProtectionReq
+	request *ReposRemoveAppAccessRestrictionsReq
+	Data    *ReposRemoveAppAccessRestrictionsResponseBody
 }
 
 /*
 ReposRemoveCollaborator performs requests for "repos/remove-collaborator"
 
-Remove user as a collaborator.
+Remove a repository collaborator.
 
   DELETE /repos/{owner}/{repo}/collaborators/{username}
 
-https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 func ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorReq, opt ...RequestOption) (*ReposRemoveCollaboratorResponse, error) {
 	if req == nil {
@@ -16098,11 +16459,11 @@ func ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorRe
 /*
 ReposRemoveCollaborator performs requests for "repos/remove-collaborator"
 
-Remove user as a collaborator.
+Remove a repository collaborator.
 
   DELETE /repos/{owner}/{repo}/collaborators/{username}
 
-https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 func (c Client) ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorReq, opt ...RequestOption) (*ReposRemoveCollaboratorResponse, error) {
 	return ReposRemoveCollaborator(ctx, req, append(c, opt...)...)
@@ -16111,7 +16472,7 @@ func (c Client) ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCol
 /*
 ReposRemoveCollaboratorReq is request data for Client.ReposRemoveCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 type ReposRemoveCollaboratorReq struct {
 	_url     string
@@ -16180,7 +16541,7 @@ func (r *ReposRemoveCollaboratorReq) Rel(link RelName, resp *ReposRemoveCollabor
 /*
 ReposRemoveCollaboratorResponse is a response for ReposRemoveCollaborator
 
-https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
+https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 type ReposRemoveCollaboratorResponse struct {
 	response
@@ -16188,19 +16549,19 @@ type ReposRemoveCollaboratorResponse struct {
 }
 
 /*
-ReposRemoveDeployKey performs requests for "repos/remove-deploy-key"
+ReposRemoveStatusCheckContexts performs requests for "repos/remove-status-check-contexts"
 
-Remove a deploy key.
+Remove status check contexts.
 
-  DELETE /repos/{owner}/{repo}/keys/{key_id}
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
 
-https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
+https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-func ReposRemoveDeployKey(ctx context.Context, req *ReposRemoveDeployKeyReq, opt ...RequestOption) (*ReposRemoveDeployKeyResponse, error) {
+func ReposRemoveStatusCheckContexts(ctx context.Context, req *ReposRemoveStatusCheckContextsReq, opt ...RequestOption) (*ReposRemoveStatusCheckContextsResponse, error) {
 	if req == nil {
-		req = new(ReposRemoveDeployKeyReq)
+		req = new(ReposRemoveStatusCheckContextsReq)
 	}
-	resp := &ReposRemoveDeployKeyResponse{request: req}
+	resp := &ReposRemoveStatusCheckContextsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -16208,247 +16569,7 @@ func ReposRemoveDeployKey(ctx context.Context, req *ReposRemoveDeployKeyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposRemoveDeployKey performs requests for "repos/remove-deploy-key"
-
-Remove a deploy key.
-
-  DELETE /repos/{owner}/{repo}/keys/{key_id}
-
-https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
-*/
-func (c Client) ReposRemoveDeployKey(ctx context.Context, req *ReposRemoveDeployKeyReq, opt ...RequestOption) (*ReposRemoveDeployKeyResponse, error) {
-	return ReposRemoveDeployKey(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposRemoveDeployKeyReq is request data for Client.ReposRemoveDeployKey
-
-https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
-*/
-type ReposRemoveDeployKeyReq struct {
-	_url  string
-	Owner string
-	Repo  string
-	KeyId int64
-}
-
-func (r *ReposRemoveDeployKeyReq) url() string {
-	return r._url
-}
-
-func (r *ReposRemoveDeployKeyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId)
-}
-
-func (r *ReposRemoveDeployKeyReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposRemoveDeployKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposRemoveDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposRemoveDeployKeyReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposRemoveDeployKeyReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveDeployKeyReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *ReposRemoveDeployKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposRemoveDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposRemoveDeployKeyReq) Rel(link RelName, resp *ReposRemoveDeployKeyResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposRemoveDeployKeyResponse is a response for ReposRemoveDeployKey
-
-https://developer.github.com/v3/repos/keys/#remove-a-deploy-key
-*/
-type ReposRemoveDeployKeyResponse struct {
-	response
-	request *ReposRemoveDeployKeyReq
-}
-
-/*
-ReposRemoveProtectedBranchAdminEnforcement performs requests for "repos/remove-protected-branch-admin-enforcement"
-
-Remove admin enforcement of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
-*/
-func ReposRemoveProtectedBranchAdminEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAdminEnforcementResponse, error) {
-	if req == nil {
-		req = new(ReposRemoveProtectedBranchAdminEnforcementReq)
-	}
-	resp := &ReposRemoveProtectedBranchAdminEnforcementResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposRemoveProtectedBranchAdminEnforcement performs requests for "repos/remove-protected-branch-admin-enforcement"
-
-Remove admin enforcement of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-
-https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
-*/
-func (c Client) ReposRemoveProtectedBranchAdminEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchAdminEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAdminEnforcementResponse, error) {
-	return ReposRemoveProtectedBranchAdminEnforcement(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposRemoveProtectedBranchAdminEnforcementReq is request data for Client.ReposRemoveProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAdminEnforcementReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) url() string {
-	return r._url
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) validStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposRemoveProtectedBranchAdminEnforcementReq) Rel(link RelName, resp *ReposRemoveProtectedBranchAdminEnforcementResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposRemoveProtectedBranchAdminEnforcementResponse is a response for ReposRemoveProtectedBranchAdminEnforcement
-
-https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAdminEnforcementResponse struct {
-	response
-	request *ReposRemoveProtectedBranchAdminEnforcementReq
-}
-
-/*
-ReposRemoveProtectedBranchAppRestrictions performs requests for "repos/remove-protected-branch-app-restrictions"
-
-Remove app restrictions of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-func ReposRemoveProtectedBranchAppRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAppRestrictionsResponse, error) {
-	if req == nil {
-		req = new(ReposRemoveProtectedBranchAppRestrictionsReq)
-	}
-	resp := &ReposRemoveProtectedBranchAppRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposRemoveProtectedBranchAppRestrictionsResponseBody)
+	resp.Data = new(ReposRemoveStatusCheckContextsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -16457,586 +16578,72 @@ func ReposRemoveProtectedBranchAppRestrictions(ctx context.Context, req *ReposRe
 }
 
 /*
-ReposRemoveProtectedBranchAppRestrictions performs requests for "repos/remove-protected-branch-app-restrictions"
+ReposRemoveStatusCheckContexts performs requests for "repos/remove-status-check-contexts"
 
-Remove app restrictions of protected branch.
+Remove status check contexts.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
 
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-func (c Client) ReposRemoveProtectedBranchAppRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchAppRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchAppRestrictions(ctx, req, append(c, opt...)...)
+func (c Client) ReposRemoveStatusCheckContexts(ctx context.Context, req *ReposRemoveStatusCheckContextsReq, opt ...RequestOption) (*ReposRemoveStatusCheckContextsResponse, error) {
+	return ReposRemoveStatusCheckContexts(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRemoveProtectedBranchAppRestrictionsReq is request data for Client.ReposRemoveProtectedBranchAppRestrictions
+ReposRemoveStatusCheckContextsReq is request data for Client.ReposRemoveStatusCheckContexts
 
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-type ReposRemoveProtectedBranchAppRestrictionsReq struct {
+type ReposRemoveStatusCheckContextsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposRemoveProtectedBranchAppRestrictionsReqBody
+	RequestBody ReposRemoveStatusCheckContextsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) url() string {
+func (r *ReposRemoveStatusCheckContextsReq) url() string {
 	return r._url
 }
 
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposRemoveProtectedBranchAppRestrictionsReq) Rel(link RelName, resp *ReposRemoveProtectedBranchAppRestrictionsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposRemoveProtectedBranchAppRestrictionsReqBody is a request body for repos/remove-protected-branch-app-restrictions
-
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAppRestrictionsReqBody []string
-
-/*
-ReposRemoveProtectedBranchAppRestrictionsResponseBody is a response body for ReposRemoveProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAppRestrictionsResponseBody []struct {
-	components.Integration2
-}
-
-/*
-ReposRemoveProtectedBranchAppRestrictionsResponse is a response for ReposRemoveProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#remove-app-restrictions-of-protected-branch
-*/
-type ReposRemoveProtectedBranchAppRestrictionsResponse struct {
-	response
-	request *ReposRemoveProtectedBranchAppRestrictionsReq
-	Data    *ReposRemoveProtectedBranchAppRestrictionsResponseBody
-}
-
-/*
-ReposRemoveProtectedBranchPullRequestReviewEnforcement performs requests for "repos/remove-protected-branch-pull-request-review-enforcement"
-
-Remove pull request review enforcement of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
-
-https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
-*/
-func ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	if req == nil {
-		req = new(ReposRemoveProtectedBranchPullRequestReviewEnforcementReq)
-	}
-	resp := &ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposRemoveProtectedBranchPullRequestReviewEnforcement performs requests for "repos/remove-protected-branch-pull-request-review-enforcement"
-
-Remove pull request review enforcement of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
-
-https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
-*/
-func (c Client) ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	return ReposRemoveProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposRemoveProtectedBranchPullRequestReviewEnforcementReq is request data for Client.ReposRemoveProtectedBranchPullRequestReviewEnforcement
-
-https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
-*/
-type ReposRemoveProtectedBranchPullRequestReviewEnforcementReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) url() string {
-	return r._url
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) validStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq) Rel(link RelName, resp *ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse is a response for ReposRemoveProtectedBranchPullRequestReviewEnforcement
-
-https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch
-*/
-type ReposRemoveProtectedBranchPullRequestReviewEnforcementResponse struct {
-	response
-	request *ReposRemoveProtectedBranchPullRequestReviewEnforcementReq
-}
-
-/*
-ReposRemoveProtectedBranchRequiredSignatures performs requests for "repos/remove-protected-branch-required-signatures"
-
-Remove required signatures of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
-*/
-func ReposRemoveProtectedBranchRequiredSignatures(ctx context.Context, req *ReposRemoveProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredSignaturesResponse, error) {
-	if req == nil {
-		req = new(ReposRemoveProtectedBranchRequiredSignaturesReq)
-	}
-	resp := &ReposRemoveProtectedBranchRequiredSignaturesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposRemoveProtectedBranchRequiredSignatures performs requests for "repos/remove-protected-branch-required-signatures"
-
-Remove required signatures of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures
-
-https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
-*/
-func (c Client) ReposRemoveProtectedBranchRequiredSignatures(ctx context.Context, req *ReposRemoveProtectedBranchRequiredSignaturesReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredSignaturesResponse, error) {
-	return ReposRemoveProtectedBranchRequiredSignatures(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposRemoveProtectedBranchRequiredSignaturesReq is request data for Client.ReposRemoveProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredSignaturesReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-
-	/*
-	Protected Branches API can now manage a setting for requiring signed commits.
-	This feature is currently available for developers to preview. See the [blog
-	post](https://developer.github.com/changes/2018-02-22-protected-branches-required-signatures)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	ZzzaxPreview bool
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) url() string {
-	return r._url
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_signatures", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
-	if requiredPreviews {
-		previewVals["zzzax"] = true
-	}
-	if allPreviews {
-		previewVals["zzzax"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) validStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposRemoveProtectedBranchRequiredSignaturesReq) Rel(link RelName, resp *ReposRemoveProtectedBranchRequiredSignaturesResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposRemoveProtectedBranchRequiredSignaturesResponse is a response for ReposRemoveProtectedBranchRequiredSignatures
-
-https://developer.github.com/v3/repos/branches/#remove-required-signatures-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredSignaturesResponse struct {
-	response
-	request *ReposRemoveProtectedBranchRequiredSignaturesReq
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecks performs requests for "repos/remove-protected-branch-required-status-checks"
-
-Remove required status checks of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
-*/
-func ReposRemoveProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksResponse, error) {
-	if req == nil {
-		req = new(ReposRemoveProtectedBranchRequiredStatusChecksReq)
-	}
-	resp := &ReposRemoveProtectedBranchRequiredStatusChecksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecks performs requests for "repos/remove-protected-branch-required-status-checks"
-
-Remove required status checks of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
-*/
-func (c Client) ReposRemoveProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksResponse, error) {
-	return ReposRemoveProtectedBranchRequiredStatusChecks(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksReq is request data for Client.ReposRemoveProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredStatusChecksReq struct {
-	_url   string
-	Owner  string
-	Repo   string
-	Branch string
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) url() string {
-	return r._url
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) body() interface{} {
-	return nil
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) validStatuses() []int {
-	return []int{}
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksReq) Rel(link RelName, resp *ReposRemoveProtectedBranchRequiredStatusChecksResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksResponse is a response for ReposRemoveProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredStatusChecksResponse struct {
-	response
-	request *ReposRemoveProtectedBranchRequiredStatusChecksReq
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksContexts performs requests for "repos/remove-protected-branch-required-status-checks-contexts"
-
-Remove required status checks contexts of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
-*/
-func ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	if req == nil {
-		req = new(ReposRemoveProtectedBranchRequiredStatusChecksContextsReq)
-	}
-	resp := &ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksContexts performs requests for "repos/remove-protected-branch-required-status-checks-contexts"
-
-Remove required status checks contexts of protected branch.
-
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
-*/
-func (c Client) ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposRemoveProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsReq is request data for Client.ReposRemoveProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
-*/
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) url() string {
-	return r._url
-}
-
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
+func (r *ReposRemoveStatusCheckContextsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) method() string {
+func (r *ReposRemoveStatusCheckContextsReq) method() string {
 	return "DELETE"
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
+func (r *ReposRemoveStatusCheckContextsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposRemoveStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
+func (r *ReposRemoveStatusCheckContextsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) dataStatuses() []int {
+func (r *ReposRemoveStatusCheckContextsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) validStatuses() []int {
+func (r *ReposRemoveStatusCheckContextsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposRemoveStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposRemoveStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -17044,7 +16651,7 @@ func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelName, resp *ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse) bool {
+func (r *ReposRemoveStatusCheckContextsReq) Rel(link RelName, resp *ReposRemoveStatusCheckContextsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -17054,44 +16661,44 @@ func (r *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq) Rel(link Rel
 }
 
 /*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/remove-protected-branch-required-status-checks-contexts
+ReposRemoveStatusCheckContextsReqBody is a request body for repos/remove-status-check-contexts
 
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsReqBody []string
+type ReposRemoveStatusCheckContextsReqBody []string
 
 /*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody is a response body for ReposRemoveProtectedBranchRequiredStatusChecksContexts
+ReposRemoveStatusCheckContextsResponseBody is a response body for ReposRemoveStatusCheckContexts
 
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody []string
+type ReposRemoveStatusCheckContextsResponseBody []string
 
 /*
-ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse is a response for ReposRemoveProtectedBranchRequiredStatusChecksContexts
+ReposRemoveStatusCheckContextsResponse is a response for ReposRemoveStatusCheckContexts
 
-https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-type ReposRemoveProtectedBranchRequiredStatusChecksContextsResponse struct {
+type ReposRemoveStatusCheckContextsResponse struct {
 	response
-	request *ReposRemoveProtectedBranchRequiredStatusChecksContextsReq
-	Data    *ReposRemoveProtectedBranchRequiredStatusChecksContextsResponseBody
+	request *ReposRemoveStatusCheckContextsReq
+	Data    *ReposRemoveStatusCheckContextsResponseBody
 }
 
 /*
-ReposRemoveProtectedBranchRestrictions performs requests for "repos/remove-protected-branch-restrictions"
+ReposRemoveStatusCheckProtection performs requests for "repos/remove-status-check-protection"
 
-Remove restrictions of protected branch.
+Remove status check protection.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
 
-https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
-func ReposRemoveProtectedBranchRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRestrictionsResponse, error) {
+func ReposRemoveStatusCheckProtection(ctx context.Context, req *ReposRemoveStatusCheckProtectionReq, opt ...RequestOption) (*ReposRemoveStatusCheckProtectionResponse, error) {
 	if req == nil {
-		req = new(ReposRemoveProtectedBranchRestrictionsReq)
+		req = new(ReposRemoveStatusCheckProtectionReq)
 	}
-	resp := &ReposRemoveProtectedBranchRestrictionsResponse{request: req}
+	resp := &ReposRemoveStatusCheckProtectionResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -17107,71 +16714,71 @@ func ReposRemoveProtectedBranchRestrictions(ctx context.Context, req *ReposRemov
 }
 
 /*
-ReposRemoveProtectedBranchRestrictions performs requests for "repos/remove-protected-branch-restrictions"
+ReposRemoveStatusCheckProtection performs requests for "repos/remove-status-check-protection"
 
-Remove restrictions of protected branch.
+Remove status check protection.
 
-  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions
+  DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
 
-https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
-func (c Client) ReposRemoveProtectedBranchRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchRestrictions(ctx, req, append(c, opt...)...)
+func (c Client) ReposRemoveStatusCheckProtection(ctx context.Context, req *ReposRemoveStatusCheckProtectionReq, opt ...RequestOption) (*ReposRemoveStatusCheckProtectionResponse, error) {
+	return ReposRemoveStatusCheckProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRemoveProtectedBranchRestrictionsReq is request data for Client.ReposRemoveProtectedBranchRestrictions
+ReposRemoveStatusCheckProtectionReq is request data for Client.ReposRemoveStatusCheckProtection
 
-https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
-type ReposRemoveProtectedBranchRestrictionsReq struct {
+type ReposRemoveStatusCheckProtectionReq struct {
 	_url   string
 	Owner  string
 	Repo   string
 	Branch string
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) url() string {
+func (r *ReposRemoveStatusCheckProtectionReq) url() string {
 	return r._url
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch)
+func (r *ReposRemoveStatusCheckProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) method() string {
+func (r *ReposRemoveStatusCheckProtectionReq) method() string {
 	return "DELETE"
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveStatusCheckProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposRemoveStatusCheckProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) body() interface{} {
+func (r *ReposRemoveStatusCheckProtectionReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) dataStatuses() []int {
+func (r *ReposRemoveStatusCheckProtectionReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) validStatuses() []int {
+func (r *ReposRemoveStatusCheckProtectionReq) validStatuses() []int {
 	return []int{}
 }
 
-func (r *ReposRemoveProtectedBranchRestrictionsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposRemoveStatusCheckProtectionReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposRemoveStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -17179,7 +16786,7 @@ func (r *ReposRemoveProtectedBranchRestrictionsReq) HTTPRequest(ctx context.Cont
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveProtectedBranchRestrictionsReq) Rel(link RelName, resp *ReposRemoveProtectedBranchRestrictionsResponse) bool {
+func (r *ReposRemoveStatusCheckProtectionReq) Rel(link RelName, resp *ReposRemoveStatusCheckProtectionResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -17189,29 +16796,29 @@ func (r *ReposRemoveProtectedBranchRestrictionsReq) Rel(link RelName, resp *Repo
 }
 
 /*
-ReposRemoveProtectedBranchRestrictionsResponse is a response for ReposRemoveProtectedBranchRestrictions
+ReposRemoveStatusCheckProtectionResponse is a response for ReposRemoveStatusCheckProtection
 
-https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
-type ReposRemoveProtectedBranchRestrictionsResponse struct {
+type ReposRemoveStatusCheckProtectionResponse struct {
 	response
-	request *ReposRemoveProtectedBranchRestrictionsReq
+	request *ReposRemoveStatusCheckProtectionReq
 }
 
 /*
-ReposRemoveProtectedBranchTeamRestrictions performs requests for "repos/remove-protected-branch-team-restrictions"
+ReposRemoveTeamAccessRestrictions performs requests for "repos/remove-team-access-restrictions"
 
-Remove team restrictions of protected branch.
+Remove team access restrictions.
 
   DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-func ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchTeamRestrictionsResponse, error) {
+func ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeamAccessRestrictionsReq, opt ...RequestOption) (*ReposRemoveTeamAccessRestrictionsResponse, error) {
 	if req == nil {
-		req = new(ReposRemoveProtectedBranchTeamRestrictionsReq)
+		req = new(ReposRemoveTeamAccessRestrictionsReq)
 	}
-	resp := &ReposRemoveProtectedBranchTeamRestrictionsResponse{request: req}
+	resp := &ReposRemoveTeamAccessRestrictionsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -17219,7 +16826,7 @@ func ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposR
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposRemoveProtectedBranchTeamRestrictionsResponseBody)
+	resp.Data = new(ReposRemoveTeamAccessRestrictionsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -17228,72 +16835,72 @@ func ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposR
 }
 
 /*
-ReposRemoveProtectedBranchTeamRestrictions performs requests for "repos/remove-protected-branch-team-restrictions"
+ReposRemoveTeamAccessRestrictions performs requests for "repos/remove-team-access-restrictions"
 
-Remove team restrictions of protected branch.
+Remove team access restrictions.
 
   DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-func (c Client) ReposRemoveProtectedBranchTeamRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchTeamRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchTeamRestrictions(ctx, req, append(c, opt...)...)
+func (c Client) ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeamAccessRestrictionsReq, opt ...RequestOption) (*ReposRemoveTeamAccessRestrictionsResponse, error) {
+	return ReposRemoveTeamAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRemoveProtectedBranchTeamRestrictionsReq is request data for Client.ReposRemoveProtectedBranchTeamRestrictions
+ReposRemoveTeamAccessRestrictionsReq is request data for Client.ReposRemoveTeamAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-type ReposRemoveProtectedBranchTeamRestrictionsReq struct {
+type ReposRemoveTeamAccessRestrictionsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposRemoveProtectedBranchTeamRestrictionsReqBody
+	RequestBody ReposRemoveTeamAccessRestrictionsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) url() string {
+func (r *ReposRemoveTeamAccessRestrictionsReq) url() string {
 	return r._url
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) urlPath() string {
+func (r *ReposRemoveTeamAccessRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) method() string {
+func (r *ReposRemoveTeamAccessRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveTeamAccessRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposRemoveTeamAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) body() interface{} {
+func (r *ReposRemoveTeamAccessRestrictionsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) dataStatuses() []int {
+func (r *ReposRemoveTeamAccessRestrictionsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) validStatuses() []int {
+func (r *ReposRemoveTeamAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposRemoveTeamAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposRemoveTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -17301,7 +16908,7 @@ func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *ReposRemoveProtectedBranchTeamRestrictionsResponse) bool {
+func (r *ReposRemoveTeamAccessRestrictionsReq) Rel(link RelName, resp *ReposRemoveTeamAccessRestrictionsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -17311,46 +16918,46 @@ func (r *ReposRemoveProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *
 }
 
 /*
-ReposRemoveProtectedBranchTeamRestrictionsReqBody is a request body for repos/remove-protected-branch-team-restrictions
+ReposRemoveTeamAccessRestrictionsReqBody is a request body for repos/remove-team-access-restrictions
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-type ReposRemoveProtectedBranchTeamRestrictionsReqBody []string
+type ReposRemoveTeamAccessRestrictionsReqBody []string
 
 /*
-ReposRemoveProtectedBranchTeamRestrictionsResponseBody is a response body for ReposRemoveProtectedBranchTeamRestrictions
+ReposRemoveTeamAccessRestrictionsResponseBody is a response body for ReposRemoveTeamAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-type ReposRemoveProtectedBranchTeamRestrictionsResponseBody []struct {
+type ReposRemoveTeamAccessRestrictionsResponseBody []struct {
 	components.Team
 }
 
 /*
-ReposRemoveProtectedBranchTeamRestrictionsResponse is a response for ReposRemoveProtectedBranchTeamRestrictions
+ReposRemoveTeamAccessRestrictionsResponse is a response for ReposRemoveTeamAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-type ReposRemoveProtectedBranchTeamRestrictionsResponse struct {
+type ReposRemoveTeamAccessRestrictionsResponse struct {
 	response
-	request *ReposRemoveProtectedBranchTeamRestrictionsReq
-	Data    *ReposRemoveProtectedBranchTeamRestrictionsResponseBody
+	request *ReposRemoveTeamAccessRestrictionsReq
+	Data    *ReposRemoveTeamAccessRestrictionsResponseBody
 }
 
 /*
-ReposRemoveProtectedBranchUserRestrictions performs requests for "repos/remove-protected-branch-user-restrictions"
+ReposRemoveUserAccessRestrictions performs requests for "repos/remove-user-access-restrictions"
 
-Remove user restrictions of protected branch.
+Remove user access restrictions.
 
   DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
 
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-func ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchUserRestrictionsResponse, error) {
+func ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUserAccessRestrictionsReq, opt ...RequestOption) (*ReposRemoveUserAccessRestrictionsResponse, error) {
 	if req == nil {
-		req = new(ReposRemoveProtectedBranchUserRestrictionsReq)
+		req = new(ReposRemoveUserAccessRestrictionsReq)
 	}
-	resp := &ReposRemoveProtectedBranchUserRestrictionsResponse{request: req}
+	resp := &ReposRemoveUserAccessRestrictionsResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -17358,7 +16965,7 @@ func ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposR
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposRemoveProtectedBranchUserRestrictionsResponseBody)
+	resp.Data = new(ReposRemoveUserAccessRestrictionsResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -17367,72 +16974,72 @@ func ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposR
 }
 
 /*
-ReposRemoveProtectedBranchUserRestrictions performs requests for "repos/remove-protected-branch-user-restrictions"
+ReposRemoveUserAccessRestrictions performs requests for "repos/remove-user-access-restrictions"
 
-Remove user restrictions of protected branch.
+Remove user access restrictions.
 
   DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
 
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-func (c Client) ReposRemoveProtectedBranchUserRestrictions(ctx context.Context, req *ReposRemoveProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposRemoveProtectedBranchUserRestrictionsResponse, error) {
-	return ReposRemoveProtectedBranchUserRestrictions(ctx, req, append(c, opt...)...)
+func (c Client) ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUserAccessRestrictionsReq, opt ...RequestOption) (*ReposRemoveUserAccessRestrictionsResponse, error) {
+	return ReposRemoveUserAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRemoveProtectedBranchUserRestrictionsReq is request data for Client.ReposRemoveProtectedBranchUserRestrictions
+ReposRemoveUserAccessRestrictionsReq is request data for Client.ReposRemoveUserAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-type ReposRemoveProtectedBranchUserRestrictionsReq struct {
+type ReposRemoveUserAccessRestrictionsReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposRemoveProtectedBranchUserRestrictionsReqBody
+	RequestBody ReposRemoveUserAccessRestrictionsReqBody
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) url() string {
+func (r *ReposRemoveUserAccessRestrictionsReq) url() string {
 	return r._url
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) urlPath() string {
+func (r *ReposRemoveUserAccessRestrictionsReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) method() string {
+func (r *ReposRemoveUserAccessRestrictionsReq) method() string {
 	return "DELETE"
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
+func (r *ReposRemoveUserAccessRestrictionsReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposRemoveUserAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) body() interface{} {
+func (r *ReposRemoveUserAccessRestrictionsReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) dataStatuses() []int {
+func (r *ReposRemoveUserAccessRestrictionsReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) validStatuses() []int {
+func (r *ReposRemoveUserAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposRemoveUserAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposRemoveUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -17440,7 +17047,7 @@ func (r *ReposRemoveProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *ReposRemoveProtectedBranchUserRestrictionsResponse) bool {
+func (r *ReposRemoveUserAccessRestrictionsReq) Rel(link RelName, resp *ReposRemoveUserAccessRestrictionsResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -17450,30 +17057,30 @@ func (r *ReposRemoveProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *
 }
 
 /*
-ReposRemoveProtectedBranchUserRestrictionsReqBody is a request body for repos/remove-protected-branch-user-restrictions
+ReposRemoveUserAccessRestrictionsReqBody is a request body for repos/remove-user-access-restrictions
 
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-type ReposRemoveProtectedBranchUserRestrictionsReqBody []string
+type ReposRemoveUserAccessRestrictionsReqBody []string
 
 /*
-ReposRemoveProtectedBranchUserRestrictionsResponseBody is a response body for ReposRemoveProtectedBranchUserRestrictions
+ReposRemoveUserAccessRestrictionsResponseBody is a response body for ReposRemoveUserAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-type ReposRemoveProtectedBranchUserRestrictionsResponseBody []struct {
+type ReposRemoveUserAccessRestrictionsResponseBody []struct {
 	components.SimpleUser
 }
 
 /*
-ReposRemoveProtectedBranchUserRestrictionsResponse is a response for ReposRemoveProtectedBranchUserRestrictions
+ReposRemoveUserAccessRestrictionsResponse is a response for ReposRemoveUserAccessRestrictions
 
-https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch
+https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-type ReposRemoveProtectedBranchUserRestrictionsResponse struct {
+type ReposRemoveUserAccessRestrictionsResponse struct {
 	response
-	request *ReposRemoveProtectedBranchUserRestrictionsReq
-	Data    *ReposRemoveProtectedBranchUserRestrictionsResponseBody
+	request *ReposRemoveUserAccessRestrictionsReq
+	Data    *ReposRemoveUserAccessRestrictionsResponseBody
 }
 
 /*
@@ -17637,573 +17244,19 @@ type ReposReplaceAllTopicsResponse struct {
 }
 
 /*
-ReposReplaceProtectedBranchAppRestrictions performs requests for "repos/replace-protected-branch-app-restrictions"
+ReposRequestPagesBuild performs requests for "repos/request-pages-build"
 
-Replace app restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-func ReposReplaceProtectedBranchAppRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchAppRestrictionsResponse, error) {
-	if req == nil {
-		req = new(ReposReplaceProtectedBranchAppRestrictionsReq)
-	}
-	resp := &ReposReplaceProtectedBranchAppRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposReplaceProtectedBranchAppRestrictionsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposReplaceProtectedBranchAppRestrictions performs requests for "repos/replace-protected-branch-app-restrictions"
-
-Replace app restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-func (c Client) ReposReplaceProtectedBranchAppRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchAppRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchAppRestrictionsResponse, error) {
-	return ReposReplaceProtectedBranchAppRestrictions(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsReq is request data for Client.ReposReplaceProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchAppRestrictionsReqBody
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) url() string {
-	return r._url
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) method() string {
-	return "PUT"
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposReplaceProtectedBranchAppRestrictionsReq) Rel(link RelName, resp *ReposReplaceProtectedBranchAppRestrictionsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsReqBody is a request body for repos/replace-protected-branch-app-restrictions
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsReqBody []string
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsResponseBody is a response body for ReposReplaceProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsResponseBody []struct {
-	components.Integration2
-}
-
-/*
-ReposReplaceProtectedBranchAppRestrictionsResponse is a response for ReposReplaceProtectedBranchAppRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-app-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchAppRestrictionsResponse struct {
-	response
-	request *ReposReplaceProtectedBranchAppRestrictionsReq
-	Data    *ReposReplaceProtectedBranchAppRestrictionsResponseBody
-}
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContexts performs requests for "repos/replace-protected-branch-required-status-checks-contexts"
-
-Replace required status checks contexts of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-func ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	if req == nil {
-		req = new(ReposReplaceProtectedBranchRequiredStatusChecksContextsReq)
-	}
-	resp := &ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContexts performs requests for "repos/replace-protected-branch-required-status-checks-contexts"
-
-Replace required status checks contexts of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-func (c Client) ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx context.Context, req *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse, error) {
-	return ReposReplaceProtectedBranchRequiredStatusChecksContexts(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsReq is request data for Client.ReposReplaceProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) url() string {
-	return r._url
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) method() string {
-	return "PUT"
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq) Rel(link RelName, resp *ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody is a request body for repos/replace-protected-branch-required-status-checks-contexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsReqBody []string
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody is a response body for ReposReplaceProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody []string
-
-/*
-ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse is a response for ReposReplaceProtectedBranchRequiredStatusChecksContexts
-
-https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch
-*/
-type ReposReplaceProtectedBranchRequiredStatusChecksContextsResponse struct {
-	response
-	request *ReposReplaceProtectedBranchRequiredStatusChecksContextsReq
-	Data    *ReposReplaceProtectedBranchRequiredStatusChecksContextsResponseBody
-}
-
-/*
-ReposReplaceProtectedBranchTeamRestrictions performs requests for "repos/replace-protected-branch-team-restrictions"
-
-Replace team restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
-
-https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
-*/
-func ReposReplaceProtectedBranchTeamRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchTeamRestrictionsResponse, error) {
-	if req == nil {
-		req = new(ReposReplaceProtectedBranchTeamRestrictionsReq)
-	}
-	resp := &ReposReplaceProtectedBranchTeamRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposReplaceProtectedBranchTeamRestrictionsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposReplaceProtectedBranchTeamRestrictions performs requests for "repos/replace-protected-branch-team-restrictions"
-
-Replace team restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
-
-https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
-*/
-func (c Client) ReposReplaceProtectedBranchTeamRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchTeamRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchTeamRestrictionsResponse, error) {
-	return ReposReplaceProtectedBranchTeamRestrictions(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposReplaceProtectedBranchTeamRestrictionsReq is request data for Client.ReposReplaceProtectedBranchTeamRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchTeamRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchTeamRestrictionsReqBody
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) url() string {
-	return r._url
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) method() string {
-	return "PUT"
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposReplaceProtectedBranchTeamRestrictionsReq) Rel(link RelName, resp *ReposReplaceProtectedBranchTeamRestrictionsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposReplaceProtectedBranchTeamRestrictionsReqBody is a request body for repos/replace-protected-branch-team-restrictions
-
-https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchTeamRestrictionsReqBody []string
-
-/*
-ReposReplaceProtectedBranchTeamRestrictionsResponseBody is a response body for ReposReplaceProtectedBranchTeamRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchTeamRestrictionsResponseBody []struct {
-	components.Team
-}
-
-/*
-ReposReplaceProtectedBranchTeamRestrictionsResponse is a response for ReposReplaceProtectedBranchTeamRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchTeamRestrictionsResponse struct {
-	response
-	request *ReposReplaceProtectedBranchTeamRestrictionsReq
-	Data    *ReposReplaceProtectedBranchTeamRestrictionsResponseBody
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictions performs requests for "repos/replace-protected-branch-user-restrictions"
-
-Replace user restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-func ReposReplaceProtectedBranchUserRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchUserRestrictionsResponse, error) {
-	if req == nil {
-		req = new(ReposReplaceProtectedBranchUserRestrictionsReq)
-	}
-	resp := &ReposReplaceProtectedBranchUserRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposReplaceProtectedBranchUserRestrictionsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictions performs requests for "repos/replace-protected-branch-user-restrictions"
-
-Replace user restrictions of protected branch.
-
-  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-func (c Client) ReposReplaceProtectedBranchUserRestrictions(ctx context.Context, req *ReposReplaceProtectedBranchUserRestrictionsReq, opt ...RequestOption) (*ReposReplaceProtectedBranchUserRestrictionsResponse, error) {
-	return ReposReplaceProtectedBranchUserRestrictions(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsReq is request data for Client.ReposReplaceProtectedBranchUserRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposReplaceProtectedBranchUserRestrictionsReqBody
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) url() string {
-	return r._url
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) method() string {
-	return "PUT"
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposReplaceProtectedBranchUserRestrictionsReq) Rel(link RelName, resp *ReposReplaceProtectedBranchUserRestrictionsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsReqBody is a request body for repos/replace-protected-branch-user-restrictions
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsReqBody []string
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsResponseBody is a response body for ReposReplaceProtectedBranchUserRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsResponseBody []struct {
-	components.SimpleUser
-}
-
-/*
-ReposReplaceProtectedBranchUserRestrictionsResponse is a response for ReposReplaceProtectedBranchUserRestrictions
-
-https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch
-*/
-type ReposReplaceProtectedBranchUserRestrictionsResponse struct {
-	response
-	request *ReposReplaceProtectedBranchUserRestrictionsReq
-	Data    *ReposReplaceProtectedBranchUserRestrictionsResponseBody
-}
-
-/*
-ReposRequestPageBuild performs requests for "repos/request-page-build"
-
-Request a page build.
+Request a GitHub Pages build.
 
   POST /repos/{owner}/{repo}/pages/builds
 
-https://developer.github.com/v3/repos/pages/#request-a-page-build
+https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-func ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, opt ...RequestOption) (*ReposRequestPageBuildResponse, error) {
+func ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq, opt ...RequestOption) (*ReposRequestPagesBuildResponse, error) {
 	if req == nil {
-		req = new(ReposRequestPageBuildReq)
+		req = new(ReposRequestPagesBuildReq)
 	}
-	resp := &ReposRequestPageBuildResponse{request: req}
+	resp := &ReposRequestPagesBuildResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -18211,7 +17264,7 @@ func ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposRequestPageBuildResponseBody)
+	resp.Data = new(ReposRequestPagesBuildResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -18220,70 +17273,70 @@ func ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, o
 }
 
 /*
-ReposRequestPageBuild performs requests for "repos/request-page-build"
+ReposRequestPagesBuild performs requests for "repos/request-pages-build"
 
-Request a page build.
+Request a GitHub Pages build.
 
   POST /repos/{owner}/{repo}/pages/builds
 
-https://developer.github.com/v3/repos/pages/#request-a-page-build
+https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-func (c Client) ReposRequestPageBuild(ctx context.Context, req *ReposRequestPageBuildReq, opt ...RequestOption) (*ReposRequestPageBuildResponse, error) {
-	return ReposRequestPageBuild(ctx, req, append(c, opt...)...)
+func (c Client) ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq, opt ...RequestOption) (*ReposRequestPagesBuildResponse, error) {
+	return ReposRequestPagesBuild(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRequestPageBuildReq is request data for Client.ReposRequestPageBuild
+ReposRequestPagesBuildReq is request data for Client.ReposRequestPagesBuild
 
-https://developer.github.com/v3/repos/pages/#request-a-page-build
+https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-type ReposRequestPageBuildReq struct {
+type ReposRequestPagesBuildReq struct {
 	_url  string
 	Owner string
 	Repo  string
 }
 
-func (r *ReposRequestPageBuildReq) url() string {
+func (r *ReposRequestPagesBuildReq) url() string {
 	return r._url
 }
 
-func (r *ReposRequestPageBuildReq) urlPath() string {
+func (r *ReposRequestPagesBuildReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/pages/builds", r.Owner, r.Repo)
 }
 
-func (r *ReposRequestPageBuildReq) method() string {
+func (r *ReposRequestPagesBuildReq) method() string {
 	return "POST"
 }
 
-func (r *ReposRequestPageBuildReq) urlQuery() url.Values {
+func (r *ReposRequestPagesBuildReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRequestPageBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposRequestPagesBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRequestPageBuildReq) body() interface{} {
+func (r *ReposRequestPagesBuildReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposRequestPageBuildReq) dataStatuses() []int {
+func (r *ReposRequestPagesBuildReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRequestPageBuildReq) validStatuses() []int {
+func (r *ReposRequestPagesBuildReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRequestPageBuildReq) endpointAttributes() []endpointAttribute {
+func (r *ReposRequestPagesBuildReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposRequestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -18291,7 +17344,7 @@ func (r *ReposRequestPageBuildReq) HTTPRequest(ctx context.Context, opt ...Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRequestPageBuildReq) Rel(link RelName, resp *ReposRequestPageBuildResponse) bool {
+func (r *ReposRequestPagesBuildReq) Rel(link RelName, resp *ReposRequestPagesBuildResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -18301,39 +17354,39 @@ func (r *ReposRequestPageBuildReq) Rel(link RelName, resp *ReposRequestPageBuild
 }
 
 /*
-ReposRequestPageBuildResponseBody is a response body for ReposRequestPageBuild
+ReposRequestPagesBuildResponseBody is a response body for ReposRequestPagesBuild
 
-https://developer.github.com/v3/repos/pages/#request-a-page-build
+https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-type ReposRequestPageBuildResponseBody struct {
+type ReposRequestPagesBuildResponseBody struct {
 	components.PageBuildStatus
 }
 
 /*
-ReposRequestPageBuildResponse is a response for ReposRequestPageBuild
+ReposRequestPagesBuildResponse is a response for ReposRequestPagesBuild
 
-https://developer.github.com/v3/repos/pages/#request-a-page-build
+https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-type ReposRequestPageBuildResponse struct {
+type ReposRequestPagesBuildResponse struct {
 	response
-	request *ReposRequestPageBuildReq
-	Data    *ReposRequestPageBuildResponseBody
+	request *ReposRequestPagesBuildReq
+	Data    *ReposRequestPagesBuildResponseBody
 }
 
 /*
-ReposRetrieveCommunityProfileMetrics performs requests for "repos/retrieve-community-profile-metrics"
+ReposSetAdminBranchProtection performs requests for "repos/set-admin-branch-protection"
 
-Retrieve community profile metrics.
+Set admin branch protection.
 
-  GET /repos/{owner}/{repo}/community/profile
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
 
-https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-func ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetrieveCommunityProfileMetricsReq, opt ...RequestOption) (*ReposRetrieveCommunityProfileMetricsResponse, error) {
+func ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranchProtectionReq, opt ...RequestOption) (*ReposSetAdminBranchProtectionResponse, error) {
 	if req == nil {
-		req = new(ReposRetrieveCommunityProfileMetricsReq)
+		req = new(ReposSetAdminBranchProtectionReq)
 	}
-	resp := &ReposRetrieveCommunityProfileMetricsResponse{request: req}
+	resp := &ReposSetAdminBranchProtectionResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -18341,7 +17394,7 @@ func ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetriev
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposRetrieveCommunityProfileMetricsResponseBody)
+	resp.Data = new(ReposSetAdminBranchProtectionResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -18350,70 +17403,71 @@ func ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetriev
 }
 
 /*
-ReposRetrieveCommunityProfileMetrics performs requests for "repos/retrieve-community-profile-metrics"
+ReposSetAdminBranchProtection performs requests for "repos/set-admin-branch-protection"
 
-Retrieve community profile metrics.
+Set admin branch protection.
 
-  GET /repos/{owner}/{repo}/community/profile
+  POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
 
-https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-func (c Client) ReposRetrieveCommunityProfileMetrics(ctx context.Context, req *ReposRetrieveCommunityProfileMetricsReq, opt ...RequestOption) (*ReposRetrieveCommunityProfileMetricsResponse, error) {
-	return ReposRetrieveCommunityProfileMetrics(ctx, req, append(c, opt...)...)
+func (c Client) ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranchProtectionReq, opt ...RequestOption) (*ReposSetAdminBranchProtectionResponse, error) {
+	return ReposSetAdminBranchProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposRetrieveCommunityProfileMetricsReq is request data for Client.ReposRetrieveCommunityProfileMetrics
+ReposSetAdminBranchProtectionReq is request data for Client.ReposSetAdminBranchProtection
 
-https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-type ReposRetrieveCommunityProfileMetricsReq struct {
-	_url  string
-	Owner string
-	Repo  string
+type ReposSetAdminBranchProtectionReq struct {
+	_url   string
+	Owner  string
+	Repo   string
+	Branch string
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) url() string {
+func (r *ReposSetAdminBranchProtectionReq) url() string {
 	return r._url
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/community/profile", r.Owner, r.Repo)
+func (r *ReposSetAdminBranchProtectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) method() string {
-	return "GET"
+func (r *ReposSetAdminBranchProtectionReq) method() string {
+	return "POST"
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) urlQuery() url.Values {
+func (r *ReposSetAdminBranchProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposSetAdminBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) body() interface{} {
+func (r *ReposSetAdminBranchProtectionReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) dataStatuses() []int {
+func (r *ReposSetAdminBranchProtectionReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) validStatuses() []int {
+func (r *ReposSetAdminBranchProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposRetrieveCommunityProfileMetricsReq) endpointAttributes() []endpointAttribute {
+func (r *ReposSetAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposSetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -18421,7 +17475,7 @@ func (r *ReposRetrieveCommunityProfileMetricsReq) HTTPRequest(ctx context.Contex
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRetrieveCommunityProfileMetricsReq) Rel(link RelName, resp *ReposRetrieveCommunityProfileMetricsResponse) bool {
+func (r *ReposSetAdminBranchProtectionReq) Rel(link RelName, resp *ReposSetAdminBranchProtectionResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -18431,39 +17485,593 @@ func (r *ReposRetrieveCommunityProfileMetricsReq) Rel(link RelName, resp *ReposR
 }
 
 /*
-ReposRetrieveCommunityProfileMetricsResponseBody is a response body for ReposRetrieveCommunityProfileMetrics
+ReposSetAdminBranchProtectionResponseBody is a response body for ReposSetAdminBranchProtection
 
-https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-type ReposRetrieveCommunityProfileMetricsResponseBody struct {
-	components.CommunityProfile
+type ReposSetAdminBranchProtectionResponseBody struct {
+	components.ProtectedBranchAdminEnforced
 }
 
 /*
-ReposRetrieveCommunityProfileMetricsResponse is a response for ReposRetrieveCommunityProfileMetrics
+ReposSetAdminBranchProtectionResponse is a response for ReposSetAdminBranchProtection
 
-https://developer.github.com/v3/repos/community/#retrieve-community-profile-metrics
+https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-type ReposRetrieveCommunityProfileMetricsResponse struct {
+type ReposSetAdminBranchProtectionResponse struct {
 	response
-	request *ReposRetrieveCommunityProfileMetricsReq
-	Data    *ReposRetrieveCommunityProfileMetricsResponseBody
+	request *ReposSetAdminBranchProtectionReq
+	Data    *ReposSetAdminBranchProtectionResponseBody
 }
 
 /*
-ReposTestPushHook performs requests for "repos/test-push-hook"
+ReposSetAppAccessRestrictions performs requests for "repos/set-app-access-restrictions"
 
-Test a push hook.
+Set app access restrictions.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
+*/
+func ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRestrictionsReq, opt ...RequestOption) (*ReposSetAppAccessRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposSetAppAccessRestrictionsReq)
+	}
+	resp := &ReposSetAppAccessRestrictionsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposSetAppAccessRestrictionsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposSetAppAccessRestrictions performs requests for "repos/set-app-access-restrictions"
+
+Set app access restrictions.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps
+
+https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
+*/
+func (c Client) ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRestrictionsReq, opt ...RequestOption) (*ReposSetAppAccessRestrictionsResponse, error) {
+	return ReposSetAppAccessRestrictions(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposSetAppAccessRestrictionsReq is request data for Client.ReposSetAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
+*/
+type ReposSetAppAccessRestrictionsReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposSetAppAccessRestrictionsReqBody
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) url() string {
+	return r._url
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/apps", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) method() string {
+	return "PUT"
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetAppAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposSetAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposSetAppAccessRestrictionsReq) Rel(link RelName, resp *ReposSetAppAccessRestrictionsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposSetAppAccessRestrictionsReqBody is a request body for repos/set-app-access-restrictions
+
+https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
+*/
+type ReposSetAppAccessRestrictionsReqBody []string
+
+/*
+ReposSetAppAccessRestrictionsResponseBody is a response body for ReposSetAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
+*/
+type ReposSetAppAccessRestrictionsResponseBody []struct {
+	components.Integration
+}
+
+/*
+ReposSetAppAccessRestrictionsResponse is a response for ReposSetAppAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
+*/
+type ReposSetAppAccessRestrictionsResponse struct {
+	response
+	request *ReposSetAppAccessRestrictionsReq
+	Data    *ReposSetAppAccessRestrictionsResponseBody
+}
+
+/*
+ReposSetStatusCheckContexts performs requests for "repos/set-status-check-contexts"
+
+Set status check contexts.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#set-status-check-contexts
+*/
+func ReposSetStatusCheckContexts(ctx context.Context, req *ReposSetStatusCheckContextsReq, opt ...RequestOption) (*ReposSetStatusCheckContextsResponse, error) {
+	if req == nil {
+		req = new(ReposSetStatusCheckContextsReq)
+	}
+	resp := &ReposSetStatusCheckContextsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposSetStatusCheckContextsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposSetStatusCheckContexts performs requests for "repos/set-status-check-contexts"
+
+Set status check contexts.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+
+https://developer.github.com/v3/repos/branches/#set-status-check-contexts
+*/
+func (c Client) ReposSetStatusCheckContexts(ctx context.Context, req *ReposSetStatusCheckContextsReq, opt ...RequestOption) (*ReposSetStatusCheckContextsResponse, error) {
+	return ReposSetStatusCheckContexts(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposSetStatusCheckContextsReq is request data for Client.ReposSetStatusCheckContexts
+
+https://developer.github.com/v3/repos/branches/#set-status-check-contexts
+*/
+type ReposSetStatusCheckContextsReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposSetStatusCheckContextsReqBody
+}
+
+func (r *ReposSetStatusCheckContextsReq) url() string {
+	return r._url
+}
+
+func (r *ReposSetStatusCheckContextsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks/contexts", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposSetStatusCheckContextsReq) method() string {
+	return "PUT"
+}
+
+func (r *ReposSetStatusCheckContextsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposSetStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposSetStatusCheckContextsReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposSetStatusCheckContextsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetStatusCheckContextsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposSetStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposSetStatusCheckContextsReq) Rel(link RelName, resp *ReposSetStatusCheckContextsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposSetStatusCheckContextsReqBody is a request body for repos/set-status-check-contexts
+
+https://developer.github.com/v3/repos/branches/#set-status-check-contexts
+*/
+type ReposSetStatusCheckContextsReqBody []string
+
+/*
+ReposSetStatusCheckContextsResponseBody is a response body for ReposSetStatusCheckContexts
+
+https://developer.github.com/v3/repos/branches/#set-status-check-contexts
+*/
+type ReposSetStatusCheckContextsResponseBody []string
+
+/*
+ReposSetStatusCheckContextsResponse is a response for ReposSetStatusCheckContexts
+
+https://developer.github.com/v3/repos/branches/#set-status-check-contexts
+*/
+type ReposSetStatusCheckContextsResponse struct {
+	response
+	request *ReposSetStatusCheckContextsReq
+	Data    *ReposSetStatusCheckContextsResponseBody
+}
+
+/*
+ReposSetTeamAccessRestrictions performs requests for "repos/set-team-access-restrictions"
+
+Set team access restrictions.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
+
+https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
+*/
+func ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccessRestrictionsReq, opt ...RequestOption) (*ReposSetTeamAccessRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposSetTeamAccessRestrictionsReq)
+	}
+	resp := &ReposSetTeamAccessRestrictionsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposSetTeamAccessRestrictionsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposSetTeamAccessRestrictions performs requests for "repos/set-team-access-restrictions"
+
+Set team access restrictions.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams
+
+https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
+*/
+func (c Client) ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccessRestrictionsReq, opt ...RequestOption) (*ReposSetTeamAccessRestrictionsResponse, error) {
+	return ReposSetTeamAccessRestrictions(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposSetTeamAccessRestrictionsReq is request data for Client.ReposSetTeamAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
+*/
+type ReposSetTeamAccessRestrictionsReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposSetTeamAccessRestrictionsReqBody
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) url() string {
+	return r._url
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/teams", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) method() string {
+	return "PUT"
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetTeamAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposSetTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposSetTeamAccessRestrictionsReq) Rel(link RelName, resp *ReposSetTeamAccessRestrictionsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposSetTeamAccessRestrictionsReqBody is a request body for repos/set-team-access-restrictions
+
+https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
+*/
+type ReposSetTeamAccessRestrictionsReqBody []string
+
+/*
+ReposSetTeamAccessRestrictionsResponseBody is a response body for ReposSetTeamAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
+*/
+type ReposSetTeamAccessRestrictionsResponseBody []struct {
+	components.Team
+}
+
+/*
+ReposSetTeamAccessRestrictionsResponse is a response for ReposSetTeamAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
+*/
+type ReposSetTeamAccessRestrictionsResponse struct {
+	response
+	request *ReposSetTeamAccessRestrictionsReq
+	Data    *ReposSetTeamAccessRestrictionsResponseBody
+}
+
+/*
+ReposSetUserAccessRestrictions performs requests for "repos/set-user-access-restrictions"
+
+Set user access restrictions.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
+
+https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
+*/
+func ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccessRestrictionsReq, opt ...RequestOption) (*ReposSetUserAccessRestrictionsResponse, error) {
+	if req == nil {
+		req = new(ReposSetUserAccessRestrictionsReq)
+	}
+	resp := &ReposSetUserAccessRestrictionsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposSetUserAccessRestrictionsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposSetUserAccessRestrictions performs requests for "repos/set-user-access-restrictions"
+
+Set user access restrictions.
+
+  PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users
+
+https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
+*/
+func (c Client) ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccessRestrictionsReq, opt ...RequestOption) (*ReposSetUserAccessRestrictionsResponse, error) {
+	return ReposSetUserAccessRestrictions(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposSetUserAccessRestrictionsReq is request data for Client.ReposSetUserAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
+*/
+type ReposSetUserAccessRestrictionsReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposSetUserAccessRestrictionsReqBody
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) url() string {
+	return r._url
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions/users", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) method() string {
+	return "PUT"
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposSetUserAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposSetUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposSetUserAccessRestrictionsReq) Rel(link RelName, resp *ReposSetUserAccessRestrictionsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposSetUserAccessRestrictionsReqBody is a request body for repos/set-user-access-restrictions
+
+https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
+*/
+type ReposSetUserAccessRestrictionsReqBody []string
+
+/*
+ReposSetUserAccessRestrictionsResponseBody is a response body for ReposSetUserAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
+*/
+type ReposSetUserAccessRestrictionsResponseBody []struct {
+	components.SimpleUser
+}
+
+/*
+ReposSetUserAccessRestrictionsResponse is a response for ReposSetUserAccessRestrictions
+
+https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
+*/
+type ReposSetUserAccessRestrictionsResponse struct {
+	response
+	request *ReposSetUserAccessRestrictionsReq
+	Data    *ReposSetUserAccessRestrictionsResponseBody
+}
+
+/*
+ReposTestPushWebhook performs requests for "repos/test-push-webhook"
+
+Test the push repository webhook.
 
   POST /repos/{owner}/{repo}/hooks/{hook_id}/tests
 
-https://developer.github.com/v3/repos/hooks/#test-a-push-hook
+https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
-func ReposTestPushHook(ctx context.Context, req *ReposTestPushHookReq, opt ...RequestOption) (*ReposTestPushHookResponse, error) {
+func ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt ...RequestOption) (*ReposTestPushWebhookResponse, error) {
 	if req == nil {
-		req = new(ReposTestPushHookReq)
+		req = new(ReposTestPushWebhookReq)
 	}
-	resp := &ReposTestPushHookResponse{request: req}
+	resp := &ReposTestPushWebhookResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -18479,71 +18087,71 @@ func ReposTestPushHook(ctx context.Context, req *ReposTestPushHookReq, opt ...Re
 }
 
 /*
-ReposTestPushHook performs requests for "repos/test-push-hook"
+ReposTestPushWebhook performs requests for "repos/test-push-webhook"
 
-Test a push hook.
+Test the push repository webhook.
 
   POST /repos/{owner}/{repo}/hooks/{hook_id}/tests
 
-https://developer.github.com/v3/repos/hooks/#test-a-push-hook
+https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
-func (c Client) ReposTestPushHook(ctx context.Context, req *ReposTestPushHookReq, opt ...RequestOption) (*ReposTestPushHookResponse, error) {
-	return ReposTestPushHook(ctx, req, append(c, opt...)...)
+func (c Client) ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt ...RequestOption) (*ReposTestPushWebhookResponse, error) {
+	return ReposTestPushWebhook(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposTestPushHookReq is request data for Client.ReposTestPushHook
+ReposTestPushWebhookReq is request data for Client.ReposTestPushWebhook
 
-https://developer.github.com/v3/repos/hooks/#test-a-push-hook
+https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
-type ReposTestPushHookReq struct {
+type ReposTestPushWebhookReq struct {
 	_url   string
 	Owner  string
 	Repo   string
 	HookId int64
 }
 
-func (r *ReposTestPushHookReq) url() string {
+func (r *ReposTestPushWebhookReq) url() string {
 	return r._url
 }
 
-func (r *ReposTestPushHookReq) urlPath() string {
+func (r *ReposTestPushWebhookReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/hooks/%v/tests", r.Owner, r.Repo, r.HookId)
 }
 
-func (r *ReposTestPushHookReq) method() string {
+func (r *ReposTestPushWebhookReq) method() string {
 	return "POST"
 }
 
-func (r *ReposTestPushHookReq) urlQuery() url.Values {
+func (r *ReposTestPushWebhookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposTestPushHookReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposTestPushWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposTestPushHookReq) body() interface{} {
+func (r *ReposTestPushWebhookReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposTestPushHookReq) dataStatuses() []int {
+func (r *ReposTestPushWebhookReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *ReposTestPushHookReq) validStatuses() []int {
+func (r *ReposTestPushWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposTestPushHookReq) endpointAttributes() []endpointAttribute {
+func (r *ReposTestPushWebhookReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposTestPushWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -18551,7 +18159,7 @@ func (r *ReposTestPushHookReq) HTTPRequest(ctx context.Context, opt ...RequestOp
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposTestPushHookReq) Rel(link RelName, resp *ReposTestPushHookResponse) bool {
+func (r *ReposTestPushWebhookReq) Rel(link RelName, resp *ReposTestPushWebhookResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -18561,13 +18169,13 @@ func (r *ReposTestPushHookReq) Rel(link RelName, resp *ReposTestPushHookResponse
 }
 
 /*
-ReposTestPushHookResponse is a response for ReposTestPushHook
+ReposTestPushWebhookResponse is a response for ReposTestPushWebhook
 
-https://developer.github.com/v3/repos/hooks/#test-a-push-hook
+https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
-type ReposTestPushHookResponse struct {
+type ReposTestPushWebhookResponse struct {
 	response
-	request *ReposTestPushHookReq
+	request *ReposTestPushWebhookReq
 }
 
 /*
@@ -19385,213 +18993,13 @@ type ReposUpdateCommitCommentResponse struct {
 }
 
 /*
-ReposUpdateHook performs requests for "repos/update-hook"
-
-Edit a hook.
-
-  PATCH /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-func ReposUpdateHook(ctx context.Context, req *ReposUpdateHookReq, opt ...RequestOption) (*ReposUpdateHookResponse, error) {
-	if req == nil {
-		req = new(ReposUpdateHookReq)
-	}
-	resp := &ReposUpdateHookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposUpdateHookResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposUpdateHook performs requests for "repos/update-hook"
-
-Edit a hook.
-
-  PATCH /repos/{owner}/{repo}/hooks/{hook_id}
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-func (c Client) ReposUpdateHook(ctx context.Context, req *ReposUpdateHookReq, opt ...RequestOption) (*ReposUpdateHookResponse, error) {
-	return ReposUpdateHook(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposUpdateHookReq is request data for Client.ReposUpdateHook
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	HookId      int64
-	RequestBody ReposUpdateHookReqBody
-}
-
-func (r *ReposUpdateHookReq) url() string {
-	return r._url
-}
-
-func (r *ReposUpdateHookReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
-}
-
-func (r *ReposUpdateHookReq) method() string {
-	return "PATCH"
-}
-
-func (r *ReposUpdateHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposUpdateHookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposUpdateHookReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposUpdateHookReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposUpdateHookReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposUpdateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposUpdateHookReq) Rel(link RelName, resp *ReposUpdateHookResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-// ReposUpdateHookReqBodyConfig is a value for ReposUpdateHookReqBody's Config field
-type ReposUpdateHookReqBodyConfig struct {
-
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
-	ContentType *string `json:"content_type,omitempty"`
-
-	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
-	*/
-	InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
-	*/
-	Secret *string `json:"secret,omitempty"`
-
-	// The URL to which the payloads will be delivered.
-	Url *string `json:"url"`
-}
-
-/*
-ReposUpdateHookReqBody is a request body for repos/update-hook
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookReqBody struct {
-
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
-	Active *bool `json:"active,omitempty"`
-
-	/*
-	   Determines a list of events to be added to the list of events that the Hook
-	   triggers for.
-	*/
-	AddEvents []string `json:"add_events,omitempty"`
-
-	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
-	*/
-	Config *ReposUpdateHookReqBodyConfig `json:"config,omitempty"`
-
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for. This replaces the entire array of events.
-	*/
-	Events []string `json:"events,omitempty"`
-
-	/*
-	   Determines a list of events to be removed from the list of events that the Hook
-	   triggers for.
-	*/
-	RemoveEvents []string `json:"remove_events,omitempty"`
-}
-
-/*
-ReposUpdateHookResponseBody is a response body for ReposUpdateHook
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookResponseBody struct {
-	components.Hook
-}
-
-/*
-ReposUpdateHookResponse is a response for ReposUpdateHook
-
-https://developer.github.com/v3/repos/hooks/#edit-a-hook
-*/
-type ReposUpdateHookResponse struct {
-	response
-	request *ReposUpdateHookReq
-	Data    *ReposUpdateHookResponseBody
-}
-
-/*
 ReposUpdateInformationAboutPagesSite performs requests for "repos/update-information-about-pages-site"
 
-Update information about a Pages site.
+Update information about a GitHub Pages site.
 
   PUT /repos/{owner}/{repo}/pages
 
-https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 func ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateInformationAboutPagesSiteReq, opt ...RequestOption) (*ReposUpdateInformationAboutPagesSiteResponse, error) {
 	if req == nil {
@@ -19615,11 +19023,11 @@ func ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateI
 /*
 ReposUpdateInformationAboutPagesSite performs requests for "repos/update-information-about-pages-site"
 
-Update information about a Pages site.
+Update information about a GitHub Pages site.
 
   PUT /repos/{owner}/{repo}/pages
 
-https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 func (c Client) ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateInformationAboutPagesSiteReq, opt ...RequestOption) (*ReposUpdateInformationAboutPagesSiteResponse, error) {
 	return ReposUpdateInformationAboutPagesSite(ctx, req, append(c, opt...)...)
@@ -19628,7 +19036,7 @@ func (c Client) ReposUpdateInformationAboutPagesSite(ctx context.Context, req *R
 /*
 ReposUpdateInformationAboutPagesSiteReq is request data for Client.ReposUpdateInformationAboutPagesSite
 
-https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteReq struct {
 	_url        string
@@ -19697,7 +19105,7 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) Rel(link RelName, resp *ReposU
 /*
 ReposUpdateInformationAboutPagesSiteReqBody is a request body for repos/update-information-about-pages-site
 
-https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteReqBody struct {
 
@@ -19720,7 +19128,7 @@ type ReposUpdateInformationAboutPagesSiteReqBody struct {
 /*
 ReposUpdateInformationAboutPagesSiteResponse is a response for ReposUpdateInformationAboutPagesSite
 
-https://developer.github.com/v3/repos/pages/#update-information-about-a-pages-site
+https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteResponse struct {
 	response
@@ -19874,19 +19282,19 @@ type ReposUpdateInvitationResponse struct {
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcement performs requests for "repos/update-protected-branch-pull-request-review-enforcement"
+ReposUpdatePullRequestReviewProtection performs requests for "repos/update-pull-request-review-protection"
 
-Update pull request review enforcement of protected branch.
+Update pull request review protection.
 
   PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
 
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-func ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse, error) {
+func ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdatePullRequestReviewProtectionReq, opt ...RequestOption) (*ReposUpdatePullRequestReviewProtectionResponse, error) {
 	if req == nil {
-		req = new(ReposUpdateProtectedBranchPullRequestReviewEnforcementReq)
+		req = new(ReposUpdatePullRequestReviewProtectionReq)
 	}
-	resp := &ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse{request: req}
+	resp := &ReposUpdatePullRequestReviewProtectionResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -19894,7 +19302,7 @@ func ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody)
+	resp.Data = new(ReposUpdatePullRequestReviewProtectionResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -19903,29 +19311,29 @@ func ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context,
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcement performs requests for "repos/update-protected-branch-pull-request-review-enforcement"
+ReposUpdatePullRequestReviewProtection performs requests for "repos/update-pull-request-review-protection"
 
-Update pull request review enforcement of protected branch.
+Update pull request review protection.
 
   PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews
 
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-func (c Client) ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx context.Context, req *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq, opt ...RequestOption) (*ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse, error) {
-	return ReposUpdateProtectedBranchPullRequestReviewEnforcement(ctx, req, append(c, opt...)...)
+func (c Client) ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdatePullRequestReviewProtectionReq, opt ...RequestOption) (*ReposUpdatePullRequestReviewProtectionResponse, error) {
+	return ReposUpdatePullRequestReviewProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementReq is request data for Client.ReposUpdateProtectedBranchPullRequestReviewEnforcement
+ReposUpdatePullRequestReviewProtectionReq is request data for Client.ReposUpdatePullRequestReviewProtection
 
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
+type ReposUpdatePullRequestReviewProtectionReq struct {
 	_url        string
 	Owner       string
 	Repo        string
 	Branch      string
-	RequestBody ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody
+	RequestBody ReposUpdatePullRequestReviewProtectionReqBody
 
 	/*
 	The Protected Branches API now has a setting for requiring a specified number of
@@ -19938,24 +19346,24 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReq struct {
 	LukeCagePreview bool
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) url() string {
+func (r *ReposUpdatePullRequestReviewProtectionReq) url() string {
 	return r._url
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlPath() string {
+func (r *ReposUpdatePullRequestReviewProtectionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) method() string {
+func (r *ReposUpdatePullRequestReviewProtectionReq) method() string {
 	return "PATCH"
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) urlQuery() url.Values {
+func (r *ReposUpdatePullRequestReviewProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposUpdatePullRequestReviewProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
 	if allPreviews {
@@ -19964,24 +19372,24 @@ func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) header(requi
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) body() interface{} {
+func (r *ReposUpdatePullRequestReviewProtectionReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) dataStatuses() []int {
+func (r *ReposUpdatePullRequestReviewProtectionReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) validStatuses() []int {
+func (r *ReposUpdatePullRequestReviewProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) endpointAttributes() []endpointAttribute {
+func (r *ReposUpdatePullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposUpdatePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -19989,7 +19397,7 @@ func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) HTTPRequest(
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) Rel(link RelName, resp *ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse) bool {
+func (r *ReposUpdatePullRequestReviewProtectionReq) Rel(link RelName, resp *ReposUpdatePullRequestReviewProtectionResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -19998,8 +19406,8 @@ func (r *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq) Rel(link Rel
 	return true
 }
 
-// ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions is a value for ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody's DismissalRestrictions field
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions struct {
+// ReposUpdatePullRequestReviewProtectionReqBodyDismissalRestrictions is a value for ReposUpdatePullRequestReviewProtectionReqBody's DismissalRestrictions field
+type ReposUpdatePullRequestReviewProtectionReqBodyDismissalRestrictions struct {
 
 	// The list of team `slug`s with dismissal access
 	Teams []string `json:"teams,omitempty"`
@@ -20009,11 +19417,11 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestr
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody is a request body for repos/update-protected-branch-pull-request-review-enforcement
+ReposUpdatePullRequestReviewProtectionReqBody is a request body for repos/update-pull-request-review-protection
 
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody struct {
+type ReposUpdatePullRequestReviewProtectionReqBody struct {
 
 	/*
 	   Set to `true` if you want to automatically dismiss approving reviews when
@@ -20027,7 +19435,7 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody struct {
 	   `dismissal_restrictions` are only available for organization-owned repositories.
 	   Omit this parameter for personal repositories.
 	*/
-	DismissalRestrictions *ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBodyDismissalRestrictions `json:"dismissal_restrictions,omitempty"`
+	DismissalRestrictions *ReposUpdatePullRequestReviewProtectionReqBodyDismissalRestrictions `json:"dismissal_restrictions,omitempty"`
 
 	/*
 	   Blocks merging pull requests until [code
@@ -20043,179 +19451,33 @@ type ReposUpdateProtectedBranchPullRequestReviewEnforcementReqBody struct {
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody is a response body for ReposUpdateProtectedBranchPullRequestReviewEnforcement
+ReposUpdatePullRequestReviewProtectionResponseBody is a response body for ReposUpdatePullRequestReviewProtection
 
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody struct {
+type ReposUpdatePullRequestReviewProtectionResponseBody struct {
 	components.ProtectedBranchPullRequestReview
 }
 
 /*
-ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse is a response for ReposUpdateProtectedBranchPullRequestReviewEnforcement
+ReposUpdatePullRequestReviewProtectionResponse is a response for ReposUpdatePullRequestReviewProtection
 
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch
+https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-type ReposUpdateProtectedBranchPullRequestReviewEnforcementResponse struct {
+type ReposUpdatePullRequestReviewProtectionResponse struct {
 	response
-	request *ReposUpdateProtectedBranchPullRequestReviewEnforcementReq
-	Data    *ReposUpdateProtectedBranchPullRequestReviewEnforcementResponseBody
-}
-
-/*
-ReposUpdateProtectedBranchRequiredStatusChecks performs requests for "repos/update-protected-branch-required-status-checks"
-
-Update required status checks of protected branch.
-
-  PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
-
-https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
-*/
-func ReposUpdateProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposUpdateProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposUpdateProtectedBranchRequiredStatusChecksResponse, error) {
-	if req == nil {
-		req = new(ReposUpdateProtectedBranchRequiredStatusChecksReq)
-	}
-	resp := &ReposUpdateProtectedBranchRequiredStatusChecksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ReposUpdateProtectedBranchRequiredStatusChecksResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ReposUpdateProtectedBranchRequiredStatusChecks performs requests for "repos/update-protected-branch-required-status-checks"
-
-Update required status checks of protected branch.
-
-  PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
-
-https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
-*/
-func (c Client) ReposUpdateProtectedBranchRequiredStatusChecks(ctx context.Context, req *ReposUpdateProtectedBranchRequiredStatusChecksReq, opt ...RequestOption) (*ReposUpdateProtectedBranchRequiredStatusChecksResponse, error) {
-	return ReposUpdateProtectedBranchRequiredStatusChecks(ctx, req, append(c, opt...)...)
-}
-
-/*
-ReposUpdateProtectedBranchRequiredStatusChecksReq is request data for Client.ReposUpdateProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
-*/
-type ReposUpdateProtectedBranchRequiredStatusChecksReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	Branch      string
-	RequestBody ReposUpdateProtectedBranchRequiredStatusChecksReqBody
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) url() string {
-	return r._url
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) method() string {
-	return "PATCH"
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ReposUpdateProtectedBranchRequiredStatusChecksReq) Rel(link RelName, resp *ReposUpdateProtectedBranchRequiredStatusChecksResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ReposUpdateProtectedBranchRequiredStatusChecksReqBody is a request body for repos/update-protected-branch-required-status-checks
-
-https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
-*/
-type ReposUpdateProtectedBranchRequiredStatusChecksReqBody struct {
-
-	// The list of status checks to require in order to merge into this branch
-	Contexts []string `json:"contexts,omitempty"`
-
-	// Require branches to be up to date before merging.
-	Strict *bool `json:"strict,omitempty"`
-}
-
-/*
-ReposUpdateProtectedBranchRequiredStatusChecksResponseBody is a response body for ReposUpdateProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
-*/
-type ReposUpdateProtectedBranchRequiredStatusChecksResponseBody struct {
-	components.StatusCheckPolicy
-}
-
-/*
-ReposUpdateProtectedBranchRequiredStatusChecksResponse is a response for ReposUpdateProtectedBranchRequiredStatusChecks
-
-https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch
-*/
-type ReposUpdateProtectedBranchRequiredStatusChecksResponse struct {
-	response
-	request *ReposUpdateProtectedBranchRequiredStatusChecksReq
-	Data    *ReposUpdateProtectedBranchRequiredStatusChecksResponseBody
+	request *ReposUpdatePullRequestReviewProtectionReq
+	Data    *ReposUpdatePullRequestReviewProtectionResponseBody
 }
 
 /*
 ReposUpdateRelease performs requests for "repos/update-release"
 
-Edit a release.
+Update a release.
 
   PATCH /repos/{owner}/{repo}/releases/{release_id}
 
-https://developer.github.com/v3/repos/releases/#edit-a-release
+https://developer.github.com/v3/repos/releases/#update-a-release
 */
 func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...RequestOption) (*ReposUpdateReleaseResponse, error) {
 	if req == nil {
@@ -20240,11 +19502,11 @@ func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...
 /*
 ReposUpdateRelease performs requests for "repos/update-release"
 
-Edit a release.
+Update a release.
 
   PATCH /repos/{owner}/{repo}/releases/{release_id}
 
-https://developer.github.com/v3/repos/releases/#edit-a-release
+https://developer.github.com/v3/repos/releases/#update-a-release
 */
 func (c Client) ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...RequestOption) (*ReposUpdateReleaseResponse, error) {
 	return ReposUpdateRelease(ctx, req, append(c, opt...)...)
@@ -20253,7 +19515,7 @@ func (c Client) ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseR
 /*
 ReposUpdateReleaseReq is request data for Client.ReposUpdateRelease
 
-https://developer.github.com/v3/repos/releases/#edit-a-release
+https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseReq struct {
 	_url        string
@@ -20323,7 +19585,7 @@ func (r *ReposUpdateReleaseReq) Rel(link RelName, resp *ReposUpdateReleaseRespon
 /*
 ReposUpdateReleaseReqBody is a request body for repos/update-release
 
-https://developer.github.com/v3/repos/releases/#edit-a-release
+https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseReqBody struct {
 
@@ -20356,7 +19618,7 @@ type ReposUpdateReleaseReqBody struct {
 /*
 ReposUpdateReleaseResponseBody is a response body for ReposUpdateRelease
 
-https://developer.github.com/v3/repos/releases/#edit-a-release
+https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseResponseBody struct {
 	components.Release2
@@ -20365,7 +19627,7 @@ type ReposUpdateReleaseResponseBody struct {
 /*
 ReposUpdateReleaseResponse is a response for ReposUpdateRelease
 
-https://developer.github.com/v3/repos/releases/#edit-a-release
+https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseResponse struct {
 	response
@@ -20376,11 +19638,11 @@ type ReposUpdateReleaseResponse struct {
 /*
 ReposUpdateReleaseAsset performs requests for "repos/update-release-asset"
 
-Edit a release asset.
+Update a release asset.
 
   PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}
 
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetReq, opt ...RequestOption) (*ReposUpdateReleaseAssetResponse, error) {
 	if req == nil {
@@ -20405,11 +19667,11 @@ func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetRe
 /*
 ReposUpdateReleaseAsset performs requests for "repos/update-release-asset"
 
-Edit a release asset.
+Update a release asset.
 
   PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}
 
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 func (c Client) ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetReq, opt ...RequestOption) (*ReposUpdateReleaseAssetResponse, error) {
 	return ReposUpdateReleaseAsset(ctx, req, append(c, opt...)...)
@@ -20418,7 +19680,7 @@ func (c Client) ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateRel
 /*
 ReposUpdateReleaseAssetReq is request data for Client.ReposUpdateReleaseAsset
 
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetReq struct {
 	_url        string
@@ -20488,7 +19750,7 @@ func (r *ReposUpdateReleaseAssetReq) Rel(link RelName, resp *ReposUpdateReleaseA
 /*
 ReposUpdateReleaseAssetReqBody is a request body for repos/update-release-asset
 
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetReqBody struct {
 
@@ -20502,7 +19764,7 @@ type ReposUpdateReleaseAssetReqBody struct {
 /*
 ReposUpdateReleaseAssetResponseBody is a response body for ReposUpdateReleaseAsset
 
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetResponseBody struct {
 	components.ReleaseAsset
@@ -20511,12 +19773,358 @@ type ReposUpdateReleaseAssetResponseBody struct {
 /*
 ReposUpdateReleaseAssetResponse is a response for ReposUpdateReleaseAsset
 
-https://developer.github.com/v3/repos/releases/#edit-a-release-asset
+https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetResponse struct {
 	response
 	request *ReposUpdateReleaseAssetReq
 	Data    *ReposUpdateReleaseAssetResponseBody
+}
+
+/*
+ReposUpdateStatusCheckPotection performs requests for "repos/update-status-check-potection"
+
+Update status check potection.
+
+  PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
+
+https://developer.github.com/v3/repos/branches/#update-status-check-potection
+*/
+func ReposUpdateStatusCheckPotection(ctx context.Context, req *ReposUpdateStatusCheckPotectionReq, opt ...RequestOption) (*ReposUpdateStatusCheckPotectionResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateStatusCheckPotectionReq)
+	}
+	resp := &ReposUpdateStatusCheckPotectionResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposUpdateStatusCheckPotectionResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposUpdateStatusCheckPotection performs requests for "repos/update-status-check-potection"
+
+Update status check potection.
+
+  PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
+
+https://developer.github.com/v3/repos/branches/#update-status-check-potection
+*/
+func (c Client) ReposUpdateStatusCheckPotection(ctx context.Context, req *ReposUpdateStatusCheckPotectionReq, opt ...RequestOption) (*ReposUpdateStatusCheckPotectionResponse, error) {
+	return ReposUpdateStatusCheckPotection(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposUpdateStatusCheckPotectionReq is request data for Client.ReposUpdateStatusCheckPotection
+
+https://developer.github.com/v3/repos/branches/#update-status-check-potection
+*/
+type ReposUpdateStatusCheckPotectionReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	Branch      string
+	RequestBody ReposUpdateStatusCheckPotectionReqBody
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) url() string {
+	return r._url
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) method() string {
+	return "PATCH"
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposUpdateStatusCheckPotectionReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposUpdateStatusCheckPotectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposUpdateStatusCheckPotectionReq) Rel(link RelName, resp *ReposUpdateStatusCheckPotectionResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposUpdateStatusCheckPotectionReqBody is a request body for repos/update-status-check-potection
+
+https://developer.github.com/v3/repos/branches/#update-status-check-potection
+*/
+type ReposUpdateStatusCheckPotectionReqBody struct {
+
+	// The list of status checks to require in order to merge into this branch
+	Contexts []string `json:"contexts,omitempty"`
+
+	// Require branches to be up to date before merging.
+	Strict *bool `json:"strict,omitempty"`
+}
+
+/*
+ReposUpdateStatusCheckPotectionResponseBody is a response body for ReposUpdateStatusCheckPotection
+
+https://developer.github.com/v3/repos/branches/#update-status-check-potection
+*/
+type ReposUpdateStatusCheckPotectionResponseBody struct {
+	components.StatusCheckPolicy
+}
+
+/*
+ReposUpdateStatusCheckPotectionResponse is a response for ReposUpdateStatusCheckPotection
+
+https://developer.github.com/v3/repos/branches/#update-status-check-potection
+*/
+type ReposUpdateStatusCheckPotectionResponse struct {
+	response
+	request *ReposUpdateStatusCheckPotectionReq
+	Data    *ReposUpdateStatusCheckPotectionResponseBody
+}
+
+/*
+ReposUpdateWebhook performs requests for "repos/update-webhook"
+
+Update a repository webhook.
+
+  PATCH /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
+*/
+func ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...RequestOption) (*ReposUpdateWebhookResponse, error) {
+	if req == nil {
+		req = new(ReposUpdateWebhookReq)
+	}
+	resp := &ReposUpdateWebhookResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReposUpdateWebhookResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposUpdateWebhook performs requests for "repos/update-webhook"
+
+Update a repository webhook.
+
+  PATCH /repos/{owner}/{repo}/hooks/{hook_id}
+
+https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
+*/
+func (c Client) ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...RequestOption) (*ReposUpdateWebhookResponse, error) {
+	return ReposUpdateWebhook(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposUpdateWebhookReq is request data for Client.ReposUpdateWebhook
+
+https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
+*/
+type ReposUpdateWebhookReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	HookId      int64
+	RequestBody ReposUpdateWebhookReqBody
+}
+
+func (r *ReposUpdateWebhookReq) url() string {
+	return r._url
+}
+
+func (r *ReposUpdateWebhookReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId)
+}
+
+func (r *ReposUpdateWebhookReq) method() string {
+	return "PATCH"
+}
+
+func (r *ReposUpdateWebhookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposUpdateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposUpdateWebhookReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReposUpdateWebhookReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposUpdateWebhookReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReposUpdateWebhookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposUpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposUpdateWebhookReq) Rel(link RelName, resp *ReposUpdateWebhookResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+// ReposUpdateWebhookReqBodyConfig is a value for ReposUpdateWebhookReqBody's Config field
+type ReposUpdateWebhookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
+}
+
+/*
+ReposUpdateWebhookReqBody is a request body for repos/update-webhook
+
+https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
+*/
+type ReposUpdateWebhookReqBody struct {
+
+	/*
+	   Determines if notifications are sent when the webhook is triggered. Set to
+	   `true` to send notifications.
+	*/
+	Active *bool `json:"active,omitempty"`
+
+	/*
+	   Determines a list of events to be added to the list of events that the Hook
+	   triggers for.
+	*/
+	AddEvents []string `json:"add_events,omitempty"`
+
+	/*
+	   Key/value pairs to provide settings for this webhook. [These are defined
+	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
+	*/
+	Config *ReposUpdateWebhookReqBodyConfig `json:"config,omitempty"`
+
+	/*
+	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
+	   the hook is triggered for. This replaces the entire array of events.
+	*/
+	Events []string `json:"events,omitempty"`
+
+	/*
+	   Determines a list of events to be removed from the list of events that the Hook
+	   triggers for.
+	*/
+	RemoveEvents []string `json:"remove_events,omitempty"`
+}
+
+/*
+ReposUpdateWebhookResponseBody is a response body for ReposUpdateWebhook
+
+https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
+*/
+type ReposUpdateWebhookResponseBody struct {
+	components.Hook
+}
+
+/*
+ReposUpdateWebhookResponse is a response for ReposUpdateWebhook
+
+https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
+*/
+type ReposUpdateWebhookResponse struct {
+	response
+	request *ReposUpdateWebhookReq
+	Data    *ReposUpdateWebhookResponseBody
 }
 
 /*

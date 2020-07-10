@@ -20,7 +20,7 @@ func main() {
 
 	ghAuth := octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 
-	resp, err := octo.ReposGetArchiveLink(ctx, &octo.ReposGetArchiveLinkReq{
+	resp, err := octo.ReposDownloadArchive(ctx, &octo.ReposDownloadArchiveReq{
 		Owner:         "WillAbides",
 		Repo:          "octo-go",
 		ArchiveFormat: "tarball",

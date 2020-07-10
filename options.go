@@ -105,7 +105,7 @@ func WithAppAuth(appID int64, privateKey []byte) RequestOption {
 // requestBody is the body to be sent when creating an installation token. It can be nil, or you can set it to limit the
 //  scope of the token's authorizations.
 // requestOptions are options to be use when requesting a token. They do not affect options for the main request.
-func WithAppInstallationAuth(appID, installationID int64, privateKey []byte, requestBody *AppsCreateInstallationTokenReqBody, opt ...RequestOption) RequestOption {
+func WithAppInstallationAuth(appID, installationID int64, privateKey []byte, requestBody *AppsCreateInstallationAccessTokenReqBody, opt ...RequestOption) RequestOption {
 	return func(opts *requestOpts) error {
 		pk, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
 		if err != nil {

@@ -13,11 +13,11 @@ import (
 /*
 CodesOfConductGetAllCodesOfConduct performs requests for "codes-of-conduct/get-all-codes-of-conduct"
 
-List all codes of conduct.
+Get all codes of conduct.
 
   GET /codes_of_conduct
 
-https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
 	if req == nil {
@@ -42,11 +42,11 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 /*
 CodesOfConductGetAllCodesOfConduct performs requests for "codes-of-conduct/get-all-codes-of-conduct"
 
-List all codes of conduct.
+Get all codes of conduct.
 
   GET /codes_of_conduct
 
-https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 func (c Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
 	return CodesOfConductGetAllCodesOfConduct(ctx, req, append(c, opt...)...)
@@ -55,7 +55,7 @@ func (c Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *Cod
 /*
 CodesOfConductGetAllCodesOfConductReq is request data for Client.CodesOfConductGetAllCodesOfConduct
 
-https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductReq struct {
 	_url string
@@ -134,7 +134,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link RelName, resp *CodesOfC
 /*
 CodesOfConductGetAllCodesOfConductResponseBody is a response body for CodesOfConductGetAllCodesOfConduct
 
-https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductResponseBody []struct {
 	components.CodeOfConductSimple
@@ -143,7 +143,7 @@ type CodesOfConductGetAllCodesOfConductResponseBody []struct {
 /*
 CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAllCodesOfConduct
 
-https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductResponse struct {
 	response
@@ -154,11 +154,11 @@ type CodesOfConductGetAllCodesOfConductResponse struct {
 /*
 CodesOfConductGetConductCode performs requests for "codes-of-conduct/get-conduct-code"
 
-Get an individual code of conduct.
+Get a code of conduct.
 
   GET /codes_of_conduct/{key}
 
-https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
 	if req == nil {
@@ -183,11 +183,11 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 /*
 CodesOfConductGetConductCode performs requests for "codes-of-conduct/get-conduct-code"
 
-Get an individual code of conduct.
+Get a code of conduct.
 
   GET /codes_of_conduct/{key}
 
-https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 func (c Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
 	return CodesOfConductGetConductCode(ctx, req, append(c, opt...)...)
@@ -196,7 +196,7 @@ func (c Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfCo
 /*
 CodesOfConductGetConductCodeReq is request data for Client.CodesOfConductGetConductCode
 
-https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type CodesOfConductGetConductCodeReq struct {
 	_url string
@@ -276,7 +276,7 @@ func (r *CodesOfConductGetConductCodeReq) Rel(link RelName, resp *CodesOfConduct
 /*
 CodesOfConductGetConductCodeResponseBody is a response body for CodesOfConductGetConductCode
 
-https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type CodesOfConductGetConductCodeResponseBody struct {
 	components.CodeOfConduct
@@ -285,7 +285,7 @@ type CodesOfConductGetConductCodeResponseBody struct {
 /*
 CodesOfConductGetConductCodeResponse is a response for CodesOfConductGetConductCode
 
-https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type CodesOfConductGetConductCodeResponse struct {
 	response
@@ -296,11 +296,11 @@ type CodesOfConductGetConductCodeResponse struct {
 /*
 CodesOfConductGetForRepo performs requests for "codes-of-conduct/get-for-repo"
 
-Get the contents of a repository's code of conduct.
+Get the code of conduct for a repository.
 
   GET /repos/{owner}/{repo}/community/code_of_conduct
 
-https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
 	if req == nil {
@@ -325,11 +325,11 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 /*
 CodesOfConductGetForRepo performs requests for "codes-of-conduct/get-for-repo"
 
-Get the contents of a repository's code of conduct.
+Get the code of conduct for a repository.
 
   GET /repos/{owner}/{repo}/community/code_of_conduct
 
-https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 func (c Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
 	return CodesOfConductGetForRepo(ctx, req, append(c, opt...)...)
@@ -338,7 +338,7 @@ func (c Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConduc
 /*
 CodesOfConductGetForRepoReq is request data for Client.CodesOfConductGetForRepo
 
-https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoReq struct {
 	_url  string
@@ -419,7 +419,7 @@ func (r *CodesOfConductGetForRepoReq) Rel(link RelName, resp *CodesOfConductGetF
 /*
 CodesOfConductGetForRepoResponseBody is a response body for CodesOfConductGetForRepo
 
-https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoResponseBody struct {
 	components.CodeOfConduct
@@ -428,7 +428,7 @@ type CodesOfConductGetForRepoResponseBody struct {
 /*
 CodesOfConductGetForRepoResponse is a response for CodesOfConductGetForRepo
 
-https://developer.github.com/v3/codes_of_conduct/#get-the-contents-of-a-repositorys-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoResponse struct {
 	response
