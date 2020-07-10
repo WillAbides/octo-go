@@ -325,7 +325,14 @@ type ScimListProvisionedIdentitiesReq struct {
 	Filters results using the equals query parameter operator (`eq`). You can filter
 	results that are equal to `id`, `userName`, `emails`, and `external_id`. For
 	example, to search for an identity with the `userName` Octocat, you would use
-	this query: `?filter=userName%20eq%20\"Octocat\"`.
+	this query:
+
+	`?filter=userName%20eq%20\"Octocat\"`.
+
+	To filter results for for the identity with the email `octocat@github.com`, you
+	would use this query:
+
+	`?filter=emails%20eq%20\"octocat@github.com\"`.
 	*/
 	Filter *string
 }
