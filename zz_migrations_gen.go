@@ -3061,7 +3061,7 @@ MigrationsUpdateImportResponseBody is a response body for MigrationsUpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportResponseBody struct {
-	components.Import3
+	components.Import2
 }
 
 /*

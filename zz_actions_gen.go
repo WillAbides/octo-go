@@ -4,6 +4,7 @@ package octo
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
 	"net/http"
@@ -392,7 +393,7 @@ type ActionsCreateOrUpdateOrgSecretReqBody struct {
 	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
 	   endpoints.
 	*/
-	SelectedRepositoryIds []string `json:"selected_repository_ids,omitempty"`
+	SelectedRepositoryIds []json.Number `json:"selected_repository_ids,omitempty"`
 
 	/*
 	   Configures the access that repositories have to the organization secret. Can be

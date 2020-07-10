@@ -1999,7 +1999,7 @@ type ReposCreateDeploymentReqBody struct {
 	Environment *string `json:"environment,omitempty"`
 
 	// JSON payload with extra information about the deployment.
-	Payload *string `json:"payload,omitempty"`
+	Payload interface{} `json:"payload,omitempty"`
 
 	/*
 	   Specifies if the given environment is one that end-users directly interact with.
