@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -e
+
+CDPATH="" cd -- "$(dirname -- "$(dirname -- "$0")")"
+
+make -s bin/octo
+touch ./current-schema-version.txt
+
+git diff --stat --exit-code current-schema-version.txt || (echo "clean your tree before proceeding" && exit 1)
+
+script/update-schema
+
+[ -n "$(git diff --stat --exit-code current-schema-version.txt || echo updated)" ] || (echo "already up to date" && exit)
+
+new_version="$(cat current-schema-version.txt)"
+update_branch="update-schema-release-$new_version"
+
+pullcount="$(
+  bin/octo pulls list \
+    --repo WillAbides/octo-go \
+    --head "octo-go:$update_branch" \
+    --format "{{len .}}"
+)"
+
+echo $pullcount
+
+# exit if there's already a pr for this update
+[ "$pullcount" != "0" ] && echo "pr already exists for $update_branch" && exit
+
+git checkout -b "$update_branch"
+
+script/generate
