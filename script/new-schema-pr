@@ -19,7 +19,7 @@ update_branch="update-schema-release-$new_version"
 pullcount="$(
   bin/octo pulls list \
     --repo WillAbides/octo-go \
-    --head "octo-go:$update_branch" \
+    --head "WillAbides:$update_branch" \
     --format "{{len .}}"
 )"
 
