@@ -89,7 +89,6 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		fn(file, endpoint)
 		file.Line()
 	}
-
 }
 
 func reqMethodFunc(fl *jen.File, endpoint model.Endpoint) {
