@@ -1,4 +1,4 @@
-name: update-routes
+name: update-schema
 on:
   schedule:
     - cron: '41 * * * *'
