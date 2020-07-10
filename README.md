@@ -56,6 +56,9 @@ key, err := ioutil.ReadFile("appsecretkey.pem")
 if err != nil {
     log.Fatal(err)
 }
+
+auth := octo.WithAppInstallationAuth(appID, installationID, key, nil)
+client := octo.NewClient(auth)
 ```
 
 When authenticating as an App Installation, you can also limit the token's authorization to specific repositories and
@@ -70,7 +73,7 @@ if err != nil {
     log.Fatal(err)
 }
 
-auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreateInstallationTokenReqBody{
+auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreateInstallationAccessTokenReqBody{
     Permissions: map[string]string{
         "deployments": "write",
         "content":     "read",
