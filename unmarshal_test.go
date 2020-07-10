@@ -30,8 +30,7 @@ func TestUnmarshalResponseBody(t *testing.T) {
 			for name, ex := range examples {
 				t.Run(name, func(t *testing.T) {
 					decoder := json.NewDecoder(bytes.NewReader(ex))
-					// comment out decoder.DisallowUnknownFields until https://github.com/github/openapi/issues/177 is fixed
-					//decoder.DisallowUnknownFields()
+					decoder.DisallowUnknownFields()
 					require.NoError(t, test.decode(decoder))
 				})
 			}
