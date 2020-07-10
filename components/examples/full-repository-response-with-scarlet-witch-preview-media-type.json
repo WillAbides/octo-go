@@ -22,7 +22,6 @@
   "downloads_url": "https://api.github.com/repos/LindseyB/cosee/downloads",
   "events_url": "https://api.github.com/repos/LindseyB/cosee/events",
   "fork": false,
-  "forks": 0,
   "forks_count": 0,
   "forks_url": "https://api.github.com/repos/LindseyB/cosee/forks",
   "full_name": "LindseyB/cosee",
@@ -53,7 +52,6 @@
   "network_count": 0,
   "node_id": "MDEwOlJlcG9zaXRvcnk4ODc2MDQwOA==",
   "notifications_url": "https://api.github.com/repos/LindseyB/cosee/notifications{?since,all,participating}",
-  "open_issues": 0,
   "open_issues_count": 0,
   "owner": {
     "avatar_url": "https://avatars2.githubusercontent.com/u/33750?v=3",
@@ -93,6 +91,5 @@
   "trees_url": "https://api.github.com/repos/LindseyB/cosee/git/trees{/sha}",
   "updated_at": "2017-04-19T15=\u003e23=\u003e26Z",
   "url": "https://api.github.com/repos/LindseyB/cosee",
-  "watchers": 0,
   "watchers_count": 0
 }

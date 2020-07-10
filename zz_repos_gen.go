@@ -1999,7 +1999,7 @@ type ReposCreateDeploymentReqBody struct {
 	Environment *string `json:"environment,omitempty"`
 
 	// JSON payload with extra information about the deployment.
-	Payload *string `json:"payload,omitempty"`
+	Payload interface{} `json:"payload,omitempty"`
 
 	/*
 	   Specifies if the given environment is one that end-users directly interact with.
@@ -2424,7 +2424,7 @@ type ReposCreateDispatchEventReqBody struct {
 	ClientPayload interface{} `json:"client_payload,omitempty"`
 
 	// **Required:** A custom webhook event name.
-	EventType *string `json:"event_type,omitempty"`
+	EventType *string `json:"event_type"`
 }
 
 /*
@@ -4136,7 +4136,8 @@ func ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ReposDeleteResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4195,7 +4196,7 @@ func (r *ReposDeleteReq) body() interface{} {
 }
 
 func (r *ReposDeleteReq) dataStatuses() []int {
-	return []int{}
+	return []int{204}
 }
 
 func (r *ReposDeleteReq) validStatuses() []int {
@@ -4225,6 +4226,16 @@ func (r *ReposDeleteReq) Rel(link RelName, resp *ReposDeleteResponse) bool {
 }
 
 /*
+ReposDeleteResponseBody is a response body for ReposDelete
+
+https://developer.github.com/v3/repos/#delete-a-repository
+*/
+type ReposDeleteResponseBody struct {
+	DocumentationUrl string `json:"documentation_url,omitempty"`
+	Message          string `json:"message,omitempty"`
+}
+
+/*
 ReposDeleteResponse is a response for ReposDelete
 
 https://developer.github.com/v3/repos/#delete-a-repository
@@ -4232,6 +4243,7 @@ https://developer.github.com/v3/repos/#delete-a-repository
 type ReposDeleteResponse struct {
 	response
 	request *ReposDeleteReq
+	Data    *ReposDeleteResponseBody
 }
 
 /*
@@ -8874,6 +8886,14 @@ type ReposGetCommunityProfileMetricsReq struct {
 	_url  string
 	Owner string
 	Repo  string
+
+	/*
+	We're currently offering a preview of the Community Profile API (also known as
+	community health). To access the API during the preview period, you must provide
+	a custom [media type](https://developer.github.com/v3/media) in the  `Accept`
+	header.
+	*/
+	BlackPantherPreview bool
 }
 
 func (r *ReposGetCommunityProfileMetricsReq) url() string {
@@ -8895,7 +8915,13 @@ func (r *ReposGetCommunityProfileMetricsReq) urlQuery() url.Values {
 
 func (r *ReposGetCommunityProfileMetricsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"black-panther": r.BlackPantherPreview}
+	if requiredPreviews {
+		previewVals["black-panther"] = true
+	}
+	if allPreviews {
+		previewVals["black-panther"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 

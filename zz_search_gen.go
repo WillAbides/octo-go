@@ -1010,6 +1010,9 @@ func (r *SearchTopicsReq) urlQuery() url.Values {
 func (r *SearchTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
+	if requiredPreviews {
+		previewVals["mercy"] = true
+	}
 	if allPreviews {
 		previewVals["mercy"] = true
 	}

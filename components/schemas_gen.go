@@ -4,6 +4,29 @@ package components
 
 import "encoding/json"
 
+type ActionsBillingUsage struct {
+
+	// The amount of free GitHub Actions minutes available.
+	IncludedMinutes      json.Number `json:"included_minutes,omitempty"`
+	MinutesUsedBreakdown struct {
+
+		// Total minutes used on macOS runner machines.
+		MACOS json.Number `json:"MACOS,omitempty"`
+
+		// Total minutes used on Ubuntu runner machines.
+		UBUNTU json.Number `json:"UBUNTU,omitempty"`
+
+		// Total minutes used on Windows runner machines.
+		WINDOWS json.Number `json:"WINDOWS,omitempty"`
+	} `json:"minutes_used_breakdown,omitempty"`
+
+	// The sum of the free and paid GitHub Actions minutes used.
+	TotalMinutesUsed json.Number `json:"total_minutes_used,omitempty"`
+
+	// The total paid GitHub Actions minutes used.
+	TotalPaidMinutesUsed json.Number `json:"total_paid_minutes_used,omitempty"`
+}
+
 type ActionsPublicKey struct {
 	Key   string `json:"key,omitempty"`
 	KeyId string `json:"key_id,omitempty"`
@@ -275,18 +298,18 @@ type BranchProtection struct {
 		DismissStaleReviews   bool `json:"dismiss_stale_reviews,omitempty"`
 		DismissalRestrictions struct {
 			Teams []struct {
-				Description     string `json:"description,omitempty"`
-				HtmlUrl         string `json:"html_url,omitempty"`
-				Id              int64  `json:"id,omitempty"`
-				MembersUrl      string `json:"members_url,omitempty"`
-				Name            string `json:"name,omitempty"`
-				NodeId          string `json:"node_id,omitempty"`
-				Parent          string `json:"parent,omitempty"`
-				Permission      string `json:"permission,omitempty"`
-				Privacy         string `json:"privacy,omitempty"`
-				RepositoriesUrl string `json:"repositories_url,omitempty"`
-				Slug            string `json:"slug,omitempty"`
-				Url             string `json:"url,omitempty"`
+				Description     string      `json:"description,omitempty"`
+				HtmlUrl         string      `json:"html_url,omitempty"`
+				Id              int64       `json:"id,omitempty"`
+				MembersUrl      string      `json:"members_url,omitempty"`
+				Name            string      `json:"name,omitempty"`
+				NodeId          string      `json:"node_id,omitempty"`
+				Parent          interface{} `json:"parent,omitempty"`
+				Permission      string      `json:"permission,omitempty"`
+				Privacy         string      `json:"privacy,omitempty"`
+				RepositoriesUrl string      `json:"repositories_url,omitempty"`
+				Slug            string      `json:"slug,omitempty"`
+				Url             string      `json:"url,omitempty"`
 			} `json:"teams,omitempty"`
 			TeamsUrl string `json:"teams_url,omitempty"`
 			Url      string `json:"url,omitempty"`
@@ -352,18 +375,18 @@ type BranchProtection struct {
 		} `json:"apps,omitempty"`
 		AppsUrl string `json:"apps_url,omitempty"`
 		Teams   []struct {
-			Description     string `json:"description,omitempty"`
-			HtmlUrl         string `json:"html_url,omitempty"`
-			Id              int64  `json:"id,omitempty"`
-			MembersUrl      string `json:"members_url,omitempty"`
-			Name            string `json:"name,omitempty"`
-			NodeId          string `json:"node_id,omitempty"`
-			Parent          string `json:"parent,omitempty"`
-			Permission      string `json:"permission,omitempty"`
-			Privacy         string `json:"privacy,omitempty"`
-			RepositoriesUrl string `json:"repositories_url,omitempty"`
-			Slug            string `json:"slug,omitempty"`
-			Url             string `json:"url,omitempty"`
+			Description     string      `json:"description,omitempty"`
+			HtmlUrl         string      `json:"html_url,omitempty"`
+			Id              int64       `json:"id,omitempty"`
+			MembersUrl      string      `json:"members_url,omitempty"`
+			Name            string      `json:"name,omitempty"`
+			NodeId          string      `json:"node_id,omitempty"`
+			Parent          interface{} `json:"parent,omitempty"`
+			Permission      string      `json:"permission,omitempty"`
+			Privacy         string      `json:"privacy,omitempty"`
+			RepositoriesUrl string      `json:"repositories_url,omitempty"`
+			Slug            string      `json:"slug,omitempty"`
+			Url             string      `json:"url,omitempty"`
 		} `json:"teams,omitempty"`
 		TeamsUrl string `json:"teams_url,omitempty"`
 		Url      string `json:"url,omitempty"`
@@ -422,18 +445,18 @@ type BranchRestrictionPolicy struct {
 	} `json:"apps,omitempty"`
 	AppsUrl string `json:"apps_url,omitempty"`
 	Teams   []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
+		Description     string      `json:"description,omitempty"`
+		HtmlUrl         string      `json:"html_url,omitempty"`
+		Id              int64       `json:"id,omitempty"`
+		MembersUrl      string      `json:"members_url,omitempty"`
+		Name            string      `json:"name,omitempty"`
+		NodeId          string      `json:"node_id,omitempty"`
+		Parent          interface{} `json:"parent,omitempty"`
+		Permission      string      `json:"permission,omitempty"`
+		Privacy         string      `json:"privacy,omitempty"`
+		RepositoriesUrl string      `json:"repositories_url,omitempty"`
+		Slug            string      `json:"slug,omitempty"`
+		Url             string      `json:"url,omitempty"`
 	} `json:"teams,omitempty"`
 	TeamsUrl string `json:"teams_url,omitempty"`
 	Url      string `json:"url,omitempty"`
@@ -586,9 +609,11 @@ type CheckRun struct {
 	Name        string `json:"name,omitempty"`
 	NodeId      string `json:"node_id,omitempty"`
 	Output      struct {
-		Summary string `json:"summary,omitempty"`
-		Text    string `json:"text,omitempty"`
-		Title   string `json:"title,omitempty"`
+		AnnotationsCount int64  `json:"annotations_count,omitempty"`
+		AnnotationsUrl   string `json:"annotations_url,omitempty"`
+		Summary          string `json:"summary,omitempty"`
+		Text             string `json:"text,omitempty"`
+		Title            string `json:"title,omitempty"`
 	} `json:"output,omitempty"`
 	PullRequests []struct {
 		Base struct {
@@ -823,7 +848,7 @@ type CheckSuite struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -936,7 +961,7 @@ type CheckSuitePreference struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -1079,6 +1104,18 @@ type Collaborator struct {
 	SubscriptionsUrl  string          `json:"subscriptions_url,omitempty"`
 	Type              string          `json:"type,omitempty"`
 	Url               string          `json:"url,omitempty"`
+}
+
+type CombinedBillingUsage struct {
+
+	// Numbers of days left in billing cycle.
+	DaysLeftInBillingCycle json.Number `json:"days_left_in_billing_cycle,omitempty"`
+
+	// Estimated storage space (GB) used in billing cycle.
+	EstimatedPaidStorageForMonth json.Number `json:"estimated_paid_storage_for_month,omitempty"`
+
+	// Estimated sum of free and paid storage space (GB) used in billing cycle.
+	EstimatedStorageForMonth json.Number `json:"estimated_storage_for_month,omitempty"`
 }
 
 type CombinedCommitStatus struct {
@@ -1736,17 +1773,19 @@ type ContentFile struct {
 		Html string `json:"html,omitempty"`
 		Self string `json:"self,omitempty"`
 	} `json:"_links,omitempty"`
-	Content     string      `json:"content,omitempty"`
-	DownloadUrl string      `json:"download_url,omitempty"`
-	Encoding    string      `json:"encoding,omitempty"`
-	GitUrl      string      `json:"git_url,omitempty"`
-	HtmlUrl     string      `json:"html_url,omitempty"`
-	Name        string      `json:"name,omitempty"`
-	Path        string      `json:"path,omitempty"`
-	Sha         string      `json:"sha,omitempty"`
-	Size        json.Number `json:"size,omitempty"`
-	Type        string      `json:"type,omitempty"`
-	Url         string      `json:"url,omitempty"`
+	Content         string      `json:"content,omitempty"`
+	DownloadUrl     string      `json:"download_url,omitempty"`
+	Encoding        string      `json:"encoding,omitempty"`
+	GitUrl          string      `json:"git_url,omitempty"`
+	HtmlUrl         string      `json:"html_url,omitempty"`
+	Name            string      `json:"name,omitempty"`
+	Path            string      `json:"path,omitempty"`
+	Sha             string      `json:"sha,omitempty"`
+	Size            json.Number `json:"size,omitempty"`
+	SubmoduleGitUrl string      `json:"submodule_git_url,omitempty"`
+	Target          string      `json:"target,omitempty"`
+	Type            string      `json:"type,omitempty"`
+	Url             string      `json:"url,omitempty"`
 }
 
 type ContentReferenceAttachment struct {
@@ -2059,19 +2098,25 @@ type FileCommit2 struct {
 			Verified  bool   `json:"verified,omitempty"`
 		} `json:"verification,omitempty"`
 	} `json:"commit,omitempty"`
-	Content string `json:"content,omitempty"`
+	Content interface{} `json:"content,omitempty"`
 }
 
 type FullRepository struct {
-	AllowMergeCommit    bool   `json:"allow_merge_commit,omitempty"`
-	AllowRebaseMerge    bool   `json:"allow_rebase_merge,omitempty"`
-	AllowSquashMerge    bool   `json:"allow_squash_merge,omitempty"`
-	ArchiveUrl          string `json:"archive_url,omitempty"`
-	Archived            bool   `json:"archived,omitempty"`
-	AssigneesUrl        string `json:"assignees_url,omitempty"`
-	BlobsUrl            string `json:"blobs_url,omitempty"`
-	BranchesUrl         string `json:"branches_url,omitempty"`
-	CloneUrl            string `json:"clone_url,omitempty"`
+	AllowMergeCommit bool   `json:"allow_merge_commit,omitempty"`
+	AllowRebaseMerge bool   `json:"allow_rebase_merge,omitempty"`
+	AllowSquashMerge bool   `json:"allow_squash_merge,omitempty"`
+	ArchiveUrl       string `json:"archive_url,omitempty"`
+	Archived         bool   `json:"archived,omitempty"`
+	AssigneesUrl     string `json:"assignees_url,omitempty"`
+	BlobsUrl         string `json:"blobs_url,omitempty"`
+	BranchesUrl      string `json:"branches_url,omitempty"`
+	CloneUrl         string `json:"clone_url,omitempty"`
+	CodeOfConduct    struct {
+		HtmlUrl string `json:"html_url,omitempty"`
+		Key     string `json:"key,omitempty"`
+		Name    string `json:"name,omitempty"`
+		Url     string `json:"url,omitempty"`
+	} `json:"code_of_conduct,omitempty"`
 	CollaboratorsUrl    string `json:"collaborators_url,omitempty"`
 	CommentsUrl         string `json:"comments_url,omitempty"`
 	CommitsUrl          string `json:"commits_url,omitempty"`
@@ -2260,7 +2305,7 @@ type FullRepository struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -2368,7 +2413,7 @@ type FullRepository struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -2587,7 +2632,7 @@ type FullRepository2 struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -2695,7 +2740,7 @@ type FullRepository2 struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -2703,24 +2748,24 @@ type FullRepository2 struct {
 		Visibility         string          `json:"visibility,omitempty"`
 		WatchersCount      int64           `json:"watchers_count,omitempty"`
 	} `json:"source,omitempty"`
-	SshUrl             string   `json:"ssh_url,omitempty"`
-	StargazersCount    int64    `json:"stargazers_count,omitempty"`
-	StargazersUrl      string   `json:"stargazers_url,omitempty"`
-	StatusesUrl        string   `json:"statuses_url,omitempty"`
-	SubscribersCount   int64    `json:"subscribers_count,omitempty"`
-	SubscribersUrl     string   `json:"subscribers_url,omitempty"`
-	SubscriptionUrl    string   `json:"subscription_url,omitempty"`
-	SvnUrl             string   `json:"svn_url,omitempty"`
-	TagsUrl            string   `json:"tags_url,omitempty"`
-	TeamsUrl           string   `json:"teams_url,omitempty"`
-	TempCloneToken     string   `json:"temp_clone_token,omitempty"`
-	TemplateRepository string   `json:"template_repository,omitempty"`
-	Topics             []string `json:"topics,omitempty"`
-	TreesUrl           string   `json:"trees_url,omitempty"`
-	UpdatedAt          string   `json:"updated_at,omitempty"`
-	Url                string   `json:"url,omitempty"`
-	Visibility         string   `json:"visibility,omitempty"`
-	WatchersCount      int64    `json:"watchers_count,omitempty"`
+	SshUrl             string      `json:"ssh_url,omitempty"`
+	StargazersCount    int64       `json:"stargazers_count,omitempty"`
+	StargazersUrl      string      `json:"stargazers_url,omitempty"`
+	StatusesUrl        string      `json:"statuses_url,omitempty"`
+	SubscribersCount   int64       `json:"subscribers_count,omitempty"`
+	SubscribersUrl     string      `json:"subscribers_url,omitempty"`
+	SubscriptionUrl    string      `json:"subscription_url,omitempty"`
+	SvnUrl             string      `json:"svn_url,omitempty"`
+	TagsUrl            string      `json:"tags_url,omitempty"`
+	TeamsUrl           string      `json:"teams_url,omitempty"`
+	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
+	TemplateRepository interface{} `json:"template_repository,omitempty"`
+	Topics             []string    `json:"topics,omitempty"`
+	TreesUrl           string      `json:"trees_url,omitempty"`
+	UpdatedAt          string      `json:"updated_at,omitempty"`
+	Url                string      `json:"url,omitempty"`
+	Visibility         string      `json:"visibility,omitempty"`
+	WatchersCount      int64       `json:"watchers_count,omitempty"`
 }
 
 type Gist struct {
@@ -2999,7 +3044,7 @@ type GitTree2 struct {
 		Mode string      `json:"mode"`
 		Path string      `json:"path"`
 		Sha  string      `json:"sha"`
-		Size json.Number `json:"size"`
+		Size json.Number `json:"size,omitempty"`
 		Type string      `json:"type"`
 		Url  string      `json:"url"`
 	} `json:"tree,omitempty"`
@@ -3125,21 +3170,11 @@ type Import2 struct {
 	RepositoryUrl   string      `json:"repository_url,omitempty"`
 	Status          string      `json:"status,omitempty"`
 	StatusText      string      `json:"status_text,omitempty"`
+	TfvcProject     string      `json:"tfvc_project,omitempty"`
 	Url             string      `json:"url,omitempty"`
 	UseLfs          string      `json:"use_lfs,omitempty"`
 	Vcs             string      `json:"vcs,omitempty"`
 	VcsUrl          string      `json:"vcs_url,omitempty"`
-}
-
-type Import3 struct {
-	AuthorsUrl    string `json:"authors_url,omitempty"`
-	HtmlUrl       string `json:"html_url,omitempty"`
-	RepositoryUrl string `json:"repository_url,omitempty"`
-	Status        string `json:"status,omitempty"`
-	Url           string `json:"url,omitempty"`
-	UseLfs        string `json:"use_lfs,omitempty"`
-	Vcs           string `json:"vcs,omitempty"`
-	VcsUrl        string `json:"vcs_url,omitempty"`
 }
 
 type Installation struct {
@@ -3311,7 +3346,7 @@ type InstallationToken struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -4315,7 +4350,7 @@ type IssueWithRepo struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -4544,7 +4579,7 @@ type MarketplacePurchase struct {
 			Url                 string   `json:"url,omitempty"`
 			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
 		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
+		UnitCount int64 `json:"unit_count,omitempty"`
 	} `json:"marketplace_pending_change,omitempty"`
 	MarketplacePurchase struct {
 		BillingCycle    string `json:"billing_cycle,omitempty"`
@@ -4566,7 +4601,7 @@ type MarketplacePurchase struct {
 			Url                 string   `json:"url,omitempty"`
 			YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
 		} `json:"plan,omitempty"`
-		UnitCount string `json:"unit_count,omitempty"`
+		UnitCount int64  `json:"unit_count,omitempty"`
 		UpdatedAt string `json:"updated_at,omitempty"`
 	} `json:"marketplace_purchase,omitempty"`
 	OrganizationBillingEmail string `json:"organization_billing_email,omitempty"`
@@ -4694,7 +4729,7 @@ type Migration struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -4821,7 +4856,7 @@ type MigrationWithShortOrg struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -4970,7 +5005,7 @@ type MinimalRepository struct {
 	TagsUrl            string          `json:"tags_url,omitempty"`
 	TeamsUrl           string          `json:"teams_url,omitempty"`
 	TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-	TemplateRepository string          `json:"template_repository,omitempty"`
+	TemplateRepository interface{}     `json:"template_repository,omitempty"`
 	Topics             []string        `json:"topics,omitempty"`
 	TreesUrl           string          `json:"trees_url,omitempty"`
 	UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -5084,8 +5119,10 @@ type OrganizationFull struct {
 	NodeId                               string      `json:"node_id,omitempty"`
 	OwnedPrivateRepos                    int64       `json:"owned_private_repos,omitempty"`
 	Plan                                 struct {
+		FilledSeats  json.Number `json:"filled_seats,omitempty"`
 		Name         string      `json:"name,omitempty"`
 		PrivateRepos int64       `json:"private_repos,omitempty"`
+		Seats        json.Number `json:"seats,omitempty"`
 		Space        json.Number `json:"space,omitempty"`
 	} `json:"plan,omitempty"`
 	PrivateGists                int64  `json:"private_gists,omitempty"`
@@ -5143,6 +5180,18 @@ type OrganizationSimple struct {
 	PublicMembersUrl string `json:"public_members_url,omitempty"`
 	ReposUrl         string `json:"repos_url,omitempty"`
 	Url              string `json:"url,omitempty"`
+}
+
+type PackagesBillingUsage struct {
+
+	// Free storage space (GB) for GitHub Packages.
+	IncludedGigabytesBandwidth json.Number `json:"included_gigabytes_bandwidth,omitempty"`
+
+	// Sum of the free and paid storage space (GB) for GitHuub Packages.
+	TotalGigabytesBandwidthUsed json.Number `json:"total_gigabytes_bandwidth_used,omitempty"`
+
+	// Total paid storage space (GB) for GitHuub Packages.
+	TotalPaidGigabytesBandwidthUsed json.Number `json:"total_paid_gigabytes_bandwidth_used,omitempty"`
 }
 
 type Page struct {
@@ -5351,18 +5400,18 @@ type ProtectedBranchPullRequestReview struct {
 	DismissStaleReviews   bool `json:"dismiss_stale_reviews,omitempty"`
 	DismissalRestrictions struct {
 		Teams []struct {
-			Description     string `json:"description,omitempty"`
-			HtmlUrl         string `json:"html_url,omitempty"`
-			Id              int64  `json:"id,omitempty"`
-			MembersUrl      string `json:"members_url,omitempty"`
-			Name            string `json:"name,omitempty"`
-			NodeId          string `json:"node_id,omitempty"`
-			Parent          string `json:"parent,omitempty"`
-			Permission      string `json:"permission,omitempty"`
-			Privacy         string `json:"privacy,omitempty"`
-			RepositoriesUrl string `json:"repositories_url,omitempty"`
-			Slug            string `json:"slug,omitempty"`
-			Url             string `json:"url,omitempty"`
+			Description     string      `json:"description,omitempty"`
+			HtmlUrl         string      `json:"html_url,omitempty"`
+			Id              int64       `json:"id,omitempty"`
+			MembersUrl      string      `json:"members_url,omitempty"`
+			Name            string      `json:"name,omitempty"`
+			NodeId          string      `json:"node_id,omitempty"`
+			Parent          interface{} `json:"parent,omitempty"`
+			Permission      string      `json:"permission,omitempty"`
+			Privacy         string      `json:"privacy,omitempty"`
+			RepositoriesUrl string      `json:"repositories_url,omitempty"`
+			Slug            string      `json:"slug,omitempty"`
+			Url             string      `json:"url,omitempty"`
 		} `json:"teams,omitempty"`
 		TeamsUrl string `json:"teams_url,omitempty"`
 		Url      string `json:"url,omitempty"`
@@ -5463,27 +5512,33 @@ type PublicRepository struct {
 }
 
 type PublicUser struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	Bio               string `json:"bio,omitempty"`
-	Blog              string `json:"blog,omitempty"`
-	Company           string `json:"company,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
-	Email             string `json:"email,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	Followers         int64  `json:"followers,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	Following         int64  `json:"following,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	Hireable          bool   `json:"hireable,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Location          string `json:"location,omitempty"`
-	Login             string `json:"login,omitempty"`
-	Name              string `json:"name,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	AvatarUrl        string `json:"avatar_url,omitempty"`
+	Bio              string `json:"bio,omitempty"`
+	Blog             string `json:"blog,omitempty"`
+	Company          string `json:"company,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	Email            string `json:"email,omitempty"`
+	EventsUrl        string `json:"events_url,omitempty"`
+	Followers        int64  `json:"followers,omitempty"`
+	FollowersUrl     string `json:"followers_url,omitempty"`
+	Following        int64  `json:"following,omitempty"`
+	FollowingUrl     string `json:"following_url,omitempty"`
+	GistsUrl         string `json:"gists_url,omitempty"`
+	GravatarId       string `json:"gravatar_id,omitempty"`
+	Hireable         bool   `json:"hireable,omitempty"`
+	HtmlUrl          string `json:"html_url,omitempty"`
+	Id               int64  `json:"id,omitempty"`
+	Location         string `json:"location,omitempty"`
+	Login            string `json:"login,omitempty"`
+	Name             string `json:"name,omitempty"`
+	NodeId           string `json:"node_id,omitempty"`
+	OrganizationsUrl string `json:"organizations_url,omitempty"`
+	Plan             struct {
+		Collaborators int64       `json:"collaborators,omitempty"`
+		Name          string      `json:"name,omitempty"`
+		PrivateRepos  int64       `json:"private_repos,omitempty"`
+		Space         json.Number `json:"space,omitempty"`
+	} `json:"plan,omitempty"`
 	PublicGists       int64  `json:"public_gists,omitempty"`
 	PublicRepos       int64  `json:"public_repos,omitempty"`
 	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
@@ -5664,7 +5719,7 @@ type PullRequest struct {
 			TagsUrl            string          `json:"tags_url,omitempty"`
 			TeamsUrl           string          `json:"teams_url,omitempty"`
 			TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-			TemplateRepository string          `json:"template_repository,omitempty"`
+			TemplateRepository interface{}     `json:"template_repository,omitempty"`
 			Topics             []string        `json:"topics,omitempty"`
 			TreesUrl           string          `json:"trees_url,omitempty"`
 			UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -5802,7 +5857,7 @@ type PullRequest struct {
 			TagsUrl            string          `json:"tags_url,omitempty"`
 			TeamsUrl           string          `json:"teams_url,omitempty"`
 			TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-			TemplateRepository string          `json:"template_repository,omitempty"`
+			TemplateRepository interface{}     `json:"template_repository,omitempty"`
 			Topics             []string        `json:"topics,omitempty"`
 			TreesUrl           string          `json:"trees_url,omitempty"`
 			UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -5933,18 +5988,18 @@ type PullRequest struct {
 		Url               string `json:"url,omitempty"`
 	} `json:"requested_reviewers,omitempty"`
 	RequestedTeams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
+		Description     string      `json:"description,omitempty"`
+		HtmlUrl         string      `json:"html_url,omitempty"`
+		Id              int64       `json:"id,omitempty"`
+		MembersUrl      string      `json:"members_url,omitempty"`
+		Name            string      `json:"name,omitempty"`
+		NodeId          string      `json:"node_id,omitempty"`
+		Parent          interface{} `json:"parent,omitempty"`
+		Permission      string      `json:"permission,omitempty"`
+		Privacy         string      `json:"privacy,omitempty"`
+		RepositoriesUrl string      `json:"repositories_url,omitempty"`
+		Slug            string      `json:"slug,omitempty"`
+		Url             string      `json:"url,omitempty"`
 	} `json:"requested_teams,omitempty"`
 	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
 	ReviewComments    int64  `json:"review_comments,omitempty"`
@@ -6282,7 +6337,7 @@ type PullRequestReviewRequest struct {
 			TagsUrl            string          `json:"tags_url,omitempty"`
 			TeamsUrl           string          `json:"teams_url,omitempty"`
 			TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-			TemplateRepository string          `json:"template_repository,omitempty"`
+			TemplateRepository interface{}     `json:"template_repository,omitempty"`
 			Topics             []string        `json:"topics,omitempty"`
 			TreesUrl           string          `json:"trees_url,omitempty"`
 			UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -6416,7 +6471,7 @@ type PullRequestReviewRequest struct {
 			TagsUrl            string          `json:"tags_url,omitempty"`
 			TeamsUrl           string          `json:"teams_url,omitempty"`
 			TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-			TemplateRepository string          `json:"template_repository,omitempty"`
+			TemplateRepository interface{}     `json:"template_repository,omitempty"`
 			Topics             []string        `json:"topics,omitempty"`
 			TreesUrl           string          `json:"trees_url,omitempty"`
 			UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -6522,18 +6577,18 @@ type PullRequestReviewRequest struct {
 		Url               string `json:"url"`
 	} `json:"requested_reviewers,omitempty"`
 	RequestedTeams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
+		Description     string      `json:"description,omitempty"`
+		HtmlUrl         string      `json:"html_url,omitempty"`
+		Id              int64       `json:"id,omitempty"`
+		MembersUrl      string      `json:"members_url,omitempty"`
+		Name            string      `json:"name,omitempty"`
+		NodeId          string      `json:"node_id,omitempty"`
+		Parent          interface{} `json:"parent,omitempty"`
+		Permission      string      `json:"permission,omitempty"`
+		Privacy         string      `json:"privacy,omitempty"`
+		RepositoriesUrl string      `json:"repositories_url,omitempty"`
+		Slug            string      `json:"slug,omitempty"`
+		Url             string      `json:"url,omitempty"`
 	} `json:"requested_teams,omitempty"`
 	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
 	ReviewCommentsUrl string `json:"review_comments_url,omitempty"`
@@ -6730,7 +6785,7 @@ type PullRequestSimple struct {
 			TagsUrl            string          `json:"tags_url,omitempty"`
 			TeamsUrl           string          `json:"teams_url,omitempty"`
 			TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-			TemplateRepository string          `json:"template_repository,omitempty"`
+			TemplateRepository interface{}     `json:"template_repository,omitempty"`
 			Topics             []string        `json:"topics,omitempty"`
 			TreesUrl           string          `json:"trees_url,omitempty"`
 			UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -6864,7 +6919,7 @@ type PullRequestSimple struct {
 			TagsUrl            string          `json:"tags_url,omitempty"`
 			TeamsUrl           string          `json:"teams_url,omitempty"`
 			TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-			TemplateRepository string          `json:"template_repository,omitempty"`
+			TemplateRepository interface{}     `json:"template_repository,omitempty"`
 			Topics             []string        `json:"topics,omitempty"`
 			TreesUrl           string          `json:"trees_url,omitempty"`
 			UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -6970,18 +7025,18 @@ type PullRequestSimple struct {
 		Url               string `json:"url,omitempty"`
 	} `json:"requested_reviewers,omitempty"`
 	RequestedTeams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
+		Description     string      `json:"description,omitempty"`
+		HtmlUrl         string      `json:"html_url,omitempty"`
+		Id              int64       `json:"id,omitempty"`
+		MembersUrl      string      `json:"members_url,omitempty"`
+		Name            string      `json:"name,omitempty"`
+		NodeId          string      `json:"node_id,omitempty"`
+		Parent          interface{} `json:"parent,omitempty"`
+		Permission      string      `json:"permission,omitempty"`
+		Privacy         string      `json:"privacy,omitempty"`
+		RepositoriesUrl string      `json:"repositories_url,omitempty"`
+		Slug            string      `json:"slug,omitempty"`
+		Url             string      `json:"url,omitempty"`
 	} `json:"requested_teams,omitempty"`
 	ReviewCommentUrl  string `json:"review_comment_url,omitempty"`
 	ReviewCommentsUrl string `json:"review_comments_url,omitempty"`
@@ -7352,7 +7407,7 @@ type Repository struct {
 	TagsUrl            string          `json:"tags_url,omitempty"`
 	TeamsUrl           string          `json:"teams_url,omitempty"`
 	TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-	TemplateRepository string          `json:"template_repository,omitempty"`
+	TemplateRepository interface{}     `json:"template_repository,omitempty"`
 	Topics             []string        `json:"topics,omitempty"`
 	TreesUrl           string          `json:"trees_url,omitempty"`
 	UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -7454,7 +7509,7 @@ type Repository2 struct {
 	TagsUrl            string      `json:"tags_url,omitempty"`
 	TeamsUrl           string      `json:"teams_url,omitempty"`
 	TempCloneToken     string      `json:"temp_clone_token,omitempty"`
-	TemplateRepository string      `json:"template_repository,omitempty"`
+	TemplateRepository interface{} `json:"template_repository,omitempty"`
 	Topics             []string    `json:"topics,omitempty"`
 	TreesUrl           string      `json:"trees_url,omitempty"`
 	UpdatedAt          string      `json:"updated_at,omitempty"`
@@ -7651,7 +7706,7 @@ type Repository3 struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -7817,6 +7872,7 @@ type RepositorySubscription struct {
 }
 
 type Runner struct {
+	Busy   bool   `json:"busy,omitempty"`
 	Id     int64  `json:"id,omitempty"`
 	Name   string `json:"name,omitempty"`
 	Os     string `json:"os,omitempty"`
@@ -7824,6 +7880,7 @@ type Runner struct {
 }
 
 type Runner2 struct {
+	Busy   bool   `json:"busy"`
 	Id     int64  `json:"id"`
 	Name   string `json:"name"`
 	Os     string `json:"os"`
@@ -8090,18 +8147,18 @@ type SimpleCommit2 struct {
 
 type SimplePullRequestReviewRequest struct {
 	Teams []struct {
-		Description     string `json:"description,omitempty"`
-		HtmlUrl         string `json:"html_url,omitempty"`
-		Id              int64  `json:"id,omitempty"`
-		MembersUrl      string `json:"members_url,omitempty"`
-		Name            string `json:"name,omitempty"`
-		NodeId          string `json:"node_id,omitempty"`
-		Parent          string `json:"parent,omitempty"`
-		Permission      string `json:"permission,omitempty"`
-		Privacy         string `json:"privacy,omitempty"`
-		RepositoriesUrl string `json:"repositories_url,omitempty"`
-		Slug            string `json:"slug,omitempty"`
-		Url             string `json:"url,omitempty"`
+		Description     string      `json:"description,omitempty"`
+		HtmlUrl         string      `json:"html_url,omitempty"`
+		Id              int64       `json:"id,omitempty"`
+		MembersUrl      string      `json:"members_url,omitempty"`
+		Name            string      `json:"name,omitempty"`
+		NodeId          string      `json:"node_id,omitempty"`
+		Parent          interface{} `json:"parent,omitempty"`
+		Permission      string      `json:"permission,omitempty"`
+		Privacy         string      `json:"privacy,omitempty"`
+		RepositoriesUrl string      `json:"repositories_url,omitempty"`
+		Slug            string      `json:"slug,omitempty"`
+		Url             string      `json:"url,omitempty"`
 	} `json:"teams,omitempty"`
 	Users []struct {
 		AvatarUrl         string `json:"avatar_url,omitempty"`
@@ -8265,7 +8322,7 @@ type StarredRepository struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -8327,18 +8384,18 @@ type Tag struct {
 }
 
 type Team struct {
-	Description     string `json:"description,omitempty"`
-	HtmlUrl         string `json:"html_url,omitempty"`
-	Id              int64  `json:"id,omitempty"`
-	MembersUrl      string `json:"members_url,omitempty"`
-	Name            string `json:"name,omitempty"`
-	NodeId          string `json:"node_id,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	Url             string `json:"url,omitempty"`
+	Description     string      `json:"description,omitempty"`
+	HtmlUrl         string      `json:"html_url,omitempty"`
+	Id              int64       `json:"id,omitempty"`
+	MembersUrl      string      `json:"members_url,omitempty"`
+	Name            string      `json:"name,omitempty"`
+	NodeId          string      `json:"node_id,omitempty"`
+	Parent          interface{} `json:"parent,omitempty"`
+	Permission      string      `json:"permission,omitempty"`
+	Privacy         string      `json:"privacy,omitempty"`
+	RepositoriesUrl string      `json:"repositories_url,omitempty"`
+	Slug            string      `json:"slug,omitempty"`
+	Url             string      `json:"url,omitempty"`
 }
 
 type Team2 struct {
@@ -8499,14 +8556,14 @@ type TeamFull struct {
 		Type                    string `json:"type,omitempty"`
 		Url                     string `json:"url,omitempty"`
 	} `json:"organization,omitempty"`
-	Parent          string `json:"parent,omitempty"`
-	Permission      string `json:"permission,omitempty"`
-	Privacy         string `json:"privacy,omitempty"`
-	ReposCount      int64  `json:"repos_count,omitempty"`
-	RepositoriesUrl string `json:"repositories_url,omitempty"`
-	Slug            string `json:"slug,omitempty"`
-	UpdatedAt       string `json:"updated_at,omitempty"`
-	Url             string `json:"url,omitempty"`
+	Parent          interface{} `json:"parent,omitempty"`
+	Permission      string      `json:"permission,omitempty"`
+	Privacy         string      `json:"privacy,omitempty"`
+	ReposCount      int64       `json:"repos_count,omitempty"`
+	RepositoriesUrl string      `json:"repositories_url,omitempty"`
+	Slug            string      `json:"slug,omitempty"`
+	UpdatedAt       string      `json:"updated_at,omitempty"`
+	Url             string      `json:"url,omitempty"`
 }
 
 type TeamMembership struct {
@@ -8668,7 +8725,7 @@ type TeamRepository struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -8771,7 +8828,7 @@ type TeamRepository struct {
 		TagsUrl            string          `json:"tags_url,omitempty"`
 		TeamsUrl           string          `json:"teams_url,omitempty"`
 		TempCloneToken     string          `json:"temp_clone_token,omitempty"`
-		TemplateRepository string          `json:"template_repository,omitempty"`
+		TemplateRepository interface{}     `json:"template_repository,omitempty"`
 		Topics             []string        `json:"topics,omitempty"`
 		TreesUrl           string          `json:"trees_url,omitempty"`
 		UpdatedAt          string          `json:"updated_at,omitempty"`
@@ -8919,7 +8976,7 @@ type UserMarketplacePurchase struct {
 		Url                 string   `json:"url,omitempty"`
 		YearlyPriceInCents  int64    `json:"yearly_price_in_cents,omitempty"`
 	} `json:"plan,omitempty"`
-	UnitCount string `json:"unit_count,omitempty"`
+	UnitCount int64  `json:"unit_count,omitempty"`
 	UpdatedAt string `json:"updated_at,omitempty"`
 }
 
@@ -8948,24 +9005,6 @@ type ViewTraffic struct {
 		Timestamp string `json:"timestamp"`
 		Uniques   int64  `json:"uniques"`
 	} `json:"views,omitempty"`
-}
-
-type WorkfloRunUsage struct {
-	Billable struct {
-		MACOS struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"MACOS,omitempty"`
-		UBUNTU struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"UBUNTU,omitempty"`
-		WINDOWS struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"WINDOWS,omitempty"`
-	} `json:"billable,omitempty"`
-	RunDurationMs int64 `json:"run_duration_ms,omitempty"`
 }
 
 type Workflow struct {
@@ -9165,6 +9204,24 @@ type WorkflowRun struct {
 	Url         string `json:"url,omitempty"`
 	WorkflowId  int64  `json:"workflow_id,omitempty"`
 	WorkflowUrl string `json:"workflow_url,omitempty"`
+}
+
+type WorkflowRunUsage struct {
+	Billable struct {
+		MACOS struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"MACOS,omitempty"`
+		UBUNTU struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"UBUNTU,omitempty"`
+		WINDOWS struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"WINDOWS,omitempty"`
+	} `json:"billable,omitempty"`
+	RunDurationMs int64 `json:"run_duration_ms,omitempty"`
 }
 
 type WorkflowUsage struct {

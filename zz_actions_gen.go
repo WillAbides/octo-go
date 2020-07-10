@@ -4,6 +4,7 @@ package octo
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
 	"net/http"
@@ -392,7 +393,7 @@ type ActionsCreateOrUpdateOrgSecretReqBody struct {
 	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
 	   endpoints.
 	*/
-	SelectedRepositoryIds []string `json:"selected_repository_ids,omitempty"`
+	SelectedRepositoryIds []json.Number `json:"selected_repository_ids,omitempty"`
 
 	/*
 	   Configures the access that repositories have to the organization secret. Can be
@@ -1074,6 +1075,147 @@ type ActionsCreateRemoveTokenForRepoResponse struct {
 }
 
 /*
+ActionsCreateWorkflowDispatch performs requests for "actions/create-workflow-dispatch"
+
+Create a workflow dispatch event.
+
+  POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+
+https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+*/
+func ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkflowDispatchReq, opt ...RequestOption) (*ActionsCreateWorkflowDispatchResponse, error) {
+	if req == nil {
+		req = new(ActionsCreateWorkflowDispatchReq)
+	}
+	resp := &ActionsCreateWorkflowDispatchResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActionsCreateWorkflowDispatch performs requests for "actions/create-workflow-dispatch"
+
+Create a workflow dispatch event.
+
+  POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+
+https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+*/
+func (c Client) ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkflowDispatchReq, opt ...RequestOption) (*ActionsCreateWorkflowDispatchResponse, error) {
+	return ActionsCreateWorkflowDispatch(ctx, req, append(c, opt...)...)
+}
+
+/*
+ActionsCreateWorkflowDispatchReq is request data for Client.ActionsCreateWorkflowDispatch
+
+https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+*/
+type ActionsCreateWorkflowDispatchReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	WorkflowId  int64
+	RequestBody ActionsCreateWorkflowDispatchReqBody
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) url() string {
+	return r._url
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/dispatches", r.Owner, r.Repo, r.WorkflowId)
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) method() string {
+	return "POST"
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ActionsCreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActionsCreateWorkflowDispatchReq) Rel(link RelName, resp *ActionsCreateWorkflowDispatchResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ActionsCreateWorkflowDispatchReqBody is a request body for actions/create-workflow-dispatch
+
+https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+*/
+type ActionsCreateWorkflowDispatchReqBody struct {
+
+	/*
+	   Input keys and values configured in the workflow file. The maximum number of
+	   properties is 10.
+	*/
+	Inputs map[string]string `json:"inputs,omitempty"`
+
+	/*
+	   The reference of the workflow run. The reference can be a branch, tag, or a
+	   commit SHA.
+	*/
+	Ref *string `json:"ref"`
+}
+
+/*
+ActionsCreateWorkflowDispatchResponse is a response for ActionsCreateWorkflowDispatch
+
+https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+*/
+type ActionsCreateWorkflowDispatchResponse struct {
+	response
+	request *ActionsCreateWorkflowDispatchReq
+}
+
+/*
 ActionsDeleteArtifact performs requests for "actions/delete-artifact"
 
 Delete an artifact.
@@ -1669,6 +1811,126 @@ https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hoste
 type ActionsDeleteSelfHostedRunnerFromRepoResponse struct {
 	response
 	request *ActionsDeleteSelfHostedRunnerFromRepoReq
+}
+
+/*
+ActionsDeleteWorkflowRun performs requests for "actions/delete-workflow-run"
+
+Delete a workflow run.
+
+  DELETE /repos/{owner}/{repo}/actions/runs/{run_id}
+
+https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
+*/
+func ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRunReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunResponse, error) {
+	if req == nil {
+		req = new(ActionsDeleteWorkflowRunReq)
+	}
+	resp := &ActionsDeleteWorkflowRunResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActionsDeleteWorkflowRun performs requests for "actions/delete-workflow-run"
+
+Delete a workflow run.
+
+  DELETE /repos/{owner}/{repo}/actions/runs/{run_id}
+
+https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
+*/
+func (c Client) ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRunReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunResponse, error) {
+	return ActionsDeleteWorkflowRun(ctx, req, append(c, opt...)...)
+}
+
+/*
+ActionsDeleteWorkflowRunReq is request data for Client.ActionsDeleteWorkflowRun
+
+https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
+*/
+type ActionsDeleteWorkflowRunReq struct {
+	_url  string
+	Owner string
+	Repo  string
+	RunId int64
+}
+
+func (r *ActionsDeleteWorkflowRunReq) url() string {
+	return r._url
+}
+
+func (r *ActionsDeleteWorkflowRunReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId)
+}
+
+func (r *ActionsDeleteWorkflowRunReq) method() string {
+	return "DELETE"
+}
+
+func (r *ActionsDeleteWorkflowRunReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ActionsDeleteWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ActionsDeleteWorkflowRunReq) body() interface{} {
+	return nil
+}
+
+func (r *ActionsDeleteWorkflowRunReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ActionsDeleteWorkflowRunReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ActionsDeleteWorkflowRunReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ActionsDeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActionsDeleteWorkflowRunReq) Rel(link RelName, resp *ActionsDeleteWorkflowRunResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ActionsDeleteWorkflowRunResponse is a response for ActionsDeleteWorkflowRun
+
+https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
+*/
+type ActionsDeleteWorkflowRunResponse struct {
+	response
+	request *ActionsDeleteWorkflowRunReq
 }
 
 /*
@@ -3574,7 +3836,7 @@ ActionsGetWorkflowRunUsageResponseBody is a response body for ActionsGetWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type ActionsGetWorkflowRunUsageResponseBody struct {
-	components.WorkfloRunUsage
+	components.WorkflowRunUsage
 }
 
 /*
