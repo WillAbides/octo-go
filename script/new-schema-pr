@@ -23,11 +23,11 @@ pullcount="$(
     --format "{{len .}}"
 )"
 
-echo $pullcount
-
 # exit if there's already a pr for this update
 [ "$pullcount" != "0" ] && echo "pr already exists for $update_branch" && exit
 
 git checkout -b "$update_branch"
 
 script/generate
+
+git add "*_gen.go" api.github.com.json current-schema-version.txt components/
