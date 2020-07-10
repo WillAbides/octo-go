@@ -13,11 +13,11 @@ import (
 /*
 RateLimitGet performs requests for "rate-limit/get"
 
-Get your current rate limit status.
+Get rate limit status for the authenticated user.
 
   GET /rate_limit
 
-https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
 	if req == nil {
@@ -42,11 +42,11 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOptio
 /*
 RateLimitGet performs requests for "rate-limit/get"
 
-Get your current rate limit status.
+Get rate limit status for the authenticated user.
 
   GET /rate_limit
 
-https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 func (c Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
 	return RateLimitGet(ctx, req, append(c, opt...)...)
@@ -55,7 +55,7 @@ func (c Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...R
 /*
 RateLimitGetReq is request data for Client.RateLimitGet
 
-https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 type RateLimitGetReq struct {
 	_url string
@@ -121,7 +121,7 @@ func (r *RateLimitGetReq) Rel(link RelName, resp *RateLimitGetResponse) bool {
 /*
 RateLimitGetResponseBody is a response body for RateLimitGet
 
-https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 type RateLimitGetResponseBody struct {
 	components.RateLimitOverview
@@ -130,7 +130,7 @@ type RateLimitGetResponseBody struct {
 /*
 RateLimitGetResponse is a response for RateLimitGet
 
-https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
+https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 type RateLimitGetResponse struct {
 	response

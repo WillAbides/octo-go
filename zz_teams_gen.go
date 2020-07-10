@@ -12,19 +12,19 @@ import (
 )
 
 /*
-TeamsAddOrUpdateMembershipInOrg performs requests for "teams/add-or-update-membership-in-org"
+TeamsAddOrUpdateMembershipForUserInOrg performs requests for "teams/add-or-update-membership-for-user-in-org"
 
-Add or update team membership.
+Add or update team membership for a user.
 
   PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
 
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-func TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
+func TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipForUserInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipForUserInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsAddOrUpdateMembershipInOrgReq)
+		req = new(TeamsAddOrUpdateMembershipForUserInOrgReq)
 	}
-	resp := &TeamsAddOrUpdateMembershipInOrgResponse{request: req}
+	resp := &TeamsAddOrUpdateMembershipForUserInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -32,7 +32,7 @@ func TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateM
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsAddOrUpdateMembershipInOrgResponseBody)
+	resp.Data = new(TeamsAddOrUpdateMembershipForUserInOrgResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -41,72 +41,72 @@ func TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateM
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrg performs requests for "teams/add-or-update-membership-in-org"
+TeamsAddOrUpdateMembershipForUserInOrg performs requests for "teams/add-or-update-membership-for-user-in-org"
 
-Add or update team membership.
+Add or update team membership for a user.
 
   PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
 
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-func (c Client) TeamsAddOrUpdateMembershipInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipInOrgResponse, error) {
-	return TeamsAddOrUpdateMembershipInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOrUpdateMembershipForUserInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipForUserInOrgResponse, error) {
+	return TeamsAddOrUpdateMembershipForUserInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrgReq is request data for Client.TeamsAddOrUpdateMembershipInOrg
+TeamsAddOrUpdateMembershipForUserInOrgReq is request data for Client.TeamsAddOrUpdateMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-type TeamsAddOrUpdateMembershipInOrgReq struct {
+type TeamsAddOrUpdateMembershipForUserInOrgReq struct {
 	_url        string
 	Org         string
 	TeamSlug    string
 	Username    string
-	RequestBody TeamsAddOrUpdateMembershipInOrgReqBody
+	RequestBody TeamsAddOrUpdateMembershipForUserInOrgReqBody
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) url() string {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) urlPath() string {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) method() string {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) method() string {
 	return "PUT"
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) body() interface{} {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) dataStatuses() []int {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) validStatuses() []int {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsAddOrUpdateMembershipInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -114,7 +114,7 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) HTTPRequest(ctx context.Context, op
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsAddOrUpdateMembershipInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateMembershipInOrgResponse) bool {
+func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateMembershipForUserInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -124,11 +124,11 @@ func (r *TeamsAddOrUpdateMembershipInOrgReq) Rel(link RelName, resp *TeamsAddOrU
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrgReqBody is a request body for teams/add-or-update-membership-in-org
+TeamsAddOrUpdateMembershipForUserInOrgReqBody is a request body for teams/add-or-update-membership-for-user-in-org
 
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-type TeamsAddOrUpdateMembershipInOrgReqBody struct {
+type TeamsAddOrUpdateMembershipForUserInOrgReqBody struct {
 
 	/*
 	   The role that this user should have in the team. Can be one of:
@@ -141,39 +141,39 @@ type TeamsAddOrUpdateMembershipInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrgResponseBody is a response body for TeamsAddOrUpdateMembershipInOrg
+TeamsAddOrUpdateMembershipForUserInOrgResponseBody is a response body for TeamsAddOrUpdateMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-type TeamsAddOrUpdateMembershipInOrgResponseBody struct {
+type TeamsAddOrUpdateMembershipForUserInOrgResponseBody struct {
 	components.TeamMembership
 }
 
 /*
-TeamsAddOrUpdateMembershipInOrgResponse is a response for TeamsAddOrUpdateMembershipInOrg
+TeamsAddOrUpdateMembershipForUserInOrgResponse is a response for TeamsAddOrUpdateMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#add-or-update-team-membership
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-type TeamsAddOrUpdateMembershipInOrgResponse struct {
+type TeamsAddOrUpdateMembershipForUserInOrgResponse struct {
 	response
-	request *TeamsAddOrUpdateMembershipInOrgReq
-	Data    *TeamsAddOrUpdateMembershipInOrgResponseBody
+	request *TeamsAddOrUpdateMembershipForUserInOrgReq
+	Data    *TeamsAddOrUpdateMembershipForUserInOrgResponseBody
 }
 
 /*
-TeamsAddOrUpdateProjectInOrg performs requests for "teams/add-or-update-project-in-org"
+TeamsAddOrUpdateProjectPermissionsInOrg performs requests for "teams/add-or-update-project-permissions-in-org"
 
-Add or update team project.
+Add or update team project permissions.
 
   PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/#add-or-update-team-project
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-func TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
+func TeamsAddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectPermissionsInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectPermissionsInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsAddOrUpdateProjectInOrgReq)
+		req = new(TeamsAddOrUpdateProjectPermissionsInOrgReq)
 	}
-	resp := &TeamsAddOrUpdateProjectInOrgResponse{request: req}
+	resp := &TeamsAddOrUpdateProjectPermissionsInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -189,29 +189,29 @@ func TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProj
 }
 
 /*
-TeamsAddOrUpdateProjectInOrg performs requests for "teams/add-or-update-project-in-org"
+TeamsAddOrUpdateProjectPermissionsInOrg performs requests for "teams/add-or-update-project-permissions-in-org"
 
-Add or update team project.
+Add or update team project permissions.
 
   PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/#add-or-update-team-project
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-func (c Client) TeamsAddOrUpdateProjectInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectInOrgResponse, error) {
-	return TeamsAddOrUpdateProjectInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsAddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *TeamsAddOrUpdateProjectPermissionsInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectPermissionsInOrgResponse, error) {
+	return TeamsAddOrUpdateProjectPermissionsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsAddOrUpdateProjectInOrgReq is request data for Client.TeamsAddOrUpdateProjectInOrg
+TeamsAddOrUpdateProjectPermissionsInOrgReq is request data for Client.TeamsAddOrUpdateProjectPermissionsInOrg
 
-https://developer.github.com/v3/teams/#add-or-update-team-project
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-type TeamsAddOrUpdateProjectInOrgReq struct {
+type TeamsAddOrUpdateProjectPermissionsInOrgReq struct {
 	_url        string
 	Org         string
 	TeamSlug    string
 	ProjectId   int64
-	RequestBody TeamsAddOrUpdateProjectInOrgReqBody
+	RequestBody TeamsAddOrUpdateProjectPermissionsInOrgReqBody
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -223,24 +223,24 @@ type TeamsAddOrUpdateProjectInOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) url() string {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) urlPath() string {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) method() string {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) method() string {
 	return "PUT"
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
@@ -252,24 +252,24 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) header(requiredPreviews, allPreviews b
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) body() interface{} {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) dataStatuses() []int {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) validStatuses() []int {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddOrUpdateProjectInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -277,7 +277,7 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) HTTPRequest(ctx context.Context, opt .
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsAddOrUpdateProjectInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateProjectInOrgResponse) bool {
+func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateProjectPermissionsInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -287,11 +287,11 @@ func (r *TeamsAddOrUpdateProjectInOrgReq) Rel(link RelName, resp *TeamsAddOrUpda
 }
 
 /*
-TeamsAddOrUpdateProjectInOrgReqBody is a request body for teams/add-or-update-project-in-org
+TeamsAddOrUpdateProjectPermissionsInOrgReqBody is a request body for teams/add-or-update-project-permissions-in-org
 
-https://developer.github.com/v3/teams/#add-or-update-team-project
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-type TeamsAddOrUpdateProjectInOrgReqBody struct {
+type TeamsAddOrUpdateProjectPermissionsInOrgReqBody struct {
 
 	/*
 	   The permission to grant to the team for this project. Can be one of:
@@ -308,29 +308,29 @@ type TeamsAddOrUpdateProjectInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateProjectInOrgResponse is a response for TeamsAddOrUpdateProjectInOrg
+TeamsAddOrUpdateProjectPermissionsInOrgResponse is a response for TeamsAddOrUpdateProjectPermissionsInOrg
 
-https://developer.github.com/v3/teams/#add-or-update-team-project
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-type TeamsAddOrUpdateProjectInOrgResponse struct {
+type TeamsAddOrUpdateProjectPermissionsInOrgResponse struct {
 	response
-	request *TeamsAddOrUpdateProjectInOrgReq
+	request *TeamsAddOrUpdateProjectPermissionsInOrgReq
 }
 
 /*
-TeamsAddOrUpdateRepoInOrg performs requests for "teams/add-or-update-repo-in-org"
+TeamsAddOrUpdateRepoPermissionsInOrg performs requests for "teams/add-or-update-repo-permissions-in-org"
 
-Add or update team repository.
+Add or update team repository permissions.
 
   PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
-https://developer.github.com/v3/teams/#add-or-update-team-repository
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-func TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
+func TeamsAddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoPermissionsInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoPermissionsInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsAddOrUpdateRepoInOrgReq)
+		req = new(TeamsAddOrUpdateRepoPermissionsInOrgReq)
 	}
-	resp := &TeamsAddOrUpdateRepoInOrgResponse{request: req}
+	resp := &TeamsAddOrUpdateRepoPermissionsInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -346,73 +346,73 @@ func TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInO
 }
 
 /*
-TeamsAddOrUpdateRepoInOrg performs requests for "teams/add-or-update-repo-in-org"
+TeamsAddOrUpdateRepoPermissionsInOrg performs requests for "teams/add-or-update-repo-permissions-in-org"
 
-Add or update team repository.
+Add or update team repository permissions.
 
   PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
-https://developer.github.com/v3/teams/#add-or-update-team-repository
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-func (c Client) TeamsAddOrUpdateRepoInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoInOrgResponse, error) {
-	return TeamsAddOrUpdateRepoInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsAddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *TeamsAddOrUpdateRepoPermissionsInOrgReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoPermissionsInOrgResponse, error) {
+	return TeamsAddOrUpdateRepoPermissionsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsAddOrUpdateRepoInOrgReq is request data for Client.TeamsAddOrUpdateRepoInOrg
+TeamsAddOrUpdateRepoPermissionsInOrgReq is request data for Client.TeamsAddOrUpdateRepoPermissionsInOrg
 
-https://developer.github.com/v3/teams/#add-or-update-team-repository
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-type TeamsAddOrUpdateRepoInOrgReq struct {
+type TeamsAddOrUpdateRepoPermissionsInOrgReq struct {
 	_url        string
 	Org         string
 	TeamSlug    string
 	Owner       string
 	Repo        string
-	RequestBody TeamsAddOrUpdateRepoInOrgReqBody
+	RequestBody TeamsAddOrUpdateRepoPermissionsInOrgReqBody
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) url() string {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) urlPath() string {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) method() string {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) method() string {
 	return "PUT"
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) urlQuery() url.Values {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) body() interface{} {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) dataStatuses() []int {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) validStatuses() []int {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddOrUpdateRepoInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -420,7 +420,7 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsAddOrUpdateRepoInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateRepoInOrgResponse) bool {
+func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateRepoPermissionsInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -430,11 +430,11 @@ func (r *TeamsAddOrUpdateRepoInOrgReq) Rel(link RelName, resp *TeamsAddOrUpdateR
 }
 
 /*
-TeamsAddOrUpdateRepoInOrgReqBody is a request body for teams/add-or-update-repo-in-org
+TeamsAddOrUpdateRepoPermissionsInOrgReqBody is a request body for teams/add-or-update-repo-permissions-in-org
 
-https://developer.github.com/v3/teams/#add-or-update-team-repository
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-type TeamsAddOrUpdateRepoInOrgReqBody struct {
+type TeamsAddOrUpdateRepoPermissionsInOrgReqBody struct {
 
 	/*
 	   The permission to grant the team on this repository. Can be one of:
@@ -456,29 +456,29 @@ type TeamsAddOrUpdateRepoInOrgReqBody struct {
 }
 
 /*
-TeamsAddOrUpdateRepoInOrgResponse is a response for TeamsAddOrUpdateRepoInOrg
+TeamsAddOrUpdateRepoPermissionsInOrgResponse is a response for TeamsAddOrUpdateRepoPermissionsInOrg
 
-https://developer.github.com/v3/teams/#add-or-update-team-repository
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-type TeamsAddOrUpdateRepoInOrgResponse struct {
+type TeamsAddOrUpdateRepoPermissionsInOrgResponse struct {
 	response
-	request *TeamsAddOrUpdateRepoInOrgReq
+	request *TeamsAddOrUpdateRepoPermissionsInOrgReq
 }
 
 /*
-TeamsCheckManagesRepoInOrg performs requests for "teams/check-manages-repo-in-org"
+TeamsCheckPermissionsForProjectInOrg performs requests for "teams/check-permissions-for-project-in-org"
 
-Check if a team manages a repository.
+Check team permissions for a project.
 
-  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-func TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
+func TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPermissionsForProjectInOrgReq, opt ...RequestOption) (*TeamsCheckPermissionsForProjectInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsCheckManagesRepoInOrgReq)
+		req = new(TeamsCheckPermissionsForProjectInOrgReq)
 	}
-	resp := &TeamsCheckManagesRepoInOrgResponse{request: req}
+	resp := &TeamsCheckPermissionsForProjectInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -486,11 +486,8 @@ func TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoI
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	err = r.decodeBody(nil)
+	resp.Data = new(TeamsCheckPermissionsForProjectInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -498,72 +495,86 @@ func TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoI
 }
 
 /*
-TeamsCheckManagesRepoInOrg performs requests for "teams/check-manages-repo-in-org"
+TeamsCheckPermissionsForProjectInOrg performs requests for "teams/check-permissions-for-project-in-org"
 
-Check if a team manages a repository.
+Check team permissions for a project.
 
-  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-func (c Client) TeamsCheckManagesRepoInOrg(ctx context.Context, req *TeamsCheckManagesRepoInOrgReq, opt ...RequestOption) (*TeamsCheckManagesRepoInOrgResponse, error) {
-	return TeamsCheckManagesRepoInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPermissionsForProjectInOrgReq, opt ...RequestOption) (*TeamsCheckPermissionsForProjectInOrgResponse, error) {
+	return TeamsCheckPermissionsForProjectInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsCheckManagesRepoInOrgReq is request data for Client.TeamsCheckManagesRepoInOrg
+TeamsCheckPermissionsForProjectInOrgReq is request data for Client.TeamsCheckPermissionsForProjectInOrg
 
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-type TeamsCheckManagesRepoInOrgReq struct {
-	_url     string
-	Org      string
-	TeamSlug string
-	Owner    string
-	Repo     string
+type TeamsCheckPermissionsForProjectInOrgReq struct {
+	_url      string
+	Org       string
+	TeamSlug  string
+	ProjectId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) url() string {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
+func (r *TeamsCheckPermissionsForProjectInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) method() string {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) method() string {
 	return "GET"
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) urlQuery() url.Values {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) body() interface{} {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) body() interface{} {
 	return nil
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) dataStatuses() []int {
-	return []int{}
+func (r *TeamsCheckPermissionsForProjectInOrgReq) dataStatuses() []int {
+	return []int{200}
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) validStatuses() []int {
-	return []int{200, 204}
+func (r *TeamsCheckPermissionsForProjectInOrgReq) validStatuses() []int {
+	return []int{200}
 }
 
-func (r *TeamsCheckManagesRepoInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
+func (r *TeamsCheckPermissionsForProjectInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -571,7 +582,7 @@ func (r *TeamsCheckManagesRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsCheckManagesRepoInOrgReq) Rel(link RelName, resp *TeamsCheckManagesRepoInOrgResponse) bool {
+func (r *TeamsCheckPermissionsForProjectInOrgReq) Rel(link RelName, resp *TeamsCheckPermissionsForProjectInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -581,24 +592,154 @@ func (r *TeamsCheckManagesRepoInOrgReq) Rel(link RelName, resp *TeamsCheckManage
 }
 
 /*
-TeamsCheckManagesRepoInOrgResponse is a response for TeamsCheckManagesRepoInOrg
+TeamsCheckPermissionsForProjectInOrgResponseBody is a response body for TeamsCheckPermissionsForProjectInOrg
 
-https://developer.github.com/v3/teams/#check-if-a-team-manages-a-repository
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-type TeamsCheckManagesRepoInOrgResponse struct {
+type TeamsCheckPermissionsForProjectInOrgResponseBody struct {
+	components.TeamProject
+}
+
+/*
+TeamsCheckPermissionsForProjectInOrgResponse is a response for TeamsCheckPermissionsForProjectInOrg
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
+*/
+type TeamsCheckPermissionsForProjectInOrgResponse struct {
 	response
-	request *TeamsCheckManagesRepoInOrgReq
-	Data    bool
+	request *TeamsCheckPermissionsForProjectInOrgReq
+	Data    *TeamsCheckPermissionsForProjectInOrgResponseBody
+}
+
+/*
+TeamsCheckPermissionsForRepoInOrg performs requests for "teams/check-permissions-for-repo-in-org"
+
+Check team permissions for a repository.
+
+  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+*/
+func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermissionsForRepoInOrgReq, opt ...RequestOption) (*TeamsCheckPermissionsForRepoInOrgResponse, error) {
+	if req == nil {
+		req = new(TeamsCheckPermissionsForRepoInOrgReq)
+	}
+	resp := &TeamsCheckPermissionsForRepoInOrgResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCheckPermissionsForRepoInOrg performs requests for "teams/check-permissions-for-repo-in-org"
+
+Check team permissions for a repository.
+
+  GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+*/
+func (c Client) TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermissionsForRepoInOrgReq, opt ...RequestOption) (*TeamsCheckPermissionsForRepoInOrgResponse, error) {
+	return TeamsCheckPermissionsForRepoInOrg(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsCheckPermissionsForRepoInOrgReq is request data for Client.TeamsCheckPermissionsForRepoInOrg
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+*/
+type TeamsCheckPermissionsForRepoInOrgReq struct {
+	_url     string
+	Org      string
+	TeamSlug string
+	Owner    string
+	Repo     string
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) url() string {
+	return r._url
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo)
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) validStatuses() []int {
+	return []int{200, 204}
+}
+
+func (r *TeamsCheckPermissionsForRepoInOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsCheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCheckPermissionsForRepoInOrgReq) Rel(link RelName, resp *TeamsCheckPermissionsForRepoInOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsCheckPermissionsForRepoInOrgResponse is a response for TeamsCheckPermissionsForRepoInOrg
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+*/
+type TeamsCheckPermissionsForRepoInOrgResponse struct {
+	response
+	request *TeamsCheckPermissionsForRepoInOrgReq
 }
 
 /*
 TeamsCreate performs requests for "teams/create"
 
-Create team.
+Create a team.
 
   POST /orgs/{org}/teams
 
-https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-a-team
 */
 func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
 	if req == nil {
@@ -623,11 +764,11 @@ func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption)
 /*
 TeamsCreate performs requests for "teams/create"
 
-Create team.
+Create a team.
 
   POST /orgs/{org}/teams
 
-https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-a-team
 */
 func (c Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption) (*TeamsCreateResponse, error) {
 	return TeamsCreate(ctx, req, append(c, opt...)...)
@@ -636,7 +777,7 @@ func (c Client) TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...Req
 /*
 TeamsCreateReq is request data for Client.TeamsCreate
 
-https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateReq struct {
 	_url        string
@@ -704,7 +845,7 @@ func (r *TeamsCreateReq) Rel(link RelName, resp *TeamsCreateResponse) bool {
 /*
 TeamsCreateReqBody is a request body for teams/create
 
-https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateReqBody struct {
 
@@ -754,7 +895,7 @@ type TeamsCreateReqBody struct {
 /*
 TeamsCreateResponseBody is a response body for TeamsCreate
 
-https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateResponseBody struct {
 	components.TeamFull
@@ -763,7 +904,7 @@ type TeamsCreateResponseBody struct {
 /*
 TeamsCreateResponse is a response for TeamsCreate
 
-https://developer.github.com/v3/teams/#create-team
+https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateResponse struct {
 	response
@@ -774,11 +915,11 @@ type TeamsCreateResponse struct {
 /*
 TeamsCreateDiscussionCommentInOrg performs requests for "teams/create-discussion-comment-in-org"
 
-Create a comment.
+Create a discussion comment.
 
   POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
 	if req == nil {
@@ -803,11 +944,11 @@ func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDisc
 /*
 TeamsCreateDiscussionCommentInOrg performs requests for "teams/create-discussion-comment-in-org"
 
-Create a comment.
+Create a discussion comment.
 
   POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 func (c Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentInOrgResponse, error) {
 	return TeamsCreateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -816,7 +957,7 @@ func (c Client) TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *Team
 /*
 TeamsCreateDiscussionCommentInOrgReq is request data for Client.TeamsCreateDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type TeamsCreateDiscussionCommentInOrgReq struct {
 	_url             string
@@ -900,7 +1041,7 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsCrea
 /*
 TeamsCreateDiscussionCommentInOrgReqBody is a request body for teams/create-discussion-comment-in-org
 
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type TeamsCreateDiscussionCommentInOrgReqBody struct {
 
@@ -911,7 +1052,7 @@ type TeamsCreateDiscussionCommentInOrgReqBody struct {
 /*
 TeamsCreateDiscussionCommentInOrgResponseBody is a response body for TeamsCreateDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type TeamsCreateDiscussionCommentInOrgResponseBody struct {
 	components.TeamDiscussionComment
@@ -920,7 +1061,7 @@ type TeamsCreateDiscussionCommentInOrgResponseBody struct {
 /*
 TeamsCreateDiscussionCommentInOrgResponse is a response for TeamsCreateDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#create-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type TeamsCreateDiscussionCommentInOrgResponse struct {
 	response
@@ -1256,11 +1397,11 @@ type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse struct {
 /*
 TeamsDeleteDiscussionCommentInOrg performs requests for "teams/delete-discussion-comment-in-org"
 
-Delete a comment.
+Delete a discussion comment.
 
   DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
-https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 func TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
 	if req == nil {
@@ -1284,11 +1425,11 @@ func TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDisc
 /*
 TeamsDeleteDiscussionCommentInOrg performs requests for "teams/delete-discussion-comment-in-org"
 
-Delete a comment.
+Delete a discussion comment.
 
   DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
-https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 func (c Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentInOrgResponse, error) {
 	return TeamsDeleteDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -1297,7 +1438,7 @@ func (c Client) TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *Team
 /*
 TeamsDeleteDiscussionCommentInOrgReq is request data for Client.TeamsDeleteDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 type TeamsDeleteDiscussionCommentInOrgReq struct {
 	_url             string
@@ -1367,7 +1508,7 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsDele
 /*
 TeamsDeleteDiscussionCommentInOrgResponse is a response for TeamsDeleteDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#delete-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 type TeamsDeleteDiscussionCommentInOrgResponse struct {
 	response
@@ -1497,11 +1638,11 @@ type TeamsDeleteDiscussionInOrgResponse struct {
 /*
 TeamsDeleteInOrg performs requests for "teams/delete-in-org"
 
-Delete team.
+Delete a team.
 
   DELETE /orgs/{org}/teams/{team_slug}
 
-https://developer.github.com/v3/teams/#delete-team
+https://developer.github.com/v3/teams/#delete-a-team
 */
 func TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
 	if req == nil {
@@ -1525,11 +1666,11 @@ func TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...Requ
 /*
 TeamsDeleteInOrg performs requests for "teams/delete-in-org"
 
-Delete team.
+Delete a team.
 
   DELETE /orgs/{org}/teams/{team_slug}
 
-https://developer.github.com/v3/teams/#delete-team
+https://developer.github.com/v3/teams/#delete-a-team
 */
 func (c Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...RequestOption) (*TeamsDeleteInOrgResponse, error) {
 	return TeamsDeleteInOrg(ctx, req, append(c, opt...)...)
@@ -1538,7 +1679,7 @@ func (c Client) TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, 
 /*
 TeamsDeleteInOrgReq is request data for Client.TeamsDeleteInOrg
 
-https://developer.github.com/v3/teams/#delete-team
+https://developer.github.com/v3/teams/#delete-a-team
 */
 type TeamsDeleteInOrgReq struct {
 	_url     string
@@ -1606,7 +1747,7 @@ func (r *TeamsDeleteInOrgReq) Rel(link RelName, resp *TeamsDeleteInOrgResponse) 
 /*
 TeamsDeleteInOrgResponse is a response for TeamsDeleteInOrg
 
-https://developer.github.com/v3/teams/#delete-team
+https://developer.github.com/v3/teams/#delete-a-team
 */
 type TeamsDeleteInOrgResponse struct {
 	response
@@ -1616,11 +1757,11 @@ type TeamsDeleteInOrgResponse struct {
 /*
 TeamsGetByName performs requests for "teams/get-by-name"
 
-Get team by name.
+Get a team by name.
 
   GET /orgs/{org}/teams/{team_slug}
 
-https://developer.github.com/v3/teams/#get-team-by-name
+https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
 	if req == nil {
@@ -1645,11 +1786,11 @@ func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestO
 /*
 TeamsGetByName performs requests for "teams/get-by-name"
 
-Get team by name.
+Get a team by name.
 
   GET /orgs/{org}/teams/{team_slug}
 
-https://developer.github.com/v3/teams/#get-team-by-name
+https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 func (c Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestOption) (*TeamsGetByNameResponse, error) {
 	return TeamsGetByName(ctx, req, append(c, opt...)...)
@@ -1658,7 +1799,7 @@ func (c Client) TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt 
 /*
 TeamsGetByNameReq is request data for Client.TeamsGetByName
 
-https://developer.github.com/v3/teams/#get-team-by-name
+https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type TeamsGetByNameReq struct {
 	_url     string
@@ -1726,7 +1867,7 @@ func (r *TeamsGetByNameReq) Rel(link RelName, resp *TeamsGetByNameResponse) bool
 /*
 TeamsGetByNameResponseBody is a response body for TeamsGetByName
 
-https://developer.github.com/v3/teams/#get-team-by-name
+https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type TeamsGetByNameResponseBody struct {
 	components.TeamFull
@@ -1735,7 +1876,7 @@ type TeamsGetByNameResponseBody struct {
 /*
 TeamsGetByNameResponse is a response for TeamsGetByName
 
-https://developer.github.com/v3/teams/#get-team-by-name
+https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type TeamsGetByNameResponse struct {
 	response
@@ -1746,11 +1887,11 @@ type TeamsGetByNameResponse struct {
 /*
 TeamsGetDiscussionCommentInOrg performs requests for "teams/get-discussion-comment-in-org"
 
-Get a single comment.
+Get a discussion comment.
 
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
 	if req == nil {
@@ -1775,11 +1916,11 @@ func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussion
 /*
 TeamsGetDiscussionCommentInOrg performs requests for "teams/get-discussion-comment-in-org"
 
-Get a single comment.
+Get a discussion comment.
 
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 func (c Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionCommentInOrgResponse, error) {
 	return TeamsGetDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -1788,7 +1929,7 @@ func (c Client) TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGe
 /*
 TeamsGetDiscussionCommentInOrgReq is request data for Client.TeamsGetDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type TeamsGetDiscussionCommentInOrgReq struct {
 	_url             string
@@ -1872,7 +2013,7 @@ func (r *TeamsGetDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsGetDisc
 /*
 TeamsGetDiscussionCommentInOrgResponseBody is a response body for TeamsGetDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type TeamsGetDiscussionCommentInOrgResponseBody struct {
 	components.TeamDiscussionComment
@@ -1881,7 +2022,7 @@ type TeamsGetDiscussionCommentInOrgResponseBody struct {
 /*
 TeamsGetDiscussionCommentInOrgResponse is a response for TeamsGetDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#get-a-single-comment
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type TeamsGetDiscussionCommentInOrgResponse struct {
 	response
@@ -1892,11 +2033,11 @@ type TeamsGetDiscussionCommentInOrgResponse struct {
 /*
 TeamsGetDiscussionInOrg performs requests for "teams/get-discussion-in-org"
 
-Get a single discussion.
+Get a discussion.
 
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
 	if req == nil {
@@ -1921,11 +2062,11 @@ func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgRe
 /*
 TeamsGetDiscussionInOrg performs requests for "teams/get-discussion-in-org"
 
-Get a single discussion.
+Get a discussion.
 
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 func (c Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgReq, opt ...RequestOption) (*TeamsGetDiscussionInOrgResponse, error) {
 	return TeamsGetDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -1934,7 +2075,7 @@ func (c Client) TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscus
 /*
 TeamsGetDiscussionInOrgReq is request data for Client.TeamsGetDiscussionInOrg
 
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type TeamsGetDiscussionInOrgReq struct {
 	_url             string
@@ -2017,7 +2158,7 @@ func (r *TeamsGetDiscussionInOrgReq) Rel(link RelName, resp *TeamsGetDiscussionI
 /*
 TeamsGetDiscussionInOrgResponseBody is a response body for TeamsGetDiscussionInOrg
 
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type TeamsGetDiscussionInOrgResponseBody struct {
 	components.TeamDiscussion
@@ -2026,7 +2167,7 @@ type TeamsGetDiscussionInOrgResponseBody struct {
 /*
 TeamsGetDiscussionInOrgResponse is a response for TeamsGetDiscussionInOrg
 
-https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type TeamsGetDiscussionInOrgResponse struct {
 	response
@@ -2035,19 +2176,19 @@ type TeamsGetDiscussionInOrgResponse struct {
 }
 
 /*
-TeamsGetMembershipInOrg performs requests for "teams/get-membership-in-org"
+TeamsGetMembershipForUserInOrg performs requests for "teams/get-membership-for-user-in-org"
 
-Get team membership.
+Get team membership for a user.
 
   GET /orgs/{org}/teams/{team_slug}/memberships/{username}
 
-https://developer.github.com/v3/teams/members/#get-team-membership
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-func TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
+func TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembershipForUserInOrgReq, opt ...RequestOption) (*TeamsGetMembershipForUserInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsGetMembershipInOrgReq)
+		req = new(TeamsGetMembershipForUserInOrgReq)
 	}
-	resp := &TeamsGetMembershipInOrgResponse{request: req}
+	resp := &TeamsGetMembershipForUserInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2055,7 +2196,7 @@ func TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetMembershipInOrgResponseBody)
+	resp.Data = new(TeamsGetMembershipForUserInOrgResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -2064,71 +2205,71 @@ func TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgRe
 }
 
 /*
-TeamsGetMembershipInOrg performs requests for "teams/get-membership-in-org"
+TeamsGetMembershipForUserInOrg performs requests for "teams/get-membership-for-user-in-org"
 
-Get team membership.
+Get team membership for a user.
 
   GET /orgs/{org}/teams/{team_slug}/memberships/{username}
 
-https://developer.github.com/v3/teams/members/#get-team-membership
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-func (c Client) TeamsGetMembershipInOrg(ctx context.Context, req *TeamsGetMembershipInOrgReq, opt ...RequestOption) (*TeamsGetMembershipInOrgResponse, error) {
-	return TeamsGetMembershipInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembershipForUserInOrgReq, opt ...RequestOption) (*TeamsGetMembershipForUserInOrgResponse, error) {
+	return TeamsGetMembershipForUserInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsGetMembershipInOrgReq is request data for Client.TeamsGetMembershipInOrg
+TeamsGetMembershipForUserInOrgReq is request data for Client.TeamsGetMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#get-team-membership
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-type TeamsGetMembershipInOrgReq struct {
+type TeamsGetMembershipForUserInOrgReq struct {
 	_url     string
 	Org      string
 	TeamSlug string
 	Username string
 }
 
-func (r *TeamsGetMembershipInOrgReq) url() string {
+func (r *TeamsGetMembershipForUserInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsGetMembershipInOrgReq) urlPath() string {
+func (r *TeamsGetMembershipForUserInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
 }
 
-func (r *TeamsGetMembershipInOrgReq) method() string {
+func (r *TeamsGetMembershipForUserInOrgReq) method() string {
 	return "GET"
 }
 
-func (r *TeamsGetMembershipInOrgReq) urlQuery() url.Values {
+func (r *TeamsGetMembershipForUserInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsGetMembershipInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *TeamsGetMembershipForUserInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsGetMembershipInOrgReq) body() interface{} {
+func (r *TeamsGetMembershipForUserInOrgReq) body() interface{} {
 	return nil
 }
 
-func (r *TeamsGetMembershipInOrgReq) dataStatuses() []int {
+func (r *TeamsGetMembershipForUserInOrgReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetMembershipInOrgReq) validStatuses() []int {
+func (r *TeamsGetMembershipForUserInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetMembershipInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsGetMembershipForUserInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsGetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2136,7 +2277,7 @@ func (r *TeamsGetMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsGetMembershipInOrgReq) Rel(link RelName, resp *TeamsGetMembershipInOrgResponse) bool {
+func (r *TeamsGetMembershipForUserInOrgReq) Rel(link RelName, resp *TeamsGetMembershipForUserInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2146,23 +2287,23 @@ func (r *TeamsGetMembershipInOrgReq) Rel(link RelName, resp *TeamsGetMembershipI
 }
 
 /*
-TeamsGetMembershipInOrgResponseBody is a response body for TeamsGetMembershipInOrg
+TeamsGetMembershipForUserInOrgResponseBody is a response body for TeamsGetMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#get-team-membership
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-type TeamsGetMembershipInOrgResponseBody struct {
+type TeamsGetMembershipForUserInOrgResponseBody struct {
 	components.TeamMembership
 }
 
 /*
-TeamsGetMembershipInOrgResponse is a response for TeamsGetMembershipInOrg
+TeamsGetMembershipForUserInOrgResponse is a response for TeamsGetMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#get-team-membership
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-type TeamsGetMembershipInOrgResponse struct {
+type TeamsGetMembershipForUserInOrgResponse struct {
 	response
-	request *TeamsGetMembershipInOrgReq
-	Data    *TeamsGetMembershipInOrgResponseBody
+	request *TeamsGetMembershipForUserInOrgReq
+	Data    *TeamsGetMembershipForUserInOrgResponseBody
 }
 
 /*
@@ -2451,11 +2592,11 @@ type TeamsListChildInOrgResponse struct {
 /*
 TeamsListDiscussionCommentsInOrg performs requests for "teams/list-discussion-comments-in-org"
 
-List comments.
+List discussion comments.
 
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
-https://developer.github.com/v3/teams/discussion_comments/#list-comments
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
 	if req == nil {
@@ -2480,11 +2621,11 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 /*
 TeamsListDiscussionCommentsInOrg performs requests for "teams/list-discussion-comments-in-org"
 
-List comments.
+List discussion comments.
 
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
-https://developer.github.com/v3/teams/discussion_comments/#list-comments
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 func (c Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscussionCommentsInOrgReq, opt ...RequestOption) (*TeamsListDiscussionCommentsInOrgResponse, error) {
 	return TeamsListDiscussionCommentsInOrg(ctx, req, append(c, opt...)...)
@@ -2493,7 +2634,7 @@ func (c Client) TeamsListDiscussionCommentsInOrg(ctx context.Context, req *Teams
 /*
 TeamsListDiscussionCommentsInOrgReq is request data for Client.TeamsListDiscussionCommentsInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#list-comments
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type TeamsListDiscussionCommentsInOrgReq struct {
 	_url             string
@@ -2597,7 +2738,7 @@ func (r *TeamsListDiscussionCommentsInOrgReq) Rel(link RelName, resp *TeamsListD
 /*
 TeamsListDiscussionCommentsInOrgResponseBody is a response body for TeamsListDiscussionCommentsInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#list-comments
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type TeamsListDiscussionCommentsInOrgResponseBody []struct {
 	components.TeamDiscussionComment
@@ -2606,7 +2747,7 @@ type TeamsListDiscussionCommentsInOrgResponseBody []struct {
 /*
 TeamsListDiscussionCommentsInOrgResponse is a response for TeamsListDiscussionCommentsInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#list-comments
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type TeamsListDiscussionCommentsInOrgResponse struct {
 	response
@@ -2782,11 +2923,11 @@ type TeamsListDiscussionsInOrgResponse struct {
 /*
 TeamsListForAuthenticatedUser performs requests for "teams/list-for-authenticated-user"
 
-List user teams.
+List teams for the authenticated user.
 
   GET /user/teams
 
-https://developer.github.com/v3/teams/#list-user-teams
+https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -2811,11 +2952,11 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 /*
 TeamsListForAuthenticatedUser performs requests for "teams/list-for-authenticated-user"
 
-List user teams.
+List teams for the authenticated user.
 
   GET /user/teams
 
-https://developer.github.com/v3/teams/#list-user-teams
+https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 func (c Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthenticatedUserReq, opt ...RequestOption) (*TeamsListForAuthenticatedUserResponse, error) {
 	return TeamsListForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -2824,7 +2965,7 @@ func (c Client) TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsLis
 /*
 TeamsListForAuthenticatedUserReq is request data for Client.TeamsListForAuthenticatedUser
 
-https://developer.github.com/v3/teams/#list-user-teams
+https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 type TeamsListForAuthenticatedUserReq struct {
 	_url string
@@ -2902,7 +3043,7 @@ func (r *TeamsListForAuthenticatedUserReq) Rel(link RelName, resp *TeamsListForA
 /*
 TeamsListForAuthenticatedUserResponseBody is a response body for TeamsListForAuthenticatedUser
 
-https://developer.github.com/v3/teams/#list-user-teams
+https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 type TeamsListForAuthenticatedUserResponseBody []struct {
 	components.TeamFull
@@ -2911,7 +3052,7 @@ type TeamsListForAuthenticatedUserResponseBody []struct {
 /*
 TeamsListForAuthenticatedUserResponse is a response for TeamsListForAuthenticatedUser
 
-https://developer.github.com/v3/teams/#list-user-teams
+https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 type TeamsListForAuthenticatedUserResponse struct {
 	response
@@ -2922,11 +3063,11 @@ type TeamsListForAuthenticatedUserResponse struct {
 /*
 TeamsListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
 
-List IdP groups in an organization.
+List IdP groups for an organization.
 
   GET /orgs/{org}/team-sync/groups
 
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
 	if req == nil {
@@ -2951,11 +3092,11 @@ func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrg
 /*
 TeamsListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
 
-List IdP groups in an organization.
+List IdP groups for an organization.
 
   GET /orgs/{org}/team-sync/groups
 
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 func (c Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
 	return TeamsListIdPGroupsForOrg(ctx, req, append(c, opt...)...)
@@ -2964,7 +3105,7 @@ func (c Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPG
 /*
 TeamsListIdPGroupsForOrgReq is request data for Client.TeamsListIdPGroupsForOrg
 
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 type TeamsListIdPGroupsForOrgReq struct {
 	_url string
@@ -3043,7 +3184,7 @@ func (r *TeamsListIdPGroupsForOrgReq) Rel(link RelName, resp *TeamsListIdPGroups
 /*
 TeamsListIdPGroupsForOrgResponseBody is a response body for TeamsListIdPGroupsForOrg
 
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 type TeamsListIdPGroupsForOrgResponseBody struct {
 	components.GroupMapping3
@@ -3052,7 +3193,7 @@ type TeamsListIdPGroupsForOrgResponseBody struct {
 /*
 TeamsListIdPGroupsForOrgResponse is a response for TeamsListIdPGroupsForOrg
 
-https://developer.github.com/v3/teams/team_sync/#list-idp-groups-in-an-organization
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 type TeamsListIdPGroupsForOrgResponse struct {
 	response
@@ -3645,11 +3786,11 @@ type TeamsListProjectsInOrgResponse struct {
 /*
 TeamsListReposInOrg performs requests for "teams/list-repos-in-org"
 
-List team repos.
+List team repositories.
 
   GET /orgs/{org}/teams/{team_slug}/repos
 
-https://developer.github.com/v3/teams/#list-team-repos
+https://developer.github.com/v3/teams/#list-team-repositories
 */
 func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
 	if req == nil {
@@ -3674,11 +3815,11 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 /*
 TeamsListReposInOrg performs requests for "teams/list-repos-in-org"
 
-List team repos.
+List team repositories.
 
   GET /orgs/{org}/teams/{team_slug}/repos
 
-https://developer.github.com/v3/teams/#list-team-repos
+https://developer.github.com/v3/teams/#list-team-repositories
 */
 func (c Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt ...RequestOption) (*TeamsListReposInOrgResponse, error) {
 	return TeamsListReposInOrg(ctx, req, append(c, opt...)...)
@@ -3687,7 +3828,7 @@ func (c Client) TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOr
 /*
 TeamsListReposInOrgReq is request data for Client.TeamsListReposInOrg
 
-https://developer.github.com/v3/teams/#list-team-repos
+https://developer.github.com/v3/teams/#list-team-repositories
 */
 type TeamsListReposInOrgReq struct {
 	_url     string
@@ -3767,7 +3908,7 @@ func (r *TeamsListReposInOrgReq) Rel(link RelName, resp *TeamsListReposInOrgResp
 /*
 TeamsListReposInOrgResponseBody is a response body for TeamsListReposInOrg
 
-https://developer.github.com/v3/teams/#list-team-repos
+https://developer.github.com/v3/teams/#list-team-repositories
 */
 type TeamsListReposInOrgResponseBody []struct {
 	components.MinimalRepository
@@ -3776,7 +3917,7 @@ type TeamsListReposInOrgResponseBody []struct {
 /*
 TeamsListReposInOrgResponse is a response for TeamsListReposInOrg
 
-https://developer.github.com/v3/teams/#list-team-repos
+https://developer.github.com/v3/teams/#list-team-repositories
 */
 type TeamsListReposInOrgResponse struct {
 	response
@@ -3785,19 +3926,19 @@ type TeamsListReposInOrgResponse struct {
 }
 
 /*
-TeamsRemoveMembershipInOrg performs requests for "teams/remove-membership-in-org"
+TeamsRemoveMembershipForUserInOrg performs requests for "teams/remove-membership-for-user-in-org"
 
-Remove team membership.
+Remove team membership for a user.
 
   DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}
 
-https://developer.github.com/v3/teams/members/#remove-team-membership
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
-func TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
+func TeamsRemoveMembershipForUserInOrg(ctx context.Context, req *TeamsRemoveMembershipForUserInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipForUserInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsRemoveMembershipInOrgReq)
+		req = new(TeamsRemoveMembershipForUserInOrgReq)
 	}
-	resp := &TeamsRemoveMembershipInOrgResponse{request: req}
+	resp := &TeamsRemoveMembershipForUserInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3813,71 +3954,71 @@ func TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipI
 }
 
 /*
-TeamsRemoveMembershipInOrg performs requests for "teams/remove-membership-in-org"
+TeamsRemoveMembershipForUserInOrg performs requests for "teams/remove-membership-for-user-in-org"
 
-Remove team membership.
+Remove team membership for a user.
 
   DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}
 
-https://developer.github.com/v3/teams/members/#remove-team-membership
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
-func (c Client) TeamsRemoveMembershipInOrg(ctx context.Context, req *TeamsRemoveMembershipInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipInOrgResponse, error) {
-	return TeamsRemoveMembershipInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsRemoveMembershipForUserInOrg(ctx context.Context, req *TeamsRemoveMembershipForUserInOrgReq, opt ...RequestOption) (*TeamsRemoveMembershipForUserInOrgResponse, error) {
+	return TeamsRemoveMembershipForUserInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsRemoveMembershipInOrgReq is request data for Client.TeamsRemoveMembershipInOrg
+TeamsRemoveMembershipForUserInOrgReq is request data for Client.TeamsRemoveMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#remove-team-membership
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
-type TeamsRemoveMembershipInOrgReq struct {
+type TeamsRemoveMembershipForUserInOrgReq struct {
 	_url     string
 	Org      string
 	TeamSlug string
 	Username string
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) url() string {
+func (r *TeamsRemoveMembershipForUserInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) urlPath() string {
+func (r *TeamsRemoveMembershipForUserInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username)
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) method() string {
+func (r *TeamsRemoveMembershipForUserInOrgReq) method() string {
 	return "DELETE"
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) urlQuery() url.Values {
+func (r *TeamsRemoveMembershipForUserInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *TeamsRemoveMembershipForUserInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) body() interface{} {
+func (r *TeamsRemoveMembershipForUserInOrgReq) body() interface{} {
 	return nil
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) dataStatuses() []int {
+func (r *TeamsRemoveMembershipForUserInOrgReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) validStatuses() []int {
+func (r *TeamsRemoveMembershipForUserInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveMembershipInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsRemoveMembershipForUserInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsRemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3885,7 +4026,7 @@ func (r *TeamsRemoveMembershipInOrgReq) HTTPRequest(ctx context.Context, opt ...
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsRemoveMembershipInOrgReq) Rel(link RelName, resp *TeamsRemoveMembershipInOrgResponse) bool {
+func (r *TeamsRemoveMembershipForUserInOrgReq) Rel(link RelName, resp *TeamsRemoveMembershipForUserInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3895,23 +4036,23 @@ func (r *TeamsRemoveMembershipInOrgReq) Rel(link RelName, resp *TeamsRemoveMembe
 }
 
 /*
-TeamsRemoveMembershipInOrgResponse is a response for TeamsRemoveMembershipInOrg
+TeamsRemoveMembershipForUserInOrgResponse is a response for TeamsRemoveMembershipForUserInOrg
 
-https://developer.github.com/v3/teams/members/#remove-team-membership
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
-type TeamsRemoveMembershipInOrgResponse struct {
+type TeamsRemoveMembershipForUserInOrgResponse struct {
 	response
-	request *TeamsRemoveMembershipInOrgReq
+	request *TeamsRemoveMembershipForUserInOrgReq
 }
 
 /*
 TeamsRemoveProjectInOrg performs requests for "teams/remove-project-in-org"
 
-Remove team project.
+Remove a project from a team.
 
   DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/#remove-team-project
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 func TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
 	if req == nil {
@@ -3935,11 +4076,11 @@ func TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgRe
 /*
 TeamsRemoveProjectInOrg performs requests for "teams/remove-project-in-org"
 
-Remove team project.
+Remove a project from a team.
 
   DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
-https://developer.github.com/v3/teams/#remove-team-project
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 func (c Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgReq, opt ...RequestOption) (*TeamsRemoveProjectInOrgResponse, error) {
 	return TeamsRemoveProjectInOrg(ctx, req, append(c, opt...)...)
@@ -3948,7 +4089,7 @@ func (c Client) TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemovePro
 /*
 TeamsRemoveProjectInOrgReq is request data for Client.TeamsRemoveProjectInOrg
 
-https://developer.github.com/v3/teams/#remove-team-project
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type TeamsRemoveProjectInOrgReq struct {
 	_url      string
@@ -4017,7 +4158,7 @@ func (r *TeamsRemoveProjectInOrgReq) Rel(link RelName, resp *TeamsRemoveProjectI
 /*
 TeamsRemoveProjectInOrgResponse is a response for TeamsRemoveProjectInOrg
 
-https://developer.github.com/v3/teams/#remove-team-project
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type TeamsRemoveProjectInOrgResponse struct {
 	response
@@ -4027,11 +4168,11 @@ type TeamsRemoveProjectInOrgResponse struct {
 /*
 TeamsRemoveRepoInOrg performs requests for "teams/remove-repo-in-org"
 
-Remove team repository.
+Remove a repository from a team.
 
   DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
-https://developer.github.com/v3/teams/#remove-team-repository
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 func TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
 	if req == nil {
@@ -4055,11 +4196,11 @@ func TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt
 /*
 TeamsRemoveRepoInOrg performs requests for "teams/remove-repo-in-org"
 
-Remove team repository.
+Remove a repository from a team.
 
   DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
-https://developer.github.com/v3/teams/#remove-team-repository
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 func (c Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt ...RequestOption) (*TeamsRemoveRepoInOrgResponse, error) {
 	return TeamsRemoveRepoInOrg(ctx, req, append(c, opt...)...)
@@ -4068,7 +4209,7 @@ func (c Client) TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoIn
 /*
 TeamsRemoveRepoInOrgReq is request data for Client.TeamsRemoveRepoInOrg
 
-https://developer.github.com/v3/teams/#remove-team-repository
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type TeamsRemoveRepoInOrgReq struct {
 	_url     string
@@ -4138,7 +4279,7 @@ func (r *TeamsRemoveRepoInOrgReq) Rel(link RelName, resp *TeamsRemoveRepoInOrgRe
 /*
 TeamsRemoveRepoInOrgResponse is a response for TeamsRemoveRepoInOrg
 
-https://developer.github.com/v3/teams/#remove-team-repository
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type TeamsRemoveRepoInOrgResponse struct {
 	response
@@ -4146,159 +4287,13 @@ type TeamsRemoveRepoInOrgResponse struct {
 }
 
 /*
-TeamsReviewProjectInOrg performs requests for "teams/review-project-in-org"
-
-Review a team project.
-
-  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#review-a-team-project
-*/
-func TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
-	if req == nil {
-		req = new(TeamsReviewProjectInOrgReq)
-	}
-	resp := &TeamsReviewProjectInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(TeamsReviewProjectInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-TeamsReviewProjectInOrg performs requests for "teams/review-project-in-org"
-
-Review a team project.
-
-  GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
-
-https://developer.github.com/v3/teams/#review-a-team-project
-*/
-func (c Client) TeamsReviewProjectInOrg(ctx context.Context, req *TeamsReviewProjectInOrgReq, opt ...RequestOption) (*TeamsReviewProjectInOrgResponse, error) {
-	return TeamsReviewProjectInOrg(ctx, req, append(c, opt...)...)
-}
-
-/*
-TeamsReviewProjectInOrgReq is request data for Client.TeamsReviewProjectInOrg
-
-https://developer.github.com/v3/teams/#review-a-team-project
-*/
-type TeamsReviewProjectInOrgReq struct {
-	_url      string
-	Org       string
-	TeamSlug  string
-	ProjectId int64
-
-	/*
-	The Projects API is currently available for developers to preview. During the
-	preview period, the API may change without advance notice. Please see the [blog
-	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
-	for full details. To access the API during the preview period, you must set this
-	to true.
-	*/
-	InertiaPreview bool
-}
-
-func (r *TeamsReviewProjectInOrgReq) url() string {
-	return r._url
-}
-
-func (r *TeamsReviewProjectInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId)
-}
-
-func (r *TeamsReviewProjectInOrgReq) method() string {
-	return "GET"
-}
-
-func (r *TeamsReviewProjectInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *TeamsReviewProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *TeamsReviewProjectInOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *TeamsReviewProjectInOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *TeamsReviewProjectInOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *TeamsReviewProjectInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *TeamsReviewProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *TeamsReviewProjectInOrgReq) Rel(link RelName, resp *TeamsReviewProjectInOrgResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-TeamsReviewProjectInOrgResponseBody is a response body for TeamsReviewProjectInOrg
-
-https://developer.github.com/v3/teams/#review-a-team-project
-*/
-type TeamsReviewProjectInOrgResponseBody struct {
-	components.TeamProject
-}
-
-/*
-TeamsReviewProjectInOrgResponse is a response for TeamsReviewProjectInOrg
-
-https://developer.github.com/v3/teams/#review-a-team-project
-*/
-type TeamsReviewProjectInOrgResponse struct {
-	response
-	request *TeamsReviewProjectInOrgReq
-	Data    *TeamsReviewProjectInOrgResponseBody
-}
-
-/*
 TeamsUpdateDiscussionCommentInOrg performs requests for "teams/update-discussion-comment-in-org"
 
-Edit a comment.
+Update a discussion comment.
 
   PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
 	if req == nil {
@@ -4323,11 +4318,11 @@ func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDisc
 /*
 TeamsUpdateDiscussionCommentInOrg performs requests for "teams/update-discussion-comment-in-org"
 
-Edit a comment.
+Update a discussion comment.
 
   PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 func (c Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDiscussionCommentInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentInOrgResponse, error) {
 	return TeamsUpdateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -4336,7 +4331,7 @@ func (c Client) TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *Team
 /*
 TeamsUpdateDiscussionCommentInOrgReq is request data for Client.TeamsUpdateDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type TeamsUpdateDiscussionCommentInOrgReq struct {
 	_url             string
@@ -4421,7 +4416,7 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) Rel(link RelName, resp *TeamsUpda
 /*
 TeamsUpdateDiscussionCommentInOrgReqBody is a request body for teams/update-discussion-comment-in-org
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type TeamsUpdateDiscussionCommentInOrgReqBody struct {
 
@@ -4432,7 +4427,7 @@ type TeamsUpdateDiscussionCommentInOrgReqBody struct {
 /*
 TeamsUpdateDiscussionCommentInOrgResponseBody is a response body for TeamsUpdateDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type TeamsUpdateDiscussionCommentInOrgResponseBody struct {
 	components.TeamDiscussionComment
@@ -4441,7 +4436,7 @@ type TeamsUpdateDiscussionCommentInOrgResponseBody struct {
 /*
 TeamsUpdateDiscussionCommentInOrgResponse is a response for TeamsUpdateDiscussionCommentInOrg
 
-https://developer.github.com/v3/teams/discussion_comments/#edit-a-comment
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type TeamsUpdateDiscussionCommentInOrgResponse struct {
 	response
@@ -4452,11 +4447,11 @@ type TeamsUpdateDiscussionCommentInOrgResponse struct {
 /*
 TeamsUpdateDiscussionInOrg performs requests for "teams/update-discussion-in-org"
 
-Edit a discussion.
+Update a discussion.
 
   PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
 	if req == nil {
@@ -4481,11 +4476,11 @@ func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionI
 /*
 TeamsUpdateDiscussionInOrg performs requests for "teams/update-discussion-in-org"
 
-Edit a discussion.
+Update a discussion.
 
   PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 func (c Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionInOrgReq, opt ...RequestOption) (*TeamsUpdateDiscussionInOrgResponse, error) {
 	return TeamsUpdateDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -4494,7 +4489,7 @@ func (c Client) TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdate
 /*
 TeamsUpdateDiscussionInOrgReq is request data for Client.TeamsUpdateDiscussionInOrg
 
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgReq struct {
 	_url             string
@@ -4578,7 +4573,7 @@ func (r *TeamsUpdateDiscussionInOrgReq) Rel(link RelName, resp *TeamsUpdateDiscu
 /*
 TeamsUpdateDiscussionInOrgReqBody is a request body for teams/update-discussion-in-org
 
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgReqBody struct {
 
@@ -4592,7 +4587,7 @@ type TeamsUpdateDiscussionInOrgReqBody struct {
 /*
 TeamsUpdateDiscussionInOrgResponseBody is a response body for TeamsUpdateDiscussionInOrg
 
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgResponseBody struct {
 	components.TeamDiscussion
@@ -4601,7 +4596,7 @@ type TeamsUpdateDiscussionInOrgResponseBody struct {
 /*
 TeamsUpdateDiscussionInOrgResponse is a response for TeamsUpdateDiscussionInOrg
 
-https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgResponse struct {
 	response
@@ -4612,11 +4607,11 @@ type TeamsUpdateDiscussionInOrgResponse struct {
 /*
 TeamsUpdateInOrg performs requests for "teams/update-in-org"
 
-Edit team.
+Update a team.
 
   PATCH /orgs/{org}/teams/{team_slug}
 
-https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#update-a-team
 */
 func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
 	if req == nil {
@@ -4641,11 +4636,11 @@ func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...Requ
 /*
 TeamsUpdateInOrg performs requests for "teams/update-in-org"
 
-Edit team.
+Update a team.
 
   PATCH /orgs/{org}/teams/{team_slug}
 
-https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#update-a-team
 */
 func (c Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...RequestOption) (*TeamsUpdateInOrgResponse, error) {
 	return TeamsUpdateInOrg(ctx, req, append(c, opt...)...)
@@ -4654,7 +4649,7 @@ func (c Client) TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, 
 /*
 TeamsUpdateInOrgReq is request data for Client.TeamsUpdateInOrg
 
-https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgReq struct {
 	_url        string
@@ -4723,7 +4718,7 @@ func (r *TeamsUpdateInOrgReq) Rel(link RelName, resp *TeamsUpdateInOrgResponse) 
 /*
 TeamsUpdateInOrgReqBody is a request body for teams/update-in-org
 
-https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgReqBody struct {
 
@@ -4764,7 +4759,7 @@ type TeamsUpdateInOrgReqBody struct {
 /*
 TeamsUpdateInOrgResponseBody is a response body for TeamsUpdateInOrg
 
-https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgResponseBody struct {
 	components.TeamFull
@@ -4773,7 +4768,7 @@ type TeamsUpdateInOrgResponseBody struct {
 /*
 TeamsUpdateInOrgResponse is a response for TeamsUpdateInOrg
 
-https://developer.github.com/v3/teams/#edit-team
+https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgResponse struct {
 	response

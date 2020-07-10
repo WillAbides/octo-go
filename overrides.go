@@ -8,7 +8,7 @@ import (
 )
 
 // UnmarshalJSON wraps json in [] before unmarshalling it ... if necessary
-func (r *ReposGetContentsResponseBody) UnmarshalJSON(p []byte) error {
+func (r *ReposGetContentResponseBody) UnmarshalJSON(p []byte) error {
 	var val []struct {
 		components.ContentFile
 	}

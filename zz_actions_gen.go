@@ -1913,19 +1913,19 @@ type ActionsDownloadArtifactResponse struct {
 }
 
 /*
-ActionsDownloadWorkflowJobLogs performs requests for "actions/download-workflow-job-logs"
+ActionsDownloadJobLogsForWorkflowRun performs requests for "actions/download-job-logs-for-workflow-run"
 
-Download workflow job logs.
+Download job logs for a workflow run.
 
   GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs
 
-https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-func ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
+func ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownloadJobLogsForWorkflowRunReq, opt ...RequestOption) (*ActionsDownloadJobLogsForWorkflowRunResponse, error) {
 	if req == nil {
-		req = new(ActionsDownloadWorkflowJobLogsReq)
+		req = new(ActionsDownloadJobLogsForWorkflowRunReq)
 	}
-	resp := &ActionsDownloadWorkflowJobLogsResponse{request: req}
+	resp := &ActionsDownloadJobLogsForWorkflowRunResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1941,71 +1941,71 @@ func ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWor
 }
 
 /*
-ActionsDownloadWorkflowJobLogs performs requests for "actions/download-workflow-job-logs"
+ActionsDownloadJobLogsForWorkflowRun performs requests for "actions/download-job-logs-for-workflow-run"
 
-Download workflow job logs.
+Download job logs for a workflow run.
 
   GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs
 
-https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-func (c Client) ActionsDownloadWorkflowJobLogs(ctx context.Context, req *ActionsDownloadWorkflowJobLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowJobLogsResponse, error) {
-	return ActionsDownloadWorkflowJobLogs(ctx, req, append(c, opt...)...)
+func (c Client) ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownloadJobLogsForWorkflowRunReq, opt ...RequestOption) (*ActionsDownloadJobLogsForWorkflowRunResponse, error) {
+	return ActionsDownloadJobLogsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
 /*
-ActionsDownloadWorkflowJobLogsReq is request data for Client.ActionsDownloadWorkflowJobLogs
+ActionsDownloadJobLogsForWorkflowRunReq is request data for Client.ActionsDownloadJobLogsForWorkflowRun
 
-https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-type ActionsDownloadWorkflowJobLogsReq struct {
+type ActionsDownloadJobLogsForWorkflowRunReq struct {
 	_url  string
 	Owner string
 	Repo  string
 	JobId int64
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) url() string {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) url() string {
 	return r._url
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) urlPath() string {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId)
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) method() string {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) method() string {
 	return "GET"
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) urlQuery() url.Values {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) body() interface{} {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) body() interface{} {
 	return nil
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) dataStatuses() []int {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) validStatuses() []int {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) validStatuses() []int {
 	return []int{302}
 }
 
-func (r *ActionsDownloadWorkflowJobLogsReq) endpointAttributes() []endpointAttribute {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrRedirectOnly}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2013,7 +2013,7 @@ func (r *ActionsDownloadWorkflowJobLogsReq) HTTPRequest(ctx context.Context, opt
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDownloadWorkflowJobLogsReq) Rel(link RelName, resp *ActionsDownloadWorkflowJobLogsResponse) bool {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) Rel(link RelName, resp *ActionsDownloadJobLogsForWorkflowRunResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2023,13 +2023,13 @@ func (r *ActionsDownloadWorkflowJobLogsReq) Rel(link RelName, resp *ActionsDownl
 }
 
 /*
-ActionsDownloadWorkflowJobLogsResponse is a response for ActionsDownloadWorkflowJobLogs
+ActionsDownloadJobLogsForWorkflowRunResponse is a response for ActionsDownloadJobLogsForWorkflowRun
 
-https://developer.github.com/v3/actions/workflow-jobs/#download-workflow-job-logs
+https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-type ActionsDownloadWorkflowJobLogsResponse struct {
+type ActionsDownloadJobLogsForWorkflowRunResponse struct {
 	response
-	request *ActionsDownloadWorkflowJobLogsReq
+	request *ActionsDownloadJobLogsForWorkflowRunReq
 }
 
 /*
@@ -2281,6 +2281,137 @@ type ActionsGetArtifactResponse struct {
 	response
 	request *ActionsGetArtifactReq
 	Data    *ActionsGetArtifactResponseBody
+}
+
+/*
+ActionsGetJobForWorkflowRun performs requests for "actions/get-job-for-workflow-run"
+
+Get a job for a workflow run.
+
+  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+*/
+func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkflowRunReq, opt ...RequestOption) (*ActionsGetJobForWorkflowRunResponse, error) {
+	if req == nil {
+		req = new(ActionsGetJobForWorkflowRunReq)
+	}
+	resp := &ActionsGetJobForWorkflowRunResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ActionsGetJobForWorkflowRunResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActionsGetJobForWorkflowRun performs requests for "actions/get-job-for-workflow-run"
+
+Get a job for a workflow run.
+
+  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+*/
+func (c Client) ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkflowRunReq, opt ...RequestOption) (*ActionsGetJobForWorkflowRunResponse, error) {
+	return ActionsGetJobForWorkflowRun(ctx, req, append(c, opt...)...)
+}
+
+/*
+ActionsGetJobForWorkflowRunReq is request data for Client.ActionsGetJobForWorkflowRun
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+*/
+type ActionsGetJobForWorkflowRunReq struct {
+	_url  string
+	Owner string
+	Repo  string
+	JobId int64
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) url() string {
+	return r._url
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId)
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) method() string {
+	return "GET"
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) body() interface{} {
+	return nil
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) dataStatuses() []int {
+	return []int{202}
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) validStatuses() []int {
+	return []int{202}
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ActionsGetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActionsGetJobForWorkflowRunReq) Rel(link RelName, resp *ActionsGetJobForWorkflowRunResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ActionsGetJobForWorkflowRunResponseBody is a response body for ActionsGetJobForWorkflowRun
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+*/
+type ActionsGetJobForWorkflowRunResponseBody struct {
+	components.Job
+}
+
+/*
+ActionsGetJobForWorkflowRunResponse is a response for ActionsGetJobForWorkflowRun
+
+https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+*/
+type ActionsGetJobForWorkflowRunResponse struct {
+	response
+	request *ActionsGetJobForWorkflowRunReq
+	Data    *ActionsGetJobForWorkflowRunResponseBody
 }
 
 /*
@@ -3196,137 +3327,6 @@ type ActionsGetWorkflowResponse struct {
 }
 
 /*
-ActionsGetWorkflowJob performs requests for "actions/get-workflow-job"
-
-Get a workflow job.
-
-  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-func ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
-	if req == nil {
-		req = new(ActionsGetWorkflowJobReq)
-	}
-	resp := &ActionsGetWorkflowJobResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ActionsGetWorkflowJobResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ActionsGetWorkflowJob performs requests for "actions/get-workflow-job"
-
-Get a workflow job.
-
-  GET /repos/{owner}/{repo}/actions/jobs/{job_id}
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-func (c Client) ActionsGetWorkflowJob(ctx context.Context, req *ActionsGetWorkflowJobReq, opt ...RequestOption) (*ActionsGetWorkflowJobResponse, error) {
-	return ActionsGetWorkflowJob(ctx, req, append(c, opt...)...)
-}
-
-/*
-ActionsGetWorkflowJobReq is request data for Client.ActionsGetWorkflowJob
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-type ActionsGetWorkflowJobReq struct {
-	_url  string
-	Owner string
-	Repo  string
-	JobId int64
-}
-
-func (r *ActionsGetWorkflowJobReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetWorkflowJobReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId)
-}
-
-func (r *ActionsGetWorkflowJobReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetWorkflowJobReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetWorkflowJobReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetWorkflowJobReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetWorkflowJobReq) dataStatuses() []int {
-	return []int{202}
-}
-
-func (r *ActionsGetWorkflowJobReq) validStatuses() []int {
-	return []int{202}
-}
-
-func (r *ActionsGetWorkflowJobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsGetWorkflowJobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ActionsGetWorkflowJobReq) Rel(link RelName, resp *ActionsGetWorkflowJobResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ActionsGetWorkflowJobResponseBody is a response body for ActionsGetWorkflowJob
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-type ActionsGetWorkflowJobResponseBody struct {
-	components.Job
-}
-
-/*
-ActionsGetWorkflowJobResponse is a response for ActionsGetWorkflowJob
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-workflow-job
-*/
-type ActionsGetWorkflowJobResponse struct {
-	response
-	request *ActionsGetWorkflowJobReq
-	Data    *ActionsGetWorkflowJobResponseBody
-}
-
-/*
 ActionsGetWorkflowRun performs requests for "actions/get-workflow-run"
 
 Get a workflow run.
@@ -3705,7 +3705,7 @@ ActionsGetWorkflowUsageResponseBody is a response body for ActionsGetWorkflowUsa
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type ActionsGetWorkflowUsageResponseBody struct {
-	components.WorkfloUsage
+	components.WorkflowUsage
 }
 
 /*
@@ -4308,192 +4308,6 @@ type ActionsListRepoSecretsResponse struct {
 	response
 	request *ActionsListRepoSecretsReq
 	Data    *ActionsListRepoSecretsResponseBody
-}
-
-/*
-ActionsListRepoWorkflowRuns performs requests for "actions/list-repo-workflow-runs"
-
-List repository workflow runs.
-
-  GET /repos/{owner}/{repo}/actions/runs
-
-https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
-*/
-func ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
-	if req == nil {
-		req = new(ActionsListRepoWorkflowRunsReq)
-	}
-	resp := &ActionsListRepoWorkflowRunsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(ActionsListRepoWorkflowRunsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-ActionsListRepoWorkflowRuns performs requests for "actions/list-repo-workflow-runs"
-
-List repository workflow runs.
-
-  GET /repos/{owner}/{repo}/actions/runs
-
-https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
-*/
-func (c Client) ActionsListRepoWorkflowRuns(ctx context.Context, req *ActionsListRepoWorkflowRunsReq, opt ...RequestOption) (*ActionsListRepoWorkflowRunsResponse, error) {
-	return ActionsListRepoWorkflowRuns(ctx, req, append(c, opt...)...)
-}
-
-/*
-ActionsListRepoWorkflowRunsReq is request data for Client.ActionsListRepoWorkflowRuns
-
-https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
-*/
-type ActionsListRepoWorkflowRunsReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	/*
-	Returns someone's workflow runs. Use the login for the user who created the
-	`push` associated with the check suite or workflow run.
-	*/
-	Actor *string
-
-	/*
-	Returns workflow runs associated with a branch. Use the name of the branch of
-	the `push`.
-	*/
-	Branch *string
-
-	/*
-	Returns workflow run triggered by the event you specify. For example, `push`,
-	`pull_request` or `issue`. For more information, see "[Events that trigger
-	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)"
-	in the GitHub Help documentation.
-	*/
-	Event *string
-
-	/*
-	Returns workflow runs associated with the check run `status` or `conclusion` you
-	specify. For example, a conclusion can be `success` or a status can be
-	`completed`. For more information, see the `status` and `conclusion` options
-	available in "[Create a check
-	run](https://developer.github.com/v3/checks/runs/#create-a-check-run)."
-	*/
-	Status *string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) url() string {
-	return r._url
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo)
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.Actor != nil {
-		query.Set("actor", *r.Actor)
-	}
-	if r.Branch != nil {
-		query.Set("branch", *r.Branch)
-	}
-	if r.Event != nil {
-		query.Set("event", *r.Event)
-	}
-	if r.Status != nil {
-		query.Set("status", *r.Status)
-	}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListRepoWorkflowRunsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListRepoWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *ActionsListRepoWorkflowRunsReq) Rel(link RelName, resp *ActionsListRepoWorkflowRunsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-ActionsListRepoWorkflowRunsResponseBody is a response body for ActionsListRepoWorkflowRuns
-
-https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
-*/
-type ActionsListRepoWorkflowRunsResponseBody struct {
-	TotalCount   int64 `json:"total_count,omitempty"`
-	WorkflowRuns []struct {
-		components.WorkflowRun
-	} `json:"workflow_runs,omitempty"`
-}
-
-/*
-ActionsListRepoWorkflowRunsResponse is a response for ActionsListRepoWorkflowRuns
-
-https://developer.github.com/v3/actions/workflow-runs/#list-repository-workflow-runs
-*/
-type ActionsListRepoWorkflowRunsResponse struct {
-	response
-	request *ActionsListRepoWorkflowRunsReq
-	Data    *ActionsListRepoWorkflowRunsResponseBody
 }
 
 /*
@@ -5653,6 +5467,192 @@ type ActionsListWorkflowRunsResponse struct {
 	response
 	request *ActionsListWorkflowRunsReq
 	Data    *ActionsListWorkflowRunsResponseBody
+}
+
+/*
+ActionsListWorkflowRunsForRepo performs requests for "actions/list-workflow-runs-for-repo"
+
+List workflow runs for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runs
+
+https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+*/
+func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflowRunsForRepoReq, opt ...RequestOption) (*ActionsListWorkflowRunsForRepoResponse, error) {
+	if req == nil {
+		req = new(ActionsListWorkflowRunsForRepoReq)
+	}
+	resp := &ActionsListWorkflowRunsForRepoResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ActionsListWorkflowRunsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ActionsListWorkflowRunsForRepo performs requests for "actions/list-workflow-runs-for-repo"
+
+List workflow runs for a repository.
+
+  GET /repos/{owner}/{repo}/actions/runs
+
+https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+*/
+func (c Client) ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflowRunsForRepoReq, opt ...RequestOption) (*ActionsListWorkflowRunsForRepoResponse, error) {
+	return ActionsListWorkflowRunsForRepo(ctx, req, append(c, opt...)...)
+}
+
+/*
+ActionsListWorkflowRunsForRepoReq is request data for Client.ActionsListWorkflowRunsForRepo
+
+https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+*/
+type ActionsListWorkflowRunsForRepoReq struct {
+	_url  string
+	Owner string
+	Repo  string
+
+	/*
+	Returns someone's workflow runs. Use the login for the user who created the
+	`push` associated with the check suite or workflow run.
+	*/
+	Actor *string
+
+	/*
+	Returns workflow runs associated with a branch. Use the name of the branch of
+	the `push`.
+	*/
+	Branch *string
+
+	/*
+	Returns workflow run triggered by the event you specify. For example, `push`,
+	`pull_request` or `issue`. For more information, see "[Events that trigger
+	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)"
+	in the GitHub Help documentation.
+	*/
+	Event *string
+
+	/*
+	Returns workflow runs associated with the check run `status` or `conclusion` you
+	specify. For example, a conclusion can be `success` or a status can be
+	`completed`. For more information, see the `status` and `conclusion` options
+	available in "[Create a check
+	run](https://developer.github.com/v3/checks/runs/#create-a-check-run)."
+	*/
+	Status *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) url() string {
+	return r._url
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo)
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) method() string {
+	return "GET"
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Actor != nil {
+		query.Set("actor", *r.Actor)
+	}
+	if r.Branch != nil {
+		query.Set("branch", *r.Branch)
+	}
+	if r.Event != nil {
+		query.Set("event", *r.Event)
+	}
+	if r.Status != nil {
+		query.Set("status", *r.Status)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) body() interface{} {
+	return nil
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ActionsListWorkflowRunsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ActionsListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ActionsListWorkflowRunsForRepoReq) Rel(link RelName, resp *ActionsListWorkflowRunsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ActionsListWorkflowRunsForRepoResponseBody is a response body for ActionsListWorkflowRunsForRepo
+
+https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+*/
+type ActionsListWorkflowRunsForRepoResponseBody struct {
+	TotalCount   int64 `json:"total_count,omitempty"`
+	WorkflowRuns []struct {
+		components.WorkflowRun
+	} `json:"workflow_runs,omitempty"`
+}
+
+/*
+ActionsListWorkflowRunsForRepoResponse is a response for ActionsListWorkflowRunsForRepo
+
+https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+*/
+type ActionsListWorkflowRunsForRepoResponse struct {
+	response
+	request *ActionsListWorkflowRunsForRepoReq
+	Data    *ActionsListWorkflowRunsForRepoResponseBody
 }
 
 /*

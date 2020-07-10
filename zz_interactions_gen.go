@@ -11,325 +11,6 @@ import (
 )
 
 /*
-InteractionsAddOrUpdateRestrictionsForOrg performs requests for "interactions/add-or-update-restrictions-for-org"
-
-Add or update interaction restrictions for an organization.
-
-  PUT /orgs/{org}/interaction-limits
-
-https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
-*/
-func InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
-	if req == nil {
-		req = new(InteractionsAddOrUpdateRestrictionsForOrgReq)
-	}
-	resp := &InteractionsAddOrUpdateRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(InteractionsAddOrUpdateRestrictionsForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForOrg performs requests for "interactions/add-or-update-restrictions-for-org"
-
-Add or update interaction restrictions for an organization.
-
-  PUT /orgs/{org}/interaction-limits
-
-https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
-*/
-func (c Client) InteractionsAddOrUpdateRestrictionsForOrg(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForOrgResponse, error) {
-	return InteractionsAddOrUpdateRestrictionsForOrg(ctx, req, append(c, opt...)...)
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForOrgReq is request data for Client.InteractionsAddOrUpdateRestrictionsForOrg
-
-https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
-*/
-type InteractionsAddOrUpdateRestrictionsForOrgReq struct {
-	_url        string
-	Org         string
-	RequestBody InteractionsAddOrUpdateRestrictionsForOrgReqBody
-
-	/*
-	The Interactions API is currently in public preview. See the [blog
-	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
-	preview for more details. To access the API during the preview period, you must
-	set this to true.
-	*/
-	SombraPreview bool
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) method() string {
-	return "PUT"
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *InteractionsAddOrUpdateRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsAddOrUpdateRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForOrgReqBody is a request body for interactions/add-or-update-restrictions-for-org
-
-https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
-*/
-type InteractionsAddOrUpdateRestrictionsForOrgReqBody struct {
-
-	/*
-	   Specifies the group of GitHub users who can comment, open issues, or create pull
-	   requests in public repositories for the given organization. Must be one of:
-	   `existing_users`, `contributors_only`, or `collaborators_only`.
-	*/
-	Limit *string `json:"limit"`
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForOrgResponseBody is a response body for InteractionsAddOrUpdateRestrictionsForOrg
-
-https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
-*/
-type InteractionsAddOrUpdateRestrictionsForOrgResponseBody struct {
-	components.InteractionLimit
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForOrgResponse is a response for InteractionsAddOrUpdateRestrictionsForOrg
-
-https://developer.github.com/v3/interactions/orgs/#add-or-update-interaction-restrictions-for-an-organization
-*/
-type InteractionsAddOrUpdateRestrictionsForOrgResponse struct {
-	response
-	request *InteractionsAddOrUpdateRestrictionsForOrgReq
-	Data    *InteractionsAddOrUpdateRestrictionsForOrgResponseBody
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForRepo performs requests for "interactions/add-or-update-restrictions-for-repo"
-
-Add or update interaction restrictions for a repository.
-
-  PUT /repos/{owner}/{repo}/interaction-limits
-
-https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
-*/
-func InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
-	if req == nil {
-		req = new(InteractionsAddOrUpdateRestrictionsForRepoReq)
-	}
-	resp := &InteractionsAddOrUpdateRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(InteractionsAddOrUpdateRestrictionsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForRepo performs requests for "interactions/add-or-update-restrictions-for-repo"
-
-Add or update interaction restrictions for a repository.
-
-  PUT /repos/{owner}/{repo}/interaction-limits
-
-https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
-*/
-func (c Client) InteractionsAddOrUpdateRestrictionsForRepo(ctx context.Context, req *InteractionsAddOrUpdateRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsAddOrUpdateRestrictionsForRepoResponse, error) {
-	return InteractionsAddOrUpdateRestrictionsForRepo(ctx, req, append(c, opt...)...)
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForRepoReq is request data for Client.InteractionsAddOrUpdateRestrictionsForRepo
-
-https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
-*/
-type InteractionsAddOrUpdateRestrictionsForRepoReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	RequestBody InteractionsAddOrUpdateRestrictionsForRepoReqBody
-
-	/*
-	The Interactions API is currently in public preview. See the [blog
-	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
-	preview for more details. To access the API during the preview period, you must
-	set this to true.
-	*/
-	SombraPreview bool
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) method() string {
-	return "PUT"
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *InteractionsAddOrUpdateRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsAddOrUpdateRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForRepoReqBody is a request body for interactions/add-or-update-restrictions-for-repo
-
-https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
-*/
-type InteractionsAddOrUpdateRestrictionsForRepoReqBody struct {
-
-	/*
-	   Specifies the group of GitHub users who can comment, open issues, or create pull
-	   requests for the given repository. Must be one of: `existing_users`,
-	   `contributors_only`, or `collaborators_only`.
-	*/
-	Limit *string `json:"limit"`
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForRepoResponseBody is a response body for InteractionsAddOrUpdateRestrictionsForRepo
-
-https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
-*/
-type InteractionsAddOrUpdateRestrictionsForRepoResponseBody struct {
-	components.InteractionLimit
-}
-
-/*
-InteractionsAddOrUpdateRestrictionsForRepoResponse is a response for InteractionsAddOrUpdateRestrictionsForRepo
-
-https://developer.github.com/v3/interactions/repos/#add-or-update-interaction-restrictions-for-a-repository
-*/
-type InteractionsAddOrUpdateRestrictionsForRepoResponse struct {
-	response
-	request *InteractionsAddOrUpdateRestrictionsForRepoReq
-	Data    *InteractionsAddOrUpdateRestrictionsForRepoResponseBody
-}
-
-/*
 InteractionsGetRestrictionsForOrg performs requests for "interactions/get-restrictions-for-org"
 
 Get interaction restrictions for an organization.
@@ -879,4 +560,323 @@ https://developer.github.com/v3/interactions/repos/#remove-interaction-restricti
 type InteractionsRemoveRestrictionsForRepoResponse struct {
 	response
 	request *InteractionsRemoveRestrictionsForRepoReq
+}
+
+/*
+InteractionsSetRestrictionsForOrg performs requests for "interactions/set-restrictions-for-org"
+
+Set interaction restrictions for an organization.
+
+  PUT /orgs/{org}/interaction-limits
+
+https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+*/
+func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsSetRestrictionsForOrgResponse, error) {
+	if req == nil {
+		req = new(InteractionsSetRestrictionsForOrgReq)
+	}
+	resp := &InteractionsSetRestrictionsForOrgResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(InteractionsSetRestrictionsForOrgResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsSetRestrictionsForOrg performs requests for "interactions/set-restrictions-for-org"
+
+Set interaction restrictions for an organization.
+
+  PUT /orgs/{org}/interaction-limits
+
+https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+*/
+func (c Client) InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsSetRestrictionsForOrgResponse, error) {
+	return InteractionsSetRestrictionsForOrg(ctx, req, append(c, opt...)...)
+}
+
+/*
+InteractionsSetRestrictionsForOrgReq is request data for Client.InteractionsSetRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+*/
+type InteractionsSetRestrictionsForOrgReq struct {
+	_url        string
+	Org         string
+	RequestBody InteractionsSetRestrictionsForOrgReqBody
+
+	/*
+	The Interactions API is currently in public preview. See the [blog
+	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
+	preview for more details. To access the API during the preview period, you must
+	set this to true.
+	*/
+	SombraPreview bool
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) url() string {
+	return r._url
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) method() string {
+	return "PUT"
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *InteractionsSetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *InteractionsSetRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsSetRestrictionsForOrgResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+InteractionsSetRestrictionsForOrgReqBody is a request body for interactions/set-restrictions-for-org
+
+https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+*/
+type InteractionsSetRestrictionsForOrgReqBody struct {
+
+	/*
+	   Specifies the group of GitHub users who can comment, open issues, or create pull
+	   requests in public repositories for the given organization. Must be one of:
+	   `existing_users`, `contributors_only`, or `collaborators_only`.
+	*/
+	Limit *string `json:"limit"`
+}
+
+/*
+InteractionsSetRestrictionsForOrgResponseBody is a response body for InteractionsSetRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+*/
+type InteractionsSetRestrictionsForOrgResponseBody struct {
+	components.InteractionLimit
+}
+
+/*
+InteractionsSetRestrictionsForOrgResponse is a response for InteractionsSetRestrictionsForOrg
+
+https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+*/
+type InteractionsSetRestrictionsForOrgResponse struct {
+	response
+	request *InteractionsSetRestrictionsForOrgReq
+	Data    *InteractionsSetRestrictionsForOrgResponseBody
+}
+
+/*
+InteractionsSetRestrictionsForRepo performs requests for "interactions/set-restrictions-for-repo"
+
+Set interaction restrictions for a repository.
+
+  PUT /repos/{owner}/{repo}/interaction-limits
+
+https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+*/
+func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsSetRestrictionsForRepoResponse, error) {
+	if req == nil {
+		req = new(InteractionsSetRestrictionsForRepoReq)
+	}
+	resp := &InteractionsSetRestrictionsForRepoResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(InteractionsSetRestrictionsForRepoResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+InteractionsSetRestrictionsForRepo performs requests for "interactions/set-restrictions-for-repo"
+
+Set interaction restrictions for a repository.
+
+  PUT /repos/{owner}/{repo}/interaction-limits
+
+https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+*/
+func (c Client) InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsSetRestrictionsForRepoResponse, error) {
+	return InteractionsSetRestrictionsForRepo(ctx, req, append(c, opt...)...)
+}
+
+/*
+InteractionsSetRestrictionsForRepoReq is request data for Client.InteractionsSetRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+*/
+type InteractionsSetRestrictionsForRepoReq struct {
+	_url        string
+	Owner       string
+	Repo        string
+	RequestBody InteractionsSetRestrictionsForRepoReqBody
+
+	/*
+	The Interactions API is currently in public preview. See the [blog
+	post](https://developer.github.com/changes/2018-12-18-interactions-preview)
+	preview for more details. To access the API during the preview period, you must
+	set this to true.
+	*/
+	SombraPreview bool
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) url() string {
+	return r._url
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) method() string {
+	return "PUT"
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"sombra": r.SombraPreview}
+	if requiredPreviews {
+		previewVals["sombra"] = true
+	}
+	if allPreviews {
+		previewVals["sombra"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *InteractionsSetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *InteractionsSetRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsSetRestrictionsForRepoResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+InteractionsSetRestrictionsForRepoReqBody is a request body for interactions/set-restrictions-for-repo
+
+https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+*/
+type InteractionsSetRestrictionsForRepoReqBody struct {
+
+	/*
+	   Specifies the group of GitHub users who can comment, open issues, or create pull
+	   requests for the given repository. Must be one of: `existing_users`,
+	   `contributors_only`, or `collaborators_only`.
+	*/
+	Limit *string `json:"limit"`
+}
+
+/*
+InteractionsSetRestrictionsForRepoResponseBody is a response body for InteractionsSetRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+*/
+type InteractionsSetRestrictionsForRepoResponseBody struct {
+	components.InteractionLimit
+}
+
+/*
+InteractionsSetRestrictionsForRepoResponse is a response for InteractionsSetRestrictionsForRepo
+
+https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+*/
+type InteractionsSetRestrictionsForRepoResponse struct {
+	response
+	request *InteractionsSetRestrictionsForRepoReq
+	Data    *InteractionsSetRestrictionsForRepoResponseBody
 }

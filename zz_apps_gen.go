@@ -14,11 +14,11 @@ import (
 /*
 AppsAddRepoToInstallation performs requests for "apps/add-repo-to-installation"
 
-Add repository to installation.
+Add a repository to an app installation.
 
   PUT /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
 	if req == nil {
@@ -42,11 +42,11 @@ func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallati
 /*
 AppsAddRepoToInstallation performs requests for "apps/add-repo-to-installation"
 
-Add repository to installation.
+Add a repository to an app installation.
 
   PUT /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 func (c Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
 	return AppsAddRepoToInstallation(ctx, req, append(c, opt...)...)
@@ -55,7 +55,7 @@ func (c Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoT
 /*
 AppsAddRepoToInstallationReq is request data for Client.AppsAddRepoToInstallation
 
-https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AppsAddRepoToInstallationReq struct {
 	_url           string
@@ -135,7 +135,7 @@ func (r *AppsAddRepoToInstallationReq) Rel(link RelName, resp *AppsAddRepoToInst
 /*
 AppsAddRepoToInstallationResponse is a response for AppsAddRepoToInstallation
 
-https://developer.github.com/v3/apps/installations/#add-repository-to-installation
+https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AppsAddRepoToInstallationResponse struct {
 	response
@@ -705,19 +705,19 @@ type AppsCreateFromManifestResponse struct {
 }
 
 /*
-AppsCreateInstallationToken performs requests for "apps/create-installation-token"
+AppsCreateInstallationAccessToken performs requests for "apps/create-installation-access-token"
 
-Create a new installation token.
+Create an installation access token for an app.
 
   POST /app/installations/{installation_id}/access_tokens
 
-https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-func AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
+func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInstallationAccessTokenReq, opt ...RequestOption) (*AppsCreateInstallationAccessTokenResponse, error) {
 	if req == nil {
-		req = new(AppsCreateInstallationTokenReq)
+		req = new(AppsCreateInstallationAccessTokenReq)
 	}
-	resp := &AppsCreateInstallationTokenResponse{request: req}
+	resp := &AppsCreateInstallationAccessTokenResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -725,7 +725,7 @@ func AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallatio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsCreateInstallationTokenResponseBody)
+	resp.Data = new(AppsCreateInstallationAccessTokenResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -734,27 +734,27 @@ func AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallatio
 }
 
 /*
-AppsCreateInstallationToken performs requests for "apps/create-installation-token"
+AppsCreateInstallationAccessToken performs requests for "apps/create-installation-access-token"
 
-Create a new installation token.
+Create an installation access token for an app.
 
   POST /app/installations/{installation_id}/access_tokens
 
-https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-func (c Client) AppsCreateInstallationToken(ctx context.Context, req *AppsCreateInstallationTokenReq, opt ...RequestOption) (*AppsCreateInstallationTokenResponse, error) {
-	return AppsCreateInstallationToken(ctx, req, append(c, opt...)...)
+func (c Client) AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInstallationAccessTokenReq, opt ...RequestOption) (*AppsCreateInstallationAccessTokenResponse, error) {
+	return AppsCreateInstallationAccessToken(ctx, req, append(c, opt...)...)
 }
 
 /*
-AppsCreateInstallationTokenReq is request data for Client.AppsCreateInstallationToken
+AppsCreateInstallationAccessTokenReq is request data for Client.AppsCreateInstallationAccessToken
 
-https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-type AppsCreateInstallationTokenReq struct {
+type AppsCreateInstallationAccessTokenReq struct {
 	_url           string
 	InstallationId int64
-	RequestBody    AppsCreateInstallationTokenReqBody
+	RequestBody    AppsCreateInstallationAccessTokenReqBody
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -763,24 +763,24 @@ type AppsCreateInstallationTokenReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsCreateInstallationTokenReq) url() string {
+func (r *AppsCreateInstallationAccessTokenReq) url() string {
 	return r._url
 }
 
-func (r *AppsCreateInstallationTokenReq) urlPath() string {
+func (r *AppsCreateInstallationAccessTokenReq) urlPath() string {
 	return fmt.Sprintf("/app/installations/%v/access_tokens", r.InstallationId)
 }
 
-func (r *AppsCreateInstallationTokenReq) method() string {
+func (r *AppsCreateInstallationAccessTokenReq) method() string {
 	return "POST"
 }
 
-func (r *AppsCreateInstallationTokenReq) urlQuery() url.Values {
+func (r *AppsCreateInstallationAccessTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *AppsCreateInstallationTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *AppsCreateInstallationAccessTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
@@ -792,24 +792,24 @@ func (r *AppsCreateInstallationTokenReq) header(requiredPreviews, allPreviews bo
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *AppsCreateInstallationTokenReq) body() interface{} {
+func (r *AppsCreateInstallationAccessTokenReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *AppsCreateInstallationTokenReq) dataStatuses() []int {
+func (r *AppsCreateInstallationAccessTokenReq) dataStatuses() []int {
 	return []int{201}
 }
 
-func (r *AppsCreateInstallationTokenReq) validStatuses() []int {
+func (r *AppsCreateInstallationAccessTokenReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *AppsCreateInstallationTokenReq) endpointAttributes() []endpointAttribute {
+func (r *AppsCreateInstallationAccessTokenReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AppsCreateInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsCreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -817,7 +817,7 @@ func (r *AppsCreateInstallationTokenReq) HTTPRequest(ctx context.Context, opt ..
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsCreateInstallationTokenReq) Rel(link RelName, resp *AppsCreateInstallationTokenResponse) bool {
+func (r *AppsCreateInstallationAccessTokenReq) Rel(link RelName, resp *AppsCreateInstallationAccessTokenResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -827,11 +827,11 @@ func (r *AppsCreateInstallationTokenReq) Rel(link RelName, resp *AppsCreateInsta
 }
 
 /*
-AppsCreateInstallationTokenReqBody is a request body for apps/create-installation-token
+AppsCreateInstallationAccessTokenReqBody is a request body for apps/create-installation-access-token
 
-https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-type AppsCreateInstallationTokenReqBody struct {
+type AppsCreateInstallationAccessTokenReqBody struct {
 
 	/*
 	   The permissions granted to the access token. The permissions object includes the
@@ -839,13 +839,13 @@ type AppsCreateInstallationTokenReqBody struct {
 	   allowable values, see "[GitHub App
 	   permissions](https://developer.github.com/apps/building-github-apps/creating-github-apps-using-url-parameters/#github-app-permissions)."
 	*/
-	Permissions map[string]string `json:"permissions,omitempty"`
+	Permissions interface{} `json:"permissions,omitempty"`
 
 	/*
 	   The `id`s of the repositories that the installation token can access. Providing
 	   repository `id`s restricts the access of an installation token to specific
-	   repositories. You can use the "[List
-	   repositories](https://developer.github.com/v3/apps/installations/#list-repositories)"
+	   repositories. You can use the "[List repositories accessible to the app
+	   installation](https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation)"
 	   endpoint to get the `id` of all repositories that an installation can access.
 	   For example, you can select specific repositories when creating an installation
 	   token to restrict the number of repositories that can be cloned using the token.
@@ -854,23 +854,23 @@ type AppsCreateInstallationTokenReqBody struct {
 }
 
 /*
-AppsCreateInstallationTokenResponseBody is a response body for AppsCreateInstallationToken
+AppsCreateInstallationAccessTokenResponseBody is a response body for AppsCreateInstallationAccessToken
 
-https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-type AppsCreateInstallationTokenResponseBody struct {
+type AppsCreateInstallationAccessTokenResponseBody struct {
 	components.InstallationToken
 }
 
 /*
-AppsCreateInstallationTokenResponse is a response for AppsCreateInstallationToken
+AppsCreateInstallationAccessTokenResponse is a response for AppsCreateInstallationAccessToken
 
-https://developer.github.com/v3/apps/#create-a-new-installation-token
+https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-type AppsCreateInstallationTokenResponse struct {
+type AppsCreateInstallationAccessTokenResponse struct {
 	response
-	request *AppsCreateInstallationTokenReq
-	Data    *AppsCreateInstallationTokenResponseBody
+	request *AppsCreateInstallationAccessTokenReq
+	Data    *AppsCreateInstallationAccessTokenResponseBody
 }
 
 /*
@@ -1006,11 +1006,11 @@ type AppsDeleteAuthorizationResponse struct {
 /*
 AppsDeleteInstallation performs requests for "apps/delete-installation"
 
-Delete an installation.
+Delete an installation for the authenticated app.
 
   DELETE /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#delete-an-installation
+https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
 	if req == nil {
@@ -1034,11 +1034,11 @@ func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq,
 /*
 AppsDeleteInstallation performs requests for "apps/delete-installation"
 
-Delete an installation.
+Delete an installation for the authenticated app.
 
   DELETE /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#delete-an-installation
+https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 func (c Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
 	return AppsDeleteInstallation(ctx, req, append(c, opt...)...)
@@ -1047,7 +1047,7 @@ func (c Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInsta
 /*
 AppsDeleteInstallationReq is request data for Client.AppsDeleteInstallation
 
-https://developer.github.com/v3/apps/#delete-an-installation
+https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type AppsDeleteInstallationReq struct {
 	_url           string
@@ -1126,7 +1126,7 @@ func (r *AppsDeleteInstallationReq) Rel(link RelName, resp *AppsDeleteInstallati
 /*
 AppsDeleteInstallationResponse is a response for AppsDeleteInstallation
 
-https://developer.github.com/v3/apps/#delete-an-installation
+https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type AppsDeleteInstallationResponse struct {
 	response
@@ -1266,11 +1266,11 @@ type AppsDeleteTokenResponse struct {
 /*
 AppsGetAuthenticated performs requests for "apps/get-authenticated"
 
-Get the authenticated GitHub App.
+Get the authenticated app.
 
   GET /app
 
-https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
 	if req == nil {
@@ -1295,11 +1295,11 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 /*
 AppsGetAuthenticated performs requests for "apps/get-authenticated"
 
-Get the authenticated GitHub App.
+Get the authenticated app.
 
   GET /app
 
-https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 func (c Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
 	return AppsGetAuthenticated(ctx, req, append(c, opt...)...)
@@ -1308,7 +1308,7 @@ func (c Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthentica
 /*
 AppsGetAuthenticatedReq is request data for Client.AppsGetAuthenticated
 
-https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type AppsGetAuthenticatedReq struct {
 	_url string
@@ -1386,16 +1386,16 @@ func (r *AppsGetAuthenticatedReq) Rel(link RelName, resp *AppsGetAuthenticatedRe
 /*
 AppsGetAuthenticatedResponseBody is a response body for AppsGetAuthenticated
 
-https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type AppsGetAuthenticatedResponseBody struct {
-	components.Integration
+	components.InstalledIntegration
 }
 
 /*
 AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
 
-https://developer.github.com/v3/apps/#get-the-authenticated-github-app
+https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type AppsGetAuthenticatedResponse struct {
 	response
@@ -1406,11 +1406,11 @@ type AppsGetAuthenticatedResponse struct {
 /*
 AppsGetBySlug performs requests for "apps/get-by-slug"
 
-Get a single GitHub App.
+Get an app.
 
   GET /apps/{app_slug}
 
-https://developer.github.com/v3/apps/#get-a-single-github-app
+https://developer.github.com/v3/apps/#get-an-app
 */
 func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
 	if req == nil {
@@ -1435,11 +1435,11 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOpt
 /*
 AppsGetBySlug performs requests for "apps/get-by-slug"
 
-Get a single GitHub App.
+Get an app.
 
   GET /apps/{app_slug}
 
-https://developer.github.com/v3/apps/#get-a-single-github-app
+https://developer.github.com/v3/apps/#get-an-app
 */
 func (c Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
 	return AppsGetBySlug(ctx, req, append(c, opt...)...)
@@ -1448,7 +1448,7 @@ func (c Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ..
 /*
 AppsGetBySlugReq is request data for Client.AppsGetBySlug
 
-https://developer.github.com/v3/apps/#get-a-single-github-app
+https://developer.github.com/v3/apps/#get-an-app
 */
 type AppsGetBySlugReq struct {
 	_url    string
@@ -1527,16 +1527,16 @@ func (r *AppsGetBySlugReq) Rel(link RelName, resp *AppsGetBySlugResponse) bool {
 /*
 AppsGetBySlugResponseBody is a response body for AppsGetBySlug
 
-https://developer.github.com/v3/apps/#get-a-single-github-app
+https://developer.github.com/v3/apps/#get-an-app
 */
 type AppsGetBySlugResponseBody struct {
-	components.Integration2
+	components.Integration
 }
 
 /*
 AppsGetBySlugResponse is a response for AppsGetBySlug
 
-https://developer.github.com/v3/apps/#get-a-single-github-app
+https://developer.github.com/v3/apps/#get-an-app
 */
 type AppsGetBySlugResponse struct {
 	response
@@ -1547,11 +1547,11 @@ type AppsGetBySlugResponse struct {
 /*
 AppsGetInstallation performs requests for "apps/get-installation"
 
-Get an installation.
+Get an installation for the authenticated app.
 
   GET /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#get-an-installation
+https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
 	if req == nil {
@@ -1576,11 +1576,11 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 /*
 AppsGetInstallation performs requests for "apps/get-installation"
 
-Get an installation.
+Get an installation for the authenticated app.
 
   GET /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#get-an-installation
+https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 func (c Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
 	return AppsGetInstallation(ctx, req, append(c, opt...)...)
@@ -1589,7 +1589,7 @@ func (c Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallatio
 /*
 AppsGetInstallationReq is request data for Client.AppsGetInstallation
 
-https://developer.github.com/v3/apps/#get-an-installation
+https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type AppsGetInstallationReq struct {
 	_url           string
@@ -1668,7 +1668,7 @@ func (r *AppsGetInstallationReq) Rel(link RelName, resp *AppsGetInstallationResp
 /*
 AppsGetInstallationResponseBody is a response body for AppsGetInstallation
 
-https://developer.github.com/v3/apps/#get-an-installation
+https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type AppsGetInstallationResponseBody struct {
 	components.BaseInstallation
@@ -1677,7 +1677,7 @@ type AppsGetInstallationResponseBody struct {
 /*
 AppsGetInstallationResponse is a response for AppsGetInstallation
 
-https://developer.github.com/v3/apps/#get-an-installation
+https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type AppsGetInstallationResponse struct {
 	response
@@ -1688,11 +1688,11 @@ type AppsGetInstallationResponse struct {
 /*
 AppsGetOrgInstallation performs requests for "apps/get-org-installation"
 
-Get an organization installation.
+Get an organization installation for the authenticated app.
 
   GET /orgs/{org}/installation
 
-https://developer.github.com/v3/apps/#get-an-organization-installation
+https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
 	if req == nil {
@@ -1717,11 +1717,11 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 /*
 AppsGetOrgInstallation performs requests for "apps/get-org-installation"
 
-Get an organization installation.
+Get an organization installation for the authenticated app.
 
   GET /orgs/{org}/installation
 
-https://developer.github.com/v3/apps/#get-an-organization-installation
+https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 func (c Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
 	return AppsGetOrgInstallation(ctx, req, append(c, opt...)...)
@@ -1730,7 +1730,7 @@ func (c Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInsta
 /*
 AppsGetOrgInstallationReq is request data for Client.AppsGetOrgInstallation
 
-https://developer.github.com/v3/apps/#get-an-organization-installation
+https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type AppsGetOrgInstallationReq struct {
 	_url string
@@ -1809,7 +1809,7 @@ func (r *AppsGetOrgInstallationReq) Rel(link RelName, resp *AppsGetOrgInstallati
 /*
 AppsGetOrgInstallationResponseBody is a response body for AppsGetOrgInstallation
 
-https://developer.github.com/v3/apps/#get-an-organization-installation
+https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type AppsGetOrgInstallationResponseBody struct {
 	components.Installation
@@ -1818,7 +1818,7 @@ type AppsGetOrgInstallationResponseBody struct {
 /*
 AppsGetOrgInstallationResponse is a response for AppsGetOrgInstallation
 
-https://developer.github.com/v3/apps/#get-an-organization-installation
+https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type AppsGetOrgInstallationResponse struct {
 	response
@@ -1829,11 +1829,11 @@ type AppsGetOrgInstallationResponse struct {
 /*
 AppsGetRepoInstallation performs requests for "apps/get-repo-installation"
 
-Get a repository installation.
+Get a repository installation for the authenticated app.
 
   GET /repos/{owner}/{repo}/installation
 
-https://developer.github.com/v3/apps/#get-a-repository-installation
+https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
 	if req == nil {
@@ -1858,11 +1858,11 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 /*
 AppsGetRepoInstallation performs requests for "apps/get-repo-installation"
 
-Get a repository installation.
+Get a repository installation for the authenticated app.
 
   GET /repos/{owner}/{repo}/installation
 
-https://developer.github.com/v3/apps/#get-a-repository-installation
+https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 func (c Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
 	return AppsGetRepoInstallation(ctx, req, append(c, opt...)...)
@@ -1871,7 +1871,7 @@ func (c Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoIns
 /*
 AppsGetRepoInstallationReq is request data for Client.AppsGetRepoInstallation
 
-https://developer.github.com/v3/apps/#get-a-repository-installation
+https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationReq struct {
 	_url  string
@@ -1951,7 +1951,7 @@ func (r *AppsGetRepoInstallationReq) Rel(link RelName, resp *AppsGetRepoInstalla
 /*
 AppsGetRepoInstallationResponseBody is a response body for AppsGetRepoInstallation
 
-https://developer.github.com/v3/apps/#get-a-repository-installation
+https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationResponseBody struct {
 	components.Installation
@@ -1960,7 +1960,7 @@ type AppsGetRepoInstallationResponseBody struct {
 /*
 AppsGetRepoInstallationResponse is a response for AppsGetRepoInstallation
 
-https://developer.github.com/v3/apps/#get-a-repository-installation
+https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationResponse struct {
 	response
@@ -2229,11 +2229,11 @@ type AppsGetSubscriptionPlanForAccountStubbedResponse struct {
 /*
 AppsGetUserInstallation performs requests for "apps/get-user-installation"
 
-Get a user installation.
+Get a user installation for the authenticated app.
 
   GET /users/{username}/installation
 
-https://developer.github.com/v3/apps/#get-a-user-installation
+https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
 	if req == nil {
@@ -2258,11 +2258,11 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 /*
 AppsGetUserInstallation performs requests for "apps/get-user-installation"
 
-Get a user installation.
+Get a user installation for the authenticated app.
 
   GET /users/{username}/installation
 
-https://developer.github.com/v3/apps/#get-a-user-installation
+https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 func (c Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
 	return AppsGetUserInstallation(ctx, req, append(c, opt...)...)
@@ -2271,7 +2271,7 @@ func (c Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserIns
 /*
 AppsGetUserInstallationReq is request data for Client.AppsGetUserInstallation
 
-https://developer.github.com/v3/apps/#get-a-user-installation
+https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationReq struct {
 	_url     string
@@ -2350,16 +2350,16 @@ func (r *AppsGetUserInstallationReq) Rel(link RelName, resp *AppsGetUserInstalla
 /*
 AppsGetUserInstallationResponseBody is a response body for AppsGetUserInstallation
 
-https://developer.github.com/v3/apps/#get-a-user-installation
+https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationResponseBody struct {
-	components.Installation2
+	components.Installation
 }
 
 /*
 AppsGetUserInstallationResponse is a response for AppsGetUserInstallation
 
-https://developer.github.com/v3/apps/#get-a-user-installation
+https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationResponse struct {
 	response
@@ -2688,11 +2688,11 @@ type AppsListAccountsForPlanStubbedResponse struct {
 /*
 AppsListInstallationReposForAuthenticatedUser performs requests for "apps/list-installation-repos-for-authenticated-user"
 
-List repositories accessible to the user for an installation.
+List repositories accessible to the user access token.
 
   GET /user/installations/{installation_id}/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -2717,11 +2717,11 @@ func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *App
 /*
 AppsListInstallationReposForAuthenticatedUser performs requests for "apps/list-installation-repos-for-authenticated-user"
 
-List repositories accessible to the user for an installation.
+List repositories accessible to the user access token.
 
   GET /user/installations/{installation_id}/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 func (c Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
 	return AppsListInstallationReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -2730,7 +2730,7 @@ func (c Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Contex
 /*
 AppsListInstallationReposForAuthenticatedUserReq is request data for Client.AppsListInstallationReposForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserReq struct {
 	_url           string
@@ -2832,7 +2832,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) Rel(link RelName, res
 /*
 AppsListInstallationReposForAuthenticatedUserResponseBody is a response body for AppsListInstallationReposForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserResponseBody struct {
 	Repositories []struct {
@@ -2844,7 +2844,7 @@ type AppsListInstallationReposForAuthenticatedUserResponseBody struct {
 /*
 AppsListInstallationReposForAuthenticatedUserResponse is a response for AppsListInstallationReposForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserResponse struct {
 	response
@@ -2855,11 +2855,11 @@ type AppsListInstallationReposForAuthenticatedUserResponse struct {
 /*
 AppsListInstallations performs requests for "apps/list-installations"
 
-List installations.
+List installations for the authenticated app.
 
   GET /app/installations
 
-https://developer.github.com/v3/apps/#list-installations
+https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
 	if req == nil {
@@ -2884,11 +2884,11 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 /*
 AppsListInstallations performs requests for "apps/list-installations"
 
-List installations.
+List installations for the authenticated app.
 
   GET /app/installations
 
-https://developer.github.com/v3/apps/#list-installations
+https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 func (c Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
 	return AppsListInstallations(ctx, req, append(c, opt...)...)
@@ -2897,7 +2897,7 @@ func (c Client) AppsListInstallations(ctx context.Context, req *AppsListInstalla
 /*
 AppsListInstallationsReq is request data for Client.AppsListInstallations
 
-https://developer.github.com/v3/apps/#list-installations
+https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type AppsListInstallationsReq struct {
 	_url string
@@ -2987,7 +2987,7 @@ func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallations
 /*
 AppsListInstallationsResponseBody is a response body for AppsListInstallations
 
-https://developer.github.com/v3/apps/#list-installations
+https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type AppsListInstallationsResponseBody []struct {
 	components.BaseInstallation
@@ -2996,7 +2996,7 @@ type AppsListInstallationsResponseBody []struct {
 /*
 AppsListInstallationsResponse is a response for AppsListInstallations
 
-https://developer.github.com/v3/apps/#list-installations
+https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type AppsListInstallationsResponse struct {
 	response
@@ -3007,11 +3007,11 @@ type AppsListInstallationsResponse struct {
 /*
 AppsListInstallationsForAuthenticatedUser performs requests for "apps/list-installations-for-authenticated-user"
 
-List installations for a user.
+List app installations accessible to the user access token.
 
   GET /user/installations
 
-https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -3036,11 +3036,11 @@ func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsLis
 /*
 AppsListInstallationsForAuthenticatedUser performs requests for "apps/list-installations-for-authenticated-user"
 
-List installations for a user.
+List app installations accessible to the user access token.
 
   GET /user/installations
 
-https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 func (c Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
 	return AppsListInstallationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -3049,7 +3049,7 @@ func (c Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, r
 /*
 AppsListInstallationsForAuthenticatedUserReq is request data for Client.AppsListInstallationsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserReq struct {
 	_url string
@@ -3139,7 +3139,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) Rel(link RelName, resp *A
 /*
 AppsListInstallationsForAuthenticatedUserResponseBody is a response body for AppsListInstallationsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserResponseBody struct {
 	Installations []struct {
@@ -3151,7 +3151,7 @@ type AppsListInstallationsForAuthenticatedUserResponseBody struct {
 /*
 AppsListInstallationsForAuthenticatedUserResponse is a response for AppsListInstallationsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-installations-for-a-user
+https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserResponse struct {
 	response
@@ -3440,19 +3440,19 @@ type AppsListPlansStubbedResponse struct {
 }
 
 /*
-AppsListRepos performs requests for "apps/list-repos"
+AppsListReposAccessibleToInstallation performs requests for "apps/list-repos-accessible-to-installation"
 
-List repositories.
+List repositories accessible to the app installation.
 
   GET /installation/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-func AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
+func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListReposAccessibleToInstallationReq, opt ...RequestOption) (*AppsListReposAccessibleToInstallationResponse, error) {
 	if req == nil {
-		req = new(AppsListReposReq)
+		req = new(AppsListReposAccessibleToInstallationReq)
 	}
-	resp := &AppsListReposResponse{request: req}
+	resp := &AppsListReposAccessibleToInstallationResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3460,7 +3460,7 @@ func AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListReposResponseBody)
+	resp.Data = new(AppsListReposAccessibleToInstallationResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3469,24 +3469,24 @@ func AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOpt
 }
 
 /*
-AppsListRepos performs requests for "apps/list-repos"
+AppsListReposAccessibleToInstallation performs requests for "apps/list-repos-accessible-to-installation"
 
-List repositories.
+List repositories accessible to the app installation.
 
   GET /installation/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-func (c Client) AppsListRepos(ctx context.Context, req *AppsListReposReq, opt ...RequestOption) (*AppsListReposResponse, error) {
-	return AppsListRepos(ctx, req, append(c, opt...)...)
+func (c Client) AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListReposAccessibleToInstallationReq, opt ...RequestOption) (*AppsListReposAccessibleToInstallationResponse, error) {
+	return AppsListReposAccessibleToInstallation(ctx, req, append(c, opt...)...)
 }
 
 /*
-AppsListReposReq is request data for Client.AppsListRepos
+AppsListReposAccessibleToInstallationReq is request data for Client.AppsListReposAccessibleToInstallation
 
-https://developer.github.com/v3/apps/installations/#list-repositories
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-type AppsListReposReq struct {
+type AppsListReposAccessibleToInstallationReq struct {
 	_url string
 
 	// Results per page (max 100)
@@ -3509,19 +3509,19 @@ type AppsListReposReq struct {
 	MercyPreview bool
 }
 
-func (r *AppsListReposReq) url() string {
+func (r *AppsListReposAccessibleToInstallationReq) url() string {
 	return r._url
 }
 
-func (r *AppsListReposReq) urlPath() string {
+func (r *AppsListReposAccessibleToInstallationReq) urlPath() string {
 	return fmt.Sprintf("/installation/repositories")
 }
 
-func (r *AppsListReposReq) method() string {
+func (r *AppsListReposAccessibleToInstallationReq) method() string {
 	return "GET"
 }
 
-func (r *AppsListReposReq) urlQuery() url.Values {
+func (r *AppsListReposAccessibleToInstallationReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3532,7 +3532,7 @@ func (r *AppsListReposReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *AppsListReposReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *AppsListReposAccessibleToInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
@@ -3548,24 +3548,24 @@ func (r *AppsListReposReq) header(requiredPreviews, allPreviews bool) http.Heade
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *AppsListReposReq) body() interface{} {
+func (r *AppsListReposAccessibleToInstallationReq) body() interface{} {
 	return nil
 }
 
-func (r *AppsListReposReq) dataStatuses() []int {
+func (r *AppsListReposAccessibleToInstallationReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListReposReq) validStatuses() []int {
+func (r *AppsListReposAccessibleToInstallationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListReposReq) endpointAttributes() []endpointAttribute {
+func (r *AppsListReposAccessibleToInstallationReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AppsListReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3573,7 +3573,7 @@ func (r *AppsListReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListReposReq) Rel(link RelName, resp *AppsListReposResponse) bool {
+func (r *AppsListReposAccessibleToInstallationReq) Rel(link RelName, resp *AppsListReposAccessibleToInstallationResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3583,11 +3583,11 @@ func (r *AppsListReposReq) Rel(link RelName, resp *AppsListReposResponse) bool {
 }
 
 /*
-AppsListReposResponseBody is a response body for AppsListRepos
+AppsListReposAccessibleToInstallationResponseBody is a response body for AppsListReposAccessibleToInstallation
 
-https://developer.github.com/v3/apps/installations/#list-repositories
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-type AppsListReposResponseBody struct {
+type AppsListReposAccessibleToInstallationResponseBody struct {
 	Repositories []struct {
 		components.Repository2
 	} `json:"repositories,omitempty"`
@@ -3595,14 +3595,14 @@ type AppsListReposResponseBody struct {
 }
 
 /*
-AppsListReposResponse is a response for AppsListRepos
+AppsListReposAccessibleToInstallationResponse is a response for AppsListReposAccessibleToInstallation
 
-https://developer.github.com/v3/apps/installations/#list-repositories
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-type AppsListReposResponse struct {
+type AppsListReposAccessibleToInstallationResponse struct {
 	response
-	request *AppsListReposReq
-	Data    *AppsListReposResponseBody
+	request *AppsListReposAccessibleToInstallationReq
+	Data    *AppsListReposAccessibleToInstallationResponseBody
 }
 
 /*
@@ -3888,11 +3888,11 @@ type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
 /*
 AppsRemoveRepoFromInstallation performs requests for "apps/remove-repo-from-installation"
 
-Remove repository from installation.
+Remove a repository from an app installation.
 
   DELETE /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
 	if req == nil {
@@ -3916,11 +3916,11 @@ func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFrom
 /*
 AppsRemoveRepoFromInstallation performs requests for "apps/remove-repo-from-installation"
 
-Remove repository from installation.
+Remove a repository from an app installation.
 
   DELETE /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 func (c Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
 	return AppsRemoveRepoFromInstallation(ctx, req, append(c, opt...)...)
@@ -3929,7 +3929,7 @@ func (c Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRem
 /*
 AppsRemoveRepoFromInstallationReq is request data for Client.AppsRemoveRepoFromInstallation
 
-https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type AppsRemoveRepoFromInstallationReq struct {
 	_url           string
@@ -4009,7 +4009,7 @@ func (r *AppsRemoveRepoFromInstallationReq) Rel(link RelName, resp *AppsRemoveRe
 /*
 AppsRemoveRepoFromInstallationResponse is a response for AppsRemoveRepoFromInstallation
 
-https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
+https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type AppsRemoveRepoFromInstallationResponse struct {
 	response
@@ -4526,19 +4526,19 @@ type AppsRevokeGrantForApplicationResponse struct {
 }
 
 /*
-AppsRevokeInstallationToken performs requests for "apps/revoke-installation-token"
+AppsRevokeInstallationAccessToken performs requests for "apps/revoke-installation-access-token"
 
-Revoke an installation token.
+Revoke an installation access token.
 
   DELETE /installation/token
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-func AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
+func AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInstallationAccessTokenReq, opt ...RequestOption) (*AppsRevokeInstallationAccessTokenResponse, error) {
 	if req == nil {
-		req = new(AppsRevokeInstallationTokenReq)
+		req = new(AppsRevokeInstallationAccessTokenReq)
 	}
-	resp := &AppsRevokeInstallationTokenResponse{request: req}
+	resp := &AppsRevokeInstallationAccessTokenResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -4554,68 +4554,68 @@ func AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallatio
 }
 
 /*
-AppsRevokeInstallationToken performs requests for "apps/revoke-installation-token"
+AppsRevokeInstallationAccessToken performs requests for "apps/revoke-installation-access-token"
 
-Revoke an installation token.
+Revoke an installation access token.
 
   DELETE /installation/token
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-func (c Client) AppsRevokeInstallationToken(ctx context.Context, req *AppsRevokeInstallationTokenReq, opt ...RequestOption) (*AppsRevokeInstallationTokenResponse, error) {
-	return AppsRevokeInstallationToken(ctx, req, append(c, opt...)...)
+func (c Client) AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInstallationAccessTokenReq, opt ...RequestOption) (*AppsRevokeInstallationAccessTokenResponse, error) {
+	return AppsRevokeInstallationAccessToken(ctx, req, append(c, opt...)...)
 }
 
 /*
-AppsRevokeInstallationTokenReq is request data for Client.AppsRevokeInstallationToken
+AppsRevokeInstallationAccessTokenReq is request data for Client.AppsRevokeInstallationAccessToken
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-type AppsRevokeInstallationTokenReq struct {
+type AppsRevokeInstallationAccessTokenReq struct {
 	_url string
 }
 
-func (r *AppsRevokeInstallationTokenReq) url() string {
+func (r *AppsRevokeInstallationAccessTokenReq) url() string {
 	return r._url
 }
 
-func (r *AppsRevokeInstallationTokenReq) urlPath() string {
+func (r *AppsRevokeInstallationAccessTokenReq) urlPath() string {
 	return fmt.Sprintf("/installation/token")
 }
 
-func (r *AppsRevokeInstallationTokenReq) method() string {
+func (r *AppsRevokeInstallationAccessTokenReq) method() string {
 	return "DELETE"
 }
 
-func (r *AppsRevokeInstallationTokenReq) urlQuery() url.Values {
+func (r *AppsRevokeInstallationAccessTokenReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *AppsRevokeInstallationTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *AppsRevokeInstallationAccessTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *AppsRevokeInstallationTokenReq) body() interface{} {
+func (r *AppsRevokeInstallationAccessTokenReq) body() interface{} {
 	return nil
 }
 
-func (r *AppsRevokeInstallationTokenReq) dataStatuses() []int {
+func (r *AppsRevokeInstallationAccessTokenReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *AppsRevokeInstallationTokenReq) validStatuses() []int {
+func (r *AppsRevokeInstallationAccessTokenReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRevokeInstallationTokenReq) endpointAttributes() []endpointAttribute {
+func (r *AppsRevokeInstallationAccessTokenReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *AppsRevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4623,7 +4623,7 @@ func (r *AppsRevokeInstallationTokenReq) HTTPRequest(ctx context.Context, opt ..
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsRevokeInstallationTokenReq) Rel(link RelName, resp *AppsRevokeInstallationTokenResponse) bool {
+func (r *AppsRevokeInstallationAccessTokenReq) Rel(link RelName, resp *AppsRevokeInstallationAccessTokenResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -4633,23 +4633,23 @@ func (r *AppsRevokeInstallationTokenReq) Rel(link RelName, resp *AppsRevokeInsta
 }
 
 /*
-AppsRevokeInstallationTokenResponse is a response for AppsRevokeInstallationToken
+AppsRevokeInstallationAccessTokenResponse is a response for AppsRevokeInstallationAccessToken
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-token
+https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-type AppsRevokeInstallationTokenResponse struct {
+type AppsRevokeInstallationAccessTokenResponse struct {
 	response
-	request *AppsRevokeInstallationTokenReq
+	request *AppsRevokeInstallationAccessTokenReq
 }
 
 /*
 AppsSuspendInstallation performs requests for "apps/suspend-installation"
 
-Suspend an installation.
+Suspend an app installation.
 
   PUT /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#suspend-an-installation
+https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
 	if req == nil {
@@ -4673,11 +4673,11 @@ func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationRe
 /*
 AppsSuspendInstallation performs requests for "apps/suspend-installation"
 
-Suspend an installation.
+Suspend an app installation.
 
   PUT /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#suspend-an-installation
+https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 func (c Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
 	return AppsSuspendInstallation(ctx, req, append(c, opt...)...)
@@ -4686,7 +4686,7 @@ func (c Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendIns
 /*
 AppsSuspendInstallationReq is request data for Client.AppsSuspendInstallation
 
-https://developer.github.com/v3/apps/#suspend-an-installation
+https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type AppsSuspendInstallationReq struct {
 	_url           string
@@ -4753,7 +4753,7 @@ func (r *AppsSuspendInstallationReq) Rel(link RelName, resp *AppsSuspendInstalla
 /*
 AppsSuspendInstallationResponse is a response for AppsSuspendInstallation
 
-https://developer.github.com/v3/apps/#suspend-an-installation
+https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type AppsSuspendInstallationResponse struct {
 	response
@@ -4763,11 +4763,11 @@ type AppsSuspendInstallationResponse struct {
 /*
 AppsUnsuspendInstallation performs requests for "apps/unsuspend-installation"
 
-Unsuspend an installation.
+Unsuspend an app installation.
 
   DELETE /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#unsuspend-an-installation
+https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
 	if req == nil {
@@ -4791,11 +4791,11 @@ func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallati
 /*
 AppsUnsuspendInstallation performs requests for "apps/unsuspend-installation"
 
-Unsuspend an installation.
+Unsuspend an app installation.
 
   DELETE /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#unsuspend-an-installation
+https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 func (c Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
 	return AppsUnsuspendInstallation(ctx, req, append(c, opt...)...)
@@ -4804,7 +4804,7 @@ func (c Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspen
 /*
 AppsUnsuspendInstallationReq is request data for Client.AppsUnsuspendInstallation
 
-https://developer.github.com/v3/apps/#unsuspend-an-installation
+https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type AppsUnsuspendInstallationReq struct {
 	_url           string
@@ -4871,7 +4871,7 @@ func (r *AppsUnsuspendInstallationReq) Rel(link RelName, resp *AppsUnsuspendInst
 /*
 AppsUnsuspendInstallationResponse is a response for AppsUnsuspendInstallation
 
-https://developer.github.com/v3/apps/#unsuspend-an-installation
+https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type AppsUnsuspendInstallationResponse struct {
 	response

@@ -13,11 +13,11 @@ import (
 /*
 MetaGet performs requests for "meta/get"
 
-Get.
+Get GitHub meta information.
 
   GET /meta
 
-https://developer.github.com/v3/meta/#meta
+https://developer.github.com/v3/meta/#get-github-meta-information
 */
 func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
 	if req == nil {
@@ -42,11 +42,11 @@ func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaG
 /*
 MetaGet performs requests for "meta/get"
 
-Get.
+Get GitHub meta information.
 
   GET /meta
 
-https://developer.github.com/v3/meta/#meta
+https://developer.github.com/v3/meta/#get-github-meta-information
 */
 func (c Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
 	return MetaGet(ctx, req, append(c, opt...)...)
@@ -55,7 +55,7 @@ func (c Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOpti
 /*
 MetaGetReq is request data for Client.MetaGet
 
-https://developer.github.com/v3/meta/#meta
+https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type MetaGetReq struct {
 	_url string
@@ -121,7 +121,7 @@ func (r *MetaGetReq) Rel(link RelName, resp *MetaGetResponse) bool {
 /*
 MetaGetResponseBody is a response body for MetaGet
 
-https://developer.github.com/v3/meta/#meta
+https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type MetaGetResponseBody struct {
 	components.ApiOverview
@@ -130,7 +130,7 @@ type MetaGetResponseBody struct {
 /*
 MetaGetResponse is a response for MetaGet
 
-https://developer.github.com/v3/meta/#meta
+https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type MetaGetResponse struct {
 	response

@@ -12,159 +12,13 @@ import (
 )
 
 /*
-OrgsAddOrUpdateMembership performs requests for "orgs/add-or-update-membership"
-
-Add or update organization membership.
-
-  PUT /orgs/{org}/memberships/{username}
-
-https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
-*/
-func OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
-	if req == nil {
-		req = new(OrgsAddOrUpdateMembershipReq)
-	}
-	resp := &OrgsAddOrUpdateMembershipResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsAddOrUpdateMembershipResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsAddOrUpdateMembership performs requests for "orgs/add-or-update-membership"
-
-Add or update organization membership.
-
-  PUT /orgs/{org}/memberships/{username}
-
-https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
-*/
-func (c Client) OrgsAddOrUpdateMembership(ctx context.Context, req *OrgsAddOrUpdateMembershipReq, opt ...RequestOption) (*OrgsAddOrUpdateMembershipResponse, error) {
-	return OrgsAddOrUpdateMembership(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsAddOrUpdateMembershipReq is request data for Client.OrgsAddOrUpdateMembership
-
-https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
-*/
-type OrgsAddOrUpdateMembershipReq struct {
-	_url        string
-	Org         string
-	Username    string
-	RequestBody OrgsAddOrUpdateMembershipReqBody
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) url() string {
-	return r._url
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username)
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) method() string {
-	return "PUT"
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsAddOrUpdateMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsAddOrUpdateMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsAddOrUpdateMembershipReq) Rel(link RelName, resp *OrgsAddOrUpdateMembershipResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsAddOrUpdateMembershipReqBody is a request body for orgs/add-or-update-membership
-
-https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
-*/
-type OrgsAddOrUpdateMembershipReqBody struct {
-
-	/*
-	   The role to give the user in the organization. Can be one of:
-	   \* `admin` - The user will become an owner of the organization.
-	   \* `member` - The user will become a non-owner member of the organization.
-	*/
-	Role *string `json:"role,omitempty"`
-}
-
-/*
-OrgsAddOrUpdateMembershipResponseBody is a response body for OrgsAddOrUpdateMembership
-
-https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
-*/
-type OrgsAddOrUpdateMembershipResponseBody struct {
-	components.OrgMembership
-}
-
-/*
-OrgsAddOrUpdateMembershipResponse is a response for OrgsAddOrUpdateMembership
-
-https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
-*/
-type OrgsAddOrUpdateMembershipResponse struct {
-	response
-	request *OrgsAddOrUpdateMembershipReq
-	Data    *OrgsAddOrUpdateMembershipResponseBody
-}
-
-/*
 OrgsBlockUser performs requests for "orgs/block-user"
 
-Block a user.
+Block a user from an organization.
 
   PUT /orgs/{org}/blocks/{username}
 
-https://developer.github.com/v3/orgs/blocking/#block-a-user
+https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 func OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
 	if req == nil {
@@ -188,11 +42,11 @@ func OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOpt
 /*
 OrgsBlockUser performs requests for "orgs/block-user"
 
-Block a user.
+Block a user from an organization.
 
   PUT /orgs/{org}/blocks/{username}
 
-https://developer.github.com/v3/orgs/blocking/#block-a-user
+https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 func (c Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOption) (*OrgsBlockUserResponse, error) {
 	return OrgsBlockUser(ctx, req, append(c, opt...)...)
@@ -201,7 +55,7 @@ func (c Client) OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ..
 /*
 OrgsBlockUserReq is request data for Client.OrgsBlockUser
 
-https://developer.github.com/v3/orgs/blocking/#block-a-user
+https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type OrgsBlockUserReq struct {
 	_url     string
@@ -269,7 +123,7 @@ func (r *OrgsBlockUserReq) Rel(link RelName, resp *OrgsBlockUserResponse) bool {
 /*
 OrgsBlockUserResponse is a response for OrgsBlockUser
 
-https://developer.github.com/v3/orgs/blocking/#block-a-user
+https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type OrgsBlockUserResponse struct {
 	response
@@ -279,11 +133,11 @@ type OrgsBlockUserResponse struct {
 /*
 OrgsCheckBlockedUser performs requests for "orgs/check-blocked-user"
 
-Check whether a user is blocked from an organization.
+Check if a user is blocked by an organization.
 
   GET /orgs/{org}/blocks/{username}
 
-https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
+https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
 	if req == nil {
@@ -311,11 +165,11 @@ func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt
 /*
 OrgsCheckBlockedUser performs requests for "orgs/check-blocked-user"
 
-Check whether a user is blocked from an organization.
+Check if a user is blocked by an organization.
 
   GET /orgs/{org}/blocks/{username}
 
-https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
+https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 func (c Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt ...RequestOption) (*OrgsCheckBlockedUserResponse, error) {
 	return OrgsCheckBlockedUser(ctx, req, append(c, opt...)...)
@@ -324,7 +178,7 @@ func (c Client) OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedU
 /*
 OrgsCheckBlockedUserReq is request data for Client.OrgsCheckBlockedUser
 
-https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
+https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type OrgsCheckBlockedUserReq struct {
 	_url     string
@@ -392,7 +246,7 @@ func (r *OrgsCheckBlockedUserReq) Rel(link RelName, resp *OrgsCheckBlockedUserRe
 /*
 OrgsCheckBlockedUserResponse is a response for OrgsCheckBlockedUser
 
-https://developer.github.com/v3/orgs/blocking/#check-whether-a-user-is-blocked-from-an-organization
+https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type OrgsCheckBlockedUserResponse struct {
 	response
@@ -401,19 +255,19 @@ type OrgsCheckBlockedUserResponse struct {
 }
 
 /*
-OrgsCheckMembership performs requests for "orgs/check-membership"
+OrgsCheckMembershipForUser performs requests for "orgs/check-membership-for-user"
 
-Check membership.
+Check organization membership for a user.
 
   GET /orgs/{org}/members/{username}
 
-https://developer.github.com/v3/orgs/members/#check-membership
+https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
-func OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
+func OrgsCheckMembershipForUser(ctx context.Context, req *OrgsCheckMembershipForUserReq, opt ...RequestOption) (*OrgsCheckMembershipForUserResponse, error) {
 	if req == nil {
-		req = new(OrgsCheckMembershipReq)
+		req = new(OrgsCheckMembershipForUserReq)
 	}
-	resp := &OrgsCheckMembershipResponse{request: req}
+	resp := &OrgsCheckMembershipForUserResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -429,70 +283,70 @@ func OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt .
 }
 
 /*
-OrgsCheckMembership performs requests for "orgs/check-membership"
+OrgsCheckMembershipForUser performs requests for "orgs/check-membership-for-user"
 
-Check membership.
+Check organization membership for a user.
 
   GET /orgs/{org}/members/{username}
 
-https://developer.github.com/v3/orgs/members/#check-membership
+https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
-func (c Client) OrgsCheckMembership(ctx context.Context, req *OrgsCheckMembershipReq, opt ...RequestOption) (*OrgsCheckMembershipResponse, error) {
-	return OrgsCheckMembership(ctx, req, append(c, opt...)...)
+func (c Client) OrgsCheckMembershipForUser(ctx context.Context, req *OrgsCheckMembershipForUserReq, opt ...RequestOption) (*OrgsCheckMembershipForUserResponse, error) {
+	return OrgsCheckMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsCheckMembershipReq is request data for Client.OrgsCheckMembership
+OrgsCheckMembershipForUserReq is request data for Client.OrgsCheckMembershipForUser
 
-https://developer.github.com/v3/orgs/members/#check-membership
+https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
-type OrgsCheckMembershipReq struct {
+type OrgsCheckMembershipForUserReq struct {
 	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsCheckMembershipReq) url() string {
+func (r *OrgsCheckMembershipForUserReq) url() string {
 	return r._url
 }
 
-func (r *OrgsCheckMembershipReq) urlPath() string {
+func (r *OrgsCheckMembershipForUserReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username)
 }
 
-func (r *OrgsCheckMembershipReq) method() string {
+func (r *OrgsCheckMembershipForUserReq) method() string {
 	return "GET"
 }
 
-func (r *OrgsCheckMembershipReq) urlQuery() url.Values {
+func (r *OrgsCheckMembershipForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *OrgsCheckMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsCheckMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsCheckMembershipReq) body() interface{} {
+func (r *OrgsCheckMembershipForUserReq) body() interface{} {
 	return nil
 }
 
-func (r *OrgsCheckMembershipReq) dataStatuses() []int {
+func (r *OrgsCheckMembershipForUserReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *OrgsCheckMembershipReq) validStatuses() []int {
+func (r *OrgsCheckMembershipForUserReq) validStatuses() []int {
 	return []int{204, 302}
 }
 
-func (r *OrgsCheckMembershipReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsCheckMembershipForUserReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsCheckMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsCheckMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -500,7 +354,7 @@ func (r *OrgsCheckMembershipReq) HTTPRequest(ctx context.Context, opt ...Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCheckMembershipReq) Rel(link RelName, resp *OrgsCheckMembershipResponse) bool {
+func (r *OrgsCheckMembershipForUserReq) Rel(link RelName, resp *OrgsCheckMembershipForUserResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -510,29 +364,29 @@ func (r *OrgsCheckMembershipReq) Rel(link RelName, resp *OrgsCheckMembershipResp
 }
 
 /*
-OrgsCheckMembershipResponse is a response for OrgsCheckMembership
+OrgsCheckMembershipForUserResponse is a response for OrgsCheckMembershipForUser
 
-https://developer.github.com/v3/orgs/members/#check-membership
+https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
-type OrgsCheckMembershipResponse struct {
+type OrgsCheckMembershipForUserResponse struct {
 	response
-	request *OrgsCheckMembershipReq
+	request *OrgsCheckMembershipForUserReq
 }
 
 /*
-OrgsCheckPublicMembership performs requests for "orgs/check-public-membership"
+OrgsCheckPublicMembershipForUser performs requests for "orgs/check-public-membership-for-user"
 
-Check public membership.
+Check public organization membership for a user.
 
   GET /orgs/{org}/public_members/{username}
 
-https://developer.github.com/v3/orgs/members/#check-public-membership
+https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
-func OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
+func OrgsCheckPublicMembershipForUser(ctx context.Context, req *OrgsCheckPublicMembershipForUserReq, opt ...RequestOption) (*OrgsCheckPublicMembershipForUserResponse, error) {
 	if req == nil {
-		req = new(OrgsCheckPublicMembershipReq)
+		req = new(OrgsCheckPublicMembershipForUserReq)
 	}
-	resp := &OrgsCheckPublicMembershipResponse{request: req}
+	resp := &OrgsCheckPublicMembershipForUserResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -552,70 +406,70 @@ func OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembersh
 }
 
 /*
-OrgsCheckPublicMembership performs requests for "orgs/check-public-membership"
+OrgsCheckPublicMembershipForUser performs requests for "orgs/check-public-membership-for-user"
 
-Check public membership.
+Check public organization membership for a user.
 
   GET /orgs/{org}/public_members/{username}
 
-https://developer.github.com/v3/orgs/members/#check-public-membership
+https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
-func (c Client) OrgsCheckPublicMembership(ctx context.Context, req *OrgsCheckPublicMembershipReq, opt ...RequestOption) (*OrgsCheckPublicMembershipResponse, error) {
-	return OrgsCheckPublicMembership(ctx, req, append(c, opt...)...)
+func (c Client) OrgsCheckPublicMembershipForUser(ctx context.Context, req *OrgsCheckPublicMembershipForUserReq, opt ...RequestOption) (*OrgsCheckPublicMembershipForUserResponse, error) {
+	return OrgsCheckPublicMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsCheckPublicMembershipReq is request data for Client.OrgsCheckPublicMembership
+OrgsCheckPublicMembershipForUserReq is request data for Client.OrgsCheckPublicMembershipForUser
 
-https://developer.github.com/v3/orgs/members/#check-public-membership
+https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
-type OrgsCheckPublicMembershipReq struct {
+type OrgsCheckPublicMembershipForUserReq struct {
 	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsCheckPublicMembershipReq) url() string {
+func (r *OrgsCheckPublicMembershipForUserReq) url() string {
 	return r._url
 }
 
-func (r *OrgsCheckPublicMembershipReq) urlPath() string {
+func (r *OrgsCheckPublicMembershipForUserReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username)
 }
 
-func (r *OrgsCheckPublicMembershipReq) method() string {
+func (r *OrgsCheckPublicMembershipForUserReq) method() string {
 	return "GET"
 }
 
-func (r *OrgsCheckPublicMembershipReq) urlQuery() url.Values {
+func (r *OrgsCheckPublicMembershipForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *OrgsCheckPublicMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsCheckPublicMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsCheckPublicMembershipReq) body() interface{} {
+func (r *OrgsCheckPublicMembershipForUserReq) body() interface{} {
 	return nil
 }
 
-func (r *OrgsCheckPublicMembershipReq) dataStatuses() []int {
+func (r *OrgsCheckPublicMembershipForUserReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *OrgsCheckPublicMembershipReq) validStatuses() []int {
+func (r *OrgsCheckPublicMembershipForUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsCheckPublicMembershipReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsCheckPublicMembershipForUserReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsCheckPublicMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsCheckPublicMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -623,7 +477,7 @@ func (r *OrgsCheckPublicMembershipReq) HTTPRequest(ctx context.Context, opt ...R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCheckPublicMembershipReq) Rel(link RelName, resp *OrgsCheckPublicMembershipResponse) bool {
+func (r *OrgsCheckPublicMembershipForUserReq) Rel(link RelName, resp *OrgsCheckPublicMembershipForUserResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -633,143 +487,24 @@ func (r *OrgsCheckPublicMembershipReq) Rel(link RelName, resp *OrgsCheckPublicMe
 }
 
 /*
-OrgsCheckPublicMembershipResponse is a response for OrgsCheckPublicMembership
+OrgsCheckPublicMembershipForUserResponse is a response for OrgsCheckPublicMembershipForUser
 
-https://developer.github.com/v3/orgs/members/#check-public-membership
+https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
-type OrgsCheckPublicMembershipResponse struct {
+type OrgsCheckPublicMembershipForUserResponse struct {
 	response
-	request *OrgsCheckPublicMembershipReq
+	request *OrgsCheckPublicMembershipForUserReq
 	Data    bool
-}
-
-/*
-OrgsConcealMembership performs requests for "orgs/conceal-membership"
-
-Conceal a user's membership.
-
-  DELETE /orgs/{org}/public_members/{username}
-
-https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
-*/
-func OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
-	if req == nil {
-		req = new(OrgsConcealMembershipReq)
-	}
-	resp := &OrgsConcealMembershipResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsConcealMembership performs requests for "orgs/conceal-membership"
-
-Conceal a user's membership.
-
-  DELETE /orgs/{org}/public_members/{username}
-
-https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
-*/
-func (c Client) OrgsConcealMembership(ctx context.Context, req *OrgsConcealMembershipReq, opt ...RequestOption) (*OrgsConcealMembershipResponse, error) {
-	return OrgsConcealMembership(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsConcealMembershipReq is request data for Client.OrgsConcealMembership
-
-https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
-*/
-type OrgsConcealMembershipReq struct {
-	_url     string
-	Org      string
-	Username string
-}
-
-func (r *OrgsConcealMembershipReq) url() string {
-	return r._url
-}
-
-func (r *OrgsConcealMembershipReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username)
-}
-
-func (r *OrgsConcealMembershipReq) method() string {
-	return "DELETE"
-}
-
-func (r *OrgsConcealMembershipReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsConcealMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsConcealMembershipReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsConcealMembershipReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *OrgsConcealMembershipReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *OrgsConcealMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsConcealMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsConcealMembershipReq) Rel(link RelName, resp *OrgsConcealMembershipResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsConcealMembershipResponse is a response for OrgsConcealMembership
-
-https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
-*/
-type OrgsConcealMembershipResponse struct {
-	response
-	request *OrgsConcealMembershipReq
 }
 
 /*
 OrgsConvertMemberToOutsideCollaborator performs requests for "orgs/convert-member-to-outside-collaborator"
 
-Convert member to outside collaborator.
+Convert an organization member to outside collaborator.
 
   PUT /orgs/{org}/outside_collaborators/{username}
 
-https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 func OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
 	if req == nil {
@@ -793,11 +528,11 @@ func OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConver
 /*
 OrgsConvertMemberToOutsideCollaborator performs requests for "orgs/convert-member-to-outside-collaborator"
 
-Convert member to outside collaborator.
+Convert an organization member to outside collaborator.
 
   PUT /orgs/{org}/outside_collaborators/{username}
 
-https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 func (c Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConvertMemberToOutsideCollaboratorReq, opt ...RequestOption) (*OrgsConvertMemberToOutsideCollaboratorResponse, error) {
 	return OrgsConvertMemberToOutsideCollaborator(ctx, req, append(c, opt...)...)
@@ -806,7 +541,7 @@ func (c Client) OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req 
 /*
 OrgsConvertMemberToOutsideCollaboratorReq is request data for Client.OrgsConvertMemberToOutsideCollaborator
 
-https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type OrgsConvertMemberToOutsideCollaboratorReq struct {
 	_url     string
@@ -874,7 +609,7 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) Rel(link RelName, resp *Orgs
 /*
 OrgsConvertMemberToOutsideCollaboratorResponse is a response for OrgsConvertMemberToOutsideCollaborator
 
-https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type OrgsConvertMemberToOutsideCollaboratorResponse struct {
 	response
@@ -882,202 +617,13 @@ type OrgsConvertMemberToOutsideCollaboratorResponse struct {
 }
 
 /*
-OrgsCreateHook performs requests for "orgs/create-hook"
-
-Create a hook.
-
-  POST /orgs/{org}/hooks
-
-https://developer.github.com/v3/orgs/hooks/#create-a-hook
-*/
-func OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
-	if req == nil {
-		req = new(OrgsCreateHookReq)
-	}
-	resp := &OrgsCreateHookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsCreateHookResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsCreateHook performs requests for "orgs/create-hook"
-
-Create a hook.
-
-  POST /orgs/{org}/hooks
-
-https://developer.github.com/v3/orgs/hooks/#create-a-hook
-*/
-func (c Client) OrgsCreateHook(ctx context.Context, req *OrgsCreateHookReq, opt ...RequestOption) (*OrgsCreateHookResponse, error) {
-	return OrgsCreateHook(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsCreateHookReq is request data for Client.OrgsCreateHook
-
-https://developer.github.com/v3/orgs/hooks/#create-a-hook
-*/
-type OrgsCreateHookReq struct {
-	_url        string
-	Org         string
-	RequestBody OrgsCreateHookReqBody
-}
-
-func (r *OrgsCreateHookReq) url() string {
-	return r._url
-}
-
-func (r *OrgsCreateHookReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/hooks", r.Org)
-}
-
-func (r *OrgsCreateHookReq) method() string {
-	return "POST"
-}
-
-func (r *OrgsCreateHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsCreateHookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsCreateHookReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OrgsCreateHookReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *OrgsCreateHookReq) validStatuses() []int {
-	return []int{201}
-}
-
-func (r *OrgsCreateHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsCreateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsCreateHookReq) Rel(link RelName, resp *OrgsCreateHookResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-// OrgsCreateHookReqBodyConfig is a value for OrgsCreateHookReqBody's Config field
-type OrgsCreateHookReqBodyConfig struct {
-
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
-	ContentType *string `json:"content_type,omitempty"`
-
-	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
-	*/
-	InsecureSsl *string `json:"insecure_ssl,omitempty"`
-
-	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
-	*/
-	Secret *string `json:"secret,omitempty"`
-
-	// The URL to which the payloads will be delivered.
-	Url *string `json:"url"`
-}
-
-/*
-OrgsCreateHookReqBody is a request body for orgs/create-hook
-
-https://developer.github.com/v3/orgs/hooks/#create-a-hook
-*/
-type OrgsCreateHookReqBody struct {
-
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
-	Active *bool `json:"active,omitempty"`
-
-	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/orgs/hooks/#create-hook-config-params).
-	*/
-	Config *OrgsCreateHookReqBodyConfig `json:"config"`
-
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for.
-	*/
-	Events []string `json:"events,omitempty"`
-
-	// Must be passed as "web".
-	Name *string `json:"name"`
-}
-
-/*
-OrgsCreateHookResponseBody is a response body for OrgsCreateHook
-
-https://developer.github.com/v3/orgs/hooks/#create-a-hook
-*/
-type OrgsCreateHookResponseBody struct {
-	components.OrgHook
-}
-
-/*
-OrgsCreateHookResponse is a response for OrgsCreateHook
-
-https://developer.github.com/v3/orgs/hooks/#create-a-hook
-*/
-type OrgsCreateHookResponse struct {
-	response
-	request *OrgsCreateHookReq
-	Data    *OrgsCreateHookResponseBody
-}
-
-/*
 OrgsCreateInvitation performs requests for "orgs/create-invitation"
 
-Create organization invitation.
+Create an organization invitation.
 
   POST /orgs/{org}/invitations
 
-https://developer.github.com/v3/orgs/members/#create-organization-invitation
+https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
 	if req == nil {
@@ -1102,11 +648,11 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 /*
 OrgsCreateInvitation performs requests for "orgs/create-invitation"
 
-Create organization invitation.
+Create an organization invitation.
 
   POST /orgs/{org}/invitations
 
-https://developer.github.com/v3/orgs/members/#create-organization-invitation
+https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 func (c Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt ...RequestOption) (*OrgsCreateInvitationResponse, error) {
 	return OrgsCreateInvitation(ctx, req, append(c, opt...)...)
@@ -1115,7 +661,7 @@ func (c Client) OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitat
 /*
 OrgsCreateInvitationReq is request data for Client.OrgsCreateInvitation
 
-https://developer.github.com/v3/orgs/members/#create-organization-invitation
+https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationReq struct {
 	_url        string
@@ -1183,7 +729,7 @@ func (r *OrgsCreateInvitationReq) Rel(link RelName, resp *OrgsCreateInvitationRe
 /*
 OrgsCreateInvitationReqBody is a request body for orgs/create-invitation
 
-https://developer.github.com/v3/orgs/members/#create-organization-invitation
+https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationReqBody struct {
 
@@ -1217,7 +763,7 @@ type OrgsCreateInvitationReqBody struct {
 /*
 OrgsCreateInvitationResponseBody is a response body for OrgsCreateInvitation
 
-https://developer.github.com/v3/orgs/members/#create-organization-invitation
+https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationResponseBody struct {
 	components.OrganizationInvitation
@@ -1226,7 +772,7 @@ type OrgsCreateInvitationResponseBody struct {
 /*
 OrgsCreateInvitationResponse is a response for OrgsCreateInvitation
 
-https://developer.github.com/v3/orgs/members/#create-organization-invitation
+https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationResponse struct {
 	response
@@ -1235,19 +781,208 @@ type OrgsCreateInvitationResponse struct {
 }
 
 /*
-OrgsDeleteHook performs requests for "orgs/delete-hook"
+OrgsCreateWebhook performs requests for "orgs/create-webhook"
 
-Delete a hook.
+Create an organization webhook.
+
+  POST /orgs/{org}/hooks
+
+https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
+*/
+func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...RequestOption) (*OrgsCreateWebhookResponse, error) {
+	if req == nil {
+		req = new(OrgsCreateWebhookReq)
+	}
+	resp := &OrgsCreateWebhookResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsCreateWebhookResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsCreateWebhook performs requests for "orgs/create-webhook"
+
+Create an organization webhook.
+
+  POST /orgs/{org}/hooks
+
+https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
+*/
+func (c Client) OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...RequestOption) (*OrgsCreateWebhookResponse, error) {
+	return OrgsCreateWebhook(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsCreateWebhookReq is request data for Client.OrgsCreateWebhook
+
+https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
+*/
+type OrgsCreateWebhookReq struct {
+	_url        string
+	Org         string
+	RequestBody OrgsCreateWebhookReqBody
+}
+
+func (r *OrgsCreateWebhookReq) url() string {
+	return r._url
+}
+
+func (r *OrgsCreateWebhookReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/hooks", r.Org)
+}
+
+func (r *OrgsCreateWebhookReq) method() string {
+	return "POST"
+}
+
+func (r *OrgsCreateWebhookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsCreateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsCreateWebhookReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *OrgsCreateWebhookReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *OrgsCreateWebhookReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *OrgsCreateWebhookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsCreateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsCreateWebhookReq) Rel(link RelName, resp *OrgsCreateWebhookResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+// OrgsCreateWebhookReqBodyConfig is a value for OrgsCreateWebhookReqBody's Config field
+type OrgsCreateWebhookReqBodyConfig struct {
+
+	/*
+	   The media type used to serialize the payloads. Supported values include `json`
+	   and `form`. The default is `form`.
+	*/
+	ContentType *string `json:"content_type,omitempty"`
+
+	/*
+	   Determines whether the SSL certificate of the host for `url` will be verified
+	   when delivering payloads. Supported values include `0` (verification is
+	   performed) and `1` (verification is not performed). The default is `0`. **We
+	   strongly recommend not setting this to `1` as you are subject to
+	   man-in-the-middle and other attacks.**
+	*/
+	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+
+	/*
+	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	   digest value in the
+	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	   header.
+	*/
+	Secret *string `json:"secret,omitempty"`
+
+	// The URL to which the payloads will be delivered.
+	Url *string `json:"url"`
+}
+
+/*
+OrgsCreateWebhookReqBody is a request body for orgs/create-webhook
+
+https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
+*/
+type OrgsCreateWebhookReqBody struct {
+
+	/*
+	   Determines if notifications are sent when the webhook is triggered. Set to
+	   `true` to send notifications.
+	*/
+	Active *bool `json:"active,omitempty"`
+
+	/*
+	   Key/value pairs to provide settings for this webhook. [These are defined
+	   below](https://developer.github.com/v3/orgs/hooks/#create-hook-config-params).
+	*/
+	Config *OrgsCreateWebhookReqBodyConfig `json:"config"`
+
+	/*
+	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
+	   the hook is triggered for.
+	*/
+	Events []string `json:"events,omitempty"`
+
+	// Must be passed as "web".
+	Name *string `json:"name"`
+}
+
+/*
+OrgsCreateWebhookResponseBody is a response body for OrgsCreateWebhook
+
+https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
+*/
+type OrgsCreateWebhookResponseBody struct {
+	components.OrgHook
+}
+
+/*
+OrgsCreateWebhookResponse is a response for OrgsCreateWebhook
+
+https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
+*/
+type OrgsCreateWebhookResponse struct {
+	response
+	request *OrgsCreateWebhookReq
+	Data    *OrgsCreateWebhookResponseBody
+}
+
+/*
+OrgsDeleteWebhook performs requests for "orgs/delete-webhook"
+
+Delete an organization webhook.
 
   DELETE /orgs/{org}/hooks/{hook_id}
 
-https://developer.github.com/v3/orgs/hooks/#delete-a-hook
+https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
-func OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
+func OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...RequestOption) (*OrgsDeleteWebhookResponse, error) {
 	if req == nil {
-		req = new(OrgsDeleteHookReq)
+		req = new(OrgsDeleteWebhookReq)
 	}
-	resp := &OrgsDeleteHookResponse{request: req}
+	resp := &OrgsDeleteWebhookResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -1263,70 +998,70 @@ func OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestO
 }
 
 /*
-OrgsDeleteHook performs requests for "orgs/delete-hook"
+OrgsDeleteWebhook performs requests for "orgs/delete-webhook"
 
-Delete a hook.
+Delete an organization webhook.
 
   DELETE /orgs/{org}/hooks/{hook_id}
 
-https://developer.github.com/v3/orgs/hooks/#delete-a-hook
+https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
-func (c Client) OrgsDeleteHook(ctx context.Context, req *OrgsDeleteHookReq, opt ...RequestOption) (*OrgsDeleteHookResponse, error) {
-	return OrgsDeleteHook(ctx, req, append(c, opt...)...)
+func (c Client) OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...RequestOption) (*OrgsDeleteWebhookResponse, error) {
+	return OrgsDeleteWebhook(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsDeleteHookReq is request data for Client.OrgsDeleteHook
+OrgsDeleteWebhookReq is request data for Client.OrgsDeleteWebhook
 
-https://developer.github.com/v3/orgs/hooks/#delete-a-hook
+https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
-type OrgsDeleteHookReq struct {
+type OrgsDeleteWebhookReq struct {
 	_url   string
 	Org    string
 	HookId int64
 }
 
-func (r *OrgsDeleteHookReq) url() string {
+func (r *OrgsDeleteWebhookReq) url() string {
 	return r._url
 }
 
-func (r *OrgsDeleteHookReq) urlPath() string {
+func (r *OrgsDeleteWebhookReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId)
 }
 
-func (r *OrgsDeleteHookReq) method() string {
+func (r *OrgsDeleteWebhookReq) method() string {
 	return "DELETE"
 }
 
-func (r *OrgsDeleteHookReq) urlQuery() url.Values {
+func (r *OrgsDeleteWebhookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *OrgsDeleteHookReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsDeleteWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsDeleteHookReq) body() interface{} {
+func (r *OrgsDeleteWebhookReq) body() interface{} {
 	return nil
 }
 
-func (r *OrgsDeleteHookReq) dataStatuses() []int {
+func (r *OrgsDeleteWebhookReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *OrgsDeleteHookReq) validStatuses() []int {
+func (r *OrgsDeleteWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsDeleteHookReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsDeleteWebhookReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsDeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -1334,7 +1069,7 @@ func (r *OrgsDeleteHookReq) HTTPRequest(ctx context.Context, opt ...RequestOptio
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsDeleteHookReq) Rel(link RelName, resp *OrgsDeleteHookResponse) bool {
+func (r *OrgsDeleteWebhookReq) Rel(link RelName, resp *OrgsDeleteWebhookResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -1344,13 +1079,13 @@ func (r *OrgsDeleteHookReq) Rel(link RelName, resp *OrgsDeleteHookResponse) bool
 }
 
 /*
-OrgsDeleteHookResponse is a response for OrgsDeleteHook
+OrgsDeleteWebhookResponse is a response for OrgsDeleteWebhook
 
-https://developer.github.com/v3/orgs/hooks/#delete-a-hook
+https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
-type OrgsDeleteHookResponse struct {
+type OrgsDeleteWebhookResponse struct {
 	response
-	request *OrgsDeleteHookReq
+	request *OrgsDeleteWebhookReq
 }
 
 /*
@@ -1501,273 +1236,13 @@ type OrgsGetResponse struct {
 }
 
 /*
-OrgsGetHook performs requests for "orgs/get-hook"
-
-Get single hook.
-
-  GET /orgs/{org}/hooks/{hook_id}
-
-https://developer.github.com/v3/orgs/hooks/#get-single-hook
-*/
-func OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
-	if req == nil {
-		req = new(OrgsGetHookReq)
-	}
-	resp := &OrgsGetHookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsGetHookResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsGetHook performs requests for "orgs/get-hook"
-
-Get single hook.
-
-  GET /orgs/{org}/hooks/{hook_id}
-
-https://developer.github.com/v3/orgs/hooks/#get-single-hook
-*/
-func (c Client) OrgsGetHook(ctx context.Context, req *OrgsGetHookReq, opt ...RequestOption) (*OrgsGetHookResponse, error) {
-	return OrgsGetHook(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsGetHookReq is request data for Client.OrgsGetHook
-
-https://developer.github.com/v3/orgs/hooks/#get-single-hook
-*/
-type OrgsGetHookReq struct {
-	_url   string
-	Org    string
-	HookId int64
-}
-
-func (r *OrgsGetHookReq) url() string {
-	return r._url
-}
-
-func (r *OrgsGetHookReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId)
-}
-
-func (r *OrgsGetHookReq) method() string {
-	return "GET"
-}
-
-func (r *OrgsGetHookReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsGetHookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsGetHookReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsGetHookReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsGetHookReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsGetHookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsGetHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsGetHookReq) Rel(link RelName, resp *OrgsGetHookResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsGetHookResponseBody is a response body for OrgsGetHook
-
-https://developer.github.com/v3/orgs/hooks/#get-single-hook
-*/
-type OrgsGetHookResponseBody struct {
-	components.OrgHook
-}
-
-/*
-OrgsGetHookResponse is a response for OrgsGetHook
-
-https://developer.github.com/v3/orgs/hooks/#get-single-hook
-*/
-type OrgsGetHookResponse struct {
-	response
-	request *OrgsGetHookReq
-	Data    *OrgsGetHookResponseBody
-}
-
-/*
-OrgsGetMembership performs requests for "orgs/get-membership"
-
-Get organization membership.
-
-  GET /orgs/{org}/memberships/{username}
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership
-*/
-func OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
-	if req == nil {
-		req = new(OrgsGetMembershipReq)
-	}
-	resp := &OrgsGetMembershipResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsGetMembershipResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsGetMembership performs requests for "orgs/get-membership"
-
-Get organization membership.
-
-  GET /orgs/{org}/memberships/{username}
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership
-*/
-func (c Client) OrgsGetMembership(ctx context.Context, req *OrgsGetMembershipReq, opt ...RequestOption) (*OrgsGetMembershipResponse, error) {
-	return OrgsGetMembership(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsGetMembershipReq is request data for Client.OrgsGetMembership
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership
-*/
-type OrgsGetMembershipReq struct {
-	_url     string
-	Org      string
-	Username string
-}
-
-func (r *OrgsGetMembershipReq) url() string {
-	return r._url
-}
-
-func (r *OrgsGetMembershipReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username)
-}
-
-func (r *OrgsGetMembershipReq) method() string {
-	return "GET"
-}
-
-func (r *OrgsGetMembershipReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsGetMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsGetMembershipReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsGetMembershipReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsGetMembershipReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsGetMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsGetMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsGetMembershipReq) Rel(link RelName, resp *OrgsGetMembershipResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsGetMembershipResponseBody is a response body for OrgsGetMembership
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership
-*/
-type OrgsGetMembershipResponseBody struct {
-	components.OrgMembership
-}
-
-/*
-OrgsGetMembershipResponse is a response for OrgsGetMembership
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership
-*/
-type OrgsGetMembershipResponse struct {
-	response
-	request *OrgsGetMembershipReq
-	Data    *OrgsGetMembershipResponseBody
-}
-
-/*
 OrgsGetMembershipForAuthenticatedUser performs requests for "orgs/get-membership-for-authenticated-user"
 
-Get your organization membership.
+Get an organization membership for the authenticated user.
 
   GET /user/memberships/orgs/{org}
 
-https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -1792,11 +1267,11 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 /*
 OrgsGetMembershipForAuthenticatedUser performs requests for "orgs/get-membership-for-authenticated-user"
 
-Get your organization membership.
+Get an organization membership for the authenticated user.
 
   GET /user/memberships/orgs/{org}
 
-https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 func (c Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsGetMembershipForAuthenticatedUserResponse, error) {
 	return OrgsGetMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -1805,7 +1280,7 @@ func (c Client) OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *
 /*
 OrgsGetMembershipForAuthenticatedUserReq is request data for Client.OrgsGetMembershipForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 type OrgsGetMembershipForAuthenticatedUserReq struct {
 	_url string
@@ -1872,7 +1347,7 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsG
 /*
 OrgsGetMembershipForAuthenticatedUserResponseBody is a response body for OrgsGetMembershipForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 type OrgsGetMembershipForAuthenticatedUserResponseBody struct {
 	components.OrgMembership
@@ -1881,7 +1356,7 @@ type OrgsGetMembershipForAuthenticatedUserResponseBody struct {
 /*
 OrgsGetMembershipForAuthenticatedUserResponse is a response for OrgsGetMembershipForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 type OrgsGetMembershipForAuthenticatedUserResponse struct {
 	response
@@ -1890,13 +1365,273 @@ type OrgsGetMembershipForAuthenticatedUserResponse struct {
 }
 
 /*
+OrgsGetMembershipForUser performs requests for "orgs/get-membership-for-user"
+
+Get organization membership for a user.
+
+  GET /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
+*/
+func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUserReq, opt ...RequestOption) (*OrgsGetMembershipForUserResponse, error) {
+	if req == nil {
+		req = new(OrgsGetMembershipForUserReq)
+	}
+	resp := &OrgsGetMembershipForUserResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsGetMembershipForUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsGetMembershipForUser performs requests for "orgs/get-membership-for-user"
+
+Get organization membership for a user.
+
+  GET /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
+*/
+func (c Client) OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUserReq, opt ...RequestOption) (*OrgsGetMembershipForUserResponse, error) {
+	return OrgsGetMembershipForUser(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsGetMembershipForUserReq is request data for Client.OrgsGetMembershipForUser
+
+https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
+*/
+type OrgsGetMembershipForUserReq struct {
+	_url     string
+	Org      string
+	Username string
+}
+
+func (r *OrgsGetMembershipForUserReq) url() string {
+	return r._url
+}
+
+func (r *OrgsGetMembershipForUserReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username)
+}
+
+func (r *OrgsGetMembershipForUserReq) method() string {
+	return "GET"
+}
+
+func (r *OrgsGetMembershipForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsGetMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsGetMembershipForUserReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsGetMembershipForUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsGetMembershipForUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsGetMembershipForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsGetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsGetMembershipForUserReq) Rel(link RelName, resp *OrgsGetMembershipForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsGetMembershipForUserResponseBody is a response body for OrgsGetMembershipForUser
+
+https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
+*/
+type OrgsGetMembershipForUserResponseBody struct {
+	components.OrgMembership
+}
+
+/*
+OrgsGetMembershipForUserResponse is a response for OrgsGetMembershipForUser
+
+https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
+*/
+type OrgsGetMembershipForUserResponse struct {
+	response
+	request *OrgsGetMembershipForUserReq
+	Data    *OrgsGetMembershipForUserResponseBody
+}
+
+/*
+OrgsGetWebhook performs requests for "orgs/get-webhook"
+
+Get an organization webhook.
+
+  GET /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
+*/
+func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...RequestOption) (*OrgsGetWebhookResponse, error) {
+	if req == nil {
+		req = new(OrgsGetWebhookReq)
+	}
+	resp := &OrgsGetWebhookResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsGetWebhookResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsGetWebhook performs requests for "orgs/get-webhook"
+
+Get an organization webhook.
+
+  GET /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
+*/
+func (c Client) OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...RequestOption) (*OrgsGetWebhookResponse, error) {
+	return OrgsGetWebhook(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsGetWebhookReq is request data for Client.OrgsGetWebhook
+
+https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
+*/
+type OrgsGetWebhookReq struct {
+	_url   string
+	Org    string
+	HookId int64
+}
+
+func (r *OrgsGetWebhookReq) url() string {
+	return r._url
+}
+
+func (r *OrgsGetWebhookReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId)
+}
+
+func (r *OrgsGetWebhookReq) method() string {
+	return "GET"
+}
+
+func (r *OrgsGetWebhookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsGetWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsGetWebhookReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsGetWebhookReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsGetWebhookReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsGetWebhookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsGetWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsGetWebhookReq) Rel(link RelName, resp *OrgsGetWebhookResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsGetWebhookResponseBody is a response body for OrgsGetWebhook
+
+https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
+*/
+type OrgsGetWebhookResponseBody struct {
+	components.OrgHook
+}
+
+/*
+OrgsGetWebhookResponse is a response for OrgsGetWebhook
+
+https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
+*/
+type OrgsGetWebhookResponse struct {
+	response
+	request *OrgsGetWebhookReq
+	Data    *OrgsGetWebhookResponseBody
+}
+
+/*
 OrgsList performs requests for "orgs/list"
 
-List all organizations.
+List organizations.
 
   GET /organizations
 
-https://developer.github.com/v3/orgs/#list-all-organizations
+https://developer.github.com/v3/orgs/#list-organizations
 */
 func OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
 	if req == nil {
@@ -1921,11 +1656,11 @@ func OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*Org
 /*
 OrgsList performs requests for "orgs/list"
 
-List all organizations.
+List organizations.
 
   GET /organizations
 
-https://developer.github.com/v3/orgs/#list-all-organizations
+https://developer.github.com/v3/orgs/#list-organizations
 */
 func (c Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*OrgsListResponse, error) {
 	return OrgsList(ctx, req, append(c, opt...)...)
@@ -1934,7 +1669,7 @@ func (c Client) OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOp
 /*
 OrgsListReq is request data for Client.OrgsList
 
-https://developer.github.com/v3/orgs/#list-all-organizations
+https://developer.github.com/v3/orgs/#list-organizations
 */
 type OrgsListReq struct {
 	_url string
@@ -2006,7 +1741,7 @@ func (r *OrgsListReq) Rel(link RelName, resp *OrgsListResponse) bool {
 /*
 OrgsListResponseBody is a response body for OrgsList
 
-https://developer.github.com/v3/orgs/#list-all-organizations
+https://developer.github.com/v3/orgs/#list-organizations
 */
 type OrgsListResponseBody []struct {
 	components.OrganizationSimple
@@ -2015,7 +1750,7 @@ type OrgsListResponseBody []struct {
 /*
 OrgsListResponse is a response for OrgsList
 
-https://developer.github.com/v3/orgs/#list-all-organizations
+https://developer.github.com/v3/orgs/#list-organizations
 */
 type OrgsListResponse struct {
 	response
@@ -2024,13 +1759,169 @@ type OrgsListResponse struct {
 }
 
 /*
+OrgsListAppInstallations performs requests for "orgs/list-app-installations"
+
+List app installations for an organization.
+
+  GET /orgs/{org}/installations
+
+https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
+*/
+func OrgsListAppInstallations(ctx context.Context, req *OrgsListAppInstallationsReq, opt ...RequestOption) (*OrgsListAppInstallationsResponse, error) {
+	if req == nil {
+		req = new(OrgsListAppInstallationsReq)
+	}
+	resp := &OrgsListAppInstallationsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsListAppInstallationsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsListAppInstallations performs requests for "orgs/list-app-installations"
+
+List app installations for an organization.
+
+  GET /orgs/{org}/installations
+
+https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
+*/
+func (c Client) OrgsListAppInstallations(ctx context.Context, req *OrgsListAppInstallationsReq, opt ...RequestOption) (*OrgsListAppInstallationsResponse, error) {
+	return OrgsListAppInstallations(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsListAppInstallationsReq is request data for Client.OrgsListAppInstallations
+
+https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
+*/
+type OrgsListAppInstallationsReq struct {
+	_url string
+	Org  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	To access the API with your GitHub App, you must set this to true for your
+	requests.
+	*/
+	MachineManPreview bool
+}
+
+func (r *OrgsListAppInstallationsReq) url() string {
+	return r._url
+}
+
+func (r *OrgsListAppInstallationsReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/installations", r.Org)
+}
+
+func (r *OrgsListAppInstallationsReq) method() string {
+	return "GET"
+}
+
+func (r *OrgsListAppInstallationsReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *OrgsListAppInstallationsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
+	if requiredPreviews {
+		previewVals["machine-man"] = true
+	}
+	if allPreviews {
+		previewVals["machine-man"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsListAppInstallationsReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsListAppInstallationsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsListAppInstallationsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsListAppInstallationsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsListAppInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsListAppInstallationsReq) Rel(link RelName, resp *OrgsListAppInstallationsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsListAppInstallationsResponseBody is a response body for OrgsListAppInstallations
+
+https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
+*/
+type OrgsListAppInstallationsResponseBody struct {
+	Installations []struct {
+		components.Installation2
+	} `json:"installations,omitempty"`
+	TotalCount int64 `json:"total_count,omitempty"`
+}
+
+/*
+OrgsListAppInstallationsResponse is a response for OrgsListAppInstallations
+
+https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
+*/
+type OrgsListAppInstallationsResponse struct {
+	response
+	request *OrgsListAppInstallationsReq
+	Data    *OrgsListAppInstallationsResponseBody
+}
+
+/*
 OrgsListBlockedUsers performs requests for "orgs/list-blocked-users"
 
-List blocked users.
+List users blocked by an organization.
 
   GET /orgs/{org}/blocks
 
-https://developer.github.com/v3/orgs/blocking/#list-blocked-users
+https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
 	if req == nil {
@@ -2055,11 +1946,11 @@ func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt
 /*
 OrgsListBlockedUsers performs requests for "orgs/list-blocked-users"
 
-List blocked users.
+List users blocked by an organization.
 
   GET /orgs/{org}/blocks
 
-https://developer.github.com/v3/orgs/blocking/#list-blocked-users
+https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 func (c Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt ...RequestOption) (*OrgsListBlockedUsersResponse, error) {
 	return OrgsListBlockedUsers(ctx, req, append(c, opt...)...)
@@ -2068,7 +1959,7 @@ func (c Client) OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUs
 /*
 OrgsListBlockedUsersReq is request data for Client.OrgsListBlockedUsers
 
-https://developer.github.com/v3/orgs/blocking/#list-blocked-users
+https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 type OrgsListBlockedUsersReq struct {
 	_url string
@@ -2135,7 +2026,7 @@ func (r *OrgsListBlockedUsersReq) Rel(link RelName, resp *OrgsListBlockedUsersRe
 /*
 OrgsListBlockedUsersResponseBody is a response body for OrgsListBlockedUsers
 
-https://developer.github.com/v3/orgs/blocking/#list-blocked-users
+https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 type OrgsListBlockedUsersResponseBody []struct {
 	components.SimpleUser
@@ -2144,7 +2035,7 @@ type OrgsListBlockedUsersResponseBody []struct {
 /*
 OrgsListBlockedUsersResponse is a response for OrgsListBlockedUsers
 
-https://developer.github.com/v3/orgs/blocking/#list-blocked-users
+https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 type OrgsListBlockedUsersResponse struct {
 	response
@@ -2153,142 +2044,13 @@ type OrgsListBlockedUsersResponse struct {
 }
 
 /*
-OrgsListCredentialAuthorizations performs requests for "orgs/list-credential-authorizations"
-
-List credential authorizations for an organization.
-
-  GET /orgs/{org}/credential-authorizations
-
-https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
-*/
-func OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
-	if req == nil {
-		req = new(OrgsListCredentialAuthorizationsReq)
-	}
-	resp := &OrgsListCredentialAuthorizationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsListCredentialAuthorizationsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsListCredentialAuthorizations performs requests for "orgs/list-credential-authorizations"
-
-List credential authorizations for an organization.
-
-  GET /orgs/{org}/credential-authorizations
-
-https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
-*/
-func (c Client) OrgsListCredentialAuthorizations(ctx context.Context, req *OrgsListCredentialAuthorizationsReq, opt ...RequestOption) (*OrgsListCredentialAuthorizationsResponse, error) {
-	return OrgsListCredentialAuthorizations(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsListCredentialAuthorizationsReq is request data for Client.OrgsListCredentialAuthorizations
-
-https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
-*/
-type OrgsListCredentialAuthorizationsReq struct {
-	_url string
-	Org  string
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) url() string {
-	return r._url
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/credential-authorizations", r.Org)
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) method() string {
-	return "GET"
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsListCredentialAuthorizationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsListCredentialAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsListCredentialAuthorizationsReq) Rel(link RelName, resp *OrgsListCredentialAuthorizationsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsListCredentialAuthorizationsResponseBody is a response body for OrgsListCredentialAuthorizations
-
-https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
-*/
-type OrgsListCredentialAuthorizationsResponseBody []struct {
-	components.CredentialAuthorization
-}
-
-/*
-OrgsListCredentialAuthorizationsResponse is a response for OrgsListCredentialAuthorizations
-
-https://developer.github.com/v3/orgs/#list-credential-authorizations-for-an-organization
-*/
-type OrgsListCredentialAuthorizationsResponse struct {
-	response
-	request *OrgsListCredentialAuthorizationsReq
-	Data    *OrgsListCredentialAuthorizationsResponseBody
-}
-
-/*
 OrgsListForAuthenticatedUser performs requests for "orgs/list-for-authenticated-user"
 
-List your organizations.
+List organizations for the authenticated user.
 
   GET /user/orgs
 
-https://developer.github.com/v3/orgs/#list-your-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
 	if req == nil {
@@ -2313,11 +2075,11 @@ func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthentic
 /*
 OrgsListForAuthenticatedUser performs requests for "orgs/list-for-authenticated-user"
 
-List your organizations.
+List organizations for the authenticated user.
 
   GET /user/orgs
 
-https://developer.github.com/v3/orgs/#list-your-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 func (c Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListForAuthenticatedUserResponse, error) {
 	return OrgsListForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -2326,7 +2088,7 @@ func (c Client) OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListF
 /*
 OrgsListForAuthenticatedUserReq is request data for Client.OrgsListForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/#list-your-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 type OrgsListForAuthenticatedUserReq struct {
 	_url string
@@ -2404,7 +2166,7 @@ func (r *OrgsListForAuthenticatedUserReq) Rel(link RelName, resp *OrgsListForAut
 /*
 OrgsListForAuthenticatedUserResponseBody is a response body for OrgsListForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/#list-your-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 type OrgsListForAuthenticatedUserResponseBody []struct {
 	components.OrganizationSimple
@@ -2413,7 +2175,7 @@ type OrgsListForAuthenticatedUserResponseBody []struct {
 /*
 OrgsListForAuthenticatedUserResponse is a response for OrgsListForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/#list-your-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 type OrgsListForAuthenticatedUserResponse struct {
 	response
@@ -2424,11 +2186,11 @@ type OrgsListForAuthenticatedUserResponse struct {
 /*
 OrgsListForUser performs requests for "orgs/list-for-user"
 
-List user organizations.
+List organizations for a user.
 
   GET /users/{username}/orgs
 
-https://developer.github.com/v3/orgs/#list-user-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
 	if req == nil {
@@ -2453,11 +2215,11 @@ func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...Reques
 /*
 OrgsListForUser performs requests for "orgs/list-for-user"
 
-List user organizations.
+List organizations for a user.
 
   GET /users/{username}/orgs
 
-https://developer.github.com/v3/orgs/#list-user-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 func (c Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...RequestOption) (*OrgsListForUserResponse, error) {
 	return OrgsListForUser(ctx, req, append(c, opt...)...)
@@ -2466,7 +2228,7 @@ func (c Client) OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, op
 /*
 OrgsListForUserReq is request data for Client.OrgsListForUser
 
-https://developer.github.com/v3/orgs/#list-user-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type OrgsListForUserReq struct {
 	_url     string
@@ -2545,7 +2307,7 @@ func (r *OrgsListForUserReq) Rel(link RelName, resp *OrgsListForUserResponse) bo
 /*
 OrgsListForUserResponseBody is a response body for OrgsListForUser
 
-https://developer.github.com/v3/orgs/#list-user-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type OrgsListForUserResponseBody []struct {
 	components.OrganizationSimple
@@ -2554,309 +2316,12 @@ type OrgsListForUserResponseBody []struct {
 /*
 OrgsListForUserResponse is a response for OrgsListForUser
 
-https://developer.github.com/v3/orgs/#list-user-organizations
+https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type OrgsListForUserResponse struct {
 	response
 	request *OrgsListForUserReq
 	Data    *OrgsListForUserResponseBody
-}
-
-/*
-OrgsListHooks performs requests for "orgs/list-hooks"
-
-List hooks.
-
-  GET /orgs/{org}/hooks
-
-https://developer.github.com/v3/orgs/hooks/#list-hooks
-*/
-func OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
-	if req == nil {
-		req = new(OrgsListHooksReq)
-	}
-	resp := &OrgsListHooksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsListHooksResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsListHooks performs requests for "orgs/list-hooks"
-
-List hooks.
-
-  GET /orgs/{org}/hooks
-
-https://developer.github.com/v3/orgs/hooks/#list-hooks
-*/
-func (c Client) OrgsListHooks(ctx context.Context, req *OrgsListHooksReq, opt ...RequestOption) (*OrgsListHooksResponse, error) {
-	return OrgsListHooks(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsListHooksReq is request data for Client.OrgsListHooks
-
-https://developer.github.com/v3/orgs/hooks/#list-hooks
-*/
-type OrgsListHooksReq struct {
-	_url string
-	Org  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-}
-
-func (r *OrgsListHooksReq) url() string {
-	return r._url
-}
-
-func (r *OrgsListHooksReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/hooks", r.Org)
-}
-
-func (r *OrgsListHooksReq) method() string {
-	return "GET"
-}
-
-func (r *OrgsListHooksReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *OrgsListHooksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsListHooksReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsListHooksReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsListHooksReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsListHooksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsListHooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsListHooksReq) Rel(link RelName, resp *OrgsListHooksResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsListHooksResponseBody is a response body for OrgsListHooks
-
-https://developer.github.com/v3/orgs/hooks/#list-hooks
-*/
-type OrgsListHooksResponseBody []struct {
-	components.OrgHook
-}
-
-/*
-OrgsListHooksResponse is a response for OrgsListHooks
-
-https://developer.github.com/v3/orgs/hooks/#list-hooks
-*/
-type OrgsListHooksResponse struct {
-	response
-	request *OrgsListHooksReq
-	Data    *OrgsListHooksResponseBody
-}
-
-/*
-OrgsListInstallations performs requests for "orgs/list-installations"
-
-List installations for an organization.
-
-  GET /orgs/{org}/installations
-
-https://developer.github.com/v3/orgs/#list-installations-for-an-organization
-*/
-func OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
-	if req == nil {
-		req = new(OrgsListInstallationsReq)
-	}
-	resp := &OrgsListInstallationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsListInstallationsResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsListInstallations performs requests for "orgs/list-installations"
-
-List installations for an organization.
-
-  GET /orgs/{org}/installations
-
-https://developer.github.com/v3/orgs/#list-installations-for-an-organization
-*/
-func (c Client) OrgsListInstallations(ctx context.Context, req *OrgsListInstallationsReq, opt ...RequestOption) (*OrgsListInstallationsResponse, error) {
-	return OrgsListInstallations(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsListInstallationsReq is request data for Client.OrgsListInstallations
-
-https://developer.github.com/v3/orgs/#list-installations-for-an-organization
-*/
-type OrgsListInstallationsReq struct {
-	_url string
-	Org  string
-
-	// Results per page (max 100)
-	PerPage *int64
-
-	// Page number of the results to fetch.
-	Page *int64
-
-	/*
-	To access the API with your GitHub App, you must set this to true for your
-	requests.
-	*/
-	MachineManPreview bool
-}
-
-func (r *OrgsListInstallationsReq) url() string {
-	return r._url
-}
-
-func (r *OrgsListInstallationsReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/installations", r.Org)
-}
-
-func (r *OrgsListInstallationsReq) method() string {
-	return "GET"
-}
-
-func (r *OrgsListInstallationsReq) urlQuery() url.Values {
-	query := url.Values{}
-	if r.PerPage != nil {
-		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
-	}
-	if r.Page != nil {
-		query.Set("page", strconv.FormatInt(*r.Page, 10))
-	}
-	return query
-}
-
-func (r *OrgsListInstallationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsListInstallationsReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsListInstallationsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsListInstallationsReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsListInstallationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsListInstallationsReq) Rel(link RelName, resp *OrgsListInstallationsResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsListInstallationsResponseBody is a response body for OrgsListInstallations
-
-https://developer.github.com/v3/orgs/#list-installations-for-an-organization
-*/
-type OrgsListInstallationsResponseBody struct {
-	Installations []struct {
-		components.Installation3
-	} `json:"installations,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
-}
-
-/*
-OrgsListInstallationsResponse is a response for OrgsListInstallations
-
-https://developer.github.com/v3/orgs/#list-installations-for-an-organization
-*/
-type OrgsListInstallationsResponse struct {
-	response
-	request *OrgsListInstallationsReq
-	Data    *OrgsListInstallationsResponseBody
 }
 
 /*
@@ -3004,11 +2469,11 @@ type OrgsListInvitationTeamsResponse struct {
 /*
 OrgsListMembers performs requests for "orgs/list-members"
 
-Members list.
+List organization members.
 
   GET /orgs/{org}/members
 
-https://developer.github.com/v3/orgs/members/#members-list
+https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
 	if req == nil {
@@ -3033,11 +2498,11 @@ func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...Reques
 /*
 OrgsListMembers performs requests for "orgs/list-members"
 
-Members list.
+List organization members.
 
   GET /orgs/{org}/members
 
-https://developer.github.com/v3/orgs/members/#members-list
+https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 func (c Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...RequestOption) (*OrgsListMembersResponse, error) {
 	return OrgsListMembers(ctx, req, append(c, opt...)...)
@@ -3046,7 +2511,7 @@ func (c Client) OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, op
 /*
 OrgsListMembersReq is request data for Client.OrgsListMembers
 
-https://developer.github.com/v3/orgs/members/#members-list
+https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type OrgsListMembersReq struct {
 	_url string
@@ -3148,7 +2613,7 @@ func (r *OrgsListMembersReq) Rel(link RelName, resp *OrgsListMembersResponse) bo
 /*
 OrgsListMembersResponseBody is a response body for OrgsListMembers
 
-https://developer.github.com/v3/orgs/members/#members-list
+https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type OrgsListMembersResponseBody []struct {
 	components.SimpleUser
@@ -3157,7 +2622,7 @@ type OrgsListMembersResponseBody []struct {
 /*
 OrgsListMembersResponse is a response for OrgsListMembers
 
-https://developer.github.com/v3/orgs/members/#members-list
+https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type OrgsListMembersResponse struct {
 	response
@@ -3166,19 +2631,19 @@ type OrgsListMembersResponse struct {
 }
 
 /*
-OrgsListMemberships performs requests for "orgs/list-memberships"
+OrgsListMembershipsForAuthenticatedUser performs requests for "orgs/list-memberships-for-authenticated-user"
 
-List your organization memberships.
+List organization memberships for the authenticated user.
 
   GET /user/memberships/orgs
 
-https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
+https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-func OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
+func OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListMembershipsForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListMembershipsForAuthenticatedUserResponse, error) {
 	if req == nil {
-		req = new(OrgsListMembershipsReq)
+		req = new(OrgsListMembershipsForAuthenticatedUserReq)
 	}
-	resp := &OrgsListMembershipsResponse{request: req}
+	resp := &OrgsListMembershipsForAuthenticatedUserResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3186,7 +2651,7 @@ func OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OrgsListMembershipsResponseBody)
+	resp.Data = new(OrgsListMembershipsForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -3195,24 +2660,24 @@ func OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt .
 }
 
 /*
-OrgsListMemberships performs requests for "orgs/list-memberships"
+OrgsListMembershipsForAuthenticatedUser performs requests for "orgs/list-memberships-for-authenticated-user"
 
-List your organization memberships.
+List organization memberships for the authenticated user.
 
   GET /user/memberships/orgs
 
-https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
+https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-func (c Client) OrgsListMemberships(ctx context.Context, req *OrgsListMembershipsReq, opt ...RequestOption) (*OrgsListMembershipsResponse, error) {
-	return OrgsListMemberships(ctx, req, append(c, opt...)...)
+func (c Client) OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListMembershipsForAuthenticatedUserReq, opt ...RequestOption) (*OrgsListMembershipsForAuthenticatedUserResponse, error) {
+	return OrgsListMembershipsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsListMembershipsReq is request data for Client.OrgsListMemberships
+OrgsListMembershipsForAuthenticatedUserReq is request data for Client.OrgsListMembershipsForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
+https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-type OrgsListMembershipsReq struct {
+type OrgsListMembershipsForAuthenticatedUserReq struct {
 	_url string
 
 	/*
@@ -3229,19 +2694,19 @@ type OrgsListMembershipsReq struct {
 	Page *int64
 }
 
-func (r *OrgsListMembershipsReq) url() string {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) url() string {
 	return r._url
 }
 
-func (r *OrgsListMembershipsReq) urlPath() string {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) urlPath() string {
 	return fmt.Sprintf("/user/memberships/orgs")
 }
 
-func (r *OrgsListMembershipsReq) method() string {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) method() string {
 	return "GET"
 }
 
-func (r *OrgsListMembershipsReq) urlQuery() url.Values {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -3255,30 +2720,30 @@ func (r *OrgsListMembershipsReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *OrgsListMembershipsReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsListMembershipsReq) body() interface{} {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) body() interface{} {
 	return nil
 }
 
-func (r *OrgsListMembershipsReq) dataStatuses() []int {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListMembershipsReq) validStatuses() []int {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListMembershipsReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsListMembershipsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3286,7 +2751,7 @@ func (r *OrgsListMembershipsReq) HTTPRequest(ctx context.Context, opt ...Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListMembershipsReq) Rel(link RelName, resp *OrgsListMembershipsResponse) bool {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) Rel(link RelName, resp *OrgsListMembershipsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3296,33 +2761,33 @@ func (r *OrgsListMembershipsReq) Rel(link RelName, resp *OrgsListMembershipsResp
 }
 
 /*
-OrgsListMembershipsResponseBody is a response body for OrgsListMemberships
+OrgsListMembershipsForAuthenticatedUserResponseBody is a response body for OrgsListMembershipsForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
+https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-type OrgsListMembershipsResponseBody []struct {
+type OrgsListMembershipsForAuthenticatedUserResponseBody []struct {
 	components.OrgMembership
 }
 
 /*
-OrgsListMembershipsResponse is a response for OrgsListMemberships
+OrgsListMembershipsForAuthenticatedUserResponse is a response for OrgsListMembershipsForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
+https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-type OrgsListMembershipsResponse struct {
+type OrgsListMembershipsForAuthenticatedUserResponse struct {
 	response
-	request *OrgsListMembershipsReq
-	Data    *OrgsListMembershipsResponseBody
+	request *OrgsListMembershipsForAuthenticatedUserReq
+	Data    *OrgsListMembershipsForAuthenticatedUserResponseBody
 }
 
 /*
 OrgsListOutsideCollaborators performs requests for "orgs/list-outside-collaborators"
 
-List outside collaborators.
+List outside collaborators for an organization.
 
   GET /orgs/{org}/outside_collaborators
 
-https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
+https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
 	if req == nil {
@@ -3347,11 +2812,11 @@ func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideColla
 /*
 OrgsListOutsideCollaborators performs requests for "orgs/list-outside-collaborators"
 
-List outside collaborators.
+List outside collaborators for an organization.
 
   GET /orgs/{org}/outside_collaborators
 
-https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
+https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 func (c Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideCollaboratorsReq, opt ...RequestOption) (*OrgsListOutsideCollaboratorsResponse, error) {
 	return OrgsListOutsideCollaborators(ctx, req, append(c, opt...)...)
@@ -3360,7 +2825,7 @@ func (c Client) OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListO
 /*
 OrgsListOutsideCollaboratorsReq is request data for Client.OrgsListOutsideCollaborators
 
-https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
+https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 type OrgsListOutsideCollaboratorsReq struct {
 	_url string
@@ -3450,7 +2915,7 @@ func (r *OrgsListOutsideCollaboratorsReq) Rel(link RelName, resp *OrgsListOutsid
 /*
 OrgsListOutsideCollaboratorsResponseBody is a response body for OrgsListOutsideCollaborators
 
-https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
+https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 type OrgsListOutsideCollaboratorsResponseBody []struct {
 	components.SimpleUser
@@ -3459,7 +2924,7 @@ type OrgsListOutsideCollaboratorsResponseBody []struct {
 /*
 OrgsListOutsideCollaboratorsResponse is a response for OrgsListOutsideCollaborators
 
-https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators
+https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 type OrgsListOutsideCollaboratorsResponse struct {
 	response
@@ -3611,11 +3076,11 @@ type OrgsListPendingInvitationsResponse struct {
 /*
 OrgsListPublicMembers performs requests for "orgs/list-public-members"
 
-Public members list.
+List public organization members.
 
   GET /orgs/{org}/public_members
 
-https://developer.github.com/v3/orgs/members/#public-members-list
+https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
 	if req == nil {
@@ -3640,11 +3105,11 @@ func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, o
 /*
 OrgsListPublicMembers performs requests for "orgs/list-public-members"
 
-Public members list.
+List public organization members.
 
   GET /orgs/{org}/public_members
 
-https://developer.github.com/v3/orgs/members/#public-members-list
+https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 func (c Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, opt ...RequestOption) (*OrgsListPublicMembersResponse, error) {
 	return OrgsListPublicMembers(ctx, req, append(c, opt...)...)
@@ -3653,7 +3118,7 @@ func (c Client) OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMe
 /*
 OrgsListPublicMembersReq is request data for Client.OrgsListPublicMembers
 
-https://developer.github.com/v3/orgs/members/#public-members-list
+https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type OrgsListPublicMembersReq struct {
 	_url string
@@ -3732,7 +3197,7 @@ func (r *OrgsListPublicMembersReq) Rel(link RelName, resp *OrgsListPublicMembers
 /*
 OrgsListPublicMembersResponseBody is a response body for OrgsListPublicMembers
 
-https://developer.github.com/v3/orgs/members/#public-members-list
+https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type OrgsListPublicMembersResponseBody []struct {
 	components.SimpleUser
@@ -3741,7 +3206,7 @@ type OrgsListPublicMembersResponseBody []struct {
 /*
 OrgsListPublicMembersResponse is a response for OrgsListPublicMembers
 
-https://developer.github.com/v3/orgs/members/#public-members-list
+https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type OrgsListPublicMembersResponse struct {
 	response
@@ -3750,19 +3215,289 @@ type OrgsListPublicMembersResponse struct {
 }
 
 /*
-OrgsPingHook performs requests for "orgs/ping-hook"
+OrgsListSamlSsoAuthorizations performs requests for "orgs/list-saml-sso-authorizations"
 
-Ping a hook.
+List SAML SSO authorizations for an organization.
+
+  GET /orgs/{org}/credential-authorizations
+
+https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
+*/
+func OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuthorizationsReq, opt ...RequestOption) (*OrgsListSamlSsoAuthorizationsResponse, error) {
+	if req == nil {
+		req = new(OrgsListSamlSsoAuthorizationsReq)
+	}
+	resp := &OrgsListSamlSsoAuthorizationsResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsListSamlSsoAuthorizationsResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsListSamlSsoAuthorizations performs requests for "orgs/list-saml-sso-authorizations"
+
+List SAML SSO authorizations for an organization.
+
+  GET /orgs/{org}/credential-authorizations
+
+https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
+*/
+func (c Client) OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuthorizationsReq, opt ...RequestOption) (*OrgsListSamlSsoAuthorizationsResponse, error) {
+	return OrgsListSamlSsoAuthorizations(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsListSamlSsoAuthorizationsReq is request data for Client.OrgsListSamlSsoAuthorizations
+
+https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
+*/
+type OrgsListSamlSsoAuthorizationsReq struct {
+	_url string
+	Org  string
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) url() string {
+	return r._url
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/credential-authorizations", r.Org)
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) method() string {
+	return "GET"
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsListSamlSsoAuthorizationsReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsListSamlSsoAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsListSamlSsoAuthorizationsReq) Rel(link RelName, resp *OrgsListSamlSsoAuthorizationsResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsListSamlSsoAuthorizationsResponseBody is a response body for OrgsListSamlSsoAuthorizations
+
+https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
+*/
+type OrgsListSamlSsoAuthorizationsResponseBody []struct {
+	components.CredentialAuthorization
+}
+
+/*
+OrgsListSamlSsoAuthorizationsResponse is a response for OrgsListSamlSsoAuthorizations
+
+https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
+*/
+type OrgsListSamlSsoAuthorizationsResponse struct {
+	response
+	request *OrgsListSamlSsoAuthorizationsReq
+	Data    *OrgsListSamlSsoAuthorizationsResponseBody
+}
+
+/*
+OrgsListWebhooks performs requests for "orgs/list-webhooks"
+
+List organization webhooks.
+
+  GET /orgs/{org}/hooks
+
+https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
+*/
+func OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...RequestOption) (*OrgsListWebhooksResponse, error) {
+	if req == nil {
+		req = new(OrgsListWebhooksReq)
+	}
+	resp := &OrgsListWebhooksResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsListWebhooksResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsListWebhooks performs requests for "orgs/list-webhooks"
+
+List organization webhooks.
+
+  GET /orgs/{org}/hooks
+
+https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
+*/
+func (c Client) OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...RequestOption) (*OrgsListWebhooksResponse, error) {
+	return OrgsListWebhooks(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsListWebhooksReq is request data for Client.OrgsListWebhooks
+
+https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
+*/
+type OrgsListWebhooksReq struct {
+	_url string
+	Org  string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *OrgsListWebhooksReq) url() string {
+	return r._url
+}
+
+func (r *OrgsListWebhooksReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/hooks", r.Org)
+}
+
+func (r *OrgsListWebhooksReq) method() string {
+	return "GET"
+}
+
+func (r *OrgsListWebhooksReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *OrgsListWebhooksReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsListWebhooksReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsListWebhooksReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsListWebhooksReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsListWebhooksReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsListWebhooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsListWebhooksReq) Rel(link RelName, resp *OrgsListWebhooksResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsListWebhooksResponseBody is a response body for OrgsListWebhooks
+
+https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
+*/
+type OrgsListWebhooksResponseBody []struct {
+	components.OrgHook
+}
+
+/*
+OrgsListWebhooksResponse is a response for OrgsListWebhooks
+
+https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
+*/
+type OrgsListWebhooksResponse struct {
+	response
+	request *OrgsListWebhooksReq
+	Data    *OrgsListWebhooksResponseBody
+}
+
+/*
+OrgsPingWebhook performs requests for "orgs/ping-webhook"
+
+Ping an organization webhook.
 
   POST /orgs/{org}/hooks/{hook_id}/pings
 
-https://developer.github.com/v3/orgs/hooks/#ping-a-hook
+https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
-func OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
+func OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...RequestOption) (*OrgsPingWebhookResponse, error) {
 	if req == nil {
-		req = new(OrgsPingHookReq)
+		req = new(OrgsPingWebhookReq)
 	}
-	resp := &OrgsPingHookResponse{request: req}
+	resp := &OrgsPingWebhookResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -3778,70 +3513,70 @@ func OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOptio
 }
 
 /*
-OrgsPingHook performs requests for "orgs/ping-hook"
+OrgsPingWebhook performs requests for "orgs/ping-webhook"
 
-Ping a hook.
+Ping an organization webhook.
 
   POST /orgs/{org}/hooks/{hook_id}/pings
 
-https://developer.github.com/v3/orgs/hooks/#ping-a-hook
+https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
-func (c Client) OrgsPingHook(ctx context.Context, req *OrgsPingHookReq, opt ...RequestOption) (*OrgsPingHookResponse, error) {
-	return OrgsPingHook(ctx, req, append(c, opt...)...)
+func (c Client) OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...RequestOption) (*OrgsPingWebhookResponse, error) {
+	return OrgsPingWebhook(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsPingHookReq is request data for Client.OrgsPingHook
+OrgsPingWebhookReq is request data for Client.OrgsPingWebhook
 
-https://developer.github.com/v3/orgs/hooks/#ping-a-hook
+https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
-type OrgsPingHookReq struct {
+type OrgsPingWebhookReq struct {
 	_url   string
 	Org    string
 	HookId int64
 }
 
-func (r *OrgsPingHookReq) url() string {
+func (r *OrgsPingWebhookReq) url() string {
 	return r._url
 }
 
-func (r *OrgsPingHookReq) urlPath() string {
+func (r *OrgsPingWebhookReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/hooks/%v/pings", r.Org, r.HookId)
 }
 
-func (r *OrgsPingHookReq) method() string {
+func (r *OrgsPingWebhookReq) method() string {
 	return "POST"
 }
 
-func (r *OrgsPingHookReq) urlQuery() url.Values {
+func (r *OrgsPingWebhookReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *OrgsPingHookReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsPingWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsPingHookReq) body() interface{} {
+func (r *OrgsPingWebhookReq) body() interface{} {
 	return nil
 }
 
-func (r *OrgsPingHookReq) dataStatuses() []int {
+func (r *OrgsPingWebhookReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *OrgsPingHookReq) validStatuses() []int {
+func (r *OrgsPingWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsPingHookReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsPingWebhookReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsPingWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -3849,7 +3584,7 @@ func (r *OrgsPingHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption)
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsPingHookReq) Rel(link RelName, resp *OrgsPingHookResponse) bool {
+func (r *OrgsPingWebhookReq) Rel(link RelName, resp *OrgsPingWebhookResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -3859,261 +3594,23 @@ func (r *OrgsPingHookReq) Rel(link RelName, resp *OrgsPingHookResponse) bool {
 }
 
 /*
-OrgsPingHookResponse is a response for OrgsPingHook
+OrgsPingWebhookResponse is a response for OrgsPingWebhook
 
-https://developer.github.com/v3/orgs/hooks/#ping-a-hook
+https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
-type OrgsPingHookResponse struct {
+type OrgsPingWebhookResponse struct {
 	response
-	request *OrgsPingHookReq
-}
-
-/*
-OrgsPublicizeMembership performs requests for "orgs/publicize-membership"
-
-Publicize a user's membership.
-
-  PUT /orgs/{org}/public_members/{username}
-
-https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
-*/
-func OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
-	if req == nil {
-		req = new(OrgsPublicizeMembershipReq)
-	}
-	resp := &OrgsPublicizeMembershipResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsPublicizeMembership performs requests for "orgs/publicize-membership"
-
-Publicize a user's membership.
-
-  PUT /orgs/{org}/public_members/{username}
-
-https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
-*/
-func (c Client) OrgsPublicizeMembership(ctx context.Context, req *OrgsPublicizeMembershipReq, opt ...RequestOption) (*OrgsPublicizeMembershipResponse, error) {
-	return OrgsPublicizeMembership(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsPublicizeMembershipReq is request data for Client.OrgsPublicizeMembership
-
-https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
-*/
-type OrgsPublicizeMembershipReq struct {
-	_url     string
-	Org      string
-	Username string
-}
-
-func (r *OrgsPublicizeMembershipReq) url() string {
-	return r._url
-}
-
-func (r *OrgsPublicizeMembershipReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username)
-}
-
-func (r *OrgsPublicizeMembershipReq) method() string {
-	return "PUT"
-}
-
-func (r *OrgsPublicizeMembershipReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsPublicizeMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsPublicizeMembershipReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsPublicizeMembershipReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *OrgsPublicizeMembershipReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *OrgsPublicizeMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsPublicizeMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsPublicizeMembershipReq) Rel(link RelName, resp *OrgsPublicizeMembershipResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsPublicizeMembershipResponse is a response for OrgsPublicizeMembership
-
-https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
-*/
-type OrgsPublicizeMembershipResponse struct {
-	response
-	request *OrgsPublicizeMembershipReq
-}
-
-/*
-OrgsRemoveCredentialAuthorization performs requests for "orgs/remove-credential-authorization"
-
-Remove a credential authorization for an organization.
-
-  DELETE /orgs/{org}/credential-authorizations/{credential_id}
-
-https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
-*/
-func OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
-	if req == nil {
-		req = new(OrgsRemoveCredentialAuthorizationReq)
-	}
-	resp := &OrgsRemoveCredentialAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	err = r.decodeBody(nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsRemoveCredentialAuthorization performs requests for "orgs/remove-credential-authorization"
-
-Remove a credential authorization for an organization.
-
-  DELETE /orgs/{org}/credential-authorizations/{credential_id}
-
-https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
-*/
-func (c Client) OrgsRemoveCredentialAuthorization(ctx context.Context, req *OrgsRemoveCredentialAuthorizationReq, opt ...RequestOption) (*OrgsRemoveCredentialAuthorizationResponse, error) {
-	return OrgsRemoveCredentialAuthorization(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsRemoveCredentialAuthorizationReq is request data for Client.OrgsRemoveCredentialAuthorization
-
-https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
-*/
-type OrgsRemoveCredentialAuthorizationReq struct {
-	_url         string
-	Org          string
-	CredentialId int64
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/credential-authorizations/%v", r.Org, r.CredentialId)
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) method() string {
-	return "DELETE"
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) body() interface{} {
-	return nil
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) validStatuses() []int {
-	return []int{204}
-}
-
-func (r *OrgsRemoveCredentialAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsRemoveCredentialAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsRemoveCredentialAuthorizationReq) Rel(link RelName, resp *OrgsRemoveCredentialAuthorizationResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsRemoveCredentialAuthorizationResponse is a response for OrgsRemoveCredentialAuthorization
-
-https://developer.github.com/v3/orgs/#remove-a-credential-authorization-for-an-organization
-*/
-type OrgsRemoveCredentialAuthorizationResponse struct {
-	response
-	request *OrgsRemoveCredentialAuthorizationReq
+	request *OrgsPingWebhookReq
 }
 
 /*
 OrgsRemoveMember performs requests for "orgs/remove-member"
 
-Remove a member.
+Remove an organization member.
 
   DELETE /orgs/{org}/members/{username}
 
-https://developer.github.com/v3/orgs/members/#remove-a-member
+https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 func OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
 	if req == nil {
@@ -4137,11 +3634,11 @@ func OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...Requ
 /*
 OrgsRemoveMember performs requests for "orgs/remove-member"
 
-Remove a member.
+Remove an organization member.
 
   DELETE /orgs/{org}/members/{username}
 
-https://developer.github.com/v3/orgs/members/#remove-a-member
+https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 func (c Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...RequestOption) (*OrgsRemoveMemberResponse, error) {
 	return OrgsRemoveMember(ctx, req, append(c, opt...)...)
@@ -4150,7 +3647,7 @@ func (c Client) OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, 
 /*
 OrgsRemoveMemberReq is request data for Client.OrgsRemoveMember
 
-https://developer.github.com/v3/orgs/members/#remove-a-member
+https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type OrgsRemoveMemberReq struct {
 	_url     string
@@ -4218,7 +3715,7 @@ func (r *OrgsRemoveMemberReq) Rel(link RelName, resp *OrgsRemoveMemberResponse) 
 /*
 OrgsRemoveMemberResponse is a response for OrgsRemoveMember
 
-https://developer.github.com/v3/orgs/members/#remove-a-member
+https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type OrgsRemoveMemberResponse struct {
 	response
@@ -4226,19 +3723,19 @@ type OrgsRemoveMemberResponse struct {
 }
 
 /*
-OrgsRemoveMembership performs requests for "orgs/remove-membership"
+OrgsRemoveMembershipForUser performs requests for "orgs/remove-membership-for-user"
 
-Remove organization membership.
+Remove organization membership for a user.
 
   DELETE /orgs/{org}/memberships/{username}
 
-https://developer.github.com/v3/orgs/members/#remove-organization-membership
+https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
-func OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
+func OrgsRemoveMembershipForUser(ctx context.Context, req *OrgsRemoveMembershipForUserReq, opt ...RequestOption) (*OrgsRemoveMembershipForUserResponse, error) {
 	if req == nil {
-		req = new(OrgsRemoveMembershipReq)
+		req = new(OrgsRemoveMembershipForUserReq)
 	}
-	resp := &OrgsRemoveMembershipResponse{request: req}
+	resp := &OrgsRemoveMembershipForUserResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -4254,70 +3751,70 @@ func OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt
 }
 
 /*
-OrgsRemoveMembership performs requests for "orgs/remove-membership"
+OrgsRemoveMembershipForUser performs requests for "orgs/remove-membership-for-user"
 
-Remove organization membership.
+Remove organization membership for a user.
 
   DELETE /orgs/{org}/memberships/{username}
 
-https://developer.github.com/v3/orgs/members/#remove-organization-membership
+https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
-func (c Client) OrgsRemoveMembership(ctx context.Context, req *OrgsRemoveMembershipReq, opt ...RequestOption) (*OrgsRemoveMembershipResponse, error) {
-	return OrgsRemoveMembership(ctx, req, append(c, opt...)...)
+func (c Client) OrgsRemoveMembershipForUser(ctx context.Context, req *OrgsRemoveMembershipForUserReq, opt ...RequestOption) (*OrgsRemoveMembershipForUserResponse, error) {
+	return OrgsRemoveMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsRemoveMembershipReq is request data for Client.OrgsRemoveMembership
+OrgsRemoveMembershipForUserReq is request data for Client.OrgsRemoveMembershipForUser
 
-https://developer.github.com/v3/orgs/members/#remove-organization-membership
+https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
-type OrgsRemoveMembershipReq struct {
+type OrgsRemoveMembershipForUserReq struct {
 	_url     string
 	Org      string
 	Username string
 }
 
-func (r *OrgsRemoveMembershipReq) url() string {
+func (r *OrgsRemoveMembershipForUserReq) url() string {
 	return r._url
 }
 
-func (r *OrgsRemoveMembershipReq) urlPath() string {
+func (r *OrgsRemoveMembershipForUserReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username)
 }
 
-func (r *OrgsRemoveMembershipReq) method() string {
+func (r *OrgsRemoveMembershipForUserReq) method() string {
 	return "DELETE"
 }
 
-func (r *OrgsRemoveMembershipReq) urlQuery() url.Values {
+func (r *OrgsRemoveMembershipForUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *OrgsRemoveMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsRemoveMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsRemoveMembershipReq) body() interface{} {
+func (r *OrgsRemoveMembershipForUserReq) body() interface{} {
 	return nil
 }
 
-func (r *OrgsRemoveMembershipReq) dataStatuses() []int {
+func (r *OrgsRemoveMembershipForUserReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *OrgsRemoveMembershipReq) validStatuses() []int {
+func (r *OrgsRemoveMembershipForUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveMembershipReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsRemoveMembershipForUserReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsRemoveMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsRemoveMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4325,7 +3822,7 @@ func (r *OrgsRemoveMembershipReq) HTTPRequest(ctx context.Context, opt ...Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsRemoveMembershipReq) Rel(link RelName, resp *OrgsRemoveMembershipResponse) bool {
+func (r *OrgsRemoveMembershipForUserReq) Rel(link RelName, resp *OrgsRemoveMembershipForUserResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -4335,23 +3832,23 @@ func (r *OrgsRemoveMembershipReq) Rel(link RelName, resp *OrgsRemoveMembershipRe
 }
 
 /*
-OrgsRemoveMembershipResponse is a response for OrgsRemoveMembership
+OrgsRemoveMembershipForUserResponse is a response for OrgsRemoveMembershipForUser
 
-https://developer.github.com/v3/orgs/members/#remove-organization-membership
+https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
-type OrgsRemoveMembershipResponse struct {
+type OrgsRemoveMembershipForUserResponse struct {
 	response
-	request *OrgsRemoveMembershipReq
+	request *OrgsRemoveMembershipForUserReq
 }
 
 /*
 OrgsRemoveOutsideCollaborator performs requests for "orgs/remove-outside-collaborator"
 
-Remove outside collaborator.
+Remove outside collaborator from an organization.
 
   DELETE /orgs/{org}/outside_collaborators/{username}
 
-https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 func OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
 	if req == nil {
@@ -4375,11 +3872,11 @@ func OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCo
 /*
 OrgsRemoveOutsideCollaborator performs requests for "orgs/remove-outside-collaborator"
 
-Remove outside collaborator.
+Remove outside collaborator from an organization.
 
   DELETE /orgs/{org}/outside_collaborators/{username}
 
-https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 func (c Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCollaboratorReq, opt ...RequestOption) (*OrgsRemoveOutsideCollaboratorResponse, error) {
 	return OrgsRemoveOutsideCollaborator(ctx, req, append(c, opt...)...)
@@ -4388,7 +3885,7 @@ func (c Client) OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemo
 /*
 OrgsRemoveOutsideCollaboratorReq is request data for Client.OrgsRemoveOutsideCollaborator
 
-https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type OrgsRemoveOutsideCollaboratorReq struct {
 	_url     string
@@ -4456,7 +3953,7 @@ func (r *OrgsRemoveOutsideCollaboratorReq) Rel(link RelName, resp *OrgsRemoveOut
 /*
 OrgsRemoveOutsideCollaboratorResponse is a response for OrgsRemoveOutsideCollaborator
 
-https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator
+https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type OrgsRemoveOutsideCollaboratorResponse struct {
 	response
@@ -4464,13 +3961,516 @@ type OrgsRemoveOutsideCollaboratorResponse struct {
 }
 
 /*
+OrgsRemovePublicMembershipForAuthenticatedUser performs requests for "orgs/remove-public-membership-for-authenticated-user"
+
+Remove public organization membership for the authenticated user.
+
+  DELETE /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
+*/
+func OrgsRemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsRemovePublicMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsRemovePublicMembershipForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(OrgsRemovePublicMembershipForAuthenticatedUserReq)
+	}
+	resp := &OrgsRemovePublicMembershipForAuthenticatedUserResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsRemovePublicMembershipForAuthenticatedUser performs requests for "orgs/remove-public-membership-for-authenticated-user"
+
+Remove public organization membership for the authenticated user.
+
+  DELETE /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
+*/
+func (c Client) OrgsRemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsRemovePublicMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsRemovePublicMembershipForAuthenticatedUserResponse, error) {
+	return OrgsRemovePublicMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsRemovePublicMembershipForAuthenticatedUserReq is request data for Client.OrgsRemovePublicMembershipForAuthenticatedUser
+
+https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
+*/
+type OrgsRemovePublicMembershipForAuthenticatedUserReq struct {
+	_url     string
+	Org      string
+	Username string
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) url() string {
+	return r._url
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username)
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) method() string {
+	return "DELETE"
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsRemovePublicMembershipForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsRemovePublicMembershipForAuthenticatedUserResponse is a response for OrgsRemovePublicMembershipForAuthenticatedUser
+
+https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
+*/
+type OrgsRemovePublicMembershipForAuthenticatedUserResponse struct {
+	response
+	request *OrgsRemovePublicMembershipForAuthenticatedUserReq
+}
+
+/*
+OrgsRemoveSamlSsoAuthorization performs requests for "orgs/remove-saml-sso-authorization"
+
+Remove a SAML SSO authorization for an organization.
+
+  DELETE /orgs/{org}/credential-authorizations/{credential_id}
+
+https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
+*/
+func OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoAuthorizationReq, opt ...RequestOption) (*OrgsRemoveSamlSsoAuthorizationResponse, error) {
+	if req == nil {
+		req = new(OrgsRemoveSamlSsoAuthorizationReq)
+	}
+	resp := &OrgsRemoveSamlSsoAuthorizationResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsRemoveSamlSsoAuthorization performs requests for "orgs/remove-saml-sso-authorization"
+
+Remove a SAML SSO authorization for an organization.
+
+  DELETE /orgs/{org}/credential-authorizations/{credential_id}
+
+https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
+*/
+func (c Client) OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoAuthorizationReq, opt ...RequestOption) (*OrgsRemoveSamlSsoAuthorizationResponse, error) {
+	return OrgsRemoveSamlSsoAuthorization(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsRemoveSamlSsoAuthorizationReq is request data for Client.OrgsRemoveSamlSsoAuthorization
+
+https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
+*/
+type OrgsRemoveSamlSsoAuthorizationReq struct {
+	_url         string
+	Org          string
+	CredentialId int64
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) url() string {
+	return r._url
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/credential-authorizations/%v", r.Org, r.CredentialId)
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) method() string {
+	return "DELETE"
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *OrgsRemoveSamlSsoAuthorizationReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsRemoveSamlSsoAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsRemoveSamlSsoAuthorizationReq) Rel(link RelName, resp *OrgsRemoveSamlSsoAuthorizationResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsRemoveSamlSsoAuthorizationResponse is a response for OrgsRemoveSamlSsoAuthorization
+
+https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
+*/
+type OrgsRemoveSamlSsoAuthorizationResponse struct {
+	response
+	request *OrgsRemoveSamlSsoAuthorizationReq
+}
+
+/*
+OrgsSetMembershipForUser performs requests for "orgs/set-membership-for-user"
+
+Set organization membership for a user.
+
+  PUT /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
+*/
+func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUserReq, opt ...RequestOption) (*OrgsSetMembershipForUserResponse, error) {
+	if req == nil {
+		req = new(OrgsSetMembershipForUserReq)
+	}
+	resp := &OrgsSetMembershipForUserResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsSetMembershipForUserResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsSetMembershipForUser performs requests for "orgs/set-membership-for-user"
+
+Set organization membership for a user.
+
+  PUT /orgs/{org}/memberships/{username}
+
+https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
+*/
+func (c Client) OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUserReq, opt ...RequestOption) (*OrgsSetMembershipForUserResponse, error) {
+	return OrgsSetMembershipForUser(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsSetMembershipForUserReq is request data for Client.OrgsSetMembershipForUser
+
+https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
+*/
+type OrgsSetMembershipForUserReq struct {
+	_url        string
+	Org         string
+	Username    string
+	RequestBody OrgsSetMembershipForUserReqBody
+}
+
+func (r *OrgsSetMembershipForUserReq) url() string {
+	return r._url
+}
+
+func (r *OrgsSetMembershipForUserReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username)
+}
+
+func (r *OrgsSetMembershipForUserReq) method() string {
+	return "PUT"
+}
+
+func (r *OrgsSetMembershipForUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsSetMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsSetMembershipForUserReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *OrgsSetMembershipForUserReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsSetMembershipForUserReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsSetMembershipForUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsSetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsSetMembershipForUserReq) Rel(link RelName, resp *OrgsSetMembershipForUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsSetMembershipForUserReqBody is a request body for orgs/set-membership-for-user
+
+https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
+*/
+type OrgsSetMembershipForUserReqBody struct {
+
+	/*
+	   The role to give the user in the organization. Can be one of:
+	   \* `admin` - The user will become an owner of the organization.
+	   \* `member` - The user will become a non-owner member of the organization.
+	*/
+	Role *string `json:"role,omitempty"`
+}
+
+/*
+OrgsSetMembershipForUserResponseBody is a response body for OrgsSetMembershipForUser
+
+https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
+*/
+type OrgsSetMembershipForUserResponseBody struct {
+	components.OrgMembership
+}
+
+/*
+OrgsSetMembershipForUserResponse is a response for OrgsSetMembershipForUser
+
+https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
+*/
+type OrgsSetMembershipForUserResponse struct {
+	response
+	request *OrgsSetMembershipForUserReq
+	Data    *OrgsSetMembershipForUserResponseBody
+}
+
+/*
+OrgsSetPublicMembershipForAuthenticatedUser performs requests for "orgs/set-public-membership-for-authenticated-user"
+
+Set public organization membership for the authenticated user.
+
+  PUT /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
+*/
+func OrgsSetPublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsSetPublicMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsSetPublicMembershipForAuthenticatedUserResponse, error) {
+	if req == nil {
+		req = new(OrgsSetPublicMembershipForAuthenticatedUserReq)
+	}
+	resp := &OrgsSetPublicMembershipForAuthenticatedUserResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsSetPublicMembershipForAuthenticatedUser performs requests for "orgs/set-public-membership-for-authenticated-user"
+
+Set public organization membership for the authenticated user.
+
+  PUT /orgs/{org}/public_members/{username}
+
+https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
+*/
+func (c Client) OrgsSetPublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsSetPublicMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsSetPublicMembershipForAuthenticatedUserResponse, error) {
+	return OrgsSetPublicMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsSetPublicMembershipForAuthenticatedUserReq is request data for Client.OrgsSetPublicMembershipForAuthenticatedUser
+
+https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
+*/
+type OrgsSetPublicMembershipForAuthenticatedUserReq struct {
+	_url     string
+	Org      string
+	Username string
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) url() string {
+	return r._url
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username)
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) method() string {
+	return "PUT"
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) body() interface{} {
+	return nil
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsSetPublicMembershipForAuthenticatedUserResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+OrgsSetPublicMembershipForAuthenticatedUserResponse is a response for OrgsSetPublicMembershipForAuthenticatedUser
+
+https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
+*/
+type OrgsSetPublicMembershipForAuthenticatedUserResponse struct {
+	response
+	request *OrgsSetPublicMembershipForAuthenticatedUserReq
+}
+
+/*
 OrgsUnblockUser performs requests for "orgs/unblock-user"
 
-Unblock a user.
+Unblock a user from an organization.
 
   DELETE /orgs/{org}/blocks/{username}
 
-https://developer.github.com/v3/orgs/blocking/#unblock-a-user
+https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 func OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
 	if req == nil {
@@ -4494,11 +4494,11 @@ func OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...Reques
 /*
 OrgsUnblockUser performs requests for "orgs/unblock-user"
 
-Unblock a user.
+Unblock a user from an organization.
 
   DELETE /orgs/{org}/blocks/{username}
 
-https://developer.github.com/v3/orgs/blocking/#unblock-a-user
+https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 func (c Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...RequestOption) (*OrgsUnblockUserResponse, error) {
 	return OrgsUnblockUser(ctx, req, append(c, opt...)...)
@@ -4507,7 +4507,7 @@ func (c Client) OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, op
 /*
 OrgsUnblockUserReq is request data for Client.OrgsUnblockUser
 
-https://developer.github.com/v3/orgs/blocking/#unblock-a-user
+https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type OrgsUnblockUserReq struct {
 	_url     string
@@ -4575,7 +4575,7 @@ func (r *OrgsUnblockUserReq) Rel(link RelName, resp *OrgsUnblockUserResponse) bo
 /*
 OrgsUnblockUserResponse is a response for OrgsUnblockUser
 
-https://developer.github.com/v3/orgs/blocking/#unblock-a-user
+https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type OrgsUnblockUserResponse struct {
 	response
@@ -4585,11 +4585,11 @@ type OrgsUnblockUserResponse struct {
 /*
 OrgsUpdate performs requests for "orgs/update"
 
-Edit an organization.
+Update an organization.
 
   PATCH /orgs/{org}
 
-https://developer.github.com/v3/orgs/#edit-an-organization
+https://developer.github.com/v3/orgs/#update-an-organization
 */
 func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
 	if req == nil {
@@ -4614,11 +4614,11 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (
 /*
 OrgsUpdate performs requests for "orgs/update"
 
-Edit an organization.
+Update an organization.
 
   PATCH /orgs/{org}
 
-https://developer.github.com/v3/orgs/#edit-an-organization
+https://developer.github.com/v3/orgs/#update-an-organization
 */
 func (c Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (*OrgsUpdateResponse, error) {
 	return OrgsUpdate(ctx, req, append(c, opt...)...)
@@ -4627,7 +4627,7 @@ func (c Client) OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...Reque
 /*
 OrgsUpdateReq is request data for Client.OrgsUpdate
 
-https://developer.github.com/v3/orgs/#edit-an-organization
+https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateReq struct {
 	_url        string
@@ -4713,7 +4713,7 @@ func (r *OrgsUpdateReq) Rel(link RelName, resp *OrgsUpdateResponse) bool {
 /*
 OrgsUpdateReqBody is a request body for orgs/update
 
-https://developer.github.com/v3/orgs/#edit-an-organization
+https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateReqBody struct {
 
@@ -4819,12 +4819,15 @@ type OrgsUpdateReqBody struct {
 
 	// The shorthand name of the company.
 	Name *string `json:"name,omitempty"`
+
+	// The Twitter username of the company.
+	TwitterUsername *string `json:"twitter_username,omitempty"`
 }
 
 /*
 OrgsUpdateResponseBody is a response body for OrgsUpdate
 
-https://developer.github.com/v3/orgs/#edit-an-organization
+https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateResponseBody struct {
 	components.OrganizationFull
@@ -4833,7 +4836,7 @@ type OrgsUpdateResponseBody struct {
 /*
 OrgsUpdateResponse is a response for OrgsUpdate
 
-https://developer.github.com/v3/orgs/#edit-an-organization
+https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateResponse struct {
 	response
@@ -4842,19 +4845,19 @@ type OrgsUpdateResponse struct {
 }
 
 /*
-OrgsUpdateHook performs requests for "orgs/update-hook"
+OrgsUpdateMembershipForAuthenticatedUser performs requests for "orgs/update-membership-for-authenticated-user"
 
-Edit a hook.
+Update an organization membership for the authenticated user.
 
-  PATCH /orgs/{org}/hooks/{hook_id}
+  PATCH /user/memberships/orgs/{org}
 
-https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
-func OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
+func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpdateMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsUpdateMembershipForAuthenticatedUserResponse, error) {
 	if req == nil {
-		req = new(OrgsUpdateHookReq)
+		req = new(OrgsUpdateMembershipForAuthenticatedUserReq)
 	}
-	resp := &OrgsUpdateHookResponse{request: req}
+	resp := &OrgsUpdateMembershipForAuthenticatedUserResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -4862,7 +4865,7 @@ func OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OrgsUpdateHookResponseBody)
+	resp.Data = new(OrgsUpdateMembershipForAuthenticatedUserResponseBody)
 	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
@@ -4871,71 +4874,70 @@ func OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestO
 }
 
 /*
-OrgsUpdateHook performs requests for "orgs/update-hook"
+OrgsUpdateMembershipForAuthenticatedUser performs requests for "orgs/update-membership-for-authenticated-user"
 
-Edit a hook.
+Update an organization membership for the authenticated user.
 
-  PATCH /orgs/{org}/hooks/{hook_id}
+  PATCH /user/memberships/orgs/{org}
 
-https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
-func (c Client) OrgsUpdateHook(ctx context.Context, req *OrgsUpdateHookReq, opt ...RequestOption) (*OrgsUpdateHookResponse, error) {
-	return OrgsUpdateHook(ctx, req, append(c, opt...)...)
+func (c Client) OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpdateMembershipForAuthenticatedUserReq, opt ...RequestOption) (*OrgsUpdateMembershipForAuthenticatedUserResponse, error) {
+	return OrgsUpdateMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
 /*
-OrgsUpdateHookReq is request data for Client.OrgsUpdateHook
+OrgsUpdateMembershipForAuthenticatedUserReq is request data for Client.OrgsUpdateMembershipForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
-type OrgsUpdateHookReq struct {
+type OrgsUpdateMembershipForAuthenticatedUserReq struct {
 	_url        string
 	Org         string
-	HookId      int64
-	RequestBody OrgsUpdateHookReqBody
+	RequestBody OrgsUpdateMembershipForAuthenticatedUserReqBody
 }
 
-func (r *OrgsUpdateHookReq) url() string {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) url() string {
 	return r._url
 }
 
-func (r *OrgsUpdateHookReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId)
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) urlPath() string {
+	return fmt.Sprintf("/user/memberships/orgs/%v", r.Org)
 }
 
-func (r *OrgsUpdateHookReq) method() string {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) method() string {
 	return "PATCH"
 }
 
-func (r *OrgsUpdateHookReq) urlQuery() url.Values {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *OrgsUpdateHookReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *OrgsUpdateHookReq) body() interface{} {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *OrgsUpdateHookReq) dataStatuses() []int {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsUpdateHookReq) validStatuses() []int {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsUpdateHookReq) endpointAttributes() []endpointAttribute {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *OrgsUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -4943,7 +4945,7 @@ func (r *OrgsUpdateHookReq) HTTPRequest(ctx context.Context, opt ...RequestOptio
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsUpdateHookReq) Rel(link RelName, resp *OrgsUpdateHookResponse) bool {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsUpdateMembershipForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -4952,8 +4954,150 @@ func (r *OrgsUpdateHookReq) Rel(link RelName, resp *OrgsUpdateHookResponse) bool
 	return true
 }
 
-// OrgsUpdateHookReqBodyConfig is a value for OrgsUpdateHookReqBody's Config field
-type OrgsUpdateHookReqBodyConfig struct {
+/*
+OrgsUpdateMembershipForAuthenticatedUserReqBody is a request body for orgs/update-membership-for-authenticated-user
+
+https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
+*/
+type OrgsUpdateMembershipForAuthenticatedUserReqBody struct {
+
+	// The state that the membership should be in. Only `"active"` will be accepted.
+	State *string `json:"state"`
+}
+
+/*
+OrgsUpdateMembershipForAuthenticatedUserResponseBody is a response body for OrgsUpdateMembershipForAuthenticatedUser
+
+https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
+*/
+type OrgsUpdateMembershipForAuthenticatedUserResponseBody struct {
+	components.OrgMembership
+}
+
+/*
+OrgsUpdateMembershipForAuthenticatedUserResponse is a response for OrgsUpdateMembershipForAuthenticatedUser
+
+https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
+*/
+type OrgsUpdateMembershipForAuthenticatedUserResponse struct {
+	response
+	request *OrgsUpdateMembershipForAuthenticatedUserReq
+	Data    *OrgsUpdateMembershipForAuthenticatedUserResponseBody
+}
+
+/*
+OrgsUpdateWebhook performs requests for "orgs/update-webhook"
+
+Update an organization webhook.
+
+  PATCH /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
+*/
+func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...RequestOption) (*OrgsUpdateWebhookResponse, error) {
+	if req == nil {
+		req = new(OrgsUpdateWebhookReq)
+	}
+	resp := &OrgsUpdateWebhookResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(OrgsUpdateWebhookResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+OrgsUpdateWebhook performs requests for "orgs/update-webhook"
+
+Update an organization webhook.
+
+  PATCH /orgs/{org}/hooks/{hook_id}
+
+https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
+*/
+func (c Client) OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...RequestOption) (*OrgsUpdateWebhookResponse, error) {
+	return OrgsUpdateWebhook(ctx, req, append(c, opt...)...)
+}
+
+/*
+OrgsUpdateWebhookReq is request data for Client.OrgsUpdateWebhook
+
+https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
+*/
+type OrgsUpdateWebhookReq struct {
+	_url        string
+	Org         string
+	HookId      int64
+	RequestBody OrgsUpdateWebhookReqBody
+}
+
+func (r *OrgsUpdateWebhookReq) url() string {
+	return r._url
+}
+
+func (r *OrgsUpdateWebhookReq) urlPath() string {
+	return fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId)
+}
+
+func (r *OrgsUpdateWebhookReq) method() string {
+	return "PATCH"
+}
+
+func (r *OrgsUpdateWebhookReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *OrgsUpdateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *OrgsUpdateWebhookReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *OrgsUpdateWebhookReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsUpdateWebhookReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *OrgsUpdateWebhookReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *OrgsUpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *OrgsUpdateWebhookReq) Rel(link RelName, resp *OrgsUpdateWebhookResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+// OrgsUpdateWebhookReqBodyConfig is a value for OrgsUpdateWebhookReqBody's Config field
+type OrgsUpdateWebhookReqBodyConfig struct {
 
 	/*
 	   The media type used to serialize the payloads. Supported values include `json`
@@ -4983,11 +5127,11 @@ type OrgsUpdateHookReqBodyConfig struct {
 }
 
 /*
-OrgsUpdateHookReqBody is a request body for orgs/update-hook
+OrgsUpdateWebhookReqBody is a request body for orgs/update-webhook
 
-https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
-type OrgsUpdateHookReqBody struct {
+type OrgsUpdateWebhookReqBody struct {
 
 	/*
 	   Determines if notifications are sent when the webhook is triggered. Set to
@@ -4999,7 +5143,7 @@ type OrgsUpdateHookReqBody struct {
 	   Key/value pairs to provide settings for this webhook. [These are defined
 	   below](https://developer.github.com/v3/orgs/hooks/#update-hook-config-params).
 	*/
-	Config *OrgsUpdateHookReqBodyConfig `json:"config,omitempty"`
+	Config *OrgsUpdateWebhookReqBodyConfig `json:"config,omitempty"`
 
 	/*
 	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
@@ -5009,162 +5153,21 @@ type OrgsUpdateHookReqBody struct {
 }
 
 /*
-OrgsUpdateHookResponseBody is a response body for OrgsUpdateHook
+OrgsUpdateWebhookResponseBody is a response body for OrgsUpdateWebhook
 
-https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
-type OrgsUpdateHookResponseBody struct {
+type OrgsUpdateWebhookResponseBody struct {
 	components.OrgHook
 }
 
 /*
-OrgsUpdateHookResponse is a response for OrgsUpdateHook
+OrgsUpdateWebhookResponse is a response for OrgsUpdateWebhook
 
-https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
-type OrgsUpdateHookResponse struct {
+type OrgsUpdateWebhookResponse struct {
 	response
-	request *OrgsUpdateHookReq
-	Data    *OrgsUpdateHookResponseBody
-}
-
-/*
-OrgsUpdateMembership performs requests for "orgs/update-membership"
-
-Edit your organization membership.
-
-  PATCH /user/memberships/orgs/{org}
-
-https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
-*/
-func OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
-	if req == nil {
-		req = new(OrgsUpdateMembershipReq)
-	}
-	resp := &OrgsUpdateMembershipResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
-	if r != nil {
-		resp.response = *r
-	}
-	if err != nil {
-		return resp, err
-	}
-	resp.Data = new(OrgsUpdateMembershipResponseBody)
-	err = r.decodeBody(resp.Data)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-OrgsUpdateMembership performs requests for "orgs/update-membership"
-
-Edit your organization membership.
-
-  PATCH /user/memberships/orgs/{org}
-
-https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
-*/
-func (c Client) OrgsUpdateMembership(ctx context.Context, req *OrgsUpdateMembershipReq, opt ...RequestOption) (*OrgsUpdateMembershipResponse, error) {
-	return OrgsUpdateMembership(ctx, req, append(c, opt...)...)
-}
-
-/*
-OrgsUpdateMembershipReq is request data for Client.OrgsUpdateMembership
-
-https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
-*/
-type OrgsUpdateMembershipReq struct {
-	_url        string
-	Org         string
-	RequestBody OrgsUpdateMembershipReqBody
-}
-
-func (r *OrgsUpdateMembershipReq) url() string {
-	return r._url
-}
-
-func (r *OrgsUpdateMembershipReq) urlPath() string {
-	return fmt.Sprintf("/user/memberships/orgs/%v", r.Org)
-}
-
-func (r *OrgsUpdateMembershipReq) method() string {
-	return "PATCH"
-}
-
-func (r *OrgsUpdateMembershipReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OrgsUpdateMembershipReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OrgsUpdateMembershipReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OrgsUpdateMembershipReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsUpdateMembershipReq) validStatuses() []int {
-	return []int{200}
-}
-
-func (r *OrgsUpdateMembershipReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OrgsUpdateMembershipReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *OrgsUpdateMembershipReq) Rel(link RelName, resp *OrgsUpdateMembershipResponse) bool {
-	u := resp.RelLink(link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-OrgsUpdateMembershipReqBody is a request body for orgs/update-membership
-
-https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
-*/
-type OrgsUpdateMembershipReqBody struct {
-
-	// The state that the membership should be in. Only `"active"` will be accepted.
-	State *string `json:"state"`
-}
-
-/*
-OrgsUpdateMembershipResponseBody is a response body for OrgsUpdateMembership
-
-https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
-*/
-type OrgsUpdateMembershipResponseBody struct {
-	components.OrgMembership
-}
-
-/*
-OrgsUpdateMembershipResponse is a response for OrgsUpdateMembership
-
-https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
-*/
-type OrgsUpdateMembershipResponse struct {
-	response
-	request *OrgsUpdateMembershipReq
-	Data    *OrgsUpdateMembershipResponseBody
+	request *OrgsUpdateWebhookReq
+	Data    *OrgsUpdateWebhookResponseBody
 }

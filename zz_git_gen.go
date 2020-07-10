@@ -1246,7 +1246,7 @@ GitGetCommitResponseBody is a response body for GitGetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GitGetCommitResponseBody struct {
-	components.GitCommit2
+	components.GitCommit
 }
 
 /*
@@ -1263,11 +1263,11 @@ type GitGetCommitResponse struct {
 /*
 GitGetRef performs requests for "git/get-ref"
 
-Get a single reference.
+Get a reference.
 
   GET /repos/{owner}/{repo}/git/ref/{ref}
 
-https://developer.github.com/v3/git/refs/#get-a-single-reference
+https://developer.github.com/v3/git/refs/#get-a-reference
 */
 func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
 	if req == nil {
@@ -1292,11 +1292,11 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*G
 /*
 GitGetRef performs requests for "git/get-ref"
 
-Get a single reference.
+Get a reference.
 
   GET /repos/{owner}/{repo}/git/ref/{ref}
 
-https://developer.github.com/v3/git/refs/#get-a-single-reference
+https://developer.github.com/v3/git/refs/#get-a-reference
 */
 func (c Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*GitGetRefResponse, error) {
 	return GitGetRef(ctx, req, append(c, opt...)...)
@@ -1305,7 +1305,7 @@ func (c Client) GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...Request
 /*
 GitGetRefReq is request data for Client.GitGetRef
 
-https://developer.github.com/v3/git/refs/#get-a-single-reference
+https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GitGetRefReq struct {
 	_url  string
@@ -1374,7 +1374,7 @@ func (r *GitGetRefReq) Rel(link RelName, resp *GitGetRefResponse) bool {
 /*
 GitGetRefResponseBody is a response body for GitGetRef
 
-https://developer.github.com/v3/git/refs/#get-a-single-reference
+https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GitGetRefResponseBody struct {
 	components.GitRef
@@ -1383,7 +1383,7 @@ type GitGetRefResponseBody struct {
 /*
 GitGetRefResponse is a response for GitGetRef
 
-https://developer.github.com/v3/git/refs/#get-a-single-reference
+https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GitGetRefResponse struct {
 	response
@@ -1570,19 +1570,19 @@ GitGetTreeReq is request data for Client.GitGetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GitGetTreeReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// tree_sha parameter
+	_url    string
+	Owner   string
+	Repo    string
 	TreeSha string
 
-	// recursive parameter
-	Recursive *int64
+	/*
+	Setting this parameter to any value returns the objects or subtrees referenced
+	by the tree specified in `:tree_sha`. For example, setting `recursive` to any of
+	the following will enable returning objects or subtrees: `0`, `1`, `"true"`, and
+	`"false"`. Omit this parameter to prevent recursively returning objects or
+	subtrees.
+	*/
+	Recursive *string
 }
 
 func (r *GitGetTreeReq) url() string {
@@ -1600,7 +1600,7 @@ func (r *GitGetTreeReq) method() string {
 func (r *GitGetTreeReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Recursive != nil {
-		query.Set("recursive", strconv.FormatInt(*r.Recursive, 10))
+		query.Set("recursive", *r.Recursive)
 	}
 	return query
 }

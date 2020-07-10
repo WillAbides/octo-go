@@ -24,12 +24,12 @@ func TestIssuesAddLabels(t *testing.T) {
 	})
 }
 
-func TestIssuesCheckAssignee(t *testing.T) {
+func TestIssuesCheckUserCanBeAssigned(t *testing.T) {
 	ctx := context.Background()
 	client := vcrClient(t, t.Name(), patAuth())
 
 	t.Run("true", func(t *testing.T) {
-		result, err := client.IssuesCheckAssignee(ctx, &octo.IssuesCheckAssigneeReq{
+		result, err := client.IssuesCheckUserCanBeAssigned(ctx, &octo.IssuesCheckUserCanBeAssignedReq{
 			Owner:    "WillAbides",
 			Repo:     "octo-go",
 			Assignee: "WillAbides",
@@ -39,7 +39,7 @@ func TestIssuesCheckAssignee(t *testing.T) {
 	})
 
 	t.Run("false", func(t *testing.T) {
-		result, err := client.IssuesCheckAssignee(ctx, &octo.IssuesCheckAssigneeReq{
+		result, err := client.IssuesCheckUserCanBeAssigned(ctx, &octo.IssuesCheckUserCanBeAssignedReq{
 			Owner:    "WillAbides",
 			Repo:     "octo-go",
 			Assignee: "defunkt",

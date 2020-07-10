@@ -17,7 +17,7 @@
   "diff_hunk": "@@ -16,33 +16,40 @@ public class Connection : IConnection...",
   "html_url": "https://github.com/octocat/Hello-World/pull/1#discussion-diff-1",
   "id": 10,
-  "in_reply_to_id": 426899381,
+  "in_reply_to_id": 8,
   "line": 2,
   "node_id": "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEw",
   "original_commit_id": "9c48853fa3dc5c1c3d6f1f1cd1f2743e72652840",

@@ -12,11 +12,11 @@ import (
 /*
 EmojisGet performs requests for "emojis/get"
 
-Get.
+Get emojis.
 
   GET /emojis
 
-https://developer.github.com/v3/emojis/#emojis
+https://developer.github.com/v3/emojis/#get-emojis
 */
 func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
 	if req == nil {
@@ -40,11 +40,11 @@ func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*E
 /*
 EmojisGet performs requests for "emojis/get"
 
-Get.
+Get emojis.
 
   GET /emojis
 
-https://developer.github.com/v3/emojis/#emojis
+https://developer.github.com/v3/emojis/#get-emojis
 */
 func (c Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
 	return EmojisGet(ctx, req, append(c, opt...)...)
@@ -53,7 +53,7 @@ func (c Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...Request
 /*
 EmojisGetReq is request data for Client.EmojisGet
 
-https://developer.github.com/v3/emojis/#emojis
+https://developer.github.com/v3/emojis/#get-emojis
 */
 type EmojisGetReq struct {
 	_url string
@@ -119,7 +119,7 @@ func (r *EmojisGetReq) Rel(link RelName, resp *EmojisGetResponse) bool {
 /*
 EmojisGetResponse is a response for EmojisGet
 
-https://developer.github.com/v3/emojis/#emojis
+https://developer.github.com/v3/emojis/#get-emojis
 */
 type EmojisGetResponse struct {
 	response

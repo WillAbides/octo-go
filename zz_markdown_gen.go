@@ -13,11 +13,11 @@ import (
 /*
 MarkdownRender performs requests for "markdown/render"
 
-Render an arbitrary Markdown document.
+Render a Markdown document.
 
   POST /markdown
 
-https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
 	if req == nil {
@@ -41,11 +41,11 @@ func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestO
 /*
 MarkdownRender performs requests for "markdown/render"
 
-Render an arbitrary Markdown document.
+Render a Markdown document.
 
   POST /markdown
 
-https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 func (c Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
 	return MarkdownRender(ctx, req, append(c, opt...)...)
@@ -54,7 +54,7 @@ func (c Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt 
 /*
 MarkdownRenderReq is request data for Client.MarkdownRender
 
-https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type MarkdownRenderReq struct {
 	_url        string
@@ -121,7 +121,7 @@ func (r *MarkdownRenderReq) Rel(link RelName, resp *MarkdownRenderResponse) bool
 /*
 MarkdownRenderReqBody is a request body for markdown/render
 
-https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type MarkdownRenderReqBody struct {
 
@@ -148,7 +148,7 @@ type MarkdownRenderReqBody struct {
 /*
 MarkdownRenderResponse is a response for MarkdownRender
 
-https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
+https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type MarkdownRenderResponse struct {
 	response
