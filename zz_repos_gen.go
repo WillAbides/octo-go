@@ -2666,8 +2666,7 @@ type ReposCreateForAuthenticatedUserReqBody struct {
 	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
 	   2.20+, `visibility` can also be `internal`. For more information, see "[Creating
 	   an internal
-	   repository](https://help.github.com/github/creating-cloning-and-archiving-repositories/creating-an-internal-repository)"
-	   in the GitHub Help documentation.
+	   repository](https://help.github.com/github/creating-cloning-and-archiving-repositories/creating-an-internal-repository)".
 	   The `visibility` parameter overrides the `private` parameter when you use both
 	   parameters with the `nebula-preview` preview header.
 	*/
@@ -3069,8 +3068,7 @@ type ReposCreateInOrgReqBody struct {
 	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
 	   2.20+, `visibility` can also be `internal`. For more information, see "[Creating
 	   an internal
-	   repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-repository-visibility#about-internal-repositories)"
-	   in the GitHub Help documentation.
+	   repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-repository-visibility#about-internal-repositories)".
 	   The `visibility` parameter overrides the `private` parameter when you use both
 	   parameters with the `nebula-preview` preview header.
 	*/
@@ -8587,10 +8585,12 @@ type ReposGetCommitCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -12555,10 +12555,12 @@ type ReposListCommentsForCommitReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -12711,10 +12713,12 @@ type ReposListCommitCommentsForRepoReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -18780,8 +18784,7 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   Allows deletion of the protected branch by anyone with write access to the
 	   repository. Set to `false` to prevent deletion of the protected branch. Default:
 	   `false`. For more information, see "[Enabling force pushes to a protected
-	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)"
-	   in the GitHub Help documentation.
+	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
 	*/
 	AllowDeletions *bool `json:"allow_deletions,omitempty"`
 
@@ -18790,8 +18793,7 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   repository. Set to `true` to allow force pushes. Set to `false` or `null` to
 	   block force pushes. Default: `false`. For more information, see "[Enabling force
 	   pushes to a protected
-	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)"
-	   in the GitHub Help documentation."
+	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
 	*/
 	AllowForcePushes *bool `json:"allow_force_pushes,omitempty"`
 
@@ -18807,8 +18809,7 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   `false` to disable a linear commit Git history. Your repository must allow
 	   squash merging or rebase merging before you can enable a linear commit history.
 	   Default: `false`. For more information, see "[Requiring a linear commit
-	   history](https://help.github.com/github/administering-a-repository/requiring-a-linear-commit-history)"
-	   in the GitHub Help documentation.
+	   history](https://help.github.com/github/administering-a-repository/requiring-a-linear-commit-history)".
 	*/
 	RequiredLinearHistory *bool `json:"required_linear_history,omitempty"`
 

@@ -968,10 +968,12 @@ type TeamsCreateDiscussionCommentInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -1124,10 +1126,12 @@ type TeamsCreateDiscussionInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -1940,10 +1944,12 @@ type TeamsGetDiscussionCommentInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -2085,10 +2091,12 @@ type TeamsGetDiscussionInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -2656,10 +2664,12 @@ type TeamsListDiscussionCommentsInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -2821,10 +2831,12 @@ type TeamsListDiscussionsInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -4343,10 +4355,12 @@ type TeamsUpdateDiscussionCommentInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -4500,10 +4514,12 @@ type TeamsUpdateDiscussionInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
