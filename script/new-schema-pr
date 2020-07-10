@@ -11,7 +11,12 @@ git diff --stat --exit-code current-schema-version.txt || (echo "clean your tree
 
 script/update-schema
 
-[ -n "$(git diff --stat --exit-code current-schema-version.txt || echo updated)" ] || (echo "already up to date" && exit)
+updated=
+git diff --stat --exit-code current-schema-version.txt || updated=1
+if [ -z "$updated" ]; then
+  echo "already up to date"
+  exit
+fi
 
 new_version="$(cat current-schema-version.txt)"
 update_branch="update-schema-release-$new_version"
