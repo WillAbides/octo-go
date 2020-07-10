@@ -80,8 +80,10 @@ func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) octo.Client
 	}))...)
 }
 
-var schemaBytes []byte
-var schemaBytesOnce sync.Once
+var (
+	schemaBytes     []byte
+	schemaBytesOnce sync.Once
+)
 
 func schemaGJSON(t *testing.T, path string) gjson.Result {
 	schemaBytesOnce.Do(func() {

@@ -55,9 +55,10 @@ func (r *response) decodeBody(target interface{}) error {
 		bodyReader = io.TeeReader(r.httpResponse.Body, &buf)
 		r.httpResponse.Body = ioutil.NopCloser(&buf)
 	}
+	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
 	defer func() {
-		_, _ = ioutil.ReadAll(bodyReader) //nolint:errcheck
-		_ = origBody.Close()              //nolint:errcheck
+		_, _ = ioutil.ReadAll(bodyReader)
+		_ = origBody.Close()
 	}()
 	if !r.statusCodeInList(r.httpRequester.dataStatuses()) {
 		return nil
@@ -258,22 +259,22 @@ func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []Reques
 	return req, nil
 }
 
-//ISOTimeString returns a pointer to tm formated as an iso8601/rfc3339 string
+// ISOTimeString returns a pointer to tm formated as an iso8601/rfc3339 string
 func ISOTimeString(tm time.Time) *string {
 	return String(tm.Format(time.RFC3339))
 }
 
-//String returns a pointer to s
+// String returns a pointer to s
 func String(s string) *string {
 	return &s
 }
 
-//Bool returns a pointer to b
+// Bool returns a pointer to b
 func Bool(b bool) *bool {
 	return &b
 }
 
-//Int64 returns a pointer to i
+// Int64 returns a pointer to i
 func Int64(i int64) *int64 {
 	return &i
 }

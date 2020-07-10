@@ -109,7 +109,7 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 	return nil
 }
 
-func addEndpointToConcernFiles(endpoint model.Endpoint, concernFiles map[string]*jen.File, pkgPath string, pkgName string) error {
+func addEndpointToConcernFiles(endpoint model.Endpoint, concernFiles map[string]*jen.File, pkgPath, pkgName string) error {
 	endpoint = endpointWithOverrides(endpoint)
 	if endpoint.Legacy {
 		return nil

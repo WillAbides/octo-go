@@ -9,7 +9,7 @@ import (
 )
 
 func reqBodyNestedStructName(schemaPath []string, schema *model.ParamSchema) string {
-	//We don't want ITEM_SCHEMA in the name, and removing it doesn't cause duplicate struct names
+	// We don't want ITEM_SCHEMA in the name, and removing it doesn't cause duplicate struct names
 	sp := removeValFromStringSlice(schemaPath, "ITEM_SCHEMA")
 
 	if len(sp) < 3 {
