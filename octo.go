@@ -55,9 +55,10 @@ func (r *response) decodeBody(target interface{}) error {
 		bodyReader = io.TeeReader(r.httpResponse.Body, &buf)
 		r.httpResponse.Body = ioutil.NopCloser(&buf)
 	}
+	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
 	defer func() {
-		_, _ = ioutil.ReadAll(bodyReader) //nolint:errcheck
-		_ = origBody.Close()              //nolint:errcheck
+		_, _ = ioutil.ReadAll(bodyReader)
+		_ = origBody.Close()
 	}()
 	if !r.statusCodeInList(r.httpRequester.dataStatuses()) {
 		return nil

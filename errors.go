@@ -131,9 +131,10 @@ func (e *ErrorData) decode(resp *http.Response) error {
 	}
 	var nextBody bytes.Buffer
 	bodyReader := io.TeeReader(resp.Body, &nextBody)
+	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
 	defer func() {
-		_, _ = ioutil.ReadAll(bodyReader) //nolint:errcheck
-		_ = resp.Body.Close()             //nolint:errcheck
+		_, _ = ioutil.ReadAll(bodyReader)
+		_ = resp.Body.Close()
 		resp.Body = ioutil.NopCloser(&nextBody)
 	}()
 	return json.NewDecoder(bodyReader).Decode(e)

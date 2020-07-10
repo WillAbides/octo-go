@@ -15,6 +15,8 @@ issues:
         - dupl
         - gosec
         - goconst
+  max-same-issues: 0
+  max-issues-per-linter: 0
 linters:
   enable:
     - golint
@@ -27,6 +29,10 @@ linters:
     - gocritic
     - gofumpt
 linters-settings:
+  gocritic:
+    enabled-tags:
+      - style
+      - diagnostic
   errcheck:
     # report about assignment of errors to blank identifier: `num, _ := strconv.Atoi(numStr)`;
     # default is false: such cases aren't reported by default.
