@@ -5350,8 +5350,7 @@ type ActionsListWorkflowRunsReq struct {
 	/*
 	Returns workflow run triggered by the event you specify. For example, `push`,
 	`pull_request` or `issue`. For more information, see "[Events that trigger
-	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)"
-	in the GitHub Help documentation.
+	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)."
 	*/
 	Event *string
 
@@ -5536,8 +5535,7 @@ type ActionsListWorkflowRunsForRepoReq struct {
 	/*
 	Returns workflow run triggered by the event you specify. For example, `push`,
 	`pull_request` or `issue`. For more information, see "[Events that trigger
-	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)"
-	in the GitHub Help documentation.
+	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)."
 	*/
 	Event *string
 

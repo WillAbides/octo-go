@@ -815,8 +815,7 @@ type PullsCreateReviewCommentReqBody struct {
 	   in green or unchanged lines that appear in white and are shown for context. For
 	   a multi-line comment, side represents whether the last line of the comment range
 	   is a deletion or addition. For more information, see "[Diff view
-	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)"
-	   in the GitHub Help documentation.
+	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)".
 	*/
 	Side *string `json:"side,omitempty"`
 
@@ -825,8 +824,7 @@ type PullsCreateReviewCommentReqBody struct {
 	   must use the `comfort-fade` preview header. The `start_line` is the first line
 	   in the pull request diff that your multi-line comment applies to. To learn more
 	   about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
-	   in the GitHub Help documentation.
+	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)".
 	*/
 	StartLine *int64 `json:"start_line,omitempty"`
 
@@ -835,9 +833,8 @@ type PullsCreateReviewCommentReqBody struct {
 	   must use the `comfort-fade` preview header. The `start_side` is the starting
 	   side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
 	   more about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
-	   in the GitHub Help documentation. See `side` in this table for additional
-	   context.
+	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)".
+	   See `side` in this table for additional context.
 	*/
 	StartSide *string `json:"start_side,omitempty"`
 }
@@ -1596,10 +1593,12 @@ type PullsGetReviewCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -2540,10 +2539,12 @@ type PullsListReviewCommentsReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/
@@ -2729,10 +2730,12 @@ type PullsListReviewCommentsForRepoReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During the preview period, the APIs may
-	change without advance notice. Please see the [blog
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
+
 
 	To access the API you must set this to true.
 	*/

@@ -4775,8 +4775,7 @@ type OrgsUpdateReqBody struct {
 	   \* `false` - only organization owners can create internal repositories.
 	   Default: `true`. For more information, see "[Restricting repository creation in
 	   your
-	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)"
-	   in the GitHub Help documentation.
+	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)".
 	*/
 	MembersCanCreateInternalRepositories *bool `json:"members_can_create_internal_repositories,omitempty"`
 
@@ -4787,8 +4786,7 @@ type OrgsUpdateReqBody struct {
 	   \* `false` - only organization owners can create private repositories.
 	   Default: `true`. For more information, see "[Restricting repository creation in
 	   your
-	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)"
-	   in the GitHub Help documentation.
+	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)".
 	*/
 	MembersCanCreatePrivateRepositories *bool `json:"members_can_create_private_repositories,omitempty"`
 
@@ -4799,8 +4797,7 @@ type OrgsUpdateReqBody struct {
 	   \* `false` - only organization owners can create public repositories.
 	   Default: `true`. For more information, see "[Restricting repository creation in
 	   your
-	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)"
-	   in the GitHub Help documentation.
+	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)".
 	*/
 	MembersCanCreatePublicRepositories *bool `json:"members_can_create_public_repositories,omitempty"`
 
