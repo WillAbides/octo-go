@@ -983,7 +983,7 @@ func (r *ActivityListEventsForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -1289,7 +1289,7 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -1418,7 +1418,7 @@ func (r *ActivityListPublicEventsReq) dataStatuses() []int {
 }
 
 func (r *ActivityListPublicEventsReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicEventsReq) endpointAttributes() []endpointAttribute {
@@ -1549,7 +1549,7 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) dataStatuses() []int {
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) endpointAttributes() []endpointAttribute {
@@ -1679,7 +1679,7 @@ func (r *ActivityListPublicEventsForUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicEventsForUserReq) endpointAttributes() []endpointAttribute {
@@ -1809,7 +1809,7 @@ func (r *ActivityListPublicOrgEventsReq) dataStatuses() []int {
 }
 
 func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicOrgEventsReq) endpointAttributes() []endpointAttribute {
@@ -1939,7 +1939,7 @@ func (r *ActivityListReceivedEventsForUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListReceivedEventsForUserReq) endpointAttributes() []endpointAttribute {
@@ -2069,7 +2069,7 @@ func (r *ActivityListReceivedPublicEventsForUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) endpointAttributes() []endpointAttribute {
@@ -2200,7 +2200,7 @@ func (r *ActivityListRepoEventsReq) dataStatuses() []int {
 }
 
 func (r *ActivityListRepoEventsReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListRepoEventsReq) endpointAttributes() []endpointAttribute {

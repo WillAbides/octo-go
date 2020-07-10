@@ -4,6 +4,29 @@ package components
 
 import "encoding/json"
 
+type ActionsBillingUsage struct {
+
+	// The amount of free GitHub Actions minutes available.
+	IncludedMinutes      json.Number `json:"included_minutes,omitempty"`
+	MinutesUsedBreakdown struct {
+
+		// Total minutes used on macOS runner machines.
+		MACOS json.Number `json:"MACOS,omitempty"`
+
+		// Total minutes used on Ubuntu runner machines.
+		UBUNTU json.Number `json:"UBUNTU,omitempty"`
+
+		// Total minutes used on Windows runner machines.
+		WINDOWS json.Number `json:"WINDOWS,omitempty"`
+	} `json:"minutes_used_breakdown,omitempty"`
+
+	// The sum of the free and paid GitHub Actions minutes used.
+	TotalMinutesUsed json.Number `json:"total_minutes_used,omitempty"`
+
+	// The total paid GitHub Actions minutes used.
+	TotalPaidMinutesUsed json.Number `json:"total_paid_minutes_used,omitempty"`
+}
+
 type ActionsPublicKey struct {
 	Key   string `json:"key,omitempty"`
 	KeyId string `json:"key_id,omitempty"`
@@ -1081,6 +1104,18 @@ type Collaborator struct {
 	SubscriptionsUrl  string          `json:"subscriptions_url,omitempty"`
 	Type              string          `json:"type,omitempty"`
 	Url               string          `json:"url,omitempty"`
+}
+
+type CombinedBillingUsage struct {
+
+	// Numbers of days left in billing cycle.
+	DaysLeftInBillingCycle json.Number `json:"days_left_in_billing_cycle,omitempty"`
+
+	// Estimated storage space (GB) used in billing cycle.
+	EstimatedPaidStorageForMonth json.Number `json:"estimated_paid_storage_for_month,omitempty"`
+
+	// Estimated sum of free and paid storage space (GB) used in billing cycle.
+	EstimatedStorageForMonth json.Number `json:"estimated_storage_for_month,omitempty"`
 }
 
 type CombinedCommitStatus struct {
@@ -5147,6 +5182,18 @@ type OrganizationSimple struct {
 	Url              string `json:"url,omitempty"`
 }
 
+type PackagesBillingUsage struct {
+
+	// Free storage space (GB) for GitHub Packages.
+	IncludedGigabytesBandwidth json.Number `json:"included_gigabytes_bandwidth,omitempty"`
+
+	// Sum of the free and paid storage space (GB) for GitHuub Packages.
+	TotalGigabytesBandwidthUsed json.Number `json:"total_gigabytes_bandwidth_used,omitempty"`
+
+	// Total paid storage space (GB) for GitHuub Packages.
+	TotalPaidGigabytesBandwidthUsed json.Number `json:"total_paid_gigabytes_bandwidth_used,omitempty"`
+}
+
 type Page struct {
 	Cname     string `json:"cname,omitempty"`
 	Custom404 bool   `json:"custom_404,omitempty"`
@@ -7825,6 +7872,7 @@ type RepositorySubscription struct {
 }
 
 type Runner struct {
+	Busy   bool   `json:"busy,omitempty"`
 	Id     int64  `json:"id,omitempty"`
 	Name   string `json:"name,omitempty"`
 	Os     string `json:"os,omitempty"`
@@ -7832,6 +7880,7 @@ type Runner struct {
 }
 
 type Runner2 struct {
+	Busy   bool   `json:"busy"`
 	Id     int64  `json:"id"`
 	Name   string `json:"name"`
 	Os     string `json:"os"`
@@ -8958,24 +9007,6 @@ type ViewTraffic struct {
 	} `json:"views,omitempty"`
 }
 
-type WorkfloRunUsage struct {
-	Billable struct {
-		MACOS struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"MACOS,omitempty"`
-		UBUNTU struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"UBUNTU,omitempty"`
-		WINDOWS struct {
-			Jobs    int64 `json:"jobs,omitempty"`
-			TotalMs int64 `json:"total_ms,omitempty"`
-		} `json:"WINDOWS,omitempty"`
-	} `json:"billable,omitempty"`
-	RunDurationMs int64 `json:"run_duration_ms,omitempty"`
-}
-
 type Workflow struct {
 	BadgeUrl  string `json:"badge_url,omitempty"`
 	CreatedAt string `json:"created_at,omitempty"`
@@ -9173,6 +9204,24 @@ type WorkflowRun struct {
 	Url         string `json:"url,omitempty"`
 	WorkflowId  int64  `json:"workflow_id,omitempty"`
 	WorkflowUrl string `json:"workflow_url,omitempty"`
+}
+
+type WorkflowRunUsage struct {
+	Billable struct {
+		MACOS struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"MACOS,omitempty"`
+		UBUNTU struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"UBUNTU,omitempty"`
+		WINDOWS struct {
+			Jobs    int64 `json:"jobs,omitempty"`
+			TotalMs int64 `json:"total_ms,omitempty"`
+		} `json:"WINDOWS,omitempty"`
+	} `json:"billable,omitempty"`
+	RunDurationMs int64 `json:"run_duration_ms,omitempty"`
 }
 
 type WorkflowUsage struct {

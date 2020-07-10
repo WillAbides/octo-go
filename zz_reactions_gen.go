@@ -838,6 +838,171 @@ type ReactionsCreateForTeamDiscussionCommentInOrgResponse struct {
 }
 
 /*
+ReactionsCreateForTeamDiscussionCommentLegacy performs requests for "reactions/create-for-team-discussion-comment-legacy"
+
+Create reaction for a team discussion comment (Legacy).
+
+  POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+*/
+func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentLegacyResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForTeamDiscussionCommentLegacyReq)
+	}
+	resp := &ReactionsCreateForTeamDiscussionCommentLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReactionsCreateForTeamDiscussionCommentLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentLegacy performs requests for "reactions/create-for-team-discussion-comment-legacy"
+
+Create reaction for a team discussion comment (Legacy).
+
+  POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+*/
+func (c Client) ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentLegacyResponse, error) {
+	return ReactionsCreateForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentLegacyReq is request data for Client.ReactionsCreateForTeamDiscussionCommentLegacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+*/
+type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+	RequestBody      ReactionsCreateForTeamDiscussionCommentLegacyReqBody
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) url() string {
+	return r._url
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
+	return "POST"
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionCommentLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentLegacyReqBody is a request body for reactions/create-for-team-discussion-comment-legacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+*/
+type ReactionsCreateForTeamDiscussionCommentLegacyReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the team discussion comment.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentLegacyResponseBody is a response body for ReactionsCreateForTeamDiscussionCommentLegacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+*/
+type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody struct {
+	components.Reaction
+}
+
+/*
+ReactionsCreateForTeamDiscussionCommentLegacyResponse is a response for ReactionsCreateForTeamDiscussionCommentLegacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
+*/
+type ReactionsCreateForTeamDiscussionCommentLegacyResponse struct {
+	response
+	request *ReactionsCreateForTeamDiscussionCommentLegacyReq
+	Data    *ReactionsCreateForTeamDiscussionCommentLegacyResponseBody
+}
+
+/*
 ReactionsCreateForTeamDiscussionInOrg performs requests for "reactions/create-for-team-discussion-in-org"
 
 Create reaction for a team discussion.
@@ -1000,6 +1165,170 @@ type ReactionsCreateForTeamDiscussionInOrgResponse struct {
 	response
 	request *ReactionsCreateForTeamDiscussionInOrgReq
 	Data    *ReactionsCreateForTeamDiscussionInOrgResponseBody
+}
+
+/*
+ReactionsCreateForTeamDiscussionLegacy performs requests for "reactions/create-for-team-discussion-legacy"
+
+Create reaction for a team discussion (Legacy).
+
+  POST /teams/{team_id}/discussions/{discussion_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+*/
+func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionLegacyResponse, error) {
+	if req == nil {
+		req = new(ReactionsCreateForTeamDiscussionLegacyReq)
+	}
+	resp := &ReactionsCreateForTeamDiscussionLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReactionsCreateForTeamDiscussionLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsCreateForTeamDiscussionLegacy performs requests for "reactions/create-for-team-discussion-legacy"
+
+Create reaction for a team discussion (Legacy).
+
+  POST /teams/{team_id}/discussions/{discussion_number}/reactions
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+*/
+func (c Client) ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionLegacyResponse, error) {
+	return ReactionsCreateForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReactionsCreateForTeamDiscussionLegacyReq is request data for Client.ReactionsCreateForTeamDiscussionLegacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+*/
+type ReactionsCreateForTeamDiscussionLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	RequestBody      ReactionsCreateForTeamDiscussionLegacyReqBody
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) url() string {
+	return r._url
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) method() string {
+	return "POST"
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReactionsCreateForTeamDiscussionLegacyReqBody is a request body for reactions/create-for-team-discussion-legacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+*/
+type ReactionsCreateForTeamDiscussionLegacyReqBody struct {
+
+	/*
+	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	   to add to the team discussion.
+	*/
+	Content *string `json:"content"`
+}
+
+/*
+ReactionsCreateForTeamDiscussionLegacyResponseBody is a response body for ReactionsCreateForTeamDiscussionLegacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+*/
+type ReactionsCreateForTeamDiscussionLegacyResponseBody struct {
+	components.Reaction
+}
+
+/*
+ReactionsCreateForTeamDiscussionLegacyResponse is a response for ReactionsCreateForTeamDiscussionLegacy
+
+https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
+*/
+type ReactionsCreateForTeamDiscussionLegacyResponse struct {
+	response
+	request *ReactionsCreateForTeamDiscussionLegacyReq
+	Data    *ReactionsCreateForTeamDiscussionLegacyResponseBody
 }
 
 /*
@@ -1841,6 +2170,143 @@ https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reacti
 type ReactionsDeleteForTeamDiscussionCommentResponse struct {
 	response
 	request *ReactionsDeleteForTeamDiscussionCommentReq
+}
+
+/*
+ReactionsDeleteLegacy performs requests for "reactions/delete-legacy"
+
+Delete a reaction (Legacy).
+
+  DELETE /reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+*/
+func ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, opt ...RequestOption) (*ReactionsDeleteLegacyResponse, error) {
+	if req == nil {
+		req = new(ReactionsDeleteLegacyReq)
+	}
+	resp := &ReactionsDeleteLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsDeleteLegacy performs requests for "reactions/delete-legacy"
+
+Delete a reaction (Legacy).
+
+  DELETE /reactions/{reaction_id}
+
+https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+*/
+func (c Client) ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, opt ...RequestOption) (*ReactionsDeleteLegacyResponse, error) {
+	return ReactionsDeleteLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReactionsDeleteLegacyReq is request data for Client.ReactionsDeleteLegacy
+
+https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+*/
+type ReactionsDeleteLegacyReq struct {
+	_url       string
+	ReactionId int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsDeleteLegacyReq) url() string {
+	return r._url
+}
+
+func (r *ReactionsDeleteLegacyReq) urlPath() string {
+	return fmt.Sprintf("/reactions/%v", r.ReactionId)
+}
+
+func (r *ReactionsDeleteLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *ReactionsDeleteLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReactionsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReactionsDeleteLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *ReactionsDeleteLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReactionsDeleteLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *ReactionsDeleteLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsDeleteLegacyReq) Rel(link RelName, resp *ReactionsDeleteLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReactionsDeleteLegacyResponse is a response for ReactionsDeleteLegacy
+
+https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+*/
+type ReactionsDeleteLegacyResponse struct {
+	response
+	request *ReactionsDeleteLegacyReq
 }
 
 /*
@@ -2705,6 +3171,178 @@ type ReactionsListForTeamDiscussionCommentInOrgResponse struct {
 }
 
 /*
+ReactionsListForTeamDiscussionCommentLegacy performs requests for "reactions/list-for-team-discussion-comment-legacy"
+
+List reactions for a team discussion comment (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
+*/
+func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentLegacyResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForTeamDiscussionCommentLegacyReq)
+	}
+	resp := &ReactionsListForTeamDiscussionCommentLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReactionsListForTeamDiscussionCommentLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForTeamDiscussionCommentLegacy performs requests for "reactions/list-for-team-discussion-comment-legacy"
+
+List reactions for a team discussion comment (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
+*/
+func (c Client) ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentLegacyResponse, error) {
+	return ReactionsListForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReactionsListForTeamDiscussionCommentLegacyReq is request data for Client.ReactionsListForTeamDiscussionCommentLegacy
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
+*/
+type ReactionsListForTeamDiscussionCommentLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+
+	/*
+	Returns a single [reaction
+	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
+	parameter to list all reactions to a team discussion comment.
+	*/
+	Content *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) url() string {
+	return r._url
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Content != nil {
+		query.Set("content", *r.Content)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionCommentLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReactionsListForTeamDiscussionCommentLegacyResponseBody is a response body for ReactionsListForTeamDiscussionCommentLegacy
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
+*/
+type ReactionsListForTeamDiscussionCommentLegacyResponseBody []struct {
+	components.Reaction
+}
+
+/*
+ReactionsListForTeamDiscussionCommentLegacyResponse is a response for ReactionsListForTeamDiscussionCommentLegacy
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
+*/
+type ReactionsListForTeamDiscussionCommentLegacyResponse struct {
+	response
+	request *ReactionsListForTeamDiscussionCommentLegacyReq
+	Data    *ReactionsListForTeamDiscussionCommentLegacyResponseBody
+}
+
+/*
 ReactionsListForTeamDiscussionInOrg performs requests for "reactions/list-for-team-discussion-in-org"
 
 List reactions for a team discussion.
@@ -2874,4 +3512,175 @@ type ReactionsListForTeamDiscussionInOrgResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionInOrgReq
 	Data    *ReactionsListForTeamDiscussionInOrgResponseBody
+}
+
+/*
+ReactionsListForTeamDiscussionLegacy performs requests for "reactions/list-for-team-discussion-legacy"
+
+List reactions for a team discussion (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+*/
+func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionLegacyResponse, error) {
+	if req == nil {
+		req = new(ReactionsListForTeamDiscussionLegacyReq)
+	}
+	resp := &ReactionsListForTeamDiscussionLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(ReactionsListForTeamDiscussionLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReactionsListForTeamDiscussionLegacy performs requests for "reactions/list-for-team-discussion-legacy"
+
+List reactions for a team discussion (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/reactions
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+*/
+func (c Client) ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionLegacyResponse, error) {
+	return ReactionsListForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReactionsListForTeamDiscussionLegacyReq is request data for Client.ReactionsListForTeamDiscussionLegacy
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+*/
+type ReactionsListForTeamDiscussionLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+
+	/*
+	Returns a single [reaction
+	type](https://developer.github.com/v3/reactions/#reaction-types). Omit this
+	parameter to list all reactions to a team discussion.
+	*/
+	Content *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) url() string {
+	return r._url
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Content != nil {
+		query.Set("content", *r.Content)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if requiredPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *ReactionsListForTeamDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReactionsListForTeamDiscussionLegacyReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReactionsListForTeamDiscussionLegacyResponseBody is a response body for ReactionsListForTeamDiscussionLegacy
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+*/
+type ReactionsListForTeamDiscussionLegacyResponseBody []struct {
+	components.Reaction
+}
+
+/*
+ReactionsListForTeamDiscussionLegacyResponse is a response for ReactionsListForTeamDiscussionLegacy
+
+https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
+*/
+type ReactionsListForTeamDiscussionLegacyResponse struct {
+	response
+	request *ReactionsListForTeamDiscussionLegacyReq
+	Data    *ReactionsListForTeamDiscussionLegacyResponseBody
 }

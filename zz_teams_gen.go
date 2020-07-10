@@ -12,6 +12,125 @@ import (
 )
 
 /*
+TeamsAddMemberLegacy performs requests for "teams/add-member-legacy"
+
+Add team member (Legacy).
+
+  PUT /teams/{team_id}/members/{username}
+
+https://developer.github.com/v3/teams/members/#add-team-member-legacy
+*/
+func TeamsAddMemberLegacy(ctx context.Context, req *TeamsAddMemberLegacyReq, opt ...RequestOption) (*TeamsAddMemberLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsAddMemberLegacyReq)
+	}
+	resp := &TeamsAddMemberLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddMemberLegacy performs requests for "teams/add-member-legacy"
+
+Add team member (Legacy).
+
+  PUT /teams/{team_id}/members/{username}
+
+https://developer.github.com/v3/teams/members/#add-team-member-legacy
+*/
+func (c Client) TeamsAddMemberLegacy(ctx context.Context, req *TeamsAddMemberLegacyReq, opt ...RequestOption) (*TeamsAddMemberLegacyResponse, error) {
+	return TeamsAddMemberLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsAddMemberLegacyReq is request data for Client.TeamsAddMemberLegacy
+
+https://developer.github.com/v3/teams/members/#add-team-member-legacy
+*/
+type TeamsAddMemberLegacyReq struct {
+	_url     string
+	TeamId   int64
+	Username string
+}
+
+func (r *TeamsAddMemberLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsAddMemberLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
+}
+
+func (r *TeamsAddMemberLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r *TeamsAddMemberLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsAddMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsAddMemberLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsAddMemberLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsAddMemberLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsAddMemberLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddMemberLegacyReq) Rel(link RelName, resp *TeamsAddMemberLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsAddMemberLegacyResponse is a response for TeamsAddMemberLegacy
+
+https://developer.github.com/v3/teams/members/#add-team-member-legacy
+*/
+type TeamsAddMemberLegacyResponse struct {
+	response
+	request *TeamsAddMemberLegacyReq
+}
+
+/*
 TeamsAddOrUpdateMembershipForUserInOrg performs requests for "teams/add-or-update-membership-for-user-in-org"
 
 Add or update team membership for a user.
@@ -158,6 +277,154 @@ type TeamsAddOrUpdateMembershipForUserInOrgResponse struct {
 	response
 	request *TeamsAddOrUpdateMembershipForUserInOrgReq
 	Data    *TeamsAddOrUpdateMembershipForUserInOrgResponseBody
+}
+
+/*
+TeamsAddOrUpdateMembershipForUserLegacy performs requests for "teams/add-or-update-membership-for-user-legacy"
+
+Add or update team membership for a user (Legacy).
+
+  PUT /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+*/
+func TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddOrUpdateMembershipForUserLegacyReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipForUserLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsAddOrUpdateMembershipForUserLegacyReq)
+	}
+	resp := &TeamsAddOrUpdateMembershipForUserLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsAddOrUpdateMembershipForUserLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateMembershipForUserLegacy performs requests for "teams/add-or-update-membership-for-user-legacy"
+
+Add or update team membership for a user (Legacy).
+
+  PUT /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+*/
+func (c Client) TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddOrUpdateMembershipForUserLegacyReq, opt ...RequestOption) (*TeamsAddOrUpdateMembershipForUserLegacyResponse, error) {
+	return TeamsAddOrUpdateMembershipForUserLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsAddOrUpdateMembershipForUserLegacyReq is request data for Client.TeamsAddOrUpdateMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+*/
+type TeamsAddOrUpdateMembershipForUserLegacyReq struct {
+	_url        string
+	TeamId      int64
+	Username    string
+	RequestBody TeamsAddOrUpdateMembershipForUserLegacyReqBody
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) Rel(link RelName, resp *TeamsAddOrUpdateMembershipForUserLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsAddOrUpdateMembershipForUserLegacyReqBody is a request body for teams/add-or-update-membership-for-user-legacy
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+*/
+type TeamsAddOrUpdateMembershipForUserLegacyReqBody struct {
+
+	/*
+	   The role that this user should have in the team. Can be one of:
+	   \* `member` - a normal member of the team.
+	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
+	   promote other team members to team maintainer, and edit the team's name and
+	   description.
+	*/
+	Role *string `json:"role,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateMembershipForUserLegacyResponseBody is a response body for TeamsAddOrUpdateMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+*/
+type TeamsAddOrUpdateMembershipForUserLegacyResponseBody struct {
+	components.TeamMembership
+}
+
+/*
+TeamsAddOrUpdateMembershipForUserLegacyResponse is a response for TeamsAddOrUpdateMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+*/
+type TeamsAddOrUpdateMembershipForUserLegacyResponse struct {
+	response
+	request *TeamsAddOrUpdateMembershipForUserLegacyReq
+	Data    *TeamsAddOrUpdateMembershipForUserLegacyResponseBody
 }
 
 /*
@@ -318,6 +585,162 @@ type TeamsAddOrUpdateProjectPermissionsInOrgResponse struct {
 }
 
 /*
+TeamsAddOrUpdateProjectPermissionsLegacy performs requests for "teams/add-or-update-project-permissions-legacy"
+
+Add or update team project permissions (Legacy).
+
+  PUT /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+*/
+func TeamsAddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *TeamsAddOrUpdateProjectPermissionsLegacyReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectPermissionsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsAddOrUpdateProjectPermissionsLegacyReq)
+	}
+	resp := &TeamsAddOrUpdateProjectPermissionsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateProjectPermissionsLegacy performs requests for "teams/add-or-update-project-permissions-legacy"
+
+Add or update team project permissions (Legacy).
+
+  PUT /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+*/
+func (c Client) TeamsAddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *TeamsAddOrUpdateProjectPermissionsLegacyReq, opt ...RequestOption) (*TeamsAddOrUpdateProjectPermissionsLegacyResponse, error) {
+	return TeamsAddOrUpdateProjectPermissionsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsAddOrUpdateProjectPermissionsLegacyReq is request data for Client.TeamsAddOrUpdateProjectPermissionsLegacy
+
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+*/
+type TeamsAddOrUpdateProjectPermissionsLegacyReq struct {
+	_url        string
+	TeamId      int64
+	ProjectId   int64
+	RequestBody TeamsAddOrUpdateProjectPermissionsLegacyReqBody
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) Rel(link RelName, resp *TeamsAddOrUpdateProjectPermissionsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsAddOrUpdateProjectPermissionsLegacyReqBody is a request body for teams/add-or-update-project-permissions-legacy
+
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+*/
+type TeamsAddOrUpdateProjectPermissionsLegacyReqBody struct {
+
+	/*
+	   The permission to grant to the team for this project. Can be one of:
+	   \* `read` - team members can read, but not write to or administer this project.
+	   \* `write` - team members can read and write, but not administer this project.
+	   \* `admin` - team members can read, write and administer this project.
+	   Default: the team's `permission` attribute will be used to determine what
+	   permission to grant the team on this project. Note that, if you choose not to
+	   pass any parameters, you'll need to set `Content-Length` to zero when calling
+	   out to this endpoint. For more information, see "[HTTP
+	   verbs](https://developer.github.com/v3/#http-verbs)."
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateProjectPermissionsLegacyResponse is a response for TeamsAddOrUpdateProjectPermissionsLegacy
+
+https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+*/
+type TeamsAddOrUpdateProjectPermissionsLegacyResponse struct {
+	response
+	request *TeamsAddOrUpdateProjectPermissionsLegacyReq
+}
+
+/*
 TeamsAddOrUpdateRepoPermissionsInOrg performs requests for "teams/add-or-update-repo-permissions-in-org"
 
 Add or update team repository permissions.
@@ -463,6 +886,147 @@ https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 type TeamsAddOrUpdateRepoPermissionsInOrgResponse struct {
 	response
 	request *TeamsAddOrUpdateRepoPermissionsInOrgReq
+}
+
+/*
+TeamsAddOrUpdateRepoPermissionsLegacy performs requests for "teams/add-or-update-repo-permissions-legacy"
+
+Add or update team repository permissions (Legacy).
+
+  PUT /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+*/
+func TeamsAddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *TeamsAddOrUpdateRepoPermissionsLegacyReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoPermissionsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsAddOrUpdateRepoPermissionsLegacyReq)
+	}
+	resp := &TeamsAddOrUpdateRepoPermissionsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsAddOrUpdateRepoPermissionsLegacy performs requests for "teams/add-or-update-repo-permissions-legacy"
+
+Add or update team repository permissions (Legacy).
+
+  PUT /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+*/
+func (c Client) TeamsAddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *TeamsAddOrUpdateRepoPermissionsLegacyReq, opt ...RequestOption) (*TeamsAddOrUpdateRepoPermissionsLegacyResponse, error) {
+	return TeamsAddOrUpdateRepoPermissionsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsAddOrUpdateRepoPermissionsLegacyReq is request data for Client.TeamsAddOrUpdateRepoPermissionsLegacy
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+*/
+type TeamsAddOrUpdateRepoPermissionsLegacyReq struct {
+	_url        string
+	TeamId      int64
+	Owner       string
+	Repo        string
+	RequestBody TeamsAddOrUpdateRepoPermissionsLegacyReqBody
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) method() string {
+	return "PUT"
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) Rel(link RelName, resp *TeamsAddOrUpdateRepoPermissionsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsAddOrUpdateRepoPermissionsLegacyReqBody is a request body for teams/add-or-update-repo-permissions-legacy
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+*/
+type TeamsAddOrUpdateRepoPermissionsLegacyReqBody struct {
+
+	/*
+	   The permission to grant the team on this repository. Can be one of:
+	   \* `pull` - team members can pull, but not push to or administer this
+	   repository.
+	   \* `push` - team members can pull and push, but not administer this repository.
+	   \* `admin` - team members can pull, push and administer this repository.
+
+	   If no permission is specified, the team's `permission` attribute will be used to
+	   determine what permission to grant the team on this repository.
+	*/
+	Permission *string `json:"permission,omitempty"`
+}
+
+/*
+TeamsAddOrUpdateRepoPermissionsLegacyResponse is a response for TeamsAddOrUpdateRepoPermissionsLegacy
+
+https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+*/
+type TeamsAddOrUpdateRepoPermissionsLegacyResponse struct {
+	response
+	request *TeamsAddOrUpdateRepoPermissionsLegacyReq
 }
 
 /*
@@ -612,6 +1176,151 @@ type TeamsCheckPermissionsForProjectInOrgResponse struct {
 }
 
 /*
+TeamsCheckPermissionsForProjectLegacy performs requests for "teams/check-permissions-for-project-legacy"
+
+Check team permissions for a project (Legacy).
+
+  GET /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+*/
+func TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckPermissionsForProjectLegacyReq, opt ...RequestOption) (*TeamsCheckPermissionsForProjectLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsCheckPermissionsForProjectLegacyReq)
+	}
+	resp := &TeamsCheckPermissionsForProjectLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsCheckPermissionsForProjectLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCheckPermissionsForProjectLegacy performs requests for "teams/check-permissions-for-project-legacy"
+
+Check team permissions for a project (Legacy).
+
+  GET /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+*/
+func (c Client) TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckPermissionsForProjectLegacyReq, opt ...RequestOption) (*TeamsCheckPermissionsForProjectLegacyResponse, error) {
+	return TeamsCheckPermissionsForProjectLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsCheckPermissionsForProjectLegacyReq is request data for Client.TeamsCheckPermissionsForProjectLegacy
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+*/
+type TeamsCheckPermissionsForProjectLegacyReq struct {
+	_url      string
+	TeamId    int64
+	ProjectId int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsCheckPermissionsForProjectLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsCheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCheckPermissionsForProjectLegacyReq) Rel(link RelName, resp *TeamsCheckPermissionsForProjectLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsCheckPermissionsForProjectLegacyResponseBody is a response body for TeamsCheckPermissionsForProjectLegacy
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+*/
+type TeamsCheckPermissionsForProjectLegacyResponseBody struct {
+	components.TeamProject
+}
+
+/*
+TeamsCheckPermissionsForProjectLegacyResponse is a response for TeamsCheckPermissionsForProjectLegacy
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+*/
+type TeamsCheckPermissionsForProjectLegacyResponse struct {
+	response
+	request *TeamsCheckPermissionsForProjectLegacyReq
+	Data    *TeamsCheckPermissionsForProjectLegacyResponseBody
+}
+
+/*
 TeamsCheckPermissionsForRepoInOrg performs requests for "teams/check-permissions-for-repo-in-org"
 
 Check team permissions for a repository.
@@ -730,6 +1439,126 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 type TeamsCheckPermissionsForRepoInOrgResponse struct {
 	response
 	request *TeamsCheckPermissionsForRepoInOrgReq
+}
+
+/*
+TeamsCheckPermissionsForRepoLegacy performs requests for "teams/check-permissions-for-repo-legacy"
+
+Check team permissions for a repository (Legacy).
+
+  GET /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+*/
+func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPermissionsForRepoLegacyReq, opt ...RequestOption) (*TeamsCheckPermissionsForRepoLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsCheckPermissionsForRepoLegacyReq)
+	}
+	resp := &TeamsCheckPermissionsForRepoLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCheckPermissionsForRepoLegacy performs requests for "teams/check-permissions-for-repo-legacy"
+
+Check team permissions for a repository (Legacy).
+
+  GET /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+*/
+func (c Client) TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPermissionsForRepoLegacyReq, opt ...RequestOption) (*TeamsCheckPermissionsForRepoLegacyResponse, error) {
+	return TeamsCheckPermissionsForRepoLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsCheckPermissionsForRepoLegacyReq is request data for Client.TeamsCheckPermissionsForRepoLegacy
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+*/
+type TeamsCheckPermissionsForRepoLegacyReq struct {
+	_url   string
+	TeamId int64
+	Owner  string
+	Repo   string
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) validStatuses() []int {
+	return []int{200, 204}
+}
+
+func (r *TeamsCheckPermissionsForRepoLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsCheckPermissionsForRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCheckPermissionsForRepoLegacyReq) Rel(link RelName, resp *TeamsCheckPermissionsForRepoLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsCheckPermissionsForRepoLegacyResponse is a response for TeamsCheckPermissionsForRepoLegacy
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+*/
+type TeamsCheckPermissionsForRepoLegacyResponse struct {
+	response
+	request *TeamsCheckPermissionsForRepoLegacyReq
 }
 
 /*
@@ -1072,6 +1901,164 @@ type TeamsCreateDiscussionCommentInOrgResponse struct {
 }
 
 /*
+TeamsCreateDiscussionCommentLegacy performs requests for "teams/create-discussion-comment-legacy"
+
+Create a discussion comment (Legacy).
+
+  POST /teams/{team_id}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+*/
+func TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsCreateDiscussionCommentLegacyReq)
+	}
+	resp := &TeamsCreateDiscussionCommentLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsCreateDiscussionCommentLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateDiscussionCommentLegacy performs requests for "teams/create-discussion-comment-legacy"
+
+Create a discussion comment (Legacy).
+
+  POST /teams/{team_id}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+*/
+func (c Client) TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsCreateDiscussionCommentLegacyResponse, error) {
+	return TeamsCreateDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsCreateDiscussionCommentLegacyReq is request data for Client.TeamsCreateDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+*/
+type TeamsCreateDiscussionCommentLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	RequestBody      TeamsCreateDiscussionCommentLegacyReqBody
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) method() string {
+	return "POST"
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateDiscussionCommentLegacyReq) Rel(link RelName, resp *TeamsCreateDiscussionCommentLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsCreateDiscussionCommentLegacyReqBody is a request body for teams/create-discussion-comment-legacy
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+*/
+type TeamsCreateDiscussionCommentLegacyReqBody struct {
+
+	// The discussion comment's body text.
+	Body *string `json:"body"`
+}
+
+/*
+TeamsCreateDiscussionCommentLegacyResponseBody is a response body for TeamsCreateDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+*/
+type TeamsCreateDiscussionCommentLegacyResponseBody struct {
+	components.TeamDiscussionComment
+}
+
+/*
+TeamsCreateDiscussionCommentLegacyResponse is a response for TeamsCreateDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+*/
+type TeamsCreateDiscussionCommentLegacyResponse struct {
+	response
+	request *TeamsCreateDiscussionCommentLegacyReq
+	Data    *TeamsCreateDiscussionCommentLegacyResponseBody
+}
+
+/*
 TeamsCreateDiscussionInOrg performs requests for "teams/create-discussion-in-org"
 
 Create a discussion.
@@ -1240,6 +2227,173 @@ type TeamsCreateDiscussionInOrgResponse struct {
 }
 
 /*
+TeamsCreateDiscussionLegacy performs requests for "teams/create-discussion-legacy"
+
+Create a discussion (Legacy).
+
+  POST /teams/{team_id}/discussions
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+*/
+func TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussionLegacyReq, opt ...RequestOption) (*TeamsCreateDiscussionLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsCreateDiscussionLegacyReq)
+	}
+	resp := &TeamsCreateDiscussionLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsCreateDiscussionLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateDiscussionLegacy performs requests for "teams/create-discussion-legacy"
+
+Create a discussion (Legacy).
+
+  POST /teams/{team_id}/discussions
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+*/
+func (c Client) TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussionLegacyReq, opt ...RequestOption) (*TeamsCreateDiscussionLegacyResponse, error) {
+	return TeamsCreateDiscussionLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsCreateDiscussionLegacyReq is request data for Client.TeamsCreateDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+*/
+type TeamsCreateDiscussionLegacyReq struct {
+	_url        string
+	TeamId      int64
+	RequestBody TeamsCreateDiscussionLegacyReqBody
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions", r.TeamId)
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) method() string {
+	return "POST"
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsCreateDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateDiscussionLegacyReq) Rel(link RelName, resp *TeamsCreateDiscussionLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsCreateDiscussionLegacyReqBody is a request body for teams/create-discussion-legacy
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+*/
+type TeamsCreateDiscussionLegacyReqBody struct {
+
+	// The discussion post's body text.
+	Body *string `json:"body"`
+
+	/*
+	   Private posts are only visible to team members, organization owners, and team
+	   maintainers. Public posts are visible to all members of the organization. Set to
+	   `true` to create a private post.
+	*/
+	Private *bool `json:"private,omitempty"`
+
+	// The discussion post's title.
+	Title *string `json:"title"`
+}
+
+/*
+TeamsCreateDiscussionLegacyResponseBody is a response body for TeamsCreateDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+*/
+type TeamsCreateDiscussionLegacyResponseBody struct {
+	components.TeamDiscussion
+}
+
+/*
+TeamsCreateDiscussionLegacyResponse is a response for TeamsCreateDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+*/
+type TeamsCreateDiscussionLegacyResponse struct {
+	response
+	request *TeamsCreateDiscussionLegacyReq
+	Data    *TeamsCreateDiscussionLegacyResponseBody
+}
+
+/*
 TeamsCreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
 
 Create or update IdP group connections.
@@ -1399,6 +2553,164 @@ type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse struct {
 }
 
 /*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacy performs requests for "teams/create-or-update-id-p-group-connections-legacy"
+
+Create or update IdP group connections (Legacy).
+
+  PATCH /teams/{team_id}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+func TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq)
+	}
+	resp := &TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacy performs requests for "teams/create-or-update-id-p-group-connections-legacy"
+
+Create or update IdP group connections (Legacy).
+
+  PATCH /teams/{team_id}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+func (c Client) TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse, error) {
+	return TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq is request data for Client.TeamsCreateOrUpdateIdPGroupConnectionsLegacy
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq struct {
+	_url        string
+	TeamId      int64
+	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) Rel(link RelName, resp *TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+// TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody's Groups field
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups struct {
+
+	// Description of the IdP group.
+	GroupDescription *string `json:"group_description"`
+
+	// ID of the IdP group.
+	GroupId *string `json:"group_id"`
+
+	// Name of the IdP group.
+	GroupName *string `json:"group_name"`
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-id-p-group-connections-legacy
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody struct {
+
+	/*
+	   The IdP groups you want to connect to a GitHub team. When updating, the new
+	   `groups` object will replace the original one. You must include any existing
+	   groups that you don't want to remove.
+	*/
+	Groups []TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups `json:"groups"`
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody is a response body for TeamsCreateOrUpdateIdPGroupConnectionsLegacy
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody struct {
+	components.GroupMapping2
+}
+
+/*
+TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse is a response for TeamsCreateOrUpdateIdPGroupConnectionsLegacy
+
+https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+*/
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse struct {
+	response
+	request *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq
+	Data    *TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody
+}
+
+/*
 TeamsDeleteDiscussionCommentInOrg performs requests for "teams/delete-discussion-comment-in-org"
 
 Delete a discussion comment.
@@ -1517,6 +2829,126 @@ https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-c
 type TeamsDeleteDiscussionCommentInOrgResponse struct {
 	response
 	request *TeamsDeleteDiscussionCommentInOrgReq
+}
+
+/*
+TeamsDeleteDiscussionCommentLegacy performs requests for "teams/delete-discussion-comment-legacy"
+
+Delete a discussion comment (Legacy).
+
+  DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
+*/
+func TeamsDeleteDiscussionCommentLegacy(ctx context.Context, req *TeamsDeleteDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsDeleteDiscussionCommentLegacyReq)
+	}
+	resp := &TeamsDeleteDiscussionCommentLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsDeleteDiscussionCommentLegacy performs requests for "teams/delete-discussion-comment-legacy"
+
+Delete a discussion comment (Legacy).
+
+  DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
+*/
+func (c Client) TeamsDeleteDiscussionCommentLegacy(ctx context.Context, req *TeamsDeleteDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsDeleteDiscussionCommentLegacyResponse, error) {
+	return TeamsDeleteDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsDeleteDiscussionCommentLegacyReq is request data for Client.TeamsDeleteDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
+*/
+type TeamsDeleteDiscussionCommentLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsDeleteDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsDeleteDiscussionCommentLegacyReq) Rel(link RelName, resp *TeamsDeleteDiscussionCommentLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsDeleteDiscussionCommentLegacyResponse is a response for TeamsDeleteDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
+*/
+type TeamsDeleteDiscussionCommentLegacyResponse struct {
+	response
+	request *TeamsDeleteDiscussionCommentLegacyReq
 }
 
 /*
@@ -1640,6 +3072,125 @@ type TeamsDeleteDiscussionInOrgResponse struct {
 }
 
 /*
+TeamsDeleteDiscussionLegacy performs requests for "teams/delete-discussion-legacy"
+
+Delete a discussion (Legacy).
+
+  DELETE /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+*/
+func TeamsDeleteDiscussionLegacy(ctx context.Context, req *TeamsDeleteDiscussionLegacyReq, opt ...RequestOption) (*TeamsDeleteDiscussionLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsDeleteDiscussionLegacyReq)
+	}
+	resp := &TeamsDeleteDiscussionLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsDeleteDiscussionLegacy performs requests for "teams/delete-discussion-legacy"
+
+Delete a discussion (Legacy).
+
+  DELETE /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+*/
+func (c Client) TeamsDeleteDiscussionLegacy(ctx context.Context, req *TeamsDeleteDiscussionLegacyReq, opt ...RequestOption) (*TeamsDeleteDiscussionLegacyResponse, error) {
+	return TeamsDeleteDiscussionLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsDeleteDiscussionLegacyReq is request data for Client.TeamsDeleteDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+*/
+type TeamsDeleteDiscussionLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsDeleteDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsDeleteDiscussionLegacyReq) Rel(link RelName, resp *TeamsDeleteDiscussionLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsDeleteDiscussionLegacyResponse is a response for TeamsDeleteDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+*/
+type TeamsDeleteDiscussionLegacyResponse struct {
+	response
+	request *TeamsDeleteDiscussionLegacyReq
+}
+
+/*
 TeamsDeleteInOrg performs requests for "teams/delete-in-org"
 
 Delete a team.
@@ -1756,6 +3307,124 @@ https://developer.github.com/v3/teams/#delete-a-team
 type TeamsDeleteInOrgResponse struct {
 	response
 	request *TeamsDeleteInOrgReq
+}
+
+/*
+TeamsDeleteLegacy performs requests for "teams/delete-legacy"
+
+Delete a team (Legacy).
+
+  DELETE /teams/{team_id}
+
+https://developer.github.com/v3/teams/#delete-a-team-legacy
+*/
+func TeamsDeleteLegacy(ctx context.Context, req *TeamsDeleteLegacyReq, opt ...RequestOption) (*TeamsDeleteLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsDeleteLegacyReq)
+	}
+	resp := &TeamsDeleteLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsDeleteLegacy performs requests for "teams/delete-legacy"
+
+Delete a team (Legacy).
+
+  DELETE /teams/{team_id}
+
+https://developer.github.com/v3/teams/#delete-a-team-legacy
+*/
+func (c Client) TeamsDeleteLegacy(ctx context.Context, req *TeamsDeleteLegacyReq, opt ...RequestOption) (*TeamsDeleteLegacyResponse, error) {
+	return TeamsDeleteLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsDeleteLegacyReq is request data for Client.TeamsDeleteLegacy
+
+https://developer.github.com/v3/teams/#delete-a-team-legacy
+*/
+type TeamsDeleteLegacyReq struct {
+	_url   string
+	TeamId int64
+}
+
+func (r *TeamsDeleteLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsDeleteLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v", r.TeamId)
+}
+
+func (r *TeamsDeleteLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsDeleteLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsDeleteLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsDeleteLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsDeleteLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsDeleteLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsDeleteLegacyReq) Rel(link RelName, resp *TeamsDeleteLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsDeleteLegacyResponse is a response for TeamsDeleteLegacy
+
+https://developer.github.com/v3/teams/#delete-a-team-legacy
+*/
+type TeamsDeleteLegacyResponse struct {
+	response
+	request *TeamsDeleteLegacyReq
 }
 
 /*
@@ -2037,6 +3706,153 @@ type TeamsGetDiscussionCommentInOrgResponse struct {
 }
 
 /*
+TeamsGetDiscussionCommentLegacy performs requests for "teams/get-discussion-comment-legacy"
+
+Get a discussion comment (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+*/
+func TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsGetDiscussionCommentLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsGetDiscussionCommentLegacyReq)
+	}
+	resp := &TeamsGetDiscussionCommentLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsGetDiscussionCommentLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetDiscussionCommentLegacy performs requests for "teams/get-discussion-comment-legacy"
+
+Get a discussion comment (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+*/
+func (c Client) TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsGetDiscussionCommentLegacyResponse, error) {
+	return TeamsGetDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsGetDiscussionCommentLegacyReq is request data for Client.TeamsGetDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+*/
+type TeamsGetDiscussionCommentLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsGetDiscussionCommentLegacyReq) Rel(link RelName, resp *TeamsGetDiscussionCommentLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsGetDiscussionCommentLegacyResponseBody is a response body for TeamsGetDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+*/
+type TeamsGetDiscussionCommentLegacyResponseBody struct {
+	components.TeamDiscussionComment
+}
+
+/*
+TeamsGetDiscussionCommentLegacyResponse is a response for TeamsGetDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+*/
+type TeamsGetDiscussionCommentLegacyResponse struct {
+	response
+	request *TeamsGetDiscussionCommentLegacyReq
+	Data    *TeamsGetDiscussionCommentLegacyResponseBody
+}
+
+/*
 TeamsGetDiscussionInOrg performs requests for "teams/get-discussion-in-org"
 
 Get a discussion.
@@ -2184,6 +4000,405 @@ type TeamsGetDiscussionInOrgResponse struct {
 }
 
 /*
+TeamsGetDiscussionLegacy performs requests for "teams/get-discussion-legacy"
+
+Get a discussion (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+*/
+func TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacyReq, opt ...RequestOption) (*TeamsGetDiscussionLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsGetDiscussionLegacyReq)
+	}
+	resp := &TeamsGetDiscussionLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsGetDiscussionLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetDiscussionLegacy performs requests for "teams/get-discussion-legacy"
+
+Get a discussion (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+*/
+func (c Client) TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacyReq, opt ...RequestOption) (*TeamsGetDiscussionLegacyResponse, error) {
+	return TeamsGetDiscussionLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsGetDiscussionLegacyReq is request data for Client.TeamsGetDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+*/
+type TeamsGetDiscussionLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsGetDiscussionLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsGetDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *TeamsGetDiscussionLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsGetDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsGetDiscussionLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsGetDiscussionLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsGetDiscussionLegacyReq) Rel(link RelName, resp *TeamsGetDiscussionLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsGetDiscussionLegacyResponseBody is a response body for TeamsGetDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+*/
+type TeamsGetDiscussionLegacyResponseBody struct {
+	components.TeamDiscussion
+}
+
+/*
+TeamsGetDiscussionLegacyResponse is a response for TeamsGetDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+*/
+type TeamsGetDiscussionLegacyResponse struct {
+	response
+	request *TeamsGetDiscussionLegacyReq
+	Data    *TeamsGetDiscussionLegacyResponseBody
+}
+
+/*
+TeamsGetLegacy performs requests for "teams/get-legacy"
+
+Get a team (Legacy).
+
+  GET /teams/{team_id}
+
+https://developer.github.com/v3/teams/#get-a-team-legacy
+*/
+func TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...RequestOption) (*TeamsGetLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsGetLegacyReq)
+	}
+	resp := &TeamsGetLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsGetLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetLegacy performs requests for "teams/get-legacy"
+
+Get a team (Legacy).
+
+  GET /teams/{team_id}
+
+https://developer.github.com/v3/teams/#get-a-team-legacy
+*/
+func (c Client) TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...RequestOption) (*TeamsGetLegacyResponse, error) {
+	return TeamsGetLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsGetLegacyReq is request data for Client.TeamsGetLegacy
+
+https://developer.github.com/v3/teams/#get-a-team-legacy
+*/
+type TeamsGetLegacyReq struct {
+	_url   string
+	TeamId int64
+}
+
+func (r *TeamsGetLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsGetLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v", r.TeamId)
+}
+
+func (r *TeamsGetLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsGetLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsGetLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsGetLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsGetLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsGetLegacyReq) Rel(link RelName, resp *TeamsGetLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsGetLegacyResponseBody is a response body for TeamsGetLegacy
+
+https://developer.github.com/v3/teams/#get-a-team-legacy
+*/
+type TeamsGetLegacyResponseBody struct {
+	components.TeamFull
+}
+
+/*
+TeamsGetLegacyResponse is a response for TeamsGetLegacy
+
+https://developer.github.com/v3/teams/#get-a-team-legacy
+*/
+type TeamsGetLegacyResponse struct {
+	response
+	request *TeamsGetLegacyReq
+	Data    *TeamsGetLegacyResponseBody
+}
+
+/*
+TeamsGetMemberLegacy performs requests for "teams/get-member-legacy"
+
+Get team member (Legacy).
+
+  GET /teams/{team_id}/members/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-member-legacy
+*/
+func TeamsGetMemberLegacy(ctx context.Context, req *TeamsGetMemberLegacyReq, opt ...RequestOption) (*TeamsGetMemberLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsGetMemberLegacyReq)
+	}
+	resp := &TeamsGetMemberLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetMemberLegacy performs requests for "teams/get-member-legacy"
+
+Get team member (Legacy).
+
+  GET /teams/{team_id}/members/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-member-legacy
+*/
+func (c Client) TeamsGetMemberLegacy(ctx context.Context, req *TeamsGetMemberLegacyReq, opt ...RequestOption) (*TeamsGetMemberLegacyResponse, error) {
+	return TeamsGetMemberLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsGetMemberLegacyReq is request data for Client.TeamsGetMemberLegacy
+
+https://developer.github.com/v3/teams/members/#get-team-member-legacy
+*/
+type TeamsGetMemberLegacyReq struct {
+	_url     string
+	TeamId   int64
+	Username string
+}
+
+func (r *TeamsGetMemberLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsGetMemberLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
+}
+
+func (r *TeamsGetMemberLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsGetMemberLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsGetMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsGetMemberLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsGetMemberLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsGetMemberLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsGetMemberLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsGetMemberLegacyReq) Rel(link RelName, resp *TeamsGetMemberLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsGetMemberLegacyResponse is a response for TeamsGetMemberLegacy
+
+https://developer.github.com/v3/teams/members/#get-team-member-legacy
+*/
+type TeamsGetMemberLegacyResponse struct {
+	response
+	request *TeamsGetMemberLegacyReq
+	Data    bool
+}
+
+/*
 TeamsGetMembershipForUserInOrg performs requests for "teams/get-membership-for-user-in-org"
 
 Get team membership for a user.
@@ -2312,6 +4527,136 @@ type TeamsGetMembershipForUserInOrgResponse struct {
 	response
 	request *TeamsGetMembershipForUserInOrgReq
 	Data    *TeamsGetMembershipForUserInOrgResponseBody
+}
+
+/*
+TeamsGetMembershipForUserLegacy performs requests for "teams/get-membership-for-user-legacy"
+
+Get team membership for a user (Legacy).
+
+  GET /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+*/
+func TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershipForUserLegacyReq, opt ...RequestOption) (*TeamsGetMembershipForUserLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsGetMembershipForUserLegacyReq)
+	}
+	resp := &TeamsGetMembershipForUserLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsGetMembershipForUserLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsGetMembershipForUserLegacy performs requests for "teams/get-membership-for-user-legacy"
+
+Get team membership for a user (Legacy).
+
+  GET /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+*/
+func (c Client) TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershipForUserLegacyReq, opt ...RequestOption) (*TeamsGetMembershipForUserLegacyResponse, error) {
+	return TeamsGetMembershipForUserLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsGetMembershipForUserLegacyReq is request data for Client.TeamsGetMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+*/
+type TeamsGetMembershipForUserLegacyReq struct {
+	_url     string
+	TeamId   int64
+	Username string
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsGetMembershipForUserLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsGetMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsGetMembershipForUserLegacyReq) Rel(link RelName, resp *TeamsGetMembershipForUserLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsGetMembershipForUserLegacyResponseBody is a response body for TeamsGetMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+*/
+type TeamsGetMembershipForUserLegacyResponseBody struct {
+	components.TeamMembership
+}
+
+/*
+TeamsGetMembershipForUserLegacyResponse is a response for TeamsGetMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+*/
+type TeamsGetMembershipForUserLegacyResponse struct {
+	response
+	request *TeamsGetMembershipForUserLegacyReq
+	Data    *TeamsGetMembershipForUserLegacyResponseBody
 }
 
 /*
@@ -2598,6 +4943,147 @@ type TeamsListChildInOrgResponse struct {
 }
 
 /*
+TeamsListChildLegacy performs requests for "teams/list-child-legacy"
+
+List child teams (Legacy).
+
+  GET /teams/{team_id}/teams
+
+https://developer.github.com/v3/teams/#list-child-teams-legacy
+*/
+func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt ...RequestOption) (*TeamsListChildLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListChildLegacyReq)
+	}
+	resp := &TeamsListChildLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListChildLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListChildLegacy performs requests for "teams/list-child-legacy"
+
+List child teams (Legacy).
+
+  GET /teams/{team_id}/teams
+
+https://developer.github.com/v3/teams/#list-child-teams-legacy
+*/
+func (c Client) TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt ...RequestOption) (*TeamsListChildLegacyResponse, error) {
+	return TeamsListChildLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListChildLegacyReq is request data for Client.TeamsListChildLegacy
+
+https://developer.github.com/v3/teams/#list-child-teams-legacy
+*/
+type TeamsListChildLegacyReq struct {
+	_url   string
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *TeamsListChildLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListChildLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/teams", r.TeamId)
+}
+
+func (r *TeamsListChildLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListChildLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListChildLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListChildLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListChildLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListChildLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListChildLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListChildLegacyReq) Rel(link RelName, resp *TeamsListChildLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListChildLegacyResponseBody is a response body for TeamsListChildLegacy
+
+https://developer.github.com/v3/teams/#list-child-teams-legacy
+*/
+type TeamsListChildLegacyResponseBody []struct {
+	components.Team2
+}
+
+/*
+TeamsListChildLegacyResponse is a response for TeamsListChildLegacy
+
+https://developer.github.com/v3/teams/#list-child-teams-legacy
+*/
+type TeamsListChildLegacyResponse struct {
+	response
+	request *TeamsListChildLegacyReq
+	Data    *TeamsListChildLegacyResponseBody
+}
+
+/*
 TeamsListDiscussionCommentsInOrg performs requests for "teams/list-discussion-comments-in-org"
 
 List discussion comments.
@@ -2763,6 +5249,173 @@ type TeamsListDiscussionCommentsInOrgResponse struct {
 	response
 	request *TeamsListDiscussionCommentsInOrgReq
 	Data    *TeamsListDiscussionCommentsInOrgResponseBody
+}
+
+/*
+TeamsListDiscussionCommentsLegacy performs requests for "teams/list-discussion-comments-legacy"
+
+List discussion comments (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+*/
+func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscussionCommentsLegacyReq, opt ...RequestOption) (*TeamsListDiscussionCommentsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListDiscussionCommentsLegacyReq)
+	}
+	resp := &TeamsListDiscussionCommentsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListDiscussionCommentsLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListDiscussionCommentsLegacy performs requests for "teams/list-discussion-comments-legacy"
+
+List discussion comments (Legacy).
+
+  GET /teams/{team_id}/discussions/{discussion_number}/comments
+
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+*/
+func (c Client) TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscussionCommentsLegacyReq, opt ...RequestOption) (*TeamsListDiscussionCommentsLegacyResponse, error) {
+	return TeamsListDiscussionCommentsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListDiscussionCommentsLegacyReq is request data for Client.TeamsListDiscussionCommentsLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+*/
+type TeamsListDiscussionCommentsLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
+	Direction *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionCommentsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListDiscussionCommentsLegacyReq) Rel(link RelName, resp *TeamsListDiscussionCommentsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListDiscussionCommentsLegacyResponseBody is a response body for TeamsListDiscussionCommentsLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+*/
+type TeamsListDiscussionCommentsLegacyResponseBody []struct {
+	components.TeamDiscussionComment
+}
+
+/*
+TeamsListDiscussionCommentsLegacyResponse is a response for TeamsListDiscussionCommentsLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+*/
+type TeamsListDiscussionCommentsLegacyResponse struct {
+	response
+	request *TeamsListDiscussionCommentsLegacyReq
+	Data    *TeamsListDiscussionCommentsLegacyResponseBody
 }
 
 /*
@@ -2933,6 +5586,172 @@ type TeamsListDiscussionsInOrgResponse struct {
 }
 
 /*
+TeamsListDiscussionsLegacy performs requests for "teams/list-discussions-legacy"
+
+List discussions (Legacy).
+
+  GET /teams/{team_id}/discussions
+
+https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+*/
+func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLegacyReq, opt ...RequestOption) (*TeamsListDiscussionsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListDiscussionsLegacyReq)
+	}
+	resp := &TeamsListDiscussionsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListDiscussionsLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListDiscussionsLegacy performs requests for "teams/list-discussions-legacy"
+
+List discussions (Legacy).
+
+  GET /teams/{team_id}/discussions
+
+https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+*/
+func (c Client) TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLegacyReq, opt ...RequestOption) (*TeamsListDiscussionsLegacyResponse, error) {
+	return TeamsListDiscussionsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListDiscussionsLegacyReq is request data for Client.TeamsListDiscussionsLegacy
+
+https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+*/
+type TeamsListDiscussionsLegacyReq struct {
+	_url   string
+	TeamId int64
+
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
+	Direction *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsListDiscussionsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListDiscussionsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions", r.TeamId)
+}
+
+func (r *TeamsListDiscussionsLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListDiscussionsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Direction != nil {
+		query.Set("direction", *r.Direction)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListDiscussionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListDiscussionsLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListDiscussionsLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionsLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListDiscussionsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListDiscussionsLegacyReq) Rel(link RelName, resp *TeamsListDiscussionsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListDiscussionsLegacyResponseBody is a response body for TeamsListDiscussionsLegacy
+
+https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+*/
+type TeamsListDiscussionsLegacyResponseBody []struct {
+	components.TeamDiscussion
+}
+
+/*
+TeamsListDiscussionsLegacyResponse is a response for TeamsListDiscussionsLegacy
+
+https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+*/
+type TeamsListDiscussionsLegacyResponse struct {
+	response
+	request *TeamsListDiscussionsLegacyReq
+	Data    *TeamsListDiscussionsLegacyResponseBody
+}
+
+/*
 TeamsListForAuthenticatedUser performs requests for "teams/list-for-authenticated-user"
 
 List teams for the authenticated user.
@@ -3070,6 +5889,135 @@ type TeamsListForAuthenticatedUserResponse struct {
 	response
 	request *TeamsListForAuthenticatedUserReq
 	Data    *TeamsListForAuthenticatedUserResponseBody
+}
+
+/*
+TeamsListIdPGroupsForLegacy performs requests for "teams/list-id-p-groups-for-legacy"
+
+List IdP groups for a team (Legacy).
+
+  GET /teams/{team_id}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+func TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsForLegacyReq, opt ...RequestOption) (*TeamsListIdPGroupsForLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListIdPGroupsForLegacyReq)
+	}
+	resp := &TeamsListIdPGroupsForLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListIdPGroupsForLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListIdPGroupsForLegacy performs requests for "teams/list-id-p-groups-for-legacy"
+
+List IdP groups for a team (Legacy).
+
+  GET /teams/{team_id}/team-sync/group-mappings
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+func (c Client) TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsForLegacyReq, opt ...RequestOption) (*TeamsListIdPGroupsForLegacyResponse, error) {
+	return TeamsListIdPGroupsForLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListIdPGroupsForLegacyReq is request data for Client.TeamsListIdPGroupsForLegacy
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+type TeamsListIdPGroupsForLegacyReq struct {
+	_url   string
+	TeamId int64
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListIdPGroupsForLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListIdPGroupsForLegacyReq) Rel(link RelName, resp *TeamsListIdPGroupsForLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListIdPGroupsForLegacyResponseBody is a response body for TeamsListIdPGroupsForLegacy
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+type TeamsListIdPGroupsForLegacyResponseBody struct {
+	components.GroupMapping3
+}
+
+/*
+TeamsListIdPGroupsForLegacyResponse is a response for TeamsListIdPGroupsForLegacy
+
+https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+*/
+type TeamsListIdPGroupsForLegacyResponse struct {
+	response
+	request *TeamsListIdPGroupsForLegacyReq
+	Data    *TeamsListIdPGroupsForLegacyResponseBody
 }
 
 /*
@@ -3497,6 +6445,158 @@ type TeamsListMembersInOrgResponse struct {
 }
 
 /*
+TeamsListMembersLegacy performs requests for "teams/list-members-legacy"
+
+List team members (Legacy).
+
+  GET /teams/{team_id}/members
+
+https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq, opt ...RequestOption) (*TeamsListMembersLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListMembersLegacyReq)
+	}
+	resp := &TeamsListMembersLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListMembersLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListMembersLegacy performs requests for "teams/list-members-legacy"
+
+List team members (Legacy).
+
+  GET /teams/{team_id}/members
+
+https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+func (c Client) TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq, opt ...RequestOption) (*TeamsListMembersLegacyResponse, error) {
+	return TeamsListMembersLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListMembersLegacyReq is request data for Client.TeamsListMembersLegacy
+
+https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+type TeamsListMembersLegacyReq struct {
+	_url   string
+	TeamId int64
+
+	/*
+	Filters members returned by their role in the team. Can be one of:
+	\* `member` - normal members of the team.
+	\* `maintainer` - team maintainers.
+	\* `all` - all members of the team.
+	*/
+	Role *string
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *TeamsListMembersLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListMembersLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/members", r.TeamId)
+}
+
+func (r *TeamsListMembersLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListMembersLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.Role != nil {
+		query.Set("role", *r.Role)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListMembersLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListMembersLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListMembersLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListMembersLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListMembersLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListMembersLegacyReq) Rel(link RelName, resp *TeamsListMembersLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListMembersLegacyResponseBody is a response body for TeamsListMembersLegacy
+
+https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+type TeamsListMembersLegacyResponseBody []struct {
+	components.SimpleUser
+}
+
+/*
+TeamsListMembersLegacyResponse is a response for TeamsListMembersLegacy
+
+https://developer.github.com/v3/teams/members/#list-team-members-legacy
+*/
+type TeamsListMembersLegacyResponse struct {
+	response
+	request *TeamsListMembersLegacyReq
+	Data    *TeamsListMembersLegacyResponseBody
+}
+
+/*
 TeamsListPendingInvitationsInOrg performs requests for "teams/list-pending-invitations-in-org"
 
 List pending team invitations.
@@ -3636,6 +6736,147 @@ type TeamsListPendingInvitationsInOrgResponse struct {
 	response
 	request *TeamsListPendingInvitationsInOrgReq
 	Data    *TeamsListPendingInvitationsInOrgResponseBody
+}
+
+/*
+TeamsListPendingInvitationsLegacy performs requests for "teams/list-pending-invitations-legacy"
+
+List pending team invitations (Legacy).
+
+  GET /teams/{team_id}/invitations
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendingInvitationsLegacyReq, opt ...RequestOption) (*TeamsListPendingInvitationsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListPendingInvitationsLegacyReq)
+	}
+	resp := &TeamsListPendingInvitationsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListPendingInvitationsLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListPendingInvitationsLegacy performs requests for "teams/list-pending-invitations-legacy"
+
+List pending team invitations (Legacy).
+
+  GET /teams/{team_id}/invitations
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+func (c Client) TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendingInvitationsLegacyReq, opt ...RequestOption) (*TeamsListPendingInvitationsLegacyResponse, error) {
+	return TeamsListPendingInvitationsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListPendingInvitationsLegacyReq is request data for Client.TeamsListPendingInvitationsLegacy
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+type TeamsListPendingInvitationsLegacyReq struct {
+	_url   string
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/invitations", r.TeamId)
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListPendingInvitationsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListPendingInvitationsLegacyReq) Rel(link RelName, resp *TeamsListPendingInvitationsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListPendingInvitationsLegacyResponseBody is a response body for TeamsListPendingInvitationsLegacy
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+type TeamsListPendingInvitationsLegacyResponseBody []struct {
+	components.OrganizationInvitation
+}
+
+/*
+TeamsListPendingInvitationsLegacyResponse is a response for TeamsListPendingInvitationsLegacy
+
+https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+*/
+type TeamsListPendingInvitationsLegacyResponse struct {
+	response
+	request *TeamsListPendingInvitationsLegacyReq
+	Data    *TeamsListPendingInvitationsLegacyResponseBody
 }
 
 /*
@@ -3796,6 +7037,162 @@ type TeamsListProjectsInOrgResponse struct {
 }
 
 /*
+TeamsListProjectsLegacy performs requests for "teams/list-projects-legacy"
+
+List team projects (Legacy).
+
+  GET /teams/{team_id}/projects
+
+https://developer.github.com/v3/teams/#list-team-projects-legacy
+*/
+func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyReq, opt ...RequestOption) (*TeamsListProjectsLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListProjectsLegacyReq)
+	}
+	resp := &TeamsListProjectsLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListProjectsLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListProjectsLegacy performs requests for "teams/list-projects-legacy"
+
+List team projects (Legacy).
+
+  GET /teams/{team_id}/projects
+
+https://developer.github.com/v3/teams/#list-team-projects-legacy
+*/
+func (c Client) TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyReq, opt ...RequestOption) (*TeamsListProjectsLegacyResponse, error) {
+	return TeamsListProjectsLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListProjectsLegacyReq is request data for Client.TeamsListProjectsLegacy
+
+https://developer.github.com/v3/teams/#list-team-projects-legacy
+*/
+type TeamsListProjectsLegacyReq struct {
+	_url   string
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+
+	/*
+	The Projects API is currently available for developers to preview. During the
+	preview period, the API may change without advance notice. Please see the [blog
+	post](https://developer.github.com/changes/2016-10-27-changes-to-projects-api)
+	for full details. To access the API during the preview period, you must set this
+	to true.
+	*/
+	InertiaPreview bool
+}
+
+func (r *TeamsListProjectsLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListProjectsLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects", r.TeamId)
+}
+
+func (r *TeamsListProjectsLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListProjectsLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListProjectsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"inertia": r.InertiaPreview}
+	if requiredPreviews {
+		previewVals["inertia"] = true
+	}
+	if allPreviews {
+		previewVals["inertia"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListProjectsLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListProjectsLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListProjectsLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListProjectsLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListProjectsLegacyReq) Rel(link RelName, resp *TeamsListProjectsLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListProjectsLegacyResponseBody is a response body for TeamsListProjectsLegacy
+
+https://developer.github.com/v3/teams/#list-team-projects-legacy
+*/
+type TeamsListProjectsLegacyResponseBody []struct {
+	components.TeamProject
+}
+
+/*
+TeamsListProjectsLegacyResponse is a response for TeamsListProjectsLegacy
+
+https://developer.github.com/v3/teams/#list-team-projects-legacy
+*/
+type TeamsListProjectsLegacyResponse struct {
+	response
+	request *TeamsListProjectsLegacyReq
+	Data    *TeamsListProjectsLegacyResponseBody
+}
+
+/*
 TeamsListReposInOrg performs requests for "teams/list-repos-in-org"
 
 List team repositories.
@@ -3938,6 +7335,271 @@ type TeamsListReposInOrgResponse struct {
 }
 
 /*
+TeamsListReposLegacy performs requests for "teams/list-repos-legacy"
+
+List team repositories (Legacy).
+
+  GET /teams/{team_id}/repos
+
+https://developer.github.com/v3/teams/#list-team-repositories-legacy
+*/
+func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt ...RequestOption) (*TeamsListReposLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsListReposLegacyReq)
+	}
+	resp := &TeamsListReposLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsListReposLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsListReposLegacy performs requests for "teams/list-repos-legacy"
+
+List team repositories (Legacy).
+
+  GET /teams/{team_id}/repos
+
+https://developer.github.com/v3/teams/#list-team-repositories-legacy
+*/
+func (c Client) TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt ...RequestOption) (*TeamsListReposLegacyResponse, error) {
+	return TeamsListReposLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsListReposLegacyReq is request data for Client.TeamsListReposLegacy
+
+https://developer.github.com/v3/teams/#list-team-repositories-legacy
+*/
+type TeamsListReposLegacyReq struct {
+	_url   string
+	TeamId int64
+
+	// Results per page (max 100)
+	PerPage *int64
+
+	// Page number of the results to fetch.
+	Page *int64
+}
+
+func (r *TeamsListReposLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsListReposLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos", r.TeamId)
+}
+
+func (r *TeamsListReposLegacyReq) method() string {
+	return "GET"
+}
+
+func (r *TeamsListReposLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
+	if r.Page != nil {
+		query.Set("page", strconv.FormatInt(*r.Page, 10))
+	}
+	return query
+}
+
+func (r *TeamsListReposLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsListReposLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsListReposLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListReposLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsListReposLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsListReposLegacyReq) Rel(link RelName, resp *TeamsListReposLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsListReposLegacyResponseBody is a response body for TeamsListReposLegacy
+
+https://developer.github.com/v3/teams/#list-team-repositories-legacy
+*/
+type TeamsListReposLegacyResponseBody []struct {
+	components.MinimalRepository
+}
+
+/*
+TeamsListReposLegacyResponse is a response for TeamsListReposLegacy
+
+https://developer.github.com/v3/teams/#list-team-repositories-legacy
+*/
+type TeamsListReposLegacyResponse struct {
+	response
+	request *TeamsListReposLegacyReq
+	Data    *TeamsListReposLegacyResponseBody
+}
+
+/*
+TeamsRemoveMemberLegacy performs requests for "teams/remove-member-legacy"
+
+Remove team member (Legacy).
+
+  DELETE /teams/{team_id}/members/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-member-legacy
+*/
+func TeamsRemoveMemberLegacy(ctx context.Context, req *TeamsRemoveMemberLegacyReq, opt ...RequestOption) (*TeamsRemoveMemberLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsRemoveMemberLegacyReq)
+	}
+	resp := &TeamsRemoveMemberLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveMemberLegacy performs requests for "teams/remove-member-legacy"
+
+Remove team member (Legacy).
+
+  DELETE /teams/{team_id}/members/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-member-legacy
+*/
+func (c Client) TeamsRemoveMemberLegacy(ctx context.Context, req *TeamsRemoveMemberLegacyReq, opt ...RequestOption) (*TeamsRemoveMemberLegacyResponse, error) {
+	return TeamsRemoveMemberLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsRemoveMemberLegacyReq is request data for Client.TeamsRemoveMemberLegacy
+
+https://developer.github.com/v3/teams/members/#remove-team-member-legacy
+*/
+type TeamsRemoveMemberLegacyReq struct {
+	_url     string
+	TeamId   int64
+	Username string
+}
+
+func (r *TeamsRemoveMemberLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsRemoveMemberLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username)
+}
+
+func (r *TeamsRemoveMemberLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsRemoveMemberLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsRemoveMemberLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsRemoveMemberLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsRemoveMemberLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveMemberLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveMemberLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrBoolean}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsRemoveMemberLegacyReq) Rel(link RelName, resp *TeamsRemoveMemberLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsRemoveMemberLegacyResponse is a response for TeamsRemoveMemberLegacy
+
+https://developer.github.com/v3/teams/members/#remove-team-member-legacy
+*/
+type TeamsRemoveMemberLegacyResponse struct {
+	response
+	request *TeamsRemoveMemberLegacyReq
+	Data    bool
+}
+
+/*
 TeamsRemoveMembershipForUserInOrg performs requests for "teams/remove-membership-for-user-in-org"
 
 Remove team membership for a user.
@@ -4055,6 +7717,125 @@ https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 type TeamsRemoveMembershipForUserInOrgResponse struct {
 	response
 	request *TeamsRemoveMembershipForUserInOrgReq
+}
+
+/*
+TeamsRemoveMembershipForUserLegacy performs requests for "teams/remove-membership-for-user-legacy"
+
+Remove team membership for a user (Legacy).
+
+  DELETE /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
+*/
+func TeamsRemoveMembershipForUserLegacy(ctx context.Context, req *TeamsRemoveMembershipForUserLegacyReq, opt ...RequestOption) (*TeamsRemoveMembershipForUserLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsRemoveMembershipForUserLegacyReq)
+	}
+	resp := &TeamsRemoveMembershipForUserLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveMembershipForUserLegacy performs requests for "teams/remove-membership-for-user-legacy"
+
+Remove team membership for a user (Legacy).
+
+  DELETE /teams/{team_id}/memberships/{username}
+
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
+*/
+func (c Client) TeamsRemoveMembershipForUserLegacy(ctx context.Context, req *TeamsRemoveMembershipForUserLegacyReq, opt ...RequestOption) (*TeamsRemoveMembershipForUserLegacyResponse, error) {
+	return TeamsRemoveMembershipForUserLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsRemoveMembershipForUserLegacyReq is request data for Client.TeamsRemoveMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
+*/
+type TeamsRemoveMembershipForUserLegacyReq struct {
+	_url     string
+	TeamId   int64
+	Username string
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username)
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveMembershipForUserLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsRemoveMembershipForUserLegacyReq) Rel(link RelName, resp *TeamsRemoveMembershipForUserLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsRemoveMembershipForUserLegacyResponse is a response for TeamsRemoveMembershipForUserLegacy
+
+https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
+*/
+type TeamsRemoveMembershipForUserLegacyResponse struct {
+	response
+	request *TeamsRemoveMembershipForUserLegacyReq
 }
 
 /*
@@ -4178,6 +7959,125 @@ type TeamsRemoveProjectInOrgResponse struct {
 }
 
 /*
+TeamsRemoveProjectLegacy performs requests for "teams/remove-project-legacy"
+
+Remove a project from a team (Legacy).
+
+  DELETE /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
+*/
+func TeamsRemoveProjectLegacy(ctx context.Context, req *TeamsRemoveProjectLegacyReq, opt ...RequestOption) (*TeamsRemoveProjectLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsRemoveProjectLegacyReq)
+	}
+	resp := &TeamsRemoveProjectLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveProjectLegacy performs requests for "teams/remove-project-legacy"
+
+Remove a project from a team (Legacy).
+
+  DELETE /teams/{team_id}/projects/{project_id}
+
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
+*/
+func (c Client) TeamsRemoveProjectLegacy(ctx context.Context, req *TeamsRemoveProjectLegacyReq, opt ...RequestOption) (*TeamsRemoveProjectLegacyResponse, error) {
+	return TeamsRemoveProjectLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsRemoveProjectLegacyReq is request data for Client.TeamsRemoveProjectLegacy
+
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
+*/
+type TeamsRemoveProjectLegacyReq struct {
+	_url      string
+	TeamId    int64
+	ProjectId int64
+}
+
+func (r *TeamsRemoveProjectLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsRemoveProjectLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId)
+}
+
+func (r *TeamsRemoveProjectLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsRemoveProjectLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsRemoveProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsRemoveProjectLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsRemoveProjectLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveProjectLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveProjectLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsRemoveProjectLegacyReq) Rel(link RelName, resp *TeamsRemoveProjectLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsRemoveProjectLegacyResponse is a response for TeamsRemoveProjectLegacy
+
+https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
+*/
+type TeamsRemoveProjectLegacyResponse struct {
+	response
+	request *TeamsRemoveProjectLegacyReq
+}
+
+/*
 TeamsRemoveRepoInOrg performs requests for "teams/remove-repo-in-org"
 
 Remove a repository from a team.
@@ -4296,6 +8196,126 @@ https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 type TeamsRemoveRepoInOrgResponse struct {
 	response
 	request *TeamsRemoveRepoInOrgReq
+}
+
+/*
+TeamsRemoveRepoLegacy performs requests for "teams/remove-repo-legacy"
+
+Remove a repository from a team (Legacy).
+
+  DELETE /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
+*/
+func TeamsRemoveRepoLegacy(ctx context.Context, req *TeamsRemoveRepoLegacyReq, opt ...RequestOption) (*TeamsRemoveRepoLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsRemoveRepoLegacyReq)
+	}
+	resp := &TeamsRemoveRepoLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsRemoveRepoLegacy performs requests for "teams/remove-repo-legacy"
+
+Remove a repository from a team (Legacy).
+
+  DELETE /teams/{team_id}/repos/{owner}/{repo}
+
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
+*/
+func (c Client) TeamsRemoveRepoLegacy(ctx context.Context, req *TeamsRemoveRepoLegacyReq, opt ...RequestOption) (*TeamsRemoveRepoLegacyResponse, error) {
+	return TeamsRemoveRepoLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsRemoveRepoLegacyReq is request data for Client.TeamsRemoveRepoLegacy
+
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
+*/
+type TeamsRemoveRepoLegacyReq struct {
+	_url   string
+	TeamId int64
+	Owner  string
+	Repo   string
+}
+
+func (r *TeamsRemoveRepoLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsRemoveRepoLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo)
+}
+
+func (r *TeamsRemoveRepoLegacyReq) method() string {
+	return "DELETE"
+}
+
+func (r *TeamsRemoveRepoLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsRemoveRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsRemoveRepoLegacyReq) body() interface{} {
+	return nil
+}
+
+func (r *TeamsRemoveRepoLegacyReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *TeamsRemoveRepoLegacyReq) validStatuses() []int {
+	return []int{204}
+}
+
+func (r *TeamsRemoveRepoLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsRemoveRepoLegacyReq) Rel(link RelName, resp *TeamsRemoveRepoLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsRemoveRepoLegacyResponse is a response for TeamsRemoveRepoLegacy
+
+https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
+*/
+type TeamsRemoveRepoLegacyResponse struct {
+	response
+	request *TeamsRemoveRepoLegacyReq
 }
 
 /*
@@ -4459,6 +8479,165 @@ type TeamsUpdateDiscussionCommentInOrgResponse struct {
 }
 
 /*
+TeamsUpdateDiscussionCommentLegacy performs requests for "teams/update-discussion-comment-legacy"
+
+Update a discussion comment (Legacy).
+
+  PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+*/
+func TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsUpdateDiscussionCommentLegacyReq)
+	}
+	resp := &TeamsUpdateDiscussionCommentLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsUpdateDiscussionCommentLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacy performs requests for "teams/update-discussion-comment-legacy"
+
+Update a discussion comment (Legacy).
+
+  PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
+
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+*/
+func (c Client) TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDiscussionCommentLegacyReq, opt ...RequestOption) (*TeamsUpdateDiscussionCommentLegacyResponse, error) {
+	return TeamsUpdateDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyReq is request data for Client.TeamsUpdateDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	CommentNumber    int64
+	RequestBody      TeamsUpdateDiscussionCommentLegacyReqBody
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber)
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsUpdateDiscussionCommentLegacyReq) Rel(link RelName, resp *TeamsUpdateDiscussionCommentLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyReqBody is a request body for teams/update-discussion-comment-legacy
+
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyReqBody struct {
+
+	// The discussion comment's body text.
+	Body *string `json:"body"`
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyResponseBody is a response body for TeamsUpdateDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyResponseBody struct {
+	components.TeamDiscussionComment
+}
+
+/*
+TeamsUpdateDiscussionCommentLegacyResponse is a response for TeamsUpdateDiscussionCommentLegacy
+
+https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+*/
+type TeamsUpdateDiscussionCommentLegacyResponse struct {
+	response
+	request *TeamsUpdateDiscussionCommentLegacyReq
+	Data    *TeamsUpdateDiscussionCommentLegacyResponseBody
+}
+
+/*
 TeamsUpdateDiscussionInOrg performs requests for "teams/update-discussion-in-org"
 
 Update a discussion.
@@ -4618,6 +8797,167 @@ type TeamsUpdateDiscussionInOrgResponse struct {
 	response
 	request *TeamsUpdateDiscussionInOrgReq
 	Data    *TeamsUpdateDiscussionInOrgResponseBody
+}
+
+/*
+TeamsUpdateDiscussionLegacy performs requests for "teams/update-discussion-legacy"
+
+Update a discussion (Legacy).
+
+  PATCH /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+*/
+func TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussionLegacyReq, opt ...RequestOption) (*TeamsUpdateDiscussionLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsUpdateDiscussionLegacyReq)
+	}
+	resp := &TeamsUpdateDiscussionLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsUpdateDiscussionLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsUpdateDiscussionLegacy performs requests for "teams/update-discussion-legacy"
+
+Update a discussion (Legacy).
+
+  PATCH /teams/{team_id}/discussions/{discussion_number}
+
+https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+*/
+func (c Client) TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussionLegacyReq, opt ...RequestOption) (*TeamsUpdateDiscussionLegacyResponse, error) {
+	return TeamsUpdateDiscussionLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsUpdateDiscussionLegacyReq is request data for Client.TeamsUpdateDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyReq struct {
+	_url             string
+	TeamId           int64
+	DiscussionNumber int64
+	RequestBody      TeamsUpdateDiscussionLegacyReqBody
+
+	/*
+	An additional `reactions` object in the issue comment payload is currently
+	available for developers to preview. During
+	the preview period, the APIs may change without advance notice. Please see the
+	[blog
+	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
+	full details.
+
+
+	To access the API you must set this to true.
+	*/
+	SquirrelGirlPreview bool
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber)
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
+	if allPreviews {
+		previewVals["squirrel-girl"] = true
+	}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) dataStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) validStatuses() []int {
+	return []int{200}
+}
+
+func (r *TeamsUpdateDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsUpdateDiscussionLegacyReq) Rel(link RelName, resp *TeamsUpdateDiscussionLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsUpdateDiscussionLegacyReqBody is a request body for teams/update-discussion-legacy
+
+https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyReqBody struct {
+
+	// The discussion post's body text.
+	Body *string `json:"body,omitempty"`
+
+	// The discussion post's title.
+	Title *string `json:"title,omitempty"`
+}
+
+/*
+TeamsUpdateDiscussionLegacyResponseBody is a response body for TeamsUpdateDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyResponseBody struct {
+	components.TeamDiscussion
+}
+
+/*
+TeamsUpdateDiscussionLegacyResponse is a response for TeamsUpdateDiscussionLegacy
+
+https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+*/
+type TeamsUpdateDiscussionLegacyResponse struct {
+	response
+	request *TeamsUpdateDiscussionLegacyReq
+	Data    *TeamsUpdateDiscussionLegacyResponseBody
 }
 
 /*
@@ -4790,4 +9130,174 @@ type TeamsUpdateInOrgResponse struct {
 	response
 	request *TeamsUpdateInOrgReq
 	Data    *TeamsUpdateInOrgResponseBody
+}
+
+/*
+TeamsUpdateLegacy performs requests for "teams/update-legacy"
+
+Update a team (Legacy).
+
+  PATCH /teams/{team_id}
+
+https://developer.github.com/v3/teams/#update-a-team-legacy
+*/
+func TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...RequestOption) (*TeamsUpdateLegacyResponse, error) {
+	if req == nil {
+		req = new(TeamsUpdateLegacyReq)
+	}
+	resp := &TeamsUpdateLegacyResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	resp.Data = new(TeamsUpdateLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+TeamsUpdateLegacy performs requests for "teams/update-legacy"
+
+Update a team (Legacy).
+
+  PATCH /teams/{team_id}
+
+https://developer.github.com/v3/teams/#update-a-team-legacy
+*/
+func (c Client) TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...RequestOption) (*TeamsUpdateLegacyResponse, error) {
+	return TeamsUpdateLegacy(ctx, req, append(c, opt...)...)
+}
+
+/*
+TeamsUpdateLegacyReq is request data for Client.TeamsUpdateLegacy
+
+https://developer.github.com/v3/teams/#update-a-team-legacy
+*/
+type TeamsUpdateLegacyReq struct {
+	_url        string
+	TeamId      int64
+	RequestBody TeamsUpdateLegacyReqBody
+}
+
+func (r *TeamsUpdateLegacyReq) url() string {
+	return r._url
+}
+
+func (r *TeamsUpdateLegacyReq) urlPath() string {
+	return fmt.Sprintf("/teams/%v", r.TeamId)
+}
+
+func (r *TeamsUpdateLegacyReq) method() string {
+	return "PATCH"
+}
+
+func (r *TeamsUpdateLegacyReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *TeamsUpdateLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *TeamsUpdateLegacyReq) body() interface{} {
+	return r.RequestBody
+}
+
+func (r *TeamsUpdateLegacyReq) dataStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsUpdateLegacyReq) validStatuses() []int {
+	return []int{201}
+}
+
+func (r *TeamsUpdateLegacyReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrJSONRequestBody}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *TeamsUpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *TeamsUpdateLegacyReq) Rel(link RelName, resp *TeamsUpdateLegacyResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+TeamsUpdateLegacyReqBody is a request body for teams/update-legacy
+
+https://developer.github.com/v3/teams/#update-a-team-legacy
+*/
+type TeamsUpdateLegacyReqBody struct {
+
+	// The description of the team.
+	Description *string `json:"description,omitempty"`
+
+	// The name of the team.
+	Name *string `json:"name"`
+
+	// The ID of a team to set as the parent team.
+	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
+
+	/*
+	   **Deprecated**. The permission that new repositories will be added to the team
+	   with when none is specified. Can be one of:
+	   \* `pull` - team members can pull, but not push to or administer newly-added
+	   repositories.
+	   \* `push` - team members can pull and push, but not administer newly-added
+	   repositories.
+	   \* `admin` - team members can pull, push and administer newly-added
+	   repositories.
+	*/
+	Permission *string `json:"permission,omitempty"`
+
+	/*
+	   The level of privacy this team should have. Editing teams without specifying
+	   this parameter leaves `privacy` intact. The options are:
+	   **For a non-nested team:**
+	   \* `secret` - only visible to organization owners and members of this team.
+	   \* `closed` - visible to all members of this organization.
+	   **For a parent or child team:**
+	   \* `closed` - visible to all members of this organization.
+	*/
+	Privacy *string `json:"privacy,omitempty"`
+}
+
+/*
+TeamsUpdateLegacyResponseBody is a response body for TeamsUpdateLegacy
+
+https://developer.github.com/v3/teams/#update-a-team-legacy
+*/
+type TeamsUpdateLegacyResponseBody struct {
+	components.TeamFull
+}
+
+/*
+TeamsUpdateLegacyResponse is a response for TeamsUpdateLegacy
+
+https://developer.github.com/v3/teams/#update-a-team-legacy
+*/
+type TeamsUpdateLegacyResponse struct {
+	response
+	request *TeamsUpdateLegacyReq
+	Data    *TeamsUpdateLegacyResponseBody
 }
