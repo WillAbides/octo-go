@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gertd/go-pluralize"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/pkg/errors"
 	"github.com/willabides/octo-go/generator/internal/model"
@@ -89,13 +88,13 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 		case model.ParamTypeArray:
 			itemsRef := val.Items
 			itemsVal := itemsRef.Value
+			fullName := fmt.Sprintf("%s-%s-item", parentName, propName)
 			if opSchemaType(itemsVal) != model.ParamTypeObject {
 				break
 			}
 			if itemsVal.AdditionalProperties != nil {
 				break
 			}
-			fullName := fmt.Sprintf("%s-%s", parentName, pluralize.NewClient().Singular(propName))
 			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", itemsVal)
 			itemsRef.Ref = "#/components/schemas/" + fullName
 			prepareComponentSchemaObj(swagger, fullName, itemsRef)
