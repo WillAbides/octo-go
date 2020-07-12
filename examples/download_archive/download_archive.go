@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	err := os.MkdirAll("tmp", 0750)
+	err := os.MkdirAll("tmp", 0o750)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,7 +26,6 @@ func main() {
 		ArchiveFormat: "tarball",
 		Ref:           "master",
 	}, ghAuth)
-
 	if err != nil {
 		log.Fatal(err)
 	}

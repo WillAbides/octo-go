@@ -16,7 +16,6 @@ func main() {
 		Repo:        "go",
 		IssueNumber: 1,
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}

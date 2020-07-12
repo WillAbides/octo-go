@@ -58,7 +58,62 @@ func buildComponentHeaders(swagger *openapi3.Swagger) (map[string]*model.ParamSc
 	return result, nil
 }
 
+func prepareComponentSchemas(swagger *openapi3.Swagger) {
+	topNames := make([]string, 0, len(swagger.Components.Schemas))
+	for nm := range swagger.Components.Schemas {
+		topNames = append(topNames, nm)
+	}
+	sort.Strings(topNames)
+	for _, nm := range topNames {
+		prepareComponentSchemaObj(swagger, nm, swagger.Components.Schemas[nm])
+	}
+}
+
+func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, schemaRef *openapi3.SchemaRef) {
+	for propName, ref := range schemaRef.Value.Properties {
+		propName = overrideComponentSchemaName(propName)
+		if ref.Ref != "" {
+			continue
+		}
+		val := ref.Value
+		switch opSchemaType(val) {
+		case model.ParamTypeObject:
+			if val.AdditionalProperties != nil {
+				break
+			}
+			fullName := fmt.Sprintf("%s-%s", parentName, propName)
+			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", val)
+			ref.Ref = "#/components/schemas/" + fullName
+			prepareComponentSchemaObj(swagger, fullName, ref)
+		case model.ParamTypeArray:
+			itemsRef := val.Items
+			itemsVal := itemsRef.Value
+			fullName := fmt.Sprintf("%s-%s-item", parentName, propName)
+			if opSchemaType(itemsVal) != model.ParamTypeObject {
+				break
+			}
+			if itemsVal.AdditionalProperties != nil {
+				break
+			}
+			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", itemsVal)
+			itemsRef.Ref = "#/components/schemas/" + fullName
+			prepareComponentSchemaObj(swagger, fullName, itemsRef)
+		}
+	}
+}
+
+func overrideComponentSchemaName(name string) string {
+	switch name {
+	case "+1":
+		return "plus-one"
+	case "-1":
+		return "minus-one"
+	}
+	return name
+}
+
 func buildComponentSchemas(swagger *openapi3.Swagger) (map[string]*model.ParamSchema, error) {
+	prepareComponentSchemas(swagger)
 	result := make(map[string]*model.ParamSchema, len(swagger.Components.Schemas))
 	var err error
 	for name, ref := range swagger.Components.Schemas {

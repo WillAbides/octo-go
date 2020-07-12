@@ -35,9 +35,9 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 
 	// Build the initial request.
 	req := &octo.IssuesListForRepoReq{
-		Owner:   "golang",
-		Repo:    "go",
-		Labels:  octo.String("release-blocker"),
+		Owner:  "golang",
+		Repo:   "go",
+		Labels: octo.String("release-blocker"),
 	}
 
 	// ok will be true as long as there is a next page.

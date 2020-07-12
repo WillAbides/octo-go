@@ -32,7 +32,6 @@ my body
 			},
 		},
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,7 +42,6 @@ my body
 	deleteResp, err := client.GistsDelete(ctx, &octo.GistsDeleteReq{
 		GistId: createResp.Data.Id,
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,5 +49,4 @@ my body
 	if deleteResp.HTTPResponse().StatusCode != http.StatusNoContent {
 		fmt.Println("something went wrong...you better delete it yourself.")
 	}
-
 }
