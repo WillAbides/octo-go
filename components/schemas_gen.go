@@ -5064,24 +5064,24 @@ type IssueSimple2User struct {
 }
 
 type IssueSimpleAssignee struct {
-	AvatarUrl         string `json:"avatar_url"`
-	EventsUrl         string `json:"events_url"`
-	FollowersUrl      string `json:"followers_url"`
-	FollowingUrl      string `json:"following_url"`
-	GistsUrl          string `json:"gists_url"`
-	GravatarId        string `json:"gravatar_id"`
-	HtmlUrl           string `json:"html_url"`
-	Id                int64  `json:"id"`
-	Login             string `json:"login"`
-	NodeId            string `json:"node_id"`
-	OrganizationsUrl  string `json:"organizations_url"`
-	ReceivedEventsUrl string `json:"received_events_url"`
-	ReposUrl          string `json:"repos_url"`
-	SiteAdmin         bool   `json:"site_admin"`
-	StarredUrl        string `json:"starred_url"`
-	SubscriptionsUrl  string `json:"subscriptions_url"`
-	Type              string `json:"type"`
-	Url               string `json:"url"`
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
 }
 
 type IssueSimpleLabel struct {
@@ -7628,24 +7628,24 @@ type PullRequestReviewRequestLinksStatuses struct {
 }
 
 type PullRequestReviewRequestAssignee struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	AvatarUrl         string `json:"avatar_url"`
+	EventsUrl         string `json:"events_url"`
+	FollowersUrl      string `json:"followers_url"`
+	FollowingUrl      string `json:"following_url"`
+	GistsUrl          string `json:"gists_url"`
+	GravatarId        string `json:"gravatar_id"`
+	HtmlUrl           string `json:"html_url"`
+	Id                int64  `json:"id"`
+	Login             string `json:"login"`
+	NodeId            string `json:"node_id"`
+	OrganizationsUrl  string `json:"organizations_url"`
+	ReceivedEventsUrl string `json:"received_events_url"`
+	ReposUrl          string `json:"repos_url"`
+	SiteAdmin         bool   `json:"site_admin"`
+	StarredUrl        string `json:"starred_url"`
+	SubscriptionsUrl  string `json:"subscriptions_url"`
+	Type              string `json:"type"`
+	Url               string `json:"url"`
 }
 
 type PullRequestReviewRequestBase struct {
@@ -8192,24 +8192,24 @@ type PullRequestSimpleLinksStatuses struct {
 }
 
 type PullRequestSimpleAssignee struct {
-	AvatarUrl         string `json:"avatar_url,omitempty"`
-	EventsUrl         string `json:"events_url,omitempty"`
-	FollowersUrl      string `json:"followers_url,omitempty"`
-	FollowingUrl      string `json:"following_url,omitempty"`
-	GistsUrl          string `json:"gists_url,omitempty"`
-	GravatarId        string `json:"gravatar_id,omitempty"`
-	HtmlUrl           string `json:"html_url,omitempty"`
-	Id                int64  `json:"id,omitempty"`
-	Login             string `json:"login,omitempty"`
-	NodeId            string `json:"node_id,omitempty"`
-	OrganizationsUrl  string `json:"organizations_url,omitempty"`
-	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-	ReposUrl          string `json:"repos_url,omitempty"`
-	SiteAdmin         bool   `json:"site_admin,omitempty"`
-	StarredUrl        string `json:"starred_url,omitempty"`
-	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-	Type              string `json:"type,omitempty"`
-	Url               string `json:"url,omitempty"`
+	AvatarUrl         string `json:"avatar_url"`
+	EventsUrl         string `json:"events_url"`
+	FollowersUrl      string `json:"followers_url"`
+	FollowingUrl      string `json:"following_url"`
+	GistsUrl          string `json:"gists_url"`
+	GravatarId        string `json:"gravatar_id"`
+	HtmlUrl           string `json:"html_url"`
+	Id                int64  `json:"id"`
+	Login             string `json:"login"`
+	NodeId            string `json:"node_id"`
+	OrganizationsUrl  string `json:"organizations_url"`
+	ReceivedEventsUrl string `json:"received_events_url"`
+	ReposUrl          string `json:"repos_url"`
+	SiteAdmin         bool   `json:"site_admin"`
+	StarredUrl        string `json:"starred_url"`
+	SubscriptionsUrl  string `json:"subscriptions_url"`
+	Type              string `json:"type"`
+	Url               string `json:"url"`
 }
 
 type PullRequestSimpleBase struct {
