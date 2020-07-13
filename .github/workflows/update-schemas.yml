@@ -1,12 +1,20 @@
 name: update-schema
 on:
+  workflow_dispatch:
+    inputs:
+      schemaVersion:
+        default: ""
+        description: version of the schema to target
+        required: false
   schedule:
     - cron: '41 * * * *'
-  workflow_dispatch: {}
 jobs:
   update-schema:
     runs-on: ubuntu-18.04
     steps:
+      - name: set schema version
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo '::set-env name=TARGET_SCHEMA_VERSION::${{ github.event.inputs.schemaVersion }}'
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.OCTO_CLI_BOT_TOKEN }}
