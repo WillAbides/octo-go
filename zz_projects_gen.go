@@ -363,7 +363,8 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ProjectsCreateColumnResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -437,7 +438,7 @@ func (r *ProjectsCreateColumnReq) body() interface{} {
 }
 
 func (r *ProjectsCreateColumnReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ProjectsCreateColumnReq) validStatuses() []int {
@@ -478,6 +479,15 @@ type ProjectsCreateColumnReqBody struct {
 }
 
 /*
+ProjectsCreateColumnResponseBody is a response body for ProjectsCreateColumn
+
+https://developer.github.com/v3/projects/columns/#create-a-project-column
+*/
+type ProjectsCreateColumnResponseBody struct {
+	components.ProjectColumn
+}
+
+/*
 ProjectsCreateColumnResponse is a response for ProjectsCreateColumn
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
@@ -485,6 +495,7 @@ https://developer.github.com/v3/projects/columns/#create-a-project-column
 type ProjectsCreateColumnResponse struct {
 	response
 	request *ProjectsCreateColumnReq
+	Data    *ProjectsCreateColumnResponseBody
 }
 
 /*
@@ -1528,7 +1539,8 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ProjectsGetCardResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1601,7 +1613,7 @@ func (r *ProjectsGetCardReq) body() interface{} {
 }
 
 func (r *ProjectsGetCardReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ProjectsGetCardReq) validStatuses() []int {
@@ -1631,6 +1643,15 @@ func (r *ProjectsGetCardReq) Rel(link RelName, resp *ProjectsGetCardResponse) bo
 }
 
 /*
+ProjectsGetCardResponseBody is a response body for ProjectsGetCard
+
+https://developer.github.com/v3/projects/cards/#get-a-project-card
+*/
+type ProjectsGetCardResponseBody struct {
+	components.ProjectCard
+}
+
+/*
 ProjectsGetCardResponse is a response for ProjectsGetCard
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
@@ -1638,6 +1659,7 @@ https://developer.github.com/v3/projects/cards/#get-a-project-card
 type ProjectsGetCardResponse struct {
 	response
 	request *ProjectsGetCardReq
+	Data    *ProjectsGetCardResponseBody
 }
 
 /*
@@ -1661,7 +1683,8 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ProjectsGetColumnResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1734,7 +1757,7 @@ func (r *ProjectsGetColumnReq) body() interface{} {
 }
 
 func (r *ProjectsGetColumnReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ProjectsGetColumnReq) validStatuses() []int {
@@ -1764,6 +1787,15 @@ func (r *ProjectsGetColumnReq) Rel(link RelName, resp *ProjectsGetColumnResponse
 }
 
 /*
+ProjectsGetColumnResponseBody is a response body for ProjectsGetColumn
+
+https://developer.github.com/v3/projects/columns/#get-a-project-column
+*/
+type ProjectsGetColumnResponseBody struct {
+	components.ProjectColumn
+}
+
+/*
 ProjectsGetColumnResponse is a response for ProjectsGetColumn
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
@@ -1771,6 +1803,7 @@ https://developer.github.com/v3/projects/columns/#get-a-project-column
 type ProjectsGetColumnResponse struct {
 	response
 	request *ProjectsGetColumnReq
+	Data    *ProjectsGetColumnResponseBody
 }
 
 /*
@@ -3559,7 +3592,8 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ProjectsUpdateCardResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3633,7 +3667,7 @@ func (r *ProjectsUpdateCardReq) body() interface{} {
 }
 
 func (r *ProjectsUpdateCardReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ProjectsUpdateCardReq) validStatuses() []int {
@@ -3684,6 +3718,15 @@ type ProjectsUpdateCardReqBody struct {
 }
 
 /*
+ProjectsUpdateCardResponseBody is a response body for ProjectsUpdateCard
+
+https://developer.github.com/v3/projects/cards/#update-a-project-card
+*/
+type ProjectsUpdateCardResponseBody struct {
+	components.ProjectCard
+}
+
+/*
 ProjectsUpdateCardResponse is a response for ProjectsUpdateCard
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
@@ -3691,6 +3734,7 @@ https://developer.github.com/v3/projects/cards/#update-a-project-card
 type ProjectsUpdateCardResponse struct {
 	response
 	request *ProjectsUpdateCardReq
+	Data    *ProjectsUpdateCardResponseBody
 }
 
 /*
@@ -3714,7 +3758,8 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ProjectsUpdateColumnResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3788,7 +3833,7 @@ func (r *ProjectsUpdateColumnReq) body() interface{} {
 }
 
 func (r *ProjectsUpdateColumnReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ProjectsUpdateColumnReq) validStatuses() []int {
@@ -3829,6 +3874,15 @@ type ProjectsUpdateColumnReqBody struct {
 }
 
 /*
+ProjectsUpdateColumnResponseBody is a response body for ProjectsUpdateColumn
+
+https://developer.github.com/v3/projects/columns/#update-a-project-column
+*/
+type ProjectsUpdateColumnResponseBody struct {
+	components.ProjectColumn
+}
+
+/*
 ProjectsUpdateColumnResponse is a response for ProjectsUpdateColumn
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
@@ -3836,4 +3890,5 @@ https://developer.github.com/v3/projects/columns/#update-a-project-column
 type ProjectsUpdateColumnResponse struct {
 	response
 	request *ProjectsUpdateColumnReq
+	Data    *ProjectsUpdateColumnResponseBody
 }

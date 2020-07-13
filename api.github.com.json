@@ -14265,7 +14265,7 @@
           "200": {
             "description": "response",
             "content": {
-              "application/vnd.github.inertia-preview+json": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/project-card"
                 },
@@ -14334,7 +14334,7 @@
           "200": {
             "description": "response",
             "content": {
-              "application/vnd.github.inertia-preview+json": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/project-card"
                 },
@@ -14567,7 +14567,7 @@
           "200": {
             "description": "response",
             "content": {
-              "application/vnd.github.inertia-preview+json": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/project-column"
                 },
@@ -14636,7 +14636,7 @@
           "200": {
             "description": "response",
             "content": {
-              "application/vnd.github.inertia-preview+json": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/project-column"
                 },
@@ -15683,7 +15683,7 @@
           "200": {
             "description": "response",
             "content": {
-              "application/vnd.github.inertia-preview+json": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/project-column"
                 },
