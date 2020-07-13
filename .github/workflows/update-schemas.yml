@@ -7,13 +7,12 @@ on:
         description: version of the schema to target
         required: false
   schedule:
-    - cron: '41 * * * *'
+    - cron: '25 * * * *'
 jobs:
   update-schema:
     runs-on: ubuntu-18.04
     steps:
       - name: set schema version
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo '::set-env name=TARGET_SCHEMA_VERSION::${{ github.event.inputs.schemaVersion }}'
       - uses: actions/checkout@v2
         with:
