@@ -1903,6 +1903,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ProjectsCreateCardResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ProjectsCreateColumnResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/projects/{project_id}/columns",
+	httpMethod:     "POST",
+	httpStatusCode: 200,
+	name:           "ProjectsCreateColumnResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ProjectsCreateForAuthenticatedUserResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -1937,6 +1946,24 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "ProjectsGetResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ProjectsGetCardResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/projects/columns/cards/{card_id}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ProjectsGetCardResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ProjectsGetColumnResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/projects/columns/{column_id}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ProjectsGetColumnResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.ProjectsGetPermissionForUserResponseBody{}
@@ -2009,6 +2036,24 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
 	name:           "ProjectsUpdateResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ProjectsUpdateCardResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/projects/columns/cards/{card_id}",
+	httpMethod:     "PATCH",
+	httpStatusCode: 200,
+	name:           "ProjectsUpdateCardResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.ProjectsUpdateColumnResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/projects/columns/{column_id}",
+	httpMethod:     "PATCH",
+	httpStatusCode: 200,
+	name:           "ProjectsUpdateColumnResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.PullsCreateResponseBody{}
