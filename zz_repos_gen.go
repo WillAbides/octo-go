@@ -10377,7 +10377,8 @@ func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullR
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(ReposGetPullRequestReviewProtectionResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10450,7 +10451,7 @@ func (r *ReposGetPullRequestReviewProtectionReq) body() interface{} {
 }
 
 func (r *ReposGetPullRequestReviewProtectionReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ReposGetPullRequestReviewProtectionReq) validStatuses() []int {
@@ -10480,6 +10481,15 @@ func (r *ReposGetPullRequestReviewProtectionReq) Rel(link RelName, resp *ReposGe
 }
 
 /*
+ReposGetPullRequestReviewProtectionResponseBody is a response body for ReposGetPullRequestReviewProtection
+
+https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
+*/
+type ReposGetPullRequestReviewProtectionResponseBody struct {
+	components.ProtectedBranchPullRequestReview
+}
+
+/*
 ReposGetPullRequestReviewProtectionResponse is a response for ReposGetPullRequestReviewProtection
 
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
@@ -10487,6 +10497,7 @@ https://developer.github.com/v3/repos/branches/#get-pull-request-review-protecti
 type ReposGetPullRequestReviewProtectionResponse struct {
 	response
 	request *ReposGetPullRequestReviewProtectionReq
+	Data    *ReposGetPullRequestReviewProtectionResponseBody
 }
 
 /*
