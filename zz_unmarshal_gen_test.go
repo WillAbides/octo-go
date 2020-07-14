@@ -2875,6 +2875,15 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	name:           "ReposGetParticipationStatsResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
+		target := octo.ReposGetPullRequestReviewProtectionResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "ReposGetPullRequestReviewProtectionResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
 		target := octo.ReposGetPunchCardStatsResponseBody{}
 		return decoder.Decode(&target)
 	},
@@ -3548,6 +3557,24 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "TeamsCheckPermissionsForProjectLegacyResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.TeamsCheckPermissionsForRepoInOrgResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "TeamsCheckPermissionsForRepoInOrgResponseBody",
+}, {
+	decode: func(decoder *json.Decoder) error {
+		target := octo.TeamsCheckPermissionsForRepoLegacyResponseBody{}
+		return decoder.Decode(&target)
+	},
+	endpointPath:   "/teams/{team_id}/repos/{owner}/{repo}",
+	httpMethod:     "GET",
+	httpStatusCode: 200,
+	name:           "TeamsCheckPermissionsForRepoLegacyResponseBody",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := octo.TeamsCreateResponseBody{}

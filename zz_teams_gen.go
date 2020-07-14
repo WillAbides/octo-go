@@ -1341,7 +1341,8 @@ func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermi
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(TeamsCheckPermissionsForRepoInOrgResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1402,7 +1403,7 @@ func (r *TeamsCheckPermissionsForRepoInOrgReq) body() interface{} {
 }
 
 func (r *TeamsCheckPermissionsForRepoInOrgReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *TeamsCheckPermissionsForRepoInOrgReq) validStatuses() []int {
@@ -1432,6 +1433,15 @@ func (r *TeamsCheckPermissionsForRepoInOrgReq) Rel(link RelName, resp *TeamsChec
 }
 
 /*
+TeamsCheckPermissionsForRepoInOrgResponseBody is a response body for TeamsCheckPermissionsForRepoInOrg
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+*/
+type TeamsCheckPermissionsForRepoInOrgResponseBody struct {
+	components.TeamRepository
+}
+
+/*
 TeamsCheckPermissionsForRepoInOrgResponse is a response for TeamsCheckPermissionsForRepoInOrg
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
@@ -1439,6 +1449,7 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 type TeamsCheckPermissionsForRepoInOrgResponse struct {
 	response
 	request *TeamsCheckPermissionsForRepoInOrgReq
+	Data    *TeamsCheckPermissionsForRepoInOrgResponseBody
 }
 
 /*
@@ -1462,7 +1473,8 @@ func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPerm
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = new(TeamsCheckPermissionsForRepoLegacyResponseBody)
+	err = r.decodeBody(resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1522,7 +1534,7 @@ func (r *TeamsCheckPermissionsForRepoLegacyReq) body() interface{} {
 }
 
 func (r *TeamsCheckPermissionsForRepoLegacyReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *TeamsCheckPermissionsForRepoLegacyReq) validStatuses() []int {
@@ -1552,6 +1564,15 @@ func (r *TeamsCheckPermissionsForRepoLegacyReq) Rel(link RelName, resp *TeamsChe
 }
 
 /*
+TeamsCheckPermissionsForRepoLegacyResponseBody is a response body for TeamsCheckPermissionsForRepoLegacy
+
+https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+*/
+type TeamsCheckPermissionsForRepoLegacyResponseBody struct {
+	components.TeamRepository
+}
+
+/*
 TeamsCheckPermissionsForRepoLegacyResponse is a response for TeamsCheckPermissionsForRepoLegacy
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
@@ -1559,6 +1580,7 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-l
 type TeamsCheckPermissionsForRepoLegacyResponse struct {
 	response
 	request *TeamsCheckPermissionsForRepoLegacyReq
+	Data    *TeamsCheckPermissionsForRepoLegacyResponseBody
 }
 
 /*
