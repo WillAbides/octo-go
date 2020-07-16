@@ -307,9 +307,7 @@ PullsCreateResponseBody is a response body for PullsCreate
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
-type PullsCreateResponseBody struct {
-	components.PullRequest
-}
+type PullsCreateResponseBody components.PullRequest
 
 /*
 PullsCreateResponse is a response for PullsCreate
@@ -451,9 +449,7 @@ PullsCreateReplyForReviewCommentResponseBody is a response body for PullsCreateR
 
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-type PullsCreateReplyForReviewCommentResponseBody struct {
-	components.PullRequestReviewComment
-}
+type PullsCreateReplyForReviewCommentResponseBody components.PullRequestReviewComment
 
 /*
 PullsCreateReplyForReviewCommentResponse is a response for PullsCreateReplyForReviewComment
@@ -637,9 +633,7 @@ PullsCreateReviewResponseBody is a response body for PullsCreateReview
 
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
-type PullsCreateReviewResponseBody struct {
-	components.PullRequestReview
-}
+type PullsCreateReviewResponseBody components.PullRequestReview
 
 /*
 PullsCreateReviewResponse is a response for PullsCreateReview
@@ -844,9 +838,7 @@ PullsCreateReviewCommentResponseBody is a response body for PullsCreateReviewCom
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-type PullsCreateReviewCommentResponseBody struct {
-	components.PullRequestReviewComment
-}
+type PullsCreateReviewCommentResponseBody components.PullRequestReviewComment
 
 /*
 PullsCreateReviewCommentResponse is a response for PullsCreateReviewComment
@@ -976,9 +968,7 @@ PullsDeletePendingReviewResponseBody is a response body for PullsDeletePendingRe
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
-type PullsDeletePendingReviewResponseBody struct {
-	components.PullRequestReview2
-}
+type PullsDeletePendingReviewResponseBody components.PullRequestReview2
 
 /*
 PullsDeletePendingReviewResponse is a response for PullsDeletePendingReview
@@ -1240,9 +1230,7 @@ PullsDismissReviewResponseBody is a response body for PullsDismissReview
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
-type PullsDismissReviewResponseBody struct {
-	components.PullRequestReview
-}
+type PullsDismissReviewResponseBody components.PullRequestReview
 
 /*
 PullsDismissReviewResponse is a response for PullsDismissReview
@@ -1384,9 +1372,7 @@ PullsGetResponseBody is a response body for PullsGet
 
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
-type PullsGetResponseBody struct {
-	components.PullRequest
-}
+type PullsGetResponseBody components.PullRequest
 
 /*
 PullsGetResponse is a response for PullsGet
@@ -1516,9 +1502,7 @@ PullsGetReviewResponseBody is a response body for PullsGetReview
 
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
-type PullsGetReviewResponseBody struct {
-	components.PullRequestReview
-}
+type PullsGetReviewResponseBody components.PullRequestReview
 
 /*
 PullsGetReviewResponse is a response for PullsGetReview
@@ -1674,9 +1658,7 @@ PullsGetReviewCommentResponseBody is a response body for PullsGetReviewComment
 
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
-type PullsGetReviewCommentResponseBody struct {
-	components.PullRequestReviewComment
-}
+type PullsGetReviewCommentResponseBody components.PullRequestReviewComment
 
 /*
 PullsGetReviewCommentResponse is a response for PullsGetReviewComment
@@ -1870,9 +1852,7 @@ PullsListResponseBody is a response body for PullsList
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
-type PullsListResponseBody []struct {
-	components.PullRequestSimple
-}
+type PullsListResponseBody []components.PullRequestSimple
 
 /*
 PullsListResponse is a response for PullsList
@@ -2014,9 +1994,7 @@ PullsListCommentsForReviewResponseBody is a response body for PullsListCommentsF
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-type PullsListCommentsForReviewResponseBody []struct {
-	components.LegacyReviewComment
-}
+type PullsListCommentsForReviewResponseBody []components.LegacyReviewComment
 
 /*
 PullsListCommentsForReviewResponse is a response for PullsListCommentsForReview
@@ -2157,9 +2135,7 @@ PullsListCommitsResponseBody is a response body for PullsListCommits
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
-type PullsListCommitsResponseBody []struct {
-	components.SimpleCommit
-}
+type PullsListCommitsResponseBody []components.SimpleCommit
 
 /*
 PullsListCommitsResponse is a response for PullsListCommits
@@ -2300,9 +2276,7 @@ PullsListFilesResponseBody is a response body for PullsListFiles
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
-type PullsListFilesResponseBody []struct {
-	components.DiffEntry
-}
+type PullsListFilesResponseBody []components.DiffEntry
 
 /*
 PullsListFilesResponse is a response for PullsListFiles
@@ -2443,9 +2417,7 @@ PullsListRequestedReviewersResponseBody is a response body for PullsListRequeste
 
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-type PullsListRequestedReviewersResponseBody struct {
-	components.SimplePullRequestReviewRequest
-}
+type PullsListRequestedReviewersResponseBody components.SimplePullRequestReviewRequest
 
 /*
 PullsListRequestedReviewersResponse is a response for PullsListRequestedReviewers
@@ -2635,9 +2607,7 @@ PullsListReviewCommentsResponseBody is a response body for PullsListReviewCommen
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
-type PullsListReviewCommentsResponseBody []struct {
-	components.PullRequestReviewComment
-}
+type PullsListReviewCommentsResponseBody []components.PullRequestReviewComment
 
 /*
 PullsListReviewCommentsResponse is a response for PullsListReviewComments
@@ -2826,9 +2796,7 @@ PullsListReviewCommentsForRepoResponseBody is a response body for PullsListRevie
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
-type PullsListReviewCommentsForRepoResponseBody []struct {
-	components.PullRequestReviewComment
-}
+type PullsListReviewCommentsForRepoResponseBody []components.PullRequestReviewComment
 
 /*
 PullsListReviewCommentsForRepoResponse is a response for PullsListReviewCommentsForRepo
@@ -2969,9 +2937,7 @@ PullsListReviewsResponseBody is a response body for PullsListReviews
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
-type PullsListReviewsResponseBody []struct {
-	components.PullRequestReview
-}
+type PullsListReviewsResponseBody []components.PullRequestReview
 
 /*
 PullsListReviewsResponse is a response for PullsListReviews
@@ -3124,9 +3090,7 @@ PullsMergeResponseBody is a response body for PullsMerge
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
-type PullsMergeResponseBody struct {
-	components.PullRequestMergeResult
-}
+type PullsMergeResponseBody components.PullRequestMergeResult
 
 /*
 PullsMergeResponse is a response for PullsMerge
@@ -3405,9 +3369,7 @@ PullsRequestReviewersResponseBody is a response body for PullsRequestReviewers
 
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
-type PullsRequestReviewersResponseBody struct {
-	components.PullRequestReviewRequest
-}
+type PullsRequestReviewersResponseBody components.PullRequestReviewRequest
 
 /*
 PullsRequestReviewersResponse is a response for PullsRequestReviewers
@@ -3558,9 +3520,7 @@ PullsSubmitReviewResponseBody is a response body for PullsSubmitReview
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
-type PullsSubmitReviewResponseBody struct {
-	components.PullRequestReview
-}
+type PullsSubmitReviewResponseBody components.PullRequestReview
 
 /*
 PullsSubmitReviewResponse is a response for PullsSubmitReview
@@ -3734,9 +3694,7 @@ PullsUpdateResponseBody is a response body for PullsUpdate
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
-type PullsUpdateResponseBody struct {
-	components.PullRequest
-}
+type PullsUpdateResponseBody components.PullRequest
 
 /*
 PullsUpdateResponse is a response for PullsUpdate
@@ -4043,9 +4001,7 @@ PullsUpdateReviewResponseBody is a response body for PullsUpdateReview
 
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
-type PullsUpdateReviewResponseBody struct {
-	components.PullRequestReview
-}
+type PullsUpdateReviewResponseBody components.PullRequestReview
 
 /*
 PullsUpdateReviewResponse is a response for PullsUpdateReview
@@ -4196,9 +4152,7 @@ PullsUpdateReviewCommentResponseBody is a response body for PullsUpdateReviewCom
 
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
-type PullsUpdateReviewCommentResponseBody struct {
-	components.PullRequestReviewComment
-}
+type PullsUpdateReviewCommentResponseBody components.PullRequestReviewComment
 
 /*
 PullsUpdateReviewCommentResponse is a response for PullsUpdateReviewComment

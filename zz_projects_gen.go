@@ -327,9 +327,7 @@ ProjectsCreateCardResponseBody is a response body for ProjectsCreateCard
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-type ProjectsCreateCardResponseBody struct {
-	components.ProjectCard
-}
+type ProjectsCreateCardResponseBody components.ProjectCard
 
 /*
 ProjectsCreateCardResponse is a response for ProjectsCreateCard
@@ -483,9 +481,7 @@ ProjectsCreateColumnResponseBody is a response body for ProjectsCreateColumn
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-type ProjectsCreateColumnResponseBody struct {
-	components.ProjectColumn
-}
+type ProjectsCreateColumnResponseBody components.ProjectColumn
 
 /*
 ProjectsCreateColumnResponse is a response for ProjectsCreateColumn
@@ -641,9 +637,7 @@ ProjectsCreateForAuthenticatedUserResponseBody is a response body for ProjectsCr
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-type ProjectsCreateForAuthenticatedUserResponseBody struct {
-	components.Project
-}
+type ProjectsCreateForAuthenticatedUserResponseBody components.Project
 
 /*
 ProjectsCreateForAuthenticatedUserResponse is a response for ProjectsCreateForAuthenticatedUser
@@ -800,9 +794,7 @@ ProjectsCreateForOrgResponseBody is a response body for ProjectsCreateForOrg
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-type ProjectsCreateForOrgResponseBody struct {
-	components.Project
-}
+type ProjectsCreateForOrgResponseBody components.Project
 
 /*
 ProjectsCreateForOrgResponse is a response for ProjectsCreateForOrg
@@ -960,9 +952,7 @@ ProjectsCreateForRepoResponseBody is a response body for ProjectsCreateForRepo
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-type ProjectsCreateForRepoResponseBody struct {
-	components.Project
-}
+type ProjectsCreateForRepoResponseBody components.Project
 
 /*
 ProjectsCreateForRepoResponse is a response for ProjectsCreateForRepo
@@ -1503,9 +1493,7 @@ ProjectsGetResponseBody is a response body for ProjectsGet
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-type ProjectsGetResponseBody struct {
-	components.Project
-}
+type ProjectsGetResponseBody components.Project
 
 /*
 ProjectsGetResponse is a response for ProjectsGet
@@ -1647,9 +1635,7 @@ ProjectsGetCardResponseBody is a response body for ProjectsGetCard
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-type ProjectsGetCardResponseBody struct {
-	components.ProjectCard
-}
+type ProjectsGetCardResponseBody components.ProjectCard
 
 /*
 ProjectsGetCardResponse is a response for ProjectsGetCard
@@ -1791,9 +1777,7 @@ ProjectsGetColumnResponseBody is a response body for ProjectsGetColumn
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-type ProjectsGetColumnResponseBody struct {
-	components.ProjectColumn
-}
+type ProjectsGetColumnResponseBody components.ProjectColumn
 
 /*
 ProjectsGetColumnResponse is a response for ProjectsGetColumn
@@ -1936,9 +1920,7 @@ ProjectsGetPermissionForUserResponseBody is a response body for ProjectsGetPermi
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
-type ProjectsGetPermissionForUserResponseBody struct {
-	components.RepositoryCollaboratorPermission
-}
+type ProjectsGetPermissionForUserResponseBody components.RepositoryCollaboratorPermission
 
 /*
 ProjectsGetPermissionForUserResponse is a response for ProjectsGetPermissionForUser
@@ -2101,9 +2083,7 @@ ProjectsListCardsResponseBody is a response body for ProjectsListCards
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-type ProjectsListCardsResponseBody []struct {
-	components.ProjectCard
-}
+type ProjectsListCardsResponseBody []components.ProjectCard
 
 /*
 ProjectsListCardsResponse is a response for ProjectsListCards
@@ -2270,9 +2250,7 @@ ProjectsListCollaboratorsResponseBody is a response body for ProjectsListCollabo
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
-type ProjectsListCollaboratorsResponseBody []struct {
-	components.SimpleUser
-}
+type ProjectsListCollaboratorsResponseBody []components.SimpleUser
 
 /*
 ProjectsListCollaboratorsResponse is a response for ProjectsListCollaborators
@@ -2426,9 +2404,7 @@ ProjectsListColumnsResponseBody is a response body for ProjectsListColumns
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-type ProjectsListColumnsResponseBody []struct {
-	components.ProjectColumn
-}
+type ProjectsListColumnsResponseBody []components.ProjectColumn
 
 /*
 ProjectsListColumnsResponse is a response for ProjectsListColumns
@@ -2591,9 +2567,7 @@ ProjectsListForOrgResponseBody is a response body for ProjectsListForOrg
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-type ProjectsListForOrgResponseBody []struct {
-	components.Project
-}
+type ProjectsListForOrgResponseBody []components.Project
 
 /*
 ProjectsListForOrgResponse is a response for ProjectsListForOrg
@@ -2757,9 +2731,7 @@ ProjectsListForRepoResponseBody is a response body for ProjectsListForRepo
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-type ProjectsListForRepoResponseBody []struct {
-	components.Project
-}
+type ProjectsListForRepoResponseBody []components.Project
 
 /*
 ProjectsListForRepoResponse is a response for ProjectsListForRepo
@@ -2922,9 +2894,7 @@ ProjectsListForUserResponseBody is a response body for ProjectsListForUser
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-type ProjectsListForUserResponseBody []struct {
-	components.Project
-}
+type ProjectsListForUserResponseBody []components.Project
 
 /*
 ProjectsListForUserResponse is a response for ProjectsListForUser
@@ -3556,9 +3526,7 @@ ProjectsUpdateResponseBody is a response body for ProjectsUpdate
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-type ProjectsUpdateResponseBody struct {
-	components.Project
-}
+type ProjectsUpdateResponseBody components.Project
 
 /*
 ProjectsUpdateResponse is a response for ProjectsUpdate
@@ -3722,9 +3690,7 @@ ProjectsUpdateCardResponseBody is a response body for ProjectsUpdateCard
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-type ProjectsUpdateCardResponseBody struct {
-	components.ProjectCard
-}
+type ProjectsUpdateCardResponseBody components.ProjectCard
 
 /*
 ProjectsUpdateCardResponse is a response for ProjectsUpdateCard
@@ -3878,9 +3844,7 @@ ProjectsUpdateColumnResponseBody is a response body for ProjectsUpdateColumn
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-type ProjectsUpdateColumnResponseBody struct {
-	components.ProjectColumn
-}
+type ProjectsUpdateColumnResponseBody components.ProjectColumn
 
 /*
 ProjectsUpdateColumnResponse is a response for ProjectsUpdateColumn

@@ -9,9 +9,7 @@ import (
 
 // UnmarshalJSON wraps json in [] before unmarshalling it ... if necessary
 func (r *ReposGetContentResponseBody) UnmarshalJSON(p []byte) error {
-	var val []struct {
-		components.ContentFile
-	}
+	var val []components.ContentFile
 	p = bytes.TrimSpace(p)
 	if !bytes.HasPrefix(p, []byte("[")) {
 		p = append([]byte("["), p...)

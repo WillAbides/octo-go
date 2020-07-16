@@ -144,9 +144,7 @@ GitCreateBlobResponseBody is a response body for GitCreateBlob
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
-type GitCreateBlobResponseBody struct {
-	components.ShortBlob
-}
+type GitCreateBlobResponseBody components.ShortBlob
 
 /*
 GitCreateBlobResponse is a response for GitCreateBlob
@@ -358,9 +356,7 @@ GitCreateCommitResponseBody is a response body for GitCreateCommit
 
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
-type GitCreateCommitResponseBody struct {
-	components.GitCommit
-}
+type GitCreateCommitResponseBody components.GitCommit
 
 /*
 GitCreateCommitResponse is a response for GitCreateCommit
@@ -506,9 +502,7 @@ GitCreateRefResponseBody is a response body for GitCreateRef
 
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
-type GitCreateRefResponseBody struct {
-	components.GitRef
-}
+type GitCreateRefResponseBody components.GitRef
 
 /*
 GitCreateRefResponse is a response for GitCreateRef
@@ -679,9 +673,7 @@ GitCreateTagResponseBody is a response body for GitCreateTag
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
-type GitCreateTagResponseBody struct {
-	components.GitTag
-}
+type GitCreateTagResponseBody components.GitTag
 
 /*
 GitCreateTagResponse is a response for GitCreateTag
@@ -863,9 +855,7 @@ GitCreateTreeResponseBody is a response body for GitCreateTree
 
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
-type GitCreateTreeResponseBody struct {
-	components.GitTree
-}
+type GitCreateTreeResponseBody components.GitTree
 
 /*
 GitCreateTreeResponse is a response for GitCreateTree
@@ -1114,9 +1104,7 @@ GitGetBlobResponseBody is a response body for GitGetBlob
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
-type GitGetBlobResponseBody struct {
-	components.Blob
-}
+type GitGetBlobResponseBody components.Blob
 
 /*
 GitGetBlobResponse is a response for GitGetBlob
@@ -1245,9 +1233,7 @@ GitGetCommitResponseBody is a response body for GitGetCommit
 
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
-type GitGetCommitResponseBody struct {
-	components.GitCommit
-}
+type GitGetCommitResponseBody components.GitCommit
 
 /*
 GitGetCommitResponse is a response for GitGetCommit
@@ -1376,9 +1362,7 @@ GitGetRefResponseBody is a response body for GitGetRef
 
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
-type GitGetRefResponseBody struct {
-	components.GitRef
-}
+type GitGetRefResponseBody components.GitRef
 
 /*
 GitGetRefResponse is a response for GitGetRef
@@ -1507,9 +1491,7 @@ GitGetTagResponseBody is a response body for GitGetTag
 
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
-type GitGetTagResponseBody struct {
-	components.GitTag
-}
+type GitGetTagResponseBody components.GitTag
 
 /*
 GitGetTagResponse is a response for GitGetTag
@@ -1650,9 +1632,7 @@ GitGetTreeResponseBody is a response body for GitGetTree
 
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
-type GitGetTreeResponseBody struct {
-	components.GitTree2
-}
+type GitGetTreeResponseBody components.GitTree2
 
 /*
 GitGetTreeResponse is a response for GitGetTree
@@ -1793,9 +1773,7 @@ GitListMatchingRefsResponseBody is a response body for GitListMatchingRefs
 
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
-type GitListMatchingRefsResponseBody []struct {
-	components.GitRef
-}
+type GitListMatchingRefsResponseBody []components.GitRef
 
 /*
 GitListMatchingRefsResponse is a response for GitListMatchingRefs
@@ -1943,9 +1921,7 @@ GitUpdateRefResponseBody is a response body for GitUpdateRef
 
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
-type GitUpdateRefResponseBody struct {
-	components.GitRef
-}
+type GitUpdateRefResponseBody components.GitRef
 
 /*
 GitUpdateRefResponse is a response for GitUpdateRef

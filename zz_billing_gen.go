@@ -126,9 +126,7 @@ BillingGetGithubActionsBillingGheResponseBody is a response body for BillingGetG
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
-type BillingGetGithubActionsBillingGheResponseBody struct {
-	components.ActionsBillingUsage
-}
+type BillingGetGithubActionsBillingGheResponseBody components.ActionsBillingUsage
 
 /*
 BillingGetGithubActionsBillingGheResponse is a response for BillingGetGithubActionsBillingGhe
@@ -255,9 +253,7 @@ BillingGetGithubActionsBillingOrgResponseBody is a response body for BillingGetG
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
-type BillingGetGithubActionsBillingOrgResponseBody struct {
-	components.ActionsBillingUsage
-}
+type BillingGetGithubActionsBillingOrgResponseBody components.ActionsBillingUsage
 
 /*
 BillingGetGithubActionsBillingOrgResponse is a response for BillingGetGithubActionsBillingOrg
@@ -384,9 +380,7 @@ BillingGetGithubActionsBillingUserResponseBody is a response body for BillingGet
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
-type BillingGetGithubActionsBillingUserResponseBody struct {
-	components.ActionsBillingUsage
-}
+type BillingGetGithubActionsBillingUserResponseBody components.ActionsBillingUsage
 
 /*
 BillingGetGithubActionsBillingUserResponse is a response for BillingGetGithubActionsBillingUser
@@ -515,9 +509,7 @@ BillingGetGithubPackagesBillingGheResponseBody is a response body for BillingGet
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
-type BillingGetGithubPackagesBillingGheResponseBody struct {
-	components.PackagesBillingUsage
-}
+type BillingGetGithubPackagesBillingGheResponseBody components.PackagesBillingUsage
 
 /*
 BillingGetGithubPackagesBillingGheResponse is a response for BillingGetGithubPackagesBillingGhe
@@ -644,9 +636,7 @@ BillingGetGithubPackagesBillingOrgResponseBody is a response body for BillingGet
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
-type BillingGetGithubPackagesBillingOrgResponseBody struct {
-	components.PackagesBillingUsage
-}
+type BillingGetGithubPackagesBillingOrgResponseBody components.PackagesBillingUsage
 
 /*
 BillingGetGithubPackagesBillingOrgResponse is a response for BillingGetGithubPackagesBillingOrg
@@ -773,9 +763,7 @@ BillingGetGithubPackagesBillingUserResponseBody is a response body for BillingGe
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
-type BillingGetGithubPackagesBillingUserResponseBody struct {
-	components.PackagesBillingUsage
-}
+type BillingGetGithubPackagesBillingUserResponseBody components.PackagesBillingUsage
 
 /*
 BillingGetGithubPackagesBillingUserResponse is a response for BillingGetGithubPackagesBillingUser
@@ -904,9 +892,7 @@ BillingGetSharedStorageBillingGheResponseBody is a response body for BillingGetS
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
-type BillingGetSharedStorageBillingGheResponseBody struct {
-	components.CombinedBillingUsage
-}
+type BillingGetSharedStorageBillingGheResponseBody components.CombinedBillingUsage
 
 /*
 BillingGetSharedStorageBillingGheResponse is a response for BillingGetSharedStorageBillingGhe
@@ -1033,9 +1019,7 @@ BillingGetSharedStorageBillingOrgResponseBody is a response body for BillingGetS
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
-type BillingGetSharedStorageBillingOrgResponseBody struct {
-	components.CombinedBillingUsage
-}
+type BillingGetSharedStorageBillingOrgResponseBody components.CombinedBillingUsage
 
 /*
 BillingGetSharedStorageBillingOrgResponse is a response for BillingGetSharedStorageBillingOrg
@@ -1162,9 +1146,7 @@ BillingGetSharedStorageBillingUserResponseBody is a response body for BillingGet
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
-type BillingGetSharedStorageBillingUserResponseBody struct {
-	components.CombinedBillingUsage
-}
+type BillingGetSharedStorageBillingUserResponseBody components.CombinedBillingUsage
 
 /*
 BillingGetSharedStorageBillingUserResponse is a response for BillingGetSharedStorageBillingUser

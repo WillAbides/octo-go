@@ -13,9 +13,6 @@ func compSchemaRefStmt(schema *model.ParamSchema) *jen.Statement {
 		return nil
 	}
 	nm := strings.TrimPrefix(schema.Ref, "#/components/schemas/")
-	if schema.Type == model.ParamTypeObject {
-		return jen.Struct(jen.Qual("github.com/willabides/octo-go/components", toExportedName(nm)))
-	}
 	return jen.Qual("github.com/willabides/octo-go/components", toExportedName(nm))
 }
 

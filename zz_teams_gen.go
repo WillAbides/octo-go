@@ -264,9 +264,7 @@ TeamsAddOrUpdateMembershipForUserInOrgResponseBody is a response body for TeamsA
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-type TeamsAddOrUpdateMembershipForUserInOrgResponseBody struct {
-	components.TeamMembership
-}
+type TeamsAddOrUpdateMembershipForUserInOrgResponseBody components.TeamMembership
 
 /*
 TeamsAddOrUpdateMembershipForUserInOrgResponse is a response for TeamsAddOrUpdateMembershipForUserInOrg
@@ -412,9 +410,7 @@ TeamsAddOrUpdateMembershipForUserLegacyResponseBody is a response body for Teams
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
-type TeamsAddOrUpdateMembershipForUserLegacyResponseBody struct {
-	components.TeamMembership
-}
+type TeamsAddOrUpdateMembershipForUserLegacyResponseBody components.TeamMembership
 
 /*
 TeamsAddOrUpdateMembershipForUserLegacyResponse is a response for TeamsAddOrUpdateMembershipForUserLegacy
@@ -1160,9 +1156,7 @@ TeamsCheckPermissionsForProjectInOrgResponseBody is a response body for TeamsChe
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-type TeamsCheckPermissionsForProjectInOrgResponseBody struct {
-	components.TeamProject
-}
+type TeamsCheckPermissionsForProjectInOrgResponseBody components.TeamProject
 
 /*
 TeamsCheckPermissionsForProjectInOrgResponse is a response for TeamsCheckPermissionsForProjectInOrg
@@ -1305,9 +1299,7 @@ TeamsCheckPermissionsForProjectLegacyResponseBody is a response body for TeamsCh
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
-type TeamsCheckPermissionsForProjectLegacyResponseBody struct {
-	components.TeamProject
-}
+type TeamsCheckPermissionsForProjectLegacyResponseBody components.TeamProject
 
 /*
 TeamsCheckPermissionsForProjectLegacyResponse is a response for TeamsCheckPermissionsForProjectLegacy
@@ -1437,9 +1429,7 @@ TeamsCheckPermissionsForRepoInOrgResponseBody is a response body for TeamsCheckP
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
-type TeamsCheckPermissionsForRepoInOrgResponseBody struct {
-	components.TeamRepository
-}
+type TeamsCheckPermissionsForRepoInOrgResponseBody components.TeamRepository
 
 /*
 TeamsCheckPermissionsForRepoInOrgResponse is a response for TeamsCheckPermissionsForRepoInOrg
@@ -1568,9 +1558,7 @@ TeamsCheckPermissionsForRepoLegacyResponseBody is a response body for TeamsCheck
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
-type TeamsCheckPermissionsForRepoLegacyResponseBody struct {
-	components.TeamRepository
-}
+type TeamsCheckPermissionsForRepoLegacyResponseBody components.TeamRepository
 
 /*
 TeamsCheckPermissionsForRepoLegacyResponse is a response for TeamsCheckPermissionsForRepoLegacy
@@ -1748,9 +1736,7 @@ TeamsCreateResponseBody is a response body for TeamsCreate
 
 https://developer.github.com/v3/teams/#create-a-team
 */
-type TeamsCreateResponseBody struct {
-	components.TeamFull
-}
+type TeamsCreateResponseBody components.TeamFull
 
 /*
 TeamsCreateResponse is a response for TeamsCreate
@@ -1907,9 +1893,7 @@ TeamsCreateDiscussionCommentInOrgResponseBody is a response body for TeamsCreate
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
-type TeamsCreateDiscussionCommentInOrgResponseBody struct {
-	components.TeamDiscussionComment
-}
+type TeamsCreateDiscussionCommentInOrgResponseBody components.TeamDiscussionComment
 
 /*
 TeamsCreateDiscussionCommentInOrgResponse is a response for TeamsCreateDiscussionCommentInOrg
@@ -2065,9 +2049,7 @@ TeamsCreateDiscussionCommentLegacyResponseBody is a response body for TeamsCreat
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
-type TeamsCreateDiscussionCommentLegacyResponseBody struct {
-	components.TeamDiscussionComment
-}
+type TeamsCreateDiscussionCommentLegacyResponseBody components.TeamDiscussionComment
 
 /*
 TeamsCreateDiscussionCommentLegacyResponse is a response for TeamsCreateDiscussionCommentLegacy
@@ -2233,9 +2215,7 @@ TeamsCreateDiscussionInOrgResponseBody is a response body for TeamsCreateDiscuss
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-type TeamsCreateDiscussionInOrgResponseBody struct {
-	components.TeamDiscussion
-}
+type TeamsCreateDiscussionInOrgResponseBody components.TeamDiscussion
 
 /*
 TeamsCreateDiscussionInOrgResponse is a response for TeamsCreateDiscussionInOrg
@@ -2400,9 +2380,7 @@ TeamsCreateDiscussionLegacyResponseBody is a response body for TeamsCreateDiscus
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
-type TeamsCreateDiscussionLegacyResponseBody struct {
-	components.TeamDiscussion
-}
+type TeamsCreateDiscussionLegacyResponseBody components.TeamDiscussion
 
 /*
 TeamsCreateDiscussionLegacyResponse is a response for TeamsCreateDiscussionLegacy
@@ -2559,9 +2537,7 @@ TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody is a response body for T
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody struct {
-	components.GroupMapping
-}
+type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody components.GroupMapping
 
 /*
 TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse is a response for TeamsCreateOrUpdateIdPGroupConnectionsInOrg
@@ -2717,9 +2693,7 @@ TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody is a response body for 
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody struct {
-	components.GroupMapping2
-}
+type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody components.GroupMapping2
 
 /*
 TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse is a response for TeamsCreateOrUpdateIdPGroupConnectionsLegacy
@@ -3564,9 +3538,7 @@ TeamsGetByNameResponseBody is a response body for TeamsGetByName
 
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
-type TeamsGetByNameResponseBody struct {
-	components.TeamFull
-}
+type TeamsGetByNameResponseBody components.TeamFull
 
 /*
 TeamsGetByNameResponse is a response for TeamsGetByName
@@ -3712,9 +3684,7 @@ TeamsGetDiscussionCommentInOrgResponseBody is a response body for TeamsGetDiscus
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
-type TeamsGetDiscussionCommentInOrgResponseBody struct {
-	components.TeamDiscussionComment
-}
+type TeamsGetDiscussionCommentInOrgResponseBody components.TeamDiscussionComment
 
 /*
 TeamsGetDiscussionCommentInOrgResponse is a response for TeamsGetDiscussionCommentInOrg
@@ -3859,9 +3829,7 @@ TeamsGetDiscussionCommentLegacyResponseBody is a response body for TeamsGetDiscu
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
-type TeamsGetDiscussionCommentLegacyResponseBody struct {
-	components.TeamDiscussionComment
-}
+type TeamsGetDiscussionCommentLegacyResponseBody components.TeamDiscussionComment
 
 /*
 TeamsGetDiscussionCommentLegacyResponse is a response for TeamsGetDiscussionCommentLegacy
@@ -4006,9 +3974,7 @@ TeamsGetDiscussionInOrgResponseBody is a response body for TeamsGetDiscussionInO
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
-type TeamsGetDiscussionInOrgResponseBody struct {
-	components.TeamDiscussion
-}
+type TeamsGetDiscussionInOrgResponseBody components.TeamDiscussion
 
 /*
 TeamsGetDiscussionInOrgResponse is a response for TeamsGetDiscussionInOrg
@@ -4152,9 +4118,7 @@ TeamsGetDiscussionLegacyResponseBody is a response body for TeamsGetDiscussionLe
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
-type TeamsGetDiscussionLegacyResponseBody struct {
-	components.TeamDiscussion
-}
+type TeamsGetDiscussionLegacyResponseBody components.TeamDiscussion
 
 /*
 TeamsGetDiscussionLegacyResponse is a response for TeamsGetDiscussionLegacy
@@ -4281,9 +4245,7 @@ TeamsGetLegacyResponseBody is a response body for TeamsGetLegacy
 
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
-type TeamsGetLegacyResponseBody struct {
-	components.TeamFull
-}
+type TeamsGetLegacyResponseBody components.TeamFull
 
 /*
 TeamsGetLegacyResponse is a response for TeamsGetLegacy
@@ -4536,9 +4498,7 @@ TeamsGetMembershipForUserInOrgResponseBody is a response body for TeamsGetMember
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-type TeamsGetMembershipForUserInOrgResponseBody struct {
-	components.TeamMembership
-}
+type TeamsGetMembershipForUserInOrgResponseBody components.TeamMembership
 
 /*
 TeamsGetMembershipForUserInOrgResponse is a response for TeamsGetMembershipForUserInOrg
@@ -4666,9 +4626,7 @@ TeamsGetMembershipForUserLegacyResponseBody is a response body for TeamsGetMembe
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
-type TeamsGetMembershipForUserLegacyResponseBody struct {
-	components.TeamMembership
-}
+type TeamsGetMembershipForUserLegacyResponseBody components.TeamMembership
 
 /*
 TeamsGetMembershipForUserLegacyResponse is a response for TeamsGetMembershipForUserLegacy
@@ -4807,9 +4765,7 @@ TeamsListResponseBody is a response body for TeamsList
 
 https://developer.github.com/v3/teams/#list-teams
 */
-type TeamsListResponseBody []struct {
-	components.Team
-}
+type TeamsListResponseBody []components.Team
 
 /*
 TeamsListResponse is a response for TeamsList
@@ -4949,9 +4905,7 @@ TeamsListChildInOrgResponseBody is a response body for TeamsListChildInOrg
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
-type TeamsListChildInOrgResponseBody []struct {
-	components.Team2
-}
+type TeamsListChildInOrgResponseBody []components.Team2
 
 /*
 TeamsListChildInOrgResponse is a response for TeamsListChildInOrg
@@ -5090,9 +5044,7 @@ TeamsListChildLegacyResponseBody is a response body for TeamsListChildLegacy
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
-type TeamsListChildLegacyResponseBody []struct {
-	components.Team2
-}
+type TeamsListChildLegacyResponseBody []components.Team2
 
 /*
 TeamsListChildLegacyResponse is a response for TeamsListChildLegacy
@@ -5258,9 +5210,7 @@ TeamsListDiscussionCommentsInOrgResponseBody is a response body for TeamsListDis
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
-type TeamsListDiscussionCommentsInOrgResponseBody []struct {
-	components.TeamDiscussionComment
-}
+type TeamsListDiscussionCommentsInOrgResponseBody []components.TeamDiscussionComment
 
 /*
 TeamsListDiscussionCommentsInOrgResponse is a response for TeamsListDiscussionCommentsInOrg
@@ -5425,9 +5375,7 @@ TeamsListDiscussionCommentsLegacyResponseBody is a response body for TeamsListDi
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
-type TeamsListDiscussionCommentsLegacyResponseBody []struct {
-	components.TeamDiscussionComment
-}
+type TeamsListDiscussionCommentsLegacyResponseBody []components.TeamDiscussionComment
 
 /*
 TeamsListDiscussionCommentsLegacyResponse is a response for TeamsListDiscussionCommentsLegacy
@@ -5592,9 +5540,7 @@ TeamsListDiscussionsInOrgResponseBody is a response body for TeamsListDiscussion
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
-type TeamsListDiscussionsInOrgResponseBody []struct {
-	components.TeamDiscussion
-}
+type TeamsListDiscussionsInOrgResponseBody []components.TeamDiscussion
 
 /*
 TeamsListDiscussionsInOrgResponse is a response for TeamsListDiscussionsInOrg
@@ -5758,9 +5704,7 @@ TeamsListDiscussionsLegacyResponseBody is a response body for TeamsListDiscussio
 
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
-type TeamsListDiscussionsLegacyResponseBody []struct {
-	components.TeamDiscussion
-}
+type TeamsListDiscussionsLegacyResponseBody []components.TeamDiscussion
 
 /*
 TeamsListDiscussionsLegacyResponse is a response for TeamsListDiscussionsLegacy
@@ -5898,9 +5842,7 @@ TeamsListForAuthenticatedUserResponseBody is a response body for TeamsListForAut
 
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
-type TeamsListForAuthenticatedUserResponseBody []struct {
-	components.TeamFull
-}
+type TeamsListForAuthenticatedUserResponseBody []components.TeamFull
 
 /*
 TeamsListForAuthenticatedUserResponse is a response for TeamsListForAuthenticatedUser
@@ -6027,9 +5969,7 @@ TeamsListIdPGroupsForLegacyResponseBody is a response body for TeamsListIdPGroup
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-type TeamsListIdPGroupsForLegacyResponseBody struct {
-	components.GroupMapping3
-}
+type TeamsListIdPGroupsForLegacyResponseBody components.GroupMapping3
 
 /*
 TeamsListIdPGroupsForLegacyResponse is a response for TeamsListIdPGroupsForLegacy
@@ -6168,9 +6108,7 @@ TeamsListIdPGroupsForOrgResponseBody is a response body for TeamsListIdPGroupsFo
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-type TeamsListIdPGroupsForOrgResponseBody struct {
-	components.GroupMapping3
-}
+type TeamsListIdPGroupsForOrgResponseBody components.GroupMapping3
 
 /*
 TeamsListIdPGroupsForOrgResponse is a response for TeamsListIdPGroupsForOrg
@@ -6298,9 +6236,7 @@ TeamsListIdPGroupsInOrgResponseBody is a response body for TeamsListIdPGroupsInO
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-type TeamsListIdPGroupsInOrgResponseBody struct {
-	components.GroupMapping3
-}
+type TeamsListIdPGroupsInOrgResponseBody components.GroupMapping3
 
 /*
 TeamsListIdPGroupsInOrgResponse is a response for TeamsListIdPGroupsInOrg
@@ -6451,9 +6387,7 @@ TeamsListMembersInOrgResponseBody is a response body for TeamsListMembersInOrg
 
 https://developer.github.com/v3/teams/members/#list-team-members
 */
-type TeamsListMembersInOrgResponseBody []struct {
-	components.SimpleUser
-}
+type TeamsListMembersInOrgResponseBody []components.SimpleUser
 
 /*
 TeamsListMembersInOrgResponse is a response for TeamsListMembersInOrg
@@ -6603,9 +6537,7 @@ TeamsListMembersLegacyResponseBody is a response body for TeamsListMembersLegacy
 
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
-type TeamsListMembersLegacyResponseBody []struct {
-	components.SimpleUser
-}
+type TeamsListMembersLegacyResponseBody []components.SimpleUser
 
 /*
 TeamsListMembersLegacyResponse is a response for TeamsListMembersLegacy
@@ -6745,9 +6677,7 @@ TeamsListPendingInvitationsInOrgResponseBody is a response body for TeamsListPen
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
-type TeamsListPendingInvitationsInOrgResponseBody []struct {
-	components.OrganizationInvitation
-}
+type TeamsListPendingInvitationsInOrgResponseBody []components.OrganizationInvitation
 
 /*
 TeamsListPendingInvitationsInOrgResponse is a response for TeamsListPendingInvitationsInOrg
@@ -6886,9 +6816,7 @@ TeamsListPendingInvitationsLegacyResponseBody is a response body for TeamsListPe
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
-type TeamsListPendingInvitationsLegacyResponseBody []struct {
-	components.OrganizationInvitation
-}
+type TeamsListPendingInvitationsLegacyResponseBody []components.OrganizationInvitation
 
 /*
 TeamsListPendingInvitationsLegacyResponse is a response for TeamsListPendingInvitationsLegacy
@@ -7043,9 +6971,7 @@ TeamsListProjectsInOrgResponseBody is a response body for TeamsListProjectsInOrg
 
 https://developer.github.com/v3/teams/#list-team-projects
 */
-type TeamsListProjectsInOrgResponseBody []struct {
-	components.TeamProject
-}
+type TeamsListProjectsInOrgResponseBody []components.TeamProject
 
 /*
 TeamsListProjectsInOrgResponse is a response for TeamsListProjectsInOrg
@@ -7199,9 +7125,7 @@ TeamsListProjectsLegacyResponseBody is a response body for TeamsListProjectsLega
 
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
-type TeamsListProjectsLegacyResponseBody []struct {
-	components.TeamProject
-}
+type TeamsListProjectsLegacyResponseBody []components.TeamProject
 
 /*
 TeamsListProjectsLegacyResponse is a response for TeamsListProjectsLegacy
@@ -7341,9 +7265,7 @@ TeamsListReposInOrgResponseBody is a response body for TeamsListReposInOrg
 
 https://developer.github.com/v3/teams/#list-team-repositories
 */
-type TeamsListReposInOrgResponseBody []struct {
-	components.MinimalRepository
-}
+type TeamsListReposInOrgResponseBody []components.MinimalRepository
 
 /*
 TeamsListReposInOrgResponse is a response for TeamsListReposInOrg
@@ -7482,9 +7404,7 @@ TeamsListReposLegacyResponseBody is a response body for TeamsListReposLegacy
 
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
-type TeamsListReposLegacyResponseBody []struct {
-	components.MinimalRepository
-}
+type TeamsListReposLegacyResponseBody []components.MinimalRepository
 
 /*
 TeamsListReposLegacyResponse is a response for TeamsListReposLegacy
@@ -8485,9 +8405,7 @@ TeamsUpdateDiscussionCommentInOrgResponseBody is a response body for TeamsUpdate
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
-type TeamsUpdateDiscussionCommentInOrgResponseBody struct {
-	components.TeamDiscussionComment
-}
+type TeamsUpdateDiscussionCommentInOrgResponseBody components.TeamDiscussionComment
 
 /*
 TeamsUpdateDiscussionCommentInOrgResponse is a response for TeamsUpdateDiscussionCommentInOrg
@@ -8644,9 +8562,7 @@ TeamsUpdateDiscussionCommentLegacyResponseBody is a response body for TeamsUpdat
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
-type TeamsUpdateDiscussionCommentLegacyResponseBody struct {
-	components.TeamDiscussionComment
-}
+type TeamsUpdateDiscussionCommentLegacyResponseBody components.TeamDiscussionComment
 
 /*
 TeamsUpdateDiscussionCommentLegacyResponse is a response for TeamsUpdateDiscussionCommentLegacy
@@ -8806,9 +8722,7 @@ TeamsUpdateDiscussionInOrgResponseBody is a response body for TeamsUpdateDiscuss
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
-type TeamsUpdateDiscussionInOrgResponseBody struct {
-	components.TeamDiscussion
-}
+type TeamsUpdateDiscussionInOrgResponseBody components.TeamDiscussion
 
 /*
 TeamsUpdateDiscussionInOrgResponse is a response for TeamsUpdateDiscussionInOrg
@@ -8967,9 +8881,7 @@ TeamsUpdateDiscussionLegacyResponseBody is a response body for TeamsUpdateDiscus
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
-type TeamsUpdateDiscussionLegacyResponseBody struct {
-	components.TeamDiscussion
-}
+type TeamsUpdateDiscussionLegacyResponseBody components.TeamDiscussion
 
 /*
 TeamsUpdateDiscussionLegacyResponse is a response for TeamsUpdateDiscussionLegacy
@@ -9139,9 +9051,7 @@ TeamsUpdateInOrgResponseBody is a response body for TeamsUpdateInOrg
 
 https://developer.github.com/v3/teams/#update-a-team
 */
-type TeamsUpdateInOrgResponseBody struct {
-	components.TeamFull
-}
+type TeamsUpdateInOrgResponseBody components.TeamFull
 
 /*
 TeamsUpdateInOrgResponse is a response for TeamsUpdateInOrg
@@ -9309,9 +9219,7 @@ TeamsUpdateLegacyResponseBody is a response body for TeamsUpdateLegacy
 
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
-type TeamsUpdateLegacyResponseBody struct {
-	components.TeamFull
-}
+type TeamsUpdateLegacyResponseBody components.TeamFull
 
 /*
 TeamsUpdateLegacyResponse is a response for TeamsUpdateLegacy

@@ -142,9 +142,7 @@ IssuesAddAssigneesResponseBody is a response body for IssuesAddAssignees
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-type IssuesAddAssigneesResponseBody struct {
-	components.IssueSimple
-}
+type IssuesAddAssigneesResponseBody components.IssueSimple
 
 /*
 IssuesAddAssigneesResponse is a response for IssuesAddAssignees
@@ -290,9 +288,7 @@ IssuesAddLabelsResponseBody is a response body for IssuesAddLabels
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-type IssuesAddLabelsResponseBody []struct {
-	components.Label
-}
+type IssuesAddLabelsResponseBody []components.Label
 
 /*
 IssuesAddLabelsResponse is a response for IssuesAddLabels
@@ -586,9 +582,7 @@ IssuesCreateResponseBody is a response body for IssuesCreate
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-type IssuesCreateResponseBody struct {
-	components.Issue
-}
+type IssuesCreateResponseBody components.Issue
 
 /*
 IssuesCreateResponse is a response for IssuesCreate
@@ -729,9 +723,7 @@ IssuesCreateCommentResponseBody is a response body for IssuesCreateComment
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
-type IssuesCreateCommentResponseBody struct {
-	components.IssueComment
-}
+type IssuesCreateCommentResponseBody components.IssueComment
 
 /*
 IssuesCreateCommentResponse is a response for IssuesCreateComment
@@ -887,9 +879,7 @@ IssuesCreateLabelResponseBody is a response body for IssuesCreateLabel
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-type IssuesCreateLabelResponseBody struct {
-	components.Label
-}
+type IssuesCreateLabelResponseBody components.Label
 
 /*
 IssuesCreateLabelResponse is a response for IssuesCreateLabel
@@ -1041,9 +1031,7 @@ IssuesCreateMilestoneResponseBody is a response body for IssuesCreateMilestone
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-type IssuesCreateMilestoneResponseBody struct {
-	components.Milestone
-}
+type IssuesCreateMilestoneResponseBody components.Milestone
 
 /*
 IssuesCreateMilestoneResponse is a response for IssuesCreateMilestone
@@ -1548,9 +1536,7 @@ IssuesGetResponseBody is a response body for IssuesGet
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-type IssuesGetResponseBody struct {
-	components.Issue
-}
+type IssuesGetResponseBody components.Issue
 
 /*
 IssuesGetResponse is a response for IssuesGet
@@ -1705,9 +1691,7 @@ IssuesGetCommentResponseBody is a response body for IssuesGetComment
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
-type IssuesGetCommentResponseBody struct {
-	components.IssueComment
-}
+type IssuesGetCommentResponseBody components.IssueComment
 
 /*
 IssuesGetCommentResponse is a response for IssuesGetComment
@@ -1873,9 +1857,7 @@ IssuesGetEventResponseBody is a response body for IssuesGetEvent
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
-type IssuesGetEventResponseBody struct {
-	components.IssueEvent
-}
+type IssuesGetEventResponseBody components.IssueEvent
 
 /*
 IssuesGetEventResponse is a response for IssuesGetEvent
@@ -2004,9 +1986,7 @@ IssuesGetLabelResponseBody is a response body for IssuesGetLabel
 
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
-type IssuesGetLabelResponseBody struct {
-	components.Label
-}
+type IssuesGetLabelResponseBody components.Label
 
 /*
 IssuesGetLabelResponse is a response for IssuesGetLabel
@@ -2135,9 +2115,7 @@ IssuesGetMilestoneResponseBody is a response body for IssuesGetMilestone
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
-type IssuesGetMilestoneResponseBody struct {
-	components.Milestone
-}
+type IssuesGetMilestoneResponseBody components.Milestone
 
 /*
 IssuesGetMilestoneResponse is a response for IssuesGetMilestone
@@ -2352,9 +2330,7 @@ IssuesListResponseBody is a response body for IssuesList
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-type IssuesListResponseBody []struct {
-	components.IssueWithRepo
-}
+type IssuesListResponseBody []components.IssueWithRepo
 
 /*
 IssuesListResponse is a response for IssuesList
@@ -2494,9 +2470,7 @@ IssuesListAssigneesResponseBody is a response body for IssuesListAssignees
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-type IssuesListAssigneesResponseBody []struct {
-	components.SimpleUser
-}
+type IssuesListAssigneesResponseBody []components.SimpleUser
 
 /*
 IssuesListAssigneesResponse is a response for IssuesListAssignees
@@ -2663,9 +2637,7 @@ IssuesListCommentsResponseBody is a response body for IssuesListComments
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
-type IssuesListCommentsResponseBody []struct {
-	components.IssueComment
-}
+type IssuesListCommentsResponseBody []components.IssueComment
 
 /*
 IssuesListCommentsResponse is a response for IssuesListComments
@@ -2843,9 +2815,7 @@ IssuesListCommentsForRepoResponseBody is a response body for IssuesListCommentsF
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
-type IssuesListCommentsForRepoResponseBody []struct {
-	components.IssueComment
-}
+type IssuesListCommentsForRepoResponseBody []components.IssueComment
 
 /*
 IssuesListCommentsForRepoResponse is a response for IssuesListCommentsForRepo
@@ -3015,9 +2985,7 @@ IssuesListEventsResponseBody is a response body for IssuesListEvents
 
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
-type IssuesListEventsResponseBody []struct {
-	components.IssueEventForIssue
-}
+type IssuesListEventsResponseBody []components.IssueEventForIssue
 
 /*
 IssuesListEventsResponse is a response for IssuesListEvents
@@ -3186,9 +3154,7 @@ IssuesListEventsForRepoResponseBody is a response body for IssuesListEventsForRe
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
-type IssuesListEventsForRepoResponseBody []struct {
-	components.IssueEvent
-}
+type IssuesListEventsForRepoResponseBody []components.IssueEvent
 
 /*
 IssuesListEventsForRepoResponse is a response for IssuesListEventsForRepo
@@ -3360,9 +3326,7 @@ IssuesListEventsForTimelineResponseBody is a response body for IssuesListEventsF
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
-type IssuesListEventsForTimelineResponseBody []struct {
-	components.IssueEventForIssue
-}
+type IssuesListEventsForTimelineResponseBody []components.IssueEventForIssue
 
 /*
 IssuesListEventsForTimelineResponse is a response for IssuesListEventsForTimeline
@@ -3577,9 +3541,7 @@ IssuesListForAuthenticatedUserResponseBody is a response body for IssuesListForA
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-type IssuesListForAuthenticatedUserResponseBody []struct {
-	components.IssueWithRepo
-}
+type IssuesListForAuthenticatedUserResponseBody []components.IssueWithRepo
 
 /*
 IssuesListForAuthenticatedUserResponse is a response for IssuesListForAuthenticatedUser
@@ -3795,9 +3757,7 @@ IssuesListForOrgResponseBody is a response body for IssuesListForOrg
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-type IssuesListForOrgResponseBody []struct {
-	components.IssueWithRepo
-}
+type IssuesListForOrgResponseBody []components.IssueWithRepo
 
 /*
 IssuesListForOrgResponse is a response for IssuesListForOrg
@@ -4031,9 +3991,7 @@ IssuesListForRepoResponseBody is a response body for IssuesListForRepo
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-type IssuesListForRepoResponseBody []struct {
-	components.IssueSimple2
-}
+type IssuesListForRepoResponseBody []components.IssueSimple2
 
 /*
 IssuesListForRepoResponse is a response for IssuesListForRepo
@@ -4174,9 +4132,7 @@ IssuesListLabelsForMilestoneResponseBody is a response body for IssuesListLabels
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
-type IssuesListLabelsForMilestoneResponseBody []struct {
-	components.Label
-}
+type IssuesListLabelsForMilestoneResponseBody []components.Label
 
 /*
 IssuesListLabelsForMilestoneResponse is a response for IssuesListLabelsForMilestone
@@ -4316,9 +4272,7 @@ IssuesListLabelsForRepoResponseBody is a response body for IssuesListLabelsForRe
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
-type IssuesListLabelsForRepoResponseBody []struct {
-	components.Label
-}
+type IssuesListLabelsForRepoResponseBody []components.Label
 
 /*
 IssuesListLabelsForRepoResponse is a response for IssuesListLabelsForRepo
@@ -4459,9 +4413,7 @@ IssuesListLabelsOnIssueResponseBody is a response body for IssuesListLabelsOnIss
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
-type IssuesListLabelsOnIssueResponseBody []struct {
-	components.Label
-}
+type IssuesListLabelsOnIssueResponseBody []components.Label
 
 /*
 IssuesListLabelsOnIssueResponse is a response for IssuesListLabelsOnIssue
@@ -4619,9 +4571,7 @@ IssuesListMilestonesResponseBody is a response body for IssuesListMilestones
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-type IssuesListMilestonesResponseBody []struct {
-	components.Milestone
-}
+type IssuesListMilestonesResponseBody []components.Milestone
 
 /*
 IssuesListMilestonesResponse is a response for IssuesListMilestones
@@ -5038,9 +4988,7 @@ IssuesRemoveAssigneesResponseBody is a response body for IssuesRemoveAssignees
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-type IssuesRemoveAssigneesResponseBody struct {
-	components.IssueSimple2
-}
+type IssuesRemoveAssigneesResponseBody components.IssueSimple2
 
 /*
 IssuesRemoveAssigneesResponse is a response for IssuesRemoveAssignees
@@ -5170,9 +5118,7 @@ IssuesRemoveLabelResponseBody is a response body for IssuesRemoveLabel
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-type IssuesRemoveLabelResponseBody []struct {
-	components.Label
-}
+type IssuesRemoveLabelResponseBody []components.Label
 
 /*
 IssuesRemoveLabelResponse is a response for IssuesRemoveLabel
@@ -5318,9 +5264,7 @@ IssuesSetLabelsResponseBody is a response body for IssuesSetLabels
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-type IssuesSetLabelsResponseBody []struct {
-	components.Label
-}
+type IssuesSetLabelsResponseBody []components.Label
 
 /*
 IssuesSetLabelsResponse is a response for IssuesSetLabels
@@ -5616,9 +5560,7 @@ IssuesUpdateResponseBody is a response body for IssuesUpdate
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-type IssuesUpdateResponseBody struct {
-	components.Issue
-}
+type IssuesUpdateResponseBody components.Issue
 
 /*
 IssuesUpdateResponse is a response for IssuesUpdate
@@ -5759,9 +5701,7 @@ IssuesUpdateCommentResponseBody is a response body for IssuesUpdateComment
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
-type IssuesUpdateCommentResponseBody struct {
-	components.IssueComment
-}
+type IssuesUpdateCommentResponseBody components.IssueComment
 
 /*
 IssuesUpdateCommentResponse is a response for IssuesUpdateComment
@@ -5918,9 +5858,7 @@ IssuesUpdateLabelResponseBody is a response body for IssuesUpdateLabel
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-type IssuesUpdateLabelResponseBody struct {
-	components.Label
-}
+type IssuesUpdateLabelResponseBody components.Label
 
 /*
 IssuesUpdateLabelResponse is a response for IssuesUpdateLabel
@@ -6073,9 +6011,7 @@ IssuesUpdateMilestoneResponseBody is a response body for IssuesUpdateMilestone
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-type IssuesUpdateMilestoneResponseBody struct {
-	components.Milestone
-}
+type IssuesUpdateMilestoneResponseBody components.Milestone
 
 /*
 IssuesUpdateMilestoneResponse is a response for IssuesUpdateMilestone

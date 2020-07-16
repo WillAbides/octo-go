@@ -254,9 +254,7 @@ ReposAddAppAccessRestrictionsResponseBody is a response body for ReposAddAppAcce
 
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
-type ReposAddAppAccessRestrictionsResponseBody []struct {
-	components.Integration
-}
+type ReposAddAppAccessRestrictionsResponseBody []components.Integration
 
 /*
 ReposAddAppAccessRestrictionsResponse is a response for ReposAddAppAccessRestrictions
@@ -407,9 +405,7 @@ ReposAddCollaboratorResponseBody is a response body for ReposAddCollaborator
 
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
-type ReposAddCollaboratorResponseBody struct {
-	components.RepositoryInvitation
-}
+type ReposAddCollaboratorResponseBody components.RepositoryInvitation
 
 /*
 ReposAddCollaboratorResponse is a response for ReposAddCollaborator
@@ -683,9 +679,7 @@ ReposAddTeamAccessRestrictionsResponseBody is a response body for ReposAddTeamAc
 
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-type ReposAddTeamAccessRestrictionsResponseBody []struct {
-	components.Team
-}
+type ReposAddTeamAccessRestrictionsResponseBody []components.Team
 
 /*
 ReposAddTeamAccessRestrictionsResponse is a response for ReposAddTeamAccessRestrictions
@@ -822,9 +816,7 @@ ReposAddUserAccessRestrictionsResponseBody is a response body for ReposAddUserAc
 
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-type ReposAddUserAccessRestrictionsResponseBody []struct {
-	components.SimpleUser
-}
+type ReposAddUserAccessRestrictionsResponseBody []components.SimpleUser
 
 /*
 ReposAddUserAccessRestrictionsResponse is a response for ReposAddUserAccessRestrictions
@@ -1216,9 +1208,7 @@ ReposCompareCommitsResponseBody is a response body for ReposCompareCommits
 
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
-type ReposCompareCommitsResponseBody struct {
-	components.CommitComparison
-}
+type ReposCompareCommitsResponseBody components.CommitComparison
 
 /*
 ReposCompareCommitsResponse is a response for ReposCompareCommits
@@ -1371,9 +1361,7 @@ ReposCreateCommitCommentResponseBody is a response body for ReposCreateCommitCom
 
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
-type ReposCreateCommitCommentResponseBody struct {
-	components.CommitComment
-}
+type ReposCreateCommitCommentResponseBody components.CommitComment
 
 /*
 ReposCreateCommitCommentResponse is a response for ReposCreateCommitComment
@@ -1517,9 +1505,7 @@ ReposCreateCommitSignatureProtectionResponseBody is a response body for ReposCre
 
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
-type ReposCreateCommitSignatureProtectionResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
+type ReposCreateCommitSignatureProtectionResponseBody components.ProtectedBranchAdminEnforced
 
 /*
 ReposCreateCommitSignatureProtectionResponse is a response for ReposCreateCommitSignatureProtection
@@ -1678,9 +1664,7 @@ ReposCreateCommitStatusResponseBody is a response body for ReposCreateCommitStat
 
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
-type ReposCreateCommitStatusResponseBody struct {
-	components.Status
-}
+type ReposCreateCommitStatusResponseBody components.Status
 
 /*
 ReposCreateCommitStatusResponse is a response for ReposCreateCommitStatus
@@ -1836,9 +1820,7 @@ ReposCreateDeployKeyResponseBody is a response body for ReposCreateDeployKey
 
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
-type ReposCreateDeployKeyResponseBody struct {
-	components.DeployKey
-}
+type ReposCreateDeployKeyResponseBody components.DeployKey
 
 /*
 ReposCreateDeployKeyResponse is a response for ReposCreateDeployKey
@@ -2041,9 +2023,7 @@ ReposCreateDeploymentResponseBody is a response body for ReposCreateDeployment
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-type ReposCreateDeploymentResponseBody struct {
-	components.Deployment
-}
+type ReposCreateDeploymentResponseBody components.Deployment
 
 /*
 ReposCreateDeploymentResponse is a response for ReposCreateDeployment
@@ -2285,9 +2265,7 @@ ReposCreateDeploymentStatusResponseBody is a response body for ReposCreateDeploy
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
-type ReposCreateDeploymentStatusResponseBody struct {
-	components.DeploymentStatus
-}
+type ReposCreateDeploymentStatusResponseBody components.DeploymentStatus
 
 /*
 ReposCreateDeploymentStatusResponse is a response for ReposCreateDeploymentStatus
@@ -2678,9 +2656,7 @@ ReposCreateForAuthenticatedUserResponseBody is a response body for ReposCreateFo
 
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
-type ReposCreateForAuthenticatedUserResponseBody struct {
-	components.Repository
-}
+type ReposCreateForAuthenticatedUserResponseBody components.Repository
 
 /*
 ReposCreateForAuthenticatedUserResponse is a response for ReposCreateForAuthenticatedUser
@@ -2823,9 +2799,7 @@ ReposCreateForkResponseBody is a response body for ReposCreateFork
 
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-type ReposCreateForkResponseBody struct {
-	components.Repository
-}
+type ReposCreateForkResponseBody components.Repository
 
 /*
 ReposCreateForkResponse is a response for ReposCreateFork
@@ -3080,9 +3054,7 @@ ReposCreateInOrgResponseBody is a response body for ReposCreateInOrg
 
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
-type ReposCreateInOrgResponseBody struct {
-	components.Repository
-}
+type ReposCreateInOrgResponseBody components.Repository
 
 /*
 ReposCreateInOrgResponse is a response for ReposCreateInOrg
@@ -3276,9 +3248,7 @@ ReposCreateOrUpdateFileContentsResponseBody is a response body for ReposCreateOr
 
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-type ReposCreateOrUpdateFileContentsResponseBody struct {
-	components.FileCommit
-}
+type ReposCreateOrUpdateFileContentsResponseBody components.FileCommit
 
 /*
 ReposCreateOrUpdateFileContentsResponse is a response for ReposCreateOrUpdateFileContents
@@ -3449,9 +3419,7 @@ ReposCreatePagesSiteResponseBody is a response body for ReposCreatePagesSite
 
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
-type ReposCreatePagesSiteResponseBody struct {
-	components.Page
-}
+type ReposCreatePagesSiteResponseBody components.Page
 
 /*
 ReposCreatePagesSiteResponse is a response for ReposCreatePagesSite
@@ -3616,9 +3584,7 @@ ReposCreateReleaseResponseBody is a response body for ReposCreateRelease
 
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
-type ReposCreateReleaseResponseBody struct {
-	components.Release
-}
+type ReposCreateReleaseResponseBody components.Release
 
 /*
 ReposCreateReleaseResponse is a response for ReposCreateRelease
@@ -3789,9 +3755,7 @@ ReposCreateUsingTemplateResponseBody is a response body for ReposCreateUsingTemp
 
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
-type ReposCreateUsingTemplateResponseBody struct {
-	components.Repository3
-}
+type ReposCreateUsingTemplateResponseBody components.Repository3
 
 /*
 ReposCreateUsingTemplateResponse is a response for ReposCreateUsingTemplate
@@ -3982,9 +3946,7 @@ ReposCreateWebhookResponseBody is a response body for ReposCreateWebhook
 
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
-type ReposCreateWebhookResponseBody struct {
-	components.Hook
-}
+type ReposCreateWebhookResponseBody components.Hook
 
 /*
 ReposCreateWebhookResponse is a response for ReposCreateWebhook
@@ -5261,9 +5223,7 @@ ReposDeleteFileResponseBody is a response body for ReposDeleteFile
 
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
-type ReposDeleteFileResponseBody struct {
-	components.FileCommit2
-}
+type ReposDeleteFileResponseBody components.FileCommit2
 
 /*
 ReposDeleteFileResponse is a response for ReposDeleteFile
@@ -6800,9 +6760,7 @@ ReposGetResponseBody is a response body for ReposGet
 
 https://developer.github.com/v3/repos/#get-a-repository
 */
-type ReposGetResponseBody struct {
-	components.FullRepository
-}
+type ReposGetResponseBody components.FullRepository
 
 /*
 ReposGetResponse is a response for ReposGet
@@ -6931,9 +6889,7 @@ ReposGetAccessRestrictionsResponseBody is a response body for ReposGetAccessRest
 
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
-type ReposGetAccessRestrictionsResponseBody struct {
-	components.BranchRestrictionPolicy
-}
+type ReposGetAccessRestrictionsResponseBody components.BranchRestrictionPolicy
 
 /*
 ReposGetAccessRestrictionsResponse is a response for ReposGetAccessRestrictions
@@ -7062,9 +7018,7 @@ ReposGetAdminBranchProtectionResponseBody is a response body for ReposGetAdminBr
 
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
-type ReposGetAdminBranchProtectionResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
+type ReposGetAdminBranchProtectionResponseBody components.ProtectedBranchAdminEnforced
 
 /*
 ReposGetAdminBranchProtectionResponse is a response for ReposGetAdminBranchProtection
@@ -7334,9 +7288,7 @@ ReposGetAllTopicsResponseBody is a response body for ReposGetAllTopics
 
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
-type ReposGetAllTopicsResponseBody struct {
-	components.Topic
-}
+type ReposGetAllTopicsResponseBody components.Topic
 
 /*
 ReposGetAllTopicsResponse is a response for ReposGetAllTopics
@@ -7465,9 +7417,7 @@ ReposGetAppsWithAccessToProtectedBranchResponseBody is a response body for Repos
 
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
-type ReposGetAppsWithAccessToProtectedBranchResponseBody []struct {
-	components.Integration
-}
+type ReposGetAppsWithAccessToProtectedBranchResponseBody []components.Integration
 
 /*
 ReposGetAppsWithAccessToProtectedBranchResponse is a response for ReposGetAppsWithAccessToProtectedBranch
@@ -7596,9 +7546,7 @@ ReposGetBranchResponseBody is a response body for ReposGetBranch
 
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
-type ReposGetBranchResponseBody struct {
-	components.BranchWithProtection
-}
+type ReposGetBranchResponseBody components.BranchWithProtection
 
 /*
 ReposGetBranchResponse is a response for ReposGetBranch
@@ -7740,9 +7688,7 @@ ReposGetBranchProtectionResponseBody is a response body for ReposGetBranchProtec
 
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
-type ReposGetBranchProtectionResponseBody struct {
-	components.BranchProtection
-}
+type ReposGetBranchProtectionResponseBody components.BranchProtection
 
 /*
 ReposGetBranchProtectionResponse is a response for ReposGetBranchProtection
@@ -7876,9 +7822,7 @@ ReposGetClonesResponseBody is a response body for ReposGetClones
 
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
-type ReposGetClonesResponseBody struct {
-	components.CloneTraffic
-}
+type ReposGetClonesResponseBody components.CloneTraffic
 
 /*
 ReposGetClonesResponse is a response for ReposGetClones
@@ -8135,9 +8079,7 @@ ReposGetCollaboratorPermissionLevelResponseBody is a response body for ReposGetC
 
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
-type ReposGetCollaboratorPermissionLevelResponseBody struct {
-	components.RepositoryCollaboratorPermission
-}
+type ReposGetCollaboratorPermissionLevelResponseBody components.RepositoryCollaboratorPermission
 
 /*
 ReposGetCollaboratorPermissionLevelResponse is a response for ReposGetCollaboratorPermissionLevel
@@ -8266,9 +8208,7 @@ ReposGetCombinedStatusForRefResponseBody is a response body for ReposGetCombined
 
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
-type ReposGetCombinedStatusForRefResponseBody struct {
-	components.CombinedCommitStatus
-}
+type ReposGetCombinedStatusForRefResponseBody components.CombinedCommitStatus
 
 /*
 ReposGetCombinedStatusForRefResponse is a response for ReposGetCombinedStatusForRef
@@ -8397,9 +8337,7 @@ ReposGetCommitResponseBody is a response body for ReposGetCommit
 
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
-type ReposGetCommitResponseBody struct {
-	components.Commit
-}
+type ReposGetCommitResponseBody components.Commit
 
 /*
 ReposGetCommitResponse is a response for ReposGetCommit
@@ -8527,9 +8465,7 @@ ReposGetCommitActivityStatsResponseBody is a response body for ReposGetCommitAct
 
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
-type ReposGetCommitActivityStatsResponseBody []struct {
-	components.CommitActivity
-}
+type ReposGetCommitActivityStatsResponseBody []components.CommitActivity
 
 /*
 ReposGetCommitActivityStatsResponse is a response for ReposGetCommitActivityStats
@@ -8674,9 +8610,7 @@ ReposGetCommitCommentResponseBody is a response body for ReposGetCommitComment
 
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
-type ReposGetCommitCommentResponseBody struct {
-	components.CommitComment
-}
+type ReposGetCommitCommentResponseBody components.CommitComment
 
 /*
 ReposGetCommitCommentResponse is a response for ReposGetCommitComment
@@ -8820,9 +8754,7 @@ ReposGetCommitSignatureProtectionResponseBody is a response body for ReposGetCom
 
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
-type ReposGetCommitSignatureProtectionResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
+type ReposGetCommitSignatureProtectionResponseBody components.ProtectedBranchAdminEnforced
 
 /*
 ReposGetCommitSignatureProtectionResponse is a response for ReposGetCommitSignatureProtection
@@ -8964,9 +8896,7 @@ ReposGetCommunityProfileMetricsResponseBody is a response body for ReposGetCommu
 
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
-type ReposGetCommunityProfileMetricsResponseBody struct {
-	components.CommunityProfile
-}
+type ReposGetCommunityProfileMetricsResponseBody components.CommunityProfile
 
 /*
 ReposGetCommunityProfileMetricsResponse is a response for ReposGetCommunityProfileMetrics
@@ -9104,9 +9034,7 @@ ReposGetContentResponseBody is a response body for ReposGetContent
 
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
-type ReposGetContentResponseBody []struct {
-	components.ContentFile
-}
+type ReposGetContentResponseBody []components.ContentFile
 
 /*
 ReposGetContentResponse is a response for ReposGetContent
@@ -9234,9 +9162,7 @@ ReposGetContributorsStatsResponseBody is a response body for ReposGetContributor
 
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
-type ReposGetContributorsStatsResponseBody []struct {
-	components.ContributorActivity
-}
+type ReposGetContributorsStatsResponseBody []components.ContributorActivity
 
 /*
 ReposGetContributorsStatsResponse is a response for ReposGetContributorsStats
@@ -9365,9 +9291,7 @@ ReposGetDeployKeyResponseBody is a response body for ReposGetDeployKey
 
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
-type ReposGetDeployKeyResponseBody struct {
-	components.DeployKey
-}
+type ReposGetDeployKeyResponseBody components.DeployKey
 
 /*
 ReposGetDeployKeyResponse is a response for ReposGetDeployKey
@@ -9520,9 +9444,7 @@ ReposGetDeploymentResponseBody is a response body for ReposGetDeployment
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
-type ReposGetDeploymentResponseBody struct {
-	components.Deployment
-}
+type ReposGetDeploymentResponseBody components.Deployment
 
 /*
 ReposGetDeploymentResponse is a response for ReposGetDeployment
@@ -9690,9 +9612,7 @@ ReposGetDeploymentStatusResponseBody is a response body for ReposGetDeploymentSt
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
-type ReposGetDeploymentStatusResponseBody struct {
-	components.DeploymentStatus
-}
+type ReposGetDeploymentStatusResponseBody components.DeploymentStatus
 
 /*
 ReposGetDeploymentStatusResponse is a response for ReposGetDeploymentStatus
@@ -9820,9 +9740,7 @@ ReposGetLatestPagesBuildResponseBody is a response body for ReposGetLatestPagesB
 
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
-type ReposGetLatestPagesBuildResponseBody struct {
-	components.PageBuild
-}
+type ReposGetLatestPagesBuildResponseBody components.PageBuild
 
 /*
 ReposGetLatestPagesBuildResponse is a response for ReposGetLatestPagesBuild
@@ -9950,9 +9868,7 @@ ReposGetLatestReleaseResponseBody is a response body for ReposGetLatestRelease
 
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
-type ReposGetLatestReleaseResponseBody struct {
-	components.Release2
-}
+type ReposGetLatestReleaseResponseBody components.Release2
 
 /*
 ReposGetLatestReleaseResponse is a response for ReposGetLatestRelease
@@ -10080,9 +9996,7 @@ ReposGetPagesResponseBody is a response body for ReposGetPages
 
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
-type ReposGetPagesResponseBody struct {
-	components.Page
-}
+type ReposGetPagesResponseBody components.Page
 
 /*
 ReposGetPagesResponse is a response for ReposGetPages
@@ -10211,9 +10125,7 @@ ReposGetPagesBuildResponseBody is a response body for ReposGetPagesBuild
 
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
-type ReposGetPagesBuildResponseBody struct {
-	components.PageBuild
-}
+type ReposGetPagesBuildResponseBody components.PageBuild
 
 /*
 ReposGetPagesBuildResponse is a response for ReposGetPagesBuild
@@ -10341,9 +10253,7 @@ ReposGetParticipationStatsResponseBody is a response body for ReposGetParticipat
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
-type ReposGetParticipationStatsResponseBody struct {
-	components.ParticipationStats
-}
+type ReposGetParticipationStatsResponseBody components.ParticipationStats
 
 /*
 ReposGetParticipationStatsResponse is a response for ReposGetParticipationStats
@@ -10485,9 +10395,7 @@ ReposGetPullRequestReviewProtectionResponseBody is a response body for ReposGetP
 
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-type ReposGetPullRequestReviewProtectionResponseBody struct {
-	components.ProtectedBranchPullRequestReview
-}
+type ReposGetPullRequestReviewProtectionResponseBody components.ProtectedBranchPullRequestReview
 
 /*
 ReposGetPullRequestReviewProtectionResponse is a response for ReposGetPullRequestReviewProtection
@@ -10752,9 +10660,7 @@ ReposGetReadmeResponseBody is a response body for ReposGetReadme
 
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
-type ReposGetReadmeResponseBody struct {
-	components.ContentFile
-}
+type ReposGetReadmeResponseBody components.ContentFile
 
 /*
 ReposGetReadmeResponse is a response for ReposGetReadme
@@ -10883,9 +10789,7 @@ ReposGetReleaseResponseBody is a response body for ReposGetRelease
 
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
-type ReposGetReleaseResponseBody struct {
-	components.Release2
-}
+type ReposGetReleaseResponseBody components.Release2
 
 /*
 ReposGetReleaseResponse is a response for ReposGetRelease
@@ -11014,9 +10918,7 @@ ReposGetReleaseAssetResponseBody is a response body for ReposGetReleaseAsset
 
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
-type ReposGetReleaseAssetResponseBody struct {
-	components.ReleaseAsset
-}
+type ReposGetReleaseAssetResponseBody components.ReleaseAsset
 
 /*
 ReposGetReleaseAssetResponse is a response for ReposGetReleaseAsset
@@ -11145,9 +11047,7 @@ ReposGetReleaseByTagResponseBody is a response body for ReposGetReleaseByTag
 
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
-type ReposGetReleaseByTagResponseBody struct {
-	components.Release2
-}
+type ReposGetReleaseByTagResponseBody components.Release2
 
 /*
 ReposGetReleaseByTagResponse is a response for ReposGetReleaseByTag
@@ -11276,9 +11176,7 @@ ReposGetStatusChecksProtectionResponseBody is a response body for ReposGetStatus
 
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
-type ReposGetStatusChecksProtectionResponseBody struct {
-	components.StatusCheckPolicy
-}
+type ReposGetStatusChecksProtectionResponseBody components.StatusCheckPolicy
 
 /*
 ReposGetStatusChecksProtectionResponse is a response for ReposGetStatusChecksProtection
@@ -11407,9 +11305,7 @@ ReposGetTeamsWithAccessToProtectedBranchResponseBody is a response body for Repo
 
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
-type ReposGetTeamsWithAccessToProtectedBranchResponseBody []struct {
-	components.Team
-}
+type ReposGetTeamsWithAccessToProtectedBranchResponseBody []components.Team
 
 /*
 ReposGetTeamsWithAccessToProtectedBranchResponse is a response for ReposGetTeamsWithAccessToProtectedBranch
@@ -11537,9 +11433,7 @@ ReposGetTopPathsResponseBody is a response body for ReposGetTopPaths
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
-type ReposGetTopPathsResponseBody []struct {
-	components.ContentTraffic
-}
+type ReposGetTopPathsResponseBody []components.ContentTraffic
 
 /*
 ReposGetTopPathsResponse is a response for ReposGetTopPaths
@@ -11667,9 +11561,7 @@ ReposGetTopReferrersResponseBody is a response body for ReposGetTopReferrers
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
-type ReposGetTopReferrersResponseBody []struct {
-	components.ReferrerTraffic
-}
+type ReposGetTopReferrersResponseBody []components.ReferrerTraffic
 
 /*
 ReposGetTopReferrersResponse is a response for ReposGetTopReferrers
@@ -11798,9 +11690,7 @@ ReposGetUsersWithAccessToProtectedBranchResponseBody is a response body for Repo
 
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
-type ReposGetUsersWithAccessToProtectedBranchResponseBody []struct {
-	components.SimpleUser
-}
+type ReposGetUsersWithAccessToProtectedBranchResponseBody []components.SimpleUser
 
 /*
 ReposGetUsersWithAccessToProtectedBranchResponse is a response for ReposGetUsersWithAccessToProtectedBranch
@@ -11934,9 +11824,7 @@ ReposGetViewsResponseBody is a response body for ReposGetViews
 
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
-type ReposGetViewsResponseBody struct {
-	components.ViewTraffic
-}
+type ReposGetViewsResponseBody components.ViewTraffic
 
 /*
 ReposGetViewsResponse is a response for ReposGetViews
@@ -12065,9 +11953,7 @@ ReposGetWebhookResponseBody is a response body for ReposGetWebhook
 
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-type ReposGetWebhookResponseBody struct {
-	components.Hook
-}
+type ReposGetWebhookResponseBody components.Hook
 
 /*
 ReposGetWebhookResponse is a response for ReposGetWebhook
@@ -12216,9 +12102,7 @@ ReposListBranchesResponseBody is a response body for ReposListBranches
 
 https://developer.github.com/v3/repos/branches/#list-branches
 */
-type ReposListBranchesResponseBody []struct {
-	components.ShortBranchWithProtection
-}
+type ReposListBranchesResponseBody []components.ShortBranchWithProtection
 
 /*
 ReposListBranchesResponse is a response for ReposListBranches
@@ -12362,9 +12246,7 @@ ReposListBranchesForHeadCommitResponseBody is a response body for ReposListBranc
 
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
-type ReposListBranchesForHeadCommitResponseBody []struct {
-	components.BranchShort
-}
+type ReposListBranchesForHeadCommitResponseBody []components.BranchShort
 
 /*
 ReposListBranchesForHeadCommitResponse is a response for ReposListBranchesForHeadCommit
@@ -12516,9 +12398,7 @@ ReposListCollaboratorsResponseBody is a response body for ReposListCollaborators
 
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
-type ReposListCollaboratorsResponseBody []struct {
-	components.Collaborator
-}
+type ReposListCollaboratorsResponseBody []components.Collaborator
 
 /*
 ReposListCollaboratorsResponse is a response for ReposListCollaborators
@@ -12675,9 +12555,7 @@ ReposListCommentsForCommitResponseBody is a response body for ReposListCommentsF
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
-type ReposListCommentsForCommitResponseBody []struct {
-	components.CommitComment
-}
+type ReposListCommentsForCommitResponseBody []components.CommitComment
 
 /*
 ReposListCommentsForCommitResponse is a response for ReposListCommentsForCommit
@@ -12833,9 +12711,7 @@ ReposListCommitCommentsForRepoResponseBody is a response body for ReposListCommi
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-type ReposListCommitCommentsForRepoResponseBody []struct {
-	components.CommitComment
-}
+type ReposListCommitCommentsForRepoResponseBody []components.CommitComment
 
 /*
 ReposListCommitCommentsForRepoResponse is a response for ReposListCommitCommentsForRepo
@@ -12976,9 +12852,7 @@ ReposListCommitStatusesForRefResponseBody is a response body for ReposListCommit
 
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
-type ReposListCommitStatusesForRefResponseBody []struct {
-	components.Status
-}
+type ReposListCommitStatusesForRefResponseBody []components.Status
 
 /*
 ReposListCommitStatusesForRefResponse is a response for ReposListCommitStatusesForRef
@@ -13157,9 +13031,7 @@ ReposListCommitsResponseBody is a response body for ReposListCommits
 
 https://developer.github.com/v3/repos/commits/#list-commits
 */
-type ReposListCommitsResponseBody []struct {
-	components.SimpleCommit
-}
+type ReposListCommitsResponseBody []components.SimpleCommit
 
 /*
 ReposListCommitsResponse is a response for ReposListCommits
@@ -13305,9 +13177,7 @@ ReposListContributorsResponseBody is a response body for ReposListContributors
 
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
-type ReposListContributorsResponseBody []struct {
-	components.Contributor
-}
+type ReposListContributorsResponseBody []components.Contributor
 
 /*
 ReposListContributorsResponse is a response for ReposListContributors
@@ -13447,9 +13317,7 @@ ReposListDeployKeysResponseBody is a response body for ReposListDeployKeys
 
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
-type ReposListDeployKeysResponseBody []struct {
-	components.DeployKey
-}
+type ReposListDeployKeysResponseBody []components.DeployKey
 
 /*
 ReposListDeployKeysResponse is a response for ReposListDeployKeys
@@ -13620,9 +13488,7 @@ ReposListDeploymentStatusesResponseBody is a response body for ReposListDeployme
 
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
-type ReposListDeploymentStatusesResponseBody []struct {
-	components.DeploymentStatus
-}
+type ReposListDeploymentStatusesResponseBody []components.DeploymentStatus
 
 /*
 ReposListDeploymentStatusesResponse is a response for ReposListDeploymentStatuses
@@ -13803,9 +13669,7 @@ ReposListDeploymentsResponseBody is a response body for ReposListDeployments
 
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
-type ReposListDeploymentsResponseBody []struct {
-	components.Deployment
-}
+type ReposListDeploymentsResponseBody []components.Deployment
 
 /*
 ReposListDeploymentsResponse is a response for ReposListDeployments
@@ -14175,9 +14039,7 @@ ReposListForOrgResponseBody is a response body for ReposListForOrg
 
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
-type ReposListForOrgResponseBody []struct {
-	components.MinimalRepository
-}
+type ReposListForOrgResponseBody []components.MinimalRepository
 
 /*
 ReposListForOrgResponse is a response for ReposListForOrg
@@ -14489,9 +14351,7 @@ ReposListForksResponseBody is a response body for ReposListForks
 
 https://developer.github.com/v3/repos/forks/#list-forks
 */
-type ReposListForksResponseBody []struct {
-	components.MinimalRepository
-}
+type ReposListForksResponseBody []components.MinimalRepository
 
 /*
 ReposListForksResponse is a response for ReposListForks
@@ -14631,9 +14491,7 @@ ReposListInvitationsResponseBody is a response body for ReposListInvitations
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
-type ReposListInvitationsResponseBody []struct {
-	components.RepositoryInvitation
-}
+type ReposListInvitationsResponseBody []components.RepositoryInvitation
 
 /*
 ReposListInvitationsResponse is a response for ReposListInvitations
@@ -14771,9 +14629,7 @@ ReposListInvitationsForAuthenticatedUserResponseBody is a response body for Repo
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
-type ReposListInvitationsForAuthenticatedUserResponseBody []struct {
-	components.RepositoryInvitation
-}
+type ReposListInvitationsForAuthenticatedUserResponseBody []components.RepositoryInvitation
 
 /*
 ReposListInvitationsForAuthenticatedUserResponse is a response for ReposListInvitationsForAuthenticatedUser
@@ -15041,9 +14897,7 @@ ReposListPagesBuildsResponseBody is a response body for ReposListPagesBuilds
 
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
-type ReposListPagesBuildsResponseBody []struct {
-	components.PageBuild
-}
+type ReposListPagesBuildsResponseBody []components.PageBuild
 
 /*
 ReposListPagesBuildsResponse is a response for ReposListPagesBuilds
@@ -15175,9 +15029,7 @@ ReposListPublicResponseBody is a response body for ReposListPublic
 
 https://developer.github.com/v3/repos/#list-public-repositories
 */
-type ReposListPublicResponseBody []struct {
-	components.PublicRepository
-}
+type ReposListPublicResponseBody []components.PublicRepository
 
 /*
 ReposListPublicResponse is a response for ReposListPublic
@@ -15333,9 +15185,7 @@ ReposListPullRequestsAssociatedWithCommitResponseBody is a response body for Rep
 
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
-type ReposListPullRequestsAssociatedWithCommitResponseBody []struct {
-	components.PullRequestSimple
-}
+type ReposListPullRequestsAssociatedWithCommitResponseBody []components.PullRequestSimple
 
 /*
 ReposListPullRequestsAssociatedWithCommitResponse is a response for ReposListPullRequestsAssociatedWithCommit
@@ -15476,9 +15326,7 @@ ReposListReleaseAssetsResponseBody is a response body for ReposListReleaseAssets
 
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
-type ReposListReleaseAssetsResponseBody []struct {
-	components.ReleaseAsset
-}
+type ReposListReleaseAssetsResponseBody []components.ReleaseAsset
 
 /*
 ReposListReleaseAssetsResponse is a response for ReposListReleaseAssets
@@ -15618,9 +15466,7 @@ ReposListReleasesResponseBody is a response body for ReposListReleases
 
 https://developer.github.com/v3/repos/releases/#list-releases
 */
-type ReposListReleasesResponseBody []struct {
-	components.Release2
-}
+type ReposListReleasesResponseBody []components.Release2
 
 /*
 ReposListReleasesResponse is a response for ReposListReleases
@@ -15760,9 +15606,7 @@ ReposListTagsResponseBody is a response body for ReposListTags
 
 https://developer.github.com/v3/repos/#list-repository-tags
 */
-type ReposListTagsResponseBody []struct {
-	components.Tag
-}
+type ReposListTagsResponseBody []components.Tag
 
 /*
 ReposListTagsResponse is a response for ReposListTags
@@ -15902,9 +15746,7 @@ ReposListTeamsResponseBody is a response body for ReposListTeams
 
 https://developer.github.com/v3/repos/#list-repository-teams
 */
-type ReposListTeamsResponseBody []struct {
-	components.Team
-}
+type ReposListTeamsResponseBody []components.Team
 
 /*
 ReposListTeamsResponse is a response for ReposListTeams
@@ -16044,9 +15886,7 @@ ReposListWebhooksResponseBody is a response body for ReposListWebhooks
 
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
-type ReposListWebhooksResponseBody []struct {
-	components.Hook
-}
+type ReposListWebhooksResponseBody []components.Hook
 
 /*
 ReposListWebhooksResponse is a response for ReposListWebhooks
@@ -16195,9 +16035,7 @@ ReposMergeResponseBody is a response body for ReposMerge
 
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
-type ReposMergeResponseBody struct {
-	components.SimpleCommit2
-}
+type ReposMergeResponseBody components.SimpleCommit2
 
 /*
 ReposMergeResponse is a response for ReposMerge
@@ -16454,9 +16292,7 @@ ReposRemoveAppAccessRestrictionsResponseBody is a response body for ReposRemoveA
 
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-type ReposRemoveAppAccessRestrictionsResponseBody []struct {
-	components.Integration
-}
+type ReposRemoveAppAccessRestrictionsResponseBody []components.Integration
 
 /*
 ReposRemoveAppAccessRestrictionsResponse is a response for ReposRemoveAppAccessRestrictions
@@ -16970,9 +16806,7 @@ ReposRemoveTeamAccessRestrictionsResponseBody is a response body for ReposRemove
 
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-type ReposRemoveTeamAccessRestrictionsResponseBody []struct {
-	components.Team
-}
+type ReposRemoveTeamAccessRestrictionsResponseBody []components.Team
 
 /*
 ReposRemoveTeamAccessRestrictionsResponse is a response for ReposRemoveTeamAccessRestrictions
@@ -17109,9 +16943,7 @@ ReposRemoveUserAccessRestrictionsResponseBody is a response body for ReposRemove
 
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-type ReposRemoveUserAccessRestrictionsResponseBody []struct {
-	components.SimpleUser
-}
+type ReposRemoveUserAccessRestrictionsResponseBody []components.SimpleUser
 
 /*
 ReposRemoveUserAccessRestrictionsResponse is a response for ReposRemoveUserAccessRestrictions
@@ -17269,9 +17101,7 @@ ReposReplaceAllTopicsResponseBody is a response body for ReposReplaceAllTopics
 
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
-type ReposReplaceAllTopicsResponseBody struct {
-	components.Topic
-}
+type ReposReplaceAllTopicsResponseBody components.Topic
 
 /*
 ReposReplaceAllTopicsResponse is a response for ReposReplaceAllTopics
@@ -17399,9 +17229,7 @@ ReposRequestPagesBuildResponseBody is a response body for ReposRequestPagesBuild
 
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-type ReposRequestPagesBuildResponseBody struct {
-	components.PageBuildStatus
-}
+type ReposRequestPagesBuildResponseBody components.PageBuildStatus
 
 /*
 ReposRequestPagesBuildResponse is a response for ReposRequestPagesBuild
@@ -17530,9 +17358,7 @@ ReposSetAdminBranchProtectionResponseBody is a response body for ReposSetAdminBr
 
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-type ReposSetAdminBranchProtectionResponseBody struct {
-	components.ProtectedBranchAdminEnforced
-}
+type ReposSetAdminBranchProtectionResponseBody components.ProtectedBranchAdminEnforced
 
 /*
 ReposSetAdminBranchProtectionResponse is a response for ReposSetAdminBranchProtection
@@ -17669,9 +17495,7 @@ ReposSetAppAccessRestrictionsResponseBody is a response body for ReposSetAppAcce
 
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
-type ReposSetAppAccessRestrictionsResponseBody []struct {
-	components.Integration
-}
+type ReposSetAppAccessRestrictionsResponseBody []components.Integration
 
 /*
 ReposSetAppAccessRestrictionsResponse is a response for ReposSetAppAccessRestrictions
@@ -17945,9 +17769,7 @@ ReposSetTeamAccessRestrictionsResponseBody is a response body for ReposSetTeamAc
 
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
-type ReposSetTeamAccessRestrictionsResponseBody []struct {
-	components.Team
-}
+type ReposSetTeamAccessRestrictionsResponseBody []components.Team
 
 /*
 ReposSetTeamAccessRestrictionsResponse is a response for ReposSetTeamAccessRestrictions
@@ -18084,9 +17906,7 @@ ReposSetUserAccessRestrictionsResponseBody is a response body for ReposSetUserAc
 
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
-type ReposSetUserAccessRestrictionsResponseBody []struct {
-	components.SimpleUser
-}
+type ReposSetUserAccessRestrictionsResponseBody []components.SimpleUser
 
 /*
 ReposSetUserAccessRestrictionsResponse is a response for ReposSetUserAccessRestrictions
@@ -18355,9 +18175,7 @@ ReposTransferResponseBody is a response body for ReposTransfer
 
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
-type ReposTransferResponseBody struct {
-	components.Repository
-}
+type ReposTransferResponseBody components.Repository
 
 /*
 ReposTransferResponse is a response for ReposTransfer
@@ -18607,9 +18425,7 @@ ReposUpdateResponseBody is a response body for ReposUpdate
 
 https://developer.github.com/v3/repos/#update-a-repository
 */
-type ReposUpdateResponseBody struct {
-	components.FullRepository2
-}
+type ReposUpdateResponseBody components.FullRepository2
 
 /*
 ReposUpdateResponse is a response for ReposUpdate
@@ -18872,9 +18688,7 @@ ReposUpdateBranchProtectionResponseBody is a response body for ReposUpdateBranch
 
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
-type ReposUpdateBranchProtectionResponseBody struct {
-	components.BranchProtection
-}
+type ReposUpdateBranchProtectionResponseBody components.BranchProtection
 
 /*
 ReposUpdateBranchProtectionResponse is a response for ReposUpdateBranchProtection
@@ -19015,9 +18829,7 @@ ReposUpdateCommitCommentResponseBody is a response body for ReposUpdateCommitCom
 
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
-type ReposUpdateCommitCommentResponseBody struct {
-	components.CommitComment
-}
+type ReposUpdateCommitCommentResponseBody components.CommitComment
 
 /*
 ReposUpdateCommitCommentResponse is a response for ReposUpdateCommitComment
@@ -19304,9 +19116,7 @@ ReposUpdateInvitationResponseBody is a response body for ReposUpdateInvitation
 
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
-type ReposUpdateInvitationResponseBody struct {
-	components.RepositoryInvitation
-}
+type ReposUpdateInvitationResponseBody components.RepositoryInvitation
 
 /*
 ReposUpdateInvitationResponse is a response for ReposUpdateInvitation
@@ -19493,9 +19303,7 @@ ReposUpdatePullRequestReviewProtectionResponseBody is a response body for ReposU
 
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-type ReposUpdatePullRequestReviewProtectionResponseBody struct {
-	components.ProtectedBranchPullRequestReview
-}
+type ReposUpdatePullRequestReviewProtectionResponseBody components.ProtectedBranchPullRequestReview
 
 /*
 ReposUpdatePullRequestReviewProtectionResponse is a response for ReposUpdatePullRequestReviewProtection
@@ -19658,9 +19466,7 @@ ReposUpdateReleaseResponseBody is a response body for ReposUpdateRelease
 
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
-type ReposUpdateReleaseResponseBody struct {
-	components.Release2
-}
+type ReposUpdateReleaseResponseBody components.Release2
 
 /*
 ReposUpdateReleaseResponse is a response for ReposUpdateRelease
@@ -19804,9 +19610,7 @@ ReposUpdateReleaseAssetResponseBody is a response body for ReposUpdateReleaseAss
 
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
-type ReposUpdateReleaseAssetResponseBody struct {
-	components.ReleaseAsset
-}
+type ReposUpdateReleaseAssetResponseBody components.ReleaseAsset
 
 /*
 ReposUpdateReleaseAssetResponse is a response for ReposUpdateReleaseAsset
@@ -19950,9 +19754,7 @@ ReposUpdateStatusCheckPotectionResponseBody is a response body for ReposUpdateSt
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-type ReposUpdateStatusCheckPotectionResponseBody struct {
-	components.StatusCheckPolicy
-}
+type ReposUpdateStatusCheckPotectionResponseBody components.StatusCheckPolicy
 
 /*
 ReposUpdateStatusCheckPotectionResponse is a response for ReposUpdateStatusCheckPotection
@@ -20150,9 +19952,7 @@ ReposUpdateWebhookResponseBody is a response body for ReposUpdateWebhook
 
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
-type ReposUpdateWebhookResponseBody struct {
-	components.Hook
-}
+type ReposUpdateWebhookResponseBody components.Hook
 
 /*
 ReposUpdateWebhookResponse is a response for ReposUpdateWebhook
@@ -20314,9 +20114,7 @@ ReposUploadReleaseAssetResponseBody is a response body for ReposUploadReleaseAss
 
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
-type ReposUploadReleaseAssetResponseBody struct {
-	components.ReleaseAsset
-}
+type ReposUploadReleaseAssetResponseBody components.ReleaseAsset
 
 /*
 ReposUploadReleaseAssetResponse is a response for ReposUploadReleaseAsset

@@ -670,9 +670,7 @@ ActionsCreateRegistrationTokenForOrgResponseBody is a response body for ActionsC
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-type ActionsCreateRegistrationTokenForOrgResponseBody struct {
-	components.AuthenticationToken
-}
+type ActionsCreateRegistrationTokenForOrgResponseBody components.AuthenticationToken
 
 /*
 ActionsCreateRegistrationTokenForOrgResponse is a response for ActionsCreateRegistrationTokenForOrg
@@ -800,9 +798,7 @@ ActionsCreateRegistrationTokenForRepoResponseBody is a response body for Actions
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-type ActionsCreateRegistrationTokenForRepoResponseBody struct {
-	components.AuthenticationToken
-}
+type ActionsCreateRegistrationTokenForRepoResponseBody components.AuthenticationToken
 
 /*
 ActionsCreateRegistrationTokenForRepoResponse is a response for ActionsCreateRegistrationTokenForRepo
@@ -929,9 +925,7 @@ ActionsCreateRemoveTokenForOrgResponseBody is a response body for ActionsCreateR
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-type ActionsCreateRemoveTokenForOrgResponseBody struct {
-	components.AuthenticationToken
-}
+type ActionsCreateRemoveTokenForOrgResponseBody components.AuthenticationToken
 
 /*
 ActionsCreateRemoveTokenForOrgResponse is a response for ActionsCreateRemoveTokenForOrg
@@ -1059,9 +1053,7 @@ ActionsCreateRemoveTokenForRepoResponseBody is a response body for ActionsCreate
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-type ActionsCreateRemoveTokenForRepoResponseBody struct {
-	components.AuthenticationToken
-}
+type ActionsCreateRemoveTokenForRepoResponseBody components.AuthenticationToken
 
 /*
 ActionsCreateRemoveTokenForRepoResponse is a response for ActionsCreateRemoveTokenForRepo
@@ -2530,9 +2522,7 @@ ActionsGetArtifactResponseBody is a response body for ActionsGetArtifact
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-type ActionsGetArtifactResponseBody struct {
-	components.Artifact
-}
+type ActionsGetArtifactResponseBody components.Artifact
 
 /*
 ActionsGetArtifactResponse is a response for ActionsGetArtifact
@@ -2661,9 +2651,7 @@ ActionsGetJobForWorkflowRunResponseBody is a response body for ActionsGetJobForW
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
-type ActionsGetJobForWorkflowRunResponseBody struct {
-	components.Job
-}
+type ActionsGetJobForWorkflowRunResponseBody components.Job
 
 /*
 ActionsGetJobForWorkflowRunResponse is a response for ActionsGetJobForWorkflowRun
@@ -2790,9 +2778,7 @@ ActionsGetOrgPublicKeyResponseBody is a response body for ActionsGetOrgPublicKey
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-type ActionsGetOrgPublicKeyResponseBody struct {
-	components.ActionsPublicKey
-}
+type ActionsGetOrgPublicKeyResponseBody components.ActionsPublicKey
 
 /*
 ActionsGetOrgPublicKeyResponse is a response for ActionsGetOrgPublicKey
@@ -2920,9 +2906,7 @@ ActionsGetOrgSecretResponseBody is a response body for ActionsGetOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-type ActionsGetOrgSecretResponseBody struct {
-	components.OrganizationActionsSecret
-}
+type ActionsGetOrgSecretResponseBody components.OrganizationActionsSecret
 
 /*
 ActionsGetOrgSecretResponse is a response for ActionsGetOrgSecret
@@ -3050,9 +3034,7 @@ ActionsGetRepoPublicKeyResponseBody is a response body for ActionsGetRepoPublicK
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-type ActionsGetRepoPublicKeyResponseBody struct {
-	components.ActionsPublicKey
-}
+type ActionsGetRepoPublicKeyResponseBody components.ActionsPublicKey
 
 /*
 ActionsGetRepoPublicKeyResponse is a response for ActionsGetRepoPublicKey
@@ -3181,9 +3163,7 @@ ActionsGetRepoSecretResponseBody is a response body for ActionsGetRepoSecret
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-type ActionsGetRepoSecretResponseBody struct {
-	components.ActionsSecret
-}
+type ActionsGetRepoSecretResponseBody components.ActionsSecret
 
 /*
 ActionsGetRepoSecretResponse is a response for ActionsGetRepoSecret
@@ -3311,9 +3291,7 @@ ActionsGetSelfHostedRunnerForOrgResponseBody is a response body for ActionsGetSe
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-type ActionsGetSelfHostedRunnerForOrgResponseBody struct {
-	components.Runner
-}
+type ActionsGetSelfHostedRunnerForOrgResponseBody components.Runner
 
 /*
 ActionsGetSelfHostedRunnerForOrgResponse is a response for ActionsGetSelfHostedRunnerForOrg
@@ -3442,9 +3420,7 @@ ActionsGetSelfHostedRunnerForRepoResponseBody is a response body for ActionsGetS
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-type ActionsGetSelfHostedRunnerForRepoResponseBody struct {
-	components.Runner
-}
+type ActionsGetSelfHostedRunnerForRepoResponseBody components.Runner
 
 /*
 ActionsGetSelfHostedRunnerForRepoResponse is a response for ActionsGetSelfHostedRunnerForRepo
@@ -3573,9 +3549,7 @@ ActionsGetWorkflowResponseBody is a response body for ActionsGetWorkflow
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-type ActionsGetWorkflowResponseBody struct {
-	components.Workflow
-}
+type ActionsGetWorkflowResponseBody components.Workflow
 
 /*
 ActionsGetWorkflowResponse is a response for ActionsGetWorkflow
@@ -3704,9 +3678,7 @@ ActionsGetWorkflowRunResponseBody is a response body for ActionsGetWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-type ActionsGetWorkflowRunResponseBody struct {
-	components.WorkflowRun
-}
+type ActionsGetWorkflowRunResponseBody components.WorkflowRun
 
 /*
 ActionsGetWorkflowRunResponse is a response for ActionsGetWorkflowRun
@@ -3835,9 +3807,7 @@ ActionsGetWorkflowRunUsageResponseBody is a response body for ActionsGetWorkflow
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-type ActionsGetWorkflowRunUsageResponseBody struct {
-	components.WorkflowRunUsage
-}
+type ActionsGetWorkflowRunUsageResponseBody components.WorkflowRunUsage
 
 /*
 ActionsGetWorkflowRunUsageResponse is a response for ActionsGetWorkflowRunUsage
@@ -3966,9 +3936,7 @@ ActionsGetWorkflowUsageResponseBody is a response body for ActionsGetWorkflowUsa
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-type ActionsGetWorkflowUsageResponseBody struct {
-	components.WorkflowUsage
-}
+type ActionsGetWorkflowUsageResponseBody components.WorkflowUsage
 
 /*
 ActionsGetWorkflowUsageResponse is a response for ActionsGetWorkflowUsage
@@ -4109,10 +4077,8 @@ ActionsListArtifactsForRepoResponseBody is a response body for ActionsListArtifa
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoResponseBody struct {
-	Artifacts []struct {
-		components.Artifact2
-	} `json:"artifacts,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Artifacts  []components.Artifact2 `json:"artifacts,omitempty"`
+	TotalCount int64                  `json:"total_count,omitempty"`
 }
 
 /*
@@ -4266,10 +4232,8 @@ ActionsListJobsForWorkflowRunResponseBody is a response body for ActionsListJobs
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ActionsListJobsForWorkflowRunResponseBody struct {
-	Jobs []struct {
-		components.Job
-	} `json:"jobs,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Jobs       []components.Job `json:"jobs,omitempty"`
+	TotalCount int64            `json:"total_count,omitempty"`
 }
 
 /*
@@ -4410,10 +4374,8 @@ ActionsListOrgSecretsResponseBody is a response body for ActionsListOrgSecrets
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsResponseBody struct {
-	Secrets []struct {
-		components.OrganizationActionsSecret2
-	} `json:"secrets,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Secrets    []components.OrganizationActionsSecret2 `json:"secrets,omitempty"`
+	TotalCount int64                                   `json:"total_count,omitempty"`
 }
 
 /*
@@ -4555,10 +4517,8 @@ ActionsListRepoSecretsResponseBody is a response body for ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsResponseBody struct {
-	Secrets []struct {
-		components.ActionsSecret2
-	} `json:"secrets,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Secrets    []components.ActionsSecret2 `json:"secrets,omitempty"`
+	TotalCount int64                       `json:"total_count,omitempty"`
 }
 
 /*
@@ -4700,10 +4660,8 @@ ActionsListRepoWorkflowsResponseBody is a response body for ActionsListRepoWorkf
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsResponseBody struct {
-	TotalCount int64 `json:"total_count,omitempty"`
-	Workflows  []struct {
-		components.Workflow2
-	} `json:"workflows,omitempty"`
+	TotalCount int64                  `json:"total_count,omitempty"`
+	Workflows  []components.Workflow2 `json:"workflows,omitempty"`
 }
 
 /*
@@ -4831,9 +4789,7 @@ ActionsListRunnerApplicationsForOrgResponseBody is a response body for ActionsLi
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-type ActionsListRunnerApplicationsForOrgResponseBody []struct {
-	components.RunnerApplication
-}
+type ActionsListRunnerApplicationsForOrgResponseBody []components.RunnerApplication
 
 /*
 ActionsListRunnerApplicationsForOrgResponse is a response for ActionsListRunnerApplicationsForOrg
@@ -4961,9 +4917,7 @@ ActionsListRunnerApplicationsForRepoResponseBody is a response body for ActionsL
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-type ActionsListRunnerApplicationsForRepoResponseBody []struct {
-	components.RunnerApplication
-}
+type ActionsListRunnerApplicationsForRepoResponseBody []components.RunnerApplication
 
 /*
 ActionsListRunnerApplicationsForRepoResponse is a response for ActionsListRunnerApplicationsForRepo
@@ -5092,10 +5046,8 @@ ActionsListSelectedReposForOrgSecretResponseBody is a response body for ActionsL
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ActionsListSelectedReposForOrgSecretResponseBody struct {
-	Repositories []struct {
-		components.PublicRepository
-	} `json:"repositories,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Repositories []components.PublicRepository `json:"repositories,omitempty"`
+	TotalCount   int64                         `json:"total_count,omitempty"`
 }
 
 /*
@@ -5236,10 +5188,8 @@ ActionsListSelfHostedRunnersForOrgResponseBody is a response body for ActionsLis
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 type ActionsListSelfHostedRunnersForOrgResponseBody struct {
-	Runners []struct {
-		components.Runner2
-	} `json:"runners,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Runners    []components.Runner2 `json:"runners,omitempty"`
+	TotalCount int64                `json:"total_count,omitempty"`
 }
 
 /*
@@ -5381,10 +5331,8 @@ ActionsListSelfHostedRunnersForRepoResponseBody is a response body for ActionsLi
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoResponseBody struct {
-	Runners []struct {
-		components.Runner2
-	} `json:"runners,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Runners    []components.Runner2 `json:"runners,omitempty"`
+	TotalCount int64                `json:"total_count,omitempty"`
 }
 
 /*
@@ -5527,10 +5475,8 @@ ActionsListWorkflowRunArtifactsResponseBody is a response body for ActionsListWo
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsResponseBody struct {
-	Artifacts []struct {
-		components.Artifact2
-	} `json:"artifacts,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Artifacts  []components.Artifact2 `json:"artifacts,omitempty"`
+	TotalCount int64                  `json:"total_count,omitempty"`
 }
 
 /*
@@ -5713,10 +5659,8 @@ ActionsListWorkflowRunsResponseBody is a response body for ActionsListWorkflowRu
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ActionsListWorkflowRunsResponseBody struct {
-	TotalCount   int64 `json:"total_count,omitempty"`
-	WorkflowRuns []struct {
-		components.WorkflowRun
-	} `json:"workflow_runs,omitempty"`
+	TotalCount   int64                    `json:"total_count,omitempty"`
+	WorkflowRuns []components.WorkflowRun `json:"workflow_runs,omitempty"`
 }
 
 /*
@@ -5898,10 +5842,8 @@ ActionsListWorkflowRunsForRepoResponseBody is a response body for ActionsListWor
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 type ActionsListWorkflowRunsForRepoResponseBody struct {
-	TotalCount   int64 `json:"total_count,omitempty"`
-	WorkflowRuns []struct {
-		components.WorkflowRun
-	} `json:"workflow_runs,omitempty"`
+	TotalCount   int64                    `json:"total_count,omitempty"`
+	WorkflowRuns []components.WorkflowRun `json:"workflow_runs,omitempty"`
 }
 
 /*

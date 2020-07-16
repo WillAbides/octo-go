@@ -158,9 +158,7 @@ OauthAuthorizationsCreateAuthorizationResponseBody is a response body for OauthA
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-type OauthAuthorizationsCreateAuthorizationResponseBody struct {
-	components.Authorization
-}
+type OauthAuthorizationsCreateAuthorizationResponseBody components.Authorization
 
 /*
 OauthAuthorizationsCreateAuthorizationResponse is a response for OauthAuthorizationsCreateAuthorization
@@ -523,9 +521,7 @@ OauthAuthorizationsGetAuthorizationResponseBody is a response body for OauthAuth
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-type OauthAuthorizationsGetAuthorizationResponseBody struct {
-	components.Authorization
-}
+type OauthAuthorizationsGetAuthorizationResponseBody components.Authorization
 
 /*
 OauthAuthorizationsGetAuthorizationResponse is a response for OauthAuthorizationsGetAuthorization
@@ -652,9 +648,7 @@ OauthAuthorizationsGetGrantResponseBody is a response body for OauthAuthorizatio
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
-type OauthAuthorizationsGetGrantResponseBody struct {
-	components.ApplicationGrant
-}
+type OauthAuthorizationsGetGrantResponseBody components.ApplicationGrant
 
 /*
 OauthAuthorizationsGetGrantResponse is a response for OauthAuthorizationsGetGrant
@@ -813,9 +807,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody is a response body
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody struct {
-	components.Authorization
-}
+type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody components.Authorization
 
 /*
 OauthAuthorizationsGetOrCreateAuthorizationForAppResponse is a response for OauthAuthorizationsGetOrCreateAuthorizationForApp
@@ -967,9 +959,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody is a
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody struct {
-	components.Authorization
-}
+type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody components.Authorization
 
 /*
 OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse is a response for OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
@@ -1107,9 +1097,7 @@ OauthAuthorizationsListAuthorizationsResponseBody is a response body for OauthAu
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-type OauthAuthorizationsListAuthorizationsResponseBody []struct {
-	components.Authorization
-}
+type OauthAuthorizationsListAuthorizationsResponseBody []components.Authorization
 
 /*
 OauthAuthorizationsListAuthorizationsResponse is a response for OauthAuthorizationsListAuthorizations
@@ -1247,9 +1235,7 @@ OauthAuthorizationsListGrantsResponseBody is a response body for OauthAuthorizat
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
-type OauthAuthorizationsListGrantsResponseBody []struct {
-	components.ApplicationGrant
-}
+type OauthAuthorizationsListGrantsResponseBody []components.ApplicationGrant
 
 /*
 OauthAuthorizationsListGrantsResponse is a response for OauthAuthorizationsListGrants
@@ -1410,9 +1396,7 @@ OauthAuthorizationsUpdateAuthorizationResponseBody is a response body for OauthA
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-type OauthAuthorizationsUpdateAuthorizationResponseBody struct {
-	components.Authorization
-}
+type OauthAuthorizationsUpdateAuthorizationResponseBody components.Authorization
 
 /*
 OauthAuthorizationsUpdateAuthorizationResponse is a response for OauthAuthorizationsUpdateAuthorization

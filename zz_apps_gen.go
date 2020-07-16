@@ -257,9 +257,7 @@ AppsCheckAuthorizationResponseBody is a response body for AppsCheckAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-type AppsCheckAuthorizationResponseBody struct {
-	components.AuthorizationWithUser
-}
+type AppsCheckAuthorizationResponseBody components.AuthorizationWithUser
 
 /*
 AppsCheckAuthorizationResponse is a response for AppsCheckAuthorization
@@ -398,9 +396,7 @@ AppsCheckTokenResponseBody is a response body for AppsCheckToken
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-type AppsCheckTokenResponseBody struct {
-	components.AuthorizationWithUser
-}
+type AppsCheckTokenResponseBody components.AuthorizationWithUser
 
 /*
 AppsCheckTokenResponse is a response for AppsCheckToken
@@ -560,9 +556,7 @@ AppsCreateContentAttachmentResponseBody is a response body for AppsCreateContent
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-type AppsCreateContentAttachmentResponseBody struct {
-	components.ContentReferenceAttachment
-}
+type AppsCreateContentAttachmentResponseBody components.ContentReferenceAttachment
 
 /*
 AppsCreateContentAttachmentResponse is a response for AppsCreateContentAttachment
@@ -689,9 +683,7 @@ AppsCreateFromManifestResponseBody is a response body for AppsCreateFromManifest
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-type AppsCreateFromManifestResponseBody struct {
-	components.IntegrationFromManifest
-}
+type AppsCreateFromManifestResponseBody components.IntegrationFromManifest
 
 /*
 AppsCreateFromManifestResponse is a response for AppsCreateFromManifest
@@ -858,9 +850,7 @@ AppsCreateInstallationAccessTokenResponseBody is a response body for AppsCreateI
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-type AppsCreateInstallationAccessTokenResponseBody struct {
-	components.InstallationToken
-}
+type AppsCreateInstallationAccessTokenResponseBody components.InstallationToken
 
 /*
 AppsCreateInstallationAccessTokenResponse is a response for AppsCreateInstallationAccessToken
@@ -1388,9 +1378,7 @@ AppsGetAuthenticatedResponseBody is a response body for AppsGetAuthenticated
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
-type AppsGetAuthenticatedResponseBody struct {
-	components.InstalledIntegration
-}
+type AppsGetAuthenticatedResponseBody components.InstalledIntegration
 
 /*
 AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
@@ -1529,9 +1517,7 @@ AppsGetBySlugResponseBody is a response body for AppsGetBySlug
 
 https://developer.github.com/v3/apps/#get-an-app
 */
-type AppsGetBySlugResponseBody struct {
-	components.Integration
-}
+type AppsGetBySlugResponseBody components.Integration
 
 /*
 AppsGetBySlugResponse is a response for AppsGetBySlug
@@ -1670,9 +1656,7 @@ AppsGetInstallationResponseBody is a response body for AppsGetInstallation
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
-type AppsGetInstallationResponseBody struct {
-	components.BaseInstallation
-}
+type AppsGetInstallationResponseBody components.BaseInstallation
 
 /*
 AppsGetInstallationResponse is a response for AppsGetInstallation
@@ -1811,9 +1795,7 @@ AppsGetOrgInstallationResponseBody is a response body for AppsGetOrgInstallation
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
-type AppsGetOrgInstallationResponseBody struct {
-	components.Installation
-}
+type AppsGetOrgInstallationResponseBody components.Installation
 
 /*
 AppsGetOrgInstallationResponse is a response for AppsGetOrgInstallation
@@ -1953,9 +1935,7 @@ AppsGetRepoInstallationResponseBody is a response body for AppsGetRepoInstallati
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
-type AppsGetRepoInstallationResponseBody struct {
-	components.Installation
-}
+type AppsGetRepoInstallationResponseBody components.Installation
 
 /*
 AppsGetRepoInstallationResponse is a response for AppsGetRepoInstallation
@@ -2082,9 +2062,7 @@ AppsGetSubscriptionPlanForAccountResponseBody is a response body for AppsGetSubs
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-type AppsGetSubscriptionPlanForAccountResponseBody struct {
-	components.MarketplacePurchase
-}
+type AppsGetSubscriptionPlanForAccountResponseBody components.MarketplacePurchase
 
 /*
 AppsGetSubscriptionPlanForAccountResponse is a response for AppsGetSubscriptionPlanForAccount
@@ -2211,9 +2189,7 @@ AppsGetSubscriptionPlanForAccountStubbedResponseBody is a response body for Apps
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-type AppsGetSubscriptionPlanForAccountStubbedResponseBody struct {
-	components.MarketplacePurchase
-}
+type AppsGetSubscriptionPlanForAccountStubbedResponseBody components.MarketplacePurchase
 
 /*
 AppsGetSubscriptionPlanForAccountStubbedResponse is a response for AppsGetSubscriptionPlanForAccountStubbed
@@ -2352,9 +2328,7 @@ AppsGetUserInstallationResponseBody is a response body for AppsGetUserInstallati
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
-type AppsGetUserInstallationResponseBody struct {
-	components.Installation
-}
+type AppsGetUserInstallationResponseBody components.Installation
 
 /*
 AppsGetUserInstallationResponse is a response for AppsGetUserInstallation
@@ -2511,9 +2485,7 @@ AppsListAccountsForPlanResponseBody is a response body for AppsListAccountsForPl
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-type AppsListAccountsForPlanResponseBody []struct {
-	components.MarketplacePurchase
-}
+type AppsListAccountsForPlanResponseBody []components.MarketplacePurchase
 
 /*
 AppsListAccountsForPlanResponse is a response for AppsListAccountsForPlan
@@ -2670,9 +2642,7 @@ AppsListAccountsForPlanStubbedResponseBody is a response body for AppsListAccoun
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-type AppsListAccountsForPlanStubbedResponseBody []struct {
-	components.MarketplacePurchase
-}
+type AppsListAccountsForPlanStubbedResponseBody []components.MarketplacePurchase
 
 /*
 AppsListAccountsForPlanStubbedResponse is a response for AppsListAccountsForPlanStubbed
@@ -2835,10 +2805,8 @@ AppsListInstallationReposForAuthenticatedUserResponseBody is a response body for
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserResponseBody struct {
-	Repositories []struct {
-		components.Repository
-	} `json:"repositories,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Repositories []components.Repository `json:"repositories,omitempty"`
+	TotalCount   int64                   `json:"total_count,omitempty"`
 }
 
 /*
@@ -2989,9 +2957,7 @@ AppsListInstallationsResponseBody is a response body for AppsListInstallations
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
-type AppsListInstallationsResponseBody []struct {
-	components.BaseInstallation
-}
+type AppsListInstallationsResponseBody []components.BaseInstallation
 
 /*
 AppsListInstallationsResponse is a response for AppsListInstallations
@@ -3142,10 +3108,8 @@ AppsListInstallationsForAuthenticatedUserResponseBody is a response body for App
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserResponseBody struct {
-	Installations []struct {
-		components.BaseInstallationForAuthUser
-	} `json:"installations,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Installations []components.BaseInstallationForAuthUser `json:"installations,omitempty"`
+	TotalCount    int64                                    `json:"total_count,omitempty"`
 }
 
 /*
@@ -3284,9 +3248,7 @@ AppsListPlansResponseBody is a response body for AppsListPlans
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-type AppsListPlansResponseBody []struct {
-	components.MarketplaceListingPlan
-}
+type AppsListPlansResponseBody []components.MarketplaceListingPlan
 
 /*
 AppsListPlansResponse is a response for AppsListPlans
@@ -3424,9 +3386,7 @@ AppsListPlansStubbedResponseBody is a response body for AppsListPlansStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-type AppsListPlansStubbedResponseBody []struct {
-	components.MarketplaceListingPlan
-}
+type AppsListPlansStubbedResponseBody []components.MarketplaceListingPlan
 
 /*
 AppsListPlansStubbedResponse is a response for AppsListPlansStubbed
@@ -3588,10 +3548,8 @@ AppsListReposAccessibleToInstallationResponseBody is a response body for AppsLis
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
 type AppsListReposAccessibleToInstallationResponseBody struct {
-	Repositories []struct {
-		components.Repository2
-	} `json:"repositories,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Repositories []components.Repository2 `json:"repositories,omitempty"`
+	TotalCount   int64                    `json:"total_count,omitempty"`
 }
 
 /*
@@ -3730,9 +3688,7 @@ AppsListSubscriptionsForAuthenticatedUserResponseBody is a response body for App
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-type AppsListSubscriptionsForAuthenticatedUserResponseBody []struct {
-	components.UserMarketplacePurchase
-}
+type AppsListSubscriptionsForAuthenticatedUserResponseBody []components.UserMarketplacePurchase
 
 /*
 AppsListSubscriptionsForAuthenticatedUserResponse is a response for AppsListSubscriptionsForAuthenticatedUser
@@ -3870,9 +3826,7 @@ AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody is a response body 
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody []struct {
-	components.UserMarketplacePurchase
-}
+type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody []components.UserMarketplacePurchase
 
 /*
 AppsListSubscriptionsForAuthenticatedUserStubbedResponse is a response for AppsListSubscriptionsForAuthenticatedUserStubbed
@@ -4131,9 +4085,7 @@ AppsResetAuthorizationResponseBody is a response body for AppsResetAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-type AppsResetAuthorizationResponseBody struct {
-	components.AuthorizationWithUser
-}
+type AppsResetAuthorizationResponseBody components.AuthorizationWithUser
 
 /*
 AppsResetAuthorizationResponse is a response for AppsResetAuthorization
@@ -4272,9 +4224,7 @@ AppsResetTokenResponseBody is a response body for AppsResetToken
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-type AppsResetTokenResponseBody struct {
-	components.AuthorizationWithUser
-}
+type AppsResetTokenResponseBody components.AuthorizationWithUser
 
 /*
 AppsResetTokenResponse is a response for AppsResetToken

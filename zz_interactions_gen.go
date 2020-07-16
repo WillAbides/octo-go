@@ -138,9 +138,7 @@ InteractionsGetRestrictionsForOrgResponseBody is a response body for Interaction
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-type InteractionsGetRestrictionsForOrgResponseBody struct {
-	components.InteractionLimit
-}
+type InteractionsGetRestrictionsForOrgResponseBody components.InteractionLimit
 
 /*
 InteractionsGetRestrictionsForOrgResponse is a response for InteractionsGetRestrictionsForOrg
@@ -282,9 +280,7 @@ InteractionsGetRestrictionsForRepoResponseBody is a response body for Interactio
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-type InteractionsGetRestrictionsForRepoResponseBody struct {
-	components.InteractionLimit
-}
+type InteractionsGetRestrictionsForRepoResponseBody components.InteractionLimit
 
 /*
 InteractionsGetRestrictionsForRepoResponse is a response for InteractionsGetRestrictionsForRepo
@@ -706,9 +702,7 @@ InteractionsSetRestrictionsForOrgResponseBody is a response body for Interaction
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
-type InteractionsSetRestrictionsForOrgResponseBody struct {
-	components.InteractionLimit
-}
+type InteractionsSetRestrictionsForOrgResponseBody components.InteractionLimit
 
 /*
 InteractionsSetRestrictionsForOrgResponse is a response for InteractionsSetRestrictionsForOrg
@@ -866,9 +860,7 @@ InteractionsSetRestrictionsForRepoResponseBody is a response body for Interactio
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
-type InteractionsSetRestrictionsForRepoResponseBody struct {
-	components.InteractionLimit
-}
+type InteractionsSetRestrictionsForRepoResponseBody components.InteractionLimit
 
 /*
 InteractionsSetRestrictionsForRepoResponse is a response for InteractionsSetRestrictionsForRepo

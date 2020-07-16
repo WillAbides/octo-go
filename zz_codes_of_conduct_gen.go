@@ -136,9 +136,7 @@ CodesOfConductGetAllCodesOfConductResponseBody is a response body for CodesOfCon
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
-type CodesOfConductGetAllCodesOfConductResponseBody []struct {
-	components.CodeOfConductSimple
-}
+type CodesOfConductGetAllCodesOfConductResponseBody []components.CodeOfConductSimple
 
 /*
 CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAllCodesOfConduct
@@ -278,9 +276,7 @@ CodesOfConductGetConductCodeResponseBody is a response body for CodesOfConductGe
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
-type CodesOfConductGetConductCodeResponseBody struct {
-	components.CodeOfConduct
-}
+type CodesOfConductGetConductCodeResponseBody components.CodeOfConduct
 
 /*
 CodesOfConductGetConductCodeResponse is a response for CodesOfConductGetConductCode
@@ -421,9 +417,7 @@ CodesOfConductGetForRepoResponseBody is a response body for CodesOfConductGetFor
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
-type CodesOfConductGetForRepoResponseBody struct {
-	components.CodeOfConduct
-}
+type CodesOfConductGetForRepoResponseBody components.CodeOfConduct
 
 /*
 CodesOfConductGetForRepoResponse is a response for CodesOfConductGetForRepo
