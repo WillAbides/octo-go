@@ -171,11 +171,9 @@ SearchCodeResponseBody is a response body for SearchCode
 https://developer.github.com/v3/search/#search-code
 */
 type SearchCodeResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.CodeSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                              `json:"incomplete_results,omitempty"`
+	Items             []components.CodeSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                             `json:"total_count,omitempty"`
 }
 
 /*
@@ -364,11 +362,9 @@ SearchCommitsResponseBody is a response body for SearchCommits
 https://developer.github.com/v3/search/#search-commits
 */
 type SearchCommitsResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.CommitSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                                `json:"incomplete_results,omitempty"`
+	Items             []components.CommitSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                               `json:"total_count,omitempty"`
 }
 
 /*
@@ -545,11 +541,9 @@ SearchIssuesAndPullRequestsResponseBody is a response body for SearchIssuesAndPu
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 type SearchIssuesAndPullRequestsResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.IssueSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                               `json:"incomplete_results,omitempty"`
+	Items             []components.IssueSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                              `json:"total_count,omitempty"`
 }
 
 /*
@@ -713,11 +707,9 @@ SearchLabelsResponseBody is a response body for SearchLabels
 https://developer.github.com/v3/search/#search-labels
 */
 type SearchLabelsResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.LabelSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                               `json:"incomplete_results,omitempty"`
+	Items             []components.LabelSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                              `json:"total_count,omitempty"`
 }
 
 /*
@@ -902,11 +894,9 @@ SearchReposResponseBody is a response body for SearchRepos
 https://developer.github.com/v3/search/#search-repositories
 */
 type SearchReposResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.RepoSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                              `json:"incomplete_results,omitempty"`
+	Items             []components.RepoSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                             `json:"total_count,omitempty"`
 }
 
 /*
@@ -1059,11 +1049,9 @@ SearchTopicsResponseBody is a response body for SearchTopics
 https://developer.github.com/v3/search/#search-topics
 */
 type SearchTopicsResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.TopicSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                               `json:"incomplete_results,omitempty"`
+	Items             []components.TopicSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                              `json:"total_count,omitempty"`
 }
 
 /*
@@ -1237,11 +1225,9 @@ SearchUsersResponseBody is a response body for SearchUsers
 https://developer.github.com/v3/search/#search-users
 */
 type SearchUsersResponseBody struct {
-	IncompleteResults bool `json:"incomplete_results,omitempty"`
-	Items             []struct {
-		components.UserSearchResultItem
-	} `json:"items,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	IncompleteResults bool                              `json:"incomplete_results,omitempty"`
+	Items             []components.UserSearchResultItem `json:"items,omitempty"`
+	TotalCount        int64                             `json:"total_count,omitempty"`
 }
 
 /*

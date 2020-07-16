@@ -161,9 +161,7 @@ ReactionsCreateForCommitCommentResponseBody is a response body for ReactionsCrea
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-type ReactionsCreateForCommitCommentResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForCommitCommentResponseBody components.Reaction
 
 /*
 ReactionsCreateForCommitCommentResponse is a response for ReactionsCreateForCommitComment
@@ -326,9 +324,7 @@ ReactionsCreateForIssueResponseBody is a response body for ReactionsCreateForIss
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-type ReactionsCreateForIssueResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForIssueResponseBody components.Reaction
 
 /*
 ReactionsCreateForIssueResponse is a response for ReactionsCreateForIssue
@@ -491,9 +487,7 @@ ReactionsCreateForIssueCommentResponseBody is a response body for ReactionsCreat
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-type ReactionsCreateForIssueCommentResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForIssueCommentResponseBody components.Reaction
 
 /*
 ReactionsCreateForIssueCommentResponse is a response for ReactionsCreateForIssueComment
@@ -656,9 +650,7 @@ ReactionsCreateForPullRequestReviewCommentResponseBody is a response body for Re
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-type ReactionsCreateForPullRequestReviewCommentResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForPullRequestReviewCommentResponseBody components.Reaction
 
 /*
 ReactionsCreateForPullRequestReviewCommentResponse is a response for ReactionsCreateForPullRequestReviewComment
@@ -822,9 +814,7 @@ ReactionsCreateForTeamDiscussionCommentInOrgResponseBody is a response body for 
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-type ReactionsCreateForTeamDiscussionCommentInOrgResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForTeamDiscussionCommentInOrgResponseBody components.Reaction
 
 /*
 ReactionsCreateForTeamDiscussionCommentInOrgResponse is a response for ReactionsCreateForTeamDiscussionCommentInOrg
@@ -987,9 +977,7 @@ ReactionsCreateForTeamDiscussionCommentLegacyResponseBody is a response body for
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForTeamDiscussionCommentLegacyResponseBody components.Reaction
 
 /*
 ReactionsCreateForTeamDiscussionCommentLegacyResponse is a response for ReactionsCreateForTeamDiscussionCommentLegacy
@@ -1152,9 +1140,7 @@ ReactionsCreateForTeamDiscussionInOrgResponseBody is a response body for Reactio
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-type ReactionsCreateForTeamDiscussionInOrgResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForTeamDiscussionInOrgResponseBody components.Reaction
 
 /*
 ReactionsCreateForTeamDiscussionInOrgResponse is a response for ReactionsCreateForTeamDiscussionInOrg
@@ -1316,9 +1302,7 @@ ReactionsCreateForTeamDiscussionLegacyResponseBody is a response body for Reacti
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
-type ReactionsCreateForTeamDiscussionLegacyResponseBody struct {
-	components.Reaction
-}
+type ReactionsCreateForTeamDiscussionLegacyResponseBody components.Reaction
 
 /*
 ReactionsCreateForTeamDiscussionLegacyResponse is a response for ReactionsCreateForTeamDiscussionLegacy
@@ -2466,9 +2450,7 @@ ReactionsListForCommitCommentResponseBody is a response body for ReactionsListFo
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-type ReactionsListForCommitCommentResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForCommitCommentResponseBody []components.Reaction
 
 /*
 ReactionsListForCommitCommentResponse is a response for ReactionsListForCommitComment
@@ -2638,9 +2620,7 @@ ReactionsListForIssueResponseBody is a response body for ReactionsListForIssue
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-type ReactionsListForIssueResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForIssueResponseBody []components.Reaction
 
 /*
 ReactionsListForIssueResponse is a response for ReactionsListForIssue
@@ -2810,9 +2790,7 @@ ReactionsListForIssueCommentResponseBody is a response body for ReactionsListFor
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-type ReactionsListForIssueCommentResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForIssueCommentResponseBody []components.Reaction
 
 /*
 ReactionsListForIssueCommentResponse is a response for ReactionsListForIssueComment
@@ -2982,9 +2960,7 @@ ReactionsListForPullRequestReviewCommentResponseBody is a response body for Reac
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-type ReactionsListForPullRequestReviewCommentResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForPullRequestReviewCommentResponseBody []components.Reaction
 
 /*
 ReactionsListForPullRequestReviewCommentResponse is a response for ReactionsListForPullRequestReviewComment
@@ -3155,9 +3131,7 @@ ReactionsListForTeamDiscussionCommentInOrgResponseBody is a response body for Re
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-type ReactionsListForTeamDiscussionCommentInOrgResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForTeamDiscussionCommentInOrgResponseBody []components.Reaction
 
 /*
 ReactionsListForTeamDiscussionCommentInOrgResponse is a response for ReactionsListForTeamDiscussionCommentInOrg
@@ -3327,9 +3301,7 @@ ReactionsListForTeamDiscussionCommentLegacyResponseBody is a response body for R
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
-type ReactionsListForTeamDiscussionCommentLegacyResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForTeamDiscussionCommentLegacyResponseBody []components.Reaction
 
 /*
 ReactionsListForTeamDiscussionCommentLegacyResponse is a response for ReactionsListForTeamDiscussionCommentLegacy
@@ -3499,9 +3471,7 @@ ReactionsListForTeamDiscussionInOrgResponseBody is a response body for Reactions
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-type ReactionsListForTeamDiscussionInOrgResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForTeamDiscussionInOrgResponseBody []components.Reaction
 
 /*
 ReactionsListForTeamDiscussionInOrgResponse is a response for ReactionsListForTeamDiscussionInOrg
@@ -3670,9 +3640,7 @@ ReactionsListForTeamDiscussionLegacyResponseBody is a response body for Reaction
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-type ReactionsListForTeamDiscussionLegacyResponseBody []struct {
-	components.Reaction
-}
+type ReactionsListForTeamDiscussionLegacyResponseBody []components.Reaction
 
 /*
 ReactionsListForTeamDiscussionLegacyResponse is a response for ReactionsListForTeamDiscussionLegacy

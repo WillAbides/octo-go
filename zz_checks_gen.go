@@ -335,9 +335,7 @@ ChecksCreateResponseBody is a response body for ChecksCreate
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-type ChecksCreateResponseBody struct {
-	components.CheckRun
-}
+type ChecksCreateResponseBody components.CheckRun
 
 /*
 ChecksCreateResponse is a response for ChecksCreate
@@ -492,9 +490,7 @@ ChecksCreateSuiteResponseBody is a response body for ChecksCreateSuite
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-type ChecksCreateSuiteResponseBody struct {
-	components.CheckSuite
-}
+type ChecksCreateSuiteResponseBody components.CheckSuite
 
 /*
 ChecksCreateSuiteResponse is a response for ChecksCreateSuite
@@ -638,9 +634,7 @@ ChecksGetResponseBody is a response body for ChecksGet
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-type ChecksGetResponseBody struct {
-	components.CheckRun2
-}
+type ChecksGetResponseBody components.CheckRun2
 
 /*
 ChecksGetResponse is a response for ChecksGet
@@ -784,9 +778,7 @@ ChecksGetSuiteResponseBody is a response body for ChecksGetSuite
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-type ChecksGetSuiteResponseBody struct {
-	components.CheckSuite
-}
+type ChecksGetSuiteResponseBody components.CheckSuite
 
 /*
 ChecksGetSuiteResponse is a response for ChecksGetSuite
@@ -942,9 +934,7 @@ ChecksListAnnotationsResponseBody is a response body for ChecksListAnnotations
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-type ChecksListAnnotationsResponseBody []struct {
-	components.CheckAnnotation
-}
+type ChecksListAnnotationsResponseBody []components.CheckAnnotation
 
 /*
 ChecksListAnnotationsResponse is a response for ChecksListAnnotations
@@ -1125,10 +1115,8 @@ ChecksListForRefResponseBody is a response body for ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefResponseBody struct {
-	CheckRuns []struct {
-		components.CheckRun2
-	} `json:"check_runs,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	CheckRuns  []components.CheckRun2 `json:"check_runs,omitempty"`
+	TotalCount int64                  `json:"total_count,omitempty"`
 }
 
 /*
@@ -1310,10 +1298,8 @@ ChecksListForSuiteResponseBody is a response body for ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteResponseBody struct {
-	CheckRuns []struct {
-		components.CheckRun2
-	} `json:"check_runs,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	CheckRuns  []components.CheckRun2 `json:"check_runs,omitempty"`
+	TotalCount int64                  `json:"total_count,omitempty"`
 }
 
 /*
@@ -1486,10 +1472,8 @@ ChecksListSuitesForRefResponseBody is a response body for ChecksListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ChecksListSuitesForRefResponseBody struct {
-	CheckSuites []struct {
-		components.CheckSuite
-	} `json:"check_suites,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	CheckSuites []components.CheckSuite `json:"check_suites,omitempty"`
+	TotalCount  int64                   `json:"total_count,omitempty"`
 }
 
 /*
@@ -1798,9 +1782,7 @@ ChecksSetSuitesPreferencesResponseBody is a response body for ChecksSetSuitesPre
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-type ChecksSetSuitesPreferencesResponseBody struct {
-	components.CheckSuitePreference
-}
+type ChecksSetSuitesPreferencesResponseBody components.CheckSuitePreference
 
 /*
 ChecksSetSuitesPreferencesResponse is a response for ChecksSetSuitesPreferences
@@ -2124,9 +2106,7 @@ ChecksUpdateResponseBody is a response body for ChecksUpdate
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-type ChecksUpdateResponseBody struct {
-	components.CheckRun2
-}
+type ChecksUpdateResponseBody components.CheckRun2
 
 /*
 ChecksUpdateResponse is a response for ChecksUpdate

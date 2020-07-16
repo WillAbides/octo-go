@@ -249,9 +249,7 @@ ScimGetProvisioningInformationForUserResponseBody is a response body for ScimGet
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
-type ScimGetProvisioningInformationForUserResponseBody struct {
-	components.ScimUser
-}
+type ScimGetProvisioningInformationForUserResponseBody components.ScimUser
 
 /*
 ScimGetProvisioningInformationForUserResponse is a response for ScimGetProvisioningInformationForUser
@@ -408,9 +406,7 @@ ScimListProvisionedIdentitiesResponseBody is a response body for ScimListProvisi
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
-type ScimListProvisionedIdentitiesResponseBody struct {
-	components.ScimUserList
-}
+type ScimListProvisionedIdentitiesResponseBody components.ScimUserList
 
 /*
 ScimListProvisionedIdentitiesResponse is a response for ScimListProvisionedIdentities
@@ -579,9 +575,7 @@ ScimProvisionAndInviteUserResponseBody is a response body for ScimProvisionAndIn
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
-type ScimProvisionAndInviteUserResponseBody struct {
-	components.ScimUser
-}
+type ScimProvisionAndInviteUserResponseBody components.ScimUser
 
 /*
 ScimProvisionAndInviteUserResponse is a response for ScimProvisionAndInviteUser
@@ -753,9 +747,7 @@ ScimSetInformationForProvisionedUserResponseBody is a response body for ScimSetI
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
-type ScimSetInformationForProvisionedUserResponseBody struct {
-	components.ScimUser
-}
+type ScimSetInformationForProvisionedUserResponseBody components.ScimUser
 
 /*
 ScimSetInformationForProvisionedUserResponse is a response for ScimSetInformationForProvisionedUser
@@ -900,9 +892,7 @@ ScimUpdateAttributeForUserResponseBody is a response body for ScimUpdateAttribut
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
-type ScimUpdateAttributeForUserResponseBody struct {
-	components.ScimUser2
-}
+type ScimUpdateAttributeForUserResponseBody components.ScimUser2
 
 /*
 ScimUpdateAttributeForUserResponse is a response for ScimUpdateAttributeForUser

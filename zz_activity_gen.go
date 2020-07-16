@@ -485,9 +485,7 @@ ActivityGetFeedsResponseBody is a response body for ActivityGetFeeds
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-type ActivityGetFeedsResponseBody struct {
-	components.Feed
-}
+type ActivityGetFeedsResponseBody components.Feed
 
 /*
 ActivityGetFeedsResponse is a response for ActivityGetFeeds
@@ -615,9 +613,7 @@ ActivityGetRepoSubscriptionResponseBody is a response body for ActivityGetRepoSu
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
-type ActivityGetRepoSubscriptionResponseBody struct {
-	components.RepositorySubscription
-}
+type ActivityGetRepoSubscriptionResponseBody components.RepositorySubscription
 
 /*
 ActivityGetRepoSubscriptionResponse is a response for ActivityGetRepoSubscription
@@ -744,9 +740,7 @@ ActivityGetThreadResponseBody is a response body for ActivityGetThread
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
-type ActivityGetThreadResponseBody struct {
-	components.Thread
-}
+type ActivityGetThreadResponseBody components.Thread
 
 /*
 ActivityGetThreadResponse is a response for ActivityGetThread
@@ -873,9 +867,7 @@ ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody is a response body
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
-type ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody struct {
-	components.ThreadSubscription
-}
+type ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody components.ThreadSubscription
 
 /*
 ActivityGetThreadSubscriptionForAuthenticatedUserResponse is a response for ActivityGetThreadSubscriptionForAuthenticatedUser
@@ -1178,9 +1170,7 @@ ActivityListNotificationsForAuthenticatedUserResponseBody is a response body for
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
-type ActivityListNotificationsForAuthenticatedUserResponseBody []struct {
-	components.Thread
-}
+type ActivityListNotificationsForAuthenticatedUserResponseBody []components.Thread
 
 /*
 ActivityListNotificationsForAuthenticatedUserResponse is a response for ActivityListNotificationsForAuthenticatedUser
@@ -2397,9 +2387,7 @@ ActivityListRepoNotificationsForAuthenticatedUserResponseBody is a response body
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
-type ActivityListRepoNotificationsForAuthenticatedUserResponseBody []struct {
-	components.Thread
-}
+type ActivityListRepoNotificationsForAuthenticatedUserResponseBody []components.Thread
 
 /*
 ActivityListRepoNotificationsForAuthenticatedUserResponse is a response for ActivityListRepoNotificationsForAuthenticatedUser
@@ -2552,9 +2540,7 @@ ActivityListReposStarredByAuthenticatedUserResponseBody is a response body for A
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-type ActivityListReposStarredByAuthenticatedUserResponseBody []struct {
-	components.Repository
-}
+type ActivityListReposStarredByAuthenticatedUserResponseBody []components.Repository
 
 /*
 ActivityListReposStarredByAuthenticatedUserResponse is a response for ActivityListReposStarredByAuthenticatedUser
@@ -2708,9 +2694,7 @@ ActivityListReposStarredByUserResponseBody is a response body for ActivityListRe
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-type ActivityListReposStarredByUserResponseBody []struct {
-	components.Repository
-}
+type ActivityListReposStarredByUserResponseBody []components.Repository
 
 /*
 ActivityListReposStarredByUserResponse is a response for ActivityListReposStarredByUser
@@ -2849,9 +2833,7 @@ ActivityListReposWatchedByUserResponseBody is a response body for ActivityListRe
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
-type ActivityListReposWatchedByUserResponseBody []struct {
-	components.MinimalRepository
-}
+type ActivityListReposWatchedByUserResponseBody []components.MinimalRepository
 
 /*
 ActivityListReposWatchedByUserResponse is a response for ActivityListReposWatchedByUser
@@ -2991,9 +2973,7 @@ ActivityListStargazersForRepoResponseBody is a response body for ActivityListSta
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-type ActivityListStargazersForRepoResponseBody []struct {
-	components.SimpleUser
-}
+type ActivityListStargazersForRepoResponseBody []components.SimpleUser
 
 /*
 ActivityListStargazersForRepoResponse is a response for ActivityListStargazersForRepo
@@ -3131,9 +3111,7 @@ ActivityListWatchedReposForAuthenticatedUserResponseBody is a response body for 
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
-type ActivityListWatchedReposForAuthenticatedUserResponseBody []struct {
-	components.MinimalRepository
-}
+type ActivityListWatchedReposForAuthenticatedUserResponseBody []components.MinimalRepository
 
 /*
 ActivityListWatchedReposForAuthenticatedUserResponse is a response for ActivityListWatchedReposForAuthenticatedUser
@@ -3273,9 +3251,7 @@ ActivityListWatchersForRepoResponseBody is a response body for ActivityListWatch
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
-type ActivityListWatchersForRepoResponseBody []struct {
-	components.SimpleUser
-}
+type ActivityListWatchersForRepoResponseBody []components.SimpleUser
 
 /*
 ActivityListWatchersForRepoResponse is a response for ActivityListWatchersForRepo
@@ -3808,9 +3784,7 @@ ActivitySetRepoSubscriptionResponseBody is a response body for ActivitySetRepoSu
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-type ActivitySetRepoSubscriptionResponseBody struct {
-	components.RepositorySubscription
-}
+type ActivitySetRepoSubscriptionResponseBody components.RepositorySubscription
 
 /*
 ActivitySetRepoSubscriptionResponse is a response for ActivitySetRepoSubscription
@@ -3952,9 +3926,7 @@ ActivitySetThreadSubscriptionResponseBody is a response body for ActivitySetThre
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-type ActivitySetThreadSubscriptionResponseBody struct {
-	components.ThreadSubscription
-}
+type ActivitySetThreadSubscriptionResponseBody components.ThreadSubscription
 
 /*
 ActivitySetThreadSubscriptionResponse is a response for ActivitySetThreadSubscription

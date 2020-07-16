@@ -123,9 +123,7 @@ MetaGetResponseBody is a response body for MetaGet
 
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
-type MetaGetResponseBody struct {
-	components.ApiOverview
-}
+type MetaGetResponseBody components.ApiOverview
 
 /*
 MetaGetResponse is a response for MetaGet

@@ -765,9 +765,7 @@ OrgsCreateInvitationResponseBody is a response body for OrgsCreateInvitation
 
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
-type OrgsCreateInvitationResponseBody struct {
-	components.OrganizationInvitation
-}
+type OrgsCreateInvitationResponseBody components.OrganizationInvitation
 
 /*
 OrgsCreateInvitationResponse is a response for OrgsCreateInvitation
@@ -954,9 +952,7 @@ OrgsCreateWebhookResponseBody is a response body for OrgsCreateWebhook
 
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
-type OrgsCreateWebhookResponseBody struct {
-	components.OrgHook
-}
+type OrgsCreateWebhookResponseBody components.OrgHook
 
 /*
 OrgsCreateWebhookResponse is a response for OrgsCreateWebhook
@@ -1220,9 +1216,7 @@ OrgsGetResponseBody is a response body for OrgsGet
 
 https://developer.github.com/v3/orgs/#get-an-organization
 */
-type OrgsGetResponseBody struct {
-	components.OrganizationFull
-}
+type OrgsGetResponseBody components.OrganizationFull
 
 /*
 OrgsGetResponse is a response for OrgsGet
@@ -1349,9 +1343,7 @@ OrgsGetMembershipForAuthenticatedUserResponseBody is a response body for OrgsGet
 
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
-type OrgsGetMembershipForAuthenticatedUserResponseBody struct {
-	components.OrgMembership
-}
+type OrgsGetMembershipForAuthenticatedUserResponseBody components.OrgMembership
 
 /*
 OrgsGetMembershipForAuthenticatedUserResponse is a response for OrgsGetMembershipForAuthenticatedUser
@@ -1479,9 +1471,7 @@ OrgsGetMembershipForUserResponseBody is a response body for OrgsGetMembershipFor
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
-type OrgsGetMembershipForUserResponseBody struct {
-	components.OrgMembership
-}
+type OrgsGetMembershipForUserResponseBody components.OrgMembership
 
 /*
 OrgsGetMembershipForUserResponse is a response for OrgsGetMembershipForUser
@@ -1609,9 +1599,7 @@ OrgsGetWebhookResponseBody is a response body for OrgsGetWebhook
 
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
-type OrgsGetWebhookResponseBody struct {
-	components.OrgHook
-}
+type OrgsGetWebhookResponseBody components.OrgHook
 
 /*
 OrgsGetWebhookResponse is a response for OrgsGetWebhook
@@ -1743,9 +1731,7 @@ OrgsListResponseBody is a response body for OrgsList
 
 https://developer.github.com/v3/orgs/#list-organizations
 */
-type OrgsListResponseBody []struct {
-	components.OrganizationSimple
-}
+type OrgsListResponseBody []components.OrganizationSimple
 
 /*
 OrgsListResponse is a response for OrgsList
@@ -1897,10 +1883,8 @@ OrgsListAppInstallationsResponseBody is a response body for OrgsListAppInstallat
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type OrgsListAppInstallationsResponseBody struct {
-	Installations []struct {
-		components.Installation2
-	} `json:"installations,omitempty"`
-	TotalCount int64 `json:"total_count,omitempty"`
+	Installations []components.Installation2 `json:"installations,omitempty"`
+	TotalCount    int64                      `json:"total_count,omitempty"`
 }
 
 /*
@@ -2028,9 +2012,7 @@ OrgsListBlockedUsersResponseBody is a response body for OrgsListBlockedUsers
 
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
-type OrgsListBlockedUsersResponseBody []struct {
-	components.SimpleUser
-}
+type OrgsListBlockedUsersResponseBody []components.SimpleUser
 
 /*
 OrgsListBlockedUsersResponse is a response for OrgsListBlockedUsers
@@ -2168,9 +2150,7 @@ OrgsListForAuthenticatedUserResponseBody is a response body for OrgsListForAuthe
 
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
-type OrgsListForAuthenticatedUserResponseBody []struct {
-	components.OrganizationSimple
-}
+type OrgsListForAuthenticatedUserResponseBody []components.OrganizationSimple
 
 /*
 OrgsListForAuthenticatedUserResponse is a response for OrgsListForAuthenticatedUser
@@ -2309,9 +2289,7 @@ OrgsListForUserResponseBody is a response body for OrgsListForUser
 
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
-type OrgsListForUserResponseBody []struct {
-	components.OrganizationSimple
-}
+type OrgsListForUserResponseBody []components.OrganizationSimple
 
 /*
 OrgsListForUserResponse is a response for OrgsListForUser
@@ -2451,9 +2429,7 @@ OrgsListInvitationTeamsResponseBody is a response body for OrgsListInvitationTea
 
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
-type OrgsListInvitationTeamsResponseBody []struct {
-	components.Team
-}
+type OrgsListInvitationTeamsResponseBody []components.Team
 
 /*
 OrgsListInvitationTeamsResponse is a response for OrgsListInvitationTeams
@@ -2615,9 +2591,7 @@ OrgsListMembersResponseBody is a response body for OrgsListMembers
 
 https://developer.github.com/v3/orgs/members/#list-organization-members
 */
-type OrgsListMembersResponseBody []struct {
-	components.SimpleUser
-}
+type OrgsListMembersResponseBody []components.SimpleUser
 
 /*
 OrgsListMembersResponse is a response for OrgsListMembers
@@ -2765,9 +2739,7 @@ OrgsListMembershipsForAuthenticatedUserResponseBody is a response body for OrgsL
 
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-type OrgsListMembershipsForAuthenticatedUserResponseBody []struct {
-	components.OrgMembership
-}
+type OrgsListMembershipsForAuthenticatedUserResponseBody []components.OrgMembership
 
 /*
 OrgsListMembershipsForAuthenticatedUserResponse is a response for OrgsListMembershipsForAuthenticatedUser
@@ -2917,9 +2889,7 @@ OrgsListOutsideCollaboratorsResponseBody is a response body for OrgsListOutsideC
 
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
-type OrgsListOutsideCollaboratorsResponseBody []struct {
-	components.SimpleUser
-}
+type OrgsListOutsideCollaboratorsResponseBody []components.SimpleUser
 
 /*
 OrgsListOutsideCollaboratorsResponse is a response for OrgsListOutsideCollaborators
@@ -3058,9 +3028,7 @@ OrgsListPendingInvitationsResponseBody is a response body for OrgsListPendingInv
 
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
-type OrgsListPendingInvitationsResponseBody []struct {
-	components.OrganizationInvitation
-}
+type OrgsListPendingInvitationsResponseBody []components.OrganizationInvitation
 
 /*
 OrgsListPendingInvitationsResponse is a response for OrgsListPendingInvitations
@@ -3199,9 +3167,7 @@ OrgsListPublicMembersResponseBody is a response body for OrgsListPublicMembers
 
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
-type OrgsListPublicMembersResponseBody []struct {
-	components.SimpleUser
-}
+type OrgsListPublicMembersResponseBody []components.SimpleUser
 
 /*
 OrgsListPublicMembersResponse is a response for OrgsListPublicMembers
@@ -3328,9 +3294,7 @@ OrgsListSamlSsoAuthorizationsResponseBody is a response body for OrgsListSamlSso
 
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
 */
-type OrgsListSamlSsoAuthorizationsResponseBody []struct {
-	components.CredentialAuthorization
-}
+type OrgsListSamlSsoAuthorizationsResponseBody []components.CredentialAuthorization
 
 /*
 OrgsListSamlSsoAuthorizationsResponse is a response for OrgsListSamlSsoAuthorizations
@@ -3469,9 +3433,7 @@ OrgsListWebhooksResponseBody is a response body for OrgsListWebhooks
 
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
-type OrgsListWebhooksResponseBody []struct {
-	components.OrgHook
-}
+type OrgsListWebhooksResponseBody []components.OrgHook
 
 /*
 OrgsListWebhooksResponse is a response for OrgsListWebhooks
@@ -4329,9 +4291,7 @@ OrgsSetMembershipForUserResponseBody is a response body for OrgsSetMembershipFor
 
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
-type OrgsSetMembershipForUserResponseBody struct {
-	components.OrgMembership
-}
+type OrgsSetMembershipForUserResponseBody components.OrgMembership
 
 /*
 OrgsSetMembershipForUserResponse is a response for OrgsSetMembershipForUser
@@ -4826,9 +4786,7 @@ OrgsUpdateResponseBody is a response body for OrgsUpdate
 
 https://developer.github.com/v3/orgs/#update-an-organization
 */
-type OrgsUpdateResponseBody struct {
-	components.OrganizationFull
-}
+type OrgsUpdateResponseBody components.OrganizationFull
 
 /*
 OrgsUpdateResponse is a response for OrgsUpdate
@@ -4967,9 +4925,7 @@ OrgsUpdateMembershipForAuthenticatedUserResponseBody is a response body for Orgs
 
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
-type OrgsUpdateMembershipForAuthenticatedUserResponseBody struct {
-	components.OrgMembership
-}
+type OrgsUpdateMembershipForAuthenticatedUserResponseBody components.OrgMembership
 
 /*
 OrgsUpdateMembershipForAuthenticatedUserResponse is a response for OrgsUpdateMembershipForAuthenticatedUser
@@ -5154,9 +5110,7 @@ OrgsUpdateWebhookResponseBody is a response body for OrgsUpdateWebhook
 
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
-type OrgsUpdateWebhookResponseBody struct {
-	components.OrgHook
-}
+type OrgsUpdateWebhookResponseBody components.OrgHook
 
 /*
 OrgsUpdateWebhookResponse is a response for OrgsUpdateWebhook

@@ -275,9 +275,7 @@ GistsCreateResponseBody is a response body for GistsCreate
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-type GistsCreateResponseBody struct {
-	components.Gist
-}
+type GistsCreateResponseBody components.Gist
 
 /*
 GistsCreateResponse is a response for GistsCreate
@@ -416,9 +414,7 @@ GistsCreateCommentResponseBody is a response body for GistsCreateComment
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
-type GistsCreateCommentResponseBody struct {
-	components.GistComment
-}
+type GistsCreateCommentResponseBody components.GistComment
 
 /*
 GistsCreateCommentResponse is a response for GistsCreateComment
@@ -782,9 +778,7 @@ GistsForkResponseBody is a response body for GistsFork
 
 https://developer.github.com/v3/gists/#fork-a-gist
 */
-type GistsForkResponseBody struct {
-	components.BaseGist
-}
+type GistsForkResponseBody components.BaseGist
 
 /*
 GistsForkResponse is a response for GistsFork
@@ -911,9 +905,7 @@ GistsGetResponseBody is a response body for GistsGet
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-type GistsGetResponseBody struct {
-	components.Gist
-}
+type GistsGetResponseBody components.Gist
 
 /*
 GistsGetResponse is a response for GistsGet
@@ -1041,9 +1033,7 @@ GistsGetCommentResponseBody is a response body for GistsGetComment
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
-type GistsGetCommentResponseBody struct {
-	components.GistComment
-}
+type GistsGetCommentResponseBody components.GistComment
 
 /*
 GistsGetCommentResponse is a response for GistsGetComment
@@ -1171,9 +1161,7 @@ GistsGetRevisionResponseBody is a response body for GistsGetRevision
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
-type GistsGetRevisionResponseBody struct {
-	components.Gist
-}
+type GistsGetRevisionResponseBody components.Gist
 
 /*
 GistsGetRevisionResponse is a response for GistsGetRevision
@@ -1321,9 +1309,7 @@ GistsListResponseBody is a response body for GistsList
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
-type GistsListResponseBody []struct {
-	components.BaseGist
-}
+type GistsListResponseBody []components.BaseGist
 
 /*
 GistsListResponse is a response for GistsList
@@ -1462,9 +1448,7 @@ GistsListCommentsResponseBody is a response body for GistsListComments
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
-type GistsListCommentsResponseBody []struct {
-	components.GistComment
-}
+type GistsListCommentsResponseBody []components.GistComment
 
 /*
 GistsListCommentsResponse is a response for GistsListComments
@@ -1603,9 +1587,7 @@ GistsListCommitsResponseBody is a response body for GistsListCommits
 
 https://developer.github.com/v3/gists/#list-gist-commits
 */
-type GistsListCommitsResponseBody []struct {
-	components.GistCommit
-}
+type GistsListCommitsResponseBody []components.GistCommit
 
 /*
 GistsListCommitsResponse is a response for GistsListCommits
@@ -1754,9 +1736,7 @@ GistsListForUserResponseBody is a response body for GistsListForUser
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
-type GistsListForUserResponseBody []struct {
-	components.BaseGist
-}
+type GistsListForUserResponseBody []components.BaseGist
 
 /*
 GistsListForUserResponse is a response for GistsListForUser
@@ -1895,9 +1875,7 @@ GistsListForksResponseBody is a response body for GistsListForks
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-type GistsListForksResponseBody []struct {
-	components.GistFork
-}
+type GistsListForksResponseBody []components.GistFork
 
 /*
 GistsListForksResponse is a response for GistsListForks
@@ -2045,9 +2023,7 @@ GistsListPublicResponseBody is a response body for GistsListPublic
 
 https://developer.github.com/v3/gists/#list-public-gists
 */
-type GistsListPublicResponseBody []struct {
-	components.BaseGist
-}
+type GistsListPublicResponseBody []components.BaseGist
 
 /*
 GistsListPublicResponse is a response for GistsListPublic
@@ -2195,9 +2171,7 @@ GistsListStarredResponseBody is a response body for GistsListStarred
 
 https://developer.github.com/v3/gists/#list-starred-gists
 */
-type GistsListStarredResponseBody []struct {
-	components.BaseGist
-}
+type GistsListStarredResponseBody []components.BaseGist
 
 /*
 GistsListStarredResponse is a response for GistsListStarred
@@ -2588,9 +2562,7 @@ GistsUpdateResponseBody is a response body for GistsUpdate
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-type GistsUpdateResponseBody struct {
-	components.Gist
-}
+type GistsUpdateResponseBody components.Gist
 
 /*
 GistsUpdateResponse is a response for GistsUpdate
@@ -2730,9 +2702,7 @@ GistsUpdateCommentResponseBody is a response body for GistsUpdateComment
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
-type GistsUpdateCommentResponseBody struct {
-	components.GistComment
-}
+type GistsUpdateCommentResponseBody components.GistComment
 
 /*
 GistsUpdateCommentResponse is a response for GistsUpdateComment

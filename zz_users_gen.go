@@ -141,9 +141,7 @@ UsersAddEmailForAuthenticatedResponseBody is a response body for UsersAddEmailFo
 
 https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-type UsersAddEmailForAuthenticatedResponseBody []struct {
-	components.Email
-}
+type UsersAddEmailForAuthenticatedResponseBody []components.Email
 
 /*
 UsersAddEmailForAuthenticatedResponse is a response for UsersAddEmailForAuthenticated
@@ -773,9 +771,7 @@ UsersCreateGpgKeyForAuthenticatedResponseBody is a response body for UsersCreate
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
-type UsersCreateGpgKeyForAuthenticatedResponseBody struct {
-	components.GpgKey
-}
+type UsersCreateGpgKeyForAuthenticatedResponseBody components.GpgKey
 
 /*
 UsersCreateGpgKeyForAuthenticatedResponse is a response for UsersCreateGpgKeyForAuthenticated
@@ -924,9 +920,7 @@ UsersCreatePublicSshKeyForAuthenticatedResponseBody is a response body for Users
 
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersCreatePublicSshKeyForAuthenticatedResponseBody struct {
-	components.ActionsPublicKey
-}
+type UsersCreatePublicSshKeyForAuthenticatedResponseBody components.ActionsPublicKey
 
 /*
 UsersCreatePublicSshKeyForAuthenticatedResponse is a response for UsersCreatePublicSshKeyForAuthenticated
@@ -1540,9 +1534,7 @@ UsersGetAuthenticatedResponseBody is a response body for UsersGetAuthenticated
 
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
-type UsersGetAuthenticatedResponseBody struct {
-	components.PrivateUser
-}
+type UsersGetAuthenticatedResponseBody components.PrivateUser
 
 /*
 UsersGetAuthenticatedResponse is a response for UsersGetAuthenticated
@@ -1669,9 +1661,7 @@ UsersGetByUsernameResponseBody is a response body for UsersGetByUsername
 
 https://developer.github.com/v3/users/#get-a-user
 */
-type UsersGetByUsernameResponseBody struct {
-	components.PublicUser
-}
+type UsersGetByUsernameResponseBody components.PublicUser
 
 /*
 UsersGetByUsernameResponse is a response for UsersGetByUsername
@@ -1817,9 +1807,7 @@ UsersGetContextForUserResponseBody is a response body for UsersGetContextForUser
 
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
-type UsersGetContextForUserResponseBody struct {
-	components.Hovercard
-}
+type UsersGetContextForUserResponseBody components.Hovercard
 
 /*
 UsersGetContextForUserResponse is a response for UsersGetContextForUser
@@ -1946,9 +1934,7 @@ UsersGetGpgKeyForAuthenticatedResponseBody is a response body for UsersGetGpgKey
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-type UsersGetGpgKeyForAuthenticatedResponseBody struct {
-	components.GpgKey
-}
+type UsersGetGpgKeyForAuthenticatedResponseBody components.GpgKey
 
 /*
 UsersGetGpgKeyForAuthenticatedResponse is a response for UsersGetGpgKeyForAuthenticated
@@ -2075,9 +2061,7 @@ UsersGetPublicSshKeyForAuthenticatedResponseBody is a response body for UsersGet
 
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersGetPublicSshKeyForAuthenticatedResponseBody struct {
-	components.ActionsPublicKey
-}
+type UsersGetPublicSshKeyForAuthenticatedResponseBody components.ActionsPublicKey
 
 /*
 UsersGetPublicSshKeyForAuthenticatedResponse is a response for UsersGetPublicSshKeyForAuthenticated
@@ -2209,9 +2193,7 @@ UsersListResponseBody is a response body for UsersList
 
 https://developer.github.com/v3/users/#list-users
 */
-type UsersListResponseBody []struct {
-	components.SimpleUser
-}
+type UsersListResponseBody []components.SimpleUser
 
 /*
 UsersListResponse is a response for UsersList
@@ -2337,9 +2319,7 @@ UsersListBlockedByAuthenticatedResponseBody is a response body for UsersListBloc
 
 https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-type UsersListBlockedByAuthenticatedResponseBody []struct {
-	components.SimpleUser
-}
+type UsersListBlockedByAuthenticatedResponseBody []components.SimpleUser
 
 /*
 UsersListBlockedByAuthenticatedResponse is a response for UsersListBlockedByAuthenticated
@@ -2477,9 +2457,7 @@ UsersListEmailsForAuthenticatedResponseBody is a response body for UsersListEmai
 
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-type UsersListEmailsForAuthenticatedResponseBody []struct {
-	components.Email
-}
+type UsersListEmailsForAuthenticatedResponseBody []components.Email
 
 /*
 UsersListEmailsForAuthenticatedResponse is a response for UsersListEmailsForAuthenticated
@@ -2617,9 +2595,7 @@ UsersListFollowedByAuthenticatedResponseBody is a response body for UsersListFol
 
 https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
-type UsersListFollowedByAuthenticatedResponseBody []struct {
-	components.SimpleUser
-}
+type UsersListFollowedByAuthenticatedResponseBody []components.SimpleUser
 
 /*
 UsersListFollowedByAuthenticatedResponse is a response for UsersListFollowedByAuthenticated
@@ -2757,9 +2733,7 @@ UsersListFollowersForAuthenticatedUserResponseBody is a response body for UsersL
 
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
-type UsersListFollowersForAuthenticatedUserResponseBody []struct {
-	components.SimpleUser
-}
+type UsersListFollowersForAuthenticatedUserResponseBody []components.SimpleUser
 
 /*
 UsersListFollowersForAuthenticatedUserResponse is a response for UsersListFollowersForAuthenticatedUser
@@ -2898,9 +2872,7 @@ UsersListFollowersForUserResponseBody is a response body for UsersListFollowersF
 
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
-type UsersListFollowersForUserResponseBody []struct {
-	components.SimpleUser
-}
+type UsersListFollowersForUserResponseBody []components.SimpleUser
 
 /*
 UsersListFollowersForUserResponse is a response for UsersListFollowersForUser
@@ -3039,9 +3011,7 @@ UsersListFollowingForUserResponseBody is a response body for UsersListFollowingF
 
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
-type UsersListFollowingForUserResponseBody []struct {
-	components.SimpleUser
-}
+type UsersListFollowingForUserResponseBody []components.SimpleUser
 
 /*
 UsersListFollowingForUserResponse is a response for UsersListFollowingForUser
@@ -3179,9 +3149,7 @@ UsersListGpgKeysForAuthenticatedResponseBody is a response body for UsersListGpg
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-type UsersListGpgKeysForAuthenticatedResponseBody []struct {
-	components.GpgKey
-}
+type UsersListGpgKeysForAuthenticatedResponseBody []components.GpgKey
 
 /*
 UsersListGpgKeysForAuthenticatedResponse is a response for UsersListGpgKeysForAuthenticated
@@ -3320,9 +3288,7 @@ UsersListGpgKeysForUserResponseBody is a response body for UsersListGpgKeysForUs
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
-type UsersListGpgKeysForUserResponseBody []struct {
-	components.GpgKey
-}
+type UsersListGpgKeysForUserResponseBody []components.GpgKey
 
 /*
 UsersListGpgKeysForUserResponse is a response for UsersListGpgKeysForUser
@@ -3460,9 +3426,7 @@ UsersListPublicEmailsForAuthenticatedResponseBody is a response body for UsersLi
 
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-type UsersListPublicEmailsForAuthenticatedResponseBody []struct {
-	components.Email
-}
+type UsersListPublicEmailsForAuthenticatedResponseBody []components.Email
 
 /*
 UsersListPublicEmailsForAuthenticatedResponse is a response for UsersListPublicEmailsForAuthenticated
@@ -3601,9 +3565,7 @@ UsersListPublicKeysForUserResponseBody is a response body for UsersListPublicKey
 
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
-type UsersListPublicKeysForUserResponseBody []struct {
-	components.KeySimple
-}
+type UsersListPublicKeysForUserResponseBody []components.KeySimple
 
 /*
 UsersListPublicKeysForUserResponse is a response for UsersListPublicKeysForUser
@@ -3741,9 +3703,7 @@ UsersListPublicSshKeysForAuthenticatedResponseBody is a response body for UsersL
 
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-type UsersListPublicSshKeysForAuthenticatedResponseBody []struct {
-	components.ActionsPublicKey
-}
+type UsersListPublicSshKeysForAuthenticatedResponseBody []components.ActionsPublicKey
 
 /*
 UsersListPublicSshKeysForAuthenticatedResponse is a response for UsersListPublicSshKeysForAuthenticated
@@ -3887,9 +3847,7 @@ UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody is a response body fo
 
 https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
-type UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody []struct {
-	components.Email
-}
+type UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody []components.Email
 
 /*
 UsersSetPrimaryEmailVisibilityForAuthenticatedResponse is a response for UsersSetPrimaryEmailVisibilityForAuthenticated
@@ -4284,9 +4242,7 @@ UsersUpdateAuthenticatedResponseBody is a response body for UsersUpdateAuthentic
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
-type UsersUpdateAuthenticatedResponseBody struct {
-	components.PrivateUser
-}
+type UsersUpdateAuthenticatedResponseBody components.PrivateUser
 
 /*
 UsersUpdateAuthenticatedResponse is a response for UsersUpdateAuthenticated

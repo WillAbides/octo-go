@@ -765,9 +765,7 @@ MigrationsGetCommitAuthorsResponseBody is a response body for MigrationsGetCommi
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
-type MigrationsGetCommitAuthorsResponseBody []struct {
-	components.PorterAuthor
-}
+type MigrationsGetCommitAuthorsResponseBody []components.PorterAuthor
 
 /*
 MigrationsGetCommitAuthorsResponse is a response for MigrationsGetCommitAuthors
@@ -895,9 +893,7 @@ MigrationsGetImportStatusResponseBody is a response body for MigrationsGetImport
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-type MigrationsGetImportStatusResponseBody struct {
-	components.Import
-}
+type MigrationsGetImportStatusResponseBody components.Import
 
 /*
 MigrationsGetImportStatusResponse is a response for MigrationsGetImportStatus
@@ -1025,9 +1021,7 @@ MigrationsGetLargeFilesResponseBody is a response body for MigrationsGetLargeFil
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
-type MigrationsGetLargeFilesResponseBody []struct {
-	components.PorterLargeFile
-}
+type MigrationsGetLargeFilesResponseBody []components.PorterLargeFile
 
 /*
 MigrationsGetLargeFilesResponse is a response for MigrationsGetLargeFiles
@@ -1163,9 +1157,7 @@ MigrationsGetStatusForAuthenticatedUserResponseBody is a response body for Migra
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
-type MigrationsGetStatusForAuthenticatedUserResponseBody struct {
-	components.Migration
-}
+type MigrationsGetStatusForAuthenticatedUserResponseBody components.Migration
 
 /*
 MigrationsGetStatusForAuthenticatedUserResponse is a response for MigrationsGetStatusForAuthenticatedUser
@@ -1302,9 +1294,7 @@ MigrationsGetStatusForOrgResponseBody is a response body for MigrationsGetStatus
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
-type MigrationsGetStatusForOrgResponseBody struct {
-	components.MigrationWithShortOrg
-}
+type MigrationsGetStatusForOrgResponseBody components.MigrationWithShortOrg
 
 /*
 MigrationsGetStatusForOrgResponse is a response for MigrationsGetStatusForOrg
@@ -1451,9 +1441,7 @@ MigrationsListForAuthenticatedUserResponseBody is a response body for Migrations
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-type MigrationsListForAuthenticatedUserResponseBody []struct {
-	components.Migration
-}
+type MigrationsListForAuthenticatedUserResponseBody []components.Migration
 
 /*
 MigrationsListForAuthenticatedUserResponse is a response for MigrationsListForAuthenticatedUser
@@ -1601,9 +1589,7 @@ MigrationsListForOrgResponseBody is a response body for MigrationsListForOrg
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-type MigrationsListForOrgResponseBody []struct {
-	components.MigrationWithShortOrg
-}
+type MigrationsListForOrgResponseBody []components.MigrationWithShortOrg
 
 /*
 MigrationsListForOrgResponse is a response for MigrationsListForOrg
@@ -1752,9 +1738,7 @@ MigrationsListReposForOrgResponseBody is a response body for MigrationsListRepos
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
-type MigrationsListReposForOrgResponseBody []struct {
-	components.MinimalRepository
-}
+type MigrationsListReposForOrgResponseBody []components.MinimalRepository
 
 /*
 MigrationsListReposForOrgResponse is a response for MigrationsListReposForOrg
@@ -1902,9 +1886,7 @@ MigrationsListReposForUserResponseBody is a response body for MigrationsListRepo
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-type MigrationsListReposForUserResponseBody []struct {
-	components.MinimalRepository
-}
+type MigrationsListReposForUserResponseBody []components.MinimalRepository
 
 /*
 MigrationsListReposForUserResponse is a response for MigrationsListReposForUser
@@ -2048,9 +2030,7 @@ MigrationsMapCommitAuthorResponseBody is a response body for MigrationsMapCommit
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-type MigrationsMapCommitAuthorResponseBody struct {
-	components.PorterAuthor
-}
+type MigrationsMapCommitAuthorResponseBody components.PorterAuthor
 
 /*
 MigrationsMapCommitAuthorResponse is a response for MigrationsMapCommitAuthor
@@ -2193,9 +2173,7 @@ MigrationsSetLfsPreferenceResponseBody is a response body for MigrationsSetLfsPr
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
-type MigrationsSetLfsPreferenceResponseBody struct {
-	components.Import
-}
+type MigrationsSetLfsPreferenceResponseBody components.Import
 
 /*
 MigrationsSetLfsPreferenceResponse is a response for MigrationsSetLfsPreference
@@ -2346,9 +2324,7 @@ MigrationsStartForAuthenticatedUserResponseBody is a response body for Migration
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-type MigrationsStartForAuthenticatedUserResponseBody struct {
-	components.Migration
-}
+type MigrationsStartForAuthenticatedUserResponseBody components.Migration
 
 /*
 MigrationsStartForAuthenticatedUserResponse is a response for MigrationsStartForAuthenticatedUser
@@ -2499,9 +2475,7 @@ MigrationsStartForOrgResponseBody is a response body for MigrationsStartForOrg
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-type MigrationsStartForOrgResponseBody struct {
-	components.MigrationWithShortOrg
-}
+type MigrationsStartForOrgResponseBody components.MigrationWithShortOrg
 
 /*
 MigrationsStartForOrgResponse is a response for MigrationsStartForOrg
@@ -2658,9 +2632,7 @@ MigrationsStartImportResponseBody is a response body for MigrationsStartImport
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-type MigrationsStartImportResponseBody struct {
-	components.Import2
-}
+type MigrationsStartImportResponseBody components.Import2
 
 /*
 MigrationsStartImportResponse is a response for MigrationsStartImport
@@ -3060,9 +3032,7 @@ MigrationsUpdateImportResponseBody is a response body for MigrationsUpdateImport
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
-type MigrationsUpdateImportResponseBody struct {
-	components.Import2
-}
+type MigrationsUpdateImportResponseBody components.Import2
 
 /*
 MigrationsUpdateImportResponse is a response for MigrationsUpdateImport

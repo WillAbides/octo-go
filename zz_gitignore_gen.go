@@ -250,9 +250,7 @@ GitignoreGetTemplateResponseBody is a response body for GitignoreGetTemplate
 
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
-type GitignoreGetTemplateResponseBody struct {
-	components.GitignoreTemplate
-}
+type GitignoreGetTemplateResponseBody components.GitignoreTemplate
 
 /*
 GitignoreGetTemplateResponse is a response for GitignoreGetTemplate

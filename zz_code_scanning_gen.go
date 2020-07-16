@@ -126,9 +126,7 @@ CodeScanningGetAlertResponseBody is a response body for CodeScanningGetAlert
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-type CodeScanningGetAlertResponseBody struct {
-	components.CodeScanningAlert
-}
+type CodeScanningGetAlertResponseBody components.CodeScanningAlert
 
 /*
 CodeScanningGetAlertResponse is a response for CodeScanningGetAlert
@@ -271,9 +269,7 @@ CodeScanningListAlertsForRepoResponseBody is a response body for CodeScanningLis
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-type CodeScanningListAlertsForRepoResponseBody []struct {
-	components.CodeScanningAlert
-}
+type CodeScanningListAlertsForRepoResponseBody []components.CodeScanningAlert
 
 /*
 CodeScanningListAlertsForRepoResponse is a response for CodeScanningListAlertsForRepo

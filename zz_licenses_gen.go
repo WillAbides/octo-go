@@ -124,9 +124,7 @@ LicensesGetResponseBody is a response body for LicensesGet
 
 https://developer.github.com/v3/licenses/#get-a-license
 */
-type LicensesGetResponseBody struct {
-	components.License
-}
+type LicensesGetResponseBody components.License
 
 /*
 LicensesGetResponse is a response for LicensesGet
@@ -252,9 +250,7 @@ LicensesGetAllCommonlyUsedResponseBody is a response body for LicensesGetAllComm
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
-type LicensesGetAllCommonlyUsedResponseBody []struct {
-	components.LicenseSimple
-}
+type LicensesGetAllCommonlyUsedResponseBody []components.LicenseSimple
 
 /*
 LicensesGetAllCommonlyUsedResponse is a response for LicensesGetAllCommonlyUsed
@@ -382,9 +378,7 @@ LicensesGetForRepoResponseBody is a response body for LicensesGetForRepo
 
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
-type LicensesGetForRepoResponseBody struct {
-	components.LicenseContent
-}
+type LicensesGetForRepoResponseBody components.LicenseContent
 
 /*
 LicensesGetForRepoResponse is a response for LicensesGetForRepo

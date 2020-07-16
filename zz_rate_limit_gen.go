@@ -123,9 +123,7 @@ RateLimitGetResponseBody is a response body for RateLimitGet
 
 https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
-type RateLimitGetResponseBody struct {
-	components.RateLimitOverview
-}
+type RateLimitGetResponseBody components.RateLimitOverview
 
 /*
 RateLimitGetResponse is a response for RateLimitGet
