@@ -43,7 +43,7 @@ func TestAppsGetRepoInstallation(t *testing.T) {
 			MachineManPreview: true,
 		})
 		require.Error(t, err)
-		require.Nil(t, installation.Data)
+		require.Empty(t, installation.Data)
 	})
 }
 

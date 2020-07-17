@@ -31,8 +31,8 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(RateLimitGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = RateLimitGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -133,5 +133,5 @@ https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authen
 type RateLimitGetResponse struct {
 	response
 	request *RateLimitGetReq
-	Data    *RateLimitGetResponseBody
+	Data    RateLimitGetResponseBody
 }

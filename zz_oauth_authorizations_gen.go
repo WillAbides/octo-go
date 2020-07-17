@@ -32,8 +32,8 @@ func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAutho
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsCreateAuthorizationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsCreateAuthorizationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +168,7 @@ https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 type OauthAuthorizationsCreateAuthorizationResponse struct {
 	response
 	request *OauthAuthorizationsCreateAuthorizationReq
-	Data    *OauthAuthorizationsCreateAuthorizationResponseBody
+	Data    OauthAuthorizationsCreateAuthorizationResponseBody
 }
 
 /*
@@ -428,8 +428,8 @@ func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthoriz
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsGetAuthorizationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsGetAuthorizationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -531,7 +531,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 type OauthAuthorizationsGetAuthorizationResponse struct {
 	response
 	request *OauthAuthorizationsGetAuthorizationReq
-	Data    *OauthAuthorizationsGetAuthorizationResponseBody
+	Data    OauthAuthorizationsGetAuthorizationResponseBody
 }
 
 /*
@@ -555,8 +555,8 @@ func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsGetGrantResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsGetGrantResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -658,7 +658,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 type OauthAuthorizationsGetGrantResponse struct {
 	response
 	request *OauthAuthorizationsGetGrantReq
-	Data    *OauthAuthorizationsGetGrantResponseBody
+	Data    OauthAuthorizationsGetGrantResponseBody
 }
 
 /*
@@ -682,8 +682,8 @@ func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -817,7 +817,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 type OauthAuthorizationsGetOrCreateAuthorizationForAppResponse struct {
 	response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppReq
-	Data    *OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody
+	Data    OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody
 }
 
 /*
@@ -841,8 +841,8 @@ func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -969,7 +969,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse struct {
 	response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq
-	Data    *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody
+	Data    OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody
 }
 
 /*
@@ -993,8 +993,8 @@ func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsListAuthorizationsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsListAuthorizationsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1107,7 +1107,7 @@ https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 type OauthAuthorizationsListAuthorizationsResponse struct {
 	response
 	request *OauthAuthorizationsListAuthorizationsReq
-	Data    *OauthAuthorizationsListAuthorizationsResponseBody
+	Data    OauthAuthorizationsListAuthorizationsResponseBody
 }
 
 /*
@@ -1131,8 +1131,8 @@ func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizations
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsListGrantsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsListGrantsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1245,7 +1245,7 @@ https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 type OauthAuthorizationsListGrantsResponse struct {
 	response
 	request *OauthAuthorizationsListGrantsReq
-	Data    *OauthAuthorizationsListGrantsResponseBody
+	Data    OauthAuthorizationsListGrantsResponseBody
 }
 
 /*
@@ -1269,8 +1269,8 @@ func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAutho
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(OauthAuthorizationsUpdateAuthorizationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = OauthAuthorizationsUpdateAuthorizationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1406,5 +1406,5 @@ https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authori
 type OauthAuthorizationsUpdateAuthorizationResponse struct {
 	response
 	request *OauthAuthorizationsUpdateAuthorizationReq
-	Data    *OauthAuthorizationsUpdateAuthorizationResponseBody
+	Data    OauthAuthorizationsUpdateAuthorizationResponseBody
 }

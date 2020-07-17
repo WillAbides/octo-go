@@ -32,8 +32,8 @@ func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksCreateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksCreateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +345,7 @@ https://developer.github.com/v3/checks/runs/#create-a-check-run
 type ChecksCreateResponse struct {
 	response
 	request *ChecksCreateReq
-	Data    *ChecksCreateResponseBody
+	Data    ChecksCreateResponseBody
 }
 
 /*
@@ -369,8 +369,8 @@ func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksCreateSuiteResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksCreateSuiteResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -500,7 +500,7 @@ https://developer.github.com/v3/checks/suites/#create-a-check-suite
 type ChecksCreateSuiteResponse struct {
 	response
 	request *ChecksCreateSuiteReq
-	Data    *ChecksCreateSuiteResponseBody
+	Data    ChecksCreateSuiteResponseBody
 }
 
 /*
@@ -524,8 +524,8 @@ func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*C
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -644,7 +644,7 @@ https://developer.github.com/v3/checks/runs/#get-a-check-run
 type ChecksGetResponse struct {
 	response
 	request *ChecksGetReq
-	Data    *ChecksGetResponseBody
+	Data    ChecksGetResponseBody
 }
 
 /*
@@ -668,8 +668,8 @@ func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksGetSuiteResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksGetSuiteResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -788,7 +788,7 @@ https://developer.github.com/v3/checks/suites/#get-a-check-suite
 type ChecksGetSuiteResponse struct {
 	response
 	request *ChecksGetSuiteReq
-	Data    *ChecksGetSuiteResponseBody
+	Data    ChecksGetSuiteResponseBody
 }
 
 /*
@@ -812,8 +812,8 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksListAnnotationsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksListAnnotationsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -944,7 +944,7 @@ https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 type ChecksListAnnotationsResponse struct {
 	response
 	request *ChecksListAnnotationsReq
-	Data    *ChecksListAnnotationsResponseBody
+	Data    ChecksListAnnotationsResponseBody
 }
 
 /*
@@ -968,8 +968,8 @@ func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksListForRefResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksListForRefResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1127,7 +1127,7 @@ https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 type ChecksListForRefResponse struct {
 	response
 	request *ChecksListForRefReq
-	Data    *ChecksListForRefResponseBody
+	Data    ChecksListForRefResponseBody
 }
 
 /*
@@ -1151,8 +1151,8 @@ func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksListForSuiteResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksListForSuiteResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1310,7 +1310,7 @@ https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 type ChecksListForSuiteResponse struct {
 	response
 	request *ChecksListForSuiteReq
-	Data    *ChecksListForSuiteResponseBody
+	Data    ChecksListForSuiteResponseBody
 }
 
 /*
@@ -1334,8 +1334,8 @@ func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksListSuitesForRefResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksListSuitesForRefResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1484,7 +1484,7 @@ https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-refer
 type ChecksListSuitesForRefResponse struct {
 	response
 	request *ChecksListSuitesForRefReq
-	Data    *ChecksListSuitesForRefResponseBody
+	Data    ChecksListSuitesForRefResponseBody
 }
 
 /*
@@ -1643,8 +1643,8 @@ func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPrefere
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksSetSuitesPreferencesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksSetSuitesPreferencesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1792,7 +1792,7 @@ https://developer.github.com/v3/checks/suites/#update-repository-preferences-for
 type ChecksSetSuitesPreferencesResponse struct {
 	response
 	request *ChecksSetSuitesPreferencesReq
-	Data    *ChecksSetSuitesPreferencesResponseBody
+	Data    ChecksSetSuitesPreferencesResponseBody
 }
 
 /*
@@ -1816,8 +1816,8 @@ func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ChecksUpdateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ChecksUpdateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2116,5 +2116,5 @@ https://developer.github.com/v3/checks/runs/#update-a-check-run
 type ChecksUpdateResponse struct {
 	response
 	request *ChecksUpdateReq
-	Data    *ChecksUpdateResponseBody
+	Data    ChecksUpdateResponseBody
 }

@@ -31,8 +31,8 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(CodesOfConductGetAllCodesOfConductResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = CodesOfConductGetAllCodesOfConductResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 type CodesOfConductGetAllCodesOfConductResponse struct {
 	response
 	request *CodesOfConductGetAllCodesOfConductReq
-	Data    *CodesOfConductGetAllCodesOfConductResponseBody
+	Data    CodesOfConductGetAllCodesOfConductResponseBody
 }
 
 /*
@@ -170,8 +170,8 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(CodesOfConductGetConductCodeResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = CodesOfConductGetConductCodeResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -286,7 +286,7 @@ https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 type CodesOfConductGetConductCodeResponse struct {
 	response
 	request *CodesOfConductGetConductCodeReq
-	Data    *CodesOfConductGetConductCodeResponseBody
+	Data    CodesOfConductGetConductCodeResponseBody
 }
 
 /*
@@ -310,8 +310,8 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(CodesOfConductGetForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = CodesOfConductGetForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -427,5 +427,5 @@ https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-
 type CodesOfConductGetForRepoResponse struct {
 	response
 	request *CodesOfConductGetForRepoReq
-	Data    *CodesOfConductGetForRepoResponseBody
+	Data    CodesOfConductGetForRepoResponseBody
 }

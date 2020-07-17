@@ -163,8 +163,8 @@ func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsCheckAuthorizationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsCheckAuthorizationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 type AppsCheckAuthorizationResponse struct {
 	response
 	request *AppsCheckAuthorizationReq
-	Data    *AppsCheckAuthorizationResponseBody
+	Data    AppsCheckAuthorizationResponseBody
 }
 
 /*
@@ -291,8 +291,8 @@ func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsCheckTokenResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsCheckTokenResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -406,7 +406,7 @@ https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 type AppsCheckTokenResponse struct {
 	response
 	request *AppsCheckTokenReq
-	Data    *AppsCheckTokenResponseBody
+	Data    AppsCheckTokenResponseBody
 }
 
 /*
@@ -430,8 +430,8 @@ func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAtta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsCreateContentAttachmentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsCreateContentAttachmentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +566,7 @@ https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 type AppsCreateContentAttachmentResponse struct {
 	response
 	request *AppsCreateContentAttachmentReq
-	Data    *AppsCreateContentAttachmentResponseBody
+	Data    AppsCreateContentAttachmentResponseBody
 }
 
 /*
@@ -590,8 +590,8 @@ func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsCreateFromManifestResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsCreateFromManifestResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -693,7 +693,7 @@ https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 type AppsCreateFromManifestResponse struct {
 	response
 	request *AppsCreateFromManifestReq
-	Data    *AppsCreateFromManifestResponseBody
+	Data    AppsCreateFromManifestResponseBody
 }
 
 /*
@@ -717,8 +717,8 @@ func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInsta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsCreateInstallationAccessTokenResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsCreateInstallationAccessTokenResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -860,7 +860,7 @@ https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an
 type AppsCreateInstallationAccessTokenResponse struct {
 	response
 	request *AppsCreateInstallationAccessTokenReq
-	Data    *AppsCreateInstallationAccessTokenResponseBody
+	Data    AppsCreateInstallationAccessTokenResponseBody
 }
 
 /*
@@ -1274,8 +1274,8 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetAuthenticatedResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetAuthenticatedResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1388,7 +1388,7 @@ https://developer.github.com/v3/apps/#get-the-authenticated-app
 type AppsGetAuthenticatedResponse struct {
 	response
 	request *AppsGetAuthenticatedReq
-	Data    *AppsGetAuthenticatedResponseBody
+	Data    AppsGetAuthenticatedResponseBody
 }
 
 /*
@@ -1412,8 +1412,8 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetBySlugResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetBySlugResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1527,7 +1527,7 @@ https://developer.github.com/v3/apps/#get-an-app
 type AppsGetBySlugResponse struct {
 	response
 	request *AppsGetBySlugReq
-	Data    *AppsGetBySlugResponseBody
+	Data    AppsGetBySlugResponseBody
 }
 
 /*
@@ -1551,8 +1551,8 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetInstallationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetInstallationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1666,7 +1666,7 @@ https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-
 type AppsGetInstallationResponse struct {
 	response
 	request *AppsGetInstallationReq
-	Data    *AppsGetInstallationResponseBody
+	Data    AppsGetInstallationResponseBody
 }
 
 /*
@@ -1690,8 +1690,8 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetOrgInstallationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetOrgInstallationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1805,7 +1805,7 @@ https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-a
 type AppsGetOrgInstallationResponse struct {
 	response
 	request *AppsGetOrgInstallationReq
-	Data    *AppsGetOrgInstallationResponseBody
+	Data    AppsGetOrgInstallationResponseBody
 }
 
 /*
@@ -1829,8 +1829,8 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetRepoInstallationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetRepoInstallationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1945,7 +1945,7 @@ https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-auth
 type AppsGetRepoInstallationResponse struct {
 	response
 	request *AppsGetRepoInstallationReq
-	Data    *AppsGetRepoInstallationResponseBody
+	Data    AppsGetRepoInstallationResponseBody
 }
 
 /*
@@ -1969,8 +1969,8 @@ func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscrip
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetSubscriptionPlanForAccountResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetSubscriptionPlanForAccountResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2072,7 +2072,7 @@ https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an
 type AppsGetSubscriptionPlanForAccountResponse struct {
 	response
 	request *AppsGetSubscriptionPlanForAccountReq
-	Data    *AppsGetSubscriptionPlanForAccountResponseBody
+	Data    AppsGetSubscriptionPlanForAccountResponseBody
 }
 
 /*
@@ -2096,8 +2096,8 @@ func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetSubscriptionPlanForAccountStubbedResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetSubscriptionPlanForAccountStubbedResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2199,7 +2199,7 @@ https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an
 type AppsGetSubscriptionPlanForAccountStubbedResponse struct {
 	response
 	request *AppsGetSubscriptionPlanForAccountStubbedReq
-	Data    *AppsGetSubscriptionPlanForAccountStubbedResponseBody
+	Data    AppsGetSubscriptionPlanForAccountStubbedResponseBody
 }
 
 /*
@@ -2223,8 +2223,8 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsGetUserInstallationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsGetUserInstallationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2338,7 +2338,7 @@ https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authentica
 type AppsGetUserInstallationResponse struct {
 	response
 	request *AppsGetUserInstallationReq
-	Data    *AppsGetUserInstallationResponseBody
+	Data    AppsGetUserInstallationResponseBody
 }
 
 /*
@@ -2362,8 +2362,8 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListAccountsForPlanResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListAccountsForPlanResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2495,7 +2495,7 @@ https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 type AppsListAccountsForPlanResponse struct {
 	response
 	request *AppsListAccountsForPlanReq
-	Data    *AppsListAccountsForPlanResponseBody
+	Data    AppsListAccountsForPlanResponseBody
 }
 
 /*
@@ -2519,8 +2519,8 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListAccountsForPlanStubbedResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListAccountsForPlanStubbedResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2652,7 +2652,7 @@ https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubb
 type AppsListAccountsForPlanStubbedResponse struct {
 	response
 	request *AppsListAccountsForPlanStubbedReq
-	Data    *AppsListAccountsForPlanStubbedResponseBody
+	Data    AppsListAccountsForPlanStubbedResponseBody
 }
 
 /*
@@ -2676,8 +2676,8 @@ func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *App
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListInstallationReposForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListInstallationReposForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2817,7 +2817,7 @@ https://developer.github.com/v3/apps/installations/#list-repositories-accessible
 type AppsListInstallationReposForAuthenticatedUserResponse struct {
 	response
 	request *AppsListInstallationReposForAuthenticatedUserReq
-	Data    *AppsListInstallationReposForAuthenticatedUserResponseBody
+	Data    AppsListInstallationReposForAuthenticatedUserResponseBody
 }
 
 /*
@@ -2841,8 +2841,8 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListInstallationsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListInstallationsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2967,7 +2967,7 @@ https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-a
 type AppsListInstallationsResponse struct {
 	response
 	request *AppsListInstallationsReq
-	Data    *AppsListInstallationsResponseBody
+	Data    AppsListInstallationsResponseBody
 }
 
 /*
@@ -2991,8 +2991,8 @@ func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListInstallationsForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListInstallationsForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3120,7 +3120,7 @@ https://developer.github.com/v3/apps/installations/#list-app-installations-acces
 type AppsListInstallationsForAuthenticatedUserResponse struct {
 	response
 	request *AppsListInstallationsForAuthenticatedUserReq
-	Data    *AppsListInstallationsForAuthenticatedUserResponseBody
+	Data    AppsListInstallationsForAuthenticatedUserResponseBody
 }
 
 /*
@@ -3144,8 +3144,8 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListPlansResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListPlansResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3258,7 +3258,7 @@ https://developer.github.com/v3/apps/marketplace/#list-plans
 type AppsListPlansResponse struct {
 	response
 	request *AppsListPlansReq
-	Data    *AppsListPlansResponseBody
+	Data    AppsListPlansResponseBody
 }
 
 /*
@@ -3282,8 +3282,8 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListPlansStubbedResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListPlansStubbedResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3396,7 +3396,7 @@ https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 type AppsListPlansStubbedResponse struct {
 	response
 	request *AppsListPlansStubbedReq
-	Data    *AppsListPlansStubbedResponseBody
+	Data    AppsListPlansStubbedResponseBody
 }
 
 /*
@@ -3420,8 +3420,8 @@ func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListRep
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListReposAccessibleToInstallationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListReposAccessibleToInstallationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3560,7 +3560,7 @@ https://developer.github.com/v3/apps/installations/#list-repositories-accessible
 type AppsListReposAccessibleToInstallationResponse struct {
 	response
 	request *AppsListReposAccessibleToInstallationReq
-	Data    *AppsListReposAccessibleToInstallationResponseBody
+	Data    AppsListReposAccessibleToInstallationResponseBody
 }
 
 /*
@@ -3584,8 +3584,8 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListSubscriptionsForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListSubscriptionsForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3698,7 +3698,7 @@ https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-aut
 type AppsListSubscriptionsForAuthenticatedUserResponse struct {
 	response
 	request *AppsListSubscriptionsForAuthenticatedUserReq
-	Data    *AppsListSubscriptionsForAuthenticatedUserResponseBody
+	Data    AppsListSubscriptionsForAuthenticatedUserResponseBody
 }
 
 /*
@@ -3722,8 +3722,8 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3836,7 +3836,7 @@ https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-aut
 type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
 	response
 	request *AppsListSubscriptionsForAuthenticatedUserStubbedReq
-	Data    *AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody
+	Data    AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody
 }
 
 /*
@@ -3991,8 +3991,8 @@ func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsResetAuthorizationResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsResetAuthorizationResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4095,7 +4095,7 @@ https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 type AppsResetAuthorizationResponse struct {
 	response
 	request *AppsResetAuthorizationReq
-	Data    *AppsResetAuthorizationResponseBody
+	Data    AppsResetAuthorizationResponseBody
 }
 
 /*
@@ -4119,8 +4119,8 @@ func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(AppsResetTokenResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = AppsResetTokenResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4234,7 +4234,7 @@ https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 type AppsResetTokenResponse struct {
 	response
 	request *AppsResetTokenReq
-	Data    *AppsResetTokenResponseBody
+	Data    AppsResetTokenResponseBody
 }
 
 /*

@@ -31,8 +31,8 @@ func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaG
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MetaGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MetaGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -133,5 +133,5 @@ https://developer.github.com/v3/meta/#get-github-meta-information
 type MetaGetResponse struct {
 	response
 	request *MetaGetReq
-	Data    *MetaGetResponseBody
+	Data    MetaGetResponseBody
 }

@@ -21,7 +21,7 @@ func TestReposGetContent(t *testing.T) {
 			Path:  "generator/main.go",
 		})
 		require.NoError(t, err)
-		require.Len(t, *response.Data, 1)
+		require.Len(t, response.Data, 1)
 	})
 
 	t.Run("directory", func(t *testing.T) {
@@ -34,7 +34,7 @@ func TestReposGetContent(t *testing.T) {
 			Path:  "generator",
 		})
 		require.NoError(t, err)
-		require.Greater(t, len(*response.Data), 1)
+		require.Greater(t, len(response.Data), 1)
 	})
 }
 

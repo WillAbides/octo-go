@@ -32,8 +32,8 @@ func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitCreateBlobResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitCreateBlobResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ https://developer.github.com/v3/git/blobs/#create-a-blob
 type GitCreateBlobResponse struct {
 	response
 	request *GitCreateBlobReq
-	Data    *GitCreateBlobResponseBody
+	Data    GitCreateBlobResponseBody
 }
 
 /*
@@ -178,8 +178,8 @@ func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitCreateCommitResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitCreateCommitResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -366,7 +366,7 @@ https://developer.github.com/v3/git/commits/#create-a-commit
 type GitCreateCommitResponse struct {
 	response
 	request *GitCreateCommitReq
-	Data    *GitCreateCommitResponseBody
+	Data    GitCreateCommitResponseBody
 }
 
 /*
@@ -390,8 +390,8 @@ func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitCreateRefResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitCreateRefResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -512,7 +512,7 @@ https://developer.github.com/v3/git/refs/#create-a-reference
 type GitCreateRefResponse struct {
 	response
 	request *GitCreateRefReq
-	Data    *GitCreateRefResponseBody
+	Data    GitCreateRefResponseBody
 }
 
 /*
@@ -536,8 +536,8 @@ func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitCreateTagResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitCreateTagResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -683,7 +683,7 @@ https://developer.github.com/v3/git/tags/#create-a-tag-object
 type GitCreateTagResponse struct {
 	response
 	request *GitCreateTagReq
-	Data    *GitCreateTagResponseBody
+	Data    GitCreateTagResponseBody
 }
 
 /*
@@ -707,8 +707,8 @@ func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitCreateTreeResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitCreateTreeResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -865,7 +865,7 @@ https://developer.github.com/v3/git/trees/#create-a-tree
 type GitCreateTreeResponse struct {
 	response
 	request *GitCreateTreeReq
-	Data    *GitCreateTreeResponseBody
+	Data    GitCreateTreeResponseBody
 }
 
 /*
@@ -1009,8 +1009,8 @@ func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitGetBlobResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitGetBlobResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1114,7 +1114,7 @@ https://developer.github.com/v3/git/blobs/#get-a-blob
 type GitGetBlobResponse struct {
 	response
 	request *GitGetBlobReq
-	Data    *GitGetBlobResponseBody
+	Data    GitGetBlobResponseBody
 }
 
 /*
@@ -1138,8 +1138,8 @@ func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitGetCommitResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitGetCommitResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1243,7 +1243,7 @@ https://developer.github.com/v3/git/commits/#get-a-commit
 type GitGetCommitResponse struct {
 	response
 	request *GitGetCommitReq
-	Data    *GitGetCommitResponseBody
+	Data    GitGetCommitResponseBody
 }
 
 /*
@@ -1267,8 +1267,8 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*G
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitGetRefResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitGetRefResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1372,7 +1372,7 @@ https://developer.github.com/v3/git/refs/#get-a-reference
 type GitGetRefResponse struct {
 	response
 	request *GitGetRefReq
-	Data    *GitGetRefResponseBody
+	Data    GitGetRefResponseBody
 }
 
 /*
@@ -1396,8 +1396,8 @@ func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*G
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitGetTagResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitGetTagResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1501,7 +1501,7 @@ https://developer.github.com/v3/git/tags/#get-a-tag
 type GitGetTagResponse struct {
 	response
 	request *GitGetTagReq
-	Data    *GitGetTagResponseBody
+	Data    GitGetTagResponseBody
 }
 
 /*
@@ -1525,8 +1525,8 @@ func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitGetTreeResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitGetTreeResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1642,7 +1642,7 @@ https://developer.github.com/v3/git/trees/#get-a-tree
 type GitGetTreeResponse struct {
 	response
 	request *GitGetTreeReq
-	Data    *GitGetTreeResponseBody
+	Data    GitGetTreeResponseBody
 }
 
 /*
@@ -1666,8 +1666,8 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitListMatchingRefsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitListMatchingRefsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1783,7 +1783,7 @@ https://developer.github.com/v3/git/refs/#list-matching-references
 type GitListMatchingRefsResponse struct {
 	response
 	request *GitListMatchingRefsReq
-	Data    *GitListMatchingRefsResponseBody
+	Data    GitListMatchingRefsResponseBody
 }
 
 /*
@@ -1807,8 +1807,8 @@ func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(GitUpdateRefResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = GitUpdateRefResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1931,5 +1931,5 @@ https://developer.github.com/v3/git/refs/#update-a-reference
 type GitUpdateRefResponse struct {
 	response
 	request *GitUpdateRefReq
-	Data    *GitUpdateRefResponseBody
+	Data    GitUpdateRefResponseBody
 }

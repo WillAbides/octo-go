@@ -43,8 +43,8 @@ func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
 			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")
 		case len(responseCodesWithBodies(endpoint)) > 0:
-			group.Id("resp").Dot("Data").Op("=").New(jen.Id(respBodyStructName(endpoint)))
-			group.Id("err").Op("=").Id("r.decodeBody(resp.Data)")
+			group.Id("resp").Dot("Data").Op("=").Id(respBodyStructName(endpoint)).Block()
+			group.Id("err").Op("=").Id("r.decodeBody(&resp.Data)")
 		default:
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")
 		}

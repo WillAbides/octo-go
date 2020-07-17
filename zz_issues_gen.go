@@ -32,8 +32,8 @@ func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesAddAssigneesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesAddAssigneesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 type IssuesAddAssigneesResponse struct {
 	response
 	request *IssuesAddAssigneesReq
-	Data    *IssuesAddAssigneesResponseBody
+	Data    IssuesAddAssigneesResponseBody
 }
 
 /*
@@ -176,8 +176,8 @@ func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesAddLabelsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesAddLabelsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +298,7 @@ https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 type IssuesAddLabelsResponse struct {
 	response
 	request *IssuesAddLabelsReq
-	Data    *IssuesAddLabelsResponseBody
+	Data    IssuesAddLabelsResponseBody
 }
 
 /*
@@ -447,8 +447,8 @@ func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesCreateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesCreateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -592,7 +592,7 @@ https://developer.github.com/v3/issues/#create-an-issue
 type IssuesCreateResponse struct {
 	response
 	request *IssuesCreateReq
-	Data    *IssuesCreateResponseBody
+	Data    IssuesCreateResponseBody
 }
 
 /*
@@ -616,8 +616,8 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesCreateCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesCreateCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -733,7 +733,7 @@ https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 type IssuesCreateCommentResponse struct {
 	response
 	request *IssuesCreateCommentReq
-	Data    *IssuesCreateCommentResponseBody
+	Data    IssuesCreateCommentResponseBody
 }
 
 /*
@@ -757,8 +757,8 @@ func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesCreateLabelResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesCreateLabelResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -889,7 +889,7 @@ https://developer.github.com/v3/issues/labels/#create-a-label
 type IssuesCreateLabelResponse struct {
 	response
 	request *IssuesCreateLabelReq
-	Data    *IssuesCreateLabelResponseBody
+	Data    IssuesCreateLabelResponseBody
 }
 
 /*
@@ -913,8 +913,8 @@ func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesCreateMilestoneResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesCreateMilestoneResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1041,7 +1041,7 @@ https://developer.github.com/v3/issues/milestones/#create-a-milestone
 type IssuesCreateMilestoneResponse struct {
 	response
 	request *IssuesCreateMilestoneReq
-	Data    *IssuesCreateMilestoneResponseBody
+	Data    IssuesCreateMilestoneResponseBody
 }
 
 /*
@@ -1425,8 +1425,8 @@ func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*I
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1546,7 +1546,7 @@ https://developer.github.com/v3/issues/#get-an-issue
 type IssuesGetResponse struct {
 	response
 	request *IssuesGetReq
-	Data    *IssuesGetResponseBody
+	Data    IssuesGetResponseBody
 }
 
 /*
@@ -1570,8 +1570,8 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesGetCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesGetCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1701,7 +1701,7 @@ https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 type IssuesGetCommentResponse struct {
 	response
 	request *IssuesGetCommentReq
-	Data    *IssuesGetCommentResponseBody
+	Data    IssuesGetCommentResponseBody
 }
 
 /*
@@ -1725,8 +1725,8 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesGetEventResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesGetEventResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1867,7 +1867,7 @@ https://developer.github.com/v3/issues/events/#get-an-issue-event
 type IssuesGetEventResponse struct {
 	response
 	request *IssuesGetEventReq
-	Data    *IssuesGetEventResponseBody
+	Data    IssuesGetEventResponseBody
 }
 
 /*
@@ -1891,8 +1891,8 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesGetLabelResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesGetLabelResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1996,7 +1996,7 @@ https://developer.github.com/v3/issues/labels/#get-a-label
 type IssuesGetLabelResponse struct {
 	response
 	request *IssuesGetLabelReq
-	Data    *IssuesGetLabelResponseBody
+	Data    IssuesGetLabelResponseBody
 }
 
 /*
@@ -2020,8 +2020,8 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesGetMilestoneResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesGetMilestoneResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2125,7 +2125,7 @@ https://developer.github.com/v3/issues/milestones/#get-a-milestone
 type IssuesGetMilestoneResponse struct {
 	response
 	request *IssuesGetMilestoneReq
-	Data    *IssuesGetMilestoneResponseBody
+	Data    IssuesGetMilestoneResponseBody
 }
 
 /*
@@ -2149,8 +2149,8 @@ func IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2340,7 +2340,7 @@ https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticate
 type IssuesListResponse struct {
 	response
 	request *IssuesListReq
-	Data    *IssuesListResponseBody
+	Data    IssuesListResponseBody
 }
 
 /*
@@ -2364,8 +2364,8 @@ func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListAssigneesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListAssigneesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2480,7 +2480,7 @@ https://developer.github.com/v3/issues/assignees/#list-assignees
 type IssuesListAssigneesResponse struct {
 	response
 	request *IssuesListAssigneesReq
-	Data    *IssuesListAssigneesResponseBody
+	Data    IssuesListAssigneesResponseBody
 }
 
 /*
@@ -2504,8 +2504,8 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListCommentsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListCommentsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2647,7 +2647,7 @@ https://developer.github.com/v3/issues/comments/#list-issue-comments
 type IssuesListCommentsResponse struct {
 	response
 	request *IssuesListCommentsReq
-	Data    *IssuesListCommentsResponseBody
+	Data    IssuesListCommentsResponseBody
 }
 
 /*
@@ -2671,8 +2671,8 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListCommentsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListCommentsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2825,7 +2825,7 @@ https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repos
 type IssuesListCommentsForRepoResponse struct {
 	response
 	request *IssuesListCommentsForRepoReq
-	Data    *IssuesListCommentsForRepoResponseBody
+	Data    IssuesListCommentsForRepoResponseBody
 }
 
 /*
@@ -2849,8 +2849,8 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListEventsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListEventsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2995,7 +2995,7 @@ https://developer.github.com/v3/issues/events/#list-issue-events
 type IssuesListEventsResponse struct {
 	response
 	request *IssuesListEventsReq
-	Data    *IssuesListEventsResponseBody
+	Data    IssuesListEventsResponseBody
 }
 
 /*
@@ -3019,8 +3019,8 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListEventsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListEventsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3164,7 +3164,7 @@ https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repositor
 type IssuesListEventsForRepoResponse struct {
 	response
 	request *IssuesListEventsForRepoReq
-	Data    *IssuesListEventsForRepoResponseBody
+	Data    IssuesListEventsForRepoResponseBody
 }
 
 /*
@@ -3188,8 +3188,8 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListEventsForTimelineResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListEventsForTimelineResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3336,7 +3336,7 @@ https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-iss
 type IssuesListEventsForTimelineResponse struct {
 	response
 	request *IssuesListEventsForTimelineReq
-	Data    *IssuesListEventsForTimelineResponseBody
+	Data    IssuesListEventsForTimelineResponseBody
 }
 
 /*
@@ -3360,8 +3360,8 @@ func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3551,7 +3551,7 @@ https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the
 type IssuesListForAuthenticatedUserResponse struct {
 	response
 	request *IssuesListForAuthenticatedUserReq
-	Data    *IssuesListForAuthenticatedUserResponseBody
+	Data    IssuesListForAuthenticatedUserResponseBody
 }
 
 /*
@@ -3575,8 +3575,8 @@ func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3767,7 +3767,7 @@ https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the
 type IssuesListForOrgResponse struct {
 	response
 	request *IssuesListForOrgReq
-	Data    *IssuesListForOrgResponseBody
+	Data    IssuesListForOrgResponseBody
 }
 
 /*
@@ -3791,8 +3791,8 @@ func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4001,7 +4001,7 @@ https://developer.github.com/v3/issues/#list-repository-issues
 type IssuesListForRepoResponse struct {
 	response
 	request *IssuesListForRepoReq
-	Data    *IssuesListForRepoResponseBody
+	Data    IssuesListForRepoResponseBody
 }
 
 /*
@@ -4025,8 +4025,8 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListLabelsForMilestoneResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListLabelsForMilestoneResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4142,7 +4142,7 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-miles
 type IssuesListLabelsForMilestoneResponse struct {
 	response
 	request *IssuesListLabelsForMilestoneReq
-	Data    *IssuesListLabelsForMilestoneResponseBody
+	Data    IssuesListLabelsForMilestoneResponseBody
 }
 
 /*
@@ -4166,8 +4166,8 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListLabelsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListLabelsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4282,7 +4282,7 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 type IssuesListLabelsForRepoResponse struct {
 	response
 	request *IssuesListLabelsForRepoReq
-	Data    *IssuesListLabelsForRepoResponseBody
+	Data    IssuesListLabelsForRepoResponseBody
 }
 
 /*
@@ -4306,8 +4306,8 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListLabelsOnIssueResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListLabelsOnIssueResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4423,7 +4423,7 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 type IssuesListLabelsOnIssueResponse struct {
 	response
 	request *IssuesListLabelsOnIssueReq
-	Data    *IssuesListLabelsOnIssueResponseBody
+	Data    IssuesListLabelsOnIssueResponseBody
 }
 
 /*
@@ -4447,8 +4447,8 @@ func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesListMilestonesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesListMilestonesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4581,7 +4581,7 @@ https://developer.github.com/v3/issues/milestones/#list-milestones
 type IssuesListMilestonesResponse struct {
 	response
 	request *IssuesListMilestonesReq
-	Data    *IssuesListMilestonesResponseBody
+	Data    IssuesListMilestonesResponseBody
 }
 
 /*
@@ -4877,8 +4877,8 @@ func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesRemoveAssigneesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesRemoveAssigneesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4998,7 +4998,7 @@ https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 type IssuesRemoveAssigneesResponse struct {
 	response
 	request *IssuesRemoveAssigneesReq
-	Data    *IssuesRemoveAssigneesResponseBody
+	Data    IssuesRemoveAssigneesResponseBody
 }
 
 /*
@@ -5022,8 +5022,8 @@ func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesRemoveLabelResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesRemoveLabelResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5128,7 +5128,7 @@ https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 type IssuesRemoveLabelResponse struct {
 	response
 	request *IssuesRemoveLabelReq
-	Data    *IssuesRemoveLabelResponseBody
+	Data    IssuesRemoveLabelResponseBody
 }
 
 /*
@@ -5152,8 +5152,8 @@ func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesSetLabelsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesSetLabelsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5274,7 +5274,7 @@ https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 type IssuesSetLabelsResponse struct {
 	response
 	request *IssuesSetLabelsReq
-	Data    *IssuesSetLabelsResponseBody
+	Data    IssuesSetLabelsResponseBody
 }
 
 /*
@@ -5418,8 +5418,8 @@ func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesUpdateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesUpdateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5570,7 +5570,7 @@ https://developer.github.com/v3/issues/#update-an-issue
 type IssuesUpdateResponse struct {
 	response
 	request *IssuesUpdateReq
-	Data    *IssuesUpdateResponseBody
+	Data    IssuesUpdateResponseBody
 }
 
 /*
@@ -5594,8 +5594,8 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesUpdateCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesUpdateCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5711,7 +5711,7 @@ https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 type IssuesUpdateCommentResponse struct {
 	response
 	request *IssuesUpdateCommentReq
-	Data    *IssuesUpdateCommentResponseBody
+	Data    IssuesUpdateCommentResponseBody
 }
 
 /*
@@ -5735,8 +5735,8 @@ func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesUpdateLabelResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesUpdateLabelResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5868,7 +5868,7 @@ https://developer.github.com/v3/issues/labels/#update-a-label
 type IssuesUpdateLabelResponse struct {
 	response
 	request *IssuesUpdateLabelReq
-	Data    *IssuesUpdateLabelResponseBody
+	Data    IssuesUpdateLabelResponseBody
 }
 
 /*
@@ -5892,8 +5892,8 @@ func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(IssuesUpdateMilestoneResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = IssuesUpdateMilestoneResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6021,5 +6021,5 @@ https://developer.github.com/v3/issues/milestones/#update-a-milestone
 type IssuesUpdateMilestoneResponse struct {
 	response
 	request *IssuesUpdateMilestoneReq
-	Data    *IssuesUpdateMilestoneResponseBody
+	Data    IssuesUpdateMilestoneResponseBody
 }

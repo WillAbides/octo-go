@@ -31,8 +31,8 @@ func BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetGithubActionsBillingGheResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetGithubActionsBillingGheResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enter
 type BillingGetGithubActionsBillingGheResponse struct {
 	response
 	request *BillingGetGithubActionsBillingGheReq
-	Data    *BillingGetGithubActionsBillingGheResponseBody
+	Data    BillingGetGithubActionsBillingGheResponseBody
 }
 
 /*
@@ -160,8 +160,8 @@ func BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetGithubActionsBillingOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetGithubActionsBillingOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organ
 type BillingGetGithubActionsBillingOrgResponse struct {
 	response
 	request *BillingGetGithubActionsBillingOrgReq
-	Data    *BillingGetGithubActionsBillingOrgResponseBody
+	Data    BillingGetGithubActionsBillingOrgResponseBody
 }
 
 /*
@@ -287,8 +287,8 @@ func BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGith
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetGithubActionsBillingUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetGithubActionsBillingUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -390,7 +390,7 @@ https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 type BillingGetGithubActionsBillingUserResponse struct {
 	response
 	request *BillingGetGithubActionsBillingUserReq
-	Data    *BillingGetGithubActionsBillingUserResponseBody
+	Data    BillingGetGithubActionsBillingUserResponseBody
 }
 
 /*
@@ -414,8 +414,8 @@ func BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGith
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetGithubPackagesBillingGheResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetGithubPackagesBillingGheResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -519,7 +519,7 @@ https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-ente
 type BillingGetGithubPackagesBillingGheResponse struct {
 	response
 	request *BillingGetGithubPackagesBillingGheReq
-	Data    *BillingGetGithubPackagesBillingGheResponseBody
+	Data    BillingGetGithubPackagesBillingGheResponseBody
 }
 
 /*
@@ -543,8 +543,8 @@ func BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGith
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetGithubPackagesBillingOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetGithubPackagesBillingOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -646,7 +646,7 @@ https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-orga
 type BillingGetGithubPackagesBillingOrgResponse struct {
 	response
 	request *BillingGetGithubPackagesBillingOrgReq
-	Data    *BillingGetGithubPackagesBillingOrgResponseBody
+	Data    BillingGetGithubPackagesBillingOrgResponseBody
 }
 
 /*
@@ -670,8 +670,8 @@ func BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGit
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetGithubPackagesBillingUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetGithubPackagesBillingUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -773,7 +773,7 @@ https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 type BillingGetGithubPackagesBillingUserResponse struct {
 	response
 	request *BillingGetGithubPackagesBillingUserReq
-	Data    *BillingGetGithubPackagesBillingUserResponseBody
+	Data    BillingGetGithubPackagesBillingUserResponseBody
 }
 
 /*
@@ -797,8 +797,8 @@ func BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetShare
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetSharedStorageBillingGheResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetSharedStorageBillingGheResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -902,7 +902,7 @@ https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enter
 type BillingGetSharedStorageBillingGheResponse struct {
 	response
 	request *BillingGetSharedStorageBillingGheReq
-	Data    *BillingGetSharedStorageBillingGheResponseBody
+	Data    BillingGetSharedStorageBillingGheResponseBody
 }
 
 /*
@@ -926,8 +926,8 @@ func BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetShare
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetSharedStorageBillingOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetSharedStorageBillingOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1029,7 +1029,7 @@ https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organ
 type BillingGetSharedStorageBillingOrgResponse struct {
 	response
 	request *BillingGetSharedStorageBillingOrgReq
-	Data    *BillingGetSharedStorageBillingOrgResponseBody
+	Data    BillingGetSharedStorageBillingOrgResponseBody
 }
 
 /*
@@ -1053,8 +1053,8 @@ func BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetShar
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(BillingGetSharedStorageBillingUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = BillingGetSharedStorageBillingUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1156,5 +1156,5 @@ https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 type BillingGetSharedStorageBillingUserResponse struct {
 	response
 	request *BillingGetSharedStorageBillingUserReq
-	Data    *BillingGetSharedStorageBillingUserResponseBody
+	Data    BillingGetSharedStorageBillingUserResponseBody
 }

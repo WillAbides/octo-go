@@ -54,7 +54,7 @@ func TestPaging(t *testing.T) {
 	for ok {
 		resp, err := client.IssuesListForRepo(ctx, req)
 		require.NoError(t, err)
-		for _, data := range *resp.Data {
+		for _, data := range resp.Data {
 			got = append(got, data.Id)
 		}
 		ok = req.Rel(octo.RelNext, resp)
@@ -80,8 +80,8 @@ func TestDistinguishesBodies(t *testing.T) {
 			HeadSha: octo.String("deadbeef"),
 		},
 	}
-	respBody1 := &octo.ChecksCreateResponseBody{Conclusion: "conclusion 1"}
-	respBody2 := &octo.ChecksCreateResponseBody{Conclusion: "conclusion 2"}
+	respBody1 := octo.ChecksCreateResponseBody{Conclusion: "conclusion 1"}
+	respBody2 := octo.ChecksCreateResponseBody{Conclusion: "conclusion 2"}
 	ctx := context.Background()
 	server := New(octo.PreserveResponseBody())
 	t.Cleanup(server.Finish)

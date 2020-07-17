@@ -577,8 +577,8 @@ func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsCreateRegistrationTokenForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsCreateRegistrationTokenForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +680,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 type ActionsCreateRegistrationTokenForOrgResponse struct {
 	response
 	request *ActionsCreateRegistrationTokenForOrgReq
-	Data    *ActionsCreateRegistrationTokenForOrgResponseBody
+	Data    ActionsCreateRegistrationTokenForOrgResponseBody
 }
 
 /*
@@ -704,8 +704,8 @@ func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCrea
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsCreateRegistrationTokenForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsCreateRegistrationTokenForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -808,7 +808,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 type ActionsCreateRegistrationTokenForRepoResponse struct {
 	response
 	request *ActionsCreateRegistrationTokenForRepoReq
-	Data    *ActionsCreateRegistrationTokenForRepoResponseBody
+	Data    ActionsCreateRegistrationTokenForRepoResponseBody
 }
 
 /*
@@ -832,8 +832,8 @@ func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemov
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsCreateRemoveTokenForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsCreateRemoveTokenForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -935,7 +935,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 type ActionsCreateRemoveTokenForOrgResponse struct {
 	response
 	request *ActionsCreateRemoveTokenForOrgReq
-	Data    *ActionsCreateRemoveTokenForOrgResponseBody
+	Data    ActionsCreateRemoveTokenForOrgResponseBody
 }
 
 /*
@@ -959,8 +959,8 @@ func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsCreateRemoveTokenForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsCreateRemoveTokenForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1063,7 +1063,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 type ActionsCreateRemoveTokenForRepoResponse struct {
 	response
 	request *ActionsCreateRemoveTokenForRepoReq
-	Data    *ActionsCreateRemoveTokenForRepoResponseBody
+	Data    ActionsCreateRemoveTokenForRepoResponseBody
 }
 
 /*
@@ -2427,8 +2427,8 @@ func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetArtifactResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetArtifactResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2532,7 +2532,7 @@ https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 type ActionsGetArtifactResponse struct {
 	response
 	request *ActionsGetArtifactReq
-	Data    *ActionsGetArtifactResponseBody
+	Data    ActionsGetArtifactResponseBody
 }
 
 /*
@@ -2556,8 +2556,8 @@ func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkf
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetJobForWorkflowRunResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetJobForWorkflowRunResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2661,7 +2661,7 @@ https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-
 type ActionsGetJobForWorkflowRunResponse struct {
 	response
 	request *ActionsGetJobForWorkflowRunReq
-	Data    *ActionsGetJobForWorkflowRunResponseBody
+	Data    ActionsGetJobForWorkflowRunResponseBody
 }
 
 /*
@@ -2685,8 +2685,8 @@ func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetOrgPublicKeyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetOrgPublicKeyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2788,7 +2788,7 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 type ActionsGetOrgPublicKeyResponse struct {
 	response
 	request *ActionsGetOrgPublicKeyReq
-	Data    *ActionsGetOrgPublicKeyResponseBody
+	Data    ActionsGetOrgPublicKeyResponseBody
 }
 
 /*
@@ -2812,8 +2812,8 @@ func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetOrgSecretResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetOrgSecretResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2916,7 +2916,7 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 type ActionsGetOrgSecretResponse struct {
 	response
 	request *ActionsGetOrgSecretReq
-	Data    *ActionsGetOrgSecretResponseBody
+	Data    ActionsGetOrgSecretResponseBody
 }
 
 /*
@@ -2940,8 +2940,8 @@ func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetRepoPublicKeyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetRepoPublicKeyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3044,7 +3044,7 @@ https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 type ActionsGetRepoPublicKeyResponse struct {
 	response
 	request *ActionsGetRepoPublicKeyReq
-	Data    *ActionsGetRepoPublicKeyResponseBody
+	Data    ActionsGetRepoPublicKeyResponseBody
 }
 
 /*
@@ -3068,8 +3068,8 @@ func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetRepoSecretResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetRepoSecretResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3173,7 +3173,7 @@ https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 type ActionsGetRepoSecretResponse struct {
 	response
 	request *ActionsGetRepoSecretReq
-	Data    *ActionsGetRepoSecretResponseBody
+	Data    ActionsGetRepoSecretResponseBody
 }
 
 /*
@@ -3197,8 +3197,8 @@ func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetSelfHostedRunnerForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetSelfHostedRunnerForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3301,7 +3301,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-r
 type ActionsGetSelfHostedRunnerForOrgResponse struct {
 	response
 	request *ActionsGetSelfHostedRunnerForOrgReq
-	Data    *ActionsGetSelfHostedRunnerForOrgResponseBody
+	Data    ActionsGetSelfHostedRunnerForOrgResponseBody
 }
 
 /*
@@ -3325,8 +3325,8 @@ func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfH
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetSelfHostedRunnerForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetSelfHostedRunnerForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3430,7 +3430,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-r
 type ActionsGetSelfHostedRunnerForRepoResponse struct {
 	response
 	request *ActionsGetSelfHostedRunnerForRepoReq
-	Data    *ActionsGetSelfHostedRunnerForRepoResponseBody
+	Data    ActionsGetSelfHostedRunnerForRepoResponseBody
 }
 
 /*
@@ -3454,8 +3454,8 @@ func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetWorkflowResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetWorkflowResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3559,7 +3559,7 @@ https://developer.github.com/v3/actions/workflows/#get-a-workflow
 type ActionsGetWorkflowResponse struct {
 	response
 	request *ActionsGetWorkflowReq
-	Data    *ActionsGetWorkflowResponseBody
+	Data    ActionsGetWorkflowResponseBody
 }
 
 /*
@@ -3583,8 +3583,8 @@ func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetWorkflowRunResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetWorkflowRunResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3688,7 +3688,7 @@ https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 type ActionsGetWorkflowRunResponse struct {
 	response
 	request *ActionsGetWorkflowRunReq
-	Data    *ActionsGetWorkflowRunResponseBody
+	Data    ActionsGetWorkflowRunResponseBody
 }
 
 /*
@@ -3712,8 +3712,8 @@ func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunU
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetWorkflowRunUsageResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetWorkflowRunUsageResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3817,7 +3817,7 @@ https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 type ActionsGetWorkflowRunUsageResponse struct {
 	response
 	request *ActionsGetWorkflowRunUsageReq
-	Data    *ActionsGetWorkflowRunUsageResponseBody
+	Data    ActionsGetWorkflowRunUsageResponseBody
 }
 
 /*
@@ -3841,8 +3841,8 @@ func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsGetWorkflowUsageResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsGetWorkflowUsageResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3946,7 +3946,7 @@ https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 type ActionsGetWorkflowUsageResponse struct {
 	response
 	request *ActionsGetWorkflowUsageReq
-	Data    *ActionsGetWorkflowUsageResponseBody
+	Data    ActionsGetWorkflowUsageResponseBody
 }
 
 /*
@@ -3970,8 +3970,8 @@ func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsF
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListArtifactsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListArtifactsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4089,7 +4089,7 @@ https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-reposito
 type ActionsListArtifactsForRepoResponse struct {
 	response
 	request *ActionsListArtifactsForRepoReq
-	Data    *ActionsListArtifactsForRepoResponseBody
+	Data    ActionsListArtifactsForRepoResponseBody
 }
 
 /*
@@ -4113,8 +4113,8 @@ func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForW
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListJobsForWorkflowRunResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListJobsForWorkflowRunResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4244,7 +4244,7 @@ https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-
 type ActionsListJobsForWorkflowRunResponse struct {
 	response
 	request *ActionsListJobsForWorkflowRunReq
-	Data    *ActionsListJobsForWorkflowRunResponseBody
+	Data    ActionsListJobsForWorkflowRunResponseBody
 }
 
 /*
@@ -4268,8 +4268,8 @@ func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListOrgSecretsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListOrgSecretsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4386,7 +4386,7 @@ https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 type ActionsListOrgSecretsResponse struct {
 	response
 	request *ActionsListOrgSecretsReq
-	Data    *ActionsListOrgSecretsResponseBody
+	Data    ActionsListOrgSecretsResponseBody
 }
 
 /*
@@ -4410,8 +4410,8 @@ func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListRepoSecretsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListRepoSecretsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4529,7 +4529,7 @@ https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 type ActionsListRepoSecretsResponse struct {
 	response
 	request *ActionsListRepoSecretsReq
-	Data    *ActionsListRepoSecretsResponseBody
+	Data    ActionsListRepoSecretsResponseBody
 }
 
 /*
@@ -4553,8 +4553,8 @@ func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflows
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListRepoWorkflowsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListRepoWorkflowsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4672,7 +4672,7 @@ https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 type ActionsListRepoWorkflowsResponse struct {
 	response
 	request *ActionsListRepoWorkflowsReq
-	Data    *ActionsListRepoWorkflowsResponseBody
+	Data    ActionsListRepoWorkflowsResponseBody
 }
 
 /*
@@ -4696,8 +4696,8 @@ func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListRunnerApplicationsForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListRunnerApplicationsForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4799,7 +4799,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 type ActionsListRunnerApplicationsForOrgResponse struct {
 	response
 	request *ActionsListRunnerApplicationsForOrgReq
-	Data    *ActionsListRunnerApplicationsForOrgResponseBody
+	Data    ActionsListRunnerApplicationsForOrgResponseBody
 }
 
 /*
@@ -4823,8 +4823,8 @@ func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListR
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListRunnerApplicationsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListRunnerApplicationsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4927,7 +4927,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 type ActionsListRunnerApplicationsForRepoResponse struct {
 	response
 	request *ActionsListRunnerApplicationsForRepoReq
-	Data    *ActionsListRunnerApplicationsForRepoResponseBody
+	Data    ActionsListRunnerApplicationsForRepoResponseBody
 }
 
 /*
@@ -4951,8 +4951,8 @@ func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListSelectedReposForOrgSecretResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListSelectedReposForOrgSecretResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5058,7 +5058,7 @@ https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-
 type ActionsListSelectedReposForOrgSecretResponse struct {
 	response
 	request *ActionsListSelectedReposForOrgSecretReq
-	Data    *ActionsListSelectedReposForOrgSecretResponseBody
+	Data    ActionsListSelectedReposForOrgSecretResponseBody
 }
 
 /*
@@ -5082,8 +5082,8 @@ func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSel
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListSelfHostedRunnersForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListSelfHostedRunnersForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5200,7 +5200,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-ru
 type ActionsListSelfHostedRunnersForOrgResponse struct {
 	response
 	request *ActionsListSelfHostedRunnersForOrgReq
-	Data    *ActionsListSelfHostedRunnersForOrgResponseBody
+	Data    ActionsListSelfHostedRunnersForOrgResponseBody
 }
 
 /*
@@ -5224,8 +5224,8 @@ func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListSelfHostedRunnersForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListSelfHostedRunnersForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5343,7 +5343,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-ru
 type ActionsListSelfHostedRunnersForRepoResponse struct {
 	response
 	request *ActionsListSelfHostedRunnersForRepoReq
-	Data    *ActionsListSelfHostedRunnersForRepoResponseBody
+	Data    ActionsListSelfHostedRunnersForRepoResponseBody
 }
 
 /*
@@ -5367,8 +5367,8 @@ func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkfl
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListWorkflowRunArtifactsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListWorkflowRunArtifactsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5487,7 +5487,7 @@ https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 type ActionsListWorkflowRunArtifactsResponse struct {
 	response
 	request *ActionsListWorkflowRunArtifactsReq
-	Data    *ActionsListWorkflowRunArtifactsResponseBody
+	Data    ActionsListWorkflowRunArtifactsResponseBody
 }
 
 /*
@@ -5511,8 +5511,8 @@ func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListWorkflowRunsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListWorkflowRunsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5671,7 +5671,7 @@ https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 type ActionsListWorkflowRunsResponse struct {
 	response
 	request *ActionsListWorkflowRunsReq
-	Data    *ActionsListWorkflowRunsResponseBody
+	Data    ActionsListWorkflowRunsResponseBody
 }
 
 /*
@@ -5695,8 +5695,8 @@ func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActionsListWorkflowRunsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActionsListWorkflowRunsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5854,7 +5854,7 @@ https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-
 type ActionsListWorkflowRunsForRepoResponse struct {
 	response
 	request *ActionsListWorkflowRunsForRepoReq
-	Data    *ActionsListWorkflowRunsForRepoResponseBody
+	Data    ActionsListWorkflowRunsForRepoResponseBody
 }
 
 /*

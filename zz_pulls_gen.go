@@ -157,8 +157,8 @@ func PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsCreateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsCreateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ https://developer.github.com/v3/pulls/#create-a-pull-request
 type PullsCreateResponse struct {
 	response
 	request *PullsCreateReq
-	Data    *PullsCreateResponseBody
+	Data    PullsCreateResponseBody
 }
 
 /*
@@ -341,8 +341,8 @@ func PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReply
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsCreateReplyForReviewCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsCreateReplyForReviewCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -459,7 +459,7 @@ https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comm
 type PullsCreateReplyForReviewCommentResponse struct {
 	response
 	request *PullsCreateReplyForReviewCommentReq
-	Data    *PullsCreateReplyForReviewCommentResponseBody
+	Data    PullsCreateReplyForReviewCommentResponseBody
 }
 
 /*
@@ -483,8 +483,8 @@ func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsCreateReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsCreateReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -643,7 +643,7 @@ https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-reques
 type PullsCreateReviewResponse struct {
 	response
 	request *PullsCreateReviewReq
-	Data    *PullsCreateReviewResponseBody
+	Data    PullsCreateReviewResponseBody
 }
 
 /*
@@ -667,8 +667,8 @@ func PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewComment
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsCreateReviewCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsCreateReviewCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -848,7 +848,7 @@ https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pu
 type PullsCreateReviewCommentResponse struct {
 	response
 	request *PullsCreateReviewCommentReq
-	Data    *PullsCreateReviewCommentResponseBody
+	Data    PullsCreateReviewCommentResponseBody
 }
 
 /*
@@ -872,8 +872,8 @@ func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReview
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsDeletePendingReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsDeletePendingReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -978,7 +978,7 @@ https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pul
 type PullsDeletePendingReviewResponse struct {
 	response
 	request *PullsDeletePendingReviewReq
-	Data    *PullsDeletePendingReviewResponseBody
+	Data    PullsDeletePendingReviewResponseBody
 }
 
 /*
@@ -1122,8 +1122,8 @@ func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsDismissReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsDismissReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1240,7 +1240,7 @@ https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-reque
 type PullsDismissReviewResponse struct {
 	response
 	request *PullsDismissReviewReq
-	Data    *PullsDismissReviewResponseBody
+	Data    PullsDismissReviewResponseBody
 }
 
 /*
@@ -1264,8 +1264,8 @@ func PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*Pul
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1382,7 +1382,7 @@ https://developer.github.com/v3/pulls/#get-a-pull-request
 type PullsGetResponse struct {
 	response
 	request *PullsGetReq
-	Data    *PullsGetResponseBody
+	Data    PullsGetResponseBody
 }
 
 /*
@@ -1406,8 +1406,8 @@ func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsGetReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsGetReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1512,7 +1512,7 @@ https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 type PullsGetReviewResponse struct {
 	response
 	request *PullsGetReviewReq
-	Data    *PullsGetReviewResponseBody
+	Data    PullsGetReviewResponseBody
 }
 
 /*
@@ -1536,8 +1536,8 @@ func PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsGetReviewCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsGetReviewCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1668,7 +1668,7 @@ https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-
 type PullsGetReviewCommentResponse struct {
 	response
 	request *PullsGetReviewCommentReq
-	Data    *PullsGetReviewCommentResponseBody
+	Data    PullsGetReviewCommentResponseBody
 }
 
 /*
@@ -1692,8 +1692,8 @@ func PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*P
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1862,7 +1862,7 @@ https://developer.github.com/v3/pulls/#list-pull-requests
 type PullsListResponse struct {
 	response
 	request *PullsListReq
-	Data    *PullsListResponseBody
+	Data    PullsListResponseBody
 }
 
 /*
@@ -1886,8 +1886,8 @@ func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListCommentsForReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListCommentsForReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2004,7 +2004,7 @@ https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-
 type PullsListCommentsForReviewResponse struct {
 	response
 	request *PullsListCommentsForReviewReq
-	Data    *PullsListCommentsForReviewResponseBody
+	Data    PullsListCommentsForReviewResponseBody
 }
 
 /*
@@ -2028,8 +2028,8 @@ func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListCommitsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListCommitsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2145,7 +2145,7 @@ https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 type PullsListCommitsResponse struct {
 	response
 	request *PullsListCommitsReq
-	Data    *PullsListCommitsResponseBody
+	Data    PullsListCommitsResponseBody
 }
 
 /*
@@ -2169,8 +2169,8 @@ func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListFilesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListFilesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2286,7 +2286,7 @@ https://developer.github.com/v3/pulls/#list-pull-requests-files
 type PullsListFilesResponse struct {
 	response
 	request *PullsListFilesReq
-	Data    *PullsListFilesResponseBody
+	Data    PullsListFilesResponseBody
 }
 
 /*
@@ -2310,8 +2310,8 @@ func PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedRev
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListRequestedReviewersResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListRequestedReviewersResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2427,7 +2427,7 @@ https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-
 type PullsListRequestedReviewersResponse struct {
 	response
 	request *PullsListRequestedReviewersReq
-	Data    *PullsListRequestedReviewersResponseBody
+	Data    PullsListRequestedReviewersResponseBody
 }
 
 /*
@@ -2451,8 +2451,8 @@ func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListReviewCommentsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListReviewCommentsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2617,7 +2617,7 @@ https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-r
 type PullsListReviewCommentsResponse struct {
 	response
 	request *PullsListReviewCommentsReq
-	Data    *PullsListReviewCommentsResponseBody
+	Data    PullsListReviewCommentsResponseBody
 }
 
 /*
@@ -2641,8 +2641,8 @@ func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCom
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListReviewCommentsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListReviewCommentsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2806,7 +2806,7 @@ https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-reposi
 type PullsListReviewCommentsForRepoResponse struct {
 	response
 	request *PullsListReviewCommentsForRepoReq
-	Data    *PullsListReviewCommentsForRepoResponseBody
+	Data    PullsListReviewCommentsForRepoResponseBody
 }
 
 /*
@@ -2830,8 +2830,8 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsListReviewsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsListReviewsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2947,7 +2947,7 @@ https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 type PullsListReviewsResponse struct {
 	response
 	request *PullsListReviewsReq
-	Data    *PullsListReviewsResponseBody
+	Data    PullsListReviewsResponseBody
 }
 
 /*
@@ -2971,8 +2971,8 @@ func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsMergeResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsMergeResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3100,7 +3100,7 @@ https://developer.github.com/v3/pulls/#merge-a-pull-request
 type PullsMergeResponse struct {
 	response
 	request *PullsMergeReq
-	Data    *PullsMergeResponseBody
+	Data    PullsMergeResponseBody
 }
 
 /*
@@ -3259,8 +3259,8 @@ func PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsRequestReviewersResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsRequestReviewersResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3379,7 +3379,7 @@ https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-p
 type PullsRequestReviewersResponse struct {
 	response
 	request *PullsRequestReviewersReq
-	Data    *PullsRequestReviewersResponseBody
+	Data    PullsRequestReviewersResponseBody
 }
 
 /*
@@ -3403,8 +3403,8 @@ func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsSubmitReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsSubmitReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3530,7 +3530,7 @@ https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-reques
 type PullsSubmitReviewResponse struct {
 	response
 	request *PullsSubmitReviewReq
-	Data    *PullsSubmitReviewResponseBody
+	Data    PullsSubmitReviewResponseBody
 }
 
 /*
@@ -3554,8 +3554,8 @@ func PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsUpdateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsUpdateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3704,7 +3704,7 @@ https://developer.github.com/v3/pulls/#update-a-pull-request
 type PullsUpdateResponse struct {
 	response
 	request *PullsUpdateReq
-	Data    *PullsUpdateResponseBody
+	Data    PullsUpdateResponseBody
 }
 
 /*
@@ -3728,8 +3728,8 @@ func PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsUpdateBranchResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsUpdateBranchResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3869,7 +3869,7 @@ https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 type PullsUpdateBranchResponse struct {
 	response
 	request *PullsUpdateBranchReq
-	Data    *PullsUpdateBranchResponseBody
+	Data    PullsUpdateBranchResponseBody
 }
 
 /*
@@ -3893,8 +3893,8 @@ func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsUpdateReviewResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsUpdateReviewResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4011,7 +4011,7 @@ https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-reques
 type PullsUpdateReviewResponse struct {
 	response
 	request *PullsUpdateReviewReq
-	Data    *PullsUpdateReviewResponseBody
+	Data    PullsUpdateReviewResponseBody
 }
 
 /*
@@ -4035,8 +4035,8 @@ func PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewComment
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(PullsUpdateReviewCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = PullsUpdateReviewCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4162,5 +4162,5 @@ https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pu
 type PullsUpdateReviewCommentResponse struct {
 	response
 	request *PullsUpdateReviewCommentReq
-	Data    *PullsUpdateReviewCommentResponseBody
+	Data    PullsUpdateReviewCommentResponseBody
 }

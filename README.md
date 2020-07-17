@@ -118,7 +118,7 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 		}
 
 		// Add issue titles to the result.
-		for _, issue := range *resp.Data {
+		for _, issue := range resp.Data {
 			result = append(result, issue.Title)
 		}
 
