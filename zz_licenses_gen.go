@@ -31,8 +31,8 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(LicensesGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = LicensesGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +134,7 @@ https://developer.github.com/v3/licenses/#get-a-license
 type LicensesGetResponse struct {
 	response
 	request *LicensesGetReq
-	Data    *LicensesGetResponseBody
+	Data    LicensesGetResponseBody
 }
 
 /*
@@ -158,8 +158,8 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(LicensesGetAllCommonlyUsedResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = LicensesGetAllCommonlyUsedResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 type LicensesGetAllCommonlyUsedResponse struct {
 	response
 	request *LicensesGetAllCommonlyUsedReq
-	Data    *LicensesGetAllCommonlyUsedResponseBody
+	Data    LicensesGetAllCommonlyUsedResponseBody
 }
 
 /*
@@ -284,8 +284,8 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(LicensesGetForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = LicensesGetForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -388,5 +388,5 @@ https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 type LicensesGetForRepoResponse struct {
 	response
 	request *LicensesGetForRepoReq
-	Data    *LicensesGetForRepoResponseBody
+	Data    LicensesGetForRepoResponseBody
 }

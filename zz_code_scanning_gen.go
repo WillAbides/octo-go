@@ -31,8 +31,8 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(CodeScanningGetAlertResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = CodeScanningGetAlertResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 type CodeScanningGetAlertResponse struct {
 	response
 	request *CodeScanningGetAlertReq
-	Data    *CodeScanningGetAlertResponseBody
+	Data    CodeScanningGetAlertResponseBody
 }
 
 /*
@@ -160,8 +160,8 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(CodeScanningListAlertsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = CodeScanningListAlertsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -279,5 +279,5 @@ https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-r
 type CodeScanningListAlertsForRepoResponse struct {
 	response
 	request *CodeScanningListAlertsForRepoReq
-	Data    *CodeScanningListAlertsForRepoResponseBody
+	Data    CodeScanningListAlertsForRepoResponseBody
 }

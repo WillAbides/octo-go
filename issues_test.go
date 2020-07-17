@@ -65,7 +65,7 @@ func TestIssuesListComments(t *testing.T) {
 			resp, err := client.IssuesListComments(ctx, req)
 			require.NoError(t, err)
 			if resp.Data != nil {
-				for _, r := range *resp.Data {
+				for _, r := range resp.Data {
 					commentIDs = append(commentIDs, r.Id)
 				}
 			}

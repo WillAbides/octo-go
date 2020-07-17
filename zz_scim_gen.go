@@ -153,8 +153,8 @@ func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProv
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ScimGetProvisioningInformationForUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ScimGetProvisioningInformationForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +259,7 @@ https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-us
 type ScimGetProvisioningInformationForUserResponse struct {
 	response
 	request *ScimGetProvisioningInformationForUserReq
-	Data    *ScimGetProvisioningInformationForUserResponseBody
+	Data    ScimGetProvisioningInformationForUserResponseBody
 }
 
 /*
@@ -283,8 +283,8 @@ func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisioned
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ScimListProvisionedIdentitiesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ScimListProvisionedIdentitiesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -416,7 +416,7 @@ https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 type ScimListProvisionedIdentitiesResponse struct {
 	response
 	request *ScimListProvisionedIdentitiesReq
-	Data    *ScimListProvisionedIdentitiesResponseBody
+	Data    ScimListProvisionedIdentitiesResponseBody
 }
 
 /*
@@ -440,8 +440,8 @@ func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInvite
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ScimProvisionAndInviteUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ScimProvisionAndInviteUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +585,7 @@ https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 type ScimProvisionAndInviteUserResponse struct {
 	response
 	request *ScimProvisionAndInviteUserReq
-	Data    *ScimProvisionAndInviteUserResponseBody
+	Data    ScimProvisionAndInviteUserResponseBody
 }
 
 /*
@@ -609,8 +609,8 @@ func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInfor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ScimSetInformationForProvisionedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ScimSetInformationForProvisionedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -757,7 +757,7 @@ https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-use
 type ScimSetInformationForProvisionedUserResponse struct {
 	response
 	request *ScimSetInformationForProvisionedUserReq
-	Data    *ScimSetInformationForProvisionedUserResponseBody
+	Data    ScimSetInformationForProvisionedUserResponseBody
 }
 
 /*
@@ -781,8 +781,8 @@ func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ScimUpdateAttributeForUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ScimUpdateAttributeForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -902,5 +902,5 @@ https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 type ScimUpdateAttributeForUserResponse struct {
 	response
 	request *ScimUpdateAttributeForUserReq
-	Data    *ScimUpdateAttributeForUserResponseBody
+	Data    ScimUpdateAttributeForUserResponseBody
 }

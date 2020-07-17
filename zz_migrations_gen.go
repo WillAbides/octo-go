@@ -661,8 +661,8 @@ func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAut
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsGetCommitAuthorsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsGetCommitAuthorsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +775,7 @@ https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 type MigrationsGetCommitAuthorsResponse struct {
 	response
 	request *MigrationsGetCommitAuthorsReq
-	Data    *MigrationsGetCommitAuthorsResponseBody
+	Data    MigrationsGetCommitAuthorsResponseBody
 }
 
 /*
@@ -799,8 +799,8 @@ func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsGetImportStatusResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsGetImportStatusResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -903,7 +903,7 @@ https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 type MigrationsGetImportStatusResponse struct {
 	response
 	request *MigrationsGetImportStatusReq
-	Data    *MigrationsGetImportStatusResponseBody
+	Data    MigrationsGetImportStatusResponseBody
 }
 
 /*
@@ -927,8 +927,8 @@ func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsGetLargeFilesResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsGetLargeFilesResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1031,7 +1031,7 @@ https://developer.github.com/v3/migrations/source_imports/#get-large-files
 type MigrationsGetLargeFilesResponse struct {
 	response
 	request *MigrationsGetLargeFilesReq
-	Data    *MigrationsGetLargeFilesResponseBody
+	Data    MigrationsGetLargeFilesResponseBody
 }
 
 /*
@@ -1055,8 +1055,8 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsGetStatusForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsGetStatusForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1167,7 +1167,7 @@ https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 type MigrationsGetStatusForAuthenticatedUserResponse struct {
 	response
 	request *MigrationsGetStatusForAuthenticatedUserReq
-	Data    *MigrationsGetStatusForAuthenticatedUserResponseBody
+	Data    MigrationsGetStatusForAuthenticatedUserResponseBody
 }
 
 /*
@@ -1191,8 +1191,8 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsGetStatusForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsGetStatusForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1304,7 +1304,7 @@ https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-s
 type MigrationsGetStatusForOrgResponse struct {
 	response
 	request *MigrationsGetStatusForOrgReq
-	Data    *MigrationsGetStatusForOrgResponseBody
+	Data    MigrationsGetStatusForOrgResponseBody
 }
 
 /*
@@ -1328,8 +1328,8 @@ func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsList
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsListForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsListForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1451,7 +1451,7 @@ https://developer.github.com/v3/migrations/users/#list-user-migrations
 type MigrationsListForAuthenticatedUserResponse struct {
 	response
 	request *MigrationsListForAuthenticatedUserReq
-	Data    *MigrationsListForAuthenticatedUserResponseBody
+	Data    MigrationsListForAuthenticatedUserResponseBody
 }
 
 /*
@@ -1475,8 +1475,8 @@ func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsListForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsListForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1599,7 +1599,7 @@ https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 type MigrationsListForOrgResponse struct {
 	response
 	request *MigrationsListForOrgReq
-	Data    *MigrationsListForOrgResponseBody
+	Data    MigrationsListForOrgResponseBody
 }
 
 /*
@@ -1623,8 +1623,8 @@ func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsListReposForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsListReposForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1748,7 +1748,7 @@ https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organiz
 type MigrationsListReposForOrgResponse struct {
 	response
 	request *MigrationsListReposForOrgReq
-	Data    *MigrationsListReposForOrgResponseBody
+	Data    MigrationsListReposForOrgResponseBody
 }
 
 /*
@@ -1772,8 +1772,8 @@ func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsListReposForUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsListReposForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1896,7 +1896,7 @@ https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-m
 type MigrationsListReposForUserResponse struct {
 	response
 	request *MigrationsListReposForUserReq
-	Data    *MigrationsListReposForUserResponseBody
+	Data    MigrationsListReposForUserResponseBody
 }
 
 /*
@@ -1920,8 +1920,8 @@ func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuth
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsMapCommitAuthorResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsMapCommitAuthorResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2040,7 +2040,7 @@ https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 type MigrationsMapCommitAuthorResponse struct {
 	response
 	request *MigrationsMapCommitAuthorReq
-	Data    *MigrationsMapCommitAuthorResponseBody
+	Data    MigrationsMapCommitAuthorResponseBody
 }
 
 /*
@@ -2064,8 +2064,8 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsSetLfsPreferenceResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsSetLfsPreferenceResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2183,7 +2183,7 @@ https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-prefer
 type MigrationsSetLfsPreferenceResponse struct {
 	response
 	request *MigrationsSetLfsPreferenceReq
-	Data    *MigrationsSetLfsPreferenceResponseBody
+	Data    MigrationsSetLfsPreferenceResponseBody
 }
 
 /*
@@ -2207,8 +2207,8 @@ func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsSta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsStartForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsStartForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2334,7 +2334,7 @@ https://developer.github.com/v3/migrations/users/#start-a-user-migration
 type MigrationsStartForAuthenticatedUserResponse struct {
 	response
 	request *MigrationsStartForAuthenticatedUserReq
-	Data    *MigrationsStartForAuthenticatedUserResponseBody
+	Data    MigrationsStartForAuthenticatedUserResponseBody
 }
 
 /*
@@ -2358,8 +2358,8 @@ func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsStartForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsStartForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2485,7 +2485,7 @@ https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 type MigrationsStartForOrgResponse struct {
 	response
 	request *MigrationsStartForOrgReq
-	Data    *MigrationsStartForOrgResponseBody
+	Data    MigrationsStartForOrgResponseBody
 }
 
 /*
@@ -2509,8 +2509,8 @@ func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsStartImportResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsStartImportResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2642,7 +2642,7 @@ https://developer.github.com/v3/migrations/source_imports/#start-an-import
 type MigrationsStartImportResponse struct {
 	response
 	request *MigrationsStartImportReq
-	Data    *MigrationsStartImportResponseBody
+	Data    MigrationsStartImportResponseBody
 }
 
 /*
@@ -2923,8 +2923,8 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(MigrationsUpdateImportResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = MigrationsUpdateImportResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3042,5 +3042,5 @@ https://developer.github.com/v3/migrations/source_imports/#update-an-import
 type MigrationsUpdateImportResponse struct {
 	response
 	request *MigrationsUpdateImportReq
-	Data    *MigrationsUpdateImportResponseBody
+	Data    MigrationsUpdateImportResponseBody
 }

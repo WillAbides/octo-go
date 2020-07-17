@@ -186,8 +186,8 @@ func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsCreateCardResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsCreateCardResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +337,7 @@ https://developer.github.com/v3/projects/cards/#create-a-project-card
 type ProjectsCreateCardResponse struct {
 	response
 	request *ProjectsCreateCardReq
-	Data    *ProjectsCreateCardResponseBody
+	Data    ProjectsCreateCardResponseBody
 }
 
 /*
@@ -361,8 +361,8 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsCreateColumnResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsCreateColumnResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -491,7 +491,7 @@ https://developer.github.com/v3/projects/columns/#create-a-project-column
 type ProjectsCreateColumnResponse struct {
 	response
 	request *ProjectsCreateColumnReq
-	Data    *ProjectsCreateColumnResponseBody
+	Data    ProjectsCreateColumnResponseBody
 }
 
 /*
@@ -515,8 +515,8 @@ func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreate
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsCreateForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsCreateForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -647,7 +647,7 @@ https://developer.github.com/v3/projects/#create-a-user-project
 type ProjectsCreateForAuthenticatedUserResponse struct {
 	response
 	request *ProjectsCreateForAuthenticatedUserReq
-	Data    *ProjectsCreateForAuthenticatedUserResponseBody
+	Data    ProjectsCreateForAuthenticatedUserResponseBody
 }
 
 /*
@@ -671,8 +671,8 @@ func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsCreateForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsCreateForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -804,7 +804,7 @@ https://developer.github.com/v3/projects/#create-an-organization-project
 type ProjectsCreateForOrgResponse struct {
 	response
 	request *ProjectsCreateForOrgReq
-	Data    *ProjectsCreateForOrgResponseBody
+	Data    ProjectsCreateForOrgResponseBody
 }
 
 /*
@@ -828,8 +828,8 @@ func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsCreateForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsCreateForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -962,7 +962,7 @@ https://developer.github.com/v3/projects/#create-a-repository-project
 type ProjectsCreateForRepoResponse struct {
 	response
 	request *ProjectsCreateForRepoReq
-	Data    *ProjectsCreateForRepoResponseBody
+	Data    ProjectsCreateForRepoResponseBody
 }
 
 /*
@@ -1385,8 +1385,8 @@ func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsGetResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1503,7 +1503,7 @@ https://developer.github.com/v3/projects/#get-a-project
 type ProjectsGetResponse struct {
 	response
 	request *ProjectsGetReq
-	Data    *ProjectsGetResponseBody
+	Data    ProjectsGetResponseBody
 }
 
 /*
@@ -1527,8 +1527,8 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsGetCardResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsGetCardResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1645,7 +1645,7 @@ https://developer.github.com/v3/projects/cards/#get-a-project-card
 type ProjectsGetCardResponse struct {
 	response
 	request *ProjectsGetCardReq
-	Data    *ProjectsGetCardResponseBody
+	Data    ProjectsGetCardResponseBody
 }
 
 /*
@@ -1669,8 +1669,8 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsGetColumnResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsGetColumnResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1787,7 +1787,7 @@ https://developer.github.com/v3/projects/columns/#get-a-project-column
 type ProjectsGetColumnResponse struct {
 	response
 	request *ProjectsGetColumnReq
-	Data    *ProjectsGetColumnResponseBody
+	Data    ProjectsGetColumnResponseBody
 }
 
 /*
@@ -1811,8 +1811,8 @@ func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsGetPermissionForUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsGetPermissionForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1930,7 +1930,7 @@ https://developer.github.com/v3/projects/collaborators/#get-project-permission-f
 type ProjectsGetPermissionForUserResponse struct {
 	response
 	request *ProjectsGetPermissionForUserReq
-	Data    *ProjectsGetPermissionForUserResponseBody
+	Data    ProjectsGetPermissionForUserResponseBody
 }
 
 /*
@@ -1954,8 +1954,8 @@ func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsListCardsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsListCardsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2093,7 +2093,7 @@ https://developer.github.com/v3/projects/cards/#list-project-cards
 type ProjectsListCardsResponse struct {
 	response
 	request *ProjectsListCardsReq
-	Data    *ProjectsListCardsResponseBody
+	Data    ProjectsListCardsResponseBody
 }
 
 /*
@@ -2117,8 +2117,8 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsListCollaboratorsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsListCollaboratorsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2260,7 +2260,7 @@ https://developer.github.com/v3/projects/collaborators/#list-project-collaborato
 type ProjectsListCollaboratorsResponse struct {
 	response
 	request *ProjectsListCollaboratorsReq
-	Data    *ProjectsListCollaboratorsResponseBody
+	Data    ProjectsListCollaboratorsResponseBody
 }
 
 /*
@@ -2284,8 +2284,8 @@ func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsListColumnsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsListColumnsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2414,7 +2414,7 @@ https://developer.github.com/v3/projects/columns/#list-project-columns
 type ProjectsListColumnsResponse struct {
 	response
 	request *ProjectsListColumnsReq
-	Data    *ProjectsListColumnsResponseBody
+	Data    ProjectsListColumnsResponseBody
 }
 
 /*
@@ -2438,8 +2438,8 @@ func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsListForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsListForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2577,7 +2577,7 @@ https://developer.github.com/v3/projects/#list-organization-projects
 type ProjectsListForOrgResponse struct {
 	response
 	request *ProjectsListForOrgReq
-	Data    *ProjectsListForOrgResponseBody
+	Data    ProjectsListForOrgResponseBody
 }
 
 /*
@@ -2601,8 +2601,8 @@ func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsListForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsListForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2741,7 +2741,7 @@ https://developer.github.com/v3/projects/#list-repository-projects
 type ProjectsListForRepoResponse struct {
 	response
 	request *ProjectsListForRepoReq
-	Data    *ProjectsListForRepoResponseBody
+	Data    ProjectsListForRepoResponseBody
 }
 
 /*
@@ -2765,8 +2765,8 @@ func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsListForUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsListForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2904,7 +2904,7 @@ https://developer.github.com/v3/projects/#list-user-projects
 type ProjectsListForUserResponse struct {
 	response
 	request *ProjectsListForUserReq
-	Data    *ProjectsListForUserResponseBody
+	Data    ProjectsListForUserResponseBody
 }
 
 /*
@@ -3362,8 +3362,8 @@ func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsUpdateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsUpdateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3536,7 +3536,7 @@ https://developer.github.com/v3/projects/#update-a-project
 type ProjectsUpdateResponse struct {
 	response
 	request *ProjectsUpdateReq
-	Data    *ProjectsUpdateResponseBody
+	Data    ProjectsUpdateResponseBody
 }
 
 /*
@@ -3560,8 +3560,8 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsUpdateCardResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsUpdateCardResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3700,7 +3700,7 @@ https://developer.github.com/v3/projects/cards/#update-a-project-card
 type ProjectsUpdateCardResponse struct {
 	response
 	request *ProjectsUpdateCardReq
-	Data    *ProjectsUpdateCardResponseBody
+	Data    ProjectsUpdateCardResponseBody
 }
 
 /*
@@ -3724,8 +3724,8 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ProjectsUpdateColumnResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ProjectsUpdateColumnResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3854,5 +3854,5 @@ https://developer.github.com/v3/projects/columns/#update-a-project-column
 type ProjectsUpdateColumnResponse struct {
 	response
 	request *ProjectsUpdateColumnReq
-	Data    *ProjectsUpdateColumnResponseBody
+	Data    ProjectsUpdateColumnResponseBody
 }

@@ -31,8 +31,8 @@ func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGet
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(InteractionsGetRestrictionsForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = InteractionsGetRestrictionsForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-
 type InteractionsGetRestrictionsForOrgResponse struct {
 	response
 	request *InteractionsGetRestrictionsForOrgReq
-	Data    *InteractionsGetRestrictionsForOrgResponseBody
+	Data    InteractionsGetRestrictionsForOrgResponseBody
 }
 
 /*
@@ -172,8 +172,8 @@ func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(InteractionsGetRestrictionsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = InteractionsGetRestrictionsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +290,7 @@ https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions
 type InteractionsGetRestrictionsForRepoResponse struct {
 	response
 	request *InteractionsGetRestrictionsForRepoReq
-	Data    *InteractionsGetRestrictionsForRepoResponseBody
+	Data    InteractionsGetRestrictionsForRepoResponseBody
 }
 
 /*
@@ -579,8 +579,8 @@ func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSet
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(InteractionsSetRestrictionsForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = InteractionsSetRestrictionsForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -712,7 +712,7 @@ https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-
 type InteractionsSetRestrictionsForOrgResponse struct {
 	response
 	request *InteractionsSetRestrictionsForOrgReq
-	Data    *InteractionsSetRestrictionsForOrgResponseBody
+	Data    InteractionsSetRestrictionsForOrgResponseBody
 }
 
 /*
@@ -736,8 +736,8 @@ func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(InteractionsSetRestrictionsForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = InteractionsSetRestrictionsForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -870,5 +870,5 @@ https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions
 type InteractionsSetRestrictionsForRepoResponse struct {
 	response
 	request *InteractionsSetRestrictionsForRepoReq
-	Data    *InteractionsSetRestrictionsForRepoResponseBody
+	Data    InteractionsSetRestrictionsForRepoResponseBody
 }

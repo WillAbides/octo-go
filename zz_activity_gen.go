@@ -393,8 +393,8 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityGetFeedsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityGetFeedsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -495,7 +495,7 @@ https://developer.github.com/v3/activity/feeds/#get-feeds
 type ActivityGetFeedsResponse struct {
 	response
 	request *ActivityGetFeedsReq
-	Data    *ActivityGetFeedsResponseBody
+	Data    ActivityGetFeedsResponseBody
 }
 
 /*
@@ -519,8 +519,8 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityGetRepoSubscriptionResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityGetRepoSubscriptionResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -623,7 +623,7 @@ https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 type ActivityGetRepoSubscriptionResponse struct {
 	response
 	request *ActivityGetRepoSubscriptionReq
-	Data    *ActivityGetRepoSubscriptionResponseBody
+	Data    ActivityGetRepoSubscriptionResponseBody
 }
 
 /*
@@ -647,8 +647,8 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityGetThreadResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityGetThreadResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -750,7 +750,7 @@ https://developer.github.com/v3/activity/notifications/#get-a-thread
 type ActivityGetThreadResponse struct {
 	response
 	request *ActivityGetThreadReq
-	Data    *ActivityGetThreadResponseBody
+	Data    ActivityGetThreadResponseBody
 }
 
 /*
@@ -774,8 +774,8 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -877,7 +877,7 @@ https://developer.github.com/v3/activity/notifications/#get-a-thread-subscriptio
 type ActivityGetThreadSubscriptionForAuthenticatedUserResponse struct {
 	response
 	request *ActivityGetThreadSubscriptionForAuthenticatedUserReq
-	Data    *ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody
+	Data    ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody
 }
 
 /*
@@ -1031,8 +1031,8 @@ func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *Act
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListNotificationsForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListNotificationsForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1180,7 +1180,7 @@ https://developer.github.com/v3/activity/notifications/#list-notifications-for-t
 type ActivityListNotificationsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListNotificationsForAuthenticatedUserReq
-	Data    *ActivityListNotificationsForAuthenticatedUserResponseBody
+	Data    ActivityListNotificationsForAuthenticatedUserResponseBody
 }
 
 /*
@@ -2246,8 +2246,8 @@ func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListRepoNotificationsForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListRepoNotificationsForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2397,7 +2397,7 @@ https://developer.github.com/v3/activity/notifications/#list-repository-notifica
 type ActivityListRepoNotificationsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListRepoNotificationsForAuthenticatedUserReq
-	Data    *ActivityListRepoNotificationsForAuthenticatedUserResponseBody
+	Data    ActivityListRepoNotificationsForAuthenticatedUserResponseBody
 }
 
 /*
@@ -2421,8 +2421,8 @@ func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *Activ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListReposStarredByAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListReposStarredByAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2550,7 +2550,7 @@ https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-
 type ActivityListReposStarredByAuthenticatedUserResponse struct {
 	response
 	request *ActivityListReposStarredByAuthenticatedUserReq
-	Data    *ActivityListReposStarredByAuthenticatedUserResponseBody
+	Data    ActivityListReposStarredByAuthenticatedUserResponseBody
 }
 
 /*
@@ -2574,8 +2574,8 @@ func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListReposStarredByUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListReposStarredByUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2704,7 +2704,7 @@ https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-
 type ActivityListReposStarredByUserResponse struct {
 	response
 	request *ActivityListReposStarredByUserReq
-	Data    *ActivityListReposStarredByUserResponseBody
+	Data    ActivityListReposStarredByUserResponseBody
 }
 
 /*
@@ -2728,8 +2728,8 @@ func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposW
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListReposWatchedByUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListReposWatchedByUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2843,7 +2843,7 @@ https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-
 type ActivityListReposWatchedByUserResponse struct {
 	response
 	request *ActivityListReposWatchedByUserReq
-	Data    *ActivityListReposWatchedByUserResponseBody
+	Data    ActivityListReposWatchedByUserResponseBody
 }
 
 /*
@@ -2867,8 +2867,8 @@ func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargaz
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListStargazersForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListStargazersForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2983,7 +2983,7 @@ https://developer.github.com/v3/activity/starring/#list-stargazers
 type ActivityListStargazersForRepoResponse struct {
 	response
 	request *ActivityListStargazersForRepoReq
-	Data    *ActivityListStargazersForRepoResponseBody
+	Data    ActivityListStargazersForRepoResponseBody
 }
 
 /*
@@ -3007,8 +3007,8 @@ func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *Acti
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListWatchedReposForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListWatchedReposForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3121,7 +3121,7 @@ https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-
 type ActivityListWatchedReposForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListWatchedReposForAuthenticatedUserReq
-	Data    *ActivityListWatchedReposForAuthenticatedUserResponseBody
+	Data    ActivityListWatchedReposForAuthenticatedUserResponseBody
 }
 
 /*
@@ -3145,8 +3145,8 @@ func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersF
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivityListWatchersForRepoResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivityListWatchersForRepoResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3261,7 +3261,7 @@ https://developer.github.com/v3/activity/watching/#list-watchers
 type ActivityListWatchersForRepoResponse struct {
 	response
 	request *ActivityListWatchersForRepoReq
-	Data    *ActivityListWatchersForRepoResponseBody
+	Data    ActivityListWatchersForRepoResponseBody
 }
 
 /*
@@ -3675,8 +3675,8 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivitySetRepoSubscriptionResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivitySetRepoSubscriptionResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3794,7 +3794,7 @@ https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 type ActivitySetRepoSubscriptionResponse struct {
 	response
 	request *ActivitySetRepoSubscriptionReq
-	Data    *ActivitySetRepoSubscriptionResponseBody
+	Data    ActivitySetRepoSubscriptionResponseBody
 }
 
 /*
@@ -3818,8 +3818,8 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ActivitySetThreadSubscriptionResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ActivitySetThreadSubscriptionResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3936,7 +3936,7 @@ https://developer.github.com/v3/activity/notifications/#set-a-thread-subscriptio
 type ActivitySetThreadSubscriptionResponse struct {
 	response
 	request *ActivitySetThreadSubscriptionReq
-	Data    *ActivitySetThreadSubscriptionResponseBody
+	Data    ActivitySetThreadSubscriptionResponseBody
 }
 
 /*

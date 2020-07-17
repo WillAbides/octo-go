@@ -151,8 +151,8 @@ func TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsAddOrUpdateMembershipForUserInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsAddOrUpdateMembershipForUserInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -274,7 +274,7 @@ https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for
 type TeamsAddOrUpdateMembershipForUserInOrgResponse struct {
 	response
 	request *TeamsAddOrUpdateMembershipForUserInOrgReq
-	Data    *TeamsAddOrUpdateMembershipForUserInOrgResponseBody
+	Data    TeamsAddOrUpdateMembershipForUserInOrgResponseBody
 }
 
 /*
@@ -298,8 +298,8 @@ func TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsAddOrUpdateMembershipForUserLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsAddOrUpdateMembershipForUserLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -420,7 +420,7 @@ https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for
 type TeamsAddOrUpdateMembershipForUserLegacyResponse struct {
 	response
 	request *TeamsAddOrUpdateMembershipForUserLegacyReq
-	Data    *TeamsAddOrUpdateMembershipForUserLegacyResponseBody
+	Data    TeamsAddOrUpdateMembershipForUserLegacyResponseBody
 }
 
 /*
@@ -1046,8 +1046,8 @@ func TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCheckPermissionsForProjectInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCheckPermissionsForProjectInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1166,7 +1166,7 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 type TeamsCheckPermissionsForProjectInOrgResponse struct {
 	response
 	request *TeamsCheckPermissionsForProjectInOrgReq
-	Data    *TeamsCheckPermissionsForProjectInOrgResponseBody
+	Data    TeamsCheckPermissionsForProjectInOrgResponseBody
 }
 
 /*
@@ -1190,8 +1190,8 @@ func TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckP
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCheckPermissionsForProjectLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCheckPermissionsForProjectLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1309,7 +1309,7 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-lega
 type TeamsCheckPermissionsForProjectLegacyResponse struct {
 	response
 	request *TeamsCheckPermissionsForProjectLegacyReq
-	Data    *TeamsCheckPermissionsForProjectLegacyResponseBody
+	Data    TeamsCheckPermissionsForProjectLegacyResponseBody
 }
 
 /*
@@ -1333,8 +1333,8 @@ func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCheckPermissionsForRepoInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCheckPermissionsForRepoInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1439,7 +1439,7 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 type TeamsCheckPermissionsForRepoInOrgResponse struct {
 	response
 	request *TeamsCheckPermissionsForRepoInOrgReq
-	Data    *TeamsCheckPermissionsForRepoInOrgResponseBody
+	Data    TeamsCheckPermissionsForRepoInOrgResponseBody
 }
 
 /*
@@ -1463,8 +1463,8 @@ func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPerm
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCheckPermissionsForRepoLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCheckPermissionsForRepoLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1568,7 +1568,7 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-l
 type TeamsCheckPermissionsForRepoLegacyResponse struct {
 	response
 	request *TeamsCheckPermissionsForRepoLegacyReq
-	Data    *TeamsCheckPermissionsForRepoLegacyResponseBody
+	Data    TeamsCheckPermissionsForRepoLegacyResponseBody
 }
 
 /*
@@ -1592,8 +1592,8 @@ func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1746,7 +1746,7 @@ https://developer.github.com/v3/teams/#create-a-team
 type TeamsCreateResponse struct {
 	response
 	request *TeamsCreateReq
-	Data    *TeamsCreateResponseBody
+	Data    TeamsCreateResponseBody
 }
 
 /*
@@ -1770,8 +1770,8 @@ func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDisc
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateDiscussionCommentInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateDiscussionCommentInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1903,7 +1903,7 @@ https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-c
 type TeamsCreateDiscussionCommentInOrgResponse struct {
 	response
 	request *TeamsCreateDiscussionCommentInOrgReq
-	Data    *TeamsCreateDiscussionCommentInOrgResponseBody
+	Data    TeamsCreateDiscussionCommentInOrgResponseBody
 }
 
 /*
@@ -1927,8 +1927,8 @@ func TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateDiscussionCommentLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateDiscussionCommentLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2059,7 +2059,7 @@ https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-c
 type TeamsCreateDiscussionCommentLegacyResponse struct {
 	response
 	request *TeamsCreateDiscussionCommentLegacyReq
-	Data    *TeamsCreateDiscussionCommentLegacyResponseBody
+	Data    TeamsCreateDiscussionCommentLegacyResponseBody
 }
 
 /*
@@ -2083,8 +2083,8 @@ func TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionI
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateDiscussionInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateDiscussionInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2225,7 +2225,7 @@ https://developer.github.com/v3/teams/discussions/#create-a-discussion
 type TeamsCreateDiscussionInOrgResponse struct {
 	response
 	request *TeamsCreateDiscussionInOrgReq
-	Data    *TeamsCreateDiscussionInOrgResponseBody
+	Data    TeamsCreateDiscussionInOrgResponseBody
 }
 
 /*
@@ -2249,8 +2249,8 @@ func TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussion
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateDiscussionLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateDiscussionLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2390,7 +2390,7 @@ https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 type TeamsCreateDiscussionLegacyResponse struct {
 	response
 	request *TeamsCreateDiscussionLegacyReq
-	Data    *TeamsCreateDiscussionLegacyResponseBody
+	Data    TeamsCreateDiscussionLegacyResponseBody
 }
 
 /*
@@ -2414,8 +2414,8 @@ func TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *Teams
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2547,7 +2547,7 @@ https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-conn
 type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse struct {
 	response
 	request *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq
-	Data    *TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody
+	Data    TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody
 }
 
 /*
@@ -2571,8 +2571,8 @@ func TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *Team
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2703,7 +2703,7 @@ https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-conn
 type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse struct {
 	response
 	request *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq
-	Data    *TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody
+	Data    TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody
 }
 
 /*
@@ -3444,8 +3444,8 @@ func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetByNameResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetByNameResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3548,7 +3548,7 @@ https://developer.github.com/v3/teams/#get-a-team-by-name
 type TeamsGetByNameResponse struct {
 	response
 	request *TeamsGetByNameReq
-	Data    *TeamsGetByNameResponseBody
+	Data    TeamsGetByNameResponseBody
 }
 
 /*
@@ -3572,8 +3572,8 @@ func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussion
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetDiscussionCommentInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetDiscussionCommentInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3694,7 +3694,7 @@ https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comm
 type TeamsGetDiscussionCommentInOrgResponse struct {
 	response
 	request *TeamsGetDiscussionCommentInOrgReq
-	Data    *TeamsGetDiscussionCommentInOrgResponseBody
+	Data    TeamsGetDiscussionCommentInOrgResponseBody
 }
 
 /*
@@ -3718,8 +3718,8 @@ func TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetDiscussionCommentLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetDiscussionCommentLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3839,7 +3839,7 @@ https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comm
 type TeamsGetDiscussionCommentLegacyResponse struct {
 	response
 	request *TeamsGetDiscussionCommentLegacyReq
-	Data    *TeamsGetDiscussionCommentLegacyResponseBody
+	Data    TeamsGetDiscussionCommentLegacyResponseBody
 }
 
 /*
@@ -3863,8 +3863,8 @@ func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetDiscussionInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetDiscussionInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3984,7 +3984,7 @@ https://developer.github.com/v3/teams/discussions/#get-a-discussion
 type TeamsGetDiscussionInOrgResponse struct {
 	response
 	request *TeamsGetDiscussionInOrgReq
-	Data    *TeamsGetDiscussionInOrgResponseBody
+	Data    TeamsGetDiscussionInOrgResponseBody
 }
 
 /*
@@ -4008,8 +4008,8 @@ func TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacy
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetDiscussionLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetDiscussionLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4128,7 +4128,7 @@ https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 type TeamsGetDiscussionLegacyResponse struct {
 	response
 	request *TeamsGetDiscussionLegacyReq
-	Data    *TeamsGetDiscussionLegacyResponseBody
+	Data    TeamsGetDiscussionLegacyResponseBody
 }
 
 /*
@@ -4152,8 +4152,8 @@ func TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4255,7 +4255,7 @@ https://developer.github.com/v3/teams/#get-a-team-legacy
 type TeamsGetLegacyResponse struct {
 	response
 	request *TeamsGetLegacyReq
-	Data    *TeamsGetLegacyResponseBody
+	Data    TeamsGetLegacyResponseBody
 }
 
 /*
@@ -4403,8 +4403,8 @@ func TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembership
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetMembershipForUserInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetMembershipForUserInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4508,7 +4508,7 @@ https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 type TeamsGetMembershipForUserInOrgResponse struct {
 	response
 	request *TeamsGetMembershipForUserInOrgReq
-	Data    *TeamsGetMembershipForUserInOrgResponseBody
+	Data    TeamsGetMembershipForUserInOrgResponseBody
 }
 
 /*
@@ -4532,8 +4532,8 @@ func TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsGetMembershipForUserLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsGetMembershipForUserLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4636,7 +4636,7 @@ https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-le
 type TeamsGetMembershipForUserLegacyResponse struct {
 	response
 	request *TeamsGetMembershipForUserLegacyReq
-	Data    *TeamsGetMembershipForUserLegacyResponseBody
+	Data    TeamsGetMembershipForUserLegacyResponseBody
 }
 
 /*
@@ -4660,8 +4660,8 @@ func TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*T
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4775,7 +4775,7 @@ https://developer.github.com/v3/teams/#list-teams
 type TeamsListResponse struct {
 	response
 	request *TeamsListReq
-	Data    *TeamsListResponseBody
+	Data    TeamsListResponseBody
 }
 
 /*
@@ -4799,8 +4799,8 @@ func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListChildInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListChildInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4915,7 +4915,7 @@ https://developer.github.com/v3/teams/#list-child-teams
 type TeamsListChildInOrgResponse struct {
 	response
 	request *TeamsListChildInOrgReq
-	Data    *TeamsListChildInOrgResponseBody
+	Data    TeamsListChildInOrgResponseBody
 }
 
 /*
@@ -4939,8 +4939,8 @@ func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListChildLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListChildLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5054,7 +5054,7 @@ https://developer.github.com/v3/teams/#list-child-teams-legacy
 type TeamsListChildLegacyResponse struct {
 	response
 	request *TeamsListChildLegacyReq
-	Data    *TeamsListChildLegacyResponseBody
+	Data    TeamsListChildLegacyResponseBody
 }
 
 /*
@@ -5078,8 +5078,8 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListDiscussionCommentsInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListDiscussionCommentsInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5220,7 +5220,7 @@ https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comme
 type TeamsListDiscussionCommentsInOrgResponse struct {
 	response
 	request *TeamsListDiscussionCommentsInOrgReq
-	Data    *TeamsListDiscussionCommentsInOrgResponseBody
+	Data    TeamsListDiscussionCommentsInOrgResponseBody
 }
 
 /*
@@ -5244,8 +5244,8 @@ func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscus
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListDiscussionCommentsLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListDiscussionCommentsLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5385,7 +5385,7 @@ https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comme
 type TeamsListDiscussionCommentsLegacyResponse struct {
 	response
 	request *TeamsListDiscussionCommentsLegacyReq
-	Data    *TeamsListDiscussionCommentsLegacyResponseBody
+	Data    TeamsListDiscussionCommentsLegacyResponseBody
 }
 
 /*
@@ -5409,8 +5409,8 @@ func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListDiscussionsInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListDiscussionsInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5550,7 +5550,7 @@ https://developer.github.com/v3/teams/discussions/#list-discussions
 type TeamsListDiscussionsInOrgResponse struct {
 	response
 	request *TeamsListDiscussionsInOrgReq
-	Data    *TeamsListDiscussionsInOrgResponseBody
+	Data    TeamsListDiscussionsInOrgResponseBody
 }
 
 /*
@@ -5574,8 +5574,8 @@ func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListDiscussionsLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListDiscussionsLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5714,7 +5714,7 @@ https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 type TeamsListDiscussionsLegacyResponse struct {
 	response
 	request *TeamsListDiscussionsLegacyReq
-	Data    *TeamsListDiscussionsLegacyResponseBody
+	Data    TeamsListDiscussionsLegacyResponseBody
 }
 
 /*
@@ -5738,8 +5738,8 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListForAuthenticatedUserResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5852,7 +5852,7 @@ https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 type TeamsListForAuthenticatedUserResponse struct {
 	response
 	request *TeamsListForAuthenticatedUserReq
-	Data    *TeamsListForAuthenticatedUserResponseBody
+	Data    TeamsListForAuthenticatedUserResponseBody
 }
 
 /*
@@ -5876,8 +5876,8 @@ func TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListIdPGroupsForLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListIdPGroupsForLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5979,7 +5979,7 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-lega
 type TeamsListIdPGroupsForLegacyResponse struct {
 	response
 	request *TeamsListIdPGroupsForLegacyReq
-	Data    *TeamsListIdPGroupsForLegacyResponseBody
+	Data    TeamsListIdPGroupsForLegacyResponseBody
 }
 
 /*
@@ -6003,8 +6003,8 @@ func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrg
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListIdPGroupsForOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListIdPGroupsForOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6118,7 +6118,7 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organiza
 type TeamsListIdPGroupsForOrgResponse struct {
 	response
 	request *TeamsListIdPGroupsForOrgReq
-	Data    *TeamsListIdPGroupsForOrgResponseBody
+	Data    TeamsListIdPGroupsForOrgResponseBody
 }
 
 /*
@@ -6142,8 +6142,8 @@ func TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListIdPGroupsInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListIdPGroupsInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6246,7 +6246,7 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 type TeamsListIdPGroupsInOrgResponse struct {
 	response
 	request *TeamsListIdPGroupsInOrgReq
-	Data    *TeamsListIdPGroupsInOrgResponseBody
+	Data    TeamsListIdPGroupsInOrgResponseBody
 }
 
 /*
@@ -6270,8 +6270,8 @@ func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListMembersInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListMembersInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6397,7 +6397,7 @@ https://developer.github.com/v3/teams/members/#list-team-members
 type TeamsListMembersInOrgResponse struct {
 	response
 	request *TeamsListMembersInOrgReq
-	Data    *TeamsListMembersInOrgResponseBody
+	Data    TeamsListMembersInOrgResponseBody
 }
 
 /*
@@ -6421,8 +6421,8 @@ func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListMembersLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListMembersLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6547,7 +6547,7 @@ https://developer.github.com/v3/teams/members/#list-team-members-legacy
 type TeamsListMembersLegacyResponse struct {
 	response
 	request *TeamsListMembersLegacyReq
-	Data    *TeamsListMembersLegacyResponseBody
+	Data    TeamsListMembersLegacyResponseBody
 }
 
 /*
@@ -6571,8 +6571,8 @@ func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPending
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListPendingInvitationsInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListPendingInvitationsInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6687,7 +6687,7 @@ https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 type TeamsListPendingInvitationsInOrgResponse struct {
 	response
 	request *TeamsListPendingInvitationsInOrgReq
-	Data    *TeamsListPendingInvitationsInOrgResponseBody
+	Data    TeamsListPendingInvitationsInOrgResponseBody
 }
 
 /*
@@ -6711,8 +6711,8 @@ func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendin
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListPendingInvitationsLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListPendingInvitationsLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6826,7 +6826,7 @@ https://developer.github.com/v3/teams/members/#list-pending-team-invitations-leg
 type TeamsListPendingInvitationsLegacyResponse struct {
 	response
 	request *TeamsListPendingInvitationsLegacyReq
-	Data    *TeamsListPendingInvitationsLegacyResponseBody
+	Data    TeamsListPendingInvitationsLegacyResponseBody
 }
 
 /*
@@ -6850,8 +6850,8 @@ func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListProjectsInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListProjectsInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6981,7 +6981,7 @@ https://developer.github.com/v3/teams/#list-team-projects
 type TeamsListProjectsInOrgResponse struct {
 	response
 	request *TeamsListProjectsInOrgReq
-	Data    *TeamsListProjectsInOrgResponseBody
+	Data    TeamsListProjectsInOrgResponseBody
 }
 
 /*
@@ -7005,8 +7005,8 @@ func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListProjectsLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListProjectsLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7135,7 +7135,7 @@ https://developer.github.com/v3/teams/#list-team-projects-legacy
 type TeamsListProjectsLegacyResponse struct {
 	response
 	request *TeamsListProjectsLegacyReq
-	Data    *TeamsListProjectsLegacyResponseBody
+	Data    TeamsListProjectsLegacyResponseBody
 }
 
 /*
@@ -7159,8 +7159,8 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListReposInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListReposInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7275,7 +7275,7 @@ https://developer.github.com/v3/teams/#list-team-repositories
 type TeamsListReposInOrgResponse struct {
 	response
 	request *TeamsListReposInOrgReq
-	Data    *TeamsListReposInOrgResponseBody
+	Data    TeamsListReposInOrgResponseBody
 }
 
 /*
@@ -7299,8 +7299,8 @@ func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsListReposLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsListReposLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7414,7 +7414,7 @@ https://developer.github.com/v3/teams/#list-team-repositories-legacy
 type TeamsListReposLegacyResponse struct {
 	response
 	request *TeamsListReposLegacyReq
-	Data    *TeamsListReposLegacyResponseBody
+	Data    TeamsListReposLegacyResponseBody
 }
 
 /*
@@ -8281,8 +8281,8 @@ func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDisc
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsUpdateDiscussionCommentInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsUpdateDiscussionCommentInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8415,7 +8415,7 @@ https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-c
 type TeamsUpdateDiscussionCommentInOrgResponse struct {
 	response
 	request *TeamsUpdateDiscussionCommentInOrgReq
-	Data    *TeamsUpdateDiscussionCommentInOrgResponseBody
+	Data    TeamsUpdateDiscussionCommentInOrgResponseBody
 }
 
 /*
@@ -8439,8 +8439,8 @@ func TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsUpdateDiscussionCommentLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsUpdateDiscussionCommentLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8572,7 +8572,7 @@ https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-c
 type TeamsUpdateDiscussionCommentLegacyResponse struct {
 	response
 	request *TeamsUpdateDiscussionCommentLegacyReq
-	Data    *TeamsUpdateDiscussionCommentLegacyResponseBody
+	Data    TeamsUpdateDiscussionCommentLegacyResponseBody
 }
 
 /*
@@ -8596,8 +8596,8 @@ func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionI
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsUpdateDiscussionInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsUpdateDiscussionInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8732,7 +8732,7 @@ https://developer.github.com/v3/teams/discussions/#update-a-discussion
 type TeamsUpdateDiscussionInOrgResponse struct {
 	response
 	request *TeamsUpdateDiscussionInOrgReq
-	Data    *TeamsUpdateDiscussionInOrgResponseBody
+	Data    TeamsUpdateDiscussionInOrgResponseBody
 }
 
 /*
@@ -8756,8 +8756,8 @@ func TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussion
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsUpdateDiscussionLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsUpdateDiscussionLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8891,7 +8891,7 @@ https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 type TeamsUpdateDiscussionLegacyResponse struct {
 	response
 	request *TeamsUpdateDiscussionLegacyReq
-	Data    *TeamsUpdateDiscussionLegacyResponseBody
+	Data    TeamsUpdateDiscussionLegacyResponseBody
 }
 
 /*
@@ -8915,8 +8915,8 @@ func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsUpdateInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsUpdateInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9061,7 +9061,7 @@ https://developer.github.com/v3/teams/#update-a-team
 type TeamsUpdateInOrgResponse struct {
 	response
 	request *TeamsUpdateInOrgReq
-	Data    *TeamsUpdateInOrgResponseBody
+	Data    TeamsUpdateInOrgResponseBody
 }
 
 /*
@@ -9085,8 +9085,8 @@ func TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(TeamsUpdateLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = TeamsUpdateLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9229,5 +9229,5 @@ https://developer.github.com/v3/teams/#update-a-team-legacy
 type TeamsUpdateLegacyResponse struct {
 	response
 	request *TeamsUpdateLegacyReq
-	Data    *TeamsUpdateLegacyResponseBody
+	Data    TeamsUpdateLegacyResponseBody
 }

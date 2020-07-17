@@ -32,8 +32,8 @@ func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchCodeResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchCodeResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +184,7 @@ https://developer.github.com/v3/search/#search-code
 type SearchCodeResponse struct {
 	response
 	request *SearchCodeReq
-	Data    *SearchCodeResponseBody
+	Data    SearchCodeResponseBody
 }
 
 /*
@@ -208,8 +208,8 @@ func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchCommitsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchCommitsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -375,7 +375,7 @@ https://developer.github.com/v3/search/#search-commits
 type SearchCommitsResponse struct {
 	response
 	request *SearchCommitsReq
-	Data    *SearchCommitsResponseBody
+	Data    SearchCommitsResponseBody
 }
 
 /*
@@ -399,8 +399,8 @@ func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchIssuesAndPullRequestsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchIssuesAndPullRequestsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -554,7 +554,7 @@ https://developer.github.com/v3/search/#search-issues-and-pull-requests
 type SearchIssuesAndPullRequestsResponse struct {
 	response
 	request *SearchIssuesAndPullRequestsReq
-	Data    *SearchIssuesAndPullRequestsResponseBody
+	Data    SearchIssuesAndPullRequestsResponseBody
 }
 
 /*
@@ -578,8 +578,8 @@ func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchLabelsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchLabelsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -720,7 +720,7 @@ https://developer.github.com/v3/search/#search-labels
 type SearchLabelsResponse struct {
 	response
 	request *SearchLabelsReq
-	Data    *SearchLabelsResponseBody
+	Data    SearchLabelsResponseBody
 }
 
 /*
@@ -744,8 +744,8 @@ func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchReposResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchReposResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -907,7 +907,7 @@ https://developer.github.com/v3/search/#search-repositories
 type SearchReposResponse struct {
 	response
 	request *SearchReposReq
-	Data    *SearchReposResponseBody
+	Data    SearchReposResponseBody
 }
 
 /*
@@ -931,8 +931,8 @@ func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchTopicsResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchTopicsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1062,7 +1062,7 @@ https://developer.github.com/v3/search/#search-topics
 type SearchTopicsResponse struct {
 	response
 	request *SearchTopicsReq
-	Data    *SearchTopicsResponseBody
+	Data    SearchTopicsResponseBody
 }
 
 /*
@@ -1086,8 +1086,8 @@ func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(SearchUsersResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = SearchUsersResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1238,5 +1238,5 @@ https://developer.github.com/v3/search/#search-users
 type SearchUsersResponse struct {
 	response
 	request *SearchUsersReq
-	Data    *SearchUsersResponseBody
+	Data    SearchUsersResponseBody
 }

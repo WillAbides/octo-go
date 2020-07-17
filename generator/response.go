@@ -40,7 +40,7 @@ func addResponse(file *jen.File, endpoint model.Endpoint) {
 		group.Id("request").Op("*").Id(reqStructName(endpoint))
 		switch {
 		case len(responseCodesWithBodies(endpoint)) > 0:
-			group.Id("Data").Id("*" + respBodyStructName(endpoint))
+			group.Id("Data").Id(respBodyStructName(endpoint))
 		case endpointHasAttribute(endpoint, attrBoolean):
 			group.Id("Data").Bool()
 		}

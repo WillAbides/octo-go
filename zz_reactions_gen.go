@@ -32,8 +32,8 @@ func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateFo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForCommitCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForCommitCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 type ReactionsCreateForCommitCommentResponse struct {
 	response
 	request *ReactionsCreateForCommitCommentReq
-	Data    *ReactionsCreateForCommitCommentResponseBody
+	Data    ReactionsCreateForCommitCommentResponseBody
 }
 
 /*
@@ -195,8 +195,8 @@ func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForIssueResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForIssueResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +334,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 type ReactionsCreateForIssueResponse struct {
 	response
 	request *ReactionsCreateForIssueReq
-	Data    *ReactionsCreateForIssueResponseBody
+	Data    ReactionsCreateForIssueResponseBody
 }
 
 /*
@@ -358,8 +358,8 @@ func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForIssueCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForIssueCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -497,7 +497,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 type ReactionsCreateForIssueCommentResponse struct {
 	response
 	request *ReactionsCreateForIssueCommentReq
-	Data    *ReactionsCreateForIssueCommentResponseBody
+	Data    ReactionsCreateForIssueCommentResponseBody
 }
 
 /*
@@ -521,8 +521,8 @@ func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *Reacti
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForPullRequestReviewCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForPullRequestReviewCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -660,7 +660,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-re
 type ReactionsCreateForPullRequestReviewCommentResponse struct {
 	response
 	request *ReactionsCreateForPullRequestReviewCommentReq
-	Data    *ReactionsCreateForPullRequestReviewCommentResponseBody
+	Data    ReactionsCreateForPullRequestReviewCommentResponseBody
 }
 
 /*
@@ -684,8 +684,8 @@ func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *Reac
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForTeamDiscussionCommentInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForTeamDiscussionCommentInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -824,7 +824,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 type ReactionsCreateForTeamDiscussionCommentInOrgResponse struct {
 	response
 	request *ReactionsCreateForTeamDiscussionCommentInOrgReq
-	Data    *ReactionsCreateForTeamDiscussionCommentInOrgResponseBody
+	Data    ReactionsCreateForTeamDiscussionCommentInOrgResponseBody
 }
 
 /*
@@ -848,8 +848,8 @@ func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *Rea
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForTeamDiscussionCommentLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForTeamDiscussionCommentLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -987,7 +987,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 type ReactionsCreateForTeamDiscussionCommentLegacyResponse struct {
 	response
 	request *ReactionsCreateForTeamDiscussionCommentLegacyReq
-	Data    *ReactionsCreateForTeamDiscussionCommentLegacyResponseBody
+	Data    ReactionsCreateForTeamDiscussionCommentLegacyResponseBody
 }
 
 /*
@@ -1011,8 +1011,8 @@ func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForTeamDiscussionInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForTeamDiscussionInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1150,7 +1150,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 type ReactionsCreateForTeamDiscussionInOrgResponse struct {
 	response
 	request *ReactionsCreateForTeamDiscussionInOrgReq
-	Data    *ReactionsCreateForTeamDiscussionInOrgResponseBody
+	Data    ReactionsCreateForTeamDiscussionInOrgResponseBody
 }
 
 /*
@@ -1174,8 +1174,8 @@ func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsC
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsCreateForTeamDiscussionLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsCreateForTeamDiscussionLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1312,7 +1312,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 type ReactionsCreateForTeamDiscussionLegacyResponse struct {
 	response
 	request *ReactionsCreateForTeamDiscussionLegacyReq
-	Data    *ReactionsCreateForTeamDiscussionLegacyResponseBody
+	Data    ReactionsCreateForTeamDiscussionLegacyResponseBody
 }
 
 /*
@@ -2314,8 +2314,8 @@ func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCom
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForCommitCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForCommitCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2460,7 +2460,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 type ReactionsListForCommitCommentResponse struct {
 	response
 	request *ReactionsListForCommitCommentReq
-	Data    *ReactionsListForCommitCommentResponseBody
+	Data    ReactionsListForCommitCommentResponseBody
 }
 
 /*
@@ -2484,8 +2484,8 @@ func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForIssueResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForIssueResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2630,7 +2630,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 type ReactionsListForIssueResponse struct {
 	response
 	request *ReactionsListForIssueReq
-	Data    *ReactionsListForIssueResponseBody
+	Data    ReactionsListForIssueResponseBody
 }
 
 /*
@@ -2654,8 +2654,8 @@ func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForIssueCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForIssueCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2800,7 +2800,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 type ReactionsListForIssueCommentResponse struct {
 	response
 	request *ReactionsListForIssueCommentReq
-	Data    *ReactionsListForIssueCommentResponseBody
+	Data    ReactionsListForIssueCommentResponseBody
 }
 
 /*
@@ -2824,8 +2824,8 @@ func ReactionsListForPullRequestReviewComment(ctx context.Context, req *Reaction
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForPullRequestReviewCommentResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForPullRequestReviewCommentResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2970,7 +2970,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-rev
 type ReactionsListForPullRequestReviewCommentResponse struct {
 	response
 	request *ReactionsListForPullRequestReviewCommentReq
-	Data    *ReactionsListForPullRequestReviewCommentResponseBody
+	Data    ReactionsListForPullRequestReviewCommentResponseBody
 }
 
 /*
@@ -2994,8 +2994,8 @@ func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *Reacti
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForTeamDiscussionCommentInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForTeamDiscussionCommentInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3141,7 +3141,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 type ReactionsListForTeamDiscussionCommentInOrgResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionCommentInOrgReq
-	Data    *ReactionsListForTeamDiscussionCommentInOrgResponseBody
+	Data    ReactionsListForTeamDiscussionCommentInOrgResponseBody
 }
 
 /*
@@ -3165,8 +3165,8 @@ func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *React
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForTeamDiscussionCommentLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForTeamDiscussionCommentLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3311,7 +3311,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 type ReactionsListForTeamDiscussionCommentLegacyResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionCommentLegacyReq
-	Data    *ReactionsListForTeamDiscussionCommentLegacyResponseBody
+	Data    ReactionsListForTeamDiscussionCommentLegacyResponseBody
 }
 
 /*
@@ -3335,8 +3335,8 @@ func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsList
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForTeamDiscussionInOrgResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForTeamDiscussionInOrgResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3481,7 +3481,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 type ReactionsListForTeamDiscussionInOrgResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionInOrgReq
-	Data    *ReactionsListForTeamDiscussionInOrgResponseBody
+	Data    ReactionsListForTeamDiscussionInOrgResponseBody
 }
 
 /*
@@ -3505,8 +3505,8 @@ func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = new(ReactionsListForTeamDiscussionLegacyResponseBody)
-	err = r.decodeBody(resp.Data)
+	resp.Data = ReactionsListForTeamDiscussionLegacyResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3650,5 +3650,5 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 type ReactionsListForTeamDiscussionLegacyResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionLegacyReq
-	Data    *ReactionsListForTeamDiscussionLegacyResponseBody
+	Data    ReactionsListForTeamDiscussionLegacyResponseBody
 }
