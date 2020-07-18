@@ -59,21 +59,9 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 		}
 	}
 
-	for concern, concernFile := range concernFiles {
-		// zz_licenses_gen.go causes issues with license file detection on GitHub
-		if concern == "licenses" {
-			concern = "lic"
-		}
-		name := fmt.Sprintf("zz_%s_gen.go", strings.ReplaceAll(concern, "-", "_"))
-		var f *os.File
-		f, err = os.Create(filepath.Join(outputPath, name))
-		if err != nil {
-			return err
-		}
-		err = concernFile.Render(f)
-		if err != nil {
-			return err
-		}
+	err = renderConcernFiles(concernFiles, outputPath)
+	if err != nil {
+		return err
 	}
 
 	componentSchemas := mdl.ComponentSchemas
@@ -110,6 +98,26 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 		return err
 	}
 
+	return nil
+}
+
+func renderConcernFiles(concernFiles map[string]*jen.File, outputPath string) error {
+	for concern, concernFile := range concernFiles {
+		// zz_licenses_gen.go causes issues with license file detection on GitHub
+		if concern == "licenses" {
+			concern = "lic"
+		}
+		name := fmt.Sprintf("zz_%s_gen.go", strings.ReplaceAll(concern, "-", "_"))
+		var f *os.File
+		f, err := os.Create(filepath.Join(outputPath, name))
+		if err != nil {
+			return err
+		}
+		err = concernFile.Render(f)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
