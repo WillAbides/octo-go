@@ -60,6 +60,10 @@ func run(schemaPath, outputPath, pkgPath, pkgName string) error {
 	}
 
 	for concern, concernFile := range concernFiles {
+		// zz_licenses_gen.go causes issues with license file detection on GitHub
+		if concern == "licenses" {
+			concern = "lic"
+		}
 		name := fmt.Sprintf("zz_%s_gen.go", strings.ReplaceAll(concern, "-", "_"))
 		var f *os.File
 		f, err = os.Create(filepath.Join(outputPath, name))
