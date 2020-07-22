@@ -1756,7 +1756,7 @@ MigrationsListReposForUser performs requests for "migrations/list-repos-for-user
 
 List repositories for a user migration.
 
-  GET /user/{migration_id}/repositories
+  GET /user/migrations/{migration_id}/repositories
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
@@ -1785,7 +1785,7 @@ MigrationsListReposForUser performs requests for "migrations/list-repos-for-user
 
 List repositories for a user migration.
 
-  GET /user/{migration_id}/repositories
+  GET /user/migrations/{migration_id}/repositories
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
@@ -1817,7 +1817,7 @@ func (r *MigrationsListReposForUserReq) url() string {
 }
 
 func (r *MigrationsListReposForUserReq) urlPath() string {
-	return fmt.Sprintf("/user/%v/repositories", r.MigrationId)
+	return fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId)
 }
 
 func (r *MigrationsListReposForUserReq) method() string {
