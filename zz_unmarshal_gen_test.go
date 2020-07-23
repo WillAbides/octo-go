@@ -1537,7 +1537,7 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 		target := octo.MigrationsListReposForUserResponseBody{}
 		return decoder.Decode(&target)
 	},
-	endpointPath:   "/user/{migration_id}/repositories",
+	endpointPath:   "/user/migrations/{migration_id}/repositories",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "MigrationsListReposForUserResponseBody",

@@ -172,7 +172,7 @@ type ChecksCreateReqBodyOutput struct {
 	   Each time you update the check run, annotations are appended to the list of
 	   annotations that already exist for the check run. For details about how you can
 	   view annotations on GitHub, see "[About status
-	   checks](https://help.github.com/articles/about-status-checks#checks)". See the
+	   checks](https://docs.github.com/articles/about-status-checks#checks)". See the
 	   [`annotations`
 	   object](https://developer.github.com/v3/checks/runs/#annotations-object)
 	   description for details about how to use this parameter.
@@ -1957,7 +1957,7 @@ type ChecksUpdateReqBodyOutput struct {
 	   Each time you update the check run, annotations are appended to the list of
 	   annotations that already exist for the check run. For details about annotations
 	   in the UI, see "[About status
-	   checks](https://help.github.com/articles/about-status-checks#checks)". See the
+	   checks](https://docs.github.com/articles/about-status-checks#checks)". See the
 	   [`annotations`
 	   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
 	   description for details.

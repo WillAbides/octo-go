@@ -1805,9 +1805,9 @@ type ReposCreateDeployKeyReqBody struct {
 	   Deploy keys with write access can perform the same actions as an organization
 	   member with admin access, or a collaborator on a personal repository. For more
 	   information, see "[Repository permission levels for an
-	   organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
+	   organization](https://docs.github.com/articles/repository-permission-levels-for-an-organization/)"
 	   and "[Permission levels for a user account
-	   repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
+	   repository](https://docs.github.com/articles/permission-levels-for-a-user-account-repository/)."
 	*/
 	ReadOnly *bool `json:"read_only,omitempty"`
 
@@ -2622,7 +2622,7 @@ type ReposCreateForAuthenticatedUserReqBody struct {
 	/*
 	   Choose an [open source license template](https://choosealicense.com/) that best
 	   suits your needs, and then use the [license
-	   keyword](https://help.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
+	   keyword](https://docs.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
 	   as the `license_template` string. For example, "mit" or "mpl-2.0".
 	*/
 	LicenseTemplate *string `json:"license_template,omitempty"`
@@ -2644,7 +2644,7 @@ type ReposCreateForAuthenticatedUserReqBody struct {
 	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
 	   2.20+, `visibility` can also be `internal`. For more information, see "[Creating
 	   an internal
-	   repository](https://help.github.com/github/creating-cloning-and-archiving-repositories/creating-an-internal-repository)".
+	   repository](https://docs.github.com/github/creating-cloning-and-archiving-repositories/creating-an-internal-repository)".
 	   The `visibility` parameter overrides the `private` parameter when you use both
 	   parameters with the `nebula-preview` preview header.
 	*/
@@ -3020,7 +3020,7 @@ type ReposCreateInOrgReqBody struct {
 	/*
 	   Choose an [open source license template](https://choosealicense.com/) that best
 	   suits your needs, and then use the [license
-	   keyword](https://help.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
+	   keyword](https://docs.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
 	   as the `license_template` string. For example, "mit" or "mpl-2.0".
 	*/
 	LicenseTemplate *string `json:"license_template,omitempty"`
@@ -3042,7 +3042,7 @@ type ReposCreateInOrgReqBody struct {
 	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
 	   2.20+, `visibility` can also be `internal`. For more information, see "[Creating
 	   an internal
-	   repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-repository-visibility#about-internal-repositories)".
+	   repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-repository-visibility#about-internal-repositories)".
 	   The `visibility` parameter overrides the `private` parameter when you use both
 	   parameters with the `nebula-preview` preview header.
 	*/
@@ -3392,7 +3392,7 @@ type ReposCreatePagesSiteReqBodySource struct {
 
 	/*
 	   The repository branch used to publish your [site's source
-	   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
+	   files](https://docs.github.com/articles/configuring-a-publishing-source-for-github-pages/).
 	   Can be either `master` or `gh-pages`.
 	*/
 	Branch *string `json:"branch,omitempty"`
@@ -18401,11 +18401,11 @@ type ReposUpdateReqBody struct {
 	   Default: `false`.
 	   **Note**: You will get a `422` error if the organization restricts [changing
 	   repository
-	   visibility](https://help.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
+	   visibility](https://docs.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
 	   to organization owners and a non-owner tries to change the value of private.
 	   **Note**: You will get a `422` error if the organization restricts [changing
 	   repository
-	   visibility](https://help.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
+	   visibility](https://docs.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
 	   to organization owners and a non-owner tries to change the value of private.
 	*/
 	Private *bool `json:"private,omitempty"`
@@ -18582,7 +18582,7 @@ type ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews struct {
 
 	/*
 	   Blocks merging pull requests until [code
-	   owners](https://help.github.com/articles/about-code-owners/) review them.
+	   owners](https://docs.github.com/articles/about-code-owners/) review them.
 	*/
 	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
 
@@ -18637,7 +18637,7 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   Allows deletion of the protected branch by anyone with write access to the
 	   repository. Set to `false` to prevent deletion of the protected branch. Default:
 	   `false`. For more information, see "[Enabling force pushes to a protected
-	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
+	   branch](https://docs.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
 	*/
 	AllowDeletions *bool `json:"allow_deletions,omitempty"`
 
@@ -18646,7 +18646,7 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   repository. Set to `true` to allow force pushes. Set to `false` or `null` to
 	   block force pushes. Default: `false`. For more information, see "[Enabling force
 	   pushes to a protected
-	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
+	   branch](https://docs.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
 	*/
 	AllowForcePushes *bool `json:"allow_force_pushes,omitempty"`
 
@@ -18662,7 +18662,7 @@ type ReposUpdateBranchProtectionReqBody struct {
 	   `false` to disable a linear commit Git history. Your repository must allow
 	   squash merging or rebase merging before you can enable a linear commit history.
 	   Default: `false`. For more information, see "[Requiring a linear commit
-	   history](https://help.github.com/github/administering-a-repository/requiring-a-linear-commit-history)".
+	   history](https://docs.github.com/github/administering-a-repository/requiring-a-linear-commit-history)".
 	*/
 	RequiredLinearHistory *bool `json:"required_linear_history,omitempty"`
 
@@ -18963,7 +18963,7 @@ type ReposUpdateInformationAboutPagesSiteReqBody struct {
 	   Specify a custom domain for the repository. Sending a `null` value will remove
 	   the custom domain. For more about custom domains, see "[Using a custom domain
 	   with GitHub
-	   Pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)."
+	   Pages](https://docs.github.com/articles/using-a-custom-domain-with-github-pages/)."
 	*/
 	Cname *string `json:"cname,omitempty"`
 
@@ -19287,7 +19287,7 @@ type ReposUpdatePullRequestReviewProtectionReqBody struct {
 
 	/*
 	   Blocks merging pull requests until [code
-	   owners](https://help.github.com/articles/about-code-owners/) have reviewed.
+	   owners](https://docs.github.com/articles/about-code-owners/) have reviewed.
 	*/
 	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
 

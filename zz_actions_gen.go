@@ -4,7 +4,6 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
 	"net/http"
@@ -393,7 +392,7 @@ type ActionsCreateOrUpdateOrgSecretReqBody struct {
 	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
 	   endpoints.
 	*/
-	SelectedRepositoryIds []json.Number `json:"selected_repository_ids,omitempty"`
+	SelectedRepositoryIds []int64 `json:"selected_repository_ids,omitempty"`
 
 	/*
 	   Configures the access that repositories have to the organization secret. Can be
@@ -5558,7 +5557,7 @@ type ActionsListWorkflowRunsReq struct {
 	/*
 	Returns workflow run triggered by the event you specify. For example, `push`,
 	`pull_request` or `issue`. For more information, see "[Events that trigger
-	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)."
+	workflows](https://docs.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)."
 	*/
 	Event *string
 
@@ -5741,7 +5740,7 @@ type ActionsListWorkflowRunsForRepoReq struct {
 	/*
 	Returns workflow run triggered by the event you specify. For example, `push`,
 	`pull_request` or `issue`. For more information, see "[Events that trigger
-	workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)."
+	workflows](https://docs.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)."
 	*/
 	Event *string
 

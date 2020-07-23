@@ -760,7 +760,7 @@ type UsersCreateGpgKeyForAuthenticatedReqBody struct {
 
 	/*
 	   Your GPG key, generated in ASCII-armored format. See "[Generating a new GPG
-	   key](https://help.github.com/articles/generating-a-new-gpg-key/)" for help
+	   key](https://docs.github.com/articles/generating-a-new-gpg-key/)" for help
 	   creating a GPG key.
 	*/
 	ArmoredPublicKey *string `json:"armored_public_key,omitempty"`
@@ -902,7 +902,7 @@ type UsersCreatePublicSshKeyForAuthenticatedReqBody struct {
 
 	/*
 	   The public SSH key to add to your GitHub account. See "[Generating a new SSH
-	   key](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)"
+	   key](https://docs.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)"
 	   for guidance on how to create a public SSH key.
 	*/
 	Key *string `json:"key,omitempty"`

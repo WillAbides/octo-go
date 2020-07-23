@@ -67,7 +67,7 @@ type SearchCodeReq struct {
 	same qualifiers as GitHub.com. To learn more about the format of the query, see
 	[Constructing a search
 	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
-	"[Searching code](https://help.github.com/articles/searching-code/)" for a
+	"[Searching code](https://docs.github.com/articles/searching-code/)" for a
 	detailed list of qualifiers.
 	*/
 	Q *string
@@ -243,7 +243,7 @@ type SearchCommitsReq struct {
 	same qualifiers as GitHub.com. To learn more about the format of the query, see
 	[Constructing a search
 	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
-	"[Searching commits](https://help.github.com/articles/searching-commits/)" for a
+	"[Searching commits](https://docs.github.com/articles/searching-commits/)" for a
 	detailed list of qualifiers.
 	*/
 	Q *string
@@ -435,7 +435,7 @@ type SearchIssuesAndPullRequestsReq struct {
 	[Constructing a search
 	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
 	"[Searching issues and pull
-	requests](https://help.github.com/articles/searching-issues-and-pull-requests/)"
+	requests](https://docs.github.com/articles/searching-issues-and-pull-requests/)"
 	for a detailed list of qualifiers.
 	*/
 	Q *string
@@ -780,7 +780,7 @@ type SearchReposReq struct {
 	[Constructing a search
 	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
 	"[Searching for
-	repositories](https://help.github.com/articles/searching-for-repositories/)" for
+	repositories](https://docs.github.com/articles/searching-for-repositories/)" for
 	a detailed list of qualifiers.
 	*/
 	Q *string
@@ -1121,7 +1121,7 @@ type SearchUsersReq struct {
 	same qualifiers as GitHub.com. To learn more about the format of the query, see
 	[Constructing a search
 	query](https://developer.github.com/v3/search/#constructing-a-search-query). See
-	"[Searching users](https://help.github.com/articles/searching-users/)" for a
+	"[Searching users](https://docs.github.com/articles/searching-users/)" for a
 	detailed list of qualifiers.
 	*/
 	Q *string

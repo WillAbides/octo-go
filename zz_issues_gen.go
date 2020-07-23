@@ -1764,7 +1764,7 @@ type IssuesGetEventReq struct {
 	post](https://developer.github.com/changes/2018-09-05-project-card-events).
 
 	To receive the `project_card` attribute, project boards must be
-	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
+	[enabled](https://docs.github.com/articles/disabling-project-boards-in-a-repository)
 	for a repository, and you must set this to true.
 	*/
 	StarfoxPreview bool
@@ -2894,7 +2894,7 @@ type IssuesListEventsReq struct {
 	post](https://developer.github.com/changes/2018-09-05-project-card-events).
 
 	To receive the `project_card` attribute, project boards must be
-	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
+	[enabled](https://docs.github.com/articles/disabling-project-boards-in-a-repository)
 	for a repository, and you must set this to true.
 	*/
 	StarfoxPreview bool
@@ -3063,7 +3063,7 @@ type IssuesListEventsForRepoReq struct {
 	post](https://developer.github.com/changes/2018-09-05-project-card-events).
 
 	To receive the `project_card` attribute, project boards must be
-	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
+	[enabled](https://docs.github.com/articles/disabling-project-boards-in-a-repository)
 	for a repository, and you must set this to true.
 	*/
 	StarfoxPreview bool
@@ -3242,7 +3242,7 @@ type IssuesListEventsForTimelineReq struct {
 	post](https://developer.github.com/changes/2018-09-05-project-card-events).
 
 	To receive the `project_card` attribute, project boards must be
-	[enabled](https://help.github.com/articles/disabling-project-boards-in-a-repository)
+	[enabled](https://docs.github.com/articles/disabling-project-boards-in-a-repository)
 	for a repository, and you must set this to true.
 	*/
 	StarfoxPreview bool
