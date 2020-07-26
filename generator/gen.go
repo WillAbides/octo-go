@@ -207,7 +207,7 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 	return jen.Interface()
 }
 
-func oneOfParamStmt(param model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func oneOfParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	stmt := jen.Id(toUnexportedName(param.Name))
 	pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts)
 	if needsPointer(param.Schema, opts.usePointers) {
@@ -228,7 +228,7 @@ func prependCodeWithComment(comment string, code ...jen.Code) *jen.Statement {
 	return jen.Line().Comment(comment).Line().Add(code...)
 }
 
-func objectParamStmt(param model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func objectParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	stmt := jen.Id(toExportedName(param.Name))
 	if needsPointer(param.Schema, opts.usePointers) {
 		stmt.Op("*")

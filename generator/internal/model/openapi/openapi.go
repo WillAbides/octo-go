@@ -186,7 +186,7 @@ func buildEndpoint(opPath, httpMethod string, op *openapi3.Operation) (*model.En
 		endpoint.GithubCloudOnly = ext.GithubCloudOnly
 		endpoint.Legacy = ext.Legacy
 		for _, preview := range ext.Previews {
-			endpoint.Previews = append(endpoint.Previews, model.Preview{
+			endpoint.Previews = append(endpoint.Previews, &model.Preview{
 				Required: preview.Required,
 				Name:     preview.Name,
 				Note:     preview.Note,
@@ -204,11 +204,11 @@ func buildEndpoint(opPath, httpMethod string, op *openapi3.Operation) (*model.En
 		}
 		switch pRef.Value.In {
 		case openapi3.ParameterInQuery:
-			endpoint.QueryParams = append(endpoint.QueryParams, *param)
+			endpoint.QueryParams = append(endpoint.QueryParams, param)
 		case openapi3.ParameterInHeader:
-			endpoint.Headers = append(endpoint.Headers, *param)
+			endpoint.Headers = append(endpoint.Headers, param)
 		case openapi3.ParameterInPath:
-			endpoint.PathParams = append(endpoint.PathParams, *param)
+			endpoint.PathParams = append(endpoint.PathParams, param)
 		}
 	}
 	endpoint.Responses, err = responses(op)
@@ -227,7 +227,7 @@ func buildEndpoint(opPath, httpMethod string, op *openapi3.Operation) (*model.En
 	return &endpoint, nil
 }
 
-func successMediaType(responses map[int]model.Response) (string, error) {
+func successMediaType(responses map[int]*model.Response) (string, error) {
 	var result string
 	for code, response := range responses {
 		if code > 299 {
@@ -321,14 +321,14 @@ func opParamSchema(schemaRef *openapi3.SchemaRef) (*model.ParamSchema, error) {
 			if err != nil {
 				return nil, errors.WithStack(err)
 			}
-			schema.ObjectParams = append(schema.ObjectParams, *objParam)
+			schema.ObjectParams = append(schema.ObjectParams, objParam)
 		}
 	}
 	return &schema, nil
 }
 
-func oneOfObjectParams(opSchemaRef *openapi3.SchemaRef, oneOf []*openapi3.SchemaRef) ([]model.Param, error) {
-	result := make([]model.Param, 0, len(oneOf))
+func oneOfObjectParams(opSchemaRef *openapi3.SchemaRef, oneOf []*openapi3.SchemaRef) ([]*model.Param, error) {
+	result := make([]*model.Param, 0, len(oneOf))
 	names := make(map[string]bool, len(oneOf))
 	for _, ref := range oneOf {
 		name := oneOfPropName(ref, names)
@@ -336,7 +336,7 @@ func oneOfObjectParams(opSchemaRef *openapi3.SchemaRef, oneOf []*openapi3.Schema
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		result = append(result, *objParam)
+		result = append(result, objParam)
 	}
 	return result, nil
 }
@@ -523,8 +523,8 @@ func getJsonResponse(content openapi3.Content) (name string, mediaType *openapi3
 	}
 }
 
-func responses(op *openapi3.Operation) (map[int]model.Response, error) {
-	result := make(map[int]model.Response, len(op.Responses))
+func responses(op *openapi3.Operation) (map[int]*model.Response, error) {
+	result := make(map[int]*model.Response, len(op.Responses))
 	for responseCode, responseRef := range op.Responses {
 		code, err := strconv.Atoi(responseCode)
 		if err != nil {
@@ -545,13 +545,12 @@ func responses(op *openapi3.Operation) (map[int]model.Response, error) {
 				hasExample = true
 			}
 		}
-		response := model.Response{
+
+		result[code] = &model.Response{
 			MediaType:  mediaType,
 			Body:       schema,
 			HasExample: hasExample,
 		}
-
-		result[code] = response
 	}
 	return result, nil
 }

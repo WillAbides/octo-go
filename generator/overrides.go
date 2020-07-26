@@ -173,7 +173,7 @@ var endpointOverrides = []*endpointOverride{
 	{
 		endpointID: "repos/upload-release-asset",
 		fn: func(endpoint *model.Endpoint) error {
-			endpoint.Headers = append(endpoint.Headers, model.Param{
+			endpoint.Headers = append(endpoint.Headers, &model.Param{
 				Required: true,
 				Name:     "Content-Type",
 				HelpText: "Content-Type for the uploaded file",
@@ -189,7 +189,7 @@ var endpointOverrides = []*endpointOverride{
 	{
 		endpointAttribute: attrExplicitURL.pointer(),
 		fn: func(endpoint *model.Endpoint) error {
-			endpoint.PathParams = model.Params{}
+			endpoint.PathParams = []*model.Param{}
 			return nil
 		},
 	},
@@ -291,8 +291,7 @@ func oneOfCheck(name string, schema *model.ParamSchema) error {
 }
 
 func (o *oneOfOverride) overrideParam(namePrefix string, param *model.Param) (*model.Param, error) {
-	p := param.Clone()
-	param = &p
+	param = param.Clone()
 	paramName := param.Name
 	if namePrefix != "" {
 		paramName = path.Join(namePrefix, paramName)
@@ -304,8 +303,8 @@ func (o *oneOfOverride) overrideParam(namePrefix string, param *model.Param) (*m
 		var matches []*model.Param
 		for i := range param.Schema.ObjectParams {
 			oneOfParam := param.Schema.ObjectParams[i]
-			if o.oneOfPicker(&oneOfParam) {
-				matches = append(matches, &oneOfParam)
+			if o.oneOfPicker(oneOfParam) {
+				matches = append(matches, oneOfParam)
 			}
 		}
 		if len(matches) == 0 || len(matches) > 1 {
@@ -319,19 +318,19 @@ func (o *oneOfOverride) overrideParam(namePrefix string, param *model.Param) (*m
 	}
 	params := param.Schema.ObjectParams
 	for i := range params {
-		pp, err := o.overrideParam(paramName, &params[i])
+		pp, err := o.overrideParam(paramName, params[i])
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		params[i] = *pp
+		params[i] = pp
 	}
 	if param.Schema.ItemSchema != nil {
 		for i := range param.Schema.ItemSchema.ObjectParams {
-			pp, err := o.overrideParam(path.Join(paramName, "ItemSchema"), &param.Schema.ItemSchema.ObjectParams[i])
+			pp, err := o.overrideParam(path.Join(paramName, "ItemSchema"), param.Schema.ItemSchema.ObjectParams[i])
 			if err != nil {
 				return nil, errors.WithStack(err)
 			}
-			param.Schema.ItemSchema.ObjectParams[i] = *pp
+			param.Schema.ItemSchema.ObjectParams[i] = pp
 		}
 	}
 	return param, nil
@@ -345,7 +344,7 @@ func (o *oneOfOverride) override(endpoint *model.Endpoint) error {
 		objectParams := endpoint.RequestBody.Schema.ObjectParams
 		for i := 0; i < len(objectParams); i++ {
 			param := objectParams[i]
-			if !o.oneOfPicker(&param) {
+			if !o.oneOfPicker(param) {
 				continue
 			}
 			endpoint.RequestBody.Schema = param.Schema.Clone()
@@ -354,11 +353,11 @@ func (o *oneOfOverride) override(endpoint *model.Endpoint) error {
 	}
 	params := endpoint.RequestBody.Schema.ObjectParams
 	for i := range params {
-		p, err := o.overrideParam("", &params[i])
+		p, err := o.overrideParam("", params[i])
 		if err != nil {
 			return err
 		}
-		params[i] = *p
+		params[i] = p
 	}
 	return nil
 }

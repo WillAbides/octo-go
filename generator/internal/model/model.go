@@ -13,12 +13,12 @@ type Endpoint struct {
 	DocsURL          string
 	Summary          string
 	HelpText         string
-	PathParams       Params
-	QueryParams      Params
-	Headers          Params
-	Previews         []Preview
+	PathParams       []*Param
+	QueryParams      []*Param
+	Headers          []*Param
+	Previews         []*Preview
 	RequestBody      *RequestBody
-	Responses        map[int]Response
+	Responses        map[int]*Response
 	SuccessMediaType string
 }
 
@@ -80,7 +80,7 @@ type ParamSchema struct {
 	Ref          string
 	Type         ParamType
 	ItemSchema   *ParamSchema
-	ObjectParams []Param
+	ObjectParams []*Param
 }
 
 func (p *ParamSchema) Clone() *ParamSchema {
@@ -89,7 +89,7 @@ func (p *ParamSchema) Clone() *ParamSchema {
 		Ref:  p.Ref,
 	}
 	if p.ObjectParams != nil {
-		result.ObjectParams = make([]Param, len(p.ObjectParams))
+		result.ObjectParams = make([]*Param, len(p.ObjectParams))
 		for i, objectParam := range p.ObjectParams {
 			result.ObjectParams[i] = objectParam.Clone()
 		}
@@ -107,10 +107,9 @@ type Param struct {
 	Schema   *ParamSchema
 }
 
-func (p Param) Clone() Param {
-	q := p
+func (p *Param) Clone() *Param {
+	q := new(Param)
+	*q = *p
 	q.Schema = q.Schema.Clone()
 	return q
 }
-
-type Params []Param
