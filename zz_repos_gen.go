@@ -4,6 +4,7 @@ package octo
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
 	"io"
@@ -59,7 +60,9 @@ ReposAcceptInvitationReq is request data for Client.ReposAcceptInvitation
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
 type ReposAcceptInvitationReq struct {
-	_url         string
+	_url string
+
+	// invitation_id parameter
 	InvitationId int64
 }
 
@@ -95,7 +98,7 @@ func (r *ReposAcceptInvitationReq) dataStatuses() []int {
 }
 
 func (r *ReposAcceptInvitationReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ReposAcceptInvitationReq) endpointAttributes() []endpointAttribute {
@@ -178,9 +181,15 @@ ReposAddAppAccessRestrictionsReq is request data for Client.ReposAddAppAccessRes
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
 type ReposAddAppAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposAddAppAccessRestrictionsReqBody
 }
@@ -203,7 +212,10 @@ func (r *ReposAddAppAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposAddAppAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -315,9 +327,15 @@ ReposAddCollaboratorReq is request data for Client.ReposAddCollaborator
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username    string
 	RequestBody ReposAddCollaboratorReqBody
 }
@@ -340,7 +358,10 @@ func (r *ReposAddCollaboratorReq) urlQuery() url.Values {
 }
 
 func (r *ReposAddCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -387,17 +408,18 @@ https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborat
 type ReposAddCollaboratorReqBody struct {
 
 	/*
-	   The permission to grant the collaborator. **Only valid on organization-owned
-	   repositories.** Can be one of:
-	   \* `pull` - can pull, but not push to or administer this repository.
-	   \* `push` - can pull and push, but not administer this repository.
-	   \* `admin` - can pull, push and administer this repository.
-	   \* `maintain` - Recommended for project managers who need to manage the
-	   repository without access to sensitive or destructive actions.
-	   \* `triage` - Recommended for contributors who need to proactively manage issues
-	   and pull requests without write access.
+	The permission to grant the collaborator. **Only valid on organization-owned
+	repositories.** Can be one of:
+	\* `pull` - can pull, but not push to or administer this repository.
+	\* `push` - can pull and push, but not administer this repository.
+	\* `admin` - can pull, push and administer this repository.
+	\* `maintain` - Recommended for project managers who need to manage the
+	repository without access to sensitive or destructive actions.
+	\* `triage` - Recommended for contributors who need to proactively manage issues
+	and pull requests without write access.
 	*/
-	Permission *string `json:"permission,omitempty"`
+	Permission  *string `json:"permission,omitempty"`
+	Permissions *string `json:"permissions,omitempty"`
 }
 
 /*
@@ -466,9 +488,15 @@ ReposAddStatusCheckContextsReq is request data for Client.ReposAddStatusCheckCon
 https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
 type ReposAddStatusCheckContextsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposAddStatusCheckContextsReqBody
 }
@@ -491,7 +519,10 @@ func (r *ReposAddStatusCheckContextsReq) urlQuery() url.Values {
 }
 
 func (r *ReposAddStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -603,9 +634,15 @@ ReposAddTeamAccessRestrictionsReq is request data for Client.ReposAddTeamAccessR
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
 type ReposAddTeamAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposAddTeamAccessRestrictionsReqBody
 }
@@ -628,7 +665,10 @@ func (r *ReposAddTeamAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposAddTeamAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -740,9 +780,15 @@ ReposAddUserAccessRestrictionsReq is request data for Client.ReposAddUserAccessR
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
 type ReposAddUserAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposAddUserAccessRestrictionsReqBody
 }
@@ -765,7 +811,10 @@ func (r *ReposAddUserAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposAddUserAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -880,9 +929,15 @@ ReposCheckCollaboratorReq is request data for Client.ReposCheckCollaborator
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 type ReposCheckCollaboratorReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username string
 }
 
@@ -1005,9 +1060,13 @@ ReposCheckVulnerabilityAlertsReq is request data for Client.ReposCheckVulnerabil
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
 type ReposCheckVulnerabilityAlertsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -1139,11 +1198,19 @@ ReposCompareCommitsReq is request data for Client.ReposCompareCommits
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
 type ReposCompareCommitsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Base  string
-	Head  string
+
+	// repo parameter
+	Repo string
+
+	// base parameter
+	Base string
+
+	// head parameter
+	Head string
 }
 
 func (r *ReposCompareCommitsReq) url() string {
@@ -1164,7 +1231,7 @@ func (r *ReposCompareCommitsReq) urlQuery() url.Values {
 }
 
 func (r *ReposCompareCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1269,9 +1336,15 @@ ReposCreateCommitCommentReq is request data for Client.ReposCreateCommitComment
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
 type ReposCreateCommitCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// commit_sha+ parameter
 	CommitSha   string
 	RequestBody ReposCreateCommitCommentReqBody
 }
@@ -1294,7 +1367,10 @@ func (r *ReposCreateCommitCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1343,10 +1419,7 @@ type ReposCreateCommitCommentReqBody struct {
 	// The contents of the comment.
 	Body *string `json:"body"`
 
-	/*
-	   **Deprecated**. Use **position** parameter instead. Line number in the file to
-	   comment on.
-	*/
+	// **Deprecated**. Use **position** parameter instead. Line number in the file to comment on.
 	Line *int64 `json:"line,omitempty"`
 
 	// Relative path of the file to comment on.
@@ -1422,9 +1495,15 @@ ReposCreateCommitSignatureProtectionReq is request data for Client.ReposCreateCo
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
 type ReposCreateCommitSignatureProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 
 	/*
@@ -1455,7 +1534,7 @@ func (r *ReposCreateCommitSignatureProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateCommitSignatureProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
 	if requiredPreviews {
 		previewVals["zzzax"] = true
@@ -1566,9 +1645,15 @@ ReposCreateCommitStatusReq is request data for Client.ReposCreateCommitStatus
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
 type ReposCreateCommitStatusReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// sha parameter
 	Sha         string
 	RequestBody ReposCreateCommitStatusReqBody
 }
@@ -1591,7 +1676,10 @@ func (r *ReposCreateCommitStatusReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateCommitStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1643,18 +1731,15 @@ type ReposCreateCommitStatusReqBody struct {
 	// A short description of the status.
 	Description *string `json:"description,omitempty"`
 
-	/*
-	   The state of the status. Can be one of `error`, `failure`, `pending`, or
-	   `success`.
-	*/
+	// The state of the status. Can be one of `error`, `failure`, `pending`, or `success`.
 	State *string `json:"state"`
 
 	/*
-	   The target URL to associate with this status. This URL will be linked from the
-	   GitHub UI to allow users to easily see the source of the status.
-	   For example, if your continuous integration system is posting build status, you
-	   would want to provide the deep link for the build output for this specific SHA:
-	   `http://ci.example.com/user/repo/build/sha`
+	The target URL to associate with this status. This URL will be linked from the
+	GitHub UI to allow users to easily see the source of the status.
+	For example, if your continuous integration system is posting build status, you
+	would want to provide the deep link for the build output for this specific SHA:
+	`http://ci.example.com/user/repo/build/sha`
 	*/
 	TargetUrl *string `json:"target_url,omitempty"`
 }
@@ -1725,8 +1810,12 @@ ReposCreateDeployKeyReq is request data for Client.ReposCreateDeployKey
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
 type ReposCreateDeployKeyReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreateDeployKeyReqBody
 }
@@ -1749,7 +1838,10 @@ func (r *ReposCreateDeployKeyReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1799,15 +1891,15 @@ type ReposCreateDeployKeyReqBody struct {
 	Key *string `json:"key"`
 
 	/*
-	   If `true`, the key will only be able to read repository contents. Otherwise, the
-	   key will be able to read and write.
+	If `true`, the key will only be able to read repository contents. Otherwise, the
+	key will be able to read and write.
 
-	   Deploy keys with write access can perform the same actions as an organization
-	   member with admin access, or a collaborator on a personal repository. For more
-	   information, see "[Repository permission levels for an
-	   organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
-	   and "[Permission levels for a user account
-	   repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
+	Deploy keys with write access can perform the same actions as an organization
+	member with admin access, or a collaborator on a personal repository. For more
+	information, see "[Repository permission levels for an
+	organization](https://help.github.com/articles/repository-permission-levels-for-an-organization/)"
+	and "[Permission levels for a user account
+	repository](https://help.github.com/articles/permission-levels-for-a-user-account-repository/)."
 	*/
 	ReadOnly *bool `json:"read_only,omitempty"`
 
@@ -1881,8 +1973,12 @@ ReposCreateDeploymentReq is request data for Client.ReposCreateDeployment
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 type ReposCreateDeploymentReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreateDeploymentReqBody
 
@@ -1916,7 +2012,10 @@ func (r *ReposCreateDeploymentReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateDeploymentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"ant-man": r.AntManPreview}
 	if allPreviews {
 		previewVals["ant-man"] = true
@@ -1965,30 +2064,25 @@ https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 type ReposCreateDeploymentReqBody struct {
 
-	/*
-	   Attempts to automatically merge the default branch into the requested ref, if
-	   it's behind the default branch.
-	*/
-	AutoMerge *bool `json:"auto_merge,omitempty"`
+	// Attempts to automatically merge the default branch into the requested ref, if it's behind the default branch.
+	AutoMerge *bool   `json:"auto_merge,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
 
 	// Short description of the deployment.
 	Description *string `json:"description,omitempty"`
 
-	/*
-	   Name for the target deployment environment (e.g., `production`, `staging`,
-	   `qa`).
-	*/
+	// Name for the target deployment environment (e.g., `production`, `staging`, `qa`).
 	Environment *string `json:"environment,omitempty"`
 
 	// JSON payload with extra information about the deployment.
-	Payload interface{} `json:"payload,omitempty"`
+	Payload *string `json:"payload,omitempty"`
 
 	/*
-	   Specifies if the given environment is one that end-users directly interact with.
-	   Default: `true` when `environment` is `production` and `false` otherwise.
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
+	Specifies if the given environment is one that end-users directly interact with.
+	Default: `true` when `environment` is `production` and `false` otherwise.
+	**Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type.
 	*/
 	ProductionEnvironment *bool `json:"production_environment,omitempty"`
 
@@ -1996,10 +2090,10 @@ type ReposCreateDeploymentReqBody struct {
 	Ref *string `json:"ref"`
 
 	/*
-	   The [status](https://developer.github.com/v3/repos/statuses/) contexts to verify
-	   against commit status checks. If you omit this parameter, GitHub verifies all
-	   unique contexts before creating a deployment. To bypass checking entirely, pass
-	   an empty array. Defaults to all unique contexts.
+	The [status](https://developer.github.com/v3/repos/statuses/) contexts to verify
+	against commit status checks. If you omit this parameter, GitHub verifies all
+	unique contexts before creating a deployment. To bypass checking entirely, pass
+	an empty array. Defaults to all unique contexts.
 	*/
 	RequiredContexts []string `json:"required_contexts,omitempty"`
 
@@ -2007,13 +2101,13 @@ type ReposCreateDeploymentReqBody struct {
 	Task *string `json:"task,omitempty"`
 
 	/*
-	   Specifies if the given environment is specific to the deployment and will no
-	   longer exist at some point in the future. Default: `false`
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
+	Specifies if the given environment is specific to the deployment and will no
+	longer exist at some point in the future. Default: `false`
+	**Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type. **Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type.
 	*/
 	TransientEnvironment *bool `json:"transient_environment,omitempty"`
 }
@@ -2084,9 +2178,15 @@ ReposCreateDeploymentStatusReq is request data for Client.ReposCreateDeploymentS
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
 type ReposCreateDeploymentStatusReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// deployment_id parameter
 	DeploymentId int64
 	RequestBody  ReposCreateDeploymentStatusReqBody
 
@@ -2132,7 +2232,10 @@ func (r *ReposCreateDeploymentStatusReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateDeploymentStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{
 		"ant-man": r.AntManPreview,
 		"flash":   r.FlashPreview,
@@ -2186,76 +2289,73 @@ https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 type ReposCreateDeploymentStatusReqBody struct {
 
 	/*
-	   Adds a new `inactive` status to all prior non-transient, non-production
-	   environment deployments with the same repository and `environment` name as the
-	   created status's deployment. An `inactive` status is only added to deployments
-	   that had a `success` state. Default: `true`
-	   **Note:** To add an `inactive` status to `production` environments, you must use
-	   the
-	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type.
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
+	Adds a new `inactive` status to all prior non-transient, non-production
+	environment deployments with the same repository and `environment` name as the
+	created status's deployment. An `inactive` status is only added to deployments
+	that had a `success` state. Default: `true`
+	**Note:** To add an `inactive` status to `production` environments, you must use
+	the
+	[`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
+	custom media type.
+	**Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type.
 	*/
 	AutoInactive *bool `json:"auto_inactive,omitempty"`
 
-	/*
-	   A short description of the status. The maximum description length is 140
-	   characters.
-	*/
+	// A short description of the status. The maximum description length is 140 characters.
 	Description *string `json:"description,omitempty"`
 
 	/*
-	   Name for the target deployment environment, which can be changed when setting a
-	   deploy status. For example, `production`, `staging`, or `qa`. **Note:** This
-	   parameter requires you to use the
-	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type.
+	Name for the target deployment environment, which can be changed when setting a
+	deploy status. For example, `production`, `staging`, or `qa`. **Note:** This
+	parameter requires you to use the
+	[`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
+	custom media type.
 	*/
 	Environment *string `json:"environment,omitempty"`
 
 	/*
-	   Sets the URL for accessing your environment. Default: `""`
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
+	Sets the URL for accessing your environment. Default: `""`
+	**Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type. **Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type.
 	*/
 	EnvironmentUrl *string `json:"environment_url,omitempty"`
 
 	/*
-	   The full URL of the deployment's output. This parameter replaces `target_url`.
-	   We will continue to accept `target_url` to support legacy uses, but we recommend
-	   replacing `target_url` with `log_url`. Setting `log_url` will automatically set
-	   `target_url` to the same value. Default: `""`
-	   **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. **Note:** This parameter requires you to use the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type.
+	The full URL of the deployment's output. This parameter replaces `target_url`.
+	We will continue to accept `target_url` to support legacy uses, but we recommend
+	replacing `target_url` with `log_url`. Setting `log_url` will automatically set
+	`target_url` to the same value. Default: `""`
+	**Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type. **Note:** This parameter requires you to use the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type.
 	*/
 	LogUrl *string `json:"log_url,omitempty"`
 
 	/*
-	   The state of the status. Can be one of `error`, `failure`, `inactive`,
-	   `in_progress`, `queued` `pending`, or `success`. **Note:** To use the `inactive`
-	   state, you must provide the
-	   [`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
-	   custom media type. To use the `in_progress` and `queued` states, you must
-	   provide the
-	   [`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
-	   custom media type. When you set a transient deployment to `inactive`, the
-	   deployment will be shown as `destroyed` in GitHub.
+	The state of the status. Can be one of `error`, `failure`, `inactive`,
+	`in_progress`, `queued` `pending`, or `success`. **Note:** To use the `inactive`
+	state, you must provide the
+	[`application/vnd.github.ant-man-preview+json`](https://developer.github.com/v3/previews/#enhanced-deployments)
+	custom media type. To use the `in_progress` and `queued` states, you must
+	provide the
+	[`application/vnd.github.flash-preview+json`](https://developer.github.com/v3/previews/#deployment-statuses)
+	custom media type. When you set a transient deployment to `inactive`, the
+	deployment will be shown as `destroyed` in GitHub.
 	*/
 	State *string `json:"state"`
 
 	/*
-	   The target URL to associate with this status. This URL should contain output to
-	   keep the user updated while the task is running or serve as historical
-	   information for what happened in the deployment. **Note:** It's recommended to
-	   use the `log_url` parameter, which replaces `target_url`.
+	The target URL to associate with this status. This URL should contain output to
+	keep the user updated while the task is running or serve as historical
+	information for what happened in the deployment. **Note:** It's recommended to
+	use the `log_url` parameter, which replaces `target_url`.
 	*/
 	TargetUrl *string `json:"target_url,omitempty"`
 }
@@ -2325,8 +2425,12 @@ ReposCreateDispatchEventReq is request data for Client.ReposCreateDispatchEvent
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 type ReposCreateDispatchEventReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreateDispatchEventReqBody
 }
@@ -2349,7 +2453,7 @@ func (r *ReposCreateDispatchEventReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateDispatchEventReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2395,14 +2499,11 @@ https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 type ReposCreateDispatchEventReqBody struct {
 
-	/*
-	   JSON payload with extra information about the webhook event that your action or
-	   worklow may use.
-	*/
+	// JSON payload with extra information about the webhook event that your action or worklow may use.
 	ClientPayload interface{} `json:"client_payload,omitempty"`
 
 	// **Required:** A custom webhook event name.
-	EventType *string `json:"event_type"`
+	EventType *string `json:"event_type,omitempty"`
 }
 
 /*
@@ -2506,7 +2607,10 @@ func (r *ReposCreateForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
@@ -2527,7 +2631,7 @@ func (r *ReposCreateForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ReposCreateForAuthenticatedUserReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *ReposCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2559,96 +2663,59 @@ https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated
 */
 type ReposCreateForAuthenticatedUserReqBody struct {
 
-	/*
-	   Either `true` to allow merging pull requests with a merge commit, or `false` to
-	   prevent merging pull requests with merge commits.
-	*/
+	// Whether to allow merge commits for pull requests.
 	AllowMergeCommit *bool `json:"allow_merge_commit,omitempty"`
 
-	/*
-	   Either `true` to allow rebase-merging pull requests, or `false` to prevent
-	   rebase-merging.
-	*/
+	// Whether to allow rebase merges for pull requests.
 	AllowRebaseMerge *bool `json:"allow_rebase_merge,omitempty"`
 
-	/*
-	   Either `true` to allow squash-merging pull requests, or `false` to prevent
-	   squash-merging.
-	*/
+	// Whether to allow squash merges for pull requests.
 	AllowSquashMerge *bool `json:"allow_squash_merge,omitempty"`
 
-	// Pass `true` to create an initial commit with empty README.
+	// Whether the repository is initialized with a minimal README.
 	AutoInit *bool `json:"auto_init,omitempty"`
 
-	/*
-	   Either `true` to allow automatically deleting head branches when pull requests
-	   are merged, or `false` to prevent automatic deletion.
-	*/
+	// Whether to delete head branches when pull requests are merged
 	DeleteBranchOnMerge *bool `json:"delete_branch_on_merge,omitempty"`
 
 	// A short description of the repository.
 	Description *string `json:"description,omitempty"`
 
-	/*
-	   Desired language or platform [.gitignore
-	   template](https://github.com/github/gitignore) to apply. Use the name of the
-	   template without the extension. For example, "Haskell".
-	*/
+	// The desired language or platform to apply to the .gitignore.
 	GitignoreTemplate *string `json:"gitignore_template,omitempty"`
 
-	// Either `true` to enable issues for this repository or `false` to disable them.
+	// Whether downloads are enabled.
+	HasDownloads *bool `json:"has_downloads,omitempty"`
+
+	// Whether issues are enabled.
 	HasIssues *bool `json:"has_issues,omitempty"`
 
-	/*
-	   Either `true` to enable projects for this repository or `false` to disable them.
-	   **Note:** If you're creating a repository in an organization that has disabled
-	   repository projects, the default is `false`, and if you pass `true`, the API
-	   returns an error.
-	*/
+	// Whether projects are enabled.
 	HasProjects *bool `json:"has_projects,omitempty"`
 
-	// Either `true` to enable the wiki for this repository or `false` to disable it.
+	// Whether the wiki is enabled.
 	HasWiki *bool `json:"has_wiki,omitempty"`
 
 	// A URL with more information about the repository.
 	Homepage *string `json:"homepage,omitempty"`
 
-	/*
-	   Either `true` to make this repo available as a template repository or `false` to
-	   prevent it.
-	*/
+	// Whether this repository acts as a template that can be used to generate new repositories.
 	IsTemplate *bool `json:"is_template,omitempty"`
 
-	/*
-	   Choose an [open source license template](https://choosealicense.com/) that best
-	   suits your needs, and then use the [license
-	   keyword](https://help.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
-	   as the `license_template` string. For example, "mit" or "mpl-2.0".
-	*/
+	// The license keyword of the open source license for this repository.
 	LicenseTemplate *string `json:"license_template,omitempty"`
 
 	// The name of the repository.
 	Name *string `json:"name"`
 
-	// Either `true` to create a private repository or `false` to create a public one.
+	// Whether the repository is private or public.
 	Private *bool `json:"private,omitempty"`
 
 	/*
-	   The id of the team that will be granted access to this repository. This is only
-	   valid when creating a repository in an organization.
+	The id of the team that will be granted access to this repository. This is only
+	valid when creating a repository in an organization.
 	*/
 	TeamId *int64 `json:"team_id,omitempty"`
-
-	/*
-	   Can be `public` or `private`. If your organization is associated with an
-	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
-	   2.20+, `visibility` can also be `internal`. For more information, see "[Creating
-	   an internal
-	   repository](https://help.github.com/github/creating-cloning-and-archiving-repositories/creating-an-internal-repository)".
-	   The `visibility` parameter overrides the `private` parameter when you use both
-	   parameters with the `nebula-preview` preview header.
-	*/
-	Visibility *string `json:"visibility,omitempty"`
 }
 
 /*
@@ -2717,8 +2784,12 @@ ReposCreateForkReq is request data for Client.ReposCreateFork
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 type ReposCreateForkReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreateForkReqBody
 }
@@ -2741,7 +2812,10 @@ func (r *ReposCreateForkReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateForkReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2787,10 +2861,7 @@ https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 type ReposCreateForkReqBody struct {
 
-	/*
-	   Optional parameter to specify the organization name if forking into an
-	   organization.
-	*/
+	// Optional parameter to specify the organization name if forking into an organization.
 	Organization *string `json:"organization,omitempty"`
 }
 
@@ -2860,7 +2931,9 @@ ReposCreateInOrgReq is request data for Client.ReposCreateInOrg
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
 type ReposCreateInOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody ReposCreateInOrgReqBody
 
@@ -2904,7 +2977,10 @@ func (r *ReposCreateInOrgReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
@@ -2958,29 +3034,23 @@ https://developer.github.com/v3/repos/#create-an-organization-repository
 type ReposCreateInOrgReqBody struct {
 
 	/*
-	   Either `true` to allow merging pull requests with a merge commit, or `false` to
-	   prevent merging pull requests with merge commits.
+	Either `true` to allow merging pull requests with a merge commit, or `false` to
+	prevent merging pull requests with merge commits.
 	*/
 	AllowMergeCommit *bool `json:"allow_merge_commit,omitempty"`
 
-	/*
-	   Either `true` to allow rebase-merging pull requests, or `false` to prevent
-	   rebase-merging.
-	*/
+	// Either `true` to allow rebase-merging pull requests, or `false` to prevent rebase-merging.
 	AllowRebaseMerge *bool `json:"allow_rebase_merge,omitempty"`
 
-	/*
-	   Either `true` to allow squash-merging pull requests, or `false` to prevent
-	   squash-merging.
-	*/
+	// Either `true` to allow squash-merging pull requests, or `false` to prevent squash-merging.
 	AllowSquashMerge *bool `json:"allow_squash_merge,omitempty"`
 
 	// Pass `true` to create an initial commit with empty README.
 	AutoInit *bool `json:"auto_init,omitempty"`
 
 	/*
-	   Either `true` to allow automatically deleting head branches when pull requests
-	   are merged, or `false` to prevent automatic deletion.
+	Either `true` to allow automatically deleting head branches when pull requests
+	are merged, or `false` to prevent automatic deletion.
 	*/
 	DeleteBranchOnMerge *bool `json:"delete_branch_on_merge,omitempty"`
 
@@ -2988,9 +3058,9 @@ type ReposCreateInOrgReqBody struct {
 	Description *string `json:"description,omitempty"`
 
 	/*
-	   Desired language or platform [.gitignore
-	   template](https://github.com/github/gitignore) to apply. Use the name of the
-	   template without the extension. For example, "Haskell".
+	Desired language or platform [.gitignore
+	template](https://github.com/github/gitignore) to apply. Use the name of the
+	template without the extension. For example, "Haskell".
 	*/
 	GitignoreTemplate *string `json:"gitignore_template,omitempty"`
 
@@ -2998,10 +3068,10 @@ type ReposCreateInOrgReqBody struct {
 	HasIssues *bool `json:"has_issues,omitempty"`
 
 	/*
-	   Either `true` to enable projects for this repository or `false` to disable them.
-	   **Note:** If you're creating a repository in an organization that has disabled
-	   repository projects, the default is `false`, and if you pass `true`, the API
-	   returns an error.
+	Either `true` to enable projects for this repository or `false` to disable them.
+	**Note:** If you're creating a repository in an organization that has disabled
+	repository projects, the default is `false`, and if you pass `true`, the API
+	returns an error.
 	*/
 	HasProjects *bool `json:"has_projects,omitempty"`
 
@@ -3011,17 +3081,14 @@ type ReposCreateInOrgReqBody struct {
 	// A URL with more information about the repository.
 	Homepage *string `json:"homepage,omitempty"`
 
-	/*
-	   Either `true` to make this repo available as a template repository or `false` to
-	   prevent it.
-	*/
+	// Either `true` to make this repo available as a template repository or `false` to prevent it.
 	IsTemplate *bool `json:"is_template,omitempty"`
 
 	/*
-	   Choose an [open source license template](https://choosealicense.com/) that best
-	   suits your needs, and then use the [license
-	   keyword](https://help.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
-	   as the `license_template` string. For example, "mit" or "mpl-2.0".
+	Choose an [open source license template](https://choosealicense.com/) that best
+	suits your needs, and then use the [license
+	keyword](https://help.github.com/articles/licensing-a-repository/#searching-github-by-license-type)
+	as the `license_template` string. For example, "mit" or "mpl-2.0".
 	*/
 	LicenseTemplate *string `json:"license_template,omitempty"`
 
@@ -3032,19 +3099,20 @@ type ReposCreateInOrgReqBody struct {
 	Private *bool `json:"private,omitempty"`
 
 	/*
-	   The id of the team that will be granted access to this repository. This is only
-	   valid when creating a repository in an organization.
+	The id of the team that will be granted access to this repository. This is only
+	valid when creating a repository in an organization.
 	*/
 	TeamId *int64 `json:"team_id,omitempty"`
 
 	/*
-	   Can be `public` or `private`. If your organization is associated with an
-	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
-	   2.20+, `visibility` can also be `internal`. For more information, see "[Creating
-	   an internal
-	   repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-repository-visibility#about-internal-repositories)".
-	   The `visibility` parameter overrides the `private` parameter when you use both
-	   parameters with the `nebula-preview` preview header.
+	Can be `public` or `private`. If your organization is associated with an
+	enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
+	2.20+, `visibility` can also be `internal`. For more information, see "[Creating
+	an internal
+	repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-repository-visibility#about-internal-repositories)"
+	in the GitHub Help documentation.
+	The `visibility` parameter overrides the `private` parameter when you use both
+	parameters with the `nebula-preview` preview header.
 	*/
 	Visibility *string `json:"visibility,omitempty"`
 }
@@ -3115,9 +3183,15 @@ ReposCreateOrUpdateFileContentsReq is request data for Client.ReposCreateOrUpdat
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
 type ReposCreateOrUpdateFileContentsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// path+ parameter
 	Path        string
 	RequestBody ReposCreateOrUpdateFileContentsReqBody
 }
@@ -3140,7 +3214,10 @@ func (r *ReposCreateOrUpdateFileContentsReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateOrUpdateFileContentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3181,33 +3258,23 @@ func (r *ReposCreateOrUpdateFileContentsReq) Rel(link RelName, resp *ReposCreate
 
 // ReposCreateOrUpdateFileContentsReqBodyAuthor is a value for ReposCreateOrUpdateFileContentsReqBody's Author field
 type ReposCreateOrUpdateFileContentsReqBodyAuthor struct {
+	Date *string `json:"date,omitempty"`
 
-	/*
-	   The email of the author or committer of the commit. You'll receive a `422`
-	   status code if `email` is omitted.
-	*/
+	// The email of the author or committer of the commit. You'll receive a `422` status code if `email` is omitted.
 	Email *string `json:"email"`
 
-	/*
-	   The name of the author or committer of the commit. You'll receive a `422` status
-	   code if `name` is omitted.
-	*/
+	// The name of the author or committer of the commit. You'll receive a `422` status code if `name` is omitted.
 	Name *string `json:"name"`
 }
 
 // ReposCreateOrUpdateFileContentsReqBodyCommitter is a value for ReposCreateOrUpdateFileContentsReqBody's Committer field
 type ReposCreateOrUpdateFileContentsReqBodyCommitter struct {
+	Date *string `json:"date,omitempty"`
 
-	/*
-	   The email of the author or committer of the commit. You'll receive a `422`
-	   status code if `email` is omitted.
-	*/
+	// The email of the author or committer of the commit. You'll receive a `422` status code if `email` is omitted.
 	Email *string `json:"email"`
 
-	/*
-	   The name of the author or committer of the commit. You'll receive a `422` status
-	   code if `name` is omitted.
-	*/
+	// The name of the author or committer of the commit. You'll receive a `422` status code if `name` is omitted.
 	Name *string `json:"name"`
 }
 
@@ -3218,10 +3285,7 @@ https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
 type ReposCreateOrUpdateFileContentsReqBody struct {
 
-	/*
-	   The author of the file. Default: The `committer` or the authenticated user if
-	   you omit `committer`.
-	*/
+	// The author of the file. Default: The `committer` or the authenticated user if you omit `committer`.
 	Author *ReposCreateOrUpdateFileContentsReqBodyAuthor `json:"author,omitempty"`
 
 	// The branch name. Default: the repository’s default branch (usually `master`)
@@ -3236,10 +3300,7 @@ type ReposCreateOrUpdateFileContentsReqBody struct {
 	// The commit message.
 	Message *string `json:"message"`
 
-	/*
-	   **Required if you are updating a file**. The blob SHA of the file being
-	   replaced.
-	*/
+	// **Required if you are updating a file**. The blob SHA of the file being replaced.
 	Sha *string `json:"sha,omitempty"`
 }
 
@@ -3309,8 +3370,12 @@ ReposCreatePagesSiteReq is request data for Client.ReposCreatePagesSite
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
 type ReposCreatePagesSiteReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreatePagesSiteReqBody
 
@@ -3342,7 +3407,10 @@ func (r *ReposCreatePagesSiteReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreatePagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"switcheroo": r.SwitcherooPreview}
 	if requiredPreviews {
 		previewVals["switcheroo"] = true
@@ -3391,16 +3459,16 @@ func (r *ReposCreatePagesSiteReq) Rel(link RelName, resp *ReposCreatePagesSiteRe
 type ReposCreatePagesSiteReqBodySource struct {
 
 	/*
-	   The repository branch used to publish your [site's source
-	   files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
-	   Can be either `master` or `gh-pages`.
+	The repository branch used to publish your [site's source
+	files](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
+	Can be either `master` or `gh-pages`.
 	*/
 	Branch *string `json:"branch,omitempty"`
 
 	/*
-	   The repository directory that includes the source files for the Pages site. When
-	   `branch` is `master`, you can change `path` to `/docs`. When `branch` is
-	   `gh-pages`, you are unable to specify a `path` other than `/`.
+	The repository directory that includes the source files for the Pages site. When
+	`branch` is `master`, you can change `path` to `/docs`. When `branch` is
+	`gh-pages`, you are unable to specify a `path` other than `/`.
 	*/
 	Path *string `json:"path,omitempty"`
 }
@@ -3480,8 +3548,12 @@ ReposCreateReleaseReq is request data for Client.ReposCreateRelease
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
 type ReposCreateReleaseReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreateReleaseReqBody
 }
@@ -3504,7 +3576,10 @@ func (r *ReposCreateReleaseReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3553,28 +3628,22 @@ type ReposCreateReleaseReqBody struct {
 	// Text describing the contents of the tag.
 	Body *string `json:"body,omitempty"`
 
-	/*
-	   `true` to create a draft (unpublished) release, `false` to create a published
-	   one.
-	*/
+	// `true` to create a draft (unpublished) release, `false` to create a published one.
 	Draft *bool `json:"draft,omitempty"`
 
 	// The name of the release.
 	Name *string `json:"name,omitempty"`
 
-	/*
-	   `true` to identify the release as a prerelease. `false` to identify the release
-	   as a full release.
-	*/
+	// `true` to identify the release as a prerelease. `false` to identify the release as a full release.
 	Prerelease *bool `json:"prerelease,omitempty"`
 
 	// The name of the tag.
 	TagName *string `json:"tag_name"`
 
 	/*
-	   Specifies the commitish value that determines where the Git tag is created from.
-	   Can be any branch or commit SHA. Unused if the Git tag already exists. Default:
-	   the repository's default branch (usually `master`).
+	Specifies the commitish value that determines where the Git tag is created from.
+	Can be any branch or commit SHA. Unused if the Git tag already exists. Default:
+	the repository's default branch (usually `master`).
 	*/
 	TargetCommitish *string `json:"target_commitish,omitempty"`
 }
@@ -3645,10 +3714,14 @@ ReposCreateUsingTemplateReq is request data for Client.ReposCreateUsingTemplate
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
 type ReposCreateUsingTemplateReq struct {
-	_url          string
+	_url string
+
+	// template_owner parameter
 	TemplateOwner string
-	TemplateRepo  string
-	RequestBody   ReposCreateUsingTemplateReqBody
+
+	// template_repo parameter
+	TemplateRepo string
+	RequestBody  ReposCreateUsingTemplateReqBody
 
 	/*
 	The `is_template` and `template_repository` keys are currently available for
@@ -3678,7 +3751,10 @@ func (r *ReposCreateUsingTemplateReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateUsingTemplateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"baptiste": r.BaptistePreview}
 	if requiredPreviews {
 		previewVals["baptiste"] = true
@@ -3737,16 +3813,13 @@ type ReposCreateUsingTemplateReqBody struct {
 	Name *string `json:"name"`
 
 	/*
-	   The organization or person who will own the new repository. To create a new
-	   repository in an organization, the authenticated user must be a member of the
-	   specified organization.
+	The organization or person who will own the new repository. To create a new
+	repository in an organization, the authenticated user must be a member of the
+	specified organization.
 	*/
 	Owner *string `json:"owner,omitempty"`
 
-	/*
-	   Either `true` to create a new private repository or `false` to create a new
-	   public one.
-	*/
+	// Either `true` to create a new private repository or `false` to create a new public one.
 	Private *bool `json:"private,omitempty"`
 }
 
@@ -3755,7 +3828,7 @@ ReposCreateUsingTemplateResponseBody is a response body for ReposCreateUsingTemp
 
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
-type ReposCreateUsingTemplateResponseBody components.Repository3
+type ReposCreateUsingTemplateResponseBody components.Repository
 
 /*
 ReposCreateUsingTemplateResponse is a response for ReposCreateUsingTemplate
@@ -3816,8 +3889,12 @@ ReposCreateWebhookReq is request data for Client.ReposCreateWebhook
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
 type ReposCreateWebhookReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposCreateWebhookReqBody
 }
@@ -3840,7 +3917,10 @@ func (r *ReposCreateWebhookReq) urlQuery() url.Values {
 }
 
 func (r *ReposCreateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3882,28 +3962,27 @@ func (r *ReposCreateWebhookReq) Rel(link RelName, resp *ReposCreateWebhookRespon
 // ReposCreateWebhookReqBodyConfig is a value for ReposCreateWebhookReqBody's Config field
 type ReposCreateWebhookReqBodyConfig struct {
 
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
+	// The media type used to serialize the payloads. Supported values include `json` and `form`. The default is `form`.
 	ContentType *string `json:"content_type,omitempty"`
+	Digest      *string `json:"digest,omitempty"`
 
 	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
+	Determines whether the SSL certificate of the host for `url` will be verified
+	when delivering payloads. Supported values include `0` (verification is
+	performed) and `1` (verification is not performed). The default is `0`. **We
+	strongly recommend not setting this to `1` as you are subject to
+	man-in-the-middle and other attacks.**
 	*/
 	InsecureSsl *string `json:"insecure_ssl,omitempty"`
 
 	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
+	If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	digest value in the
+	[`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	header.
 	*/
 	Secret *string `json:"secret,omitempty"`
+	Token  *string `json:"token,omitempty"`
 
 	// The URL to which the payloads will be delivered.
 	Url *string `json:"url"`
@@ -3916,28 +3995,19 @@ https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
 type ReposCreateWebhookReqBody struct {
 
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
+	// Determines if notifications are sent when the webhook is triggered. Set to `true` to send notifications.
 	Active *bool `json:"active,omitempty"`
 
 	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
+	Key/value pairs to provide settings for this webhook. [These are defined
+	below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
 	*/
 	Config *ReposCreateWebhookReqBodyConfig `json:"config"`
 
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for.
-	*/
+	// Determines what [events](https://developer.github.com/webhooks/event-payloads) the hook is triggered for.
 	Events []string `json:"events,omitempty"`
 
-	/*
-	   Use `web` to create a webhook. Default: `web`. This parameter only accepts the
-	   value `web`.
-	*/
+	// Use `web` to create a webhook. Default: `web`. This parameter only accepts the value `web`.
 	Name *string `json:"name,omitempty"`
 }
 
@@ -4006,7 +4076,9 @@ ReposDeclineInvitationReq is request data for Client.ReposDeclineInvitation
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
 type ReposDeclineInvitationReq struct {
-	_url         string
+	_url string
+
+	// invitation_id parameter
 	InvitationId int64
 }
 
@@ -4042,7 +4114,7 @@ func (r *ReposDeclineInvitationReq) dataStatuses() []int {
 }
 
 func (r *ReposDeclineInvitationReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ReposDeclineInvitationReq) endpointAttributes() []endpointAttribute {
@@ -4098,8 +4170,7 @@ func ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposDeleteResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4125,9 +4196,13 @@ ReposDeleteReq is request data for Client.ReposDelete
 https://developer.github.com/v3/repos/#delete-a-repository
 */
 type ReposDeleteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposDeleteReq) url() string {
@@ -4158,7 +4233,7 @@ func (r *ReposDeleteReq) body() interface{} {
 }
 
 func (r *ReposDeleteReq) dataStatuses() []int {
-	return []int{204}
+	return []int{}
 }
 
 func (r *ReposDeleteReq) validStatuses() []int {
@@ -4188,16 +4263,6 @@ func (r *ReposDeleteReq) Rel(link RelName, resp *ReposDeleteResponse) bool {
 }
 
 /*
-ReposDeleteResponseBody is a response body for ReposDelete
-
-https://developer.github.com/v3/repos/#delete-a-repository
-*/
-type ReposDeleteResponseBody struct {
-	DocumentationUrl string `json:"documentation_url,omitempty"`
-	Message          string `json:"message,omitempty"`
-}
-
-/*
 ReposDeleteResponse is a response for ReposDelete
 
 https://developer.github.com/v3/repos/#delete-a-repository
@@ -4205,7 +4270,6 @@ https://developer.github.com/v3/repos/#delete-a-repository
 type ReposDeleteResponse struct {
 	response
 	request *ReposDeleteReq
-	Data    ReposDeleteResponseBody
 }
 
 /*
@@ -4255,9 +4319,15 @@ ReposDeleteAccessRestrictionsReq is request data for Client.ReposDeleteAccessRes
 https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 */
 type ReposDeleteAccessRestrictionsReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -4293,7 +4363,7 @@ func (r *ReposDeleteAccessRestrictionsReq) dataStatuses() []int {
 }
 
 func (r *ReposDeleteAccessRestrictionsReq) validStatuses() []int {
-	return []int{}
+	return []int{204}
 }
 
 func (r *ReposDeleteAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
@@ -4349,6 +4419,10 @@ func ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdmin
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -4375,9 +4449,15 @@ ReposDeleteAdminBranchProtectionReq is request data for Client.ReposDeleteAdminB
 https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 */
 type ReposDeleteAdminBranchProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -4413,11 +4493,11 @@ func (r *ReposDeleteAdminBranchProtectionReq) dataStatuses() []int {
 }
 
 func (r *ReposDeleteAdminBranchProtectionReq) validStatuses() []int {
-	return []int{}
+	return []int{204}
 }
 
 func (r *ReposDeleteAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4446,6 +4526,7 @@ https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 type ReposDeleteAdminBranchProtectionResponse struct {
 	response
 	request *ReposDeleteAdminBranchProtectionReq
+	Data    bool
 }
 
 /*
@@ -4495,9 +4576,15 @@ ReposDeleteBranchProtectionReq is request data for Client.ReposDeleteBranchProte
 https://developer.github.com/v3/repos/branches/#delete-branch-protection
 */
 type ReposDeleteBranchProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -4589,6 +4676,10 @@ func ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitComment
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -4615,9 +4706,15 @@ ReposDeleteCommitCommentReq is request data for Client.ReposDeleteCommitComment
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
 type ReposDeleteCommitCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 }
 
@@ -4657,7 +4754,7 @@ func (r *ReposDeleteCommitCommentReq) validStatuses() []int {
 }
 
 func (r *ReposDeleteCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4686,6 +4783,7 @@ https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 type ReposDeleteCommitCommentResponse struct {
 	response
 	request *ReposDeleteCommitCommentReq
+	Data    bool
 }
 
 /*
@@ -4708,6 +4806,10 @@ func ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteC
 	}
 	if err != nil {
 		return resp, err
+	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4735,9 +4837,15 @@ ReposDeleteCommitSignatureProtectionReq is request data for Client.ReposDeleteCo
 https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
 */
 type ReposDeleteCommitSignatureProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 
 	/*
@@ -4788,11 +4896,11 @@ func (r *ReposDeleteCommitSignatureProtectionReq) dataStatuses() []int {
 }
 
 func (r *ReposDeleteCommitSignatureProtectionReq) validStatuses() []int {
-	return []int{}
+	return []int{204}
 }
 
 func (r *ReposDeleteCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4821,6 +4929,7 @@ https://developer.github.com/v3/repos/branches/#delete-commit-signature-protecti
 type ReposDeleteCommitSignatureProtectionResponse struct {
 	response
 	request *ReposDeleteCommitSignatureProtectionReq
+	Data    bool
 }
 
 /*
@@ -4870,9 +4979,15 @@ ReposDeleteDeployKeyReq is request data for Client.ReposDeleteDeployKey
 https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 */
 type ReposDeleteDeployKeyReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// key_id parameter
 	KeyId int64
 }
 
@@ -4990,9 +5105,15 @@ ReposDeleteDeploymentReq is request data for Client.ReposDeleteDeployment
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
 type ReposDeleteDeploymentReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// deployment_id parameter
 	DeploymentId int64
 }
 
@@ -5111,9 +5232,15 @@ ReposDeleteFileReq is request data for Client.ReposDeleteFile
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
 type ReposDeleteFileReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// path+ parameter
 	Path        string
 	RequestBody ReposDeleteFileReqBody
 }
@@ -5136,7 +5263,10 @@ func (r *ReposDeleteFileReq) urlQuery() url.Values {
 }
 
 func (r *ReposDeleteFileReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5223,7 +5353,7 @@ ReposDeleteFileResponseBody is a response body for ReposDeleteFile
 
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
-type ReposDeleteFileResponseBody components.FileCommit2
+type ReposDeleteFileResponseBody components.FileCommit
 
 /*
 ReposDeleteFileResponse is a response for ReposDeleteFile
@@ -5283,9 +5413,15 @@ ReposDeleteInvitationReq is request data for Client.ReposDeleteInvitation
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
 type ReposDeleteInvitationReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// invitation_id parameter
 	InvitationId int64
 }
 
@@ -5403,9 +5539,13 @@ ReposDeletePagesSiteReq is request data for Client.ReposDeletePagesSite
 https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 */
 type ReposDeletePagesSiteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling Pages in the Pages API is currently available for
@@ -5511,6 +5651,10 @@ func ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDelet
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -5537,9 +5681,15 @@ ReposDeletePullRequestReviewProtectionReq is request data for Client.ReposDelete
 https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
 */
 type ReposDeletePullRequestReviewProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -5575,11 +5725,11 @@ func (r *ReposDeletePullRequestReviewProtectionReq) dataStatuses() []int {
 }
 
 func (r *ReposDeletePullRequestReviewProtectionReq) validStatuses() []int {
-	return []int{}
+	return []int{204}
 }
 
 func (r *ReposDeletePullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5608,6 +5758,7 @@ https://developer.github.com/v3/repos/branches/#delete-pull-request-review-prote
 type ReposDeletePullRequestReviewProtectionResponse struct {
 	response
 	request *ReposDeletePullRequestReviewProtectionReq
+	Data    bool
 }
 
 /*
@@ -5657,9 +5808,15 @@ ReposDeleteReleaseReq is request data for Client.ReposDeleteRelease
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
 type ReposDeleteReleaseReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// release_id parameter
 	ReleaseId int64
 }
 
@@ -5777,9 +5934,15 @@ ReposDeleteReleaseAssetReq is request data for Client.ReposDeleteReleaseAsset
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
 type ReposDeleteReleaseAssetReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// asset_id parameter
 	AssetId int64
 }
 
@@ -5871,6 +6034,10 @@ func ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -5897,9 +6064,15 @@ ReposDeleteWebhookReq is request data for Client.ReposDeleteWebhook
 https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 */
 type ReposDeleteWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -5939,7 +6112,7 @@ func (r *ReposDeleteWebhookReq) validStatuses() []int {
 }
 
 func (r *ReposDeleteWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5968,6 +6141,7 @@ https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 type ReposDeleteWebhookResponse struct {
 	response
 	request *ReposDeleteWebhookReq
+	Data    bool
 }
 
 /*
@@ -6017,9 +6191,13 @@ ReposDisableAutomatedSecurityFixesReq is request data for Client.ReposDisableAut
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
 type ReposDisableAutomatedSecurityFixesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling or disabling automated security fixes is currently available for
@@ -6149,9 +6327,13 @@ ReposDisableVulnerabilityAlertsReq is request data for Client.ReposDisableVulner
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
 type ReposDisableVulnerabilityAlertsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -6235,19 +6417,18 @@ type ReposDisableVulnerabilityAlertsResponse struct {
 }
 
 /*
-ReposDownloadArchive performs requests for "repos/download-archive"
+ReposDownloadTarballArchive performs requests for "repos/download-tarball-archive"
 
-Download a repository archive.
+Download a repository archive (tar).
 
-  GET /repos/{owner}/{repo}/{archive_format}/{ref}
+  GET /repos/{owner}/{repo}/tarball/{ref}
 
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-func ReposDownloadArchive(ctx context.Context, req *ReposDownloadArchiveReq, opt ...RequestOption) (*ReposDownloadArchiveResponse, error) {
+func ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballArchiveReq, opt ...RequestOption) (*ReposDownloadTarballArchiveResponse, error) {
 	if req == nil {
-		req = new(ReposDownloadArchiveReq)
+		req = new(ReposDownloadTarballArchiveReq)
 	}
-	resp := &ReposDownloadArchiveResponse{request: req}
+	resp := &ReposDownloadTarballArchiveResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -6263,72 +6444,75 @@ func ReposDownloadArchive(ctx context.Context, req *ReposDownloadArchiveReq, opt
 }
 
 /*
-ReposDownloadArchive performs requests for "repos/download-archive"
+ReposDownloadTarballArchive performs requests for "repos/download-tarball-archive"
 
-Download a repository archive.
+Download a repository archive (tar).
 
-  GET /repos/{owner}/{repo}/{archive_format}/{ref}
+  GET /repos/{owner}/{repo}/tarball/{ref}
 
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-func (c Client) ReposDownloadArchive(ctx context.Context, req *ReposDownloadArchiveReq, opt ...RequestOption) (*ReposDownloadArchiveResponse, error) {
-	return ReposDownloadArchive(ctx, req, append(c, opt...)...)
+func (c Client) ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballArchiveReq, opt ...RequestOption) (*ReposDownloadTarballArchiveResponse, error) {
+	return ReposDownloadTarballArchive(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposDownloadArchiveReq is request data for Client.ReposDownloadArchive
+ReposDownloadTarballArchiveReq is request data for Client.ReposDownloadTarballArchive
 
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-type ReposDownloadArchiveReq struct {
-	_url          string
-	Owner         string
-	Repo          string
-	ArchiveFormat string
-	Ref           string
+type ReposDownloadTarballArchiveReq struct {
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// ref parameter
+	Ref string
 }
 
-func (r *ReposDownloadArchiveReq) url() string {
+func (r *ReposDownloadTarballArchiveReq) url() string {
 	return r._url
 }
 
-func (r *ReposDownloadArchiveReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/%v/%v", r.Owner, r.Repo, r.ArchiveFormat, r.Ref)
+func (r *ReposDownloadTarballArchiveReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/tarball/%v", r.Owner, r.Repo, r.Ref)
 }
 
-func (r *ReposDownloadArchiveReq) method() string {
+func (r *ReposDownloadTarballArchiveReq) method() string {
 	return "GET"
 }
 
-func (r *ReposDownloadArchiveReq) urlQuery() url.Values {
+func (r *ReposDownloadTarballArchiveReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposDownloadArchiveReq) header(requiredPreviews, allPreviews bool) http.Header {
+func (r *ReposDownloadTarballArchiveReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposDownloadArchiveReq) body() interface{} {
+func (r *ReposDownloadTarballArchiveReq) body() interface{} {
 	return nil
 }
 
-func (r *ReposDownloadArchiveReq) dataStatuses() []int {
+func (r *ReposDownloadTarballArchiveReq) dataStatuses() []int {
 	return []int{}
 }
 
-func (r *ReposDownloadArchiveReq) validStatuses() []int {
+func (r *ReposDownloadTarballArchiveReq) validStatuses() []int {
 	return []int{302}
 }
 
-func (r *ReposDownloadArchiveReq) endpointAttributes() []endpointAttribute {
+func (r *ReposDownloadTarballArchiveReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrRedirectOnly}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposDownloadArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposDownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -6336,7 +6520,7 @@ func (r *ReposDownloadArchiveReq) HTTPRequest(ctx context.Context, opt ...Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDownloadArchiveReq) Rel(link RelName, resp *ReposDownloadArchiveResponse) bool {
+func (r *ReposDownloadTarballArchiveReq) Rel(link RelName, resp *ReposDownloadTarballArchiveResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -6346,13 +6530,134 @@ func (r *ReposDownloadArchiveReq) Rel(link RelName, resp *ReposDownloadArchiveRe
 }
 
 /*
-ReposDownloadArchiveResponse is a response for ReposDownloadArchive
+ReposDownloadTarballArchiveResponse is a response for ReposDownloadTarballArchive
 
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-type ReposDownloadArchiveResponse struct {
+type ReposDownloadTarballArchiveResponse struct {
 	response
-	request *ReposDownloadArchiveReq
+	request *ReposDownloadTarballArchiveReq
+}
+
+/*
+ReposDownloadZipballArchive performs requests for "repos/download-zipball-archive"
+
+Download a repository archive (zip).
+
+  GET /repos/{owner}/{repo}/zipball/{ref}
+
+*/
+func ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballArchiveReq, opt ...RequestOption) (*ReposDownloadZipballArchiveResponse, error) {
+	if req == nil {
+		req = new(ReposDownloadZipballArchiveReq)
+	}
+	resp := &ReposDownloadZipballArchiveResponse{request: req}
+	r, err := doRequest(ctx, req, opt...)
+	if r != nil {
+		resp.response = *r
+	}
+	if err != nil {
+		return resp, err
+	}
+	err = r.decodeBody(nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+/*
+ReposDownloadZipballArchive performs requests for "repos/download-zipball-archive"
+
+Download a repository archive (zip).
+
+  GET /repos/{owner}/{repo}/zipball/{ref}
+
+*/
+func (c Client) ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballArchiveReq, opt ...RequestOption) (*ReposDownloadZipballArchiveResponse, error) {
+	return ReposDownloadZipballArchive(ctx, req, append(c, opt...)...)
+}
+
+/*
+ReposDownloadZipballArchiveReq is request data for Client.ReposDownloadZipballArchive
+
+*/
+type ReposDownloadZipballArchiveReq struct {
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// ref parameter
+	Ref string
+}
+
+func (r *ReposDownloadZipballArchiveReq) url() string {
+	return r._url
+}
+
+func (r *ReposDownloadZipballArchiveReq) urlPath() string {
+	return fmt.Sprintf("/repos/%v/%v/zipball/%v", r.Owner, r.Repo, r.Ref)
+}
+
+func (r *ReposDownloadZipballArchiveReq) method() string {
+	return "GET"
+}
+
+func (r *ReposDownloadZipballArchiveReq) urlQuery() url.Values {
+	query := url.Values{}
+	return query
+}
+
+func (r *ReposDownloadZipballArchiveReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{}
+	previewVals := map[string]bool{}
+	return requestHeaders(headerVals, previewVals)
+}
+
+func (r *ReposDownloadZipballArchiveReq) body() interface{} {
+	return nil
+}
+
+func (r *ReposDownloadZipballArchiveReq) dataStatuses() []int {
+	return []int{}
+}
+
+func (r *ReposDownloadZipballArchiveReq) validStatuses() []int {
+	return []int{302}
+}
+
+func (r *ReposDownloadZipballArchiveReq) endpointAttributes() []endpointAttribute {
+	return []endpointAttribute{attrRedirectOnly}
+}
+
+// HTTPRequest builds an *http.Request
+func (r *ReposDownloadZipballArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+	return buildHTTPRequest(ctx, r, opt)
+}
+
+/*
+Rel updates this request to point to a relative link from resp. Returns false if
+the link does not exist. Handy for paging.
+*/
+func (r *ReposDownloadZipballArchiveReq) Rel(link RelName, resp *ReposDownloadZipballArchiveResponse) bool {
+	u := resp.RelLink(link)
+	if u == "" {
+		return false
+	}
+	r._url = u
+	return true
+}
+
+/*
+ReposDownloadZipballArchiveResponse is a response for ReposDownloadZipballArchive
+
+*/
+type ReposDownloadZipballArchiveResponse struct {
+	response
+	request *ReposDownloadZipballArchiveReq
 }
 
 /*
@@ -6402,9 +6707,13 @@ ReposEnableAutomatedSecurityFixesReq is request data for Client.ReposEnableAutom
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
 type ReposEnableAutomatedSecurityFixesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling or disabling automated security fixes is currently available for
@@ -6534,9 +6843,13 @@ ReposEnableVulnerabilityAlertsReq is request data for Client.ReposEnableVulnerab
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
 type ReposEnableVulnerabilityAlertsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -6667,9 +6980,13 @@ ReposGetReq is request data for Client.ReposGet
 https://developer.github.com/v3/repos/#get-a-repository
 */
 type ReposGetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	You can set the visibility of a repository using the new `visibility` parameter
@@ -6709,7 +7026,7 @@ func (r *ReposGetReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"nebula":        r.NebulaPreview,
 		"scarlet-witch": r.ScarletWitchPreview,
@@ -6730,7 +7047,7 @@ func (r *ReposGetReq) dataStatuses() []int {
 }
 
 func (r *ReposGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301}
 }
 
 func (r *ReposGetReq) endpointAttributes() []endpointAttribute {
@@ -6821,9 +7138,15 @@ ReposGetAccessRestrictionsReq is request data for Client.ReposGetAccessRestricti
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
 type ReposGetAccessRestrictionsReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -6845,7 +7168,7 @@ func (r *ReposGetAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -6950,9 +7273,15 @@ ReposGetAdminBranchProtectionReq is request data for Client.ReposGetAdminBranchP
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
 type ReposGetAdminBranchProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -6974,7 +7303,7 @@ func (r *ReposGetAdminBranchProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetAdminBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7079,9 +7408,15 @@ ReposGetAllStatusCheckContextsReq is request data for Client.ReposGetAllStatusCh
 https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 */
 type ReposGetAllStatusCheckContextsReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -7103,7 +7438,7 @@ func (r *ReposGetAllStatusCheckContextsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetAllStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7208,9 +7543,13 @@ ReposGetAllTopicsReq is request data for Client.ReposGetAllTopics
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
 type ReposGetAllTopicsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The `topics` property for repositories on GitHub is currently available for
@@ -7238,7 +7577,7 @@ func (r *ReposGetAllTopicsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetAllTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
 	if requiredPreviews {
 		previewVals["mercy"] = true
@@ -7349,9 +7688,15 @@ ReposGetAppsWithAccessToProtectedBranchReq is request data for Client.ReposGetAp
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -7373,7 +7718,7 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetAppsWithAccessToProtectedBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7478,9 +7823,15 @@ ReposGetBranchReq is request data for Client.ReposGetBranch
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type ReposGetBranchReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -7502,7 +7853,7 @@ func (r *ReposGetBranchReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7607,9 +7958,15 @@ ReposGetBranchProtectionReq is request data for Client.ReposGetBranchProtection
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
 type ReposGetBranchProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 
 	/*
@@ -7641,7 +7998,7 @@ func (r *ReposGetBranchProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
 	if allPreviews {
 		previewVals["luke-cage"] = true
@@ -7749,9 +8106,13 @@ ReposGetClonesReq is request data for Client.ReposGetClones
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type ReposGetClonesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Must be one of: `day`, `week`.
 	Per *string
@@ -7778,7 +8139,7 @@ func (r *ReposGetClonesReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetClonesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7883,9 +8244,13 @@ ReposGetCodeFrequencyStatsReq is request data for Client.ReposGetCodeFrequencySt
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type ReposGetCodeFrequencyStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetCodeFrequencyStatsReq) url() string {
@@ -7906,7 +8271,7 @@ func (r *ReposGetCodeFrequencyStatsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCodeFrequencyStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -8011,9 +8376,15 @@ ReposGetCollaboratorPermissionLevelReq is request data for Client.ReposGetCollab
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type ReposGetCollaboratorPermissionLevelReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username string
 }
 
@@ -8035,7 +8406,7 @@ func (r *ReposGetCollaboratorPermissionLevelReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCollaboratorPermissionLevelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -8140,10 +8511,16 @@ ReposGetCombinedStatusForRefReq is request data for Client.ReposGetCombinedStatu
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type ReposGetCombinedStatusForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 }
 
 func (r *ReposGetCombinedStatusForRefReq) url() string {
@@ -8164,7 +8541,7 @@ func (r *ReposGetCombinedStatusForRefReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCombinedStatusForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -8269,10 +8646,16 @@ ReposGetCommitReq is request data for Client.ReposGetCommit
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type ReposGetCommitReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 }
 
 func (r *ReposGetCommitReq) url() string {
@@ -8293,7 +8676,7 @@ func (r *ReposGetCommitReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -8398,9 +8781,13 @@ ReposGetCommitActivityStatsReq is request data for Client.ReposGetCommitActivity
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type ReposGetCommitActivityStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetCommitActivityStatsReq) url() string {
@@ -8421,7 +8808,7 @@ func (r *ReposGetCommitActivityStatsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCommitActivityStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -8526,19 +8913,23 @@ ReposGetCommitCommentReq is request data for Client.ReposGetCommitComment
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type ReposGetCommitCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -8563,7 +8954,7 @@ func (r *ReposGetCommitCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -8671,9 +9062,15 @@ ReposGetCommitSignatureProtectionReq is request data for Client.ReposGetCommitSi
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
 type ReposGetCommitSignatureProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 
 	/*
@@ -8704,7 +9101,7 @@ func (r *ReposGetCommitSignatureProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCommitSignatureProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"zzzax": r.ZzzaxPreview}
 	if requiredPreviews {
 		previewVals["zzzax"] = true
@@ -8815,15 +9212,18 @@ ReposGetCommunityProfileMetricsReq is request data for Client.ReposGetCommunityP
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
 type ReposGetCommunityProfileMetricsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	We're currently offering a preview of the Community Profile API (also known as
-	community health). To access the API during the preview period, you must provide
-	a custom [media type](https://developer.github.com/v3/media) in the  `Accept`
-	header.
+	community health). To access the API during the preview period, you must set
+	this to true.
 	*/
 	BlackPantherPreview bool
 }
@@ -8846,7 +9246,7 @@ func (r *ReposGetCommunityProfileMetricsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetCommunityProfileMetricsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"black-panther": r.BlackPantherPreview}
 	if requiredPreviews {
 		previewVals["black-panther"] = true
@@ -8957,10 +9357,16 @@ ReposGetContentReq is request data for Client.ReposGetContent
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
 type ReposGetContentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Path  string
+
+	// repo parameter
+	Repo string
+
+	// path+ parameter
+	Path string
 
 	/*
 	The name of the commit/branch/tag. Default: the repository’s default branch
@@ -8990,7 +9396,7 @@ func (r *ReposGetContentReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetContentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9004,11 +9410,11 @@ func (r *ReposGetContentReq) dataStatuses() []int {
 }
 
 func (r *ReposGetContentReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 302}
 }
 
 func (r *ReposGetContentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrForceArrayResponse}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -9034,7 +9440,91 @@ ReposGetContentResponseBody is a response body for ReposGetContent
 
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
-type ReposGetContentResponseBody []components.ContentFile
+type ReposGetContentResponseBody struct {
+	oneOfField string
+
+	// A list of directory items
+	contentDirectory components.ContentDirectory
+
+	// Content File
+	contentFile components.ContentFile
+
+	// An object describing a symlink
+	contentSymlink components.ContentSymlink
+
+	// An object describing a symlink
+	contentSubmodule components.ContentSubmodule
+}
+
+// Value returns ReposGetContentResponseBody's value. The type will be one of ContentDirectory, ContentFile, ContentSymlink or ContentSubmodule.
+func (c *ReposGetContentResponseBody) Value() interface{} {
+	switch c.oneOfField {
+	case "contentDirectory":
+		return c.contentDirectory
+	case "contentFile":
+		return c.contentFile
+	case "contentSymlink":
+		return c.contentSymlink
+	case "contentSubmodule":
+		return c.contentSubmodule
+	}
+	return nil
+}
+
+// SetValue sets ReposGetContentResponseBody's value. The type must be one of ContentDirectory, ContentFile, ContentSymlink or ContentSubmodule.
+func (c *ReposGetContentResponseBody) SetValue(value interface{}) {
+	switch v := value.(type) {
+	case components.ContentDirectory:
+		c.contentDirectory = v
+	case components.ContentFile:
+		c.contentFile = v
+	case components.ContentSymlink:
+		c.contentSymlink = v
+	case components.ContentSubmodule:
+		c.contentSubmodule = v
+	default:
+		panic("type not acceptable")
+	}
+}
+
+func (c *ReposGetContentResponseBody) MarshalJSON() ([]byte, error) {
+	switch c.oneOfField {
+	case "contentDirectory":
+		return json.Marshal(&c.contentDirectory)
+	case "contentFile":
+		return json.Marshal(&c.contentFile)
+	case "contentSymlink":
+		return json.Marshal(&c.contentSymlink)
+	case "contentSubmodule":
+		return json.Marshal(&c.contentSubmodule)
+	}
+	return json.Marshal(interface{}(nil))
+}
+
+func (c *ReposGetContentResponseBody) UnmarshalJSON(data []byte) error {
+	var err error
+	err = json.Unmarshal(data, &c.contentDirectory)
+	if err == nil {
+		c.oneOfField = "contentDirectory"
+		return nil
+	}
+	err = json.Unmarshal(data, &c.contentFile)
+	if err == nil {
+		c.oneOfField = "contentFile"
+		return nil
+	}
+	err = json.Unmarshal(data, &c.contentSymlink)
+	if err == nil {
+		c.oneOfField = "contentSymlink"
+		return nil
+	}
+	err = json.Unmarshal(data, &c.contentSubmodule)
+	if err == nil {
+		c.oneOfField = "contentSubmodule"
+		return nil
+	}
+	return fmt.Errorf("could not unmarshal json")
+}
 
 /*
 ReposGetContentResponse is a response for ReposGetContent
@@ -9095,9 +9585,13 @@ ReposGetContributorsStatsReq is request data for Client.ReposGetContributorsStat
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type ReposGetContributorsStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetContributorsStatsReq) url() string {
@@ -9118,7 +9612,7 @@ func (r *ReposGetContributorsStatsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetContributorsStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9223,9 +9717,15 @@ ReposGetDeployKeyReq is request data for Client.ReposGetDeployKey
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
 type ReposGetDeployKeyReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// key_id parameter
 	KeyId int64
 }
 
@@ -9247,7 +9747,7 @@ func (r *ReposGetDeployKeyReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetDeployKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9352,9 +9852,15 @@ ReposGetDeploymentReq is request data for Client.ReposGetDeployment
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type ReposGetDeploymentReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// deployment_id parameter
 	DeploymentId int64
 
 	/*
@@ -9393,7 +9899,7 @@ func (r *ReposGetDeploymentReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetDeploymentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"ant-man":     r.AntManPreview,
 		"machine-man": r.MachineManPreview,
@@ -9505,11 +10011,19 @@ ReposGetDeploymentStatusReq is request data for Client.ReposGetDeploymentStatus
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type ReposGetDeploymentStatusReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// deployment_id parameter
 	DeploymentId int64
-	StatusId     int64
+
+	// status_id parameter
+	StatusId int64
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -9559,7 +10073,7 @@ func (r *ReposGetDeploymentStatusReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetDeploymentStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"ant-man":     r.AntManPreview,
 		"flash":       r.FlashPreview,
@@ -9673,9 +10187,13 @@ ReposGetLatestPagesBuildReq is request data for Client.ReposGetLatestPagesBuild
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
 type ReposGetLatestPagesBuildReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetLatestPagesBuildReq) url() string {
@@ -9696,7 +10214,7 @@ func (r *ReposGetLatestPagesBuildReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetLatestPagesBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9801,9 +10319,13 @@ ReposGetLatestReleaseReq is request data for Client.ReposGetLatestRelease
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
 type ReposGetLatestReleaseReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetLatestReleaseReq) url() string {
@@ -9824,7 +10346,7 @@ func (r *ReposGetLatestReleaseReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetLatestReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9868,7 +10390,7 @@ ReposGetLatestReleaseResponseBody is a response body for ReposGetLatestRelease
 
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
-type ReposGetLatestReleaseResponseBody components.Release2
+type ReposGetLatestReleaseResponseBody components.Release
 
 /*
 ReposGetLatestReleaseResponse is a response for ReposGetLatestRelease
@@ -9929,9 +10451,13 @@ ReposGetPagesReq is request data for Client.ReposGetPages
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type ReposGetPagesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetPagesReq) url() string {
@@ -9952,7 +10478,7 @@ func (r *ReposGetPagesReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetPagesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10057,9 +10583,15 @@ ReposGetPagesBuildReq is request data for Client.ReposGetPagesBuild
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type ReposGetPagesBuildReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// build_id parameter
 	BuildId int64
 }
 
@@ -10081,7 +10613,7 @@ func (r *ReposGetPagesBuildReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetPagesBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10186,9 +10718,13 @@ ReposGetParticipationStatsReq is request data for Client.ReposGetParticipationSt
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type ReposGetParticipationStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetParticipationStatsReq) url() string {
@@ -10209,7 +10745,7 @@ func (r *ReposGetParticipationStatsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetParticipationStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10314,9 +10850,15 @@ ReposGetPullRequestReviewProtectionReq is request data for Client.ReposGetPullRe
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
 type ReposGetPullRequestReviewProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 
 	/*
@@ -10348,7 +10890,7 @@ func (r *ReposGetPullRequestReviewProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetPullRequestReviewProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/vnd.github.luke-cage-preview+json")}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
 	if allPreviews {
 		previewVals["luke-cage"] = true
@@ -10456,9 +10998,13 @@ ReposGetPunchCardStatsReq is request data for Client.ReposGetPunchCardStats
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type ReposGetPunchCardStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetPunchCardStatsReq) url() string {
@@ -10479,7 +11025,7 @@ func (r *ReposGetPunchCardStatsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetPunchCardStatsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10584,9 +11130,13 @@ ReposGetReadmeReq is request data for Client.ReposGetReadme
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type ReposGetReadmeReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The name of the commit/branch/tag. Default: the repository’s default branch
@@ -10616,7 +11166,7 @@ func (r *ReposGetReadmeReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetReadmeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10721,9 +11271,15 @@ ReposGetReleaseReq is request data for Client.ReposGetRelease
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type ReposGetReleaseReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// release_id parameter
 	ReleaseId int64
 }
 
@@ -10745,7 +11301,7 @@ func (r *ReposGetReleaseReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10789,7 +11345,7 @@ ReposGetReleaseResponseBody is a response body for ReposGetRelease
 
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
-type ReposGetReleaseResponseBody components.Release2
+type ReposGetReleaseResponseBody components.Release
 
 /*
 ReposGetReleaseResponse is a response for ReposGetRelease
@@ -10850,9 +11406,15 @@ ReposGetReleaseAssetReq is request data for Client.ReposGetReleaseAsset
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type ReposGetReleaseAssetReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// asset_id parameter
 	AssetId int64
 }
 
@@ -10874,7 +11436,7 @@ func (r *ReposGetReleaseAssetReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -10888,7 +11450,7 @@ func (r *ReposGetReleaseAssetReq) dataStatuses() []int {
 }
 
 func (r *ReposGetReleaseAssetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 302}
 }
 
 func (r *ReposGetReleaseAssetReq) endpointAttributes() []endpointAttribute {
@@ -10979,10 +11541,16 @@ ReposGetReleaseByTagReq is request data for Client.ReposGetReleaseByTag
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
 type ReposGetReleaseByTagReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Tag   string
+
+	// repo parameter
+	Repo string
+
+	// tag+ parameter
+	Tag string
 }
 
 func (r *ReposGetReleaseByTagReq) url() string {
@@ -11003,7 +11571,7 @@ func (r *ReposGetReleaseByTagReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetReleaseByTagReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11047,7 +11615,7 @@ ReposGetReleaseByTagResponseBody is a response body for ReposGetReleaseByTag
 
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
-type ReposGetReleaseByTagResponseBody components.Release2
+type ReposGetReleaseByTagResponseBody components.Release
 
 /*
 ReposGetReleaseByTagResponse is a response for ReposGetReleaseByTag
@@ -11108,9 +11676,15 @@ ReposGetStatusChecksProtectionReq is request data for Client.ReposGetStatusCheck
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
 type ReposGetStatusChecksProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -11132,7 +11706,7 @@ func (r *ReposGetStatusChecksProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetStatusChecksProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11237,9 +11811,15 @@ ReposGetTeamsWithAccessToProtectedBranchReq is request data for Client.ReposGetT
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -11261,7 +11841,7 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetTeamsWithAccessToProtectedBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11366,9 +11946,13 @@ ReposGetTopPathsReq is request data for Client.ReposGetTopPaths
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type ReposGetTopPathsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetTopPathsReq) url() string {
@@ -11389,7 +11973,7 @@ func (r *ReposGetTopPathsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetTopPathsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11494,9 +12078,13 @@ ReposGetTopReferrersReq is request data for Client.ReposGetTopReferrers
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type ReposGetTopReferrersReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposGetTopReferrersReq) url() string {
@@ -11517,7 +12105,7 @@ func (r *ReposGetTopReferrersReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetTopReferrersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11622,9 +12210,15 @@ ReposGetUsersWithAccessToProtectedBranchReq is request data for Client.ReposGetU
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -11646,7 +12240,7 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetUsersWithAccessToProtectedBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11751,9 +12345,13 @@ ReposGetViewsReq is request data for Client.ReposGetViews
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type ReposGetViewsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Must be one of: `day`, `week`.
 	Per *string
@@ -11780,7 +12378,7 @@ func (r *ReposGetViewsReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetViewsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -11885,9 +12483,15 @@ ReposGetWebhookReq is request data for Client.ReposGetWebhook
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
 type ReposGetWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -11909,7 +12513,7 @@ func (r *ReposGetWebhookReq) urlQuery() url.Values {
 }
 
 func (r *ReposGetWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -12014,9 +12618,13 @@ ReposListBranchesReq is request data for Client.ReposListBranches
 https://developer.github.com/v3/repos/branches/#list-branches
 */
 type ReposListBranchesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Setting to `true` returns only protected branches. When set to `false`, only
@@ -12058,7 +12666,7 @@ func (r *ReposListBranchesReq) urlQuery() url.Values {
 }
 
 func (r *ReposListBranchesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -12102,7 +12710,7 @@ ReposListBranchesResponseBody is a response body for ReposListBranches
 
 https://developer.github.com/v3/repos/branches/#list-branches
 */
-type ReposListBranchesResponseBody []components.ShortBranchWithProtection
+type ReposListBranchesResponseBody []components.ShortBranch
 
 /*
 ReposListBranchesResponse is a response for ReposListBranches
@@ -12163,9 +12771,15 @@ ReposListBranchesForHeadCommitReq is request data for Client.ReposListBranchesFo
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
 type ReposListBranchesForHeadCommitReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// commit_sha+ parameter
 	CommitSha string
 
 	/*
@@ -12196,7 +12810,7 @@ func (r *ReposListBranchesForHeadCommitReq) urlQuery() url.Values {
 }
 
 func (r *ReposListBranchesForHeadCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"groot": r.GrootPreview}
 	if requiredPreviews {
 		previewVals["groot"] = true
@@ -12307,9 +12921,13 @@ ReposListCollaboratorsReq is request data for Client.ReposListCollaborators
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ReposListCollaboratorsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Filter collaborators returned by their affiliation. Can be one of:
@@ -12354,7 +12972,7 @@ func (r *ReposListCollaboratorsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListCollaboratorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -12459,9 +13077,15 @@ ReposListCommentsForCommitReq is request data for Client.ReposListCommentsForCom
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ReposListCommentsForCommitReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// commit_sha+ parameter
 	CommitSha string
 
 	// Results per page (max 100)
@@ -12472,12 +13096,10 @@ type ReposListCommentsForCommitReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -12508,7 +13130,7 @@ func (r *ReposListCommentsForCommitReq) urlQuery() url.Values {
 }
 
 func (r *ReposListCommentsForCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -12616,9 +13238,13 @@ ReposListCommitCommentsForRepoReq is request data for Client.ReposListCommitComm
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
 type ReposListCommitCommentsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -12628,12 +13254,10 @@ type ReposListCommitCommentsForRepoReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -12664,7 +13288,7 @@ func (r *ReposListCommitCommentsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ReposListCommitCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -12772,10 +13396,16 @@ ReposListCommitStatusesForRefReq is request data for Client.ReposListCommitStatu
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
 type ReposListCommitStatusesForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -12808,7 +13438,7 @@ func (r *ReposListCommitStatusesForRefReq) urlQuery() url.Values {
 }
 
 func (r *ReposListCommitStatusesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -12822,7 +13452,7 @@ func (r *ReposListCommitStatusesForRefReq) dataStatuses() []int {
 }
 
 func (r *ReposListCommitStatusesForRefReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301}
 }
 
 func (r *ReposListCommitStatusesForRefReq) endpointAttributes() []endpointAttribute {
@@ -12913,9 +13543,13 @@ ReposListCommitsReq is request data for Client.ReposListCommits
 https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ReposListCommitsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	SHA or branch to start listing commits from. Default: the repository’s default
@@ -12987,7 +13621,7 @@ func (r *ReposListCommitsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -13092,9 +13726,13 @@ ReposListContributorsReq is request data for Client.ReposListContributors
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ReposListContributorsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Set to `1` or `true` to include anonymous contributors in results.
 	Anon *string
@@ -13133,7 +13771,7 @@ func (r *ReposListContributorsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListContributorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -13238,9 +13876,13 @@ ReposListDeployKeysReq is request data for Client.ReposListDeployKeys
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
 type ReposListDeployKeysReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -13273,7 +13915,7 @@ func (r *ReposListDeployKeysReq) urlQuery() url.Values {
 }
 
 func (r *ReposListDeployKeysReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -13378,9 +14020,15 @@ ReposListDeploymentStatusesReq is request data for Client.ReposListDeploymentSta
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
 type ReposListDeploymentStatusesReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// deployment_id parameter
 	DeploymentId int64
 
 	// Results per page (max 100)
@@ -13437,7 +14085,7 @@ func (r *ReposListDeploymentStatusesReq) urlQuery() url.Values {
 }
 
 func (r *ReposListDeploymentStatusesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"ant-man": r.AntManPreview,
 		"flash":   r.FlashPreview,
@@ -13549,9 +14197,13 @@ ReposListDeploymentsReq is request data for Client.ReposListDeployments
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
 type ReposListDeploymentsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// The SHA recorded at creation time.
 	Sha *string
@@ -13622,7 +14274,7 @@ func (r *ReposListDeploymentsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListDeploymentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"ant-man": r.AntManPreview}
 	if allPreviews {
 		previewVals["ant-man"] = true
@@ -13703,7 +14355,8 @@ func ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthent
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ReposListForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13768,6 +14421,20 @@ type ReposListForAuthenticatedUserReq struct {
 
 	// Page number of the results to fetch.
 	Page *int64
+
+	/*
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Since *string
+
+	/*
+	Only show notifications updated before the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Before *string
 }
 
 func (r *ReposListForAuthenticatedUserReq) url() string {
@@ -13805,11 +14472,17 @@ func (r *ReposListForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.Before != nil {
+		query.Set("before", *r.Before)
+	}
 	return query
 }
 
 func (r *ReposListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -13819,11 +14492,11 @@ func (r *ReposListForAuthenticatedUserReq) body() interface{} {
 }
 
 func (r *ReposListForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ReposListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200, 304}
 }
 
 func (r *ReposListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -13849,6 +14522,13 @@ func (r *ReposListForAuthenticatedUserReq) Rel(link RelName, resp *ReposListForA
 }
 
 /*
+ReposListForAuthenticatedUserResponseBody is a response body for ReposListForAuthenticatedUser
+
+https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
+*/
+type ReposListForAuthenticatedUserResponseBody []components.Repository
+
+/*
 ReposListForAuthenticatedUserResponse is a response for ReposListForAuthenticatedUser
 
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
@@ -13856,6 +14536,7 @@ https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-u
 type ReposListForAuthenticatedUserResponse struct {
 	response
 	request *ReposListForAuthenticatedUserReq
+	Data    ReposListForAuthenticatedUserResponseBody
 }
 
 /*
@@ -13907,7 +14588,9 @@ https://developer.github.com/v3/repos/#list-organization-repositories
 */
 type ReposListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Specifies the types of repositories you want returned. Can be one of `all`,
@@ -13988,7 +14671,7 @@ func (r *ReposListForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ReposListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
@@ -14073,7 +14756,8 @@ func ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ReposListForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14099,7 +14783,9 @@ ReposListForUserReq is request data for Client.ReposListForUser
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
 type ReposListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Can be one of `all`, `owner`, `member`.
@@ -14166,7 +14852,7 @@ func (r *ReposListForUserReq) urlQuery() url.Values {
 }
 
 func (r *ReposListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"nebula": r.NebulaPreview}
 	if allPreviews {
 		previewVals["nebula"] = true
@@ -14179,11 +14865,11 @@ func (r *ReposListForUserReq) body() interface{} {
 }
 
 func (r *ReposListForUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ReposListForUserReq) validStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ReposListForUserReq) endpointAttributes() []endpointAttribute {
@@ -14209,6 +14895,13 @@ func (r *ReposListForUserReq) Rel(link RelName, resp *ReposListForUserResponse) 
 }
 
 /*
+ReposListForUserResponseBody is a response body for ReposListForUser
+
+https://developer.github.com/v3/repos/#list-repositories-for-a-user
+*/
+type ReposListForUserResponseBody []components.MinimalRepository
+
+/*
 ReposListForUserResponse is a response for ReposListForUser
 
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
@@ -14216,6 +14909,7 @@ https://developer.github.com/v3/repos/#list-repositories-for-a-user
 type ReposListForUserResponse struct {
 	response
 	request *ReposListForUserReq
+	Data    ReposListForUserResponseBody
 }
 
 /*
@@ -14266,9 +14960,13 @@ ReposListForksReq is request data for Client.ReposListForks
 https://developer.github.com/v3/repos/forks/#list-forks
 */
 type ReposListForksReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// The sort order. Can be either `newest`, `oldest`, or `stargazers`.
 	Sort *string
@@ -14307,7 +15005,7 @@ func (r *ReposListForksReq) urlQuery() url.Values {
 }
 
 func (r *ReposListForksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -14412,9 +15110,13 @@ ReposListInvitationsReq is request data for Client.ReposListInvitations
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ReposListInvitationsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14447,7 +15149,7 @@ func (r *ReposListInvitationsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListInvitationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -14585,7 +15287,7 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *ReposListInvitationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -14599,7 +15301,7 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ReposListInvitationsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ReposListInvitationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -14690,9 +15392,13 @@ ReposListLanguagesReq is request data for Client.ReposListLanguages
 https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ReposListLanguagesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposListLanguagesReq) url() string {
@@ -14713,7 +15419,7 @@ func (r *ReposListLanguagesReq) urlQuery() url.Values {
 }
 
 func (r *ReposListLanguagesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -14757,7 +15463,7 @@ ReposListLanguagesResponseBody is a response body for ReposListLanguages
 
 https://developer.github.com/v3/repos/#list-repository-languages
 */
-type ReposListLanguagesResponseBody map[string]int64
+type ReposListLanguagesResponseBody components.Language
 
 /*
 ReposListLanguagesResponse is a response for ReposListLanguages
@@ -14818,9 +15524,13 @@ ReposListPagesBuildsReq is request data for Client.ReposListPagesBuilds
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ReposListPagesBuildsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14853,7 +15563,7 @@ func (r *ReposListPagesBuildsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListPagesBuildsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -14960,8 +15670,16 @@ https://developer.github.com/v3/repos/#list-public-repositories
 type ReposListPublicReq struct {
 	_url string
 
-	// The integer ID of the last repository that you've seen.
-	Since *int64
+	// Results per page (max 100)
+	PerPage *int64
+
+	/*
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Since      *string
+	Visibility *string
 }
 
 func (r *ReposListPublicReq) url() string {
@@ -14978,14 +15696,20 @@ func (r *ReposListPublicReq) method() string {
 
 func (r *ReposListPublicReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
 	if r.Since != nil {
-		query.Set("since", strconv.FormatInt(*r.Since, 10))
+		query.Set("since", *r.Since)
+	}
+	if r.Visibility != nil {
+		query.Set("visibility", *r.Visibility)
 	}
 	return query
 }
 
 func (r *ReposListPublicReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -14999,7 +15723,7 @@ func (r *ReposListPublicReq) dataStatuses() []int {
 }
 
 func (r *ReposListPublicReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ReposListPublicReq) endpointAttributes() []endpointAttribute {
@@ -15029,7 +15753,7 @@ ReposListPublicResponseBody is a response body for ReposListPublic
 
 https://developer.github.com/v3/repos/#list-public-repositories
 */
-type ReposListPublicResponseBody []components.PublicRepository
+type ReposListPublicResponseBody []components.MinimalRepository
 
 /*
 ReposListPublicResponse is a response for ReposListPublic
@@ -15090,9 +15814,15 @@ ReposListPullRequestsAssociatedWithCommitReq is request data for Client.ReposLis
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ReposListPullRequestsAssociatedWithCommitReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// commit_sha+ parameter
 	CommitSha string
 
 	// Results per page (max 100)
@@ -15135,7 +15865,7 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) urlQuery() url.Values {
 }
 
 func (r *ReposListPullRequestsAssociatedWithCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"groot": r.GrootPreview}
 	if requiredPreviews {
 		previewVals["groot"] = true
@@ -15246,9 +15976,15 @@ ReposListReleaseAssetsReq is request data for Client.ReposListReleaseAssets
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
 type ReposListReleaseAssetsReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// release_id parameter
 	ReleaseId int64
 
 	// Results per page (max 100)
@@ -15282,7 +16018,7 @@ func (r *ReposListReleaseAssetsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListReleaseAssetsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -15387,9 +16123,13 @@ ReposListReleasesReq is request data for Client.ReposListReleases
 https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ReposListReleasesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15422,7 +16162,7 @@ func (r *ReposListReleasesReq) urlQuery() url.Values {
 }
 
 func (r *ReposListReleasesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -15466,7 +16206,7 @@ ReposListReleasesResponseBody is a response body for ReposListReleases
 
 https://developer.github.com/v3/repos/releases/#list-releases
 */
-type ReposListReleasesResponseBody []components.Release2
+type ReposListReleasesResponseBody []components.Release
 
 /*
 ReposListReleasesResponse is a response for ReposListReleases
@@ -15527,9 +16267,13 @@ ReposListTagsReq is request data for Client.ReposListTags
 https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ReposListTagsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15562,7 +16306,7 @@ func (r *ReposListTagsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListTagsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -15667,9 +16411,13 @@ ReposListTeamsReq is request data for Client.ReposListTeams
 https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ReposListTeamsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15702,7 +16450,7 @@ func (r *ReposListTeamsReq) urlQuery() url.Values {
 }
 
 func (r *ReposListTeamsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -15807,9 +16555,13 @@ ReposListWebhooksReq is request data for Client.ReposListWebhooks
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
 type ReposListWebhooksReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15842,7 +16594,7 @@ func (r *ReposListWebhooksReq) urlQuery() url.Values {
 }
 
 func (r *ReposListWebhooksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -15947,8 +16699,12 @@ ReposMergeReq is request data for Client.ReposMerge
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposMergeReqBody
 }
@@ -15971,7 +16727,10 @@ func (r *ReposMergeReq) urlQuery() url.Values {
 }
 
 func (r *ReposMergeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -16020,10 +16779,7 @@ type ReposMergeReqBody struct {
 	// The name of the base branch that the head will be merged into.
 	Base *string `json:"base"`
 
-	/*
-	   Commit message to use for the merge commit. If omitted, a default message will
-	   be used.
-	*/
+	// Commit message to use for the merge commit. If omitted, a default message will be used.
 	CommitMessage *string `json:"commit_message,omitempty"`
 
 	// The head to merge. This can be a branch name or a commit SHA1.
@@ -16035,7 +16791,7 @@ ReposMergeResponseBody is a response body for ReposMerge
 
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
-type ReposMergeResponseBody components.SimpleCommit2
+type ReposMergeResponseBody components.Commit
 
 /*
 ReposMergeResponse is a response for ReposMerge
@@ -16069,6 +16825,10 @@ func ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -16095,9 +16855,15 @@ ReposPingWebhookReq is request data for Client.ReposPingWebhook
 https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
 type ReposPingWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -16137,7 +16903,7 @@ func (r *ReposPingWebhookReq) validStatuses() []int {
 }
 
 func (r *ReposPingWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -16166,6 +16932,7 @@ https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 type ReposPingWebhookResponse struct {
 	response
 	request *ReposPingWebhookReq
+	Data    bool
 }
 
 /*
@@ -16216,9 +16983,15 @@ ReposRemoveAppAccessRestrictionsReq is request data for Client.ReposRemoveAppAcc
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
 type ReposRemoveAppAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposRemoveAppAccessRestrictionsReqBody
 }
@@ -16241,7 +17014,10 @@ func (r *ReposRemoveAppAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposRemoveAppAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -16352,9 +17128,15 @@ ReposRemoveCollaboratorReq is request data for Client.ReposRemoveCollaborator
 https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 type ReposRemoveCollaboratorReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username string
 }
 
@@ -16473,9 +17255,15 @@ ReposRemoveStatusCheckContextsReq is request data for Client.ReposRemoveStatusCh
 https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
 type ReposRemoveStatusCheckContextsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposRemoveStatusCheckContextsReqBody
 }
@@ -16498,7 +17286,10 @@ func (r *ReposRemoveStatusCheckContextsReq) urlQuery() url.Values {
 }
 
 func (r *ReposRemoveStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -16609,9 +17400,15 @@ ReposRemoveStatusCheckProtectionReq is request data for Client.ReposRemoveStatus
 https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
 type ReposRemoveStatusCheckProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -16647,7 +17444,7 @@ func (r *ReposRemoveStatusCheckProtectionReq) dataStatuses() []int {
 }
 
 func (r *ReposRemoveStatusCheckProtectionReq) validStatuses() []int {
-	return []int{}
+	return []int{204}
 }
 
 func (r *ReposRemoveStatusCheckProtectionReq) endpointAttributes() []endpointAttribute {
@@ -16730,9 +17527,15 @@ ReposRemoveTeamAccessRestrictionsReq is request data for Client.ReposRemoveTeamA
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
 type ReposRemoveTeamAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposRemoveTeamAccessRestrictionsReqBody
 }
@@ -16755,7 +17558,10 @@ func (r *ReposRemoveTeamAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposRemoveTeamAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -16867,9 +17673,15 @@ ReposRemoveUserAccessRestrictionsReq is request data for Client.ReposRemoveUserA
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
 type ReposRemoveUserAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposRemoveUserAccessRestrictionsReqBody
 }
@@ -16892,7 +17704,10 @@ func (r *ReposRemoveUserAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposRemoveUserAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17004,8 +17819,12 @@ ReposReplaceAllTopicsReq is request data for Client.ReposReplaceAllTopics
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
 type ReposReplaceAllTopicsReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposReplaceAllTopicsReqBody
 
@@ -17035,7 +17854,10 @@ func (r *ReposReplaceAllTopicsReq) urlQuery() url.Values {
 }
 
 func (r *ReposReplaceAllTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
 	if requiredPreviews {
 		previewVals["mercy"] = true
@@ -17088,10 +17910,10 @@ https://developer.github.com/v3/repos/#replace-all-repository-topics
 type ReposReplaceAllTopicsReqBody struct {
 
 	/*
-	   An array of topics to add to the repository. Pass one or more topics to
-	   _replace_ the set of existing topics. Send an empty array (`[]`) to clear all
-	   topics from the repository. **Note:** Topic `names` cannot contain uppercase
-	   letters.
+	An array of topics to add to the repository. Pass one or more topics to
+	_replace_ the set of existing topics. Send an empty array (`[]`) to clear all
+	topics from the repository. **Note:** Topic `names` cannot contain uppercase
+	letters.
 	*/
 	Names []string `json:"names"`
 }
@@ -17162,9 +17984,13 @@ ReposRequestPagesBuildReq is request data for Client.ReposRequestPagesBuild
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
 type ReposRequestPagesBuildReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ReposRequestPagesBuildReq) url() string {
@@ -17185,7 +18011,7 @@ func (r *ReposRequestPagesBuildReq) urlQuery() url.Values {
 }
 
 func (r *ReposRequestPagesBuildReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17195,11 +18021,11 @@ func (r *ReposRequestPagesBuildReq) body() interface{} {
 }
 
 func (r *ReposRequestPagesBuildReq) dataStatuses() []int {
-	return []int{200}
+	return []int{201}
 }
 
 func (r *ReposRequestPagesBuildReq) validStatuses() []int {
-	return []int{200}
+	return []int{201}
 }
 
 func (r *ReposRequestPagesBuildReq) endpointAttributes() []endpointAttribute {
@@ -17290,9 +18116,15 @@ ReposSetAdminBranchProtectionReq is request data for Client.ReposSetAdminBranchP
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
 type ReposSetAdminBranchProtectionReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch string
 }
 
@@ -17314,7 +18146,7 @@ func (r *ReposSetAdminBranchProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposSetAdminBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17419,9 +18251,15 @@ ReposSetAppAccessRestrictionsReq is request data for Client.ReposSetAppAccessRes
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
 type ReposSetAppAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposSetAppAccessRestrictionsReqBody
 }
@@ -17444,7 +18282,10 @@ func (r *ReposSetAppAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposSetAppAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17556,9 +18397,15 @@ ReposSetStatusCheckContextsReq is request data for Client.ReposSetStatusCheckCon
 https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 */
 type ReposSetStatusCheckContextsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposSetStatusCheckContextsReqBody
 }
@@ -17581,7 +18428,10 @@ func (r *ReposSetStatusCheckContextsReq) urlQuery() url.Values {
 }
 
 func (r *ReposSetStatusCheckContextsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17693,9 +18543,15 @@ ReposSetTeamAccessRestrictionsReq is request data for Client.ReposSetTeamAccessR
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
 type ReposSetTeamAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposSetTeamAccessRestrictionsReqBody
 }
@@ -17718,7 +18574,10 @@ func (r *ReposSetTeamAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposSetTeamAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17830,9 +18689,15 @@ ReposSetUserAccessRestrictionsReq is request data for Client.ReposSetUserAccessR
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
 type ReposSetUserAccessRestrictionsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposSetUserAccessRestrictionsReqBody
 }
@@ -17855,7 +18720,10 @@ func (r *ReposSetUserAccessRestrictionsReq) urlQuery() url.Values {
 }
 
 func (r *ReposSetUserAccessRestrictionsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -17940,6 +18808,10 @@ func ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -17966,9 +18838,15 @@ ReposTestPushWebhookReq is request data for Client.ReposTestPushWebhook
 https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
 type ReposTestPushWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -18008,7 +18886,7 @@ func (r *ReposTestPushWebhookReq) validStatuses() []int {
 }
 
 func (r *ReposTestPushWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -18037,6 +18915,7 @@ https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 type ReposTestPushWebhookResponse struct {
 	response
 	request *ReposTestPushWebhookReq
+	Data    bool
 }
 
 /*
@@ -18087,8 +18966,12 @@ ReposTransferReq is request data for Client.ReposTransfer
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
 type ReposTransferReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposTransferReqBody
 }
@@ -18111,7 +18994,10 @@ func (r *ReposTransferReq) urlQuery() url.Values {
 }
 
 func (r *ReposTransferReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -18157,16 +19043,10 @@ https://developer.github.com/v3/repos/#transfer-a-repository
 */
 type ReposTransferReqBody struct {
 
-	/*
-	   **Required:** The username or organization name the repository will be
-	   transferred to.
-	*/
+	// **Required:** The username or organization name the repository will be transferred to.
 	NewOwner *string `json:"new_owner,omitempty"`
 
-	/*
-	   ID of the team or teams to add to the repository. Teams can only be added to
-	   organization-owned repositories.
-	*/
+	// ID of the team or teams to add to the repository. Teams can only be added to organization-owned repositories.
 	TeamIds []int64 `json:"team_ids,omitempty"`
 }
 
@@ -18236,8 +19116,12 @@ ReposUpdateReq is request data for Client.ReposUpdate
 https://developer.github.com/v3/repos/#update-a-repository
 */
 type ReposUpdateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposUpdateReqBody
 
@@ -18281,7 +19165,10 @@ func (r *ReposUpdateReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{
 		"baptiste": r.BaptistePreview,
 		"nebula":   r.NebulaPreview,
@@ -18335,35 +19222,26 @@ https://developer.github.com/v3/repos/#update-a-repository
 type ReposUpdateReqBody struct {
 
 	/*
-	   Either `true` to allow merging pull requests with a merge commit, or `false` to
-	   prevent merging pull requests with merge commits.
+	Either `true` to allow merging pull requests with a merge commit, or `false` to
+	prevent merging pull requests with merge commits.
 	*/
 	AllowMergeCommit *bool `json:"allow_merge_commit,omitempty"`
 
-	/*
-	   Either `true` to allow rebase-merging pull requests, or `false` to prevent
-	   rebase-merging.
-	*/
+	// Either `true` to allow rebase-merging pull requests, or `false` to prevent rebase-merging.
 	AllowRebaseMerge *bool `json:"allow_rebase_merge,omitempty"`
 
-	/*
-	   Either `true` to allow squash-merging pull requests, or `false` to prevent
-	   squash-merging.
-	*/
+	// Either `true` to allow squash-merging pull requests, or `false` to prevent squash-merging.
 	AllowSquashMerge *bool `json:"allow_squash_merge,omitempty"`
 
-	/*
-	   `true` to archive this repository. **Note**: You cannot unarchive repositories
-	   through the API.
-	*/
+	// `true` to archive this repository. **Note**: You cannot unarchive repositories through the API.
 	Archived *bool `json:"archived,omitempty"`
 
 	// Updates the default branch for this repository.
 	DefaultBranch *string `json:"default_branch,omitempty"`
 
 	/*
-	   Either `true` to allow automatically deleting head branches when pull requests
-	   are merged, or `false` to prevent automatic deletion.
+	Either `true` to allow automatically deleting head branches when pull requests
+	are merged, or `false` to prevent automatic deletion.
 	*/
 	DeleteBranchOnMerge *bool `json:"delete_branch_on_merge,omitempty"`
 
@@ -18374,10 +19252,10 @@ type ReposUpdateReqBody struct {
 	HasIssues *bool `json:"has_issues,omitempty"`
 
 	/*
-	   Either `true` to enable projects for this repository or `false` to disable them.
-	   **Note:** If you're creating a repository in an organization that has disabled
-	   repository projects, the default is `false`, and if you pass `true`, the API
-	   returns an error.
+	Either `true` to enable projects for this repository or `false` to disable them.
+	**Note:** If you're creating a repository in an organization that has disabled
+	repository projects, the default is `false`, and if you pass `true`, the API
+	returns an error.
 	*/
 	HasProjects *bool `json:"has_projects,omitempty"`
 
@@ -18387,35 +19265,32 @@ type ReposUpdateReqBody struct {
 	// A URL with more information about the repository.
 	Homepage *string `json:"homepage,omitempty"`
 
-	/*
-	   Either `true` to make this repo available as a template repository or `false` to
-	   prevent it.
-	*/
+	// Either `true` to make this repo available as a template repository or `false` to prevent it.
 	IsTemplate *bool `json:"is_template,omitempty"`
 
 	// The name of the repository.
 	Name *string `json:"name,omitempty"`
 
 	/*
-	   Either `true` to make the repository private or `false` to make it public.
-	   Default: `false`.
-	   **Note**: You will get a `422` error if the organization restricts [changing
-	   repository
-	   visibility](https://help.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
-	   to organization owners and a non-owner tries to change the value of private.
-	   **Note**: You will get a `422` error if the organization restricts [changing
-	   repository
-	   visibility](https://help.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
-	   to organization owners and a non-owner tries to change the value of private.
+	Either `true` to make the repository private or `false` to make it public.
+	Default: `false`.
+	**Note**: You will get a `422` error if the organization restricts [changing
+	repository
+	visibility](https://help.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
+	to organization owners and a non-owner tries to change the value of private.
+	**Note**: You will get a `422` error if the organization restricts [changing
+	repository
+	visibility](https://help.github.com/articles/repository-permission-levels-for-an-organization#changing-the-visibility-of-repositories)
+	to organization owners and a non-owner tries to change the value of private.
 	*/
 	Private *bool `json:"private,omitempty"`
 
 	/*
-	   Can be `public` or `private`. If your organization is associated with an
-	   enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
-	   2.20+, `visibility` can also be `internal`. The `visibility` parameter overrides
-	   the `private` parameter when you use both along with the `nebula-preview`
-	   preview header.
+	Can be `public` or `private`. If your organization is associated with an
+	enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server
+	2.20+, `visibility` can also be `internal`. The `visibility` parameter overrides
+	the `private` parameter when you use both along with the `nebula-preview`
+	preview header.
 	*/
 	Visibility *string `json:"visibility,omitempty"`
 }
@@ -18425,7 +19300,7 @@ ReposUpdateResponseBody is a response body for ReposUpdate
 
 https://developer.github.com/v3/repos/#update-a-repository
 */
-type ReposUpdateResponseBody components.FullRepository2
+type ReposUpdateResponseBody components.FullRepository
 
 /*
 ReposUpdateResponse is a response for ReposUpdate
@@ -18486,9 +19361,15 @@ ReposUpdateBranchProtectionReq is request data for Client.ReposUpdateBranchProte
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
 type ReposUpdateBranchProtectionReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposUpdateBranchProtectionReqBody
 
@@ -18521,7 +19402,10 @@ func (r *ReposUpdateBranchProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateBranchProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
 	if allPreviews {
 		previewVals["luke-cage"] = true
@@ -18566,30 +19450,21 @@ func (r *ReposUpdateBranchProtectionReq) Rel(link RelName, resp *ReposUpdateBran
 // ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews is a value for ReposUpdateBranchProtectionReqBody's RequiredPullRequestReviews field
 type ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews struct {
 
-	/*
-	   Set to `true` if you want to automatically dismiss approving reviews when
-	   someone pushes a new commit.
-	*/
+	// Set to `true` if you want to automatically dismiss approving reviews when someone pushes a new commit.
 	DismissStaleReviews *bool `json:"dismiss_stale_reviews,omitempty"`
 
 	/*
-	   Specify which users and teams can dismiss pull request reviews. Pass an empty
-	   `dismissal_restrictions` object to disable. User and team
-	   `dismissal_restrictions` are only available for organization-owned repositories.
-	   Omit this parameter for personal repositories.
+	Specify which users and teams can dismiss pull request reviews. Pass an empty
+	`dismissal_restrictions` object to disable. User and team
+	`dismissal_restrictions` are only available for organization-owned repositories.
+	Omit this parameter for personal repositories.
 	*/
 	DismissalRestrictions *ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviewsDismissalRestrictions `json:"dismissal_restrictions,omitempty"`
 
-	/*
-	   Blocks merging pull requests until [code
-	   owners](https://help.github.com/articles/about-code-owners/) review them.
-	*/
+	// Blocks merging pull requests until [code owners](https://help.github.com/articles/about-code-owners/) review them.
 	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
 
-	/*
-	   Specify the number of reviewers required to approve pull requests. Use a number
-	   between 1 and 6.
-	*/
+	// Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.
 	RequiredApprovingReviewCount *int64 `json:"required_approving_review_count,omitempty"`
 }
 
@@ -18634,51 +19509,51 @@ https://developer.github.com/v3/repos/branches/#update-branch-protection
 type ReposUpdateBranchProtectionReqBody struct {
 
 	/*
-	   Allows deletion of the protected branch by anyone with write access to the
-	   repository. Set to `false` to prevent deletion of the protected branch. Default:
-	   `false`. For more information, see "[Enabling force pushes to a protected
-	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
+	Allows deletion of the protected branch by anyone with write access to the
+	repository. Set to `false` to prevent deletion of the protected branch. Default:
+	`false`. For more information, see "[Enabling force pushes to a protected
+	branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)"
+	in the GitHub Help documentation.
 	*/
 	AllowDeletions *bool `json:"allow_deletions,omitempty"`
 
 	/*
-	   Permits force pushes to the protected branch by anyone with write access to the
-	   repository. Set to `true` to allow force pushes. Set to `false` or `null` to
-	   block force pushes. Default: `false`. For more information, see "[Enabling force
-	   pushes to a protected
-	   branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)".
+	Permits force pushes to the protected branch by anyone with write access to the
+	repository. Set to `true` to allow force pushes. Set to `false` or `null` to
+	block force pushes. Default: `false`. For more information, see "[Enabling force
+	pushes to a protected
+	branch](https://help.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)"
+	in the GitHub Help documentation."
 	*/
 	AllowForcePushes *bool `json:"allow_force_pushes,omitempty"`
 
 	/*
-	   Enforce all configured restrictions for administrators. Set to `true` to enforce
-	   required status checks for repository administrators. Set to `null` to disable.
+	Enforce all configured restrictions for administrators. Set to `true` to enforce
+	required status checks for repository administrators. Set to `null` to disable.
 	*/
 	EnforceAdmins *bool `json:"enforce_admins"`
 
 	/*
-	   Enforces a linear commit Git history, which prevents anyone from pushing merge
-	   commits to a branch. Set to `true` to enforce a linear commit history. Set to
-	   `false` to disable a linear commit Git history. Your repository must allow
-	   squash merging or rebase merging before you can enable a linear commit history.
-	   Default: `false`. For more information, see "[Requiring a linear commit
-	   history](https://help.github.com/github/administering-a-repository/requiring-a-linear-commit-history)".
+	Enforces a linear commit Git history, which prevents anyone from pushing merge
+	commits to a branch. Set to `true` to enforce a linear commit history. Set to
+	`false` to disable a linear commit Git history. Your repository must allow
+	squash merging or rebase merging before you can enable a linear commit history.
+	Default: `false`. For more information, see "[Requiring a linear commit
+	history](https://help.github.com/github/administering-a-repository/requiring-a-linear-commit-history)"
+	in the GitHub Help documentation.
 	*/
 	RequiredLinearHistory *bool `json:"required_linear_history,omitempty"`
 
-	/*
-	   Require at least one approving review on a pull request, before merging. Set to
-	   `null` to disable.
-	*/
+	// Require at least one approving review on a pull request, before merging. Set to `null` to disable.
 	RequiredPullRequestReviews *ReposUpdateBranchProtectionReqBodyRequiredPullRequestReviews `json:"required_pull_request_reviews"`
 
 	// Require status checks to pass before merging. Set to `null` to disable.
 	RequiredStatusChecks *ReposUpdateBranchProtectionReqBodyRequiredStatusChecks `json:"required_status_checks"`
 
 	/*
-	   Restrict who can push to the protected branch. User, app, and team
-	   `restrictions` are only available for organization-owned repositories. Set to
-	   `null` to disable.
+	Restrict who can push to the protected branch. User, app, and team
+	`restrictions` are only available for organization-owned repositories. Set to
+	`null` to disable.
 	*/
 	Restrictions *ReposUpdateBranchProtectionReqBodyRestrictions `json:"restrictions"`
 }
@@ -18688,7 +19563,7 @@ ReposUpdateBranchProtectionResponseBody is a response body for ReposUpdateBranch
 
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
-type ReposUpdateBranchProtectionResponseBody components.BranchProtection
+type ReposUpdateBranchProtectionResponseBody components.ProtectedBranch
 
 /*
 ReposUpdateBranchProtectionResponse is a response for ReposUpdateBranchProtection
@@ -18749,9 +19624,15 @@ ReposUpdateCommitCommentReq is request data for Client.ReposUpdateCommitComment
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
 type ReposUpdateCommitCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody ReposUpdateCommitCommentReqBody
 }
@@ -18774,7 +19655,10 @@ func (r *ReposUpdateCommitCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -18889,8 +19773,12 @@ ReposUpdateInformationAboutPagesSiteReq is request data for Client.ReposUpdateIn
 https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReposUpdateInformationAboutPagesSiteReqBody
 }
@@ -18913,7 +19801,7 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateInformationAboutPagesSiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -18960,19 +19848,13 @@ https://developer.github.com/v3/repos/pages/#update-information-about-a-github-p
 type ReposUpdateInformationAboutPagesSiteReqBody struct {
 
 	/*
-	   Specify a custom domain for the repository. Sending a `null` value will remove
-	   the custom domain. For more about custom domains, see "[Using a custom domain
-	   with GitHub
-	   Pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)."
+	Specify a custom domain for the repository. Sending a `null` value will remove
+	the custom domain. For more about custom domains, see "[Using a custom domain
+	with GitHub
+	Pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)."
 	*/
-	Cname *string `json:"cname,omitempty"`
-
-	/*
-	   Update the source for the repository. Must include the branch name, and may
-	   optionally specify the subdirectory `/docs`. Possible values are `"gh-pages"`,
-	   `"master"`, and `"master /docs"`.
-	*/
-	Source *string `json:"source,omitempty"`
+	Cname  *string     `json:"cname,omitempty"`
+	Source interface{} `json:"source,omitempty"`
 }
 
 /*
@@ -19033,9 +19915,15 @@ ReposUpdateInvitationReq is request data for Client.ReposUpdateInvitation
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
 type ReposUpdateInvitationReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// invitation_id parameter
 	InvitationId int64
 	RequestBody  ReposUpdateInvitationReqBody
 }
@@ -19058,7 +19946,10 @@ func (r *ReposUpdateInvitationReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateInvitationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -19105,8 +19996,8 @@ https://developer.github.com/v3/repos/invitations/#update-a-repository-invitatio
 type ReposUpdateInvitationReqBody struct {
 
 	/*
-	   The permissions that the associated user will have on the repository. Valid
-	   values are `read`, `write`, `maintain`, `triage`, and `admin`.
+	The permissions that the associated user will have on the repository. Valid
+	values are `read`, `write`, `maintain`, `triage`, and `admin`.
 	*/
 	Permissions *string `json:"permissions,omitempty"`
 }
@@ -19177,9 +20068,15 @@ ReposUpdatePullRequestReviewProtectionReq is request data for Client.ReposUpdate
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
 type ReposUpdatePullRequestReviewProtectionReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
 	RequestBody ReposUpdatePullRequestReviewProtectionReqBody
 
@@ -19212,7 +20109,10 @@ func (r *ReposUpdatePullRequestReviewProtectionReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdatePullRequestReviewProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"luke-cage": r.LukeCagePreview}
 	if allPreviews {
 		previewVals["luke-cage"] = true
@@ -19271,30 +20171,21 @@ https://developer.github.com/v3/repos/branches/#update-pull-request-review-prote
 */
 type ReposUpdatePullRequestReviewProtectionReqBody struct {
 
-	/*
-	   Set to `true` if you want to automatically dismiss approving reviews when
-	   someone pushes a new commit.
-	*/
+	// Set to `true` if you want to automatically dismiss approving reviews when someone pushes a new commit.
 	DismissStaleReviews *bool `json:"dismiss_stale_reviews,omitempty"`
 
 	/*
-	   Specify which users and teams can dismiss pull request reviews. Pass an empty
-	   `dismissal_restrictions` object to disable. User and team
-	   `dismissal_restrictions` are only available for organization-owned repositories.
-	   Omit this parameter for personal repositories.
+	Specify which users and teams can dismiss pull request reviews. Pass an empty
+	`dismissal_restrictions` object to disable. User and team
+	`dismissal_restrictions` are only available for organization-owned repositories.
+	Omit this parameter for personal repositories.
 	*/
 	DismissalRestrictions *ReposUpdatePullRequestReviewProtectionReqBodyDismissalRestrictions `json:"dismissal_restrictions,omitempty"`
 
-	/*
-	   Blocks merging pull requests until [code
-	   owners](https://help.github.com/articles/about-code-owners/) have reviewed.
-	*/
+	// Blocks merging pull requests until [code owners](https://help.github.com/articles/about-code-owners/) have reviewed.
 	RequireCodeOwnerReviews *bool `json:"require_code_owner_reviews,omitempty"`
 
-	/*
-	   Specifies the number of reviewers required to approve pull requests. Use a
-	   number between 1 and 6.
-	*/
+	// Specifies the number of reviewers required to approve pull requests. Use a number between 1 and 6.
 	RequiredApprovingReviewCount *int64 `json:"required_approving_review_count,omitempty"`
 }
 
@@ -19364,9 +20255,15 @@ ReposUpdateReleaseReq is request data for Client.ReposUpdateRelease
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// release_id parameter
 	ReleaseId   int64
 	RequestBody ReposUpdateReleaseReqBody
 }
@@ -19389,7 +20286,10 @@ func (r *ReposUpdateReleaseReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateReleaseReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -19444,19 +20344,16 @@ type ReposUpdateReleaseReqBody struct {
 	// The name of the release.
 	Name *string `json:"name,omitempty"`
 
-	/*
-	   `true` to identify the release as a prerelease, `false` to identify the release
-	   as a full release.
-	*/
+	// `true` to identify the release as a prerelease, `false` to identify the release as a full release.
 	Prerelease *bool `json:"prerelease,omitempty"`
 
 	// The name of the tag.
 	TagName *string `json:"tag_name,omitempty"`
 
 	/*
-	   Specifies the commitish value that determines where the Git tag is created from.
-	   Can be any branch or commit SHA. Unused if the Git tag already exists. Default:
-	   the repository's default branch (usually `master`).
+	Specifies the commitish value that determines where the Git tag is created from.
+	Can be any branch or commit SHA. Unused if the Git tag already exists. Default:
+	the repository's default branch (usually `master`).
 	*/
 	TargetCommitish *string `json:"target_commitish,omitempty"`
 }
@@ -19466,7 +20363,7 @@ ReposUpdateReleaseResponseBody is a response body for ReposUpdateRelease
 
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
-type ReposUpdateReleaseResponseBody components.Release2
+type ReposUpdateReleaseResponseBody components.Release
 
 /*
 ReposUpdateReleaseResponse is a response for ReposUpdateRelease
@@ -19527,9 +20424,15 @@ ReposUpdateReleaseAssetReq is request data for Client.ReposUpdateReleaseAsset
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// asset_id parameter
 	AssetId     int64
 	RequestBody ReposUpdateReleaseAssetReqBody
 }
@@ -19552,7 +20455,10 @@ func (r *ReposUpdateReleaseAssetReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -19602,7 +20508,8 @@ type ReposUpdateReleaseAssetReqBody struct {
 	Label *string `json:"label,omitempty"`
 
 	// The file name of the asset.
-	Name *string `json:"name,omitempty"`
+	Name  *string `json:"name,omitempty"`
+	State *string `json:"state,omitempty"`
 }
 
 /*
@@ -19624,19 +20531,19 @@ type ReposUpdateReleaseAssetResponse struct {
 }
 
 /*
-ReposUpdateStatusCheckPotection performs requests for "repos/update-status-check-potection"
+ReposUpdateStatusCheckProtection performs requests for "repos/update-status-check-protection"
 
-Update status check potection.
+Update status check protection.
 
   PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-func ReposUpdateStatusCheckPotection(ctx context.Context, req *ReposUpdateStatusCheckPotectionReq, opt ...RequestOption) (*ReposUpdateStatusCheckPotectionResponse, error) {
+func ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatusCheckProtectionReq, opt ...RequestOption) (*ReposUpdateStatusCheckProtectionResponse, error) {
 	if req == nil {
-		req = new(ReposUpdateStatusCheckPotectionReq)
+		req = new(ReposUpdateStatusCheckProtectionReq)
 	}
-	resp := &ReposUpdateStatusCheckPotectionResponse{request: req}
+	resp := &ReposUpdateStatusCheckProtectionResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -19644,7 +20551,7 @@ func ReposUpdateStatusCheckPotection(ctx context.Context, req *ReposUpdateStatus
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateStatusCheckPotectionResponseBody{}
+	resp.Data = ReposUpdateStatusCheckProtectionResponseBody{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19653,72 +20560,81 @@ func ReposUpdateStatusCheckPotection(ctx context.Context, req *ReposUpdateStatus
 }
 
 /*
-ReposUpdateStatusCheckPotection performs requests for "repos/update-status-check-potection"
+ReposUpdateStatusCheckProtection performs requests for "repos/update-status-check-protection"
 
-Update status check potection.
+Update status check protection.
 
   PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-func (c Client) ReposUpdateStatusCheckPotection(ctx context.Context, req *ReposUpdateStatusCheckPotectionReq, opt ...RequestOption) (*ReposUpdateStatusCheckPotectionResponse, error) {
-	return ReposUpdateStatusCheckPotection(ctx, req, append(c, opt...)...)
+func (c Client) ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatusCheckProtectionReq, opt ...RequestOption) (*ReposUpdateStatusCheckProtectionResponse, error) {
+	return ReposUpdateStatusCheckProtection(ctx, req, append(c, opt...)...)
 }
 
 /*
-ReposUpdateStatusCheckPotectionReq is request data for Client.ReposUpdateStatusCheckPotection
+ReposUpdateStatusCheckProtectionReq is request data for Client.ReposUpdateStatusCheckProtection
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-type ReposUpdateStatusCheckPotectionReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+type ReposUpdateStatusCheckProtectionReq struct {
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// branch+ parameter
 	Branch      string
-	RequestBody ReposUpdateStatusCheckPotectionReqBody
+	RequestBody ReposUpdateStatusCheckProtectionReqBody
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) url() string {
+func (r *ReposUpdateStatusCheckProtectionReq) url() string {
 	return r._url
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) urlPath() string {
+func (r *ReposUpdateStatusCheckProtectionReq) urlPath() string {
 	return fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch)
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) method() string {
+func (r *ReposUpdateStatusCheckProtectionReq) method() string {
 	return "PATCH"
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) urlQuery() url.Values {
+func (r *ReposUpdateStatusCheckProtectionReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+func (r *ReposUpdateStatusCheckProtectionReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) body() interface{} {
+func (r *ReposUpdateStatusCheckProtectionReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) dataStatuses() []int {
+func (r *ReposUpdateStatusCheckProtectionReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) validStatuses() []int {
+func (r *ReposUpdateStatusCheckProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateStatusCheckPotectionReq) endpointAttributes() []endpointAttribute {
+func (r *ReposUpdateStatusCheckProtectionReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposUpdateStatusCheckPotectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *ReposUpdateStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -19726,7 +20642,7 @@ func (r *ReposUpdateStatusCheckPotectionReq) HTTPRequest(ctx context.Context, op
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateStatusCheckPotectionReq) Rel(link RelName, resp *ReposUpdateStatusCheckPotectionResponse) bool {
+func (r *ReposUpdateStatusCheckProtectionReq) Rel(link RelName, resp *ReposUpdateStatusCheckProtectionResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -19736,11 +20652,11 @@ func (r *ReposUpdateStatusCheckPotectionReq) Rel(link RelName, resp *ReposUpdate
 }
 
 /*
-ReposUpdateStatusCheckPotectionReqBody is a request body for repos/update-status-check-potection
+ReposUpdateStatusCheckProtectionReqBody is a request body for repos/update-status-check-protection
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-type ReposUpdateStatusCheckPotectionReqBody struct {
+type ReposUpdateStatusCheckProtectionReqBody struct {
 
 	// The list of status checks to require in order to merge into this branch
 	Contexts []string `json:"contexts,omitempty"`
@@ -19750,21 +20666,21 @@ type ReposUpdateStatusCheckPotectionReqBody struct {
 }
 
 /*
-ReposUpdateStatusCheckPotectionResponseBody is a response body for ReposUpdateStatusCheckPotection
+ReposUpdateStatusCheckProtectionResponseBody is a response body for ReposUpdateStatusCheckProtection
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-type ReposUpdateStatusCheckPotectionResponseBody components.StatusCheckPolicy
+type ReposUpdateStatusCheckProtectionResponseBody components.StatusCheckPolicy
 
 /*
-ReposUpdateStatusCheckPotectionResponse is a response for ReposUpdateStatusCheckPotection
+ReposUpdateStatusCheckProtectionResponse is a response for ReposUpdateStatusCheckProtection
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-type ReposUpdateStatusCheckPotectionResponse struct {
+type ReposUpdateStatusCheckProtectionResponse struct {
 	response
-	request *ReposUpdateStatusCheckPotectionReq
-	Data    ReposUpdateStatusCheckPotectionResponseBody
+	request *ReposUpdateStatusCheckProtectionReq
+	Data    ReposUpdateStatusCheckProtectionResponseBody
 }
 
 /*
@@ -19815,9 +20731,15 @@ ReposUpdateWebhookReq is request data for Client.ReposUpdateWebhook
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
 type ReposUpdateWebhookReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId      int64
 	RequestBody ReposUpdateWebhookReqBody
 }
@@ -19840,7 +20762,10 @@ func (r *ReposUpdateWebhookReq) urlQuery() url.Values {
 }
 
 func (r *ReposUpdateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -19881,27 +20806,26 @@ func (r *ReposUpdateWebhookReq) Rel(link RelName, resp *ReposUpdateWebhookRespon
 
 // ReposUpdateWebhookReqBodyConfig is a value for ReposUpdateWebhookReqBody's Config field
 type ReposUpdateWebhookReqBodyConfig struct {
+	Address *string `json:"address,omitempty"`
 
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
+	// The media type used to serialize the payloads. Supported values include `json` and `form`. The default is `form`.
 	ContentType *string `json:"content_type,omitempty"`
 
 	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
+	Determines whether the SSL certificate of the host for `url` will be verified
+	when delivering payloads. Supported values include `0` (verification is
+	performed) and `1` (verification is not performed). The default is `0`. **We
+	strongly recommend not setting this to `1` as you are subject to
+	man-in-the-middle and other attacks.**
 	*/
 	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+	Room        *string `json:"room,omitempty"`
 
 	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
+	If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	digest value in the
+	[`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	header.
 	*/
 	Secret *string `json:"secret,omitempty"`
 
@@ -19916,34 +20840,25 @@ https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
 type ReposUpdateWebhookReqBody struct {
 
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
+	// Determines if notifications are sent when the webhook is triggered. Set to `true` to send notifications.
 	Active *bool `json:"active,omitempty"`
 
-	/*
-	   Determines a list of events to be added to the list of events that the Hook
-	   triggers for.
-	*/
+	// Determines a list of events to be added to the list of events that the Hook triggers for.
 	AddEvents []string `json:"add_events,omitempty"`
 
 	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
+	Key/value pairs to provide settings for this webhook. [These are defined
+	below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params).
 	*/
 	Config *ReposUpdateWebhookReqBodyConfig `json:"config,omitempty"`
 
 	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for. This replaces the entire array of events.
+	Determines what [events](https://developer.github.com/webhooks/event-payloads)
+	the hook is triggered for. This replaces the entire array of events.
 	*/
 	Events []string `json:"events,omitempty"`
 
-	/*
-	   Determines a list of events to be removed from the list of events that the Hook
-	   triggers for.
-	*/
+	// Determines a list of events to be removed from the list of events that the Hook triggers for.
 	RemoveEvents []string `json:"remove_events,omitempty"`
 }
 
@@ -20027,16 +20942,7 @@ type ReposUploadReleaseAssetReq struct {
 	// http request's body
 	RequestBody io.Reader
 
-	/*
-	Size of the asset in bytes. Most libraries will calculate the header
-	automatically
-	*/
-	ContentLengthHeader *string
-
-	/*
-	Media Type of the asset. For a list of media types, see
-	https://www.iana.org/assignments/media-types/media-types.xhtml
-	*/
+	// Content-Type for the uploaded file
 	ContentTypeHeader *string
 }
 
@@ -20068,8 +20974,8 @@ func (r *ReposUploadReleaseAssetReq) urlQuery() url.Values {
 
 func (r *ReposUploadReleaseAssetReq) header(requiredPreviews, allPreviews bool) http.Header {
 	headerVals := map[string]*string{
-		"content-length": r.ContentLengthHeader,
-		"content-type":   r.ContentTypeHeader,
+		"accept":       String("application/json"),
+		"content-type": r.ContentTypeHeader,
 	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)

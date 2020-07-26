@@ -39,6 +39,7 @@ func addResponse(file *jen.File, endpoint model.Endpoint) {
 		group.Id("response")
 		group.Id("request").Op("*").Id(reqStructName(endpoint))
 		switch {
+		case endpointHasAttribute(endpoint, attrNoResponseBody):
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			group.Id("Data").Id(respBodyStructName(endpoint))
 		case endpointHasAttribute(endpoint, attrBoolean):
@@ -68,14 +69,14 @@ func responseCodesWithBodies(endpoint model.Endpoint) []int {
 		if !cmp.Equal(endpoint.Responses[bodyCodes[0]].Body, endpoint.Responses[bodyCodes[i]].Body) {
 			panic(fmt.Sprintf("%s has broken our assumption that success bodies will all be equal", endpoint.ID))
 		}
-		if !cmp.Equal(endpoint.Responses[bodyCodes[0]].Headers, endpoint.Responses[bodyCodes[i]].Headers) {
-			panic(fmt.Sprintf("%s has broken our assumption that success bodies will all be equal", endpoint.ID))
-		}
 	}
 	return bodyCodes
 }
 
 func addResponseBody(file *jen.File, endpoint model.Endpoint) {
+	if endpointHasAttribute(endpoint, attrNoResponseBody) {
+		return
+	}
 	bodyCodes := responseCodesWithBodies(endpoint)
 	if len(bodyCodes) == 0 {
 		return
@@ -93,4 +94,16 @@ func addResponseBody(file *jen.File, endpoint model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(respBodyStructName(endpoint)).Add(tp)
+
+	if resp.Body.Type == model.ParamTypeOneOf {
+		file.Line()
+		file.Add(oneOfValueFunc(structName, resp.Body))
+		file.Line()
+		file.Add(oneOfSetValueFunc(structName, resp.Body))
+		file.Line()
+		file.Add(oneOfMarshalJSONFunc(structName, resp.Body))
+		file.Line()
+		file.Add(oneOfUnmarshalJSONFunc(structName, resp.Body))
+		file.Line()
+	}
 }

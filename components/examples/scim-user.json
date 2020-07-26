@@ -3,8 +3,10 @@
   "emails": [
     {
       "primary": true,
-      "type": "work",
       "value": "mona.octocat@okta.example.com"
+    },
+    {
+      "value": "monalisa@octocat.github.com"
     }
   ],
   "externalId": "a7d0f98382",
@@ -17,7 +19,7 @@
   },
   "name": {
     "familyName": "Octocat",
-    "givenName": "Mona"
+    "givenName": "Monalisa"
   },
   "schemas": [
     "urn:ietf:params:scim:schemas:core:2.0:User"

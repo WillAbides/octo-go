@@ -86,7 +86,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) urlQuery() url.Values {
 }
 
 func (r *CodesOfConductGetAllCodesOfConductReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
 	if requiredPreviews {
 		previewVals["scarlet-witch"] = true
@@ -106,7 +106,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) dataStatuses() []int {
 }
 
 func (r *CodesOfConductGetAllCodesOfConductReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *CodesOfConductGetAllCodesOfConductReq) endpointAttributes() []endpointAttribute {
@@ -136,7 +136,7 @@ CodesOfConductGetAllCodesOfConductResponseBody is a response body for CodesOfCon
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
-type CodesOfConductGetAllCodesOfConductResponseBody []components.CodeOfConductSimple
+type CodesOfConductGetAllCodesOfConductResponseBody []components.CodeOfConduct
 
 /*
 CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAllCodesOfConduct
@@ -198,7 +198,9 @@ https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type CodesOfConductGetConductCodeReq struct {
 	_url string
-	Key  string
+
+	// key parameter
+	Key string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.
@@ -226,7 +228,7 @@ func (r *CodesOfConductGetConductCodeReq) urlQuery() url.Values {
 }
 
 func (r *CodesOfConductGetConductCodeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
 	if requiredPreviews {
 		previewVals["scarlet-witch"] = true
@@ -246,7 +248,7 @@ func (r *CodesOfConductGetConductCodeReq) dataStatuses() []int {
 }
 
 func (r *CodesOfConductGetConductCodeReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *CodesOfConductGetConductCodeReq) endpointAttributes() []endpointAttribute {
@@ -337,9 +339,13 @@ CodesOfConductGetForRepoReq is request data for Client.CodesOfConductGetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.
@@ -367,7 +373,7 @@ func (r *CodesOfConductGetForRepoReq) urlQuery() url.Values {
 }
 
 func (r *CodesOfConductGetForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
 	if requiredPreviews {
 		previewVals["scarlet-witch"] = true

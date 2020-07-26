@@ -81,7 +81,10 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) urlQuery() url.Values {
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -95,7 +98,7 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttributes() []endpointAttribute {
@@ -127,24 +130,17 @@ https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationReqBody struct {
 
-	// The 20 character OAuth app client key for which to create the token.
+	// The OAuth app client key for which to create the token.
 	ClientId *string `json:"client_id,omitempty"`
 
-	// The 40 character OAuth app client secret for which to create the token.
+	// The OAuth app client secret for which to create the token.
 	ClientSecret *string `json:"client_secret,omitempty"`
 
-	/*
-	   A unique string to distinguish an authorization from others created for the same
-	   client ID and user.
-	*/
+	// A unique string to distinguish an authorization from others created for the same client ID and user.
 	Fingerprint *string `json:"fingerprint,omitempty"`
 
-	/*
-	   A note to remind you what the OAuth token is for. Tokens not associated with a
-	   specific OAuth application (i.e. personal access tokens) must have a unique
-	   note.
-	*/
-	Note *string `json:"note"`
+	// A note to remind you what the OAuth token is for.
+	Note *string `json:"note,omitempty"`
 
 	// A URL to remind you what app the OAuth token is for.
 	NoteUrl *string `json:"note_url,omitempty"`
@@ -218,7 +214,9 @@ OauthAuthorizationsDeleteAuthorizationReq is request data for Client.OauthAuthor
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 type OauthAuthorizationsDeleteAuthorizationReq struct {
-	_url            string
+	_url string
+
+	// authorization_id parameter
 	AuthorizationId int64
 }
 
@@ -254,7 +252,7 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
@@ -336,7 +334,9 @@ OauthAuthorizationsDeleteGrantReq is request data for Client.OauthAuthorizations
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 type OauthAuthorizationsDeleteGrantReq struct {
-	_url    string
+	_url string
+
+	// grant_id parameter
 	GrantId int64
 }
 
@@ -372,7 +372,7 @@ func (r *OauthAuthorizationsDeleteGrantReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *OauthAuthorizationsDeleteGrantReq) endpointAttributes() []endpointAttribute {
@@ -455,7 +455,9 @@ OauthAuthorizationsGetAuthorizationReq is request data for Client.OauthAuthoriza
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type OauthAuthorizationsGetAuthorizationReq struct {
-	_url            string
+	_url string
+
+	// authorization_id parameter
 	AuthorizationId int64
 }
 
@@ -477,7 +479,7 @@ func (r *OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
 }
 
 func (r *OauthAuthorizationsGetAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -491,7 +493,7 @@ func (r *OauthAuthorizationsGetAuthorizationReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttributes() []endpointAttribute {
@@ -582,7 +584,9 @@ OauthAuthorizationsGetGrantReq is request data for Client.OauthAuthorizationsGet
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type OauthAuthorizationsGetGrantReq struct {
-	_url    string
+	_url string
+
+	// grant_id parameter
 	GrantId int64
 }
 
@@ -604,7 +608,7 @@ func (r *OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
 }
 
 func (r *OauthAuthorizationsGetGrantReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -618,7 +622,7 @@ func (r *OauthAuthorizationsGetGrantReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OauthAuthorizationsGetGrantReq) endpointAttributes() []endpointAttribute {
@@ -709,7 +713,9 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppReq is request data for Client.
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
 }
@@ -732,7 +738,10 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlQuery() url.Va
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -746,7 +755,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) dataStatuses() []
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() []int {
-	return []int{200, 201}
+	return []int{200, 201, 304}
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttributes() []endpointAttribute {
@@ -778,18 +787,10 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody struct {
 
-	/*
-	   The 40 character OAuth app client secret associated with the client ID specified
-	   in the URL.
-	*/
+	// The OAuth app client secret for which to create the token.
 	ClientSecret *string `json:"client_secret"`
 
-	/*
-	   A unique string to distinguish an authorization from others created for the same
-	   client and user. If provided, this API is functionally equivalent to
-	   [Get-or-create an authorization for a specific app and
-	   fingerprint](https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint).
-	*/
+	// A unique string to distinguish an authorization from others created for the same client ID and user.
 	Fingerprint *string `json:"fingerprint,omitempty"`
 
 	// A note to remind you what the OAuth token is for.
@@ -868,8 +869,12 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq is request da
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// fingerprint parameter
 	Fingerprint string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
 }
@@ -892,7 +897,10 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) url
 }
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -938,10 +946,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody struct {
 
-	/*
-	   The 40 character OAuth app client secret associated with the client ID specified
-	   in the URL.
-	*/
+	// The OAuth app client secret for which to create the token.
 	ClientSecret *string `json:"client_secret"`
 
 	// A note to remind you what the OAuth token is for.
@@ -1053,7 +1058,7 @@ func (r *OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
 }
 
 func (r *OauthAuthorizationsListAuthorizationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1067,7 +1072,7 @@ func (r *OauthAuthorizationsListAuthorizationsReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttributes() []endpointAttribute {
@@ -1191,7 +1196,7 @@ func (r *OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
 }
 
 func (r *OauthAuthorizationsListGrantsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1205,7 +1210,7 @@ func (r *OauthAuthorizationsListGrantsReq) dataStatuses() []int {
 }
 
 func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OauthAuthorizationsListGrantsReq) endpointAttributes() []endpointAttribute {
@@ -1296,7 +1301,9 @@ OauthAuthorizationsUpdateAuthorizationReq is request data for Client.OauthAuthor
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationReq struct {
-	_url            string
+	_url string
+
+	// authorization_id parameter
 	AuthorizationId int64
 	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
 }
@@ -1319,7 +1326,10 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) urlQuery() url.Values {
 }
 
 func (r *OauthAuthorizationsUpdateAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1368,17 +1378,10 @@ type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 	// A list of scopes to add to this authorization.
 	AddScopes []string `json:"add_scopes,omitempty"`
 
-	/*
-	   A unique string to distinguish an authorization from others created for the same
-	   client ID and user.
-	*/
+	// A unique string to distinguish an authorization from others created for the same client ID and user.
 	Fingerprint *string `json:"fingerprint,omitempty"`
 
-	/*
-	   A note to remind you what the OAuth token is for. Tokens not associated with a
-	   specific OAuth application (i.e. personal access tokens) must have a unique
-	   note.
-	*/
+	// A note to remind you what the OAuth token is for.
 	Note *string `json:"note,omitempty"`
 
 	// A URL to remind you what app the OAuth token is for.
@@ -1387,7 +1390,7 @@ type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 	// A list of scopes to remove from this authorization.
 	RemoveScopes []string `json:"remove_scopes,omitempty"`
 
-	// Replaces the authorization scopes with these.
+	// A list of scopes that this authorization is in.
 	Scopes []string `json:"scopes,omitempty"`
 }
 

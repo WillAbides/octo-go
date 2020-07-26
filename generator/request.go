@@ -205,6 +205,32 @@ func reqHTTPRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
+func reqHeaderMap(endpoint model.Endpoint) *jen.Statement {
+	return jen.Map(jen.String()).Op("*").String().Values(
+		jen.DictFunc(func(dict jen.Dict) {
+			headers := map[string]*jen.Statement{}
+			if endpoint.SuccessMediaType != "" {
+				headers["accept"] = jen.Id("String").Call(jen.Lit(endpoint.SuccessMediaType))
+			}
+
+			for _, header := range endpoint.Headers {
+				if header.Name == "accept" {
+					continue
+				}
+				headers[strings.ToLower(header.Name)] = jen.Id("r").Dot(toExportedName(header.Name + "-header"))
+			}
+
+			if headers["content-type"] == nil && endpoint.RequestBody != nil && endpoint.RequestBody.MediaType != "" {
+				headers["content-type"] = jen.Id("String").Call(jen.Lit(endpoint.RequestBody.MediaType))
+			}
+
+			for k, v := range headers {
+				dict[jen.Lit(k)] = v
+			}
+		}),
+	)
+}
+
 func reqHeaderFunc(file *jen.File, endpoint model.Endpoint) {
 	structName := reqStructName(endpoint)
 	stmt := file.Func().Params(jen.Id("r").Id("*"+structName)).Id("header").Params(jen.Id("requiredPreviews, allPreviews bool")).Qual("net/http", "Header")
@@ -216,16 +242,7 @@ func reqHeaderFunc(file *jen.File, endpoint model.Endpoint) {
 		}
 	}
 	stmt.BlockFunc(func(fnBlock *jen.Group) {
-		fnBlock.Id("headerVals").Op(":=").Map(jen.String()).Op("*").String().Values(
-			jen.DictFunc(func(dict jen.Dict) {
-				for _, header := range endpoint.Headers {
-					if header.Name == "accept" {
-						continue
-					}
-					dict[jen.Lit(header.Name)] = jen.Id("r").Dot(toExportedName(header.Name + "-header"))
-				}
-			}),
-		)
+		fnBlock.Id("headerVals").Op(":=").Add(reqHeaderMap(endpoint))
 		fnBlock.Id("previewVals").Op(":=").Map(jen.String()).Bool().Values(
 			jen.DictFunc(func(dict jen.Dict) {
 				for _, preview := range endpoint.Previews {
@@ -299,7 +316,8 @@ func reqURLQueryFunc(file *jen.File, endpoint model.Endpoint) {
 				case model.ParamTypeBool:
 					valStmt = jen.Qual("strconv", "FormatBool").Params(jen.Op("*").Add(paramArg))
 				default:
-					fmt.Printf("UNEXPECTED %v\n", param)
+					fmt.Println(endpoint.ID)
+					fmt.Printf("UNEXPECTED %v, %s\n", param, param.Schema.Type)
 				}
 				ifGroup.Id("query").Dot("Set").Params(jen.Lit(param.Name), valStmt)
 			})

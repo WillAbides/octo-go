@@ -6,7 +6,7 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/vnd.github.v3+json
+      - application/json
       User-Agent:
       - octo-go
     url: https://api.github.com/repos/octo-cli-testorg/scratch/releases/tags/v0.0.2
@@ -96,7 +96,7 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/vnd.github.v3+json
+      - application/json
       Content-Type:
       - text/plain
       User-Agent:

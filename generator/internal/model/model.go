@@ -1,35 +1,36 @@
 package model
 
 type Endpoint struct {
-	GithubCloudOnly bool
-	EnabledForApps  bool
-	Legacy          bool
-	Deprecated      bool
-	ID              string
-	Path            string
-	Method          string
-	Name            string
-	Concern         string
-	DocsURL         string
-	Summary         string
-	HelpText        string
-	PathParams      Params
-	QueryParams     Params
-	Headers         Params
-	Previews        []Preview
-	Requests        []Request
-	Responses       map[int]Response
+	GithubCloudOnly  bool
+	EnabledForApps   bool
+	Legacy           bool
+	Deprecated       bool
+	ID               string
+	Path             string
+	Method           string
+	Name             string
+	Concern          string
+	DocsURL          string
+	Summary          string
+	HelpText         string
+	PathParams       Params
+	QueryParams      Params
+	Headers          Params
+	Previews         []Preview
+	RequestBody      *RequestBody
+	Responses        map[int]Response
+	SuccessMediaType string
 }
 
-type Request struct {
-	MimeType string
-	Schema   *ParamSchema
+type RequestBody struct {
+	MediaType string
+	Schema    *ParamSchema
 }
 
 type Response struct {
+	MediaType  string
 	Body       *ParamSchema
 	HasExample bool
-	Headers    []Header
 }
 
 type Preview struct {
@@ -49,9 +50,33 @@ const (
 	ParamTypeInterface
 	ParamTypeObject
 	ParamTypeArray
+	ParamTypeOneOf
 )
 
+func (pt ParamType) String() string {
+	switch pt {
+	case ParamTypeString:
+		return "string"
+	case ParamTypeInt:
+		return "int"
+	case ParamTypeBool:
+		return "bool"
+	case ParamTypeNumber:
+		return "number"
+	case ParamTypeInterface:
+		return "interface"
+	case ParamTypeObject:
+		return "object"
+	case ParamTypeArray:
+		return "array"
+	case ParamTypeOneOf:
+		return "oneOf"
+	}
+	return "invalid"
+}
+
 type ParamSchema struct {
+	Nullable     bool
 	Ref          string
 	Type         ParamType
 	ItemSchema   *ParamSchema
@@ -75,14 +100,6 @@ func (p *ParamSchema) Clone() *ParamSchema {
 	return &result
 }
 
-type Header struct {
-	Ref      string
-	Required bool
-	Name     string
-	HelpText string
-	Schema   *ParamSchema
-}
-
 type Param struct {
 	Required bool
 	Name     string
@@ -97,14 +114,3 @@ func (p Param) Clone() Param {
 }
 
 type Params []Param
-
-func (p Params) Clone() Params {
-	if p == nil {
-		return nil
-	}
-	result := make(Params, len(p))
-	for i, param := range p {
-		result[i] = param.Clone()
-	}
-	return result
-}

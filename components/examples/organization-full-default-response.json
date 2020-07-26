@@ -44,5 +44,6 @@
   "twitter_username": "github",
   "two_factor_requirement_enabled": true,
   "type": "Organization",
+  "updated_at": "2014-03-03T18:58:10Z",
   "url": "https://api.github.com/orgs/github"
 }

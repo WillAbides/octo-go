@@ -59,9 +59,15 @@ IssuesAddAssigneesReq is request data for Client.IssuesAddAssignees
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type IssuesAddAssigneesReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesAddAssigneesReqBody
 }
@@ -84,7 +90,10 @@ func (r *IssuesAddAssigneesReq) urlQuery() url.Values {
 }
 
 func (r *IssuesAddAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -131,8 +140,8 @@ https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 type IssuesAddAssigneesReqBody struct {
 
 	/*
-	   Usernames of people to assign this issue to. _NOTE: Only users with push access
-	   can add assignees to an issue. Assignees are silently ignored otherwise._
+	Usernames of people to assign this issue to. _NOTE: Only users with push access
+	can add assignees to an issue. Assignees are silently ignored otherwise._
 	*/
 	Assignees []string `json:"assignees,omitempty"`
 }
@@ -203,9 +212,15 @@ IssuesAddLabelsReq is request data for Client.IssuesAddLabels
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type IssuesAddLabelsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesAddLabelsReqBody
 }
@@ -228,7 +243,10 @@ func (r *IssuesAddLabelsReq) urlQuery() url.Values {
 }
 
 func (r *IssuesAddLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -275,10 +293,10 @@ https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 type IssuesAddLabelsReqBody struct {
 
 	/*
-	   The name of the label to add to the issue. Must contain at least one label.
-	   **Note:** Alternatively, you can pass a single label as a `string` or an `array`
-	   of labels directly, but GitHub recommends passing an object with the `labels`
-	   key.
+	The name of the label to add to the issue. Must contain at least one label.
+	**Note:** Alternatively, you can pass a single label as a `string` or an `array`
+	of labels directly, but GitHub recommends passing an object with the `labels`
+	key.
 	*/
 	Labels []string `json:"labels"`
 }
@@ -352,9 +370,15 @@ IssuesCheckUserCanBeAssignedReq is request data for Client.IssuesCheckUserCanBeA
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
 type IssuesCheckUserCanBeAssignedReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// assignee parameter
 	Assignee string
 }
 
@@ -474,8 +498,12 @@ IssuesCreateReq is request data for Client.IssuesCreate
 https://developer.github.com/v3/issues/#create-an-issue
 */
 type IssuesCreateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody IssuesCreateReqBody
 }
@@ -498,7 +526,10 @@ func (r *IssuesCreateReq) urlQuery() url.Values {
 }
 
 func (r *IssuesCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -545,15 +576,15 @@ https://developer.github.com/v3/issues/#create-an-issue
 type IssuesCreateReqBody struct {
 
 	/*
-	   Login for the user that this issue should be assigned to. _NOTE: Only users with
-	   push access can set the assignee for new issues. The assignee is silently
-	   dropped otherwise. **This field is deprecated.**_
+	Login for the user that this issue should be assigned to. _NOTE: Only users with
+	push access can set the assignee for new issues. The assignee is silently
+	dropped otherwise. **This field is deprecated.**_
 	*/
 	Assignee *string `json:"assignee,omitempty"`
 
 	/*
-	   Logins for Users to assign to this issue. _NOTE: Only users with push access can
-	   set assignees for new issues. Assignees are silently dropped otherwise._
+	Logins for Users to assign to this issue. _NOTE: Only users with push access can
+	set assignees for new issues. Assignees are silently dropped otherwise._
 	*/
 	Assignees []string `json:"assignees,omitempty"`
 
@@ -561,15 +592,15 @@ type IssuesCreateReqBody struct {
 	Body *string `json:"body,omitempty"`
 
 	/*
-	   Labels to associate with this issue. _NOTE: Only users with push access can set
-	   labels for new issues. Labels are silently dropped otherwise._
+	Labels to associate with this issue. _NOTE: Only users with push access can set
+	labels for new issues. Labels are silently dropped otherwise._
 	*/
 	Labels []string `json:"labels,omitempty"`
 
 	/*
-	   The `number` of the milestone to associate this issue with. _NOTE: Only users
-	   with push access can set the milestone for new issues. The milestone is silently
-	   dropped otherwise._
+	The `number` of the milestone to associate this issue with. _NOTE: Only users
+	with push access can set the milestone for new issues. The milestone is silently
+	dropped otherwise._
 	*/
 	Milestone *int64 `json:"milestone,omitempty"`
 
@@ -643,9 +674,15 @@ IssuesCreateCommentReq is request data for Client.IssuesCreateComment
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesCreateCommentReqBody
 }
@@ -668,7 +705,10 @@ func (r *IssuesCreateCommentReq) urlQuery() url.Values {
 }
 
 func (r *IssuesCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -784,8 +824,12 @@ IssuesCreateLabelReq is request data for Client.IssuesCreateLabel
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody IssuesCreateLabelReqBody
 }
@@ -808,7 +852,10 @@ func (r *IssuesCreateLabelReq) urlQuery() url.Values {
 }
 
 func (r *IssuesCreateLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -854,22 +901,19 @@ https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelReqBody struct {
 
-	/*
-	   The [hexadecimal color code](http://www.color-hex.com/) for the label, without
-	   the leading `#`.
-	*/
-	Color *string `json:"color"`
+	// The [hexadecimal color code](http://www.color-hex.com/) for the label, without the leading `#`.
+	Color *string `json:"color,omitempty"`
 
 	// A short description of the label.
 	Description *string `json:"description,omitempty"`
 
 	/*
-	   The name of the label. Emoji can be added to label names, using either native
-	   emoji or colon-style markup. For example, typing `:strawberry:` will render the
-	   emoji
-	   ![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
-	   ":strawberry:"). For a full list of available emoji and codes, see
-	   [emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
+	The name of the label. Emoji can be added to label names, using either native
+	emoji or colon-style markup. For example, typing `:strawberry:` will render the
+	emoji
+	![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
+	":strawberry:"). For a full list of available emoji and codes, see
+	[emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
 	*/
 	Name *string `json:"name"`
 }
@@ -940,8 +984,12 @@ IssuesCreateMilestoneReq is request data for Client.IssuesCreateMilestone
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type IssuesCreateMilestoneReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody IssuesCreateMilestoneReqBody
 }
@@ -964,7 +1012,10 @@ func (r *IssuesCreateMilestoneReq) urlQuery() url.Values {
 }
 
 func (r *IssuesCreateMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1014,8 +1065,8 @@ type IssuesCreateMilestoneReqBody struct {
 	Description *string `json:"description,omitempty"`
 
 	/*
-	   The milestone due date. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	The milestone due date. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	DueOn *string `json:"due_on,omitempty"`
 
@@ -1091,9 +1142,15 @@ IssuesDeleteCommentReq is request data for Client.IssuesDeleteComment
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type IssuesDeleteCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 }
 
@@ -1211,10 +1268,16 @@ IssuesDeleteLabelReq is request data for Client.IssuesDeleteLabel
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 type IssuesDeleteLabelReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Name  string
+
+	// repo parameter
+	Repo string
+
+	// name parameter
+	Name string
 }
 
 func (r *IssuesDeleteLabelReq) url() string {
@@ -1305,6 +1368,10 @@ func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, o
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -1331,9 +1398,15 @@ IssuesDeleteMilestoneReq is request data for Client.IssuesDeleteMilestone
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 type IssuesDeleteMilestoneReq struct {
-	_url            string
-	Owner           string
-	Repo            string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// milestone_number parameter
 	MilestoneNumber int64
 }
 
@@ -1373,7 +1446,7 @@ func (r *IssuesDeleteMilestoneReq) validStatuses() []int {
 }
 
 func (r *IssuesDeleteMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1402,6 +1475,7 @@ https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 type IssuesDeleteMilestoneResponse struct {
 	response
 	request *IssuesDeleteMilestoneReq
+	Data    bool
 }
 
 /*
@@ -1452,19 +1526,23 @@ IssuesGetReq is request data for Client.IssuesGet
 https://developer.github.com/v3/issues/#get-an-issue
 */
 type IssuesGetReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1489,7 +1567,7 @@ func (r *IssuesGetReq) urlQuery() url.Values {
 }
 
 func (r *IssuesGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -1506,7 +1584,7 @@ func (r *IssuesGetReq) dataStatuses() []int {
 }
 
 func (r *IssuesGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301, 304}
 }
 
 func (r *IssuesGetReq) endpointAttributes() []endpointAttribute {
@@ -1597,9 +1675,15 @@ IssuesGetCommentReq is request data for Client.IssuesGetComment
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 
 	/*
@@ -1610,12 +1694,10 @@ type IssuesGetCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1640,7 +1722,7 @@ func (r *IssuesGetCommentReq) urlQuery() url.Values {
 }
 
 func (r *IssuesGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -1752,9 +1834,15 @@ IssuesGetEventReq is request data for Client.IssuesGetEvent
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// event_id parameter
 	EventId int64
 
 	/*
@@ -1804,7 +1892,7 @@ func (r *IssuesGetEventReq) urlQuery() url.Values {
 }
 
 func (r *IssuesGetEventReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
 		"sailor-v":    r.SailorVPreview,
@@ -1918,10 +2006,16 @@ IssuesGetLabelReq is request data for Client.IssuesGetLabel
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Name  string
+
+	// repo parameter
+	Repo string
+
+	// name parameter
+	Name string
 }
 
 func (r *IssuesGetLabelReq) url() string {
@@ -1942,7 +2036,7 @@ func (r *IssuesGetLabelReq) urlQuery() url.Values {
 }
 
 func (r *IssuesGetLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2047,9 +2141,15 @@ IssuesGetMilestoneReq is request data for Client.IssuesGetMilestone
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneReq struct {
-	_url            string
-	Owner           string
-	Repo            string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// milestone_number parameter
 	MilestoneNumber int64
 }
 
@@ -2071,7 +2171,7 @@ func (r *IssuesGetMilestoneReq) urlQuery() url.Values {
 }
 
 func (r *IssuesGetMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2209,7 +2309,11 @@ type IssuesListReq struct {
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
-	Since *string
+	Since  *string
+	Collab *bool
+	Orgs   *bool
+	Owned  *bool
+	Pulls  *bool
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2225,12 +2329,10 @@ type IssuesListReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2269,6 +2371,18 @@ func (r *IssuesListReq) urlQuery() url.Values {
 	if r.Since != nil {
 		query.Set("since", *r.Since)
 	}
+	if r.Collab != nil {
+		query.Set("collab", strconv.FormatBool(*r.Collab))
+	}
+	if r.Orgs != nil {
+		query.Set("orgs", strconv.FormatBool(*r.Orgs))
+	}
+	if r.Owned != nil {
+		query.Set("owned", strconv.FormatBool(*r.Owned))
+	}
+	if r.Pulls != nil {
+		query.Set("pulls", strconv.FormatBool(*r.Pulls))
+	}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
@@ -2279,7 +2393,7 @@ func (r *IssuesListReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -2300,7 +2414,7 @@ func (r *IssuesListReq) dataStatuses() []int {
 }
 
 func (r *IssuesListReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *IssuesListReq) endpointAttributes() []endpointAttribute {
@@ -2330,7 +2444,7 @@ IssuesListResponseBody is a response body for IssuesList
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-type IssuesListResponseBody []components.IssueWithRepo
+type IssuesListResponseBody []components.Issue
 
 /*
 IssuesListResponse is a response for IssuesList
@@ -2391,9 +2505,13 @@ IssuesListAssigneesReq is request data for Client.IssuesListAssignees
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 type IssuesListAssigneesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2426,7 +2544,7 @@ func (r *IssuesListAssigneesReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2531,9 +2649,15 @@ IssuesListCommentsReq is request data for Client.IssuesListComments
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 
 	/*
@@ -2551,12 +2675,10 @@ type IssuesListCommentsReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2590,7 +2712,7 @@ func (r *IssuesListCommentsReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2698,9 +2820,13 @@ IssuesListCommentsForRepoReq is request data for Client.IssuesListCommentsForRep
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Either `created` or `updated`.
 	Sort *string
@@ -2723,12 +2849,10 @@ type IssuesListCommentsForRepoReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2768,7 +2892,7 @@ func (r *IssuesListCommentsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2876,9 +3000,15 @@ IssuesListEventsReq is request data for Client.IssuesListEvents
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 
 	// Results per page (max 100)
@@ -2934,7 +3064,7 @@ func (r *IssuesListEventsReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"sailor-v": r.SailorVPreview,
 		"starfox":  r.StarfoxPreview,
@@ -3046,9 +3176,13 @@ IssuesListEventsForRepoReq is request data for Client.IssuesListEventsForRepo
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3103,7 +3237,7 @@ func (r *IssuesListEventsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListEventsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"sailor-v": r.SailorVPreview,
 		"starfox":  r.StarfoxPreview,
@@ -3215,9 +3349,15 @@ IssuesListEventsForTimelineReq is request data for Client.IssuesListEventsForTim
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 
 	// Results per page (max 100)
@@ -3272,7 +3412,7 @@ func (r *IssuesListEventsForTimelineReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListEventsForTimelineReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"mockingbird": r.MockingbirdPreview,
 		"starfox":     r.StarfoxPreview,
@@ -3436,12 +3576,10 @@ type IssuesListForAuthenticatedUserReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3490,7 +3628,7 @@ func (r *IssuesListForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -3511,7 +3649,7 @@ func (r *IssuesListForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *IssuesListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *IssuesListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -3541,7 +3679,7 @@ IssuesListForAuthenticatedUserResponseBody is a response body for IssuesListForA
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-type IssuesListForAuthenticatedUserResponseBody []components.IssueWithRepo
+type IssuesListForAuthenticatedUserResponseBody []components.Issue
 
 /*
 IssuesListForAuthenticatedUserResponse is a response for IssuesListForAuthenticatedUser
@@ -3603,7 +3741,9 @@ https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the
 */
 type IssuesListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -3652,12 +3792,10 @@ type IssuesListForOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3706,7 +3844,7 @@ func (r *IssuesListForOrgReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -3757,7 +3895,7 @@ IssuesListForOrgResponseBody is a response body for IssuesListForOrg
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-type IssuesListForOrgResponseBody []components.IssueWithRepo
+type IssuesListForOrgResponseBody []components.Issue
 
 /*
 IssuesListForOrgResponse is a response for IssuesListForOrg
@@ -3818,9 +3956,13 @@ IssuesListForRepoReq is request data for Client.IssuesListForRepo
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 type IssuesListForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	If an `integer` is passed, it should refer to a milestone by its `number` field.
@@ -3877,12 +4019,10 @@ type IssuesListForRepoReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3940,7 +4080,7 @@ func (r *IssuesListForRepoReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man":   r.MachineManPreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -3961,7 +4101,7 @@ func (r *IssuesListForRepoReq) dataStatuses() []int {
 }
 
 func (r *IssuesListForRepoReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301}
 }
 
 func (r *IssuesListForRepoReq) endpointAttributes() []endpointAttribute {
@@ -3991,7 +4131,7 @@ IssuesListForRepoResponseBody is a response body for IssuesListForRepo
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-type IssuesListForRepoResponseBody []components.IssueSimple2
+type IssuesListForRepoResponseBody []components.IssueSimple
 
 /*
 IssuesListForRepoResponse is a response for IssuesListForRepo
@@ -4052,9 +4192,15 @@ IssuesListLabelsForMilestoneReq is request data for Client.IssuesListLabelsForMi
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneReq struct {
-	_url            string
-	Owner           string
-	Repo            string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// milestone_number parameter
 	MilestoneNumber int64
 
 	// Results per page (max 100)
@@ -4088,7 +4234,7 @@ func (r *IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListLabelsForMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4193,9 +4339,13 @@ IssuesListLabelsForRepoReq is request data for Client.IssuesListLabelsForRepo
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4228,7 +4378,7 @@ func (r *IssuesListLabelsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListLabelsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4333,9 +4483,15 @@ IssuesListLabelsOnIssueReq is request data for Client.IssuesListLabelsOnIssue
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 
 	// Results per page (max 100)
@@ -4369,7 +4525,7 @@ func (r *IssuesListLabelsOnIssueReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListLabelsOnIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4474,9 +4630,13 @@ IssuesListMilestonesReq is request data for Client.IssuesListMilestones
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
 type IssuesListMilestonesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// The state of the milestone. Either `open`, `closed`, or `all`.
 	State *string
@@ -4527,7 +4687,7 @@ func (r *IssuesListMilestonesReq) urlQuery() url.Values {
 }
 
 func (r *IssuesListMilestonesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4631,9 +4791,15 @@ IssuesLockReq is request data for Client.IssuesLock
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 type IssuesLockReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesLockReqBody
 
@@ -4666,7 +4832,7 @@ func (r *IssuesLockReq) urlQuery() url.Values {
 }
 
 func (r *IssuesLockReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
 	if allPreviews {
 		previewVals["sailor-v"] = true
@@ -4716,12 +4882,12 @@ https://developer.github.com/v3/issues/#lock-an-issue
 type IssuesLockReqBody struct {
 
 	/*
-	   The reason for locking the issue or pull request conversation. Lock will fail if
-	   you don't use one of these reasons:
-	   \* `off-topic`
-	   \* `too heated`
-	   \* `resolved`
-	   \* `spam`
+	The reason for locking the issue or pull request conversation. Lock will fail if
+	you don't use one of these reasons:
+	\* `off-topic`
+	\* `too heated`
+	\* `resolved`
+	\* `spam`
 	*/
 	LockReason *string `json:"lock_reason,omitempty"`
 }
@@ -4783,9 +4949,15 @@ IssuesRemoveAllLabelsReq is request data for Client.IssuesRemoveAllLabels
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 type IssuesRemoveAllLabelsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 }
 
@@ -4904,9 +5076,15 @@ IssuesRemoveAssigneesReq is request data for Client.IssuesRemoveAssignees
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type IssuesRemoveAssigneesReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesRemoveAssigneesReqBody
 }
@@ -4929,7 +5107,10 @@ func (r *IssuesRemoveAssigneesReq) urlQuery() url.Values {
 }
 
 func (r *IssuesRemoveAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4976,9 +5157,9 @@ https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 type IssuesRemoveAssigneesReqBody struct {
 
 	/*
-	   Usernames of assignees to remove from an issue. _NOTE: Only users with push
-	   access can remove assignees from an issue. Assignees are silently ignored
-	   otherwise._
+	Usernames of assignees to remove from an issue. _NOTE: Only users with push
+	access can remove assignees from an issue. Assignees are silently ignored
+	otherwise._
 	*/
 	Assignees []string `json:"assignees,omitempty"`
 }
@@ -4988,7 +5169,7 @@ IssuesRemoveAssigneesResponseBody is a response body for IssuesRemoveAssignees
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-type IssuesRemoveAssigneesResponseBody components.IssueSimple2
+type IssuesRemoveAssigneesResponseBody components.IssueSimple
 
 /*
 IssuesRemoveAssigneesResponse is a response for IssuesRemoveAssignees
@@ -5049,11 +5230,19 @@ IssuesRemoveLabelReq is request data for Client.IssuesRemoveLabel
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 type IssuesRemoveLabelReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
-	Name        string
+
+	// name parameter
+	Name string
 }
 
 func (r *IssuesRemoveLabelReq) url() string {
@@ -5074,7 +5263,7 @@ func (r *IssuesRemoveLabelReq) urlQuery() url.Values {
 }
 
 func (r *IssuesRemoveLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5179,9 +5368,15 @@ IssuesSetLabelsReq is request data for Client.IssuesSetLabels
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
 type IssuesSetLabelsReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesSetLabelsReqBody
 }
@@ -5204,7 +5399,10 @@ func (r *IssuesSetLabelsReq) urlQuery() url.Values {
 }
 
 func (r *IssuesSetLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5251,10 +5449,10 @@ https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 type IssuesSetLabelsReqBody struct {
 
 	/*
-	   The names of the labels to add to the issue. You can pass an empty array to
-	   remove all labels. **Note:** Alternatively, you can pass a single label as a
-	   `string` or an `array` of labels directly, but GitHub recommends passing an
-	   object with the `labels` key.
+	The names of the labels to add to the issue. You can pass an empty array to
+	remove all labels. **Note:** Alternatively, you can pass a single label as a
+	`string` or an `array` of labels directly, but GitHub recommends passing an
+	object with the `labels` key.
 	*/
 	Labels []string `json:"labels,omitempty"`
 }
@@ -5324,9 +5522,15 @@ IssuesUnlockReq is request data for Client.IssuesUnlock
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 type IssuesUnlockReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 }
 
@@ -5445,9 +5649,15 @@ IssuesUpdateReq is request data for Client.IssuesUpdate
 https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody IssuesUpdateReqBody
 }
@@ -5470,7 +5680,10 @@ func (r *IssuesUpdateReq) urlQuery() url.Values {
 }
 
 func (r *IssuesUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5484,7 +5697,7 @@ func (r *IssuesUpdateReq) dataStatuses() []int {
 }
 
 func (r *IssuesUpdateReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301}
 }
 
 func (r *IssuesUpdateReq) endpointAttributes() []endpointAttribute {
@@ -5516,17 +5729,14 @@ https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateReqBody struct {
 
-	/*
-	   Login for the user that this issue should be assigned to. **This field is
-	   deprecated.**
-	*/
+	// Login for the user that this issue should be assigned to. **This field is deprecated.**
 	Assignee *string `json:"assignee,omitempty"`
 
 	/*
-	   Logins for Users to assign to this issue. Pass one or more user logins to
-	   _replace_ the set of assignees on this Issue. Send an empty array (`[]`) to
-	   clear all assignees from the Issue. _NOTE: Only users with push access can set
-	   assignees for new issues. Assignees are silently dropped otherwise._
+	Logins for Users to assign to this issue. Pass one or more user logins to
+	_replace_ the set of assignees on this Issue. Send an empty array (`[]`) to
+	clear all assignees from the Issue. _NOTE: Only users with push access can set
+	assignees for new issues. Assignees are silently dropped otherwise._
 	*/
 	Assignees []string `json:"assignees,omitempty"`
 
@@ -5534,17 +5744,17 @@ type IssuesUpdateReqBody struct {
 	Body *string `json:"body,omitempty"`
 
 	/*
-	   Labels to associate with this issue. Pass one or more Labels to _replace_ the
-	   set of Labels on this Issue. Send an empty array (`[]`) to clear all Labels from
-	   the Issue. _NOTE: Only users with push access can set labels for issues. Labels
-	   are silently dropped otherwise._
+	Labels to associate with this issue. Pass one or more Labels to _replace_ the
+	set of Labels on this Issue. Send an empty array (`[]`) to clear all Labels from
+	the Issue. _NOTE: Only users with push access can set labels for issues. Labels
+	are silently dropped otherwise._
 	*/
 	Labels []string `json:"labels,omitempty"`
 
 	/*
-	   The `number` of the milestone to associate this issue with or `null` to remove
-	   current. _NOTE: Only users with push access can set the milestone for issues.
-	   The milestone is silently dropped otherwise._
+	The `number` of the milestone to associate this issue with or `null` to remove
+	current. _NOTE: Only users with push access can set the milestone for issues.
+	The milestone is silently dropped otherwise._
 	*/
 	Milestone *int64 `json:"milestone,omitempty"`
 
@@ -5621,9 +5831,15 @@ IssuesUpdateCommentReq is request data for Client.IssuesUpdateComment
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody IssuesUpdateCommentReqBody
 }
@@ -5646,7 +5862,10 @@ func (r *IssuesUpdateCommentReq) urlQuery() url.Values {
 }
 
 func (r *IssuesUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5762,9 +5981,15 @@ IssuesUpdateLabelReq is request data for Client.IssuesUpdateLabel
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// name parameter
 	Name        string
 	RequestBody IssuesUpdateLabelReqBody
 }
@@ -5787,7 +6012,10 @@ func (r *IssuesUpdateLabelReq) urlQuery() url.Values {
 }
 
 func (r *IssuesUpdateLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5833,22 +6061,20 @@ https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelReqBody struct {
 
-	/*
-	   The [hexadecimal color code](http://www.color-hex.com/) for the label, without
-	   the leading `#`.
-	*/
+	// The [hexadecimal color code](http://www.color-hex.com/) for the label, without the leading `#`.
 	Color *string `json:"color,omitempty"`
 
 	// A short description of the label.
 	Description *string `json:"description,omitempty"`
+	Name        *string `json:"name,omitempty"`
 
 	/*
-	   The new name of the label. Emoji can be added to label names, using either
-	   native emoji or colon-style markup. For example, typing `:strawberry:` will
-	   render the emoji
-	   ![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
-	   ":strawberry:"). For a full list of available emoji and codes, see
-	   [emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
+	The new name of the label. Emoji can be added to label names, using either
+	native emoji or colon-style markup. For example, typing `:strawberry:` will
+	render the emoji
+	![:strawberry:](https://github.githubassets.com/images/icons/emoji/unicode/1f353.png
+	":strawberry:"). For a full list of available emoji and codes, see
+	[emoji-cheat-sheet.com](http://emoji-cheat-sheet.com/).
 	*/
 	NewName *string `json:"new_name,omitempty"`
 }
@@ -5919,9 +6145,15 @@ IssuesUpdateMilestoneReq is request data for Client.IssuesUpdateMilestone
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type IssuesUpdateMilestoneReq struct {
-	_url            string
-	Owner           string
-	Repo            string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// milestone_number parameter
 	MilestoneNumber int64
 	RequestBody     IssuesUpdateMilestoneReqBody
 }
@@ -5944,7 +6176,10 @@ func (r *IssuesUpdateMilestoneReq) urlQuery() url.Values {
 }
 
 func (r *IssuesUpdateMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5994,8 +6229,8 @@ type IssuesUpdateMilestoneReqBody struct {
 	Description *string `json:"description,omitempty"`
 
 	/*
-	   The milestone due date. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	The milestone due date. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	DueOn *string `json:"due_on,omitempty"`
 

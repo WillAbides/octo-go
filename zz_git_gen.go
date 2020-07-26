@@ -59,8 +59,12 @@ GitCreateBlobReq is request data for Client.GitCreateBlob
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type GitCreateBlobReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody GitCreateBlobReqBody
 }
@@ -83,7 +87,10 @@ func (r *GitCreateBlobReq) urlQuery() url.Values {
 }
 
 func (r *GitCreateBlobReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -132,10 +139,7 @@ type GitCreateBlobReqBody struct {
 	// The new blob's content.
 	Content *string `json:"content"`
 
-	/*
-	   The encoding used for `content`. Currently, `"utf-8"` and `"base64"` are
-	   supported.
-	*/
+	// The encoding used for `content`. Currently, `"utf-8"` and `"base64"` are supported.
 	Encoding *string `json:"encoding,omitempty"`
 }
 
@@ -205,8 +209,12 @@ GitCreateCommitReq is request data for Client.GitCreateCommit
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type GitCreateCommitReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody GitCreateCommitReqBody
 }
@@ -229,7 +237,10 @@ func (r *GitCreateCommitReq) urlQuery() url.Values {
 }
 
 func (r *GitCreateCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -272,9 +283,9 @@ func (r *GitCreateCommitReq) Rel(link RelName, resp *GitCreateCommitResponse) bo
 type GitCreateCommitReqBodyAuthor struct {
 
 	/*
-	   Indicates when this commit was authored (or committed). This is a timestamp in
-	   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	   `YYYY-MM-DDTHH:MM:SSZ`.
+	Indicates when this commit was authored (or committed). This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Date *string `json:"date,omitempty"`
 
@@ -289,9 +300,9 @@ type GitCreateCommitReqBodyAuthor struct {
 type GitCreateCommitReqBodyCommitter struct {
 
 	/*
-	   Indicates when this commit was authored (or committed). This is a timestamp in
-	   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	   `YYYY-MM-DDTHH:MM:SSZ`.
+	Indicates when this commit was authored (or committed). This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Date *string `json:"date,omitempty"`
 
@@ -310,16 +321,16 @@ https://developer.github.com/v3/git/commits/#create-a-commit
 type GitCreateCommitReqBody struct {
 
 	/*
-	   Information about the author of the commit. By default, the `author` will be the
-	   authenticated user and the current date. See the `author` and `committer` object
-	   below for details.
+	Information about the author of the commit. By default, the `author` will be the
+	authenticated user and the current date. See the `author` and `committer` object
+	below for details.
 	*/
 	Author *GitCreateCommitReqBodyAuthor `json:"author,omitempty"`
 
 	/*
-	   Information about the person who is making the commit. By default, `committer`
-	   will use the information set in `author`. See the `author` and `committer`
-	   object below for details.
+	Information about the person who is making the commit. By default, `committer`
+	will use the information set in `author`. See the `author` and `committer`
+	object below for details.
 	*/
 	Committer *GitCreateCommitReqBodyCommitter `json:"committer,omitempty"`
 
@@ -327,23 +338,23 @@ type GitCreateCommitReqBody struct {
 	Message *string `json:"message"`
 
 	/*
-	   The SHAs of the commits that were the parents of this commit. If omitted or
-	   empty, the commit will be written as a root commit. For a single parent, an
-	   array of one SHA should be provided; for a merge commit, an array of more than
-	   one should be provided.
+	The SHAs of the commits that were the parents of this commit. If omitted or
+	empty, the commit will be written as a root commit. For a single parent, an
+	array of one SHA should be provided; for a merge commit, an array of more than
+	one should be provided.
 	*/
-	Parents []string `json:"parents"`
+	Parents []string `json:"parents,omitempty"`
 
 	/*
-	   The [PGP signature](https://en.wikipedia.org/wiki/Pretty_Good_Privacy) of the
-	   commit. GitHub adds the signature to the `gpgsig` header of the created commit.
-	   For a commit signature to be verifiable by Git or GitHub, it must be an
-	   ASCII-armored detached PGP signature over the string commit as it would be
-	   written to the object database. To pass a `signature` parameter, you need to
-	   first manually create a valid PGP signature, which can be complicated. You may
-	   find it easier to [use the command
-	   line](https://git-scm.com/book/id/v2/Git-Tools-Signing-Your-Work) to create
-	   signed commits.
+	The [PGP signature](https://en.wikipedia.org/wiki/Pretty_Good_Privacy) of the
+	commit. GitHub adds the signature to the `gpgsig` header of the created commit.
+	For a commit signature to be verifiable by Git or GitHub, it must be an
+	ASCII-armored detached PGP signature over the string commit as it would be
+	written to the object database. To pass a `signature` parameter, you need to
+	first manually create a valid PGP signature, which can be complicated. You may
+	find it easier to [use the command
+	line](https://git-scm.com/book/id/v2/Git-Tools-Signing-Your-Work) to create
+	signed commits.
 	*/
 	Signature *string `json:"signature,omitempty"`
 
@@ -417,8 +428,12 @@ GitCreateRefReq is request data for Client.GitCreateRef
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody GitCreateRefReqBody
 }
@@ -441,7 +456,10 @@ func (r *GitCreateRefReq) urlQuery() url.Values {
 }
 
 func (r *GitCreateRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -486,10 +504,11 @@ GitCreateRefReqBody is a request body for git/create-ref
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefReqBody struct {
+	Key *string `json:"key,omitempty"`
 
 	/*
-	   The name of the fully qualified reference (ie: `refs/heads/master`). If it
-	   doesn't start with 'refs' and have at least two slashes, it will be rejected.
+	The name of the fully qualified reference (ie: `refs/heads/master`). If it
+	doesn't start with 'refs' and have at least two slashes, it will be rejected.
 	*/
 	Ref *string `json:"ref"`
 
@@ -563,8 +582,12 @@ GitCreateTagReq is request data for Client.GitCreateTag
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type GitCreateTagReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody GitCreateTagReqBody
 }
@@ -587,7 +610,10 @@ func (r *GitCreateTagReq) urlQuery() url.Values {
 }
 
 func (r *GitCreateTagReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -630,8 +656,8 @@ func (r *GitCreateTagReq) Rel(link RelName, resp *GitCreateTagResponse) bool {
 type GitCreateTagReqBodyTagger struct {
 
 	/*
-	   When this object was tagged. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	When this object was tagged. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Date *string `json:"date,omitempty"`
 
@@ -661,10 +687,7 @@ type GitCreateTagReqBody struct {
 	// An object with information about the individual creating the tag.
 	Tagger *GitCreateTagReqBodyTagger `json:"tagger,omitempty"`
 
-	/*
-	   The type of the object we're tagging. Normally this is a `commit` but it can
-	   also be a `tree` or a `blob`.
-	*/
+	// The type of the object we're tagging. Normally this is a `commit` but it can also be a `tree` or a `blob`.
 	Type *string `json:"type"`
 }
 
@@ -734,8 +757,12 @@ GitCreateTreeReq is request data for Client.GitCreateTree
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type GitCreateTreeReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody GitCreateTreeReqBody
 }
@@ -758,7 +785,10 @@ func (r *GitCreateTreeReq) urlQuery() url.Values {
 }
 
 func (r *GitCreateTreeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -801,18 +831,18 @@ func (r *GitCreateTreeReq) Rel(link RelName, resp *GitCreateTreeResponse) bool {
 type GitCreateTreeReqBodyTree struct {
 
 	/*
-	   The content you want this file to have. GitHub will write this blob out and use
-	   that SHA for this entry. Use either this, or `tree.sha`.
+	The content you want this file to have. GitHub will write this blob out and use
+	that SHA for this entry. Use either this, or `tree.sha`.
 
-	   **Note:** Use either `tree.sha` or `content` to specify the contents of the
-	   entry. Using both `tree.sha` and `content` will return an error.
+	**Note:** Use either `tree.sha` or `content` to specify the contents of the
+	entry. Using both `tree.sha` and `content` will return an error.
 	*/
 	Content *string `json:"content,omitempty"`
 
 	/*
-	   The file mode; one of `100644` for file (blob), `100755` for executable (blob),
-	   `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000`
-	   for a blob that specifies the path of a symlink.
+	The file mode; one of `100644` for file (blob), `100755` for executable (blob),
+	`040000` for subdirectory (tree), `160000` for submodule (commit), or `120000`
+	for a blob that specifies the path of a symlink.
 	*/
 	Mode *string `json:"mode,omitempty"`
 
@@ -820,11 +850,11 @@ type GitCreateTreeReqBodyTree struct {
 	Path *string `json:"path,omitempty"`
 
 	/*
-	   The SHA1 checksum ID of the object in the tree. Also called `tree.sha`. If the
-	   value is `null` then the file will be deleted.
+	The SHA1 checksum ID of the object in the tree. Also called `tree.sha`. If the
+	value is `null` then the file will be deleted.
 
-	   **Note:** Use either `tree.sha` or `content` to specify the contents of the
-	   entry. Using both `tree.sha` and `content` will return an error.
+	**Note:** Use either `tree.sha` or `content` to specify the contents of the
+	entry. Using both `tree.sha` and `content` will return an error.
 	*/
 	Sha *string `json:"sha,omitempty"`
 
@@ -840,9 +870,9 @@ https://developer.github.com/v3/git/trees/#create-a-tree
 type GitCreateTreeReqBody struct {
 
 	/*
-	   The SHA1 of the tree you want to update with new data. If you don't set this,
-	   the commit will be created on top of everything; however, it will only contain
-	   your change, the rest of your files will show up as deleted.
+	The SHA1 of the tree you want to update with new data. If you don't set this,
+	the commit will be created on top of everything; however, it will only contain
+	your change, the rest of your files will show up as deleted.
 	*/
 	BaseTree *string `json:"base_tree,omitempty"`
 
@@ -915,10 +945,16 @@ GitDeleteRefReq is request data for Client.GitDeleteRef
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 type GitDeleteRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 }
 
 func (r *GitDeleteRefReq) url() string {
@@ -1036,9 +1072,15 @@ GitGetBlobReq is request data for Client.GitGetBlob
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GitGetBlobReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// file_sha parameter
 	FileSha string
 }
 
@@ -1060,7 +1102,7 @@ func (r *GitGetBlobReq) urlQuery() url.Values {
 }
 
 func (r *GitGetBlobReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1165,9 +1207,15 @@ GitGetCommitReq is request data for Client.GitGetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GitGetCommitReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// commit_sha+ parameter
 	CommitSha string
 }
 
@@ -1189,7 +1237,7 @@ func (r *GitGetCommitReq) urlQuery() url.Values {
 }
 
 func (r *GitGetCommitReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1294,10 +1342,16 @@ GitGetRefReq is request data for Client.GitGetRef
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GitGetRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 }
 
 func (r *GitGetRefReq) url() string {
@@ -1318,7 +1372,7 @@ func (r *GitGetRefReq) urlQuery() url.Values {
 }
 
 func (r *GitGetRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1423,9 +1477,15 @@ GitGetTagReq is request data for Client.GitGetTag
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GitGetTagReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// tag_sha parameter
 	TagSha string
 }
 
@@ -1447,7 +1507,7 @@ func (r *GitGetTagReq) urlQuery() url.Values {
 }
 
 func (r *GitGetTagReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1552,9 +1612,15 @@ GitGetTreeReq is request data for Client.GitGetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GitGetTreeReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// tree_sha parameter
 	TreeSha string
 
 	/*
@@ -1588,7 +1654,7 @@ func (r *GitGetTreeReq) urlQuery() url.Values {
 }
 
 func (r *GitGetTreeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1632,7 +1698,7 @@ GitGetTreeResponseBody is a response body for GitGetTree
 
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
-type GitGetTreeResponseBody components.GitTree2
+type GitGetTreeResponseBody components.GitTree
 
 /*
 GitGetTreeResponse is a response for GitGetTree
@@ -1693,10 +1759,16 @@ GitListMatchingRefsReq is request data for Client.GitListMatchingRefs
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type GitListMatchingRefsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1729,7 +1801,7 @@ func (r *GitListMatchingRefsReq) urlQuery() url.Values {
 }
 
 func (r *GitListMatchingRefsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1834,9 +1906,15 @@ GitUpdateRefReq is request data for Client.GitUpdateRef
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type GitUpdateRefReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
 	Ref         string
 	RequestBody GitUpdateRefReqBody
 }
@@ -1859,7 +1937,10 @@ func (r *GitUpdateRefReq) urlQuery() url.Values {
 }
 
 func (r *GitUpdateRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1906,9 +1987,9 @@ https://developer.github.com/v3/git/refs/#update-a-reference
 type GitUpdateRefReqBody struct {
 
 	/*
-	   Indicates whether to force the update or to make sure the update is a
-	   fast-forward update. Leaving this out or setting it to `false` will make sure
-	   you're not overwriting work.
+	Indicates whether to force the update or to make sure the update is a
+	fast-forward update. Leaving this out or setting it to `false` will make sure
+	you're not overwriting work.
 	*/
 	Force *bool `json:"force,omitempty"`
 

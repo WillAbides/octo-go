@@ -8,6 +8,8 @@ interactions:
     headers:
       Accept:
       - application/vnd.github.v3+json
+      Content-Type:
+        - application/json
       User-Agent:
       - octo-go
     url: https://api.github.com/markdown

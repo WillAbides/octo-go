@@ -26,9 +26,7 @@
     "id": 1,
     "node_id": "MDEwOkRlcGxveW1lbnQx",
     "original_environment": "staging",
-    "payload": {
-      "deploy": "migrate"
-    },
+    "payload": {},
     "production_environment": true,
     "ref": "topic-branch",
     "repository_url": "https://api.github.com/repos/octocat/example",

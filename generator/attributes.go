@@ -23,6 +23,8 @@ const (
 	attrExplicitURL
 	// endpoint that may need some coercing to return an array response
 	attrForceArrayResponse
+	// endpoint that shouldn't have any response body
+	attrNoResponseBody
 	// attrInvalid is last so we can get a list of all valid types with a for loop
 	attrInvalid
 )
@@ -34,6 +36,11 @@ var attrNames = map[endpointAttribute]string{
 	attrJSONRequestBody:    "attrJSONRequestBody",
 	attrExplicitURL:        "attrExplicitURL",
 	attrForceArrayResponse: "attrForceArrayResponse",
+	attrNoResponseBody:     "attrNoResponseBody",
+}
+
+func (e endpointAttribute) pointer() *endpointAttribute {
+	return &e
 }
 
 func (e endpointAttribute) String() string {
@@ -82,21 +89,21 @@ type attrCheck func(endpoint model.Endpoint, attrs *[]endpointAttribute)
 var attrChecks = []attrCheck{
 	// attrJSONRequestBody if the endpoint has an application/json request
 	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
-		for _, request := range endpoint.Requests {
-			if strings.EqualFold("application/json", request.MimeType) {
-				*attrs = append(*attrs, attrJSONRequestBody)
-				break
-			}
+		if endpoint.RequestBody == nil {
+			return
+		}
+		if strings.HasSuffix(endpoint.RequestBody.MediaType, "json") {
+			*attrs = append(*attrs, attrJSONRequestBody)
 		}
 	},
 
 	// attrBodyUploader if the endpoint has a */* request
 	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
-		for _, request := range endpoint.Requests {
-			if request.MimeType == "*/*" {
-				*attrs = append(*attrs, attrBodyUploader)
-				break
-			}
+		if endpoint.RequestBody == nil {
+			return
+		}
+		if endpoint.RequestBody.MediaType == "*/*" {
+			*attrs = append(*attrs, attrBodyUploader)
 		}
 	},
 

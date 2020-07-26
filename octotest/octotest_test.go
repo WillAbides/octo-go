@@ -10,8 +10,9 @@ import (
 
 func TestPaging(t *testing.T) {
 	req1 := &octo.IssuesListForRepoReq{
-		Owner:   "golang",
-		Repo:    "go",
+		Owner: "golang",
+		Repo:  "go",
+
 		Labels:  octo.String("release-blocker"),
 		PerPage: octo.Int64(2),
 	}

@@ -14,6 +14,7 @@ import (
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/gjson"
 	"github.com/willabides/octo-go"
@@ -70,6 +71,20 @@ func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) octo.Client
 	r.AddFilter(func(i *cassette.Interaction) error {
 		delete(i.Request.Headers, "Authorization")
 		return nil
+	})
+	r.SetMatcher(func(req *http.Request, cr cassette.Request) bool {
+		if cr.Body != "" {
+			assert.NotNil(t, req.Body)
+			reqBody, err := ioutil.ReadAll(req.Body)
+			assert.NoError(t, err)
+			assert.Equal(t, cr.Body, string(reqBody))
+		}
+
+		reqHeader := req.Header.Clone()
+		reqHeader.Del("Authorization")
+		assert.Equal(t, cr.Headers, reqHeader)
+
+		return cassette.DefaultMatcher(req, cr)
 	})
 	t.Cleanup(func() {
 		require.NoError(t, r.Stop())

@@ -38,6 +38,7 @@ func endpointUnmarshalTests(grp *jen.Group, endpoint model.Endpoint) {
 			continue
 		}
 		grp.Values(jen.DictFunc(func(dict jen.Dict) {
+			dict[jen.Id("operationID")] = jen.Lit(endpoint.ID)
 			dict[jen.Id("name")] = jen.Lit(respBodyStructName(endpoint))
 			dict[jen.Id("endpointPath")] = jen.Lit(endpoint.Path)
 			dict[jen.Id("httpMethod")] = jen.Lit(endpoint.Method)

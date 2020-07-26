@@ -23,6 +23,7 @@
         "url": "https://api.github.com/users/octo-org"
       },
       "app_id": 2218,
+      "app_slug": "github-actions",
       "created_at": "2017-05-16T08:47:09.000-07:00",
       "events": [
         "deployment",

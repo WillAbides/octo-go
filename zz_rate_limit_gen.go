@@ -79,7 +79,7 @@ func (r *RateLimitGetReq) urlQuery() url.Values {
 }
 
 func (r *RateLimitGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -93,7 +93,7 @@ func (r *RateLimitGetReq) dataStatuses() []int {
 }
 
 func (r *RateLimitGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *RateLimitGetReq) endpointAttributes() []endpointAttribute {

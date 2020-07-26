@@ -28,8 +28,7 @@ func TestMarkdownRenderRaw(t *testing.T) {
 	ctx := context.Background()
 	client := vcrClient(t, t.Name())
 	response, err := client.MarkdownRenderRaw(ctx, &octo.MarkdownRenderRawReq{
-		RequestBody:       strings.NewReader("this is my body"),
-		ContentTypeHeader: octo.String("text/plain"),
+		RequestBody: strings.NewReader("this is my body"),
 	}, octo.PreserveResponseBody())
 	require.NoError(t, err)
 	rendered, err := ioutil.ReadAll(response.HTTPResponse().Body)
