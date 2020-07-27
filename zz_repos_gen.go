@@ -181,13 +181,9 @@ ReposAddAppAccessRestrictionsReq is request data for Client.ReposAddAppAccessRes
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
 type ReposAddAppAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -327,15 +323,9 @@ ReposAddCollaboratorReq is request data for Client.ReposAddCollaborator
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// username parameter
+	_url        string
+	Owner       string
+	Repo        string
 	Username    string
 	RequestBody ReposAddCollaboratorReqBody
 }
@@ -488,13 +478,9 @@ ReposAddStatusCheckContextsReq is request data for Client.ReposAddStatusCheckCon
 https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
 type ReposAddStatusCheckContextsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -634,13 +620,9 @@ ReposAddTeamAccessRestrictionsReq is request data for Client.ReposAddTeamAccessR
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
 type ReposAddTeamAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -780,13 +762,9 @@ ReposAddUserAccessRestrictionsReq is request data for Client.ReposAddUserAccessR
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
 type ReposAddUserAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -929,15 +907,9 @@ ReposCheckCollaboratorReq is request data for Client.ReposCheckCollaborator
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 type ReposCheckCollaboratorReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// username parameter
+	_url     string
+	Owner    string
+	Repo     string
 	Username string
 }
 
@@ -1060,13 +1032,9 @@ ReposCheckVulnerabilityAlertsReq is request data for Client.ReposCheckVulnerabil
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
 type ReposCheckVulnerabilityAlertsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -1198,13 +1166,9 @@ ReposCompareCommitsReq is request data for Client.ReposCompareCommits
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
 type ReposCompareCommitsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// base parameter
 	Base string
@@ -1336,13 +1300,9 @@ ReposCreateCommitCommentReq is request data for Client.ReposCreateCommitComment
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
 type ReposCreateCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// commit_sha+ parameter
 	CommitSha   string
@@ -1495,13 +1455,9 @@ ReposCreateCommitSignatureProtectionReq is request data for Client.ReposCreateCo
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
 type ReposCreateCommitSignatureProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -1645,13 +1601,9 @@ ReposCreateCommitStatusReq is request data for Client.ReposCreateCommitStatus
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
 type ReposCreateCommitStatusReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// sha parameter
 	Sha         string
@@ -1810,12 +1762,8 @@ ReposCreateDeployKeyReq is request data for Client.ReposCreateDeployKey
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
 type ReposCreateDeployKeyReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreateDeployKeyReqBody
 }
@@ -1973,12 +1921,8 @@ ReposCreateDeploymentReq is request data for Client.ReposCreateDeployment
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 type ReposCreateDeploymentReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreateDeploymentReqBody
 
@@ -2178,13 +2122,9 @@ ReposCreateDeploymentStatusReq is request data for Client.ReposCreateDeploymentS
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
 type ReposCreateDeploymentStatusReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -2425,12 +2365,8 @@ ReposCreateDispatchEventReq is request data for Client.ReposCreateDispatchEvent
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 type ReposCreateDispatchEventReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreateDispatchEventReqBody
 }
@@ -2784,12 +2720,8 @@ ReposCreateForkReq is request data for Client.ReposCreateFork
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 type ReposCreateForkReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreateForkReqBody
 }
@@ -2931,9 +2863,7 @@ ReposCreateInOrgReq is request data for Client.ReposCreateInOrg
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
 type ReposCreateInOrgReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody ReposCreateInOrgReqBody
 
@@ -3183,13 +3113,9 @@ ReposCreateOrUpdateFileContentsReq is request data for Client.ReposCreateOrUpdat
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
 type ReposCreateOrUpdateFileContentsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// path+ parameter
 	Path        string
@@ -3370,12 +3296,8 @@ ReposCreatePagesSiteReq is request data for Client.ReposCreatePagesSite
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
 type ReposCreatePagesSiteReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreatePagesSiteReqBody
 
@@ -3548,12 +3470,8 @@ ReposCreateReleaseReq is request data for Client.ReposCreateRelease
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
 type ReposCreateReleaseReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreateReleaseReqBody
 }
@@ -3889,12 +3807,8 @@ ReposCreateWebhookReq is request data for Client.ReposCreateWebhook
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
 type ReposCreateWebhookReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposCreateWebhookReqBody
 }
@@ -4196,13 +4110,9 @@ ReposDeleteReq is request data for Client.ReposDelete
 https://developer.github.com/v3/repos/#delete-a-repository
 */
 type ReposDeleteReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposDeleteReq) url() string {
@@ -4319,13 +4229,9 @@ ReposDeleteAccessRestrictionsReq is request data for Client.ReposDeleteAccessRes
 https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 */
 type ReposDeleteAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -4449,13 +4355,9 @@ ReposDeleteAdminBranchProtectionReq is request data for Client.ReposDeleteAdminB
 https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 */
 type ReposDeleteAdminBranchProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -4576,13 +4478,9 @@ ReposDeleteBranchProtectionReq is request data for Client.ReposDeleteBranchProte
 https://developer.github.com/v3/repos/branches/#delete-branch-protection
 */
 type ReposDeleteBranchProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -4706,13 +4604,9 @@ ReposDeleteCommitCommentReq is request data for Client.ReposDeleteCommitComment
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
 type ReposDeleteCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -4837,13 +4731,9 @@ ReposDeleteCommitSignatureProtectionReq is request data for Client.ReposDeleteCo
 https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
 */
 type ReposDeleteCommitSignatureProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -4979,13 +4869,9 @@ ReposDeleteDeployKeyReq is request data for Client.ReposDeleteDeployKey
 https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 */
 type ReposDeleteDeployKeyReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// key_id parameter
 	KeyId int64
@@ -5105,13 +4991,9 @@ ReposDeleteDeploymentReq is request data for Client.ReposDeleteDeployment
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
 type ReposDeleteDeploymentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -5232,13 +5114,9 @@ ReposDeleteFileReq is request data for Client.ReposDeleteFile
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
 type ReposDeleteFileReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// path+ parameter
 	Path        string
@@ -5413,13 +5291,9 @@ ReposDeleteInvitationReq is request data for Client.ReposDeleteInvitation
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
 type ReposDeleteInvitationReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// invitation_id parameter
 	InvitationId int64
@@ -5539,13 +5413,9 @@ ReposDeletePagesSiteReq is request data for Client.ReposDeletePagesSite
 https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 */
 type ReposDeletePagesSiteReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Enabling and disabling Pages in the Pages API is currently available for
@@ -5681,13 +5551,9 @@ ReposDeletePullRequestReviewProtectionReq is request data for Client.ReposDelete
 https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
 */
 type ReposDeletePullRequestReviewProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -5808,13 +5674,9 @@ ReposDeleteReleaseReq is request data for Client.ReposDeleteRelease
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
 type ReposDeleteReleaseReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// release_id parameter
 	ReleaseId int64
@@ -5934,13 +5796,9 @@ ReposDeleteReleaseAssetReq is request data for Client.ReposDeleteReleaseAsset
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
 type ReposDeleteReleaseAssetReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// asset_id parameter
 	AssetId int64
@@ -6064,15 +5922,9 @@ ReposDeleteWebhookReq is request data for Client.ReposDeleteWebhook
 https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 */
 type ReposDeleteWebhookReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// hook_id parameter
+	_url   string
+	Owner  string
+	Repo   string
 	HookId int64
 }
 
@@ -6191,13 +6043,9 @@ ReposDisableAutomatedSecurityFixesReq is request data for Client.ReposDisableAut
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
 type ReposDisableAutomatedSecurityFixesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Enabling or disabling automated security fixes is currently available for
@@ -6327,13 +6175,9 @@ ReposDisableVulnerabilityAlertsReq is request data for Client.ReposDisableVulner
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
 type ReposDisableVulnerabilityAlertsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -6423,6 +6267,7 @@ Download a repository archive (tar).
 
   GET /repos/{owner}/{repo}/tarball/{ref}
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 func ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballArchiveReq, opt ...RequestOption) (*ReposDownloadTarballArchiveResponse, error) {
 	if req == nil {
@@ -6450,6 +6295,7 @@ Download a repository archive (tar).
 
   GET /repos/{owner}/{repo}/tarball/{ref}
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 func (c Client) ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballArchiveReq, opt ...RequestOption) (*ReposDownloadTarballArchiveResponse, error) {
 	return ReposDownloadTarballArchive(ctx, req, append(c, opt...)...)
@@ -6458,15 +6304,12 @@ func (c Client) ReposDownloadTarballArchive(ctx context.Context, req *ReposDownl
 /*
 ReposDownloadTarballArchiveReq is request data for Client.ReposDownloadTarballArchive
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type ReposDownloadTarballArchiveReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref parameter
 	Ref string
@@ -6532,6 +6375,7 @@ func (r *ReposDownloadTarballArchiveReq) Rel(link RelName, resp *ReposDownloadTa
 /*
 ReposDownloadTarballArchiveResponse is a response for ReposDownloadTarballArchive
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type ReposDownloadTarballArchiveResponse struct {
 	response
@@ -6545,6 +6389,7 @@ Download a repository archive (zip).
 
   GET /repos/{owner}/{repo}/zipball/{ref}
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 func ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballArchiveReq, opt ...RequestOption) (*ReposDownloadZipballArchiveResponse, error) {
 	if req == nil {
@@ -6572,6 +6417,7 @@ Download a repository archive (zip).
 
   GET /repos/{owner}/{repo}/zipball/{ref}
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 func (c Client) ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballArchiveReq, opt ...RequestOption) (*ReposDownloadZipballArchiveResponse, error) {
 	return ReposDownloadZipballArchive(ctx, req, append(c, opt...)...)
@@ -6580,15 +6426,12 @@ func (c Client) ReposDownloadZipballArchive(ctx context.Context, req *ReposDownl
 /*
 ReposDownloadZipballArchiveReq is request data for Client.ReposDownloadZipballArchive
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type ReposDownloadZipballArchiveReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref parameter
 	Ref string
@@ -6654,6 +6497,7 @@ func (r *ReposDownloadZipballArchiveReq) Rel(link RelName, resp *ReposDownloadZi
 /*
 ReposDownloadZipballArchiveResponse is a response for ReposDownloadZipballArchive
 
+https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type ReposDownloadZipballArchiveResponse struct {
 	response
@@ -6707,13 +6551,9 @@ ReposEnableAutomatedSecurityFixesReq is request data for Client.ReposEnableAutom
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
 type ReposEnableAutomatedSecurityFixesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Enabling or disabling automated security fixes is currently available for
@@ -6843,13 +6683,9 @@ ReposEnableVulnerabilityAlertsReq is request data for Client.ReposEnableVulnerab
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
 type ReposEnableVulnerabilityAlertsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -6980,13 +6816,9 @@ ReposGetReq is request data for Client.ReposGet
 https://developer.github.com/v3/repos/#get-a-repository
 */
 type ReposGetReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	You can set the visibility of a repository using the new `visibility` parameter
@@ -7138,13 +6970,9 @@ ReposGetAccessRestrictionsReq is request data for Client.ReposGetAccessRestricti
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
 type ReposGetAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -7273,13 +7101,9 @@ ReposGetAdminBranchProtectionReq is request data for Client.ReposGetAdminBranchP
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
 type ReposGetAdminBranchProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -7408,13 +7232,9 @@ ReposGetAllStatusCheckContextsReq is request data for Client.ReposGetAllStatusCh
 https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 */
 type ReposGetAllStatusCheckContextsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -7543,13 +7363,9 @@ ReposGetAllTopicsReq is request data for Client.ReposGetAllTopics
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
 type ReposGetAllTopicsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	The `topics` property for repositories on GitHub is currently available for
@@ -7688,13 +7504,9 @@ ReposGetAppsWithAccessToProtectedBranchReq is request data for Client.ReposGetAp
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -7823,13 +7635,9 @@ ReposGetBranchReq is request data for Client.ReposGetBranch
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type ReposGetBranchReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -7958,13 +7766,9 @@ ReposGetBranchProtectionReq is request data for Client.ReposGetBranchProtection
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
 type ReposGetBranchProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -8106,13 +7910,9 @@ ReposGetClonesReq is request data for Client.ReposGetClones
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type ReposGetClonesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Must be one of: `day`, `week`.
 	Per *string
@@ -8244,13 +8044,9 @@ ReposGetCodeFrequencyStatsReq is request data for Client.ReposGetCodeFrequencySt
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type ReposGetCodeFrequencyStatsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetCodeFrequencyStatsReq) url() string {
@@ -8376,15 +8172,9 @@ ReposGetCollaboratorPermissionLevelReq is request data for Client.ReposGetCollab
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type ReposGetCollaboratorPermissionLevelReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// username parameter
+	_url     string
+	Owner    string
+	Repo     string
 	Username string
 }
 
@@ -8511,13 +8301,9 @@ ReposGetCombinedStatusForRefReq is request data for Client.ReposGetCombinedStatu
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type ReposGetCombinedStatusForRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -8646,13 +8432,9 @@ ReposGetCommitReq is request data for Client.ReposGetCommit
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type ReposGetCommitReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -8781,13 +8563,9 @@ ReposGetCommitActivityStatsReq is request data for Client.ReposGetCommitActivity
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type ReposGetCommitActivityStatsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetCommitActivityStatsReq) url() string {
@@ -8913,13 +8691,9 @@ ReposGetCommitCommentReq is request data for Client.ReposGetCommitComment
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type ReposGetCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -9062,13 +8836,9 @@ ReposGetCommitSignatureProtectionReq is request data for Client.ReposGetCommitSi
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
 type ReposGetCommitSignatureProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -9212,13 +8982,9 @@ ReposGetCommunityProfileMetricsReq is request data for Client.ReposGetCommunityP
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
 type ReposGetCommunityProfileMetricsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	We're currently offering a preview of the Community Profile API (also known as
@@ -9357,13 +9123,9 @@ ReposGetContentReq is request data for Client.ReposGetContent
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
 type ReposGetContentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// path+ parameter
 	Path string
@@ -9585,13 +9347,9 @@ ReposGetContributorsStatsReq is request data for Client.ReposGetContributorsStat
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type ReposGetContributorsStatsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetContributorsStatsReq) url() string {
@@ -9717,13 +9475,9 @@ ReposGetDeployKeyReq is request data for Client.ReposGetDeployKey
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
 type ReposGetDeployKeyReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// key_id parameter
 	KeyId int64
@@ -9852,13 +9606,9 @@ ReposGetDeploymentReq is request data for Client.ReposGetDeployment
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type ReposGetDeploymentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -10011,13 +9761,9 @@ ReposGetDeploymentStatusReq is request data for Client.ReposGetDeploymentStatus
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type ReposGetDeploymentStatusReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -10187,13 +9933,9 @@ ReposGetLatestPagesBuildReq is request data for Client.ReposGetLatestPagesBuild
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
 type ReposGetLatestPagesBuildReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetLatestPagesBuildReq) url() string {
@@ -10319,13 +10061,9 @@ ReposGetLatestReleaseReq is request data for Client.ReposGetLatestRelease
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
 type ReposGetLatestReleaseReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetLatestReleaseReq) url() string {
@@ -10451,13 +10189,9 @@ ReposGetPagesReq is request data for Client.ReposGetPages
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type ReposGetPagesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetPagesReq) url() string {
@@ -10583,13 +10317,9 @@ ReposGetPagesBuildReq is request data for Client.ReposGetPagesBuild
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type ReposGetPagesBuildReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// build_id parameter
 	BuildId int64
@@ -10718,13 +10448,9 @@ ReposGetParticipationStatsReq is request data for Client.ReposGetParticipationSt
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type ReposGetParticipationStatsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetParticipationStatsReq) url() string {
@@ -10850,13 +10576,9 @@ ReposGetPullRequestReviewProtectionReq is request data for Client.ReposGetPullRe
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
 type ReposGetPullRequestReviewProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -10998,13 +10720,9 @@ ReposGetPunchCardStatsReq is request data for Client.ReposGetPunchCardStats
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type ReposGetPunchCardStatsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetPunchCardStatsReq) url() string {
@@ -11130,13 +10848,9 @@ ReposGetReadmeReq is request data for Client.ReposGetReadme
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type ReposGetReadmeReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	The name of the commit/branch/tag. Default: the repository’s default branch
@@ -11271,13 +10985,9 @@ ReposGetReleaseReq is request data for Client.ReposGetRelease
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type ReposGetReleaseReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// release_id parameter
 	ReleaseId int64
@@ -11406,13 +11116,9 @@ ReposGetReleaseAssetReq is request data for Client.ReposGetReleaseAsset
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type ReposGetReleaseAssetReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// asset_id parameter
 	AssetId int64
@@ -11541,13 +11247,9 @@ ReposGetReleaseByTagReq is request data for Client.ReposGetReleaseByTag
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
 type ReposGetReleaseByTagReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// tag+ parameter
 	Tag string
@@ -11676,13 +11378,9 @@ ReposGetStatusChecksProtectionReq is request data for Client.ReposGetStatusCheck
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
 type ReposGetStatusChecksProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -11811,13 +11509,9 @@ ReposGetTeamsWithAccessToProtectedBranchReq is request data for Client.ReposGetT
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -11946,13 +11640,9 @@ ReposGetTopPathsReq is request data for Client.ReposGetTopPaths
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type ReposGetTopPathsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetTopPathsReq) url() string {
@@ -12078,13 +11768,9 @@ ReposGetTopReferrersReq is request data for Client.ReposGetTopReferrers
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type ReposGetTopReferrersReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposGetTopReferrersReq) url() string {
@@ -12210,13 +11896,9 @@ ReposGetUsersWithAccessToProtectedBranchReq is request data for Client.ReposGetU
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -12345,13 +12027,9 @@ ReposGetViewsReq is request data for Client.ReposGetViews
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type ReposGetViewsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Must be one of: `day`, `week`.
 	Per *string
@@ -12483,15 +12161,9 @@ ReposGetWebhookReq is request data for Client.ReposGetWebhook
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
 type ReposGetWebhookReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// hook_id parameter
+	_url   string
+	Owner  string
+	Repo   string
 	HookId int64
 }
 
@@ -12618,13 +12290,9 @@ ReposListBranchesReq is request data for Client.ReposListBranches
 https://developer.github.com/v3/repos/branches/#list-branches
 */
 type ReposListBranchesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Setting to `true` returns only protected branches. When set to `false`, only
@@ -12771,13 +12439,9 @@ ReposListBranchesForHeadCommitReq is request data for Client.ReposListBranchesFo
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
 type ReposListBranchesForHeadCommitReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -12921,13 +12585,9 @@ ReposListCollaboratorsReq is request data for Client.ReposListCollaborators
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ReposListCollaboratorsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Filter collaborators returned by their affiliation. Can be one of:
@@ -13077,13 +12737,9 @@ ReposListCommentsForCommitReq is request data for Client.ReposListCommentsForCom
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ReposListCommentsForCommitReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -13238,13 +12894,9 @@ ReposListCommitCommentsForRepoReq is request data for Client.ReposListCommitComm
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
 type ReposListCommitCommentsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -13396,13 +13048,9 @@ ReposListCommitStatusesForRefReq is request data for Client.ReposListCommitStatu
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
 type ReposListCommitStatusesForRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -13543,13 +13191,9 @@ ReposListCommitsReq is request data for Client.ReposListCommits
 https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ReposListCommitsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	SHA or branch to start listing commits from. Default: the repository’s default
@@ -13564,8 +13208,9 @@ type ReposListCommitsReq struct {
 	Author *string
 
 	/*
-	Only commits after this date will be returned. This is a timestamp in [ISO
-	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -13726,13 +13371,9 @@ ReposListContributorsReq is request data for Client.ReposListContributors
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ReposListContributorsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Set to `1` or `true` to include anonymous contributors in results.
 	Anon *string
@@ -13876,13 +13517,9 @@ ReposListDeployKeysReq is request data for Client.ReposListDeployKeys
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
 type ReposListDeployKeysReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14020,13 +13657,9 @@ ReposListDeploymentStatusesReq is request data for Client.ReposListDeploymentSta
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
 type ReposListDeploymentStatusesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -14197,13 +13830,9 @@ ReposListDeploymentsReq is request data for Client.ReposListDeployments
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
 type ReposListDeploymentsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// The SHA recorded at creation time.
 	Sha *string
@@ -14588,9 +14217,7 @@ https://developer.github.com/v3/repos/#list-organization-repositories
 */
 type ReposListForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	Specifies the types of repositories you want returned. Can be one of `all`,
@@ -14783,9 +14410,7 @@ ReposListForUserReq is request data for Client.ReposListForUser
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
 type ReposListForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Can be one of `all`, `owner`, `member`.
@@ -14960,13 +14585,9 @@ ReposListForksReq is request data for Client.ReposListForks
 https://developer.github.com/v3/repos/forks/#list-forks
 */
 type ReposListForksReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// The sort order. Can be either `newest`, `oldest`, or `stargazers`.
 	Sort *string
@@ -15110,13 +14731,9 @@ ReposListInvitationsReq is request data for Client.ReposListInvitations
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ReposListInvitationsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15392,13 +15009,9 @@ ReposListLanguagesReq is request data for Client.ReposListLanguages
 https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ReposListLanguagesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposListLanguagesReq) url() string {
@@ -15524,13 +15137,9 @@ ReposListPagesBuildsReq is request data for Client.ReposListPagesBuilds
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ReposListPagesBuildsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15814,13 +15423,9 @@ ReposListPullRequestsAssociatedWithCommitReq is request data for Client.ReposLis
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ReposListPullRequestsAssociatedWithCommitReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -15976,13 +15581,9 @@ ReposListReleaseAssetsReq is request data for Client.ReposListReleaseAssets
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
 type ReposListReleaseAssetsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// release_id parameter
 	ReleaseId int64
@@ -16123,13 +15724,9 @@ ReposListReleasesReq is request data for Client.ReposListReleases
 https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ReposListReleasesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -16267,13 +15864,9 @@ ReposListTagsReq is request data for Client.ReposListTags
 https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ReposListTagsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -16411,13 +16004,9 @@ ReposListTeamsReq is request data for Client.ReposListTeams
 https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ReposListTeamsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -16555,13 +16144,9 @@ ReposListWebhooksReq is request data for Client.ReposListWebhooks
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
 type ReposListWebhooksReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -16699,12 +16284,8 @@ ReposMergeReq is request data for Client.ReposMerge
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposMergeReqBody
 }
@@ -16855,15 +16436,9 @@ ReposPingWebhookReq is request data for Client.ReposPingWebhook
 https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
 type ReposPingWebhookReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// hook_id parameter
+	_url   string
+	Owner  string
+	Repo   string
 	HookId int64
 }
 
@@ -16983,13 +16558,9 @@ ReposRemoveAppAccessRestrictionsReq is request data for Client.ReposRemoveAppAcc
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
 type ReposRemoveAppAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -17128,15 +16699,9 @@ ReposRemoveCollaboratorReq is request data for Client.ReposRemoveCollaborator
 https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 type ReposRemoveCollaboratorReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// username parameter
+	_url     string
+	Owner    string
+	Repo     string
 	Username string
 }
 
@@ -17255,13 +16820,9 @@ ReposRemoveStatusCheckContextsReq is request data for Client.ReposRemoveStatusCh
 https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
 type ReposRemoveStatusCheckContextsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -17400,13 +16961,9 @@ ReposRemoveStatusCheckProtectionReq is request data for Client.ReposRemoveStatus
 https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
 type ReposRemoveStatusCheckProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -17527,13 +17084,9 @@ ReposRemoveTeamAccessRestrictionsReq is request data for Client.ReposRemoveTeamA
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
 type ReposRemoveTeamAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -17673,13 +17226,9 @@ ReposRemoveUserAccessRestrictionsReq is request data for Client.ReposRemoveUserA
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
 type ReposRemoveUserAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -17819,12 +17368,8 @@ ReposReplaceAllTopicsReq is request data for Client.ReposReplaceAllTopics
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
 type ReposReplaceAllTopicsReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposReplaceAllTopicsReqBody
 
@@ -17984,13 +17529,9 @@ ReposRequestPagesBuildReq is request data for Client.ReposRequestPagesBuild
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
 type ReposRequestPagesBuildReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ReposRequestPagesBuildReq) url() string {
@@ -18116,13 +17657,9 @@ ReposSetAdminBranchProtectionReq is request data for Client.ReposSetAdminBranchP
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
 type ReposSetAdminBranchProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch string
@@ -18251,13 +17788,9 @@ ReposSetAppAccessRestrictionsReq is request data for Client.ReposSetAppAccessRes
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
 type ReposSetAppAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -18397,13 +17930,9 @@ ReposSetStatusCheckContextsReq is request data for Client.ReposSetStatusCheckCon
 https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 */
 type ReposSetStatusCheckContextsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -18543,13 +18072,9 @@ ReposSetTeamAccessRestrictionsReq is request data for Client.ReposSetTeamAccessR
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
 type ReposSetTeamAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -18689,13 +18214,9 @@ ReposSetUserAccessRestrictionsReq is request data for Client.ReposSetUserAccessR
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
 type ReposSetUserAccessRestrictionsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -18838,15 +18359,9 @@ ReposTestPushWebhookReq is request data for Client.ReposTestPushWebhook
 https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
 type ReposTestPushWebhookReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// hook_id parameter
+	_url   string
+	Owner  string
+	Repo   string
 	HookId int64
 }
 
@@ -18966,12 +18481,8 @@ ReposTransferReq is request data for Client.ReposTransfer
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
 type ReposTransferReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposTransferReqBody
 }
@@ -19116,12 +18627,8 @@ ReposUpdateReq is request data for Client.ReposUpdate
 https://developer.github.com/v3/repos/#update-a-repository
 */
 type ReposUpdateReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposUpdateReqBody
 
@@ -19361,13 +18868,9 @@ ReposUpdateBranchProtectionReq is request data for Client.ReposUpdateBranchProte
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
 type ReposUpdateBranchProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -19624,13 +19127,9 @@ ReposUpdateCommitCommentReq is request data for Client.ReposUpdateCommitComment
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
 type ReposUpdateCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId   int64
@@ -19773,12 +19272,8 @@ ReposUpdateInformationAboutPagesSiteReq is request data for Client.ReposUpdateIn
 https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ReposUpdateInformationAboutPagesSiteReqBody
 }
@@ -19915,13 +19410,9 @@ ReposUpdateInvitationReq is request data for Client.ReposUpdateInvitation
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
 type ReposUpdateInvitationReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// invitation_id parameter
 	InvitationId int64
@@ -20068,13 +19559,9 @@ ReposUpdatePullRequestReviewProtectionReq is request data for Client.ReposUpdate
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
 type ReposUpdatePullRequestReviewProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -20255,13 +19742,9 @@ ReposUpdateReleaseReq is request data for Client.ReposUpdateRelease
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// release_id parameter
 	ReleaseId   int64
@@ -20424,13 +19907,9 @@ ReposUpdateReleaseAssetReq is request data for Client.ReposUpdateReleaseAsset
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// asset_id parameter
 	AssetId     int64
@@ -20578,13 +20057,9 @@ ReposUpdateStatusCheckProtectionReq is request data for Client.ReposUpdateStatus
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
 type ReposUpdateStatusCheckProtectionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// branch+ parameter
 	Branch      string
@@ -20731,15 +20206,9 @@ ReposUpdateWebhookReq is request data for Client.ReposUpdateWebhook
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
 type ReposUpdateWebhookReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// hook_id parameter
+	_url        string
+	Owner       string
+	Repo        string
 	HookId      int64
 	RequestBody ReposUpdateWebhookReqBody
 }

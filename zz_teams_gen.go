@@ -58,12 +58,8 @@ TeamsAddMemberLegacyReq is request data for Client.TeamsAddMemberLegacy
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
 type TeamsAddMemberLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// username parameter
+	_url     string
+	TeamId   int64
 	Username string
 }
 
@@ -183,14 +179,10 @@ https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for
 */
 type TeamsAddOrUpdateMembershipForUserInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// username parameter
+	TeamSlug    string
 	Username    string
 	RequestBody TeamsAddOrUpdateMembershipForUserInOrgReqBody
 }
@@ -338,12 +330,8 @@ TeamsAddOrUpdateMembershipForUserLegacyReq is request data for Client.TeamsAddOr
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
 type TeamsAddOrUpdateMembershipForUserLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// username parameter
+	_url        string
+	TeamId      int64
 	Username    string
 	RequestBody TeamsAddOrUpdateMembershipForUserLegacyReqBody
 }
@@ -491,14 +479,10 @@ https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
 type TeamsAddOrUpdateProjectPermissionsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// project_id parameter
+	TeamSlug    string
 	ProjectId   int64
 	RequestBody TeamsAddOrUpdateProjectPermissionsInOrgReqBody
 
@@ -653,12 +637,8 @@ TeamsAddOrUpdateProjectPermissionsLegacyReq is request data for Client.TeamsAddO
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
 type TeamsAddOrUpdateProjectPermissionsLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// project_id parameter
+	_url        string
+	TeamId      int64
 	ProjectId   int64
 	RequestBody TeamsAddOrUpdateProjectPermissionsLegacyReqBody
 
@@ -814,17 +794,11 @@ https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
 type TeamsAddOrUpdateRepoPermissionsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	TeamSlug    string
+	Owner       string
 	Repo        string
 	RequestBody TeamsAddOrUpdateRepoPermissionsInOrgReqBody
 }
@@ -969,15 +943,9 @@ TeamsAddOrUpdateRepoPermissionsLegacyReq is request data for Client.TeamsAddOrUp
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
 type TeamsAddOrUpdateRepoPermissionsLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	TeamId      int64
+	Owner       string
 	Repo        string
 	RequestBody TeamsAddOrUpdateRepoPermissionsLegacyReqBody
 }
@@ -1118,14 +1086,10 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
 type TeamsCheckPermissionsForProjectInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// project_id parameter
+	TeamSlug  string
 	ProjectId int64
 
 	/*
@@ -1267,12 +1231,8 @@ TeamsCheckPermissionsForProjectLegacyReq is request data for Client.TeamsCheckPe
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
 type TeamsCheckPermissionsForProjectLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// project_id parameter
+	_url      string
+	TeamId    int64
 	ProjectId int64
 
 	/*
@@ -1415,18 +1375,12 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
 type TeamsCheckPermissionsForRepoInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
+	Owner    string
+	Repo     string
 }
 
 func (r *TeamsCheckPermissionsForRepoInOrgReq) url() string {
@@ -1552,16 +1506,10 @@ TeamsCheckPermissionsForRepoLegacyReq is request data for Client.TeamsCheckPermi
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
 type TeamsCheckPermissionsForRepoLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
+	Owner  string
+	Repo   string
 }
 
 func (r *TeamsCheckPermissionsForRepoLegacyReq) url() string {
@@ -1687,9 +1635,7 @@ TeamsCreateReq is request data for Client.TeamsCreate
 https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody TeamsCreateReqBody
 }
@@ -1868,14 +1814,10 @@ https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-c
 */
 type TeamsCreateDiscussionCommentInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 	RequestBody      TeamsCreateDiscussionCommentInOrgReqBody
 
@@ -2031,12 +1973,8 @@ TeamsCreateDiscussionCommentLegacyReq is request data for Client.TeamsCreateDisc
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
 type TeamsCreateDiscussionCommentLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 	RequestBody      TeamsCreateDiscussionCommentLegacyReqBody
 
@@ -2193,9 +2131,7 @@ https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type TeamsCreateDiscussionInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug    string
@@ -2363,9 +2299,7 @@ TeamsCreateDiscussionLegacyReq is request data for Client.TeamsCreateDiscussionL
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 type TeamsCreateDiscussionLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url        string
 	TeamId      int64
 	RequestBody TeamsCreateDiscussionLegacyReqBody
 
@@ -2532,9 +2466,7 @@ https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-conn
 */
 type TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug    string
@@ -2695,9 +2627,7 @@ TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq is request data for Client.Teams
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
 type TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url        string
 	TeamId      int64
 	RequestBody TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBody
 }
@@ -2860,18 +2790,12 @@ https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-c
 */
 type TeamsDeleteDiscussionCommentInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
+	CommentNumber    int64
 }
 
 func (r *TeamsDeleteDiscussionCommentInOrgReq) url() string {
@@ -2988,16 +2912,10 @@ TeamsDeleteDiscussionCommentLegacyReq is request data for Client.TeamsDeleteDisc
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
 type TeamsDeleteDiscussionCommentLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
+	CommentNumber    int64
 }
 
 func (r *TeamsDeleteDiscussionCommentLegacyReq) url() string {
@@ -3115,14 +3033,10 @@ https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 type TeamsDeleteDiscussionInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 }
 
@@ -3240,12 +3154,8 @@ TeamsDeleteDiscussionLegacyReq is request data for Client.TeamsDeleteDiscussionL
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
 type TeamsDeleteDiscussionLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 }
 
@@ -3364,9 +3274,7 @@ https://developer.github.com/v3/teams/#delete-a-team
 */
 type TeamsDeleteInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -3486,9 +3394,7 @@ TeamsDeleteLegacyReq is request data for Client.TeamsDeleteLegacy
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
 type TeamsDeleteLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 }
 
@@ -3608,9 +3514,7 @@ https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type TeamsGetByNameReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -3740,18 +3644,12 @@ https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comm
 */
 type TeamsGetDiscussionCommentInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
+	CommentNumber    int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -3891,16 +3789,10 @@ TeamsGetDiscussionCommentLegacyReq is request data for Client.TeamsGetDiscussion
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
 type TeamsGetDiscussionCommentLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
+	CommentNumber    int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -4041,14 +3933,10 @@ https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type TeamsGetDiscussionInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 
 	/*
@@ -4189,12 +4077,8 @@ TeamsGetDiscussionLegacyReq is request data for Client.TeamsGetDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
 type TeamsGetDiscussionLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 
 	/*
@@ -4335,9 +4219,7 @@ TeamsGetLegacyReq is request data for Client.TeamsGetLegacy
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
 type TeamsGetLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 }
 
@@ -4467,12 +4349,8 @@ TeamsGetMemberLegacyReq is request data for Client.TeamsGetMemberLegacy
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
 type TeamsGetMemberLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// username parameter
+	_url     string
+	TeamId   int64
 	Username string
 }
 
@@ -4593,14 +4471,10 @@ https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
 type TeamsGetMembershipForUserInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
-
-	// username parameter
 	Username string
 }
 
@@ -4727,12 +4601,8 @@ TeamsGetMembershipForUserLegacyReq is request data for Client.TeamsGetMembership
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
 type TeamsGetMembershipForUserLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// username parameter
+	_url     string
+	TeamId   int64
 	Username string
 }
 
@@ -4860,9 +4730,7 @@ https://developer.github.com/v3/teams/#list-teams
 */
 type TeamsListReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5001,9 +4869,7 @@ https://developer.github.com/v3/teams/#list-child-teams
 */
 type TeamsListChildInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -5144,9 +5010,7 @@ TeamsListChildLegacyReq is request data for Client.TeamsListChildLegacy
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 type TeamsListChildLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 
 	// Results per page (max 100)
@@ -5286,20 +5150,13 @@ https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comme
 */
 type TeamsListDiscussionCommentsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	// Results per page (max 100)
@@ -5455,18 +5312,11 @@ TeamsListDiscussionCommentsLegacyReq is request data for Client.TeamsListDiscuss
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
 type TeamsListDiscussionCommentsLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	// Results per page (max 100)
@@ -5623,17 +5473,12 @@ https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type TeamsListDiscussionsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
 
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	// Results per page (max 100)
@@ -5789,15 +5634,10 @@ TeamsListDiscussionsLegacyReq is request data for Client.TeamsListDiscussionsLeg
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 type TeamsListDiscussionsLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 
-	/*
-	Sorts the discussion comments by the date they were created. To return the
-	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
-	*/
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	// Results per page (max 100)
@@ -6091,9 +5931,7 @@ TeamsListIdpGroupsForLegacyReq is request data for Client.TeamsListIdpGroupsForL
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
 type TeamsListIdpGroupsForLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 }
 
@@ -6221,9 +6059,7 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organiza
 */
 type TeamsListIdpGroupsForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -6362,9 +6198,7 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 type TeamsListIdpGroupsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -6494,9 +6328,7 @@ https://developer.github.com/v3/teams/members/#list-team-members
 */
 type TeamsListMembersInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -6648,9 +6480,7 @@ TeamsListMembersLegacyReq is request data for Client.TeamsListMembersLegacy
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 type TeamsListMembersLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 
 	/*
@@ -6801,9 +6631,7 @@ https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type TeamsListPendingInvitationsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -6944,9 +6772,7 @@ TeamsListPendingInvitationsLegacyReq is request data for Client.TeamsListPending
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 type TeamsListPendingInvitationsLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 
 	// Results per page (max 100)
@@ -7086,9 +6912,7 @@ https://developer.github.com/v3/teams/#list-team-projects
 */
 type TeamsListProjectsInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -7244,9 +7068,7 @@ TeamsListProjectsLegacyReq is request data for Client.TeamsListProjectsLegacy
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 type TeamsListProjectsLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 
 	// Results per page (max 100)
@@ -7401,9 +7223,7 @@ https://developer.github.com/v3/teams/#list-team-repositories
 */
 type TeamsListReposInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
@@ -7544,9 +7364,7 @@ TeamsListReposLegacyReq is request data for Client.TeamsListReposLegacy
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
 type TeamsListReposLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
 
 	// Results per page (max 100)
@@ -7688,12 +7506,8 @@ TeamsRemoveMemberLegacyReq is request data for Client.TeamsRemoveMemberLegacy
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
 type TeamsRemoveMemberLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// username parameter
+	_url     string
+	TeamId   int64
 	Username string
 }
 
@@ -7813,14 +7627,10 @@ https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
 type TeamsRemoveMembershipForUserInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
-
-	// username parameter
 	Username string
 }
 
@@ -7938,12 +7748,8 @@ TeamsRemoveMembershipForUserLegacyReq is request data for Client.TeamsRemoveMemb
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
 type TeamsRemoveMembershipForUserLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// username parameter
+	_url     string
+	TeamId   int64
 	Username string
 }
 
@@ -8062,14 +7868,10 @@ https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type TeamsRemoveProjectInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// project_id parameter
+	TeamSlug  string
 	ProjectId int64
 }
 
@@ -8187,12 +7989,8 @@ TeamsRemoveProjectLegacyReq is request data for Client.TeamsRemoveProjectLegacy
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
 type TeamsRemoveProjectLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// project_id parameter
+	_url      string
+	TeamId    int64
 	ProjectId int64
 }
 
@@ -8311,18 +8109,12 @@ https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type TeamsRemoveRepoInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
+	Owner    string
+	Repo     string
 }
 
 func (r *TeamsRemoveRepoInOrgReq) url() string {
@@ -8439,16 +8231,10 @@ TeamsRemoveRepoLegacyReq is request data for Client.TeamsRemoveRepoLegacy
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
 type TeamsRemoveRepoLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url   string
 	TeamId int64
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
+	Owner  string
+	Repo   string
 }
 
 func (r *TeamsRemoveRepoLegacyReq) url() string {
@@ -8567,19 +8353,13 @@ https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-c
 */
 type TeamsUpdateDiscussionCommentInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
-	RequestBody   TeamsUpdateDiscussionCommentInOrgReqBody
+	CommentNumber    int64
+	RequestBody      TeamsUpdateDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -8733,17 +8513,11 @@ TeamsUpdateDiscussionCommentLegacyReq is request data for Client.TeamsUpdateDisc
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
 type TeamsUpdateDiscussionCommentLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
-	RequestBody   TeamsUpdateDiscussionCommentLegacyReqBody
+	CommentNumber    int64
+	RequestBody      TeamsUpdateDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -8898,14 +8672,10 @@ https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 	RequestBody      TeamsUpdateDiscussionInOrgReqBody
 
@@ -9064,12 +8834,8 @@ TeamsUpdateDiscussionLegacyReq is request data for Client.TeamsUpdateDiscussionL
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
 type TeamsUpdateDiscussionLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 	RequestBody      TeamsUpdateDiscussionLegacyReqBody
 
@@ -9229,9 +8995,7 @@ https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
 	TeamSlug    string
@@ -9405,9 +9169,7 @@ TeamsUpdateLegacyReq is request data for Client.TeamsUpdateLegacy
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
 type TeamsUpdateLegacyReq struct {
-	_url string
-
-	// team_id parameter
+	_url        string
 	TeamId      int64
 	RequestBody TeamsUpdateLegacyReqBody
 }

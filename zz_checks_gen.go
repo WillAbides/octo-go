@@ -59,12 +59,8 @@ ChecksCreateReq is request data for Client.ChecksCreate
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type ChecksCreateReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ChecksCreateReqBody
 
@@ -388,12 +384,8 @@ ChecksCreateSuiteReq is request data for Client.ChecksCreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type ChecksCreateSuiteReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ChecksCreateSuiteReqBody
 
@@ -550,13 +542,9 @@ ChecksGetReq is request data for Client.ChecksGet
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type ChecksGetReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// check_run_id parameter
 	CheckRunId int64
@@ -700,13 +688,9 @@ ChecksGetSuiteReq is request data for Client.ChecksGetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type ChecksGetSuiteReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// check_suite_id parameter
 	CheckSuiteId int64
@@ -850,13 +834,9 @@ ChecksListAnnotationsReq is request data for Client.ChecksListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ChecksListAnnotationsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// check_run_id parameter
 	CheckRunId int64
@@ -1012,13 +992,9 @@ ChecksListForRefReq is request data for Client.ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -1201,13 +1177,9 @@ ChecksListForSuiteReq is request data for Client.ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// check_suite_id parameter
 	CheckSuiteId int64
@@ -1390,13 +1362,9 @@ ChecksListSuitesForRefReq is request data for Client.ChecksListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ChecksListSuitesForRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -1404,10 +1372,7 @@ type ChecksListSuitesForRefReq struct {
 	// Filters check suites by GitHub App `id`.
 	AppId *int64
 
-	/*
-	Filters checks suites by the name of the [check
-	run](https://developer.github.com/v3/checks/runs/).
-	*/
+	// Returns check runs with the specified `name`.
 	CheckName *string
 
 	// Results per page (max 100)
@@ -1569,13 +1534,9 @@ ChecksRerequestSuiteReq is request data for Client.ChecksRerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type ChecksRerequestSuiteReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// check_suite_id parameter
 	CheckSuiteId int64
@@ -1711,12 +1672,8 @@ ChecksSetSuitesPreferencesReq is request data for Client.ChecksSetSuitesPreferen
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type ChecksSetSuitesPreferencesReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ChecksSetSuitesPreferencesReqBody
 
@@ -1891,13 +1848,9 @@ ChecksUpdateReq is request data for Client.ChecksUpdate
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type ChecksUpdateReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// check_run_id parameter
 	CheckRunId  int64

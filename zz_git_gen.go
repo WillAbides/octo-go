@@ -59,12 +59,8 @@ GitCreateBlobReq is request data for Client.GitCreateBlob
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type GitCreateBlobReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody GitCreateBlobReqBody
 }
@@ -209,12 +205,8 @@ GitCreateCommitReq is request data for Client.GitCreateCommit
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type GitCreateCommitReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody GitCreateCommitReqBody
 }
@@ -428,12 +420,8 @@ GitCreateRefReq is request data for Client.GitCreateRef
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody GitCreateRefReqBody
 }
@@ -582,12 +570,8 @@ GitCreateTagReq is request data for Client.GitCreateTag
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type GitCreateTagReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody GitCreateTagReqBody
 }
@@ -757,12 +741,8 @@ GitCreateTreeReq is request data for Client.GitCreateTree
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type GitCreateTreeReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody GitCreateTreeReqBody
 }
@@ -945,13 +925,9 @@ GitDeleteRefReq is request data for Client.GitDeleteRef
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 type GitDeleteRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -1072,13 +1048,9 @@ GitGetBlobReq is request data for Client.GitGetBlob
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GitGetBlobReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// file_sha parameter
 	FileSha string
@@ -1207,13 +1179,9 @@ GitGetCommitReq is request data for Client.GitGetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GitGetCommitReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -1342,13 +1310,9 @@ GitGetRefReq is request data for Client.GitGetRef
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GitGetRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -1477,13 +1441,9 @@ GitGetTagReq is request data for Client.GitGetTag
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GitGetTagReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// tag_sha parameter
 	TagSha string
@@ -1612,13 +1572,9 @@ GitGetTreeReq is request data for Client.GitGetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GitGetTreeReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// tree_sha parameter
 	TreeSha string
@@ -1759,13 +1715,9 @@ GitListMatchingRefsReq is request data for Client.GitListMatchingRefs
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type GitListMatchingRefsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref string
@@ -1906,13 +1858,9 @@ GitUpdateRefReq is request data for Client.GitUpdateRef
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type GitUpdateRefReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// ref+ parameter
 	Ref         string

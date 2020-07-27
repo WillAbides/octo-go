@@ -194,12 +194,8 @@ AppsCheckAuthorizationReq is request data for Client.AppsCheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type AppsCheckAuthorizationReq struct {
-	_url string
-
-	// client_id parameter
-	ClientId string
-
-	// access_token parameter
+	_url        string
+	ClientId    string
 	AccessToken string
 }
 
@@ -377,9 +373,7 @@ AppsCheckTokenReq is request data for Client.AppsCheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenReq struct {
-	_url string
-
-	// client_id parameter
+	_url        string
 	ClientId    string
 	RequestBody AppsCheckTokenReqBody
 }
@@ -1021,9 +1015,7 @@ AppsDeleteAuthorizationReq is request data for Client.AppsDeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type AppsDeleteAuthorizationReq struct {
-	_url string
-
-	// client_id parameter
+	_url        string
 	ClientId    string
 	RequestBody AppsDeleteAuthorizationReqBody
 }
@@ -1290,9 +1282,7 @@ AppsDeleteTokenReq is request data for Client.AppsDeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type AppsDeleteTokenReq struct {
-	_url string
-
-	// client_id parameter
+	_url        string
 	ClientId    string
 	RequestBody AppsDeleteTokenReqBody
 }
@@ -1844,9 +1834,7 @@ https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-a
 */
 type AppsGetOrgInstallationReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1984,13 +1972,9 @@ AppsGetRepoInstallationReq is request data for Client.AppsGetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -2386,9 +2370,7 @@ AppsGetUserInstallationReq is request data for Client.AppsGetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	/*
@@ -2533,8 +2515,8 @@ type AppsListAccountsForPlanReq struct {
 	PlanId int64
 
 	/*
-	Sorts the GitHub accounts by the date they were created or last updated. Can be
-	one of `created` or `updated`.
+	One of `created` (when the repository was starred) or `updated` (when it was
+	last pushed to).
 	*/
 	Sort *string
 
@@ -2692,8 +2674,8 @@ type AppsListAccountsForPlanStubbedReq struct {
 	PlanId int64
 
 	/*
-	Sorts the GitHub accounts by the date they were created or last updated. Can be
-	one of `created` or `updated`.
+	One of `created` (when the repository was starred) or `updated` (when it was
+	last pushed to).
 	*/
 	Sort *string
 
@@ -4182,12 +4164,8 @@ AppsResetAuthorizationReq is request data for Client.AppsResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type AppsResetAuthorizationReq struct {
-	_url string
-
-	// client_id parameter
-	ClientId string
-
-	// access_token parameter
+	_url        string
+	ClientId    string
 	AccessToken string
 }
 
@@ -4314,9 +4292,7 @@ AppsResetTokenReq is request data for Client.AppsResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenReq struct {
-	_url string
-
-	// client_id parameter
+	_url        string
 	ClientId    string
 	RequestBody AppsResetTokenReqBody
 }
@@ -4457,12 +4433,8 @@ AppsRevokeAuthorizationForApplicationReq is request data for Client.AppsRevokeAu
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type AppsRevokeAuthorizationForApplicationReq struct {
-	_url string
-
-	// client_id parameter
-	ClientId string
-
-	// access_token parameter
+	_url        string
+	ClientId    string
 	AccessToken string
 }
 
@@ -4580,12 +4552,8 @@ AppsRevokeGrantForApplicationReq is request data for Client.AppsRevokeGrantForAp
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type AppsRevokeGrantForApplicationReq struct {
-	_url string
-
-	// client_id parameter
-	ClientId string
-
-	// access_token parameter
+	_url        string
+	ClientId    string
 	AccessToken string
 }
 

@@ -713,9 +713,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppReq is request data for Client.
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
-	_url string
-
-	// client_id parameter
+	_url        string
 	ClientId    string
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
 }
@@ -869,9 +867,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq is request da
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
-	_url string
-
-	// client_id parameter
+	_url     string
 	ClientId string
 
 	// fingerprint parameter

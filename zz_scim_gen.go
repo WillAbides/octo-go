@@ -59,9 +59,7 @@ https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
 type ScimDeleteUserFromOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// scim_user_id parameter
 	ScimUserId string
@@ -183,9 +181,7 @@ https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-us
 */
 type ScimGetProvisioningInformationForUserReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// scim_user_id parameter
 	ScimUserId string
@@ -315,9 +311,7 @@ https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
 type ScimListProvisionedIdentitiesReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Used for pagination: the index of the first result to return.
 	StartIndex *int64
@@ -473,9 +467,7 @@ ScimProvisionAndInviteUserReq is request data for Client.ScimProvisionAndInviteU
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
 type ScimProvisionAndInviteUserReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody ScimProvisionAndInviteUserReqBody
 }
@@ -640,9 +632,7 @@ https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-use
 */
 type ScimSetInformationForProvisionedUserReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// scim_user_id parameter
 	ScimUserId  string
@@ -809,9 +799,7 @@ https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
 type ScimUpdateAttributeForUserReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// scim_user_id parameter
 	ScimUserId  string

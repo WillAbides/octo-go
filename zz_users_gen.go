@@ -205,9 +205,7 @@ UsersBlockReq is request data for Client.UsersBlock
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
 type UsersBlockReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 
@@ -325,9 +323,7 @@ UsersCheckBlockedReq is request data for Client.UsersCheckBlocked
 https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 type UsersCheckBlockedReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 
@@ -449,9 +445,7 @@ UsersCheckFollowingForUserReq is request data for Client.UsersCheckFollowingForU
 https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 type UsersCheckFollowingForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// target_user parameter
@@ -573,9 +567,7 @@ UsersCheckPersonIsFollowedByAuthenticatedReq is request data for Client.UsersChe
 https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
 type UsersCheckPersonIsFollowedByAuthenticatedReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 
@@ -1347,9 +1339,7 @@ UsersFollowReq is request data for Client.UsersFollow
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
 type UsersFollowReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 
@@ -1650,9 +1640,7 @@ UsersGetByUsernameReq is request data for Client.UsersGetByUsername
 https://developer.github.com/v3/users/#get-a-user
 */
 type UsersGetByUsernameReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 
@@ -1835,9 +1823,7 @@ UsersGetContextForUserReq is request data for Client.UsersGetContextForUser
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type UsersGetContextForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	/*
@@ -2923,9 +2909,7 @@ UsersListFollowersForUserReq is request data for Client.UsersListFollowersForUse
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type UsersListFollowersForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -3064,9 +3048,7 @@ UsersListFollowingForUserReq is request data for Client.UsersListFollowingForUse
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type UsersListFollowingForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -3343,9 +3325,7 @@ UsersListGpgKeysForUserReq is request data for Client.UsersListGpgKeysForUser
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 type UsersListGpgKeysForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -3622,9 +3602,7 @@ UsersListPublicKeysForUserReq is request data for Client.UsersListPublicKeysForU
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 type UsersListPublicKeysForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -4044,9 +4022,7 @@ UsersUnblockReq is request data for Client.UsersUnblock
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
 type UsersUnblockReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 
@@ -4164,9 +4140,7 @@ UsersUnfollowReq is request data for Client.UsersUnfollow
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
 type UsersUnfollowReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 }
 

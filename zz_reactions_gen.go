@@ -59,13 +59,9 @@ ReactionsCreateForCommitCommentReq is request data for Client.ReactionsCreateFor
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId   int64
@@ -226,13 +222,9 @@ ReactionsCreateForIssueReq is request data for Client.ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -393,13 +385,9 @@ ReactionsCreateForIssueCommentReq is request data for Client.ReactionsCreateForI
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId   int64
@@ -560,13 +548,9 @@ ReactionsCreateForPullRequestReviewCommentReq is request data for Client.Reactio
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId   int64
@@ -731,19 +715,13 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
-	RequestBody   ReactionsCreateForTeamDiscussionCommentInOrgReqBody
+	CommentNumber    int64
+	RequestBody      ReactionsCreateForTeamDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -900,17 +878,11 @@ ReactionsCreateForTeamDiscussionCommentLegacyReq is request data for Client.Reac
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
 type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
-	RequestBody   ReactionsCreateForTeamDiscussionCommentLegacyReqBody
+	CommentNumber    int64
+	RequestBody      ReactionsCreateForTeamDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -1068,14 +1040,10 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 	RequestBody      ReactionsCreateForTeamDiscussionInOrgReqBody
 
@@ -1234,12 +1202,8 @@ ReactionsCreateForTeamDiscussionLegacyReq is request data for Client.ReactionsCr
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type ReactionsCreateForTeamDiscussionLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 	RequestBody      ReactionsCreateForTeamDiscussionLegacyReqBody
 
@@ -1397,18 +1361,12 @@ ReactionsDeleteForCommitCommentReq is request data for Client.ReactionsDeleteFor
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 type ReactionsDeleteForCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
-	CommentId int64
-
-	// reaction_id parameter
+	CommentId  int64
 	ReactionId int64
 
 	/*
@@ -1543,19 +1501,13 @@ ReactionsDeleteForIssueReq is request data for Client.ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 type ReactionsDeleteForIssueReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
-
-	// reaction_id parameter
-	ReactionId int64
+	ReactionId  int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -1689,18 +1641,12 @@ ReactionsDeleteForIssueCommentReq is request data for Client.ReactionsDeleteForI
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 type ReactionsDeleteForIssueCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
-	CommentId int64
-
-	// reaction_id parameter
+	CommentId  int64
 	ReactionId int64
 
 	/*
@@ -1835,18 +1781,12 @@ ReactionsDeleteForPullRequestCommentReq is request data for Client.ReactionsDele
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 type ReactionsDeleteForPullRequestCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
-	CommentId int64
-
-	// reaction_id parameter
+	CommentId  int64
 	ReactionId int64
 
 	/*
@@ -1982,18 +1922,12 @@ https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 type ReactionsDeleteForTeamDiscussionReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// reaction_id parameter
-	ReactionId int64
+	ReactionId       int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -2128,21 +2062,13 @@ https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reacti
 */
 type ReactionsDeleteForTeamDiscussionCommentReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
-
-	// reaction_id parameter
-	ReactionId int64
+	CommentNumber    int64
+	ReactionId       int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -2276,9 +2202,7 @@ ReactionsDeleteLegacyReq is request data for Client.ReactionsDeleteLegacy
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
 type ReactionsDeleteLegacyReq struct {
-	_url string
-
-	// reaction_id parameter
+	_url       string
 	ReactionId int64
 
 	/*
@@ -2414,13 +2338,9 @@ ReactionsListForCommitCommentReq is request data for Client.ReactionsListForComm
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ReactionsListForCommitCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -2588,13 +2508,9 @@ ReactionsListForIssueReq is request data for Client.ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ReactionsListForIssueReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -2762,13 +2678,9 @@ ReactionsListForIssueCommentReq is request data for Client.ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ReactionsListForIssueCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -2936,13 +2848,9 @@ ReactionsListForPullRequestReviewCommentReq is request data for Client.Reactions
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ReactionsListForPullRequestReviewCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -3111,18 +3019,12 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 */
 type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
+	CommentNumber    int64
 
 	/*
 	Returns a single [reaction
@@ -3287,16 +3189,10 @@ ReactionsListForTeamDiscussionCommentLegacyReq is request data for Client.Reacti
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ReactionsListForTeamDiscussionCommentLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
-
-	// comment_number parameter
-	CommentNumber int64
+	CommentNumber    int64
 
 	/*
 	Returns a single [reaction
@@ -3462,14 +3358,10 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ReactionsListForTeamDiscussionInOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// team_slug parameter
-	TeamSlug string
-
-	// discussion_number parameter
+	TeamSlug         string
 	DiscussionNumber int64
 
 	/*
@@ -3635,12 +3527,8 @@ ReactionsListForTeamDiscussionLegacyReq is request data for Client.ReactionsList
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
 type ReactionsListForTeamDiscussionLegacyReq struct {
-	_url string
-
-	// team_id parameter
-	TeamId int64
-
-	// discussion_number parameter
+	_url             string
+	TeamId           int64
 	DiscussionNumber int64
 
 	/*

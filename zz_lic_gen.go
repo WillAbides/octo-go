@@ -324,13 +324,9 @@ LicensesGetForRepoReq is request data for Client.LicensesGetForRepo
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *LicensesGetForRepoReq) url() string {

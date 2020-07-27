@@ -58,12 +58,8 @@ OrgsBlockUserReq is request data for Client.OrgsBlockUser
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type OrgsBlockUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -185,12 +181,8 @@ OrgsCheckBlockedUserReq is request data for Client.OrgsCheckBlockedUser
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type OrgsCheckBlockedUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -309,12 +301,8 @@ OrgsCheckMembershipForUserReq is request data for Client.OrgsCheckMembershipForU
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
 type OrgsCheckMembershipForUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -436,12 +424,8 @@ OrgsCheckPublicMembershipForUserReq is request data for Client.OrgsCheckPublicMe
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
 type OrgsCheckPublicMembershipForUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -560,12 +544,8 @@ OrgsConvertMemberToOutsideCollaboratorReq is request data for Client.OrgsConvert
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type OrgsConvertMemberToOutsideCollaboratorReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -684,9 +664,7 @@ OrgsCreateInvitationReq is request data for Client.OrgsCreateInvitation
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody OrgsCreateInvitationReqBody
 }
@@ -848,9 +826,7 @@ OrgsCreateWebhookReq is request data for Client.OrgsCreateWebhook
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
 type OrgsCreateWebhookReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody OrgsCreateWebhookReqBody
 }
@@ -1036,12 +1012,8 @@ OrgsDeleteWebhookReq is request data for Client.OrgsDeleteWebhook
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
 type OrgsDeleteWebhookReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// hook_id parameter
+	_url   string
+	Org    string
 	HookId int64
 }
 
@@ -1162,9 +1134,7 @@ https://developer.github.com/v3/orgs/#get-an-organization
 */
 type OrgsGetReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	New repository creation permissions are available to preview. You can now use
@@ -1309,9 +1279,7 @@ https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for
 */
 type OrgsGetMembershipForAuthenticatedUserReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *OrgsGetMembershipForAuthenticatedUserReq) url() string {
@@ -1437,12 +1405,8 @@ OrgsGetMembershipForUserReq is request data for Client.OrgsGetMembershipForUser
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
 type OrgsGetMembershipForUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -1569,12 +1533,8 @@ OrgsGetWebhookReq is request data for Client.OrgsGetWebhook
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
 type OrgsGetWebhookReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// hook_id parameter
+	_url   string
+	Org    string
 	HookId int64
 }
 
@@ -1844,9 +1804,7 @@ https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type OrgsListAppInstallationsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2000,9 +1958,7 @@ https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organiza
 */
 type OrgsListBlockedUsersReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *OrgsListBlockedUsersReq) url() string {
@@ -2266,9 +2222,7 @@ OrgsListForUserReq is request data for Client.OrgsListForUser
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type OrgsListForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2408,9 +2362,7 @@ https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type OrgsListInvitationTeamsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// invitation_id parameter
 	InvitationId int64
@@ -2552,9 +2504,7 @@ https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type OrgsListMembersReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	Filter members returned in the list. Can be one of:
@@ -2864,9 +2814,7 @@ https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collabo
 */
 type OrgsListOutsideCollaboratorsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	Filter the list of outside collaborators. Can be one of:
@@ -3016,9 +2964,7 @@ https://developer.github.com/v3/orgs/members/#list-pending-organization-invitati
 */
 type OrgsListPendingInvitationsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3157,9 +3103,7 @@ https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type OrgsListPublicMembersReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3298,9 +3242,7 @@ https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organi
 */
 type OrgsListSamlSsoAuthorizationsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *OrgsListSamlSsoAuthorizationsReq) url() string {
@@ -3427,9 +3369,7 @@ https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
 type OrgsListWebhooksReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3570,12 +3510,8 @@ OrgsPingWebhookReq is request data for Client.OrgsPingWebhook
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
 type OrgsPingWebhookReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// hook_id parameter
+	_url   string
+	Org    string
 	HookId int64
 }
 
@@ -3694,12 +3630,8 @@ OrgsRemoveMemberReq is request data for Client.OrgsRemoveMember
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type OrgsRemoveMemberReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -3817,12 +3749,8 @@ OrgsRemoveMembershipForUserReq is request data for Client.OrgsRemoveMembershipFo
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
 type OrgsRemoveMembershipForUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -3940,12 +3868,8 @@ OrgsRemoveOutsideCollaboratorReq is request data for Client.OrgsRemoveOutsideCol
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type OrgsRemoveOutsideCollaboratorReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -4063,12 +3987,8 @@ OrgsRemovePublicMembershipForAuthenticatedUserReq is request data for Client.Org
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
 type OrgsRemovePublicMembershipForAuthenticatedUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -4191,9 +4111,7 @@ https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-org
 */
 type OrgsRemoveSamlSsoAuthorizationReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// credential_id parameter
 	CredentialId int64
@@ -4315,12 +4233,8 @@ OrgsSetMembershipForUserReq is request data for Client.OrgsSetMembershipForUser
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
 type OrgsSetMembershipForUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url        string
+	Org         string
 	Username    string
 	RequestBody OrgsSetMembershipForUserReqBody
 }
@@ -4465,12 +4379,8 @@ OrgsSetPublicMembershipForAuthenticatedUserReq is request data for Client.OrgsSe
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
 type OrgsSetPublicMembershipForAuthenticatedUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -4588,12 +4498,8 @@ OrgsUnblockUserReq is request data for Client.OrgsUnblockUser
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type OrgsUnblockUserReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// username parameter
+	_url     string
+	Org      string
 	Username string
 }
 
@@ -4712,9 +4618,7 @@ OrgsUpdateReq is request data for Client.OrgsUpdate
 https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody OrgsUpdateReqBody
 
@@ -4975,9 +4879,7 @@ OrgsUpdateMembershipForAuthenticatedUserReq is request data for Client.OrgsUpdat
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
 type OrgsUpdateMembershipForAuthenticatedUserReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody OrgsUpdateMembershipForAuthenticatedUserReqBody
 }
@@ -5119,12 +5021,8 @@ OrgsUpdateWebhookReq is request data for Client.OrgsUpdateWebhook
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
 type OrgsUpdateWebhookReq struct {
-	_url string
-
-	// org parameter
-	Org string
-
-	// hook_id parameter
+	_url        string
+	Org         string
 	HookId      int64
 	RequestBody OrgsUpdateWebhookReqBody
 }
