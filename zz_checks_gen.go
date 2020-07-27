@@ -779,7 +779,7 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksListAnnotationsResponseBody{}
+	resp.Data = []components.CheckAnnotation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -899,13 +899,6 @@ func (r *ChecksListAnnotationsReq) Rel(link RelName, resp *ChecksListAnnotations
 }
 
 /*
-ChecksListAnnotationsResponseBody is a response body for ChecksListAnnotations
-
-https://developer.github.com/v3/checks/runs/#list-check-run-annotations
-*/
-type ChecksListAnnotationsResponseBody []components.CheckAnnotation
-
-/*
 ChecksListAnnotationsResponse is a response for ChecksListAnnotations
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
@@ -913,7 +906,7 @@ https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 type ChecksListAnnotationsResponse struct {
 	response
 	request *ChecksListAnnotationsReq
-	Data    ChecksListAnnotationsResponseBody
+	Data    []components.CheckAnnotation
 }
 
 /*

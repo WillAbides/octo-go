@@ -1618,7 +1618,7 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitListMatchingRefsResponseBody{}
+	resp.Data = []components.GitRef{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1723,13 +1723,6 @@ func (r *GitListMatchingRefsReq) Rel(link RelName, resp *GitListMatchingRefsResp
 }
 
 /*
-GitListMatchingRefsResponseBody is a response body for GitListMatchingRefs
-
-https://developer.github.com/v3/git/refs/#list-matching-references
-*/
-type GitListMatchingRefsResponseBody []components.GitRef
-
-/*
 GitListMatchingRefsResponse is a response for GitListMatchingRefs
 
 https://developer.github.com/v3/git/refs/#list-matching-references
@@ -1737,7 +1730,7 @@ https://developer.github.com/v3/git/refs/#list-matching-references
 type GitListMatchingRefsResponse struct {
 	response
 	request *GitListMatchingRefsReq
-	Data    GitListMatchingRefsResponseBody
+	Data    []components.GitRef
 }
 
 /*

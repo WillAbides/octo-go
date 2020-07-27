@@ -154,7 +154,7 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = LicensesGetAllCommonlyUsedResponseBody{}
+	resp.Data = []components.LicenseSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -252,13 +252,6 @@ func (r *LicensesGetAllCommonlyUsedReq) Rel(link RelName, resp *LicensesGetAllCo
 }
 
 /*
-LicensesGetAllCommonlyUsedResponseBody is a response body for LicensesGetAllCommonlyUsed
-
-https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
-*/
-type LicensesGetAllCommonlyUsedResponseBody []components.LicenseSimple
-
-/*
 LicensesGetAllCommonlyUsedResponse is a response for LicensesGetAllCommonlyUsed
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
@@ -266,7 +259,7 @@ https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 type LicensesGetAllCommonlyUsedResponse struct {
 	response
 	request *LicensesGetAllCommonlyUsedReq
-	Data    LicensesGetAllCommonlyUsedResponseBody
+	Data    []components.LicenseSimple
 }
 
 /*

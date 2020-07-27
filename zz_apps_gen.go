@@ -2405,7 +2405,7 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListAccountsForPlanResponseBody{}
+	resp.Data = []components.MarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2526,13 +2526,6 @@ func (r *AppsListAccountsForPlanReq) Rel(link RelName, resp *AppsListAccountsFor
 }
 
 /*
-AppsListAccountsForPlanResponseBody is a response body for AppsListAccountsForPlan
-
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
-*/
-type AppsListAccountsForPlanResponseBody []components.MarketplacePurchase
-
-/*
 AppsListAccountsForPlanResponse is a response for AppsListAccountsForPlan
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
@@ -2540,7 +2533,7 @@ https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 type AppsListAccountsForPlanResponse struct {
 	response
 	request *AppsListAccountsForPlanReq
-	Data    AppsListAccountsForPlanResponseBody
+	Data    []components.MarketplacePurchase
 }
 
 /*
@@ -2564,7 +2557,7 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListAccountsForPlanStubbedResponseBody{}
+	resp.Data = []components.MarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2685,13 +2678,6 @@ func (r *AppsListAccountsForPlanStubbedReq) Rel(link RelName, resp *AppsListAcco
 }
 
 /*
-AppsListAccountsForPlanStubbedResponseBody is a response body for AppsListAccountsForPlanStubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
-*/
-type AppsListAccountsForPlanStubbedResponseBody []components.MarketplacePurchase
-
-/*
 AppsListAccountsForPlanStubbedResponse is a response for AppsListAccountsForPlanStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
@@ -2699,7 +2685,7 @@ https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubb
 type AppsListAccountsForPlanStubbedResponse struct {
 	response
 	request *AppsListAccountsForPlanStubbedReq
-	Data    AppsListAccountsForPlanStubbedResponseBody
+	Data    []components.MarketplacePurchase
 }
 
 /*
@@ -2891,7 +2877,7 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListInstallationsResponseBody{}
+	resp.Data = []components.Installation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3017,13 +3003,6 @@ func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallations
 }
 
 /*
-AppsListInstallationsResponseBody is a response body for AppsListInstallations
-
-https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
-*/
-type AppsListInstallationsResponseBody []components.Installation
-
-/*
 AppsListInstallationsResponse is a response for AppsListInstallations
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
@@ -3031,7 +3010,7 @@ https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-a
 type AppsListInstallationsResponse struct {
 	response
 	request *AppsListInstallationsReq
-	Data    AppsListInstallationsResponseBody
+	Data    []components.Installation
 }
 
 /*
@@ -3208,7 +3187,7 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListPlansResponseBody{}
+	resp.Data = []components.MarketplaceListingPlan{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3308,13 +3287,6 @@ func (r *AppsListPlansReq) Rel(link RelName, resp *AppsListPlansResponse) bool {
 }
 
 /*
-AppsListPlansResponseBody is a response body for AppsListPlans
-
-https://developer.github.com/v3/apps/marketplace/#list-plans
-*/
-type AppsListPlansResponseBody []components.MarketplaceListingPlan
-
-/*
 AppsListPlansResponse is a response for AppsListPlans
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
@@ -3322,7 +3294,7 @@ https://developer.github.com/v3/apps/marketplace/#list-plans
 type AppsListPlansResponse struct {
 	response
 	request *AppsListPlansReq
-	Data    AppsListPlansResponseBody
+	Data    []components.MarketplaceListingPlan
 }
 
 /*
@@ -3346,7 +3318,7 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListPlansStubbedResponseBody{}
+	resp.Data = []components.MarketplaceListingPlan{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3446,13 +3418,6 @@ func (r *AppsListPlansStubbedReq) Rel(link RelName, resp *AppsListPlansStubbedRe
 }
 
 /*
-AppsListPlansStubbedResponseBody is a response body for AppsListPlansStubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
-*/
-type AppsListPlansStubbedResponseBody []components.MarketplaceListingPlan
-
-/*
 AppsListPlansStubbedResponse is a response for AppsListPlansStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
@@ -3460,7 +3425,7 @@ https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 type AppsListPlansStubbedResponse struct {
 	response
 	request *AppsListPlansStubbedReq
-	Data    AppsListPlansStubbedResponseBody
+	Data    []components.MarketplaceListingPlan
 }
 
 /*
@@ -3649,7 +3614,7 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListSubscriptionsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.UserMarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3749,13 +3714,6 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link RelName, resp *A
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserResponseBody is a response body for AppsListSubscriptionsForAuthenticatedUser
-
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
-*/
-type AppsListSubscriptionsForAuthenticatedUserResponseBody []components.UserMarketplacePurchase
-
-/*
 AppsListSubscriptionsForAuthenticatedUserResponse is a response for AppsListSubscriptionsForAuthenticatedUser
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
@@ -3763,7 +3721,7 @@ https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-aut
 type AppsListSubscriptionsForAuthenticatedUserResponse struct {
 	response
 	request *AppsListSubscriptionsForAuthenticatedUserReq
-	Data    AppsListSubscriptionsForAuthenticatedUserResponseBody
+	Data    []components.UserMarketplacePurchase
 }
 
 /*
@@ -3787,7 +3745,7 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody{}
+	resp.Data = []components.UserMarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3887,13 +3845,6 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link RelName, 
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody is a response body for AppsListSubscriptionsForAuthenticatedUserStubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
-*/
-type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody []components.UserMarketplacePurchase
-
-/*
 AppsListSubscriptionsForAuthenticatedUserStubbedResponse is a response for AppsListSubscriptionsForAuthenticatedUserStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
@@ -3901,7 +3852,7 @@ https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-aut
 type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
 	response
 	request *AppsListSubscriptionsForAuthenticatedUserStubbedReq
-	Data    AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody
+	Data    []components.UserMarketplacePurchase
 }
 
 /*

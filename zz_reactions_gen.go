@@ -2255,7 +2255,7 @@ func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCom
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForCommitCommentResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2387,13 +2387,6 @@ func (r *ReactionsListForCommitCommentReq) Rel(link RelName, resp *ReactionsList
 }
 
 /*
-ReactionsListForCommitCommentResponseBody is a response body for ReactionsListForCommitComment
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
-*/
-type ReactionsListForCommitCommentResponseBody []components.Reaction
-
-/*
 ReactionsListForCommitCommentResponse is a response for ReactionsListForCommitComment
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
@@ -2401,7 +2394,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 type ReactionsListForCommitCommentResponse struct {
 	response
 	request *ReactionsListForCommitCommentReq
-	Data    ReactionsListForCommitCommentResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -2425,7 +2418,7 @@ func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForIssueResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2557,13 +2550,6 @@ func (r *ReactionsListForIssueReq) Rel(link RelName, resp *ReactionsListForIssue
 }
 
 /*
-ReactionsListForIssueResponseBody is a response body for ReactionsListForIssue
-
-https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
-*/
-type ReactionsListForIssueResponseBody []components.Reaction
-
-/*
 ReactionsListForIssueResponse is a response for ReactionsListForIssue
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
@@ -2571,7 +2557,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 type ReactionsListForIssueResponse struct {
 	response
 	request *ReactionsListForIssueReq
-	Data    ReactionsListForIssueResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -2595,7 +2581,7 @@ func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForIssueCommentResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2727,13 +2713,6 @@ func (r *ReactionsListForIssueCommentReq) Rel(link RelName, resp *ReactionsListF
 }
 
 /*
-ReactionsListForIssueCommentResponseBody is a response body for ReactionsListForIssueComment
-
-https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
-*/
-type ReactionsListForIssueCommentResponseBody []components.Reaction
-
-/*
 ReactionsListForIssueCommentResponse is a response for ReactionsListForIssueComment
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
@@ -2741,7 +2720,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 type ReactionsListForIssueCommentResponse struct {
 	response
 	request *ReactionsListForIssueCommentReq
-	Data    ReactionsListForIssueCommentResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -2765,7 +2744,7 @@ func ReactionsListForPullRequestReviewComment(ctx context.Context, req *Reaction
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForPullRequestReviewCommentResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2897,13 +2876,6 @@ func (r *ReactionsListForPullRequestReviewCommentReq) Rel(link RelName, resp *Re
 }
 
 /*
-ReactionsListForPullRequestReviewCommentResponseBody is a response body for ReactionsListForPullRequestReviewComment
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
-*/
-type ReactionsListForPullRequestReviewCommentResponseBody []components.Reaction
-
-/*
 ReactionsListForPullRequestReviewCommentResponse is a response for ReactionsListForPullRequestReviewComment
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
@@ -2911,7 +2883,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-rev
 type ReactionsListForPullRequestReviewCommentResponse struct {
 	response
 	request *ReactionsListForPullRequestReviewCommentReq
-	Data    ReactionsListForPullRequestReviewCommentResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -2935,7 +2907,7 @@ func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *Reacti
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForTeamDiscussionCommentInOrgResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3068,13 +3040,6 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *
 }
 
 /*
-ReactionsListForTeamDiscussionCommentInOrgResponseBody is a response body for ReactionsListForTeamDiscussionCommentInOrg
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
-*/
-type ReactionsListForTeamDiscussionCommentInOrgResponseBody []components.Reaction
-
-/*
 ReactionsListForTeamDiscussionCommentInOrgResponse is a response for ReactionsListForTeamDiscussionCommentInOrg
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
@@ -3082,7 +3047,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 type ReactionsListForTeamDiscussionCommentInOrgResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionCommentInOrgReq
-	Data    ReactionsListForTeamDiscussionCommentInOrgResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -3106,7 +3071,7 @@ func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *React
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForTeamDiscussionCommentLegacyResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3236,13 +3201,6 @@ func (r *ReactionsListForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp 
 }
 
 /*
-ReactionsListForTeamDiscussionCommentLegacyResponseBody is a response body for ReactionsListForTeamDiscussionCommentLegacy
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
-*/
-type ReactionsListForTeamDiscussionCommentLegacyResponseBody []components.Reaction
-
-/*
 ReactionsListForTeamDiscussionCommentLegacyResponse is a response for ReactionsListForTeamDiscussionCommentLegacy
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
@@ -3250,7 +3208,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 type ReactionsListForTeamDiscussionCommentLegacyResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionCommentLegacyReq
-	Data    ReactionsListForTeamDiscussionCommentLegacyResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -3274,7 +3232,7 @@ func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsList
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForTeamDiscussionInOrgResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3406,13 +3364,6 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) Rel(link RelName, resp *Reactio
 }
 
 /*
-ReactionsListForTeamDiscussionInOrgResponseBody is a response body for ReactionsListForTeamDiscussionInOrg
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
-*/
-type ReactionsListForTeamDiscussionInOrgResponseBody []components.Reaction
-
-/*
 ReactionsListForTeamDiscussionInOrgResponse is a response for ReactionsListForTeamDiscussionInOrg
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
@@ -3420,7 +3371,7 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 type ReactionsListForTeamDiscussionInOrgResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionInOrgReq
-	Data    ReactionsListForTeamDiscussionInOrgResponseBody
+	Data    []components.Reaction
 }
 
 /*
@@ -3444,7 +3395,7 @@ func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReactionsListForTeamDiscussionLegacyResponseBody{}
+	resp.Data = []components.Reaction{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3573,13 +3524,6 @@ func (r *ReactionsListForTeamDiscussionLegacyReq) Rel(link RelName, resp *Reacti
 }
 
 /*
-ReactionsListForTeamDiscussionLegacyResponseBody is a response body for ReactionsListForTeamDiscussionLegacy
-
-https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
-*/
-type ReactionsListForTeamDiscussionLegacyResponseBody []components.Reaction
-
-/*
 ReactionsListForTeamDiscussionLegacyResponse is a response for ReactionsListForTeamDiscussionLegacy
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
@@ -3587,5 +3531,5 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 type ReactionsListForTeamDiscussionLegacyResponse struct {
 	response
 	request *ReactionsListForTeamDiscussionLegacyReq
-	Data    ReactionsListForTeamDiscussionLegacyResponseBody
+	Data    []components.Reaction
 }

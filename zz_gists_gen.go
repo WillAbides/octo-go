@@ -1173,7 +1173,7 @@ func GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*G
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListResponseBody{}
+	resp.Data = []components.BaseGist{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1283,13 +1283,6 @@ func (r *GistsListReq) Rel(link RelName, resp *GistsListResponse) bool {
 }
 
 /*
-GistsListResponseBody is a response body for GistsList
-
-https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
-*/
-type GistsListResponseBody []components.BaseGist
-
-/*
 GistsListResponse is a response for GistsList
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
@@ -1297,7 +1290,7 @@ https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 type GistsListResponse struct {
 	response
 	request *GistsListReq
-	Data    GistsListResponseBody
+	Data    []components.BaseGist
 }
 
 /*
@@ -1321,7 +1314,7 @@ func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListCommentsResponseBody{}
+	resp.Data = []components.GistComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1424,13 +1417,6 @@ func (r *GistsListCommentsReq) Rel(link RelName, resp *GistsListCommentsResponse
 }
 
 /*
-GistsListCommentsResponseBody is a response body for GistsListComments
-
-https://developer.github.com/v3/gists/comments/#list-gist-comments
-*/
-type GistsListCommentsResponseBody []components.GistComment
-
-/*
 GistsListCommentsResponse is a response for GistsListComments
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
@@ -1438,7 +1424,7 @@ https://developer.github.com/v3/gists/comments/#list-gist-comments
 type GistsListCommentsResponse struct {
 	response
 	request *GistsListCommentsReq
-	Data    GistsListCommentsResponseBody
+	Data    []components.GistComment
 }
 
 /*
@@ -1462,7 +1448,7 @@ func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListCommitsResponseBody{}
+	resp.Data = []components.GistCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1565,13 +1551,6 @@ func (r *GistsListCommitsReq) Rel(link RelName, resp *GistsListCommitsResponse) 
 }
 
 /*
-GistsListCommitsResponseBody is a response body for GistsListCommits
-
-https://developer.github.com/v3/gists/#list-gist-commits
-*/
-type GistsListCommitsResponseBody []components.GistCommit
-
-/*
 GistsListCommitsResponse is a response for GistsListCommits
 
 https://developer.github.com/v3/gists/#list-gist-commits
@@ -1579,7 +1558,7 @@ https://developer.github.com/v3/gists/#list-gist-commits
 type GistsListCommitsResponse struct {
 	response
 	request *GistsListCommitsReq
-	Data    GistsListCommitsResponseBody
+	Data    []components.GistCommit
 }
 
 /*
@@ -1603,7 +1582,7 @@ func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListForUserResponseBody{}
+	resp.Data = []components.BaseGist{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1714,13 +1693,6 @@ func (r *GistsListForUserReq) Rel(link RelName, resp *GistsListForUserResponse) 
 }
 
 /*
-GistsListForUserResponseBody is a response body for GistsListForUser
-
-https://developer.github.com/v3/gists/#list-gists-for-a-user
-*/
-type GistsListForUserResponseBody []components.BaseGist
-
-/*
 GistsListForUserResponse is a response for GistsListForUser
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
@@ -1728,7 +1700,7 @@ https://developer.github.com/v3/gists/#list-gists-for-a-user
 type GistsListForUserResponse struct {
 	response
 	request *GistsListForUserReq
-	Data    GistsListForUserResponseBody
+	Data    []components.BaseGist
 }
 
 /*
@@ -1752,7 +1724,7 @@ func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListForksResponseBody{}
+	resp.Data = []components.GistFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1855,13 +1827,6 @@ func (r *GistsListForksReq) Rel(link RelName, resp *GistsListForksResponse) bool
 }
 
 /*
-GistsListForksResponseBody is a response body for GistsListForks
-
-https://developer.github.com/v3/gists/#list-gist-forks
-*/
-type GistsListForksResponseBody []components.GistFull
-
-/*
 GistsListForksResponse is a response for GistsListForks
 
 https://developer.github.com/v3/gists/#list-gist-forks
@@ -1869,7 +1834,7 @@ https://developer.github.com/v3/gists/#list-gist-forks
 type GistsListForksResponse struct {
 	response
 	request *GistsListForksReq
-	Data    GistsListForksResponseBody
+	Data    []components.GistFull
 }
 
 /*
@@ -1893,7 +1858,7 @@ func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListPublicResponseBody{}
+	resp.Data = []components.BaseGist{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2003,13 +1968,6 @@ func (r *GistsListPublicReq) Rel(link RelName, resp *GistsListPublicResponse) bo
 }
 
 /*
-GistsListPublicResponseBody is a response body for GistsListPublic
-
-https://developer.github.com/v3/gists/#list-public-gists
-*/
-type GistsListPublicResponseBody []components.BaseGist
-
-/*
 GistsListPublicResponse is a response for GistsListPublic
 
 https://developer.github.com/v3/gists/#list-public-gists
@@ -2017,7 +1975,7 @@ https://developer.github.com/v3/gists/#list-public-gists
 type GistsListPublicResponse struct {
 	response
 	request *GistsListPublicReq
-	Data    GistsListPublicResponseBody
+	Data    []components.BaseGist
 }
 
 /*
@@ -2041,7 +1999,7 @@ func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsListStarredResponseBody{}
+	resp.Data = []components.BaseGist{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2151,13 +2109,6 @@ func (r *GistsListStarredReq) Rel(link RelName, resp *GistsListStarredResponse) 
 }
 
 /*
-GistsListStarredResponseBody is a response body for GistsListStarred
-
-https://developer.github.com/v3/gists/#list-starred-gists
-*/
-type GistsListStarredResponseBody []components.BaseGist
-
-/*
 GistsListStarredResponse is a response for GistsListStarred
 
 https://developer.github.com/v3/gists/#list-starred-gists
@@ -2165,7 +2116,7 @@ https://developer.github.com/v3/gists/#list-starred-gists
 type GistsListStarredResponse struct {
 	response
 	request *GistsListStarredReq
-	Data    GistsListStarredResponseBody
+	Data    []components.BaseGist
 }
 
 /*

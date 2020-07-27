@@ -46,7 +46,11 @@ func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			bodyType := respBodyType(endpoint)
-			group.Id("resp").Dot("Data").Op("=").Qual(bodyType.pkg, bodyType.name).Block()
+			group.Id("resp").Dot("Data").Op("=").Do(func(stmt *jen.Statement) {
+				if bodyType.slice {
+					stmt.Op("[]")
+				}
+			}).Qual(bodyType.pkg, bodyType.name).Block()
 			group.Id("err").Op("=").Id("r.decodeBody(&resp.Data)")
 		default:
 			group.Id("err").Op("=").Id("r.decodeBody(nil)")

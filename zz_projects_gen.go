@@ -1890,7 +1890,7 @@ func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsListCardsResponseBody{}
+	resp.Data = []components.ProjectCard{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2017,13 +2017,6 @@ func (r *ProjectsListCardsReq) Rel(link RelName, resp *ProjectsListCardsResponse
 }
 
 /*
-ProjectsListCardsResponseBody is a response body for ProjectsListCards
-
-https://developer.github.com/v3/projects/cards/#list-project-cards
-*/
-type ProjectsListCardsResponseBody []components.ProjectCard
-
-/*
 ProjectsListCardsResponse is a response for ProjectsListCards
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
@@ -2031,7 +2024,7 @@ https://developer.github.com/v3/projects/cards/#list-project-cards
 type ProjectsListCardsResponse struct {
 	response
 	request *ProjectsListCardsReq
-	Data    ProjectsListCardsResponseBody
+	Data    []components.ProjectCard
 }
 
 /*
@@ -2055,7 +2048,7 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsListCollaboratorsResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2184,13 +2177,6 @@ func (r *ProjectsListCollaboratorsReq) Rel(link RelName, resp *ProjectsListColla
 }
 
 /*
-ProjectsListCollaboratorsResponseBody is a response body for ProjectsListCollaborators
-
-https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
-*/
-type ProjectsListCollaboratorsResponseBody []components.SimpleUser
-
-/*
 ProjectsListCollaboratorsResponse is a response for ProjectsListCollaborators
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
@@ -2198,7 +2184,7 @@ https://developer.github.com/v3/projects/collaborators/#list-project-collaborato
 type ProjectsListCollaboratorsResponse struct {
 	response
 	request *ProjectsListCollaboratorsReq
-	Data    ProjectsListCollaboratorsResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2222,7 +2208,7 @@ func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsListColumnsResponseBody{}
+	resp.Data = []components.ProjectColumn{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2338,13 +2324,6 @@ func (r *ProjectsListColumnsReq) Rel(link RelName, resp *ProjectsListColumnsResp
 }
 
 /*
-ProjectsListColumnsResponseBody is a response body for ProjectsListColumns
-
-https://developer.github.com/v3/projects/columns/#list-project-columns
-*/
-type ProjectsListColumnsResponseBody []components.ProjectColumn
-
-/*
 ProjectsListColumnsResponse is a response for ProjectsListColumns
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
@@ -2352,7 +2331,7 @@ https://developer.github.com/v3/projects/columns/#list-project-columns
 type ProjectsListColumnsResponse struct {
 	response
 	request *ProjectsListColumnsReq
-	Data    ProjectsListColumnsResponseBody
+	Data    []components.ProjectColumn
 }
 
 /*
@@ -2376,7 +2355,7 @@ func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsListForOrgResponseBody{}
+	resp.Data = []components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2501,13 +2480,6 @@ func (r *ProjectsListForOrgReq) Rel(link RelName, resp *ProjectsListForOrgRespon
 }
 
 /*
-ProjectsListForOrgResponseBody is a response body for ProjectsListForOrg
-
-https://developer.github.com/v3/projects/#list-organization-projects
-*/
-type ProjectsListForOrgResponseBody []components.Project
-
-/*
 ProjectsListForOrgResponse is a response for ProjectsListForOrg
 
 https://developer.github.com/v3/projects/#list-organization-projects
@@ -2515,7 +2487,7 @@ https://developer.github.com/v3/projects/#list-organization-projects
 type ProjectsListForOrgResponse struct {
 	response
 	request *ProjectsListForOrgReq
-	Data    ProjectsListForOrgResponseBody
+	Data    []components.Project
 }
 
 /*
@@ -2539,7 +2511,7 @@ func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsListForRepoResponseBody{}
+	resp.Data = []components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2665,13 +2637,6 @@ func (r *ProjectsListForRepoReq) Rel(link RelName, resp *ProjectsListForRepoResp
 }
 
 /*
-ProjectsListForRepoResponseBody is a response body for ProjectsListForRepo
-
-https://developer.github.com/v3/projects/#list-repository-projects
-*/
-type ProjectsListForRepoResponseBody []components.Project
-
-/*
 ProjectsListForRepoResponse is a response for ProjectsListForRepo
 
 https://developer.github.com/v3/projects/#list-repository-projects
@@ -2679,7 +2644,7 @@ https://developer.github.com/v3/projects/#list-repository-projects
 type ProjectsListForRepoResponse struct {
 	response
 	request *ProjectsListForRepoReq
-	Data    ProjectsListForRepoResponseBody
+	Data    []components.Project
 }
 
 /*
@@ -2703,7 +2668,7 @@ func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsListForUserResponseBody{}
+	resp.Data = []components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2828,13 +2793,6 @@ func (r *ProjectsListForUserReq) Rel(link RelName, resp *ProjectsListForUserResp
 }
 
 /*
-ProjectsListForUserResponseBody is a response body for ProjectsListForUser
-
-https://developer.github.com/v3/projects/#list-user-projects
-*/
-type ProjectsListForUserResponseBody []components.Project
-
-/*
 ProjectsListForUserResponse is a response for ProjectsListForUser
 
 https://developer.github.com/v3/projects/#list-user-projects
@@ -2842,7 +2800,7 @@ https://developer.github.com/v3/projects/#list-user-projects
 type ProjectsListForUserResponse struct {
 	response
 	request *ProjectsListForUserReq
-	Data    ProjectsListForUserResponseBody
+	Data    []components.Project
 }
 
 /*

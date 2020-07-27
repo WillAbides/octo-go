@@ -1666,7 +1666,7 @@ func PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*P
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListResponseBody{}
+	resp.Data = []components.PullRequestSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1822,13 +1822,6 @@ func (r *PullsListReq) Rel(link RelName, resp *PullsListResponse) bool {
 }
 
 /*
-PullsListResponseBody is a response body for PullsList
-
-https://developer.github.com/v3/pulls/#list-pull-requests
-*/
-type PullsListResponseBody []components.PullRequestSimple
-
-/*
 PullsListResponse is a response for PullsList
 
 https://developer.github.com/v3/pulls/#list-pull-requests
@@ -1836,7 +1829,7 @@ https://developer.github.com/v3/pulls/#list-pull-requests
 type PullsListResponse struct {
 	response
 	request *PullsListReq
-	Data    PullsListResponseBody
+	Data    []components.PullRequestSimple
 }
 
 /*
@@ -1860,7 +1853,7 @@ func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListCommentsForReviewResponseBody{}
+	resp.Data = []components.ReviewComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1966,13 +1959,6 @@ func (r *PullsListCommentsForReviewReq) Rel(link RelName, resp *PullsListComment
 }
 
 /*
-PullsListCommentsForReviewResponseBody is a response body for PullsListCommentsForReview
-
-https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
-*/
-type PullsListCommentsForReviewResponseBody []components.ReviewComment
-
-/*
 PullsListCommentsForReviewResponse is a response for PullsListCommentsForReview
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
@@ -1980,7 +1966,7 @@ https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-
 type PullsListCommentsForReviewResponse struct {
 	response
 	request *PullsListCommentsForReviewReq
-	Data    PullsListCommentsForReviewResponseBody
+	Data    []components.ReviewComment
 }
 
 /*
@@ -2004,7 +1990,7 @@ func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListCommitsResponseBody{}
+	resp.Data = []components.SimpleCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2107,13 +2093,6 @@ func (r *PullsListCommitsReq) Rel(link RelName, resp *PullsListCommitsResponse) 
 }
 
 /*
-PullsListCommitsResponseBody is a response body for PullsListCommits
-
-https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
-*/
-type PullsListCommitsResponseBody []components.SimpleCommit
-
-/*
 PullsListCommitsResponse is a response for PullsListCommits
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
@@ -2121,7 +2100,7 @@ https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 type PullsListCommitsResponse struct {
 	response
 	request *PullsListCommitsReq
-	Data    PullsListCommitsResponseBody
+	Data    []components.SimpleCommit
 }
 
 /*
@@ -2145,7 +2124,7 @@ func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListFilesResponseBody{}
+	resp.Data = []components.DiffEntry{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2248,13 +2227,6 @@ func (r *PullsListFilesReq) Rel(link RelName, resp *PullsListFilesResponse) bool
 }
 
 /*
-PullsListFilesResponseBody is a response body for PullsListFiles
-
-https://developer.github.com/v3/pulls/#list-pull-requests-files
-*/
-type PullsListFilesResponseBody []components.DiffEntry
-
-/*
 PullsListFilesResponse is a response for PullsListFiles
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
@@ -2262,7 +2234,7 @@ https://developer.github.com/v3/pulls/#list-pull-requests-files
 type PullsListFilesResponse struct {
 	response
 	request *PullsListFilesReq
-	Data    PullsListFilesResponseBody
+	Data    []components.DiffEntry
 }
 
 /*
@@ -2420,7 +2392,7 @@ func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListReviewCommentsResponseBody{}
+	resp.Data = []components.PullRequestReviewComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2573,13 +2545,6 @@ func (r *PullsListReviewCommentsReq) Rel(link RelName, resp *PullsListReviewComm
 }
 
 /*
-PullsListReviewCommentsResponseBody is a response body for PullsListReviewComments
-
-https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
-*/
-type PullsListReviewCommentsResponseBody []components.PullRequestReviewComment
-
-/*
 PullsListReviewCommentsResponse is a response for PullsListReviewComments
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
@@ -2587,7 +2552,7 @@ https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-r
 type PullsListReviewCommentsResponse struct {
 	response
 	request *PullsListReviewCommentsReq
-	Data    PullsListReviewCommentsResponseBody
+	Data    []components.PullRequestReviewComment
 }
 
 /*
@@ -2611,7 +2576,7 @@ func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCom
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListReviewCommentsForRepoResponseBody{}
+	resp.Data = []components.PullRequestReviewComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2763,13 +2728,6 @@ func (r *PullsListReviewCommentsForRepoReq) Rel(link RelName, resp *PullsListRev
 }
 
 /*
-PullsListReviewCommentsForRepoResponseBody is a response body for PullsListReviewCommentsForRepo
-
-https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
-*/
-type PullsListReviewCommentsForRepoResponseBody []components.PullRequestReviewComment
-
-/*
 PullsListReviewCommentsForRepoResponse is a response for PullsListReviewCommentsForRepo
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
@@ -2777,7 +2735,7 @@ https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-reposi
 type PullsListReviewCommentsForRepoResponse struct {
 	response
 	request *PullsListReviewCommentsForRepoReq
-	Data    PullsListReviewCommentsForRepoResponseBody
+	Data    []components.PullRequestReviewComment
 }
 
 /*
@@ -2801,7 +2759,7 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = PullsListReviewsResponseBody{}
+	resp.Data = []components.PullRequestReview{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2904,13 +2862,6 @@ func (r *PullsListReviewsReq) Rel(link RelName, resp *PullsListReviewsResponse) 
 }
 
 /*
-PullsListReviewsResponseBody is a response body for PullsListReviews
-
-https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
-*/
-type PullsListReviewsResponseBody []components.PullRequestReview
-
-/*
 PullsListReviewsResponse is a response for PullsListReviews
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
@@ -2918,7 +2869,7 @@ https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 type PullsListReviewsResponse struct {
 	response
 	request *PullsListReviewsReq
-	Data    PullsListReviewsResponseBody
+	Data    []components.PullRequestReview
 }
 
 /*

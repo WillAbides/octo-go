@@ -674,7 +674,7 @@ func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAut
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsGetCommitAuthorsResponseBody{}
+	resp.Data = []components.PorterAuthor{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -774,13 +774,6 @@ func (r *MigrationsGetCommitAuthorsReq) Rel(link RelName, resp *MigrationsGetCom
 }
 
 /*
-MigrationsGetCommitAuthorsResponseBody is a response body for MigrationsGetCommitAuthors
-
-https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
-*/
-type MigrationsGetCommitAuthorsResponseBody []components.PorterAuthor
-
-/*
 MigrationsGetCommitAuthorsResponse is a response for MigrationsGetCommitAuthors
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
@@ -788,7 +781,7 @@ https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 type MigrationsGetCommitAuthorsResponse struct {
 	response
 	request *MigrationsGetCommitAuthorsReq
-	Data    MigrationsGetCommitAuthorsResponseBody
+	Data    []components.PorterAuthor
 }
 
 /*
@@ -933,7 +926,7 @@ func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsGetLargeFilesResponseBody{}
+	resp.Data = []components.PorterLargeFile{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1023,13 +1016,6 @@ func (r *MigrationsGetLargeFilesReq) Rel(link RelName, resp *MigrationsGetLargeF
 }
 
 /*
-MigrationsGetLargeFilesResponseBody is a response body for MigrationsGetLargeFiles
-
-https://developer.github.com/v3/migrations/source_imports/#get-large-files
-*/
-type MigrationsGetLargeFilesResponseBody []components.PorterLargeFile
-
-/*
 MigrationsGetLargeFilesResponse is a response for MigrationsGetLargeFiles
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
@@ -1037,7 +1023,7 @@ https://developer.github.com/v3/migrations/source_imports/#get-large-files
 type MigrationsGetLargeFilesResponse struct {
 	response
 	request *MigrationsGetLargeFilesReq
-	Data    MigrationsGetLargeFilesResponseBody
+	Data    []components.PorterLargeFile
 }
 
 /*
@@ -1324,7 +1310,7 @@ func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsList
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsListForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Migration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1433,13 +1419,6 @@ func (r *MigrationsListForAuthenticatedUserReq) Rel(link RelName, resp *Migratio
 }
 
 /*
-MigrationsListForAuthenticatedUserResponseBody is a response body for MigrationsListForAuthenticatedUser
-
-https://developer.github.com/v3/migrations/users/#list-user-migrations
-*/
-type MigrationsListForAuthenticatedUserResponseBody []components.Migration
-
-/*
 MigrationsListForAuthenticatedUserResponse is a response for MigrationsListForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
@@ -1447,7 +1426,7 @@ https://developer.github.com/v3/migrations/users/#list-user-migrations
 type MigrationsListForAuthenticatedUserResponse struct {
 	response
 	request *MigrationsListForAuthenticatedUserReq
-	Data    MigrationsListForAuthenticatedUserResponseBody
+	Data    []components.Migration
 }
 
 /*
@@ -1471,7 +1450,7 @@ func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsListForOrgResponseBody{}
+	resp.Data = []components.Migration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1581,13 +1560,6 @@ func (r *MigrationsListForOrgReq) Rel(link RelName, resp *MigrationsListForOrgRe
 }
 
 /*
-MigrationsListForOrgResponseBody is a response body for MigrationsListForOrg
-
-https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
-*/
-type MigrationsListForOrgResponseBody []components.Migration
-
-/*
 MigrationsListForOrgResponse is a response for MigrationsListForOrg
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
@@ -1595,7 +1567,7 @@ https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 type MigrationsListForOrgResponse struct {
 	response
 	request *MigrationsListForOrgReq
-	Data    MigrationsListForOrgResponseBody
+	Data    []components.Migration
 }
 
 /*
@@ -1619,7 +1591,7 @@ func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsListReposForOrgResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1732,13 +1704,6 @@ func (r *MigrationsListReposForOrgReq) Rel(link RelName, resp *MigrationsListRep
 }
 
 /*
-MigrationsListReposForOrgResponseBody is a response body for MigrationsListReposForOrg
-
-https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
-*/
-type MigrationsListReposForOrgResponseBody []components.MinimalRepository
-
-/*
 MigrationsListReposForOrgResponse is a response for MigrationsListReposForOrg
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
@@ -1746,7 +1711,7 @@ https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organiz
 type MigrationsListReposForOrgResponse struct {
 	response
 	request *MigrationsListReposForOrgReq
-	Data    MigrationsListReposForOrgResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -1770,7 +1735,7 @@ func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsListReposForUserResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1882,13 +1847,6 @@ func (r *MigrationsListReposForUserReq) Rel(link RelName, resp *MigrationsListRe
 }
 
 /*
-MigrationsListReposForUserResponseBody is a response body for MigrationsListReposForUser
-
-https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
-*/
-type MigrationsListReposForUserResponseBody []components.MinimalRepository
-
-/*
 MigrationsListReposForUserResponse is a response for MigrationsListReposForUser
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
@@ -1896,7 +1854,7 @@ https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-m
 type MigrationsListReposForUserResponse struct {
 	response
 	request *MigrationsListReposForUserReq
-	Data    MigrationsListReposForUserResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*

@@ -224,23 +224,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "actions/list-repo-workflows",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActionsListRunnerApplicationsForOrgResponseBody{}
+		target := []components.RunnerApplication{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/actions/runners/downloads",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActionsListRunnerApplicationsForOrgResponseBody",
+	name:           "[]components.RunnerApplication",
 	operationID:    "actions/list-runner-applications-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActionsListRunnerApplicationsForRepoResponseBody{}
+		target := []components.RunnerApplication{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/actions/runners/downloads",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActionsListRunnerApplicationsForRepoResponseBody",
+	name:           "[]components.RunnerApplication",
 	operationID:    "actions/list-runner-applications-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -344,83 +344,83 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "activity/get-thread-subscription-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListNotificationsForAuthenticatedUserResponseBody{}
+		target := []components.Thread{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/notifications",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListNotificationsForAuthenticatedUserResponseBody",
+	name:           "[]components.Thread",
 	operationID:    "activity/list-notifications-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListRepoNotificationsForAuthenticatedUserResponseBody{}
+		target := []components.Thread{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/notifications",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListRepoNotificationsForAuthenticatedUserResponseBody",
+	name:           "[]components.Thread",
 	operationID:    "activity/list-repo-notifications-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListReposStarredByAuthenticatedUserResponseBody{}
+		target := []components.StarredRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/starred",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListReposStarredByAuthenticatedUserResponseBody",
+	name:           "[]components.StarredRepository",
 	operationID:    "activity/list-repos-starred-by-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListReposStarredByUserResponseBody{}
+		target := []components.StarredRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/starred",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListReposStarredByUserResponseBody",
+	name:           "[]components.StarredRepository",
 	operationID:    "activity/list-repos-starred-by-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListReposWatchedByUserResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/subscriptions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListReposWatchedByUserResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "activity/list-repos-watched-by-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListStargazersForRepoResponseBody{}
+		target := []components.Stargazer{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/stargazers",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListStargazersForRepoResponseBody",
+	name:           "[]components.Stargazer",
 	operationID:    "activity/list-stargazers-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListWatchedReposForAuthenticatedUserResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/subscriptions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListWatchedReposForAuthenticatedUserResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "activity/list-watched-repos-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ActivityListWatchersForRepoResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/subscribers",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ActivityListWatchersForRepoResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "activity/list-watchers-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -574,23 +574,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "apps/get-user-installation",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListAccountsForPlanResponseBody{}
+		target := []components.MarketplacePurchase{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/marketplace_listing/plans/{plan_id}/accounts",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListAccountsForPlanResponseBody",
+	name:           "[]components.MarketplacePurchase",
 	operationID:    "apps/list-accounts-for-plan",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListAccountsForPlanStubbedResponseBody{}
+		target := []components.MarketplacePurchase{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/marketplace_listing/stubbed/plans/{plan_id}/accounts",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListAccountsForPlanStubbedResponseBody",
+	name:           "[]components.MarketplacePurchase",
 	operationID:    "apps/list-accounts-for-plan-stubbed",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -604,13 +604,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "apps/list-installation-repos-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListInstallationsResponseBody{}
+		target := []components.Installation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/app/installations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListInstallationsResponseBody",
+	name:           "[]components.Installation",
 	operationID:    "apps/list-installations",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -624,23 +624,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "apps/list-installations-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListPlansResponseBody{}
+		target := []components.MarketplaceListingPlan{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/marketplace_listing/plans",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListPlansResponseBody",
+	name:           "[]components.MarketplaceListingPlan",
 	operationID:    "apps/list-plans",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListPlansStubbedResponseBody{}
+		target := []components.MarketplaceListingPlan{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/marketplace_listing/stubbed/plans",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListPlansStubbedResponseBody",
+	name:           "[]components.MarketplaceListingPlan",
 	operationID:    "apps/list-plans-stubbed",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -654,23 +654,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "apps/list-repos-accessible-to-installation",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListSubscriptionsForAuthenticatedUserResponseBody{}
+		target := []components.UserMarketplacePurchase{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/marketplace_purchases",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListSubscriptionsForAuthenticatedUserResponseBody",
+	name:           "[]components.UserMarketplacePurchase",
 	operationID:    "apps/list-subscriptions-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody{}
+		target := []components.UserMarketplacePurchase{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/marketplace_purchases/stubbed",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody",
+	name:           "[]components.UserMarketplacePurchase",
 	operationID:    "apps/list-subscriptions-for-authenticated-user-stubbed",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -824,13 +824,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "checks/get-suite",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ChecksListAnnotationsResponseBody{}
+		target := []components.CheckAnnotation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ChecksListAnnotationsResponseBody",
+	name:           "[]components.CheckAnnotation",
 	operationID:    "checks/list-annotations",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -894,23 +894,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "code-scanning/get-alert",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.CodeScanningListAlertsForRepoResponseBody{}
+		target := []components.CodeScanningAlert{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/code-scanning/alerts",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.CodeScanningListAlertsForRepoResponseBody",
+	name:           "[]components.CodeScanningAlert",
 	operationID:    "code-scanning/list-alerts-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.CodesOfConductGetAllCodesOfConductResponseBody{}
+		target := []components.CodeOfConduct{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/codes_of_conduct",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.CodesOfConductGetAllCodesOfConductResponseBody",
+	name:           "[]components.CodeOfConduct",
 	operationID:    "codes-of-conduct/get-all-codes-of-conduct",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -994,73 +994,73 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "gists/get-revision",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListResponseBody{}
+		target := []components.BaseGist{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/gists",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListResponseBody",
+	name:           "[]components.BaseGist",
 	operationID:    "gists/list",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListCommentsResponseBody{}
+		target := []components.GistComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/gists/{gist_id}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListCommentsResponseBody",
+	name:           "[]components.GistComment",
 	operationID:    "gists/list-comments",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListCommitsResponseBody{}
+		target := []components.GistCommit{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/gists/{gist_id}/commits",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListCommitsResponseBody",
+	name:           "[]components.GistCommit",
 	operationID:    "gists/list-commits",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListForUserResponseBody{}
+		target := []components.BaseGist{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/gists",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListForUserResponseBody",
+	name:           "[]components.BaseGist",
 	operationID:    "gists/list-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListForksResponseBody{}
+		target := []components.GistFull{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/gists/{gist_id}/forks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListForksResponseBody",
+	name:           "[]components.GistFull",
 	operationID:    "gists/list-forks",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListPublicResponseBody{}
+		target := []components.BaseGist{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/gists/public",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListPublicResponseBody",
+	name:           "[]components.BaseGist",
 	operationID:    "gists/list-public",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GistsListStarredResponseBody{}
+		target := []components.BaseGist{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/gists/starred",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GistsListStarredResponseBody",
+	name:           "[]components.BaseGist",
 	operationID:    "gists/list-starred",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1184,13 +1184,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "git/get-tree",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.GitListMatchingRefsResponseBody{}
+		target := []components.GitRef{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/git/matching-refs/{ref}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.GitListMatchingRefsResponseBody",
+	name:           "[]components.GitRef",
 	operationID:    "git/list-matching-refs",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1274,13 +1274,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "issues/add-assignees",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesAddLabelsResponseBody{}
+		target := []components.Label{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/labels",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "octo.IssuesAddLabelsResponseBody",
+	name:           "[]components.Label",
 	operationID:    "issues/add-labels",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1374,143 +1374,143 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "issues/get-milestone",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListResponseBody{}
+		target := []components.Issue{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/issues",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListResponseBody",
+	name:           "[]components.Issue",
 	operationID:    "issues/list",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListAssigneesResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/assignees",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListAssigneesResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "issues/list-assignees",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListCommentsResponseBody{}
+		target := []components.IssueComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListCommentsResponseBody",
+	name:           "[]components.IssueComment",
 	operationID:    "issues/list-comments",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListCommentsForRepoResponseBody{}
+		target := []components.IssueComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListCommentsForRepoResponseBody",
+	name:           "[]components.IssueComment",
 	operationID:    "issues/list-comments-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListEventsResponseBody{}
+		target := []components.IssueEventForIssue{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/events",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListEventsResponseBody",
+	name:           "[]components.IssueEventForIssue",
 	operationID:    "issues/list-events",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListEventsForRepoResponseBody{}
+		target := []components.IssueEvent{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/events",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListEventsForRepoResponseBody",
+	name:           "[]components.IssueEvent",
 	operationID:    "issues/list-events-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListEventsForTimelineResponseBody{}
+		target := []components.IssueEventForIssue{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/timeline",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListEventsForTimelineResponseBody",
+	name:           "[]components.IssueEventForIssue",
 	operationID:    "issues/list-events-for-timeline",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListForAuthenticatedUserResponseBody{}
+		target := []components.Issue{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/issues",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListForAuthenticatedUserResponseBody",
+	name:           "[]components.Issue",
 	operationID:    "issues/list-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListForOrgResponseBody{}
+		target := []components.Issue{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/issues",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListForOrgResponseBody",
+	name:           "[]components.Issue",
 	operationID:    "issues/list-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListForRepoResponseBody{}
+		target := []components.IssueSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListForRepoResponseBody",
+	name:           "[]components.IssueSimple",
 	operationID:    "issues/list-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListLabelsForMilestoneResponseBody{}
+		target := []components.Label{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/milestones/{milestone_number}/labels",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListLabelsForMilestoneResponseBody",
+	name:           "[]components.Label",
 	operationID:    "issues/list-labels-for-milestone",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListLabelsForRepoResponseBody{}
+		target := []components.Label{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/labels",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListLabelsForRepoResponseBody",
+	name:           "[]components.Label",
 	operationID:    "issues/list-labels-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListLabelsOnIssueResponseBody{}
+		target := []components.Label{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/labels",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListLabelsOnIssueResponseBody",
+	name:           "[]components.Label",
 	operationID:    "issues/list-labels-on-issue",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesListMilestonesResponseBody{}
+		target := []components.Milestone{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/milestones",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.IssuesListMilestonesResponseBody",
+	name:           "[]components.Milestone",
 	operationID:    "issues/list-milestones",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1524,23 +1524,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "issues/remove-assignees",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesRemoveLabelResponseBody{}
+		target := []components.Label{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/labels/{name}",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "octo.IssuesRemoveLabelResponseBody",
+	name:           "[]components.Label",
 	operationID:    "issues/remove-label",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.IssuesSetLabelsResponseBody{}
+		target := []components.Label{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/labels",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "octo.IssuesSetLabelsResponseBody",
+	name:           "[]components.Label",
 	operationID:    "issues/set-labels",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1594,13 +1594,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "licenses/get",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.LicensesGetAllCommonlyUsedResponseBody{}
+		target := []components.LicenseSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/licenses",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.LicensesGetAllCommonlyUsedResponseBody",
+	name:           "[]components.LicenseSimple",
 	operationID:    "licenses/get-all-commonly-used",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1624,13 +1624,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "meta/get",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsGetCommitAuthorsResponseBody{}
+		target := []components.PorterAuthor{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/import/authors",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.MigrationsGetCommitAuthorsResponseBody",
+	name:           "[]components.PorterAuthor",
 	operationID:    "migrations/get-commit-authors",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1644,13 +1644,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "migrations/get-import-status",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsGetLargeFilesResponseBody{}
+		target := []components.PorterLargeFile{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/import/large_files",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.MigrationsGetLargeFilesResponseBody",
+	name:           "[]components.PorterLargeFile",
 	operationID:    "migrations/get-large-files",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1674,43 +1674,43 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "migrations/get-status-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsListForAuthenticatedUserResponseBody{}
+		target := []components.Migration{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/migrations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.MigrationsListForAuthenticatedUserResponseBody",
+	name:           "[]components.Migration",
 	operationID:    "migrations/list-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsListForOrgResponseBody{}
+		target := []components.Migration{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/migrations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.MigrationsListForOrgResponseBody",
+	name:           "[]components.Migration",
 	operationID:    "migrations/list-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsListReposForOrgResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/migrations/{migration_id}/repositories",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.MigrationsListReposForOrgResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "migrations/list-repos-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.MigrationsListReposForUserResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/migrations/{migration_id}/repositories",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.MigrationsListReposForUserResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "migrations/list-repos-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1844,23 +1844,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OauthAuthorizationsListAuthorizationsResponseBody{}
+		target := []components.Authorization{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/authorizations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OauthAuthorizationsListAuthorizationsResponseBody",
+	name:           "[]components.Authorization",
 	operationID:    "oauth-authorizations/list-authorizations",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OauthAuthorizationsListGrantsResponseBody{}
+		target := []components.ApplicationGrant{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/applications/grants",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OauthAuthorizationsListGrantsResponseBody",
+	name:           "[]components.ApplicationGrant",
 	operationID:    "oauth-authorizations/list-grants",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1934,13 +1934,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "orgs/get-webhook",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListResponseBody{}
+		target := []components.OrganizationSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/organizations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListResponseBody",
+	name:           "[]components.OrganizationSimple",
 	operationID:    "orgs/list",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -1954,113 +1954,113 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "orgs/list-app-installations",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListBlockedUsersResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/blocks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListBlockedUsersResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "orgs/list-blocked-users",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListForAuthenticatedUserResponseBody{}
+		target := []components.OrganizationSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/orgs",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListForAuthenticatedUserResponseBody",
+	name:           "[]components.OrganizationSimple",
 	operationID:    "orgs/list-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListForUserResponseBody{}
+		target := []components.OrganizationSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/orgs",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListForUserResponseBody",
+	name:           "[]components.OrganizationSimple",
 	operationID:    "orgs/list-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListInvitationTeamsResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/invitations/{invitation_id}/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListInvitationTeamsResponseBody",
+	name:           "[]components.Team",
 	operationID:    "orgs/list-invitation-teams",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListMembersResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/members",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListMembersResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "orgs/list-members",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListMembershipsForAuthenticatedUserResponseBody{}
+		target := []components.OrgMembership{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/memberships/orgs",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListMembershipsForAuthenticatedUserResponseBody",
+	name:           "[]components.OrgMembership",
 	operationID:    "orgs/list-memberships-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListOutsideCollaboratorsResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/outside_collaborators",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListOutsideCollaboratorsResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "orgs/list-outside-collaborators",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListPendingInvitationsResponseBody{}
+		target := []components.OrganizationInvitation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/invitations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListPendingInvitationsResponseBody",
+	name:           "[]components.OrganizationInvitation",
 	operationID:    "orgs/list-pending-invitations",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListPublicMembersResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/public_members",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListPublicMembersResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "orgs/list-public-members",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListSamlSsoAuthorizationsResponseBody{}
+		target := []components.CredentialAuthorization{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/credential-authorizations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListSamlSsoAuthorizationsResponseBody",
+	name:           "[]components.CredentialAuthorization",
 	operationID:    "orgs/list-saml-sso-authorizations",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.OrgsListWebhooksResponseBody{}
+		target := []components.OrgHook{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/hooks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.OrgsListWebhooksResponseBody",
+	name:           "[]components.OrgHook",
 	operationID:    "orgs/list-webhooks",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -2194,63 +2194,63 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "projects/get-permission-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsListCardsResponseBody{}
+		target := []components.ProjectCard{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/projects/columns/{column_id}/cards",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ProjectsListCardsResponseBody",
+	name:           "[]components.ProjectCard",
 	operationID:    "projects/list-cards",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsListCollaboratorsResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/projects/{project_id}/collaborators",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ProjectsListCollaboratorsResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "projects/list-collaborators",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsListColumnsResponseBody{}
+		target := []components.ProjectColumn{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/projects/{project_id}/columns",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ProjectsListColumnsResponseBody",
+	name:           "[]components.ProjectColumn",
 	operationID:    "projects/list-columns",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsListForOrgResponseBody{}
+		target := []components.Project{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/projects",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ProjectsListForOrgResponseBody",
+	name:           "[]components.Project",
 	operationID:    "projects/list-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsListForRepoResponseBody{}
+		target := []components.Project{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/projects",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ProjectsListForRepoResponseBody",
+	name:           "[]components.Project",
 	operationID:    "projects/list-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ProjectsListForUserResponseBody{}
+		target := []components.Project{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/projects",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ProjectsListForUserResponseBody",
+	name:           "[]components.Project",
 	operationID:    "projects/list-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -2374,43 +2374,43 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "pulls/get-review-comment",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListResponseBody{}
+		target := []components.PullRequestSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListResponseBody",
+	name:           "[]components.PullRequestSimple",
 	operationID:    "pulls/list",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListCommentsForReviewResponseBody{}
+		target := []components.ReviewComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListCommentsForReviewResponseBody",
+	name:           "[]components.ReviewComment",
 	operationID:    "pulls/list-comments-for-review",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListCommitsResponseBody{}
+		target := []components.SimpleCommit{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/commits",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListCommitsResponseBody",
+	name:           "[]components.SimpleCommit",
 	operationID:    "pulls/list-commits",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListFilesResponseBody{}
+		target := []components.DiffEntry{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/files",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListFilesResponseBody",
+	name:           "[]components.DiffEntry",
 	operationID:    "pulls/list-files",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -2424,33 +2424,33 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "pulls/list-requested-reviewers",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListReviewCommentsResponseBody{}
+		target := []components.PullRequestReviewComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListReviewCommentsResponseBody",
+	name:           "[]components.PullRequestReviewComment",
 	operationID:    "pulls/list-review-comments",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListReviewCommentsForRepoResponseBody{}
+		target := []components.PullRequestReviewComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListReviewCommentsForRepoResponseBody",
+	name:           "[]components.PullRequestReviewComment",
 	operationID:    "pulls/list-review-comments-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.PullsListReviewsResponseBody{}
+		target := []components.PullRequestReview{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.PullsListReviewsResponseBody",
+	name:           "[]components.PullRequestReview",
 	operationID:    "pulls/list-reviews",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -2644,93 +2644,93 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "reactions/create-for-team-discussion-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForCommitCommentResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForCommitCommentResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-commit-comment",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForIssueResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForIssueResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-issue",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForIssueCommentResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForIssueCommentResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-issue-comment",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForPullRequestReviewCommentResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForPullRequestReviewCommentResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-pull-request-review-comment",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForTeamDiscussionCommentInOrgResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForTeamDiscussionCommentInOrgResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-team-discussion-comment-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForTeamDiscussionCommentLegacyResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForTeamDiscussionCommentLegacyResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-team-discussion-comment-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForTeamDiscussionInOrgResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForTeamDiscussionInOrgResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-team-discussion-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReactionsListForTeamDiscussionLegacyResponseBody{}
+		target := []components.Reaction{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/discussions/{discussion_number}/reactions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReactionsListForTeamDiscussionLegacyResponseBody",
+	name:           "[]components.Reaction",
 	operationID:    "reactions/list-for-team-discussion-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddAppAccessRestrictionsResponseBody{}
+		target := []components.Integration{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "octo.ReposAddAppAccessRestrictionsResponseBody",
+	name:           "[]components.Integration",
 	operationID:    "repos/add-app-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -2754,23 +2754,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/add-status-check-contexts",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddTeamAccessRestrictionsResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "octo.ReposAddTeamAccessRestrictionsResponseBody",
+	name:           "[]components.Team",
 	operationID:    "repos/add-team-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposAddUserAccessRestrictionsResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
 	httpMethod:     "POST",
 	httpStatusCode: 200,
-	name:           "octo.ReposAddUserAccessRestrictionsResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "repos/add-user-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -2994,13 +2994,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-all-topics",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetAppsWithAccessToProtectedBranchResponseBody{}
+		target := []components.Integration{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetAppsWithAccessToProtectedBranchResponseBody",
+	name:           "[]components.Integration",
 	operationID:    "repos/get-apps-with-access-to-protected-branch",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3034,13 +3034,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-clones",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetCodeFrequencyStatsResponseBody{}
+		target := []components.CodeFrequencyStat{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/stats/code_frequency",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetCodeFrequencyStatsResponseBody",
+	name:           "[]components.CodeFrequencyStat",
 	operationID:    "repos/get-code-frequency-stats",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3074,13 +3074,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-commit",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetCommitActivityStatsResponseBody{}
+		target := []components.CommitActivity{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/stats/commit_activity",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetCommitActivityStatsResponseBody",
+	name:           "[]components.CommitActivity",
 	operationID:    "repos/get-commit-activity-stats",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3124,13 +3124,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-content",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetContributorsStatsResponseBody{}
+		target := []components.ContributorActivity{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/stats/contributors",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetContributorsStatsResponseBody",
+	name:           "[]components.ContributorActivity",
 	operationID:    "repos/get-contributors-stats",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3224,13 +3224,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-pull-request-review-protection",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetPunchCardStatsResponseBody{}
+		target := []components.CodeFrequencyStat{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/stats/punch_card",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetPunchCardStatsResponseBody",
+	name:           "[]components.CodeFrequencyStat",
 	operationID:    "repos/get-punch-card-stats",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3284,43 +3284,43 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-status-checks-protection",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetTeamsWithAccessToProtectedBranchResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetTeamsWithAccessToProtectedBranchResponseBody",
+	name:           "[]components.Team",
 	operationID:    "repos/get-teams-with-access-to-protected-branch",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetTopPathsResponseBody{}
+		target := []components.ContentTraffic{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/traffic/popular/paths",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetTopPathsResponseBody",
+	name:           "[]components.ContentTraffic",
 	operationID:    "repos/get-top-paths",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetTopReferrersResponseBody{}
+		target := []components.ReferrerTraffic{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/traffic/popular/referrers",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetTopReferrersResponseBody",
+	name:           "[]components.ReferrerTraffic",
 	operationID:    "repos/get-top-referrers",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposGetUsersWithAccessToProtectedBranchResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposGetUsersWithAccessToProtectedBranchResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "repos/get-users-with-access-to-protected-branch",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3344,173 +3344,173 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/get-webhook",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListBranchesResponseBody{}
+		target := []components.ShortBranch{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListBranchesResponseBody",
+	name:           "[]components.ShortBranch",
 	operationID:    "repos/list-branches",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListBranchesForHeadCommitResponseBody{}
+		target := []components.BranchShort{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListBranchesForHeadCommitResponseBody",
+	name:           "[]components.BranchShort",
 	operationID:    "repos/list-branches-for-head-commit",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListCollaboratorsResponseBody{}
+		target := []components.Collaborator{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/collaborators",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListCollaboratorsResponseBody",
+	name:           "[]components.Collaborator",
 	operationID:    "repos/list-collaborators",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListCommentsForCommitResponseBody{}
+		target := []components.CommitComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/commits/{commit_sha}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListCommentsForCommitResponseBody",
+	name:           "[]components.CommitComment",
 	operationID:    "repos/list-comments-for-commit",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListCommitCommentsForRepoResponseBody{}
+		target := []components.CommitComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListCommitCommentsForRepoResponseBody",
+	name:           "[]components.CommitComment",
 	operationID:    "repos/list-commit-comments-for-repo",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListCommitStatusesForRefResponseBody{}
+		target := []components.Status{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/commits/{ref}/statuses",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListCommitStatusesForRefResponseBody",
+	name:           "[]components.Status",
 	operationID:    "repos/list-commit-statuses-for-ref",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListCommitsResponseBody{}
+		target := []components.SimpleCommit{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/commits",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListCommitsResponseBody",
+	name:           "[]components.SimpleCommit",
 	operationID:    "repos/list-commits",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListContributorsResponseBody{}
+		target := []components.Contributor{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/contributors",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListContributorsResponseBody",
+	name:           "[]components.Contributor",
 	operationID:    "repos/list-contributors",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListDeployKeysResponseBody{}
+		target := []components.DeployKey{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/keys",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListDeployKeysResponseBody",
+	name:           "[]components.DeployKey",
 	operationID:    "repos/list-deploy-keys",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListDeploymentStatusesResponseBody{}
+		target := []components.DeploymentStatus{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListDeploymentStatusesResponseBody",
+	name:           "[]components.DeploymentStatus",
 	operationID:    "repos/list-deployment-statuses",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListDeploymentsResponseBody{}
+		target := []components.Deployment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/deployments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListDeploymentsResponseBody",
+	name:           "[]components.Deployment",
 	operationID:    "repos/list-deployments",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListForAuthenticatedUserResponseBody{}
+		target := []components.Repository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/repos",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListForAuthenticatedUserResponseBody",
+	name:           "[]components.Repository",
 	operationID:    "repos/list-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListForOrgResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/repos",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListForOrgResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "repos/list-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListForUserResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/repos",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListForUserResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "repos/list-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListForksResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/forks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListForksResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "repos/list-forks",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListInvitationsResponseBody{}
+		target := []components.RepositoryInvitation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/invitations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListInvitationsResponseBody",
+	name:           "[]components.RepositoryInvitation",
 	operationID:    "repos/list-invitations",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListInvitationsForAuthenticatedUserResponseBody{}
+		target := []components.RepositoryInvitation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/repository_invitations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListInvitationsForAuthenticatedUserResponseBody",
+	name:           "[]components.RepositoryInvitation",
 	operationID:    "repos/list-invitations-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3524,83 +3524,83 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/list-languages",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListPagesBuildsResponseBody{}
+		target := []components.PageBuild{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/pages/builds",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListPagesBuildsResponseBody",
+	name:           "[]components.PageBuild",
 	operationID:    "repos/list-pages-builds",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListPublicResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repositories",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListPublicResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "repos/list-public",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListPullRequestsAssociatedWithCommitResponseBody{}
+		target := []components.PullRequestSimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/commits/{commit_sha}/pulls",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListPullRequestsAssociatedWithCommitResponseBody",
+	name:           "[]components.PullRequestSimple",
 	operationID:    "repos/list-pull-requests-associated-with-commit",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListReleaseAssetsResponseBody{}
+		target := []components.ReleaseAsset{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/releases/{release_id}/assets",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListReleaseAssetsResponseBody",
+	name:           "[]components.ReleaseAsset",
 	operationID:    "repos/list-release-assets",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListReleasesResponseBody{}
+		target := []components.Release{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/releases",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListReleasesResponseBody",
+	name:           "[]components.Release",
 	operationID:    "repos/list-releases",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListTagsResponseBody{}
+		target := []components.Tag{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/tags",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListTagsResponseBody",
+	name:           "[]components.Tag",
 	operationID:    "repos/list-tags",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListTeamsResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListTeamsResponseBody",
+	name:           "[]components.Team",
 	operationID:    "repos/list-teams",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposListWebhooksResponseBody{}
+		target := []components.Hook{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/hooks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.ReposListWebhooksResponseBody",
+	name:           "[]components.Hook",
 	operationID:    "repos/list-webhooks",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3614,13 +3614,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/merge",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveAppAccessRestrictionsResponseBody{}
+		target := []components.Integration{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "octo.ReposRemoveAppAccessRestrictionsResponseBody",
+	name:           "[]components.Integration",
 	operationID:    "repos/remove-app-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3634,23 +3634,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/remove-status-check-contexts",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveTeamAccessRestrictionsResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "octo.ReposRemoveTeamAccessRestrictionsResponseBody",
+	name:           "[]components.Team",
 	operationID:    "repos/remove-team-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposRemoveUserAccessRestrictionsResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
 	httpMethod:     "DELETE",
 	httpStatusCode: 200,
-	name:           "octo.ReposRemoveUserAccessRestrictionsResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "repos/remove-user-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3684,13 +3684,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/set-admin-branch-protection",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposSetAppAccessRestrictionsResponseBody{}
+		target := []components.Integration{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "octo.ReposSetAppAccessRestrictionsResponseBody",
+	name:           "[]components.Integration",
 	operationID:    "repos/set-app-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -3704,23 +3704,23 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "repos/set-status-check-contexts",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposSetTeamAccessRestrictionsResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "octo.ReposSetTeamAccessRestrictionsResponseBody",
+	name:           "[]components.Team",
 	operationID:    "repos/set-team-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.ReposSetUserAccessRestrictionsResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
 	httpMethod:     "PUT",
 	httpStatusCode: 200,
-	name:           "octo.ReposSetUserAccessRestrictionsResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "repos/set-user-access-restrictions",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -4154,83 +4154,83 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "teams/get-membership-for-user-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListResponseBody",
+	name:           "[]components.Team",
 	operationID:    "teams/list",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListChildInOrgResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListChildInOrgResponseBody",
+	name:           "[]components.Team",
 	operationID:    "teams/list-child-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListChildLegacyResponseBody{}
+		target := []components.Team{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListChildLegacyResponseBody",
+	name:           "[]components.Team",
 	operationID:    "teams/list-child-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListDiscussionCommentsInOrgResponseBody{}
+		target := []components.TeamDiscussionComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListDiscussionCommentsInOrgResponseBody",
+	name:           "[]components.TeamDiscussionComment",
 	operationID:    "teams/list-discussion-comments-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListDiscussionCommentsLegacyResponseBody{}
+		target := []components.TeamDiscussionComment{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/discussions/{discussion_number}/comments",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListDiscussionCommentsLegacyResponseBody",
+	name:           "[]components.TeamDiscussionComment",
 	operationID:    "teams/list-discussion-comments-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListDiscussionsInOrgResponseBody{}
+		target := []components.TeamDiscussion{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/discussions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListDiscussionsInOrgResponseBody",
+	name:           "[]components.TeamDiscussion",
 	operationID:    "teams/list-discussions-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListDiscussionsLegacyResponseBody{}
+		target := []components.TeamDiscussion{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/discussions",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListDiscussionsLegacyResponseBody",
+	name:           "[]components.TeamDiscussion",
 	operationID:    "teams/list-discussions-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListForAuthenticatedUserResponseBody{}
+		target := []components.TeamFull{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/teams",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListForAuthenticatedUserResponseBody",
+	name:           "[]components.TeamFull",
 	operationID:    "teams/list-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -4264,83 +4264,83 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "teams/list-idp-groups-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListMembersInOrgResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/members",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListMembersInOrgResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "teams/list-members-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListMembersLegacyResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/members",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListMembersLegacyResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "teams/list-members-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListPendingInvitationsInOrgResponseBody{}
+		target := []components.OrganizationInvitation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/invitations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListPendingInvitationsInOrgResponseBody",
+	name:           "[]components.OrganizationInvitation",
 	operationID:    "teams/list-pending-invitations-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListPendingInvitationsLegacyResponseBody{}
+		target := []components.OrganizationInvitation{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/invitations",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListPendingInvitationsLegacyResponseBody",
+	name:           "[]components.OrganizationInvitation",
 	operationID:    "teams/list-pending-invitations-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListProjectsInOrgResponseBody{}
+		target := []components.TeamProject{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/projects",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListProjectsInOrgResponseBody",
+	name:           "[]components.TeamProject",
 	operationID:    "teams/list-projects-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListProjectsLegacyResponseBody{}
+		target := []components.TeamProject{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/projects",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListProjectsLegacyResponseBody",
+	name:           "[]components.TeamProject",
 	operationID:    "teams/list-projects-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListReposInOrgResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/orgs/{org}/teams/{team_slug}/repos",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListReposInOrgResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "teams/list-repos-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.TeamsListReposLegacyResponseBody{}
+		target := []components.MinimalRepository{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/teams/{team_id}/repos",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.TeamsListReposLegacyResponseBody",
+	name:           "[]components.MinimalRepository",
 	operationID:    "teams/list-repos-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -4404,13 +4404,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "teams/update-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersAddEmailForAuthenticatedResponseBody{}
+		target := []components.Email{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/emails",
 	httpMethod:     "POST",
 	httpStatusCode: 201,
-	name:           "octo.UsersAddEmailForAuthenticatedResponseBody",
+	name:           "[]components.Email",
 	operationID:    "users/add-email-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
@@ -4484,133 +4484,133 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "users/get-public-ssh-key-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "users/list",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListBlockedByAuthenticatedResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/blocks",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListBlockedByAuthenticatedResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "users/list-blocked-by-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListEmailsForAuthenticatedResponseBody{}
+		target := []components.Email{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/emails",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListEmailsForAuthenticatedResponseBody",
+	name:           "[]components.Email",
 	operationID:    "users/list-emails-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListFollowedByAuthenticatedResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/following",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListFollowedByAuthenticatedResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "users/list-followed-by-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListFollowersForAuthenticatedUserResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/followers",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListFollowersForAuthenticatedUserResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "users/list-followers-for-authenticated-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListFollowersForUserResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/followers",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListFollowersForUserResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "users/list-followers-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListFollowingForUserResponseBody{}
+		target := []components.SimpleUser{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/following",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListFollowingForUserResponseBody",
+	name:           "[]components.SimpleUser",
 	operationID:    "users/list-following-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListGpgKeysForAuthenticatedResponseBody{}
+		target := []components.GpgKey{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/gpg_keys",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListGpgKeysForAuthenticatedResponseBody",
+	name:           "[]components.GpgKey",
 	operationID:    "users/list-gpg-keys-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListGpgKeysForUserResponseBody{}
+		target := []components.GpgKey{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/gpg_keys",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListGpgKeysForUserResponseBody",
+	name:           "[]components.GpgKey",
 	operationID:    "users/list-gpg-keys-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListPublicEmailsForAuthenticatedResponseBody{}
+		target := []components.Email{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/public_emails",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListPublicEmailsForAuthenticatedResponseBody",
+	name:           "[]components.Email",
 	operationID:    "users/list-public-emails-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListPublicKeysForUserResponseBody{}
+		target := []components.KeySimple{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/users/{username}/keys",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListPublicKeysForUserResponseBody",
+	name:           "[]components.KeySimple",
 	operationID:    "users/list-public-keys-for-user",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersListPublicSshKeysForAuthenticatedResponseBody{}
+		target := []components.Key{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/keys",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.UsersListPublicSshKeysForAuthenticatedResponseBody",
+	name:           "[]components.Key",
 	operationID:    "users/list-public-ssh-keys-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := octo.UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody{}
+		target := []components.Email{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/user/email/visibility",
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
-	name:           "octo.UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody",
+	name:           "[]components.Email",
 	operationID:    "users/set-primary-email-visibility-for-authenticated",
 }, {
 	decode: func(decoder *json.Decoder) error {

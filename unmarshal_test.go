@@ -26,9 +26,8 @@ var unmarshalResponseBodyTests []unmarshalResponseBodyTest
 
 func TestUnmarshalResponseBody(t *testing.T) {
 	skippers := map[string]bool{
-		"octo.ActivityListStargazersForRepoResponseBody":               true,
-		"octo.ActivityListReposStarredByAuthenticatedUserResponseBody": true,
-		"octo.ActivityListReposStarredByUserResponseBody":              true,
+		"[]components.StarredRepository": true,
+		"[]components.Stargazer":         true,
 	}
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")

@@ -4555,7 +4555,7 @@ func TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*T
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4656,13 +4656,6 @@ func (r *TeamsListReq) Rel(link RelName, resp *TeamsListResponse) bool {
 }
 
 /*
-TeamsListResponseBody is a response body for TeamsList
-
-https://developer.github.com/v3/teams/#list-teams
-*/
-type TeamsListResponseBody []components.Team
-
-/*
 TeamsListResponse is a response for TeamsList
 
 https://developer.github.com/v3/teams/#list-teams
@@ -4670,7 +4663,7 @@ https://developer.github.com/v3/teams/#list-teams
 type TeamsListResponse struct {
 	response
 	request *TeamsListReq
-	Data    TeamsListResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -4694,7 +4687,7 @@ func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListChildInOrgResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4798,13 +4791,6 @@ func (r *TeamsListChildInOrgReq) Rel(link RelName, resp *TeamsListChildInOrgResp
 }
 
 /*
-TeamsListChildInOrgResponseBody is a response body for TeamsListChildInOrg
-
-https://developer.github.com/v3/teams/#list-child-teams
-*/
-type TeamsListChildInOrgResponseBody []components.Team
-
-/*
 TeamsListChildInOrgResponse is a response for TeamsListChildInOrg
 
 https://developer.github.com/v3/teams/#list-child-teams
@@ -4812,7 +4798,7 @@ https://developer.github.com/v3/teams/#list-child-teams
 type TeamsListChildInOrgResponse struct {
 	response
 	request *TeamsListChildInOrgReq
-	Data    TeamsListChildInOrgResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -4836,7 +4822,7 @@ func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListChildLegacyResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4937,13 +4923,6 @@ func (r *TeamsListChildLegacyReq) Rel(link RelName, resp *TeamsListChildLegacyRe
 }
 
 /*
-TeamsListChildLegacyResponseBody is a response body for TeamsListChildLegacy
-
-https://developer.github.com/v3/teams/#list-child-teams-legacy
-*/
-type TeamsListChildLegacyResponseBody []components.Team
-
-/*
 TeamsListChildLegacyResponse is a response for TeamsListChildLegacy
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
@@ -4951,7 +4930,7 @@ https://developer.github.com/v3/teams/#list-child-teams-legacy
 type TeamsListChildLegacyResponse struct {
 	response
 	request *TeamsListChildLegacyReq
-	Data    TeamsListChildLegacyResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -4975,7 +4954,7 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListDiscussionCommentsInOrgResponseBody{}
+	resp.Data = []components.TeamDiscussionComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5100,13 +5079,6 @@ func (r *TeamsListDiscussionCommentsInOrgReq) Rel(link RelName, resp *TeamsListD
 }
 
 /*
-TeamsListDiscussionCommentsInOrgResponseBody is a response body for TeamsListDiscussionCommentsInOrg
-
-https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
-*/
-type TeamsListDiscussionCommentsInOrgResponseBody []components.TeamDiscussionComment
-
-/*
 TeamsListDiscussionCommentsInOrgResponse is a response for TeamsListDiscussionCommentsInOrg
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
@@ -5114,7 +5086,7 @@ https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comme
 type TeamsListDiscussionCommentsInOrgResponse struct {
 	response
 	request *TeamsListDiscussionCommentsInOrgReq
-	Data    TeamsListDiscussionCommentsInOrgResponseBody
+	Data    []components.TeamDiscussionComment
 }
 
 /*
@@ -5138,7 +5110,7 @@ func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscus
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListDiscussionCommentsLegacyResponseBody{}
+	resp.Data = []components.TeamDiscussionComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5260,13 +5232,6 @@ func (r *TeamsListDiscussionCommentsLegacyReq) Rel(link RelName, resp *TeamsList
 }
 
 /*
-TeamsListDiscussionCommentsLegacyResponseBody is a response body for TeamsListDiscussionCommentsLegacy
-
-https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
-*/
-type TeamsListDiscussionCommentsLegacyResponseBody []components.TeamDiscussionComment
-
-/*
 TeamsListDiscussionCommentsLegacyResponse is a response for TeamsListDiscussionCommentsLegacy
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
@@ -5274,7 +5239,7 @@ https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comme
 type TeamsListDiscussionCommentsLegacyResponse struct {
 	response
 	request *TeamsListDiscussionCommentsLegacyReq
-	Data    TeamsListDiscussionCommentsLegacyResponseBody
+	Data    []components.TeamDiscussionComment
 }
 
 /*
@@ -5298,7 +5263,7 @@ func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListDiscussionsInOrgResponseBody{}
+	resp.Data = []components.TeamDiscussion{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5422,13 +5387,6 @@ func (r *TeamsListDiscussionsInOrgReq) Rel(link RelName, resp *TeamsListDiscussi
 }
 
 /*
-TeamsListDiscussionsInOrgResponseBody is a response body for TeamsListDiscussionsInOrg
-
-https://developer.github.com/v3/teams/discussions/#list-discussions
-*/
-type TeamsListDiscussionsInOrgResponseBody []components.TeamDiscussion
-
-/*
 TeamsListDiscussionsInOrgResponse is a response for TeamsListDiscussionsInOrg
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
@@ -5436,7 +5394,7 @@ https://developer.github.com/v3/teams/discussions/#list-discussions
 type TeamsListDiscussionsInOrgResponse struct {
 	response
 	request *TeamsListDiscussionsInOrgReq
-	Data    TeamsListDiscussionsInOrgResponseBody
+	Data    []components.TeamDiscussion
 }
 
 /*
@@ -5460,7 +5418,7 @@ func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListDiscussionsLegacyResponseBody{}
+	resp.Data = []components.TeamDiscussion{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5581,13 +5539,6 @@ func (r *TeamsListDiscussionsLegacyReq) Rel(link RelName, resp *TeamsListDiscuss
 }
 
 /*
-TeamsListDiscussionsLegacyResponseBody is a response body for TeamsListDiscussionsLegacy
-
-https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
-*/
-type TeamsListDiscussionsLegacyResponseBody []components.TeamDiscussion
-
-/*
 TeamsListDiscussionsLegacyResponse is a response for TeamsListDiscussionsLegacy
 
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
@@ -5595,7 +5546,7 @@ https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 type TeamsListDiscussionsLegacyResponse struct {
 	response
 	request *TeamsListDiscussionsLegacyReq
-	Data    TeamsListDiscussionsLegacyResponseBody
+	Data    []components.TeamDiscussion
 }
 
 /*
@@ -5619,7 +5570,7 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListForAuthenticatedUserResponseBody{}
+	resp.Data = []components.TeamFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5719,13 +5670,6 @@ func (r *TeamsListForAuthenticatedUserReq) Rel(link RelName, resp *TeamsListForA
 }
 
 /*
-TeamsListForAuthenticatedUserResponseBody is a response body for TeamsListForAuthenticatedUser
-
-https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
-*/
-type TeamsListForAuthenticatedUserResponseBody []components.TeamFull
-
-/*
 TeamsListForAuthenticatedUserResponse is a response for TeamsListForAuthenticatedUser
 
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
@@ -5733,7 +5677,7 @@ https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 type TeamsListForAuthenticatedUserResponse struct {
 	response
 	request *TeamsListForAuthenticatedUserReq
-	Data    TeamsListForAuthenticatedUserResponseBody
+	Data    []components.TeamFull
 }
 
 /*
@@ -6132,7 +6076,7 @@ func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListMembersInOrgResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6247,13 +6191,6 @@ func (r *TeamsListMembersInOrgReq) Rel(link RelName, resp *TeamsListMembersInOrg
 }
 
 /*
-TeamsListMembersInOrgResponseBody is a response body for TeamsListMembersInOrg
-
-https://developer.github.com/v3/teams/members/#list-team-members
-*/
-type TeamsListMembersInOrgResponseBody []components.SimpleUser
-
-/*
 TeamsListMembersInOrgResponse is a response for TeamsListMembersInOrg
 
 https://developer.github.com/v3/teams/members/#list-team-members
@@ -6261,7 +6198,7 @@ https://developer.github.com/v3/teams/members/#list-team-members
 type TeamsListMembersInOrgResponse struct {
 	response
 	request *TeamsListMembersInOrgReq
-	Data    TeamsListMembersInOrgResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -6285,7 +6222,7 @@ func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListMembersLegacyResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6397,13 +6334,6 @@ func (r *TeamsListMembersLegacyReq) Rel(link RelName, resp *TeamsListMembersLega
 }
 
 /*
-TeamsListMembersLegacyResponseBody is a response body for TeamsListMembersLegacy
-
-https://developer.github.com/v3/teams/members/#list-team-members-legacy
-*/
-type TeamsListMembersLegacyResponseBody []components.SimpleUser
-
-/*
 TeamsListMembersLegacyResponse is a response for TeamsListMembersLegacy
 
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
@@ -6411,7 +6341,7 @@ https://developer.github.com/v3/teams/members/#list-team-members-legacy
 type TeamsListMembersLegacyResponse struct {
 	response
 	request *TeamsListMembersLegacyReq
-	Data    TeamsListMembersLegacyResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -6435,7 +6365,7 @@ func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPending
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListPendingInvitationsInOrgResponseBody{}
+	resp.Data = []components.OrganizationInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6539,13 +6469,6 @@ func (r *TeamsListPendingInvitationsInOrgReq) Rel(link RelName, resp *TeamsListP
 }
 
 /*
-TeamsListPendingInvitationsInOrgResponseBody is a response body for TeamsListPendingInvitationsInOrg
-
-https://developer.github.com/v3/teams/members/#list-pending-team-invitations
-*/
-type TeamsListPendingInvitationsInOrgResponseBody []components.OrganizationInvitation
-
-/*
 TeamsListPendingInvitationsInOrgResponse is a response for TeamsListPendingInvitationsInOrg
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
@@ -6553,7 +6476,7 @@ https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 type TeamsListPendingInvitationsInOrgResponse struct {
 	response
 	request *TeamsListPendingInvitationsInOrgReq
-	Data    TeamsListPendingInvitationsInOrgResponseBody
+	Data    []components.OrganizationInvitation
 }
 
 /*
@@ -6577,7 +6500,7 @@ func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendin
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListPendingInvitationsLegacyResponseBody{}
+	resp.Data = []components.OrganizationInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6678,13 +6601,6 @@ func (r *TeamsListPendingInvitationsLegacyReq) Rel(link RelName, resp *TeamsList
 }
 
 /*
-TeamsListPendingInvitationsLegacyResponseBody is a response body for TeamsListPendingInvitationsLegacy
-
-https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
-*/
-type TeamsListPendingInvitationsLegacyResponseBody []components.OrganizationInvitation
-
-/*
 TeamsListPendingInvitationsLegacyResponse is a response for TeamsListPendingInvitationsLegacy
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
@@ -6692,7 +6608,7 @@ https://developer.github.com/v3/teams/members/#list-pending-team-invitations-leg
 type TeamsListPendingInvitationsLegacyResponse struct {
 	response
 	request *TeamsListPendingInvitationsLegacyReq
-	Data    TeamsListPendingInvitationsLegacyResponseBody
+	Data    []components.OrganizationInvitation
 }
 
 /*
@@ -6716,7 +6632,7 @@ func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListProjectsInOrgResponseBody{}
+	resp.Data = []components.TeamProject{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6835,13 +6751,6 @@ func (r *TeamsListProjectsInOrgReq) Rel(link RelName, resp *TeamsListProjectsInO
 }
 
 /*
-TeamsListProjectsInOrgResponseBody is a response body for TeamsListProjectsInOrg
-
-https://developer.github.com/v3/teams/#list-team-projects
-*/
-type TeamsListProjectsInOrgResponseBody []components.TeamProject
-
-/*
 TeamsListProjectsInOrgResponse is a response for TeamsListProjectsInOrg
 
 https://developer.github.com/v3/teams/#list-team-projects
@@ -6849,7 +6758,7 @@ https://developer.github.com/v3/teams/#list-team-projects
 type TeamsListProjectsInOrgResponse struct {
 	response
 	request *TeamsListProjectsInOrgReq
-	Data    TeamsListProjectsInOrgResponseBody
+	Data    []components.TeamProject
 }
 
 /*
@@ -6873,7 +6782,7 @@ func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListProjectsLegacyResponseBody{}
+	resp.Data = []components.TeamProject{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6989,13 +6898,6 @@ func (r *TeamsListProjectsLegacyReq) Rel(link RelName, resp *TeamsListProjectsLe
 }
 
 /*
-TeamsListProjectsLegacyResponseBody is a response body for TeamsListProjectsLegacy
-
-https://developer.github.com/v3/teams/#list-team-projects-legacy
-*/
-type TeamsListProjectsLegacyResponseBody []components.TeamProject
-
-/*
 TeamsListProjectsLegacyResponse is a response for TeamsListProjectsLegacy
 
 https://developer.github.com/v3/teams/#list-team-projects-legacy
@@ -7003,7 +6905,7 @@ https://developer.github.com/v3/teams/#list-team-projects-legacy
 type TeamsListProjectsLegacyResponse struct {
 	response
 	request *TeamsListProjectsLegacyReq
-	Data    TeamsListProjectsLegacyResponseBody
+	Data    []components.TeamProject
 }
 
 /*
@@ -7027,7 +6929,7 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListReposInOrgResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7131,13 +7033,6 @@ func (r *TeamsListReposInOrgReq) Rel(link RelName, resp *TeamsListReposInOrgResp
 }
 
 /*
-TeamsListReposInOrgResponseBody is a response body for TeamsListReposInOrg
-
-https://developer.github.com/v3/teams/#list-team-repositories
-*/
-type TeamsListReposInOrgResponseBody []components.MinimalRepository
-
-/*
 TeamsListReposInOrgResponse is a response for TeamsListReposInOrg
 
 https://developer.github.com/v3/teams/#list-team-repositories
@@ -7145,7 +7040,7 @@ https://developer.github.com/v3/teams/#list-team-repositories
 type TeamsListReposInOrgResponse struct {
 	response
 	request *TeamsListReposInOrgReq
-	Data    TeamsListReposInOrgResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -7169,7 +7064,7 @@ func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListReposLegacyResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7270,13 +7165,6 @@ func (r *TeamsListReposLegacyReq) Rel(link RelName, resp *TeamsListReposLegacyRe
 }
 
 /*
-TeamsListReposLegacyResponseBody is a response body for TeamsListReposLegacy
-
-https://developer.github.com/v3/teams/#list-team-repositories-legacy
-*/
-type TeamsListReposLegacyResponseBody []components.MinimalRepository
-
-/*
 TeamsListReposLegacyResponse is a response for TeamsListReposLegacy
 
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
@@ -7284,7 +7172,7 @@ https://developer.github.com/v3/teams/#list-team-repositories-legacy
 type TeamsListReposLegacyResponse struct {
 	response
 	request *TeamsListReposLegacyReq
-	Data    TeamsListReposLegacyResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*

@@ -9,6 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/willabides/octo-go/generator/internal/model"
 )
 
 func TestAllEndpointAttributesHaveName(t *testing.T) {
@@ -31,4 +32,28 @@ func Test_run(t *testing.T) {
 	pkgName := "octo"
 	err = run(schemaPath, outputPath, pkgPath, pkgName)
 	require.NoError(t, err)
+}
+
+func Test_respBodyType(t *testing.T) {
+	endpoint := &model.Endpoint{
+		Name:    "blah-blah",
+		Concern: "puppies",
+		Responses: map[int]*model.Response{
+			200: {
+				Body: &model.ParamSchema{
+					Ref:  "",
+					Type: model.ParamTypeArray,
+					ItemSchema: &model.ParamSchema{
+						Ref: "#/components/schemas/foo-bar",
+					},
+				},
+			},
+		},
+	}
+	got := respBodyType(endpoint)
+	require.Equal(t, &qualifiedType{
+		pkg:   "github.com/willabides/octo-go/components",
+		name:  "FooBar",
+		slice: true,
+	}, got)
 }

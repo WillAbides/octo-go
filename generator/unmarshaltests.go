@@ -44,6 +44,9 @@ func endpointUnmarshalTests(grp *jen.Group, endpoint *model.Endpoint) {
 		if strings.HasSuffix(bodyType.pkg, "/components") {
 			testName = fmt.Sprintf("components.%s", bodyType.name)
 		}
+		if bodyType.slice {
+			testName = "[]" + testName
+		}
 		grp.Values(jen.DictFunc(func(dict jen.Dict) {
 			dict[jen.Id("operationID")] = jen.Lit(endpoint.ID)
 			dict[jen.Id("name")] = jen.Lit(testName)
@@ -53,7 +56,11 @@ func endpointUnmarshalTests(grp *jen.Group, endpoint *model.Endpoint) {
 			dict[jen.Id("decode")] = jen.Func().Params(
 				jen.Id("decoder").Op("*").Qual("encoding/json", "Decoder"),
 			).Error().Block(
-				jen.Id("target").Op(":=").Qual(bodyType.pkg, bodyType.name).Values(),
+				jen.Id("target").Op(":=").Do(func(stmt *jen.Statement) {
+					if bodyType.slice {
+						stmt.Op("[]")
+					}
+				}).Qual(bodyType.pkg, bodyType.name).Values(),
 				jen.Return(jen.Id("decoder.Decode(&target)")),
 			)
 		}))

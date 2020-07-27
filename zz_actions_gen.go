@@ -4617,7 +4617,7 @@ func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsListRunnerApplicationsForOrgResponseBody{}
+	resp.Data = []components.RunnerApplication{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4706,13 +4706,6 @@ func (r *ActionsListRunnerApplicationsForOrgReq) Rel(link RelName, resp *Actions
 }
 
 /*
-ActionsListRunnerApplicationsForOrgResponseBody is a response body for ActionsListRunnerApplicationsForOrg
-
-https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
-*/
-type ActionsListRunnerApplicationsForOrgResponseBody []components.RunnerApplication
-
-/*
 ActionsListRunnerApplicationsForOrgResponse is a response for ActionsListRunnerApplicationsForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
@@ -4720,7 +4713,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 type ActionsListRunnerApplicationsForOrgResponse struct {
 	response
 	request *ActionsListRunnerApplicationsForOrgReq
-	Data    ActionsListRunnerApplicationsForOrgResponseBody
+	Data    []components.RunnerApplication
 }
 
 /*
@@ -4744,7 +4737,7 @@ func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListR
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsListRunnerApplicationsForRepoResponseBody{}
+	resp.Data = []components.RunnerApplication{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4834,13 +4827,6 @@ func (r *ActionsListRunnerApplicationsForRepoReq) Rel(link RelName, resp *Action
 }
 
 /*
-ActionsListRunnerApplicationsForRepoResponseBody is a response body for ActionsListRunnerApplicationsForRepo
-
-https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
-*/
-type ActionsListRunnerApplicationsForRepoResponseBody []components.RunnerApplication
-
-/*
 ActionsListRunnerApplicationsForRepoResponse is a response for ActionsListRunnerApplicationsForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
@@ -4848,7 +4834,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 type ActionsListRunnerApplicationsForRepoResponse struct {
 	response
 	request *ActionsListRunnerApplicationsForRepoReq
-	Data    ActionsListRunnerApplicationsForRepoResponseBody
+	Data    []components.RunnerApplication
 }
 
 /*

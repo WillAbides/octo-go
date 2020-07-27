@@ -44,7 +44,11 @@ func addResponse(file *jen.File, endpoint *model.Endpoint) {
 		}
 		bodyType := respBodyType(endpoint)
 		if bodyType != nil {
-			group.Id("Data").Qual(bodyType.pkg, bodyType.name)
+			group.Id("Data").Do(func(stmt *jen.Statement) {
+				if bodyType.slice {
+					stmt.Op("[]")
+				}
+			}).Qual(bodyType.pkg, bodyType.name)
 		}
 		if endpointHasAttribute(endpoint, attrBoolean) {
 			group.Id("Data").Bool()
@@ -58,6 +62,17 @@ func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 		return nil
 	}
 	body := endpoint.Responses[codeBodies[0]].Body
+	if body.Type == model.ParamTypeArray {
+		if strings.HasPrefix(body.ItemSchema.Ref, "#/components/schemas/") {
+			nm := strings.TrimPrefix(body.ItemSchema.Ref, "#/components/schemas/")
+			return &qualifiedType{
+				pkg:   "github.com/willabides/octo-go/components",
+				name:  toExportedName(nm),
+				slice: true,
+			}
+		}
+	}
+
 	if strings.HasPrefix(body.Ref, "#/components/schemas/") {
 		nm := strings.TrimPrefix(body.Ref, "#/components/schemas/")
 		return &qualifiedType{

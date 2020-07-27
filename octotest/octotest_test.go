@@ -31,15 +31,15 @@ func TestPaging(t *testing.T) {
 		Page:    octo.Int64(3),
 		PerPage: octo.Int64(2),
 	}
-	res1 := &octo.IssuesListForRepoResponseBody{
+	res1 := []*components.IssueSimple{
 		{Id: 1},
 		{Id: 2},
 	}
-	res2 := &octo.IssuesListForRepoResponseBody{
+	res2 := []*components.IssueSimple{
 		{Id: 3},
 		{Id: 4},
 	}
-	res3 := &octo.IssuesListForRepoResponseBody{
+	res3 := []*components.IssueSimple{
 		{Id: 5},
 		{Id: 6},
 	}

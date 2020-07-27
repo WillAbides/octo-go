@@ -959,7 +959,7 @@ func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsListAuthorizationsResponseBody{}
+	resp.Data = []components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1059,13 +1059,6 @@ func (r *OauthAuthorizationsListAuthorizationsReq) Rel(link RelName, resp *Oauth
 }
 
 /*
-OauthAuthorizationsListAuthorizationsResponseBody is a response body for OauthAuthorizationsListAuthorizations
-
-https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
-*/
-type OauthAuthorizationsListAuthorizationsResponseBody []components.Authorization
-
-/*
 OauthAuthorizationsListAuthorizationsResponse is a response for OauthAuthorizationsListAuthorizations
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
@@ -1073,7 +1066,7 @@ https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 type OauthAuthorizationsListAuthorizationsResponse struct {
 	response
 	request *OauthAuthorizationsListAuthorizationsReq
-	Data    OauthAuthorizationsListAuthorizationsResponseBody
+	Data    []components.Authorization
 }
 
 /*
@@ -1097,7 +1090,7 @@ func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizations
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsListGrantsResponseBody{}
+	resp.Data = []components.ApplicationGrant{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1197,13 +1190,6 @@ func (r *OauthAuthorizationsListGrantsReq) Rel(link RelName, resp *OauthAuthoriz
 }
 
 /*
-OauthAuthorizationsListGrantsResponseBody is a response body for OauthAuthorizationsListGrants
-
-https://developer.github.com/v3/oauth_authorizations/#list-your-grants
-*/
-type OauthAuthorizationsListGrantsResponseBody []components.ApplicationGrant
-
-/*
 OauthAuthorizationsListGrantsResponse is a response for OauthAuthorizationsListGrants
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
@@ -1211,7 +1197,7 @@ https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 type OauthAuthorizationsListGrantsResponse struct {
 	response
 	request *OauthAuthorizationsListGrantsReq
-	Data    OauthAuthorizationsListGrantsResponseBody
+	Data    []components.ApplicationGrant
 }
 
 /*

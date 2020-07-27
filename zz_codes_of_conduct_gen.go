@@ -31,7 +31,7 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodesOfConductGetAllCodesOfConductResponseBody{}
+	resp.Data = []components.CodeOfConduct{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -132,13 +132,6 @@ func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link RelName, resp *CodesOfC
 }
 
 /*
-CodesOfConductGetAllCodesOfConductResponseBody is a response body for CodesOfConductGetAllCodesOfConduct
-
-https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
-*/
-type CodesOfConductGetAllCodesOfConductResponseBody []components.CodeOfConduct
-
-/*
 CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAllCodesOfConduct
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
@@ -146,7 +139,7 @@ https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 type CodesOfConductGetAllCodesOfConductResponse struct {
 	response
 	request *CodesOfConductGetAllCodesOfConductReq
-	Data    CodesOfConductGetAllCodesOfConductResponseBody
+	Data    []components.CodeOfConduct
 }
 
 /*

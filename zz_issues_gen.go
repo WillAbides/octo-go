@@ -174,7 +174,7 @@ func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesAddLabelsResponseBody{}
+	resp.Data = []components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -287,13 +287,6 @@ type IssuesAddLabelsReqBody struct {
 }
 
 /*
-IssuesAddLabelsResponseBody is a response body for IssuesAddLabels
-
-https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
-*/
-type IssuesAddLabelsResponseBody []components.Label
-
-/*
 IssuesAddLabelsResponse is a response for IssuesAddLabels
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
@@ -301,7 +294,7 @@ https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 type IssuesAddLabelsResponse struct {
 	response
 	request *IssuesAddLabelsReq
-	Data    IssuesAddLabelsResponseBody
+	Data    []components.Label
 }
 
 /*
@@ -2119,7 +2112,7 @@ func IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListResponseBody{}
+	resp.Data = []components.Issue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2310,13 +2303,6 @@ func (r *IssuesListReq) Rel(link RelName, resp *IssuesListResponse) bool {
 }
 
 /*
-IssuesListResponseBody is a response body for IssuesList
-
-https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
-*/
-type IssuesListResponseBody []components.Issue
-
-/*
 IssuesListResponse is a response for IssuesList
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
@@ -2324,7 +2310,7 @@ https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticate
 type IssuesListResponse struct {
 	response
 	request *IssuesListReq
-	Data    IssuesListResponseBody
+	Data    []components.Issue
 }
 
 /*
@@ -2348,7 +2334,7 @@ func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListAssigneesResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2450,13 +2436,6 @@ func (r *IssuesListAssigneesReq) Rel(link RelName, resp *IssuesListAssigneesResp
 }
 
 /*
-IssuesListAssigneesResponseBody is a response body for IssuesListAssignees
-
-https://developer.github.com/v3/issues/assignees/#list-assignees
-*/
-type IssuesListAssigneesResponseBody []components.SimpleUser
-
-/*
 IssuesListAssigneesResponse is a response for IssuesListAssignees
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
@@ -2464,7 +2443,7 @@ https://developer.github.com/v3/issues/assignees/#list-assignees
 type IssuesListAssigneesResponse struct {
 	response
 	request *IssuesListAssigneesReq
-	Data    IssuesListAssigneesResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2488,7 +2467,7 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListCommentsResponseBody{}
+	resp.Data = []components.IssueComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2617,13 +2596,6 @@ func (r *IssuesListCommentsReq) Rel(link RelName, resp *IssuesListCommentsRespon
 }
 
 /*
-IssuesListCommentsResponseBody is a response body for IssuesListComments
-
-https://developer.github.com/v3/issues/comments/#list-issue-comments
-*/
-type IssuesListCommentsResponseBody []components.IssueComment
-
-/*
 IssuesListCommentsResponse is a response for IssuesListComments
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
@@ -2631,7 +2603,7 @@ https://developer.github.com/v3/issues/comments/#list-issue-comments
 type IssuesListCommentsResponse struct {
 	response
 	request *IssuesListCommentsReq
-	Data    IssuesListCommentsResponseBody
+	Data    []components.IssueComment
 }
 
 /*
@@ -2655,7 +2627,7 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListCommentsForRepoResponseBody{}
+	resp.Data = []components.IssueComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2796,13 +2768,6 @@ func (r *IssuesListCommentsForRepoReq) Rel(link RelName, resp *IssuesListComment
 }
 
 /*
-IssuesListCommentsForRepoResponseBody is a response body for IssuesListCommentsForRepo
-
-https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
-*/
-type IssuesListCommentsForRepoResponseBody []components.IssueComment
-
-/*
 IssuesListCommentsForRepoResponse is a response for IssuesListCommentsForRepo
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
@@ -2810,7 +2775,7 @@ https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repos
 type IssuesListCommentsForRepoResponse struct {
 	response
 	request *IssuesListCommentsForRepoReq
-	Data    IssuesListCommentsForRepoResponseBody
+	Data    []components.IssueComment
 }
 
 /*
@@ -2834,7 +2799,7 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListEventsResponseBody{}
+	resp.Data = []components.IssueEventForIssue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2968,13 +2933,6 @@ func (r *IssuesListEventsReq) Rel(link RelName, resp *IssuesListEventsResponse) 
 }
 
 /*
-IssuesListEventsResponseBody is a response body for IssuesListEvents
-
-https://developer.github.com/v3/issues/events/#list-issue-events
-*/
-type IssuesListEventsResponseBody []components.IssueEventForIssue
-
-/*
 IssuesListEventsResponse is a response for IssuesListEvents
 
 https://developer.github.com/v3/issues/events/#list-issue-events
@@ -2982,7 +2940,7 @@ https://developer.github.com/v3/issues/events/#list-issue-events
 type IssuesListEventsResponse struct {
 	response
 	request *IssuesListEventsReq
-	Data    IssuesListEventsResponseBody
+	Data    []components.IssueEventForIssue
 }
 
 /*
@@ -3006,7 +2964,7 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListEventsForRepoResponseBody{}
+	resp.Data = []components.IssueEvent{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3137,13 +3095,6 @@ func (r *IssuesListEventsForRepoReq) Rel(link RelName, resp *IssuesListEventsFor
 }
 
 /*
-IssuesListEventsForRepoResponseBody is a response body for IssuesListEventsForRepo
-
-https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
-*/
-type IssuesListEventsForRepoResponseBody []components.IssueEvent
-
-/*
 IssuesListEventsForRepoResponse is a response for IssuesListEventsForRepo
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
@@ -3151,7 +3102,7 @@ https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repositor
 type IssuesListEventsForRepoResponse struct {
 	response
 	request *IssuesListEventsForRepoReq
-	Data    IssuesListEventsForRepoResponseBody
+	Data    []components.IssueEvent
 }
 
 /*
@@ -3175,7 +3126,7 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListEventsForTimelineResponseBody{}
+	resp.Data = []components.IssueEventForIssue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3311,13 +3262,6 @@ func (r *IssuesListEventsForTimelineReq) Rel(link RelName, resp *IssuesListEvent
 }
 
 /*
-IssuesListEventsForTimelineResponseBody is a response body for IssuesListEventsForTimeline
-
-https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
-*/
-type IssuesListEventsForTimelineResponseBody []components.IssueEventForIssue
-
-/*
 IssuesListEventsForTimelineResponse is a response for IssuesListEventsForTimeline
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
@@ -3325,7 +3269,7 @@ https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-iss
 type IssuesListEventsForTimelineResponse struct {
 	response
 	request *IssuesListEventsForTimelineReq
-	Data    IssuesListEventsForTimelineResponseBody
+	Data    []components.IssueEventForIssue
 }
 
 /*
@@ -3349,7 +3293,7 @@ func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Issue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3524,13 +3468,6 @@ func (r *IssuesListForAuthenticatedUserReq) Rel(link RelName, resp *IssuesListFo
 }
 
 /*
-IssuesListForAuthenticatedUserResponseBody is a response body for IssuesListForAuthenticatedUser
-
-https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
-*/
-type IssuesListForAuthenticatedUserResponseBody []components.Issue
-
-/*
 IssuesListForAuthenticatedUserResponse is a response for IssuesListForAuthenticatedUser
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
@@ -3538,7 +3475,7 @@ https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the
 type IssuesListForAuthenticatedUserResponse struct {
 	response
 	request *IssuesListForAuthenticatedUserReq
-	Data    IssuesListForAuthenticatedUserResponseBody
+	Data    []components.Issue
 }
 
 /*
@@ -3562,7 +3499,7 @@ func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListForOrgResponseBody{}
+	resp.Data = []components.Issue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3738,13 +3675,6 @@ func (r *IssuesListForOrgReq) Rel(link RelName, resp *IssuesListForOrgResponse) 
 }
 
 /*
-IssuesListForOrgResponseBody is a response body for IssuesListForOrg
-
-https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
-*/
-type IssuesListForOrgResponseBody []components.Issue
-
-/*
 IssuesListForOrgResponse is a response for IssuesListForOrg
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
@@ -3752,7 +3682,7 @@ https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the
 type IssuesListForOrgResponse struct {
 	response
 	request *IssuesListForOrgReq
-	Data    IssuesListForOrgResponseBody
+	Data    []components.Issue
 }
 
 /*
@@ -3776,7 +3706,7 @@ func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListForRepoResponseBody{}
+	resp.Data = []components.IssueSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3970,13 +3900,6 @@ func (r *IssuesListForRepoReq) Rel(link RelName, resp *IssuesListForRepoResponse
 }
 
 /*
-IssuesListForRepoResponseBody is a response body for IssuesListForRepo
-
-https://developer.github.com/v3/issues/#list-repository-issues
-*/
-type IssuesListForRepoResponseBody []components.IssueSimple
-
-/*
 IssuesListForRepoResponse is a response for IssuesListForRepo
 
 https://developer.github.com/v3/issues/#list-repository-issues
@@ -3984,7 +3907,7 @@ https://developer.github.com/v3/issues/#list-repository-issues
 type IssuesListForRepoResponse struct {
 	response
 	request *IssuesListForRepoReq
-	Data    IssuesListForRepoResponseBody
+	Data    []components.IssueSimple
 }
 
 /*
@@ -4008,7 +3931,7 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListLabelsForMilestoneResponseBody{}
+	resp.Data = []components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4113,13 +4036,6 @@ func (r *IssuesListLabelsForMilestoneReq) Rel(link RelName, resp *IssuesListLabe
 }
 
 /*
-IssuesListLabelsForMilestoneResponseBody is a response body for IssuesListLabelsForMilestone
-
-https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
-*/
-type IssuesListLabelsForMilestoneResponseBody []components.Label
-
-/*
 IssuesListLabelsForMilestoneResponse is a response for IssuesListLabelsForMilestone
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
@@ -4127,7 +4043,7 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-miles
 type IssuesListLabelsForMilestoneResponse struct {
 	response
 	request *IssuesListLabelsForMilestoneReq
-	Data    IssuesListLabelsForMilestoneResponseBody
+	Data    []components.Label
 }
 
 /*
@@ -4151,7 +4067,7 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListLabelsForRepoResponseBody{}
+	resp.Data = []components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4253,13 +4169,6 @@ func (r *IssuesListLabelsForRepoReq) Rel(link RelName, resp *IssuesListLabelsFor
 }
 
 /*
-IssuesListLabelsForRepoResponseBody is a response body for IssuesListLabelsForRepo
-
-https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
-*/
-type IssuesListLabelsForRepoResponseBody []components.Label
-
-/*
 IssuesListLabelsForRepoResponse is a response for IssuesListLabelsForRepo
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
@@ -4267,7 +4176,7 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 type IssuesListLabelsForRepoResponse struct {
 	response
 	request *IssuesListLabelsForRepoReq
-	Data    IssuesListLabelsForRepoResponseBody
+	Data    []components.Label
 }
 
 /*
@@ -4291,7 +4200,7 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListLabelsOnIssueResponseBody{}
+	resp.Data = []components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4396,13 +4305,6 @@ func (r *IssuesListLabelsOnIssueReq) Rel(link RelName, resp *IssuesListLabelsOnI
 }
 
 /*
-IssuesListLabelsOnIssueResponseBody is a response body for IssuesListLabelsOnIssue
-
-https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
-*/
-type IssuesListLabelsOnIssueResponseBody []components.Label
-
-/*
 IssuesListLabelsOnIssueResponse is a response for IssuesListLabelsOnIssue
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
@@ -4410,7 +4312,7 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 type IssuesListLabelsOnIssueResponse struct {
 	response
 	request *IssuesListLabelsOnIssueReq
-	Data    IssuesListLabelsOnIssueResponseBody
+	Data    []components.Label
 }
 
 /*
@@ -4434,7 +4336,7 @@ func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesListMilestonesResponseBody{}
+	resp.Data = []components.Milestone{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4554,13 +4456,6 @@ func (r *IssuesListMilestonesReq) Rel(link RelName, resp *IssuesListMilestonesRe
 }
 
 /*
-IssuesListMilestonesResponseBody is a response body for IssuesListMilestones
-
-https://developer.github.com/v3/issues/milestones/#list-milestones
-*/
-type IssuesListMilestonesResponseBody []components.Milestone
-
-/*
 IssuesListMilestonesResponse is a response for IssuesListMilestones
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
@@ -4568,7 +4463,7 @@ https://developer.github.com/v3/issues/milestones/#list-milestones
 type IssuesListMilestonesResponse struct {
 	response
 	request *IssuesListMilestonesReq
-	Data    IssuesListMilestonesResponseBody
+	Data    []components.Milestone
 }
 
 /*
@@ -5011,7 +4906,7 @@ func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesRemoveLabelResponseBody{}
+	resp.Data = []components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5107,13 +5002,6 @@ func (r *IssuesRemoveLabelReq) Rel(link RelName, resp *IssuesRemoveLabelResponse
 }
 
 /*
-IssuesRemoveLabelResponseBody is a response body for IssuesRemoveLabel
-
-https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
-*/
-type IssuesRemoveLabelResponseBody []components.Label
-
-/*
 IssuesRemoveLabelResponse is a response for IssuesRemoveLabel
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
@@ -5121,7 +5009,7 @@ https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 type IssuesRemoveLabelResponse struct {
 	response
 	request *IssuesRemoveLabelReq
-	Data    IssuesRemoveLabelResponseBody
+	Data    []components.Label
 }
 
 /*
@@ -5145,7 +5033,7 @@ func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesSetLabelsResponseBody{}
+	resp.Data = []components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5258,13 +5146,6 @@ type IssuesSetLabelsReqBody struct {
 }
 
 /*
-IssuesSetLabelsResponseBody is a response body for IssuesSetLabels
-
-https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
-*/
-type IssuesSetLabelsResponseBody []components.Label
-
-/*
 IssuesSetLabelsResponse is a response for IssuesSetLabels
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
@@ -5272,7 +5153,7 @@ https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 type IssuesSetLabelsResponse struct {
 	response
 	request *IssuesSetLabelsReq
-	Data    IssuesSetLabelsResponseBody
+	Data    []components.Label
 }
 
 /*

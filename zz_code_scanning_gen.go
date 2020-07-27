@@ -155,7 +155,7 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodeScanningListAlertsForRepoResponseBody{}
+	resp.Data = []components.CodeScanningAlert{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -260,13 +260,6 @@ func (r *CodeScanningListAlertsForRepoReq) Rel(link RelName, resp *CodeScanningL
 }
 
 /*
-CodeScanningListAlertsForRepoResponseBody is a response body for CodeScanningListAlertsForRepo
-
-https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
-*/
-type CodeScanningListAlertsForRepoResponseBody []components.CodeScanningAlert
-
-/*
 CodeScanningListAlertsForRepoResponse is a response for CodeScanningListAlertsForRepo
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
@@ -274,5 +267,5 @@ https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-r
 type CodeScanningListAlertsForRepoResponse struct {
 	response
 	request *CodeScanningListAlertsForRepoReq
-	Data    CodeScanningListAlertsForRepoResponseBody
+	Data    []components.CodeScanningAlert
 }
