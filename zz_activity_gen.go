@@ -390,7 +390,7 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetFeedsResponseBody{}
+	resp.Data = components.Feed{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -478,13 +478,6 @@ func (r *ActivityGetFeedsReq) Rel(link RelName, resp *ActivityGetFeedsResponse) 
 }
 
 /*
-ActivityGetFeedsResponseBody is a response body for ActivityGetFeeds
-
-https://developer.github.com/v3/activity/feeds/#get-feeds
-*/
-type ActivityGetFeedsResponseBody components.Feed
-
-/*
 ActivityGetFeedsResponse is a response for ActivityGetFeeds
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
@@ -492,7 +485,7 @@ https://developer.github.com/v3/activity/feeds/#get-feeds
 type ActivityGetFeedsResponse struct {
 	response
 	request *ActivityGetFeedsReq
-	Data    ActivityGetFeedsResponseBody
+	Data    components.Feed
 }
 
 /*
@@ -516,7 +509,7 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetRepoSubscriptionResponseBody{}
+	resp.Data = components.RepositorySubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -606,13 +599,6 @@ func (r *ActivityGetRepoSubscriptionReq) Rel(link RelName, resp *ActivityGetRepo
 }
 
 /*
-ActivityGetRepoSubscriptionResponseBody is a response body for ActivityGetRepoSubscription
-
-https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
-*/
-type ActivityGetRepoSubscriptionResponseBody components.RepositorySubscription
-
-/*
 ActivityGetRepoSubscriptionResponse is a response for ActivityGetRepoSubscription
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
@@ -620,7 +606,7 @@ https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 type ActivityGetRepoSubscriptionResponse struct {
 	response
 	request *ActivityGetRepoSubscriptionReq
-	Data    ActivityGetRepoSubscriptionResponseBody
+	Data    components.RepositorySubscription
 }
 
 /*
@@ -644,7 +630,7 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetThreadResponseBody{}
+	resp.Data = components.Thread{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -735,13 +721,6 @@ func (r *ActivityGetThreadReq) Rel(link RelName, resp *ActivityGetThreadResponse
 }
 
 /*
-ActivityGetThreadResponseBody is a response body for ActivityGetThread
-
-https://developer.github.com/v3/activity/notifications/#get-a-thread
-*/
-type ActivityGetThreadResponseBody components.Thread
-
-/*
 ActivityGetThreadResponse is a response for ActivityGetThread
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
@@ -749,7 +728,7 @@ https://developer.github.com/v3/activity/notifications/#get-a-thread
 type ActivityGetThreadResponse struct {
 	response
 	request *ActivityGetThreadReq
-	Data    ActivityGetThreadResponseBody
+	Data    components.Thread
 }
 
 /*
@@ -773,7 +752,7 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody{}
+	resp.Data = components.ThreadSubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -864,13 +843,6 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link RelName,
 }
 
 /*
-ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody is a response body for ActivityGetThreadSubscriptionForAuthenticatedUser
-
-https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
-*/
-type ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody components.ThreadSubscription
-
-/*
 ActivityGetThreadSubscriptionForAuthenticatedUserResponse is a response for ActivityGetThreadSubscriptionForAuthenticatedUser
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
@@ -878,7 +850,7 @@ https://developer.github.com/v3/activity/notifications/#get-a-thread-subscriptio
 type ActivityGetThreadSubscriptionForAuthenticatedUserResponse struct {
 	response
 	request *ActivityGetThreadSubscriptionForAuthenticatedUserReq
-	Data    ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody
+	Data    components.ThreadSubscription
 }
 
 /*
@@ -902,7 +874,7 @@ func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityLi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListEventsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1003,13 +975,6 @@ func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link RelName, resp *Acti
 }
 
 /*
-ActivityListEventsForAuthenticatedUserResponseBody is a response body for ActivityListEventsForAuthenticatedUser
-
-https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
-*/
-type ActivityListEventsForAuthenticatedUserResponseBody []components.Event
-
-/*
 ActivityListEventsForAuthenticatedUserResponse is a response for ActivityListEventsForAuthenticatedUser
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
@@ -1017,7 +982,7 @@ https://developer.github.com/v3/activity/events/#list-events-for-the-authenticat
 type ActivityListEventsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListEventsForAuthenticatedUserReq
-	Data    ActivityListEventsForAuthenticatedUserResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -1041,7 +1006,7 @@ func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *Act
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListNotificationsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Thread{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1176,13 +1141,6 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) Rel(link RelName, res
 }
 
 /*
-ActivityListNotificationsForAuthenticatedUserResponseBody is a response body for ActivityListNotificationsForAuthenticatedUser
-
-https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
-*/
-type ActivityListNotificationsForAuthenticatedUserResponseBody []components.Thread
-
-/*
 ActivityListNotificationsForAuthenticatedUserResponse is a response for ActivityListNotificationsForAuthenticatedUser
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
@@ -1190,7 +1148,7 @@ https://developer.github.com/v3/activity/notifications/#list-notifications-for-t
 type ActivityListNotificationsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListNotificationsForAuthenticatedUserReq
-	Data    ActivityListNotificationsForAuthenticatedUserResponseBody
+	Data    []components.Thread
 }
 
 /*
@@ -1214,7 +1172,7 @@ func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *Activit
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListOrgEventsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1316,13 +1274,6 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link RelName, resp *A
 }
 
 /*
-ActivityListOrgEventsForAuthenticatedUserResponseBody is a response body for ActivityListOrgEventsForAuthenticatedUser
-
-https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
-*/
-type ActivityListOrgEventsForAuthenticatedUserResponseBody []components.Event
-
-/*
 ActivityListOrgEventsForAuthenticatedUserResponse is a response for ActivityListOrgEventsForAuthenticatedUser
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
@@ -1330,7 +1281,7 @@ https://developer.github.com/v3/activity/events/#list-organization-events-for-th
 type ActivityListOrgEventsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListOrgEventsForAuthenticatedUserReq
-	Data    ActivityListOrgEventsForAuthenticatedUserResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -1354,7 +1305,7 @@ func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEvents
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListPublicEventsResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1454,13 +1405,6 @@ func (r *ActivityListPublicEventsReq) Rel(link RelName, resp *ActivityListPublic
 }
 
 /*
-ActivityListPublicEventsResponseBody is a response body for ActivityListPublicEvents
-
-https://developer.github.com/v3/activity/events/#list-public-events
-*/
-type ActivityListPublicEventsResponseBody []components.Event
-
-/*
 ActivityListPublicEventsResponse is a response for ActivityListPublicEvents
 
 https://developer.github.com/v3/activity/events/#list-public-events
@@ -1468,7 +1412,7 @@ https://developer.github.com/v3/activity/events/#list-public-events
 type ActivityListPublicEventsResponse struct {
 	response
 	request *ActivityListPublicEventsReq
-	Data    ActivityListPublicEventsResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -1492,7 +1436,7 @@ func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityLi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListPublicEventsForRepoNetworkResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1594,13 +1538,6 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link RelName, resp *Acti
 }
 
 /*
-ActivityListPublicEventsForRepoNetworkResponseBody is a response body for ActivityListPublicEventsForRepoNetwork
-
-https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
-*/
-type ActivityListPublicEventsForRepoNetworkResponseBody []components.Event
-
-/*
 ActivityListPublicEventsForRepoNetworkResponse is a response for ActivityListPublicEventsForRepoNetwork
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
@@ -1608,7 +1545,7 @@ https://developer.github.com/v3/activity/events/#list-public-events-for-a-networ
 type ActivityListPublicEventsForRepoNetworkResponse struct {
 	response
 	request *ActivityListPublicEventsForRepoNetworkReq
-	Data    ActivityListPublicEventsForRepoNetworkResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -1632,7 +1569,7 @@ func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPubli
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListPublicEventsForUserResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1733,13 +1670,6 @@ func (r *ActivityListPublicEventsForUserReq) Rel(link RelName, resp *ActivityLis
 }
 
 /*
-ActivityListPublicEventsForUserResponseBody is a response body for ActivityListPublicEventsForUser
-
-https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
-*/
-type ActivityListPublicEventsForUserResponseBody []components.Event
-
-/*
 ActivityListPublicEventsForUserResponse is a response for ActivityListPublicEventsForUser
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
@@ -1747,7 +1677,7 @@ https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 type ActivityListPublicEventsForUserResponse struct {
 	response
 	request *ActivityListPublicEventsForUserReq
-	Data    ActivityListPublicEventsForUserResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -1771,7 +1701,7 @@ func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrg
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListPublicOrgEventsResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1872,13 +1802,6 @@ func (r *ActivityListPublicOrgEventsReq) Rel(link RelName, resp *ActivityListPub
 }
 
 /*
-ActivityListPublicOrgEventsResponseBody is a response body for ActivityListPublicOrgEvents
-
-https://developer.github.com/v3/activity/events/#list-public-organization-events
-*/
-type ActivityListPublicOrgEventsResponseBody []components.Event
-
-/*
 ActivityListPublicOrgEventsResponse is a response for ActivityListPublicOrgEvents
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
@@ -1886,7 +1809,7 @@ https://developer.github.com/v3/activity/events/#list-public-organization-events
 type ActivityListPublicOrgEventsResponse struct {
 	response
 	request *ActivityListPublicOrgEventsReq
-	Data    ActivityListPublicOrgEventsResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -1910,7 +1833,7 @@ func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListRec
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListReceivedEventsForUserResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2011,13 +1934,6 @@ func (r *ActivityListReceivedEventsForUserReq) Rel(link RelName, resp *ActivityL
 }
 
 /*
-ActivityListReceivedEventsForUserResponseBody is a response body for ActivityListReceivedEventsForUser
-
-https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
-*/
-type ActivityListReceivedEventsForUserResponseBody []components.Event
-
-/*
 ActivityListReceivedEventsForUserResponse is a response for ActivityListReceivedEventsForUser
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
@@ -2025,7 +1941,7 @@ https://developer.github.com/v3/activity/events/#list-events-received-by-the-aut
 type ActivityListReceivedEventsForUserResponse struct {
 	response
 	request *ActivityListReceivedEventsForUserReq
-	Data    ActivityListReceivedEventsForUserResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -2049,7 +1965,7 @@ func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityL
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListReceivedPublicEventsForUserResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2150,13 +2066,6 @@ func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link RelName, resp *Act
 }
 
 /*
-ActivityListReceivedPublicEventsForUserResponseBody is a response body for ActivityListReceivedPublicEventsForUser
-
-https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
-*/
-type ActivityListReceivedPublicEventsForUserResponseBody []components.Event
-
-/*
 ActivityListReceivedPublicEventsForUserResponse is a response for ActivityListReceivedPublicEventsForUser
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
@@ -2164,7 +2073,7 @@ https://developer.github.com/v3/activity/events/#list-public-events-received-by-
 type ActivityListReceivedPublicEventsForUserResponse struct {
 	response
 	request *ActivityListReceivedPublicEventsForUserReq
-	Data    ActivityListReceivedPublicEventsForUserResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -2188,7 +2097,7 @@ func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListRepoEventsResponseBody{}
+	resp.Data = []components.Event{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2290,13 +2199,6 @@ func (r *ActivityListRepoEventsReq) Rel(link RelName, resp *ActivityListRepoEven
 }
 
 /*
-ActivityListRepoEventsResponseBody is a response body for ActivityListRepoEvents
-
-https://developer.github.com/v3/activity/events/#list-repository-events
-*/
-type ActivityListRepoEventsResponseBody []components.Event
-
-/*
 ActivityListRepoEventsResponse is a response for ActivityListRepoEvents
 
 https://developer.github.com/v3/activity/events/#list-repository-events
@@ -2304,7 +2206,7 @@ https://developer.github.com/v3/activity/events/#list-repository-events
 type ActivityListRepoEventsResponse struct {
 	response
 	request *ActivityListRepoEventsReq
-	Data    ActivityListRepoEventsResponseBody
+	Data    []components.Event
 }
 
 /*
@@ -2328,7 +2230,7 @@ func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListRepoNotificationsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Thread{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2465,13 +2367,6 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) Rel(link RelName,
 }
 
 /*
-ActivityListRepoNotificationsForAuthenticatedUserResponseBody is a response body for ActivityListRepoNotificationsForAuthenticatedUser
-
-https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
-*/
-type ActivityListRepoNotificationsForAuthenticatedUserResponseBody []components.Thread
-
-/*
 ActivityListRepoNotificationsForAuthenticatedUserResponse is a response for ActivityListRepoNotificationsForAuthenticatedUser
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
@@ -2479,7 +2374,7 @@ https://developer.github.com/v3/activity/notifications/#list-repository-notifica
 type ActivityListRepoNotificationsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListRepoNotificationsForAuthenticatedUserReq
-	Data    ActivityListRepoNotificationsForAuthenticatedUserResponseBody
+	Data    []components.Thread
 }
 
 /*
@@ -2503,7 +2398,7 @@ func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *Activ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListReposStarredByAuthenticatedUserResponseBody{}
+	resp.Data = []components.StarredRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2618,13 +2513,6 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) Rel(link RelName, resp 
 }
 
 /*
-ActivityListReposStarredByAuthenticatedUserResponseBody is a response body for ActivityListReposStarredByAuthenticatedUser
-
-https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
-*/
-type ActivityListReposStarredByAuthenticatedUserResponseBody []components.StarredRepository
-
-/*
 ActivityListReposStarredByAuthenticatedUserResponse is a response for ActivityListReposStarredByAuthenticatedUser
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
@@ -2632,7 +2520,7 @@ https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-
 type ActivityListReposStarredByAuthenticatedUserResponse struct {
 	response
 	request *ActivityListReposStarredByAuthenticatedUserReq
-	Data    ActivityListReposStarredByAuthenticatedUserResponseBody
+	Data    []components.StarredRepository
 }
 
 /*
@@ -2656,7 +2544,7 @@ func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListReposStarredByUserResponseBody{}
+	resp.Data = []components.StarredRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2772,13 +2660,6 @@ func (r *ActivityListReposStarredByUserReq) Rel(link RelName, resp *ActivityList
 }
 
 /*
-ActivityListReposStarredByUserResponseBody is a response body for ActivityListReposStarredByUser
-
-https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
-*/
-type ActivityListReposStarredByUserResponseBody []components.StarredRepository
-
-/*
 ActivityListReposStarredByUserResponse is a response for ActivityListReposStarredByUser
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
@@ -2786,7 +2667,7 @@ https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-
 type ActivityListReposStarredByUserResponse struct {
 	response
 	request *ActivityListReposStarredByUserReq
-	Data    ActivityListReposStarredByUserResponseBody
+	Data    []components.StarredRepository
 }
 
 /*
@@ -2810,7 +2691,7 @@ func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposW
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListReposWatchedByUserResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2911,13 +2792,6 @@ func (r *ActivityListReposWatchedByUserReq) Rel(link RelName, resp *ActivityList
 }
 
 /*
-ActivityListReposWatchedByUserResponseBody is a response body for ActivityListReposWatchedByUser
-
-https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
-*/
-type ActivityListReposWatchedByUserResponseBody []components.MinimalRepository
-
-/*
 ActivityListReposWatchedByUserResponse is a response for ActivityListReposWatchedByUser
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
@@ -2925,7 +2799,7 @@ https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-
 type ActivityListReposWatchedByUserResponse struct {
 	response
 	request *ActivityListReposWatchedByUserReq
-	Data    ActivityListReposWatchedByUserResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -2949,7 +2823,7 @@ func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargaz
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListStargazersForRepoResponseBody{}
+	resp.Data = []components.Stargazer{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3051,13 +2925,6 @@ func (r *ActivityListStargazersForRepoReq) Rel(link RelName, resp *ActivityListS
 }
 
 /*
-ActivityListStargazersForRepoResponseBody is a response body for ActivityListStargazersForRepo
-
-https://developer.github.com/v3/activity/starring/#list-stargazers
-*/
-type ActivityListStargazersForRepoResponseBody []components.Stargazer
-
-/*
 ActivityListStargazersForRepoResponse is a response for ActivityListStargazersForRepo
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
@@ -3065,7 +2932,7 @@ https://developer.github.com/v3/activity/starring/#list-stargazers
 type ActivityListStargazersForRepoResponse struct {
 	response
 	request *ActivityListStargazersForRepoReq
-	Data    ActivityListStargazersForRepoResponseBody
+	Data    []components.Stargazer
 }
 
 /*
@@ -3089,7 +2956,7 @@ func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *Acti
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListWatchedReposForAuthenticatedUserResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3189,13 +3056,6 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) Rel(link RelName, resp
 }
 
 /*
-ActivityListWatchedReposForAuthenticatedUserResponseBody is a response body for ActivityListWatchedReposForAuthenticatedUser
-
-https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
-*/
-type ActivityListWatchedReposForAuthenticatedUserResponseBody []components.MinimalRepository
-
-/*
 ActivityListWatchedReposForAuthenticatedUserResponse is a response for ActivityListWatchedReposForAuthenticatedUser
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
@@ -3203,7 +3063,7 @@ https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-
 type ActivityListWatchedReposForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListWatchedReposForAuthenticatedUserReq
-	Data    ActivityListWatchedReposForAuthenticatedUserResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -3227,7 +3087,7 @@ func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersF
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityListWatchersForRepoResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3329,13 +3189,6 @@ func (r *ActivityListWatchersForRepoReq) Rel(link RelName, resp *ActivityListWat
 }
 
 /*
-ActivityListWatchersForRepoResponseBody is a response body for ActivityListWatchersForRepo
-
-https://developer.github.com/v3/activity/watching/#list-watchers
-*/
-type ActivityListWatchersForRepoResponseBody []components.SimpleUser
-
-/*
 ActivityListWatchersForRepoResponse is a response for ActivityListWatchersForRepo
 
 https://developer.github.com/v3/activity/watching/#list-watchers
@@ -3343,7 +3196,7 @@ https://developer.github.com/v3/activity/watching/#list-watchers
 type ActivityListWatchersForRepoResponse struct {
 	response
 	request *ActivityListWatchersForRepoReq
-	Data    ActivityListWatchersForRepoResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -3770,7 +3623,7 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivitySetRepoSubscriptionResponseBody{}
+	resp.Data = components.RepositorySubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3878,13 +3731,6 @@ type ActivitySetRepoSubscriptionReqBody struct {
 }
 
 /*
-ActivitySetRepoSubscriptionResponseBody is a response body for ActivitySetRepoSubscription
-
-https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
-*/
-type ActivitySetRepoSubscriptionResponseBody components.RepositorySubscription
-
-/*
 ActivitySetRepoSubscriptionResponse is a response for ActivitySetRepoSubscription
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
@@ -3892,7 +3738,7 @@ https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 type ActivitySetRepoSubscriptionResponse struct {
 	response
 	request *ActivitySetRepoSubscriptionReq
-	Data    ActivitySetRepoSubscriptionResponseBody
+	Data    components.RepositorySubscription
 }
 
 /*
@@ -3916,7 +3762,7 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivitySetThreadSubscriptionResponseBody{}
+	resp.Data = components.ThreadSubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4022,13 +3868,6 @@ type ActivitySetThreadSubscriptionReqBody struct {
 }
 
 /*
-ActivitySetThreadSubscriptionResponseBody is a response body for ActivitySetThreadSubscription
-
-https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
-*/
-type ActivitySetThreadSubscriptionResponseBody components.ThreadSubscription
-
-/*
 ActivitySetThreadSubscriptionResponse is a response for ActivitySetThreadSubscription
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
@@ -4036,7 +3875,7 @@ https://developer.github.com/v3/activity/notifications/#set-a-thread-subscriptio
 type ActivitySetThreadSubscriptionResponse struct {
 	response
 	request *ActivitySetThreadSubscriptionReq
-	Data    ActivitySetThreadSubscriptionResponseBody
+	Data    components.ThreadSubscription
 }
 
 /*

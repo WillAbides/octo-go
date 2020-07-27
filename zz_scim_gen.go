@@ -153,7 +153,7 @@ func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProv
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ScimGetProvisioningInformationForUserResponseBody{}
+	resp.Data = components.ScimUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -245,13 +245,6 @@ func (r *ScimGetProvisioningInformationForUserReq) Rel(link RelName, resp *ScimG
 }
 
 /*
-ScimGetProvisioningInformationForUserResponseBody is a response body for ScimGetProvisioningInformationForUser
-
-https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
-*/
-type ScimGetProvisioningInformationForUserResponseBody components.ScimUser
-
-/*
 ScimGetProvisioningInformationForUserResponse is a response for ScimGetProvisioningInformationForUser
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
@@ -259,7 +252,7 @@ https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-us
 type ScimGetProvisioningInformationForUserResponse struct {
 	response
 	request *ScimGetProvisioningInformationForUserReq
-	Data    ScimGetProvisioningInformationForUserResponseBody
+	Data    components.ScimUser
 }
 
 /*
@@ -283,7 +276,7 @@ func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisioned
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ScimListProvisionedIdentitiesResponseBody{}
+	resp.Data = components.ScimUserList{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -402,13 +395,6 @@ func (r *ScimListProvisionedIdentitiesReq) Rel(link RelName, resp *ScimListProvi
 }
 
 /*
-ScimListProvisionedIdentitiesResponseBody is a response body for ScimListProvisionedIdentities
-
-https://developer.github.com/v3/scim/#list-scim-provisioned-identities
-*/
-type ScimListProvisionedIdentitiesResponseBody components.ScimUserList
-
-/*
 ScimListProvisionedIdentitiesResponse is a response for ScimListProvisionedIdentities
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
@@ -416,7 +402,7 @@ https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 type ScimListProvisionedIdentitiesResponse struct {
 	response
 	request *ScimListProvisionedIdentitiesReq
-	Data    ScimListProvisionedIdentitiesResponseBody
+	Data    components.ScimUserList
 }
 
 /*
@@ -440,7 +426,7 @@ func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInvite
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ScimProvisionAndInviteUserResponseBody{}
+	resp.Data = components.ScimUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -566,13 +552,6 @@ type ScimProvisionAndInviteUserReqBody struct {
 }
 
 /*
-ScimProvisionAndInviteUserResponseBody is a response body for ScimProvisionAndInviteUser
-
-https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
-*/
-type ScimProvisionAndInviteUserResponseBody components.ScimUser
-
-/*
 ScimProvisionAndInviteUserResponse is a response for ScimProvisionAndInviteUser
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
@@ -580,7 +559,7 @@ https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 type ScimProvisionAndInviteUserResponse struct {
 	response
 	request *ScimProvisionAndInviteUserReq
-	Data    ScimProvisionAndInviteUserResponseBody
+	Data    components.ScimUser
 }
 
 /*
@@ -604,7 +583,7 @@ func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInfor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ScimSetInformationForProvisionedUserResponseBody{}
+	resp.Data = components.ScimUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -733,13 +712,6 @@ type ScimSetInformationForProvisionedUserReqBody struct {
 }
 
 /*
-ScimSetInformationForProvisionedUserResponseBody is a response body for ScimSetInformationForProvisionedUser
-
-https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
-*/
-type ScimSetInformationForProvisionedUserResponseBody components.ScimUser
-
-/*
 ScimSetInformationForProvisionedUserResponse is a response for ScimSetInformationForProvisionedUser
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
@@ -747,7 +719,7 @@ https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-use
 type ScimSetInformationForProvisionedUserResponse struct {
 	response
 	request *ScimSetInformationForProvisionedUserReq
-	Data    ScimSetInformationForProvisionedUserResponseBody
+	Data    components.ScimUser
 }
 
 /*
@@ -771,7 +743,7 @@ func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ScimUpdateAttributeForUserResponseBody{}
+	resp.Data = components.ScimUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -895,13 +867,6 @@ type ScimUpdateAttributeForUserReqBody struct {
 }
 
 /*
-ScimUpdateAttributeForUserResponseBody is a response body for ScimUpdateAttributeForUser
-
-https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
-*/
-type ScimUpdateAttributeForUserResponseBody components.ScimUser
-
-/*
 ScimUpdateAttributeForUserResponse is a response for ScimUpdateAttributeForUser
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
@@ -909,5 +874,5 @@ https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 type ScimUpdateAttributeForUserResponse struct {
 	response
 	request *ScimUpdateAttributeForUserReq
-	Data    ScimUpdateAttributeForUserResponseBody
+	Data    components.ScimUser
 }

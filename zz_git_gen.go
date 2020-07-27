@@ -32,7 +32,7 @@ func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitCreateBlobResponseBody{}
+	resp.Data = components.ShortBlob{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -140,13 +140,6 @@ type GitCreateBlobReqBody struct {
 }
 
 /*
-GitCreateBlobResponseBody is a response body for GitCreateBlob
-
-https://developer.github.com/v3/git/blobs/#create-a-blob
-*/
-type GitCreateBlobResponseBody components.ShortBlob
-
-/*
 GitCreateBlobResponse is a response for GitCreateBlob
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
@@ -154,7 +147,7 @@ https://developer.github.com/v3/git/blobs/#create-a-blob
 type GitCreateBlobResponse struct {
 	response
 	request *GitCreateBlobReq
-	Data    GitCreateBlobResponseBody
+	Data    components.ShortBlob
 }
 
 /*
@@ -178,7 +171,7 @@ func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitCreateCommitResponseBody{}
+	resp.Data = components.GitCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -355,13 +348,6 @@ type GitCreateCommitReqBody struct {
 }
 
 /*
-GitCreateCommitResponseBody is a response body for GitCreateCommit
-
-https://developer.github.com/v3/git/commits/#create-a-commit
-*/
-type GitCreateCommitResponseBody components.GitCommit
-
-/*
 GitCreateCommitResponse is a response for GitCreateCommit
 
 https://developer.github.com/v3/git/commits/#create-a-commit
@@ -369,7 +355,7 @@ https://developer.github.com/v3/git/commits/#create-a-commit
 type GitCreateCommitResponse struct {
 	response
 	request *GitCreateCommitReq
-	Data    GitCreateCommitResponseBody
+	Data    components.GitCommit
 }
 
 /*
@@ -393,7 +379,7 @@ func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitCreateRefResponseBody{}
+	resp.Data = components.GitRef{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -505,13 +491,6 @@ type GitCreateRefReqBody struct {
 }
 
 /*
-GitCreateRefResponseBody is a response body for GitCreateRef
-
-https://developer.github.com/v3/git/refs/#create-a-reference
-*/
-type GitCreateRefResponseBody components.GitRef
-
-/*
 GitCreateRefResponse is a response for GitCreateRef
 
 https://developer.github.com/v3/git/refs/#create-a-reference
@@ -519,7 +498,7 @@ https://developer.github.com/v3/git/refs/#create-a-reference
 type GitCreateRefResponse struct {
 	response
 	request *GitCreateRefReq
-	Data    GitCreateRefResponseBody
+	Data    components.GitRef
 }
 
 /*
@@ -543,7 +522,7 @@ func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitCreateTagResponseBody{}
+	resp.Data = components.GitTag{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -676,13 +655,6 @@ type GitCreateTagReqBody struct {
 }
 
 /*
-GitCreateTagResponseBody is a response body for GitCreateTag
-
-https://developer.github.com/v3/git/tags/#create-a-tag-object
-*/
-type GitCreateTagResponseBody components.GitTag
-
-/*
 GitCreateTagResponse is a response for GitCreateTag
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
@@ -690,7 +662,7 @@ https://developer.github.com/v3/git/tags/#create-a-tag-object
 type GitCreateTagResponse struct {
 	response
 	request *GitCreateTagReq
-	Data    GitCreateTagResponseBody
+	Data    components.GitTag
 }
 
 /*
@@ -714,7 +686,7 @@ func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitCreateTreeResponseBody{}
+	resp.Data = components.GitTree{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -861,13 +833,6 @@ type GitCreateTreeReqBody struct {
 }
 
 /*
-GitCreateTreeResponseBody is a response body for GitCreateTree
-
-https://developer.github.com/v3/git/trees/#create-a-tree
-*/
-type GitCreateTreeResponseBody components.GitTree
-
-/*
 GitCreateTreeResponse is a response for GitCreateTree
 
 https://developer.github.com/v3/git/trees/#create-a-tree
@@ -875,7 +840,7 @@ https://developer.github.com/v3/git/trees/#create-a-tree
 type GitCreateTreeResponse struct {
 	response
 	request *GitCreateTreeReq
-	Data    GitCreateTreeResponseBody
+	Data    components.GitTree
 }
 
 /*
@@ -1021,7 +986,7 @@ func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitGetBlobResponseBody{}
+	resp.Data = components.Blob{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1114,13 +1079,6 @@ func (r *GitGetBlobReq) Rel(link RelName, resp *GitGetBlobResponse) bool {
 }
 
 /*
-GitGetBlobResponseBody is a response body for GitGetBlob
-
-https://developer.github.com/v3/git/blobs/#get-a-blob
-*/
-type GitGetBlobResponseBody components.Blob
-
-/*
 GitGetBlobResponse is a response for GitGetBlob
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
@@ -1128,7 +1086,7 @@ https://developer.github.com/v3/git/blobs/#get-a-blob
 type GitGetBlobResponse struct {
 	response
 	request *GitGetBlobReq
-	Data    GitGetBlobResponseBody
+	Data    components.Blob
 }
 
 /*
@@ -1152,7 +1110,7 @@ func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitGetCommitResponseBody{}
+	resp.Data = components.GitCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1245,13 +1203,6 @@ func (r *GitGetCommitReq) Rel(link RelName, resp *GitGetCommitResponse) bool {
 }
 
 /*
-GitGetCommitResponseBody is a response body for GitGetCommit
-
-https://developer.github.com/v3/git/commits/#get-a-commit
-*/
-type GitGetCommitResponseBody components.GitCommit
-
-/*
 GitGetCommitResponse is a response for GitGetCommit
 
 https://developer.github.com/v3/git/commits/#get-a-commit
@@ -1259,7 +1210,7 @@ https://developer.github.com/v3/git/commits/#get-a-commit
 type GitGetCommitResponse struct {
 	response
 	request *GitGetCommitReq
-	Data    GitGetCommitResponseBody
+	Data    components.GitCommit
 }
 
 /*
@@ -1283,7 +1234,7 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*G
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitGetRefResponseBody{}
+	resp.Data = components.GitRef{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1376,13 +1327,6 @@ func (r *GitGetRefReq) Rel(link RelName, resp *GitGetRefResponse) bool {
 }
 
 /*
-GitGetRefResponseBody is a response body for GitGetRef
-
-https://developer.github.com/v3/git/refs/#get-a-reference
-*/
-type GitGetRefResponseBody components.GitRef
-
-/*
 GitGetRefResponse is a response for GitGetRef
 
 https://developer.github.com/v3/git/refs/#get-a-reference
@@ -1390,7 +1334,7 @@ https://developer.github.com/v3/git/refs/#get-a-reference
 type GitGetRefResponse struct {
 	response
 	request *GitGetRefReq
-	Data    GitGetRefResponseBody
+	Data    components.GitRef
 }
 
 /*
@@ -1414,7 +1358,7 @@ func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*G
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitGetTagResponseBody{}
+	resp.Data = components.GitTag{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1507,13 +1451,6 @@ func (r *GitGetTagReq) Rel(link RelName, resp *GitGetTagResponse) bool {
 }
 
 /*
-GitGetTagResponseBody is a response body for GitGetTag
-
-https://developer.github.com/v3/git/tags/#get-a-tag
-*/
-type GitGetTagResponseBody components.GitTag
-
-/*
 GitGetTagResponse is a response for GitGetTag
 
 https://developer.github.com/v3/git/tags/#get-a-tag
@@ -1521,7 +1458,7 @@ https://developer.github.com/v3/git/tags/#get-a-tag
 type GitGetTagResponse struct {
 	response
 	request *GitGetTagReq
-	Data    GitGetTagResponseBody
+	Data    components.GitTag
 }
 
 /*
@@ -1545,7 +1482,7 @@ func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitGetTreeResponseBody{}
+	resp.Data = components.GitTree{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1650,13 +1587,6 @@ func (r *GitGetTreeReq) Rel(link RelName, resp *GitGetTreeResponse) bool {
 }
 
 /*
-GitGetTreeResponseBody is a response body for GitGetTree
-
-https://developer.github.com/v3/git/trees/#get-a-tree
-*/
-type GitGetTreeResponseBody components.GitTree
-
-/*
 GitGetTreeResponse is a response for GitGetTree
 
 https://developer.github.com/v3/git/trees/#get-a-tree
@@ -1664,7 +1594,7 @@ https://developer.github.com/v3/git/trees/#get-a-tree
 type GitGetTreeResponse struct {
 	response
 	request *GitGetTreeReq
-	Data    GitGetTreeResponseBody
+	Data    components.GitTree
 }
 
 /*
@@ -1688,7 +1618,7 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitListMatchingRefsResponseBody{}
+	resp.Data = []components.GitRef{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1793,13 +1723,6 @@ func (r *GitListMatchingRefsReq) Rel(link RelName, resp *GitListMatchingRefsResp
 }
 
 /*
-GitListMatchingRefsResponseBody is a response body for GitListMatchingRefs
-
-https://developer.github.com/v3/git/refs/#list-matching-references
-*/
-type GitListMatchingRefsResponseBody []components.GitRef
-
-/*
 GitListMatchingRefsResponse is a response for GitListMatchingRefs
 
 https://developer.github.com/v3/git/refs/#list-matching-references
@@ -1807,7 +1730,7 @@ https://developer.github.com/v3/git/refs/#list-matching-references
 type GitListMatchingRefsResponse struct {
 	response
 	request *GitListMatchingRefsReq
-	Data    GitListMatchingRefsResponseBody
+	Data    []components.GitRef
 }
 
 /*
@@ -1831,7 +1754,7 @@ func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitUpdateRefResponseBody{}
+	resp.Data = components.GitRef{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1946,13 +1869,6 @@ type GitUpdateRefReqBody struct {
 }
 
 /*
-GitUpdateRefResponseBody is a response body for GitUpdateRef
-
-https://developer.github.com/v3/git/refs/#update-a-reference
-*/
-type GitUpdateRefResponseBody components.GitRef
-
-/*
 GitUpdateRefResponse is a response for GitUpdateRef
 
 https://developer.github.com/v3/git/refs/#update-a-reference
@@ -1960,5 +1876,5 @@ https://developer.github.com/v3/git/refs/#update-a-reference
 type GitUpdateRefResponse struct {
 	response
 	request *GitUpdateRefReq
-	Data    GitUpdateRefResponseBody
+	Data    components.GitRef
 }

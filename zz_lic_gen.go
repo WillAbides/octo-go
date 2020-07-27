@@ -32,7 +32,7 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = LicensesGetResponseBody{}
+	resp.Data = components.License{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -123,13 +123,6 @@ func (r *LicensesGetReq) Rel(link RelName, resp *LicensesGetResponse) bool {
 }
 
 /*
-LicensesGetResponseBody is a response body for LicensesGet
-
-https://developer.github.com/v3/licenses/#get-a-license
-*/
-type LicensesGetResponseBody components.License
-
-/*
 LicensesGetResponse is a response for LicensesGet
 
 https://developer.github.com/v3/licenses/#get-a-license
@@ -137,7 +130,7 @@ https://developer.github.com/v3/licenses/#get-a-license
 type LicensesGetResponse struct {
 	response
 	request *LicensesGetReq
-	Data    LicensesGetResponseBody
+	Data    components.License
 }
 
 /*
@@ -161,7 +154,7 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = LicensesGetAllCommonlyUsedResponseBody{}
+	resp.Data = []components.LicenseSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -259,13 +252,6 @@ func (r *LicensesGetAllCommonlyUsedReq) Rel(link RelName, resp *LicensesGetAllCo
 }
 
 /*
-LicensesGetAllCommonlyUsedResponseBody is a response body for LicensesGetAllCommonlyUsed
-
-https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
-*/
-type LicensesGetAllCommonlyUsedResponseBody []components.LicenseSimple
-
-/*
 LicensesGetAllCommonlyUsedResponse is a response for LicensesGetAllCommonlyUsed
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
@@ -273,7 +259,7 @@ https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 type LicensesGetAllCommonlyUsedResponse struct {
 	response
 	request *LicensesGetAllCommonlyUsedReq
-	Data    LicensesGetAllCommonlyUsedResponseBody
+	Data    []components.LicenseSimple
 }
 
 /*
@@ -297,7 +283,7 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = LicensesGetForRepoResponseBody{}
+	resp.Data = components.LicenseContent{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -387,13 +373,6 @@ func (r *LicensesGetForRepoReq) Rel(link RelName, resp *LicensesGetForRepoRespon
 }
 
 /*
-LicensesGetForRepoResponseBody is a response body for LicensesGetForRepo
-
-https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
-*/
-type LicensesGetForRepoResponseBody components.LicenseContent
-
-/*
 LicensesGetForRepoResponse is a response for LicensesGetForRepo
 
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
@@ -401,5 +380,5 @@ https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 type LicensesGetForRepoResponse struct {
 	response
 	request *LicensesGetForRepoReq
-	Data    LicensesGetForRepoResponseBody
+	Data    components.LicenseContent
 }

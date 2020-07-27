@@ -157,7 +157,7 @@ func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GitignoreGetTemplateResponseBody{}
+	resp.Data = components.GitignoreTemplate{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -248,13 +248,6 @@ func (r *GitignoreGetTemplateReq) Rel(link RelName, resp *GitignoreGetTemplateRe
 }
 
 /*
-GitignoreGetTemplateResponseBody is a response body for GitignoreGetTemplate
-
-https://developer.github.com/v3/gitignore/#get-a-gitignore-template
-*/
-type GitignoreGetTemplateResponseBody components.GitignoreTemplate
-
-/*
 GitignoreGetTemplateResponse is a response for GitignoreGetTemplate
 
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
@@ -262,5 +255,5 @@ https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 type GitignoreGetTemplateResponse struct {
 	response
 	request *GitignoreGetTemplateReq
-	Data    GitignoreGetTemplateResponseBody
+	Data    components.GitignoreTemplate
 }

@@ -31,7 +31,7 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = RateLimitGetResponseBody{}
+	resp.Data = components.RateLimitOverview{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -119,13 +119,6 @@ func (r *RateLimitGetReq) Rel(link RelName, resp *RateLimitGetResponse) bool {
 }
 
 /*
-RateLimitGetResponseBody is a response body for RateLimitGet
-
-https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
-*/
-type RateLimitGetResponseBody components.RateLimitOverview
-
-/*
 RateLimitGetResponse is a response for RateLimitGet
 
 https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
@@ -133,5 +126,5 @@ https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authen
 type RateLimitGetResponse struct {
 	response
 	request *RateLimitGetReq
-	Data    RateLimitGetResponseBody
+	Data    components.RateLimitOverview
 }

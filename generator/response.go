@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strings"
 
 	"github.com/dave/jennifer/jen"
 	"github.com/google/go-cmp/cmp"
@@ -38,14 +39,51 @@ func addResponse(file *jen.File, endpoint *model.Endpoint) {
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
 		group.Id("response")
 		group.Id("request").Op("*").Id(reqStructName(endpoint))
-		switch {
-		case endpointHasAttribute(endpoint, attrNoResponseBody):
-		case len(responseCodesWithBodies(endpoint)) > 0:
-			group.Id("Data").Id(respBodyStructName(endpoint))
-		case endpointHasAttribute(endpoint, attrBoolean):
+		if endpointHasAttribute(endpoint, attrNoResponseBody) {
+			return
+		}
+		bodyType := respBodyType(endpoint)
+		if bodyType != nil {
+			group.Id("Data").Do(func(stmt *jen.Statement) {
+				if bodyType.slice {
+					stmt.Op("[]")
+				}
+			}).Qual(bodyType.pkg, bodyType.name)
+		}
+		if endpointHasAttribute(endpoint, attrBoolean) {
 			group.Id("Data").Bool()
 		}
 	})
+}
+
+func respBodyType(endpoint *model.Endpoint) *qualifiedType {
+	codeBodies := responseCodesWithBodies(endpoint)
+	if len(codeBodies) == 0 {
+		return nil
+	}
+	body := endpoint.Responses[codeBodies[0]].Body
+	if body.Type == model.ParamTypeArray {
+		if strings.HasPrefix(body.ItemSchema.Ref, "#/components/schemas/") {
+			nm := strings.TrimPrefix(body.ItemSchema.Ref, "#/components/schemas/")
+			return &qualifiedType{
+				pkg:   "github.com/willabides/octo-go/components",
+				name:  toExportedName(nm),
+				slice: true,
+			}
+		}
+	}
+
+	if strings.HasPrefix(body.Ref, "#/components/schemas/") {
+		nm := strings.TrimPrefix(body.Ref, "#/components/schemas/")
+		return &qualifiedType{
+			pkg:  "github.com/willabides/octo-go/components",
+			name: toExportedName(nm),
+		}
+	}
+	return &qualifiedType{
+		pkg:  "github.com/willabides/octo-go",
+		name: toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name)),
+	}
 }
 
 func responseCodesWithBodies(endpoint *model.Endpoint) []int {
@@ -75,6 +113,10 @@ func responseCodesWithBodies(endpoint *model.Endpoint) []int {
 
 func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrNoResponseBody) {
+		return
+	}
+	bt := respBodyType(endpoint)
+	if bt != nil && bt.pkg == "github.com/willabides/octo-go/components" {
 		return
 	}
 	bodyCodes := responseCodesWithBodies(endpoint)

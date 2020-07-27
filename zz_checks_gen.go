@@ -32,7 +32,7 @@ func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksCreateResponseBody{}
+	resp.Data = components.CheckRun{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -319,13 +319,6 @@ type ChecksCreateReqBody struct {
 }
 
 /*
-ChecksCreateResponseBody is a response body for ChecksCreate
-
-https://developer.github.com/v3/checks/runs/#create-a-check-run
-*/
-type ChecksCreateResponseBody components.CheckRun
-
-/*
 ChecksCreateResponse is a response for ChecksCreate
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
@@ -333,7 +326,7 @@ https://developer.github.com/v3/checks/runs/#create-a-check-run
 type ChecksCreateResponse struct {
 	response
 	request *ChecksCreateReq
-	Data    ChecksCreateResponseBody
+	Data    components.CheckRun
 }
 
 /*
@@ -357,7 +350,7 @@ func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksCreateSuiteResponseBody{}
+	resp.Data = components.CheckSuite{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -477,13 +470,6 @@ type ChecksCreateSuiteReqBody struct {
 }
 
 /*
-ChecksCreateSuiteResponseBody is a response body for ChecksCreateSuite
-
-https://developer.github.com/v3/checks/suites/#create-a-check-suite
-*/
-type ChecksCreateSuiteResponseBody components.CheckSuite
-
-/*
 ChecksCreateSuiteResponse is a response for ChecksCreateSuite
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
@@ -491,7 +477,7 @@ https://developer.github.com/v3/checks/suites/#create-a-check-suite
 type ChecksCreateSuiteResponse struct {
 	response
 	request *ChecksCreateSuiteReq
-	Data    ChecksCreateSuiteResponseBody
+	Data    components.CheckSuite
 }
 
 /*
@@ -515,7 +501,7 @@ func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*C
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksGetResponseBody{}
+	resp.Data = components.CheckRun{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -623,13 +609,6 @@ func (r *ChecksGetReq) Rel(link RelName, resp *ChecksGetResponse) bool {
 }
 
 /*
-ChecksGetResponseBody is a response body for ChecksGet
-
-https://developer.github.com/v3/checks/runs/#get-a-check-run
-*/
-type ChecksGetResponseBody components.CheckRun
-
-/*
 ChecksGetResponse is a response for ChecksGet
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
@@ -637,7 +616,7 @@ https://developer.github.com/v3/checks/runs/#get-a-check-run
 type ChecksGetResponse struct {
 	response
 	request *ChecksGetReq
-	Data    ChecksGetResponseBody
+	Data    components.CheckRun
 }
 
 /*
@@ -661,7 +640,7 @@ func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksGetSuiteResponseBody{}
+	resp.Data = components.CheckSuite{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -769,13 +748,6 @@ func (r *ChecksGetSuiteReq) Rel(link RelName, resp *ChecksGetSuiteResponse) bool
 }
 
 /*
-ChecksGetSuiteResponseBody is a response body for ChecksGetSuite
-
-https://developer.github.com/v3/checks/suites/#get-a-check-suite
-*/
-type ChecksGetSuiteResponseBody components.CheckSuite
-
-/*
 ChecksGetSuiteResponse is a response for ChecksGetSuite
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
@@ -783,7 +755,7 @@ https://developer.github.com/v3/checks/suites/#get-a-check-suite
 type ChecksGetSuiteResponse struct {
 	response
 	request *ChecksGetSuiteReq
-	Data    ChecksGetSuiteResponseBody
+	Data    components.CheckSuite
 }
 
 /*
@@ -807,7 +779,7 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksListAnnotationsResponseBody{}
+	resp.Data = []components.CheckAnnotation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -927,13 +899,6 @@ func (r *ChecksListAnnotationsReq) Rel(link RelName, resp *ChecksListAnnotations
 }
 
 /*
-ChecksListAnnotationsResponseBody is a response body for ChecksListAnnotations
-
-https://developer.github.com/v3/checks/runs/#list-check-run-annotations
-*/
-type ChecksListAnnotationsResponseBody []components.CheckAnnotation
-
-/*
 ChecksListAnnotationsResponse is a response for ChecksListAnnotations
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
@@ -941,7 +906,7 @@ https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 type ChecksListAnnotationsResponse struct {
 	response
 	request *ChecksListAnnotationsReq
-	Data    ChecksListAnnotationsResponseBody
+	Data    []components.CheckAnnotation
 }
 
 /*
@@ -1645,7 +1610,7 @@ func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPrefere
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksSetSuitesPreferencesResponseBody{}
+	resp.Data = components.CheckSuitePreference{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1783,13 +1748,6 @@ type ChecksSetSuitesPreferencesReqBody struct {
 }
 
 /*
-ChecksSetSuitesPreferencesResponseBody is a response body for ChecksSetSuitesPreferences
-
-https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
-*/
-type ChecksSetSuitesPreferencesResponseBody components.CheckSuitePreference
-
-/*
 ChecksSetSuitesPreferencesResponse is a response for ChecksSetSuitesPreferences
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
@@ -1797,7 +1755,7 @@ https://developer.github.com/v3/checks/suites/#update-repository-preferences-for
 type ChecksSetSuitesPreferencesResponse struct {
 	response
 	request *ChecksSetSuitesPreferencesReq
-	Data    ChecksSetSuitesPreferencesResponseBody
+	Data    components.CheckSuitePreference
 }
 
 /*
@@ -1821,7 +1779,7 @@ func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ChecksUpdateResponseBody{}
+	resp.Data = components.CheckRun{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2094,13 +2052,6 @@ type ChecksUpdateReqBody struct {
 }
 
 /*
-ChecksUpdateResponseBody is a response body for ChecksUpdate
-
-https://developer.github.com/v3/checks/runs/#update-a-check-run
-*/
-type ChecksUpdateResponseBody components.CheckRun
-
-/*
 ChecksUpdateResponse is a response for ChecksUpdate
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
@@ -2108,5 +2059,5 @@ https://developer.github.com/v3/checks/runs/#update-a-check-run
 type ChecksUpdateResponse struct {
 	response
 	request *ChecksUpdateReq
-	Data    ChecksUpdateResponseBody
+	Data    components.CheckRun
 }

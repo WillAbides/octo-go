@@ -31,7 +31,7 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodeScanningGetAlertResponseBody{}
+	resp.Data = components.CodeScanningAlert{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -124,13 +124,6 @@ func (r *CodeScanningGetAlertReq) Rel(link RelName, resp *CodeScanningGetAlertRe
 }
 
 /*
-CodeScanningGetAlertResponseBody is a response body for CodeScanningGetAlert
-
-https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
-*/
-type CodeScanningGetAlertResponseBody components.CodeScanningAlert
-
-/*
 CodeScanningGetAlertResponse is a response for CodeScanningGetAlert
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
@@ -138,7 +131,7 @@ https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 type CodeScanningGetAlertResponse struct {
 	response
 	request *CodeScanningGetAlertReq
-	Data    CodeScanningGetAlertResponseBody
+	Data    components.CodeScanningAlert
 }
 
 /*
@@ -162,7 +155,7 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodeScanningListAlertsForRepoResponseBody{}
+	resp.Data = []components.CodeScanningAlert{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -267,13 +260,6 @@ func (r *CodeScanningListAlertsForRepoReq) Rel(link RelName, resp *CodeScanningL
 }
 
 /*
-CodeScanningListAlertsForRepoResponseBody is a response body for CodeScanningListAlertsForRepo
-
-https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
-*/
-type CodeScanningListAlertsForRepoResponseBody []components.CodeScanningAlert
-
-/*
 CodeScanningListAlertsForRepoResponse is a response for CodeScanningListAlertsForRepo
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
@@ -281,5 +267,5 @@ https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-r
 type CodeScanningListAlertsForRepoResponse struct {
 	response
 	request *CodeScanningListAlertsForRepoReq
-	Data    CodeScanningListAlertsForRepoResponseBody
+	Data    []components.CodeScanningAlert
 }

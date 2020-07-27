@@ -154,7 +154,7 @@ func ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposAddAppAccessRestrictionsResponseBody{}
+	resp.Data = []components.Integration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -258,13 +258,6 @@ https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 type ReposAddAppAccessRestrictionsReqBody []string
 
 /*
-ReposAddAppAccessRestrictionsResponseBody is a response body for ReposAddAppAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
-*/
-type ReposAddAppAccessRestrictionsResponseBody []components.Integration
-
-/*
 ReposAddAppAccessRestrictionsResponse is a response for ReposAddAppAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
@@ -272,7 +265,7 @@ https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 type ReposAddAppAccessRestrictionsResponse struct {
 	response
 	request *ReposAddAppAccessRestrictionsReq
-	Data    ReposAddAppAccessRestrictionsResponseBody
+	Data    []components.Integration
 }
 
 /*
@@ -296,7 +289,7 @@ func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposAddCollaboratorResponseBody{}
+	resp.Data = components.RepositoryInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -413,13 +406,6 @@ type ReposAddCollaboratorReqBody struct {
 }
 
 /*
-ReposAddCollaboratorResponseBody is a response body for ReposAddCollaborator
-
-https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
-*/
-type ReposAddCollaboratorResponseBody components.RepositoryInvitation
-
-/*
 ReposAddCollaboratorResponse is a response for ReposAddCollaborator
 
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
@@ -427,7 +413,7 @@ https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborat
 type ReposAddCollaboratorResponse struct {
 	response
 	request *ReposAddCollaboratorReq
-	Data    ReposAddCollaboratorResponseBody
+	Data    components.RepositoryInvitation
 }
 
 /*
@@ -593,7 +579,7 @@ func ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccess
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposAddTeamAccessRestrictionsResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -697,13 +683,6 @@ https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 type ReposAddTeamAccessRestrictionsReqBody []string
 
 /*
-ReposAddTeamAccessRestrictionsResponseBody is a response body for ReposAddTeamAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
-*/
-type ReposAddTeamAccessRestrictionsResponseBody []components.Team
-
-/*
 ReposAddTeamAccessRestrictionsResponse is a response for ReposAddTeamAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
@@ -711,7 +690,7 @@ https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 type ReposAddTeamAccessRestrictionsResponse struct {
 	response
 	request *ReposAddTeamAccessRestrictionsReq
-	Data    ReposAddTeamAccessRestrictionsResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -735,7 +714,7 @@ func ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccess
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposAddUserAccessRestrictionsResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -839,13 +818,6 @@ https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 type ReposAddUserAccessRestrictionsReqBody []string
 
 /*
-ReposAddUserAccessRestrictionsResponseBody is a response body for ReposAddUserAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
-*/
-type ReposAddUserAccessRestrictionsResponseBody []components.SimpleUser
-
-/*
 ReposAddUserAccessRestrictionsResponse is a response for ReposAddUserAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
@@ -853,7 +825,7 @@ https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 type ReposAddUserAccessRestrictionsResponse struct {
 	response
 	request *ReposAddUserAccessRestrictionsReq
-	Data    ReposAddUserAccessRestrictionsResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -1139,7 +1111,7 @@ func ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCompareCommitsResponseBody{}
+	resp.Data = components.CommitComparison{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1235,13 +1207,6 @@ func (r *ReposCompareCommitsReq) Rel(link RelName, resp *ReposCompareCommitsResp
 }
 
 /*
-ReposCompareCommitsResponseBody is a response body for ReposCompareCommits
-
-https://developer.github.com/v3/repos/commits/#compare-two-commits
-*/
-type ReposCompareCommitsResponseBody components.CommitComparison
-
-/*
 ReposCompareCommitsResponse is a response for ReposCompareCommits
 
 https://developer.github.com/v3/repos/commits/#compare-two-commits
@@ -1249,7 +1214,7 @@ https://developer.github.com/v3/repos/commits/#compare-two-commits
 type ReposCompareCommitsResponse struct {
 	response
 	request *ReposCompareCommitsReq
-	Data    ReposCompareCommitsResponseBody
+	Data    components.CommitComparison
 }
 
 /*
@@ -1273,7 +1238,7 @@ func ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitComment
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateCommitCommentResponseBody{}
+	resp.Data = components.CommitComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1390,13 +1355,6 @@ type ReposCreateCommitCommentReqBody struct {
 }
 
 /*
-ReposCreateCommitCommentResponseBody is a response body for ReposCreateCommitComment
-
-https://developer.github.com/v3/repos/comments/#create-a-commit-comment
-*/
-type ReposCreateCommitCommentResponseBody components.CommitComment
-
-/*
 ReposCreateCommitCommentResponse is a response for ReposCreateCommitComment
 
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
@@ -1404,7 +1362,7 @@ https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 type ReposCreateCommitCommentResponse struct {
 	response
 	request *ReposCreateCommitCommentReq
-	Data    ReposCreateCommitCommentResponseBody
+	Data    components.CommitComment
 }
 
 /*
@@ -1428,7 +1386,7 @@ func ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateC
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateCommitSignatureProtectionResponseBody{}
+	resp.Data = components.ProtectedBranchAdminEnforced{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1536,13 +1494,6 @@ func (r *ReposCreateCommitSignatureProtectionReq) Rel(link RelName, resp *ReposC
 }
 
 /*
-ReposCreateCommitSignatureProtectionResponseBody is a response body for ReposCreateCommitSignatureProtection
-
-https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
-*/
-type ReposCreateCommitSignatureProtectionResponseBody components.ProtectedBranchAdminEnforced
-
-/*
 ReposCreateCommitSignatureProtectionResponse is a response for ReposCreateCommitSignatureProtection
 
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
@@ -1550,7 +1501,7 @@ https://developer.github.com/v3/repos/branches/#create-commit-signature-protecti
 type ReposCreateCommitSignatureProtectionResponse struct {
 	response
 	request *ReposCreateCommitSignatureProtectionReq
-	Data    ReposCreateCommitSignatureProtectionResponseBody
+	Data    components.ProtectedBranchAdminEnforced
 }
 
 /*
@@ -1574,7 +1525,7 @@ func ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateCommitStatusResponseBody{}
+	resp.Data = components.Status{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1697,13 +1648,6 @@ type ReposCreateCommitStatusReqBody struct {
 }
 
 /*
-ReposCreateCommitStatusResponseBody is a response body for ReposCreateCommitStatus
-
-https://developer.github.com/v3/repos/statuses/#create-a-commit-status
-*/
-type ReposCreateCommitStatusResponseBody components.Status
-
-/*
 ReposCreateCommitStatusResponse is a response for ReposCreateCommitStatus
 
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
@@ -1711,7 +1655,7 @@ https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 type ReposCreateCommitStatusResponse struct {
 	response
 	request *ReposCreateCommitStatusReq
-	Data    ReposCreateCommitStatusResponseBody
+	Data    components.Status
 }
 
 /*
@@ -1735,7 +1679,7 @@ func ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateDeployKeyResponseBody{}
+	resp.Data = components.DeployKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1856,13 +1800,6 @@ type ReposCreateDeployKeyReqBody struct {
 }
 
 /*
-ReposCreateDeployKeyResponseBody is a response body for ReposCreateDeployKey
-
-https://developer.github.com/v3/repos/keys/#create-a-deploy-key
-*/
-type ReposCreateDeployKeyResponseBody components.DeployKey
-
-/*
 ReposCreateDeployKeyResponse is a response for ReposCreateDeployKey
 
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
@@ -1870,7 +1807,7 @@ https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 type ReposCreateDeployKeyResponse struct {
 	response
 	request *ReposCreateDeployKeyReq
-	Data    ReposCreateDeployKeyResponseBody
+	Data    components.DeployKey
 }
 
 /*
@@ -1894,7 +1831,7 @@ func ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateDeploymentResponseBody{}
+	resp.Data = components.Deployment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2057,13 +1994,6 @@ type ReposCreateDeploymentReqBody struct {
 }
 
 /*
-ReposCreateDeploymentResponseBody is a response body for ReposCreateDeployment
-
-https://developer.github.com/v3/repos/deployments/#create-a-deployment
-*/
-type ReposCreateDeploymentResponseBody components.Deployment
-
-/*
 ReposCreateDeploymentResponse is a response for ReposCreateDeployment
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
@@ -2071,7 +2001,7 @@ https://developer.github.com/v3/repos/deployments/#create-a-deployment
 type ReposCreateDeploymentResponse struct {
 	response
 	request *ReposCreateDeploymentReq
-	Data    ReposCreateDeploymentResponseBody
+	Data    components.Deployment
 }
 
 /*
@@ -2095,7 +2025,7 @@ func ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeployment
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateDeploymentStatusResponseBody{}
+	resp.Data = components.DeploymentStatus{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2301,13 +2231,6 @@ type ReposCreateDeploymentStatusReqBody struct {
 }
 
 /*
-ReposCreateDeploymentStatusResponseBody is a response body for ReposCreateDeploymentStatus
-
-https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
-*/
-type ReposCreateDeploymentStatusResponseBody components.DeploymentStatus
-
-/*
 ReposCreateDeploymentStatusResponse is a response for ReposCreateDeploymentStatus
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
@@ -2315,7 +2238,7 @@ https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 type ReposCreateDeploymentStatusResponse struct {
 	response
 	request *ReposCreateDeploymentStatusReq
-	Data    ReposCreateDeploymentStatusResponseBody
+	Data    components.DeploymentStatus
 }
 
 /*
@@ -2473,7 +2396,7 @@ func ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAut
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateForAuthenticatedUserResponseBody{}
+	resp.Data = components.Repository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2655,13 +2578,6 @@ type ReposCreateForAuthenticatedUserReqBody struct {
 }
 
 /*
-ReposCreateForAuthenticatedUserResponseBody is a response body for ReposCreateForAuthenticatedUser
-
-https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
-*/
-type ReposCreateForAuthenticatedUserResponseBody components.Repository
-
-/*
 ReposCreateForAuthenticatedUserResponse is a response for ReposCreateForAuthenticatedUser
 
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
@@ -2669,7 +2585,7 @@ https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated
 type ReposCreateForAuthenticatedUserResponse struct {
 	response
 	request *ReposCreateForAuthenticatedUserReq
-	Data    ReposCreateForAuthenticatedUserResponseBody
+	Data    components.Repository
 }
 
 /*
@@ -2693,7 +2609,7 @@ func ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateForkResponseBody{}
+	resp.Data = components.Repository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2798,13 +2714,6 @@ type ReposCreateForkReqBody struct {
 }
 
 /*
-ReposCreateForkResponseBody is a response body for ReposCreateFork
-
-https://developer.github.com/v3/repos/forks/#create-a-fork
-*/
-type ReposCreateForkResponseBody components.Repository
-
-/*
 ReposCreateForkResponse is a response for ReposCreateFork
 
 https://developer.github.com/v3/repos/forks/#create-a-fork
@@ -2812,7 +2721,7 @@ https://developer.github.com/v3/repos/forks/#create-a-fork
 type ReposCreateForkResponse struct {
 	response
 	request *ReposCreateForkReq
-	Data    ReposCreateForkResponseBody
+	Data    components.Repository
 }
 
 /*
@@ -2836,7 +2745,7 @@ func ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateInOrgResponseBody{}
+	resp.Data = components.Repository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3048,13 +2957,6 @@ type ReposCreateInOrgReqBody struct {
 }
 
 /*
-ReposCreateInOrgResponseBody is a response body for ReposCreateInOrg
-
-https://developer.github.com/v3/repos/#create-an-organization-repository
-*/
-type ReposCreateInOrgResponseBody components.Repository
-
-/*
 ReposCreateInOrgResponse is a response for ReposCreateInOrg
 
 https://developer.github.com/v3/repos/#create-an-organization-repository
@@ -3062,7 +2964,7 @@ https://developer.github.com/v3/repos/#create-an-organization-repository
 type ReposCreateInOrgResponse struct {
 	response
 	request *ReposCreateInOrgReq
-	Data    ReposCreateInOrgResponseBody
+	Data    components.Repository
 }
 
 /*
@@ -3086,7 +2988,7 @@ func ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpda
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateOrUpdateFileContentsResponseBody{}
+	resp.Data = components.FileCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3231,13 +3133,6 @@ type ReposCreateOrUpdateFileContentsReqBody struct {
 }
 
 /*
-ReposCreateOrUpdateFileContentsResponseBody is a response body for ReposCreateOrUpdateFileContents
-
-https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
-*/
-type ReposCreateOrUpdateFileContentsResponseBody components.FileCommit
-
-/*
 ReposCreateOrUpdateFileContentsResponse is a response for ReposCreateOrUpdateFileContents
 
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
@@ -3245,7 +3140,7 @@ https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 type ReposCreateOrUpdateFileContentsResponse struct {
 	response
 	request *ReposCreateOrUpdateFileContentsReq
-	Data    ReposCreateOrUpdateFileContentsResponseBody
+	Data    components.FileCommit
 }
 
 /*
@@ -3269,7 +3164,7 @@ func ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreatePagesSiteResponseBody{}
+	resp.Data = components.Page{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3405,13 +3300,6 @@ type ReposCreatePagesSiteReqBody struct {
 }
 
 /*
-ReposCreatePagesSiteResponseBody is a response body for ReposCreatePagesSite
-
-https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
-*/
-type ReposCreatePagesSiteResponseBody components.Page
-
-/*
 ReposCreatePagesSiteResponse is a response for ReposCreatePagesSite
 
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
@@ -3419,7 +3307,7 @@ https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 type ReposCreatePagesSiteResponse struct {
 	response
 	request *ReposCreatePagesSiteReq
-	Data    ReposCreatePagesSiteResponseBody
+	Data    components.Page
 }
 
 /*
@@ -3443,7 +3331,7 @@ func ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateReleaseResponseBody{}
+	resp.Data = components.Release{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3567,13 +3455,6 @@ type ReposCreateReleaseReqBody struct {
 }
 
 /*
-ReposCreateReleaseResponseBody is a response body for ReposCreateRelease
-
-https://developer.github.com/v3/repos/releases/#create-a-release
-*/
-type ReposCreateReleaseResponseBody components.Release
-
-/*
 ReposCreateReleaseResponse is a response for ReposCreateRelease
 
 https://developer.github.com/v3/repos/releases/#create-a-release
@@ -3581,7 +3462,7 @@ https://developer.github.com/v3/repos/releases/#create-a-release
 type ReposCreateReleaseResponse struct {
 	response
 	request *ReposCreateReleaseReq
-	Data    ReposCreateReleaseResponseBody
+	Data    components.Release
 }
 
 /*
@@ -3605,7 +3486,7 @@ func ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplate
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateUsingTemplateResponseBody{}
+	resp.Data = components.Repository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3742,13 +3623,6 @@ type ReposCreateUsingTemplateReqBody struct {
 }
 
 /*
-ReposCreateUsingTemplateResponseBody is a response body for ReposCreateUsingTemplate
-
-https://developer.github.com/v3/repos/#create-a-repository-using-a-template
-*/
-type ReposCreateUsingTemplateResponseBody components.Repository
-
-/*
 ReposCreateUsingTemplateResponse is a response for ReposCreateUsingTemplate
 
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
@@ -3756,7 +3630,7 @@ https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 type ReposCreateUsingTemplateResponse struct {
 	response
 	request *ReposCreateUsingTemplateReq
-	Data    ReposCreateUsingTemplateResponseBody
+	Data    components.Repository
 }
 
 /*
@@ -3780,7 +3654,7 @@ func ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposCreateWebhookResponseBody{}
+	resp.Data = components.Hook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3926,13 +3800,6 @@ type ReposCreateWebhookReqBody struct {
 }
 
 /*
-ReposCreateWebhookResponseBody is a response body for ReposCreateWebhook
-
-https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
-*/
-type ReposCreateWebhookResponseBody components.Hook
-
-/*
 ReposCreateWebhookResponse is a response for ReposCreateWebhook
 
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
@@ -3940,7 +3807,7 @@ https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 type ReposCreateWebhookResponse struct {
 	response
 	request *ReposCreateWebhookReq
-	Data    ReposCreateWebhookResponseBody
+	Data    components.Hook
 }
 
 /*
@@ -5087,7 +4954,7 @@ func ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposDeleteFileResponseBody{}
+	resp.Data = components.FileCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5227,13 +5094,6 @@ type ReposDeleteFileReqBody struct {
 }
 
 /*
-ReposDeleteFileResponseBody is a response body for ReposDeleteFile
-
-https://developer.github.com/v3/repos/contents/#delete-a-file
-*/
-type ReposDeleteFileResponseBody components.FileCommit
-
-/*
 ReposDeleteFileResponse is a response for ReposDeleteFile
 
 https://developer.github.com/v3/repos/contents/#delete-a-file
@@ -5241,7 +5101,7 @@ https://developer.github.com/v3/repos/contents/#delete-a-file
 type ReposDeleteFileResponse struct {
 	response
 	request *ReposDeleteFileReq
-	Data    ReposDeleteFileResponseBody
+	Data    components.FileCommit
 }
 
 /*
@@ -6789,7 +6649,7 @@ func ReposGet(ctx context.Context, req *ReposGetReq, opt ...RequestOption) (*Rep
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetResponseBody{}
+	resp.Data = components.FullRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6905,13 +6765,6 @@ func (r *ReposGetReq) Rel(link RelName, resp *ReposGetResponse) bool {
 }
 
 /*
-ReposGetResponseBody is a response body for ReposGet
-
-https://developer.github.com/v3/repos/#get-a-repository
-*/
-type ReposGetResponseBody components.FullRepository
-
-/*
 ReposGetResponse is a response for ReposGet
 
 https://developer.github.com/v3/repos/#get-a-repository
@@ -6919,7 +6772,7 @@ https://developer.github.com/v3/repos/#get-a-repository
 type ReposGetResponse struct {
 	response
 	request *ReposGetReq
-	Data    ReposGetResponseBody
+	Data    components.FullRepository
 }
 
 /*
@@ -6943,7 +6796,7 @@ func ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrict
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetAccessRestrictionsResponseBody{}
+	resp.Data = components.BranchRestrictionPolicy{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7036,13 +6889,6 @@ func (r *ReposGetAccessRestrictionsReq) Rel(link RelName, resp *ReposGetAccessRe
 }
 
 /*
-ReposGetAccessRestrictionsResponseBody is a response body for ReposGetAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#get-access-restrictions
-*/
-type ReposGetAccessRestrictionsResponseBody components.BranchRestrictionPolicy
-
-/*
 ReposGetAccessRestrictionsResponse is a response for ReposGetAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
@@ -7050,7 +6896,7 @@ https://developer.github.com/v3/repos/branches/#get-access-restrictions
 type ReposGetAccessRestrictionsResponse struct {
 	response
 	request *ReposGetAccessRestrictionsReq
-	Data    ReposGetAccessRestrictionsResponseBody
+	Data    components.BranchRestrictionPolicy
 }
 
 /*
@@ -7074,7 +6920,7 @@ func ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranch
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetAdminBranchProtectionResponseBody{}
+	resp.Data = components.ProtectedBranchAdminEnforced{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7167,13 +7013,6 @@ func (r *ReposGetAdminBranchProtectionReq) Rel(link RelName, resp *ReposGetAdmin
 }
 
 /*
-ReposGetAdminBranchProtectionResponseBody is a response body for ReposGetAdminBranchProtection
-
-https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
-*/
-type ReposGetAdminBranchProtectionResponseBody components.ProtectedBranchAdminEnforced
-
-/*
 ReposGetAdminBranchProtectionResponse is a response for ReposGetAdminBranchProtection
 
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
@@ -7181,7 +7020,7 @@ https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 type ReposGetAdminBranchProtectionResponse struct {
 	response
 	request *ReposGetAdminBranchProtectionReq
-	Data    ReposGetAdminBranchProtectionResponseBody
+	Data    components.ProtectedBranchAdminEnforced
 }
 
 /*
@@ -7336,7 +7175,7 @@ func ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetAllTopicsResponseBody{}
+	resp.Data = components.Topic{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7439,13 +7278,6 @@ func (r *ReposGetAllTopicsReq) Rel(link RelName, resp *ReposGetAllTopicsResponse
 }
 
 /*
-ReposGetAllTopicsResponseBody is a response body for ReposGetAllTopics
-
-https://developer.github.com/v3/repos/#get-all-repository-topics
-*/
-type ReposGetAllTopicsResponseBody components.Topic
-
-/*
 ReposGetAllTopicsResponse is a response for ReposGetAllTopics
 
 https://developer.github.com/v3/repos/#get-all-repository-topics
@@ -7453,7 +7285,7 @@ https://developer.github.com/v3/repos/#get-all-repository-topics
 type ReposGetAllTopicsResponse struct {
 	response
 	request *ReposGetAllTopicsReq
-	Data    ReposGetAllTopicsResponseBody
+	Data    components.Topic
 }
 
 /*
@@ -7477,7 +7309,7 @@ func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetA
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetAppsWithAccessToProtectedBranchResponseBody{}
+	resp.Data = []components.Integration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7570,13 +7402,6 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) Rel(link RelName, resp *Rep
 }
 
 /*
-ReposGetAppsWithAccessToProtectedBranchResponseBody is a response body for ReposGetAppsWithAccessToProtectedBranch
-
-https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
-*/
-type ReposGetAppsWithAccessToProtectedBranchResponseBody []components.Integration
-
-/*
 ReposGetAppsWithAccessToProtectedBranchResponse is a response for ReposGetAppsWithAccessToProtectedBranch
 
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
@@ -7584,7 +7409,7 @@ https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-pro
 type ReposGetAppsWithAccessToProtectedBranchResponse struct {
 	response
 	request *ReposGetAppsWithAccessToProtectedBranchReq
-	Data    ReposGetAppsWithAccessToProtectedBranchResponseBody
+	Data    []components.Integration
 }
 
 /*
@@ -7608,7 +7433,7 @@ func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetBranchResponseBody{}
+	resp.Data = components.BranchWithProtection{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7701,13 +7526,6 @@ func (r *ReposGetBranchReq) Rel(link RelName, resp *ReposGetBranchResponse) bool
 }
 
 /*
-ReposGetBranchResponseBody is a response body for ReposGetBranch
-
-https://developer.github.com/v3/repos/branches/#get-a-branch
-*/
-type ReposGetBranchResponseBody components.BranchWithProtection
-
-/*
 ReposGetBranchResponse is a response for ReposGetBranch
 
 https://developer.github.com/v3/repos/branches/#get-a-branch
@@ -7715,7 +7533,7 @@ https://developer.github.com/v3/repos/branches/#get-a-branch
 type ReposGetBranchResponse struct {
 	response
 	request *ReposGetBranchReq
-	Data    ReposGetBranchResponseBody
+	Data    components.BranchWithProtection
 }
 
 /*
@@ -7739,7 +7557,7 @@ func ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtection
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetBranchProtectionResponseBody{}
+	resp.Data = components.BranchProtection{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7845,13 +7663,6 @@ func (r *ReposGetBranchProtectionReq) Rel(link RelName, resp *ReposGetBranchProt
 }
 
 /*
-ReposGetBranchProtectionResponseBody is a response body for ReposGetBranchProtection
-
-https://developer.github.com/v3/repos/branches/#get-branch-protection
-*/
-type ReposGetBranchProtectionResponseBody components.BranchProtection
-
-/*
 ReposGetBranchProtectionResponse is a response for ReposGetBranchProtection
 
 https://developer.github.com/v3/repos/branches/#get-branch-protection
@@ -7859,7 +7670,7 @@ https://developer.github.com/v3/repos/branches/#get-branch-protection
 type ReposGetBranchProtectionResponse struct {
 	response
 	request *ReposGetBranchProtectionReq
-	Data    ReposGetBranchProtectionResponseBody
+	Data    components.BranchProtection
 }
 
 /*
@@ -7883,7 +7694,7 @@ func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetClonesResponseBody{}
+	resp.Data = components.CloneTraffic{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -7979,13 +7790,6 @@ func (r *ReposGetClonesReq) Rel(link RelName, resp *ReposGetClonesResponse) bool
 }
 
 /*
-ReposGetClonesResponseBody is a response body for ReposGetClones
-
-https://developer.github.com/v3/repos/traffic/#get-repository-clones
-*/
-type ReposGetClonesResponseBody components.CloneTraffic
-
-/*
 ReposGetClonesResponse is a response for ReposGetClones
 
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
@@ -7993,7 +7797,7 @@ https://developer.github.com/v3/repos/traffic/#get-repository-clones
 type ReposGetClonesResponse struct {
 	response
 	request *ReposGetClonesReq
-	Data    ReposGetClonesResponseBody
+	Data    components.CloneTraffic
 }
 
 /*
@@ -8017,7 +7821,7 @@ func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCodeFrequencyStatsResponseBody{}
+	resp.Data = []components.CodeFrequencyStat{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8107,13 +7911,6 @@ func (r *ReposGetCodeFrequencyStatsReq) Rel(link RelName, resp *ReposGetCodeFreq
 }
 
 /*
-ReposGetCodeFrequencyStatsResponseBody is a response body for ReposGetCodeFrequencyStats
-
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
-*/
-type ReposGetCodeFrequencyStatsResponseBody []components.CodeFrequencyStat
-
-/*
 ReposGetCodeFrequencyStatsResponse is a response for ReposGetCodeFrequencyStats
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
@@ -8121,7 +7918,7 @@ https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 type ReposGetCodeFrequencyStatsResponse struct {
 	response
 	request *ReposGetCodeFrequencyStatsReq
-	Data    ReposGetCodeFrequencyStatsResponseBody
+	Data    []components.CodeFrequencyStat
 }
 
 /*
@@ -8145,7 +7942,7 @@ func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetColla
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCollaboratorPermissionLevelResponseBody{}
+	resp.Data = components.RepositoryCollaboratorPermission{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8236,13 +8033,6 @@ func (r *ReposGetCollaboratorPermissionLevelReq) Rel(link RelName, resp *ReposGe
 }
 
 /*
-ReposGetCollaboratorPermissionLevelResponseBody is a response body for ReposGetCollaboratorPermissionLevel
-
-https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
-*/
-type ReposGetCollaboratorPermissionLevelResponseBody components.RepositoryCollaboratorPermission
-
-/*
 ReposGetCollaboratorPermissionLevelResponse is a response for ReposGetCollaboratorPermissionLevel
 
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
@@ -8250,7 +8040,7 @@ https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-
 type ReposGetCollaboratorPermissionLevelResponse struct {
 	response
 	request *ReposGetCollaboratorPermissionLevelReq
-	Data    ReposGetCollaboratorPermissionLevelResponseBody
+	Data    components.RepositoryCollaboratorPermission
 }
 
 /*
@@ -8274,7 +8064,7 @@ func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCombinedStatusForRefResponseBody{}
+	resp.Data = components.CombinedCommitStatus{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8367,13 +8157,6 @@ func (r *ReposGetCombinedStatusForRefReq) Rel(link RelName, resp *ReposGetCombin
 }
 
 /*
-ReposGetCombinedStatusForRefResponseBody is a response body for ReposGetCombinedStatusForRef
-
-https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
-*/
-type ReposGetCombinedStatusForRefResponseBody components.CombinedCommitStatus
-
-/*
 ReposGetCombinedStatusForRefResponse is a response for ReposGetCombinedStatusForRef
 
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
@@ -8381,7 +8164,7 @@ https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-sp
 type ReposGetCombinedStatusForRefResponse struct {
 	response
 	request *ReposGetCombinedStatusForRefReq
-	Data    ReposGetCombinedStatusForRefResponseBody
+	Data    components.CombinedCommitStatus
 }
 
 /*
@@ -8405,7 +8188,7 @@ func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCommitResponseBody{}
+	resp.Data = components.Commit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8498,13 +8281,6 @@ func (r *ReposGetCommitReq) Rel(link RelName, resp *ReposGetCommitResponse) bool
 }
 
 /*
-ReposGetCommitResponseBody is a response body for ReposGetCommit
-
-https://developer.github.com/v3/repos/commits/#get-a-commit
-*/
-type ReposGetCommitResponseBody components.Commit
-
-/*
 ReposGetCommitResponse is a response for ReposGetCommit
 
 https://developer.github.com/v3/repos/commits/#get-a-commit
@@ -8512,7 +8288,7 @@ https://developer.github.com/v3/repos/commits/#get-a-commit
 type ReposGetCommitResponse struct {
 	response
 	request *ReposGetCommitReq
-	Data    ReposGetCommitResponseBody
+	Data    components.Commit
 }
 
 /*
@@ -8536,7 +8312,7 @@ func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivit
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCommitActivityStatsResponseBody{}
+	resp.Data = []components.CommitActivity{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8626,13 +8402,6 @@ func (r *ReposGetCommitActivityStatsReq) Rel(link RelName, resp *ReposGetCommitA
 }
 
 /*
-ReposGetCommitActivityStatsResponseBody is a response body for ReposGetCommitActivityStats
-
-https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
-*/
-type ReposGetCommitActivityStatsResponseBody []components.CommitActivity
-
-/*
 ReposGetCommitActivityStatsResponse is a response for ReposGetCommitActivityStats
 
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
@@ -8640,7 +8409,7 @@ https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-ac
 type ReposGetCommitActivityStatsResponse struct {
 	response
 	request *ReposGetCommitActivityStatsReq
-	Data    ReposGetCommitActivityStatsResponseBody
+	Data    []components.CommitActivity
 }
 
 /*
@@ -8664,7 +8433,7 @@ func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCommitCommentResponseBody{}
+	resp.Data = components.CommitComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8771,13 +8540,6 @@ func (r *ReposGetCommitCommentReq) Rel(link RelName, resp *ReposGetCommitComment
 }
 
 /*
-ReposGetCommitCommentResponseBody is a response body for ReposGetCommitComment
-
-https://developer.github.com/v3/repos/comments/#get-a-commit-comment
-*/
-type ReposGetCommitCommentResponseBody components.CommitComment
-
-/*
 ReposGetCommitCommentResponse is a response for ReposGetCommitComment
 
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
@@ -8785,7 +8547,7 @@ https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 type ReposGetCommitCommentResponse struct {
 	response
 	request *ReposGetCommitCommentReq
-	Data    ReposGetCommitCommentResponseBody
+	Data    components.CommitComment
 }
 
 /*
@@ -8809,7 +8571,7 @@ func ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCommitSignatureProtectionResponseBody{}
+	resp.Data = components.ProtectedBranchAdminEnforced{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -8917,13 +8679,6 @@ func (r *ReposGetCommitSignatureProtectionReq) Rel(link RelName, resp *ReposGetC
 }
 
 /*
-ReposGetCommitSignatureProtectionResponseBody is a response body for ReposGetCommitSignatureProtection
-
-https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
-*/
-type ReposGetCommitSignatureProtectionResponseBody components.ProtectedBranchAdminEnforced
-
-/*
 ReposGetCommitSignatureProtectionResponse is a response for ReposGetCommitSignatureProtection
 
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
@@ -8931,7 +8686,7 @@ https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 type ReposGetCommitSignatureProtectionResponse struct {
 	response
 	request *ReposGetCommitSignatureProtectionReq
-	Data    ReposGetCommitSignatureProtectionResponseBody
+	Data    components.ProtectedBranchAdminEnforced
 }
 
 /*
@@ -8955,7 +8710,7 @@ func ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunity
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetCommunityProfileMetricsResponseBody{}
+	resp.Data = components.CommunityProfile{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -9058,13 +8813,6 @@ func (r *ReposGetCommunityProfileMetricsReq) Rel(link RelName, resp *ReposGetCom
 }
 
 /*
-ReposGetCommunityProfileMetricsResponseBody is a response body for ReposGetCommunityProfileMetrics
-
-https://developer.github.com/v3/repos/community/#get-community-profile-metrics
-*/
-type ReposGetCommunityProfileMetricsResponseBody components.CommunityProfile
-
-/*
 ReposGetCommunityProfileMetricsResponse is a response for ReposGetCommunityProfileMetrics
 
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
@@ -9072,7 +8820,7 @@ https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 type ReposGetCommunityProfileMetricsResponse struct {
 	response
 	request *ReposGetCommunityProfileMetricsReq
-	Data    ReposGetCommunityProfileMetricsResponseBody
+	Data    components.CommunityProfile
 }
 
 /*
@@ -9320,7 +9068,7 @@ func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsSta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetContributorsStatsResponseBody{}
+	resp.Data = []components.ContributorActivity{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -9410,13 +9158,6 @@ func (r *ReposGetContributorsStatsReq) Rel(link RelName, resp *ReposGetContribut
 }
 
 /*
-ReposGetContributorsStatsResponseBody is a response body for ReposGetContributorsStats
-
-https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
-*/
-type ReposGetContributorsStatsResponseBody []components.ContributorActivity
-
-/*
 ReposGetContributorsStatsResponse is a response for ReposGetContributorsStats
 
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
@@ -9424,7 +9165,7 @@ https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-act
 type ReposGetContributorsStatsResponse struct {
 	response
 	request *ReposGetContributorsStatsReq
-	Data    ReposGetContributorsStatsResponseBody
+	Data    []components.ContributorActivity
 }
 
 /*
@@ -9448,7 +9189,7 @@ func ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetDeployKeyResponseBody{}
+	resp.Data = components.DeployKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -9541,13 +9282,6 @@ func (r *ReposGetDeployKeyReq) Rel(link RelName, resp *ReposGetDeployKeyResponse
 }
 
 /*
-ReposGetDeployKeyResponseBody is a response body for ReposGetDeployKey
-
-https://developer.github.com/v3/repos/keys/#get-a-deploy-key
-*/
-type ReposGetDeployKeyResponseBody components.DeployKey
-
-/*
 ReposGetDeployKeyResponse is a response for ReposGetDeployKey
 
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
@@ -9555,7 +9289,7 @@ https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 type ReposGetDeployKeyResponse struct {
 	response
 	request *ReposGetDeployKeyReq
-	Data    ReposGetDeployKeyResponseBody
+	Data    components.DeployKey
 }
 
 /*
@@ -9579,7 +9313,7 @@ func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetDeploymentResponseBody{}
+	resp.Data = components.Deployment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -9696,13 +9430,6 @@ func (r *ReposGetDeploymentReq) Rel(link RelName, resp *ReposGetDeploymentRespon
 }
 
 /*
-ReposGetDeploymentResponseBody is a response body for ReposGetDeployment
-
-https://developer.github.com/v3/repos/deployments/#get-a-deployment
-*/
-type ReposGetDeploymentResponseBody components.Deployment
-
-/*
 ReposGetDeploymentResponse is a response for ReposGetDeployment
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
@@ -9710,7 +9437,7 @@ https://developer.github.com/v3/repos/deployments/#get-a-deployment
 type ReposGetDeploymentResponse struct {
 	response
 	request *ReposGetDeploymentReq
-	Data    ReposGetDeploymentResponseBody
+	Data    components.Deployment
 }
 
 /*
@@ -9734,7 +9461,7 @@ func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatus
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetDeploymentStatusResponseBody{}
+	resp.Data = components.DeploymentStatus{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -9868,13 +9595,6 @@ func (r *ReposGetDeploymentStatusReq) Rel(link RelName, resp *ReposGetDeployment
 }
 
 /*
-ReposGetDeploymentStatusResponseBody is a response body for ReposGetDeploymentStatus
-
-https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
-*/
-type ReposGetDeploymentStatusResponseBody components.DeploymentStatus
-
-/*
 ReposGetDeploymentStatusResponse is a response for ReposGetDeploymentStatus
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
@@ -9882,7 +9602,7 @@ https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 type ReposGetDeploymentStatusResponse struct {
 	response
 	request *ReposGetDeploymentStatusReq
-	Data    ReposGetDeploymentStatusResponseBody
+	Data    components.DeploymentStatus
 }
 
 /*
@@ -9906,7 +9626,7 @@ func ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuild
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetLatestPagesBuildResponseBody{}
+	resp.Data = components.PageBuild{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -9996,13 +9716,6 @@ func (r *ReposGetLatestPagesBuildReq) Rel(link RelName, resp *ReposGetLatestPage
 }
 
 /*
-ReposGetLatestPagesBuildResponseBody is a response body for ReposGetLatestPagesBuild
-
-https://developer.github.com/v3/repos/pages/#get-latest-pages-build
-*/
-type ReposGetLatestPagesBuildResponseBody components.PageBuild
-
-/*
 ReposGetLatestPagesBuildResponse is a response for ReposGetLatestPagesBuild
 
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
@@ -10010,7 +9723,7 @@ https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 type ReposGetLatestPagesBuildResponse struct {
 	response
 	request *ReposGetLatestPagesBuildReq
-	Data    ReposGetLatestPagesBuildResponseBody
+	Data    components.PageBuild
 }
 
 /*
@@ -10034,7 +9747,7 @@ func ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetLatestReleaseResponseBody{}
+	resp.Data = components.Release{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10124,13 +9837,6 @@ func (r *ReposGetLatestReleaseReq) Rel(link RelName, resp *ReposGetLatestRelease
 }
 
 /*
-ReposGetLatestReleaseResponseBody is a response body for ReposGetLatestRelease
-
-https://developer.github.com/v3/repos/releases/#get-the-latest-release
-*/
-type ReposGetLatestReleaseResponseBody components.Release
-
-/*
 ReposGetLatestReleaseResponse is a response for ReposGetLatestRelease
 
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
@@ -10138,7 +9844,7 @@ https://developer.github.com/v3/repos/releases/#get-the-latest-release
 type ReposGetLatestReleaseResponse struct {
 	response
 	request *ReposGetLatestReleaseReq
-	Data    ReposGetLatestReleaseResponseBody
+	Data    components.Release
 }
 
 /*
@@ -10162,7 +9868,7 @@ func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetPagesResponseBody{}
+	resp.Data = components.Page{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10252,13 +9958,6 @@ func (r *ReposGetPagesReq) Rel(link RelName, resp *ReposGetPagesResponse) bool {
 }
 
 /*
-ReposGetPagesResponseBody is a response body for ReposGetPages
-
-https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
-*/
-type ReposGetPagesResponseBody components.Page
-
-/*
 ReposGetPagesResponse is a response for ReposGetPages
 
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
@@ -10266,7 +9965,7 @@ https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 type ReposGetPagesResponse struct {
 	response
 	request *ReposGetPagesReq
-	Data    ReposGetPagesResponseBody
+	Data    components.Page
 }
 
 /*
@@ -10290,7 +9989,7 @@ func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetPagesBuildResponseBody{}
+	resp.Data = components.PageBuild{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10383,13 +10082,6 @@ func (r *ReposGetPagesBuildReq) Rel(link RelName, resp *ReposGetPagesBuildRespon
 }
 
 /*
-ReposGetPagesBuildResponseBody is a response body for ReposGetPagesBuild
-
-https://developer.github.com/v3/repos/pages/#get-github-pages-build
-*/
-type ReposGetPagesBuildResponseBody components.PageBuild
-
-/*
 ReposGetPagesBuildResponse is a response for ReposGetPagesBuild
 
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
@@ -10397,7 +10089,7 @@ https://developer.github.com/v3/repos/pages/#get-github-pages-build
 type ReposGetPagesBuildResponse struct {
 	response
 	request *ReposGetPagesBuildReq
-	Data    ReposGetPagesBuildResponseBody
+	Data    components.PageBuild
 }
 
 /*
@@ -10421,7 +10113,7 @@ func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetParticipationStatsResponseBody{}
+	resp.Data = components.ParticipationStats{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10511,13 +10203,6 @@ func (r *ReposGetParticipationStatsReq) Rel(link RelName, resp *ReposGetParticip
 }
 
 /*
-ReposGetParticipationStatsResponseBody is a response body for ReposGetParticipationStats
-
-https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
-*/
-type ReposGetParticipationStatsResponseBody components.ParticipationStats
-
-/*
 ReposGetParticipationStatsResponse is a response for ReposGetParticipationStats
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
@@ -10525,7 +10210,7 @@ https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 type ReposGetParticipationStatsResponse struct {
 	response
 	request *ReposGetParticipationStatsReq
-	Data    ReposGetParticipationStatsResponseBody
+	Data    components.ParticipationStats
 }
 
 /*
@@ -10549,7 +10234,7 @@ func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullR
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetPullRequestReviewProtectionResponseBody{}
+	resp.Data = components.ProtectedBranchPullRequestReview{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10655,13 +10340,6 @@ func (r *ReposGetPullRequestReviewProtectionReq) Rel(link RelName, resp *ReposGe
 }
 
 /*
-ReposGetPullRequestReviewProtectionResponseBody is a response body for ReposGetPullRequestReviewProtection
-
-https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
-*/
-type ReposGetPullRequestReviewProtectionResponseBody components.ProtectedBranchPullRequestReview
-
-/*
 ReposGetPullRequestReviewProtectionResponse is a response for ReposGetPullRequestReviewProtection
 
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
@@ -10669,7 +10347,7 @@ https://developer.github.com/v3/repos/branches/#get-pull-request-review-protecti
 type ReposGetPullRequestReviewProtectionResponse struct {
 	response
 	request *ReposGetPullRequestReviewProtectionReq
-	Data    ReposGetPullRequestReviewProtectionResponseBody
+	Data    components.ProtectedBranchPullRequestReview
 }
 
 /*
@@ -10693,7 +10371,7 @@ func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetPunchCardStatsResponseBody{}
+	resp.Data = []components.CodeFrequencyStat{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10783,13 +10461,6 @@ func (r *ReposGetPunchCardStatsReq) Rel(link RelName, resp *ReposGetPunchCardSta
 }
 
 /*
-ReposGetPunchCardStatsResponseBody is a response body for ReposGetPunchCardStats
-
-https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
-*/
-type ReposGetPunchCardStatsResponseBody []components.CodeFrequencyStat
-
-/*
 ReposGetPunchCardStatsResponse is a response for ReposGetPunchCardStats
 
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
@@ -10797,7 +10468,7 @@ https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-fo
 type ReposGetPunchCardStatsResponse struct {
 	response
 	request *ReposGetPunchCardStatsReq
-	Data    ReposGetPunchCardStatsResponseBody
+	Data    []components.CodeFrequencyStat
 }
 
 /*
@@ -10821,7 +10492,7 @@ func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetReadmeResponseBody{}
+	resp.Data = components.ContentFile{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -10920,13 +10591,6 @@ func (r *ReposGetReadmeReq) Rel(link RelName, resp *ReposGetReadmeResponse) bool
 }
 
 /*
-ReposGetReadmeResponseBody is a response body for ReposGetReadme
-
-https://developer.github.com/v3/repos/contents/#get-a-repository-readme
-*/
-type ReposGetReadmeResponseBody components.ContentFile
-
-/*
 ReposGetReadmeResponse is a response for ReposGetReadme
 
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
@@ -10934,7 +10598,7 @@ https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 type ReposGetReadmeResponse struct {
 	response
 	request *ReposGetReadmeReq
-	Data    ReposGetReadmeResponseBody
+	Data    components.ContentFile
 }
 
 /*
@@ -10958,7 +10622,7 @@ func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetReleaseResponseBody{}
+	resp.Data = components.Release{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11051,13 +10715,6 @@ func (r *ReposGetReleaseReq) Rel(link RelName, resp *ReposGetReleaseResponse) bo
 }
 
 /*
-ReposGetReleaseResponseBody is a response body for ReposGetRelease
-
-https://developer.github.com/v3/repos/releases/#get-a-release
-*/
-type ReposGetReleaseResponseBody components.Release
-
-/*
 ReposGetReleaseResponse is a response for ReposGetRelease
 
 https://developer.github.com/v3/repos/releases/#get-a-release
@@ -11065,7 +10722,7 @@ https://developer.github.com/v3/repos/releases/#get-a-release
 type ReposGetReleaseResponse struct {
 	response
 	request *ReposGetReleaseReq
-	Data    ReposGetReleaseResponseBody
+	Data    components.Release
 }
 
 /*
@@ -11089,7 +10746,7 @@ func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetReleaseAssetResponseBody{}
+	resp.Data = components.ReleaseAsset{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11182,13 +10839,6 @@ func (r *ReposGetReleaseAssetReq) Rel(link RelName, resp *ReposGetReleaseAssetRe
 }
 
 /*
-ReposGetReleaseAssetResponseBody is a response body for ReposGetReleaseAsset
-
-https://developer.github.com/v3/repos/releases/#get-a-release-asset
-*/
-type ReposGetReleaseAssetResponseBody components.ReleaseAsset
-
-/*
 ReposGetReleaseAssetResponse is a response for ReposGetReleaseAsset
 
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
@@ -11196,7 +10846,7 @@ https://developer.github.com/v3/repos/releases/#get-a-release-asset
 type ReposGetReleaseAssetResponse struct {
 	response
 	request *ReposGetReleaseAssetReq
-	Data    ReposGetReleaseAssetResponseBody
+	Data    components.ReleaseAsset
 }
 
 /*
@@ -11220,7 +10870,7 @@ func ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetReleaseByTagResponseBody{}
+	resp.Data = components.Release{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11313,13 +10963,6 @@ func (r *ReposGetReleaseByTagReq) Rel(link RelName, resp *ReposGetReleaseByTagRe
 }
 
 /*
-ReposGetReleaseByTagResponseBody is a response body for ReposGetReleaseByTag
-
-https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
-*/
-type ReposGetReleaseByTagResponseBody components.Release
-
-/*
 ReposGetReleaseByTagResponse is a response for ReposGetReleaseByTag
 
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
@@ -11327,7 +10970,7 @@ https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 type ReposGetReleaseByTagResponse struct {
 	response
 	request *ReposGetReleaseByTagReq
-	Data    ReposGetReleaseByTagResponseBody
+	Data    components.Release
 }
 
 /*
@@ -11351,7 +10994,7 @@ func ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChec
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetStatusChecksProtectionResponseBody{}
+	resp.Data = components.StatusCheckPolicy{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11444,13 +11087,6 @@ func (r *ReposGetStatusChecksProtectionReq) Rel(link RelName, resp *ReposGetStat
 }
 
 /*
-ReposGetStatusChecksProtectionResponseBody is a response body for ReposGetStatusChecksProtection
-
-https://developer.github.com/v3/repos/branches/#get-status-checks-protection
-*/
-type ReposGetStatusChecksProtectionResponseBody components.StatusCheckPolicy
-
-/*
 ReposGetStatusChecksProtectionResponse is a response for ReposGetStatusChecksProtection
 
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
@@ -11458,7 +11094,7 @@ https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 type ReposGetStatusChecksProtectionResponse struct {
 	response
 	request *ReposGetStatusChecksProtectionReq
-	Data    ReposGetStatusChecksProtectionResponseBody
+	Data    components.StatusCheckPolicy
 }
 
 /*
@@ -11482,7 +11118,7 @@ func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetTeamsWithAccessToProtectedBranchResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11575,13 +11211,6 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) Rel(link RelName, resp *Re
 }
 
 /*
-ReposGetTeamsWithAccessToProtectedBranchResponseBody is a response body for ReposGetTeamsWithAccessToProtectedBranch
-
-https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
-*/
-type ReposGetTeamsWithAccessToProtectedBranchResponseBody []components.Team
-
-/*
 ReposGetTeamsWithAccessToProtectedBranchResponse is a response for ReposGetTeamsWithAccessToProtectedBranch
 
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
@@ -11589,7 +11218,7 @@ https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-pr
 type ReposGetTeamsWithAccessToProtectedBranchResponse struct {
 	response
 	request *ReposGetTeamsWithAccessToProtectedBranchReq
-	Data    ReposGetTeamsWithAccessToProtectedBranchResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -11613,7 +11242,7 @@ func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetTopPathsResponseBody{}
+	resp.Data = []components.ContentTraffic{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11703,13 +11332,6 @@ func (r *ReposGetTopPathsReq) Rel(link RelName, resp *ReposGetTopPathsResponse) 
 }
 
 /*
-ReposGetTopPathsResponseBody is a response body for ReposGetTopPaths
-
-https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
-*/
-type ReposGetTopPathsResponseBody []components.ContentTraffic
-
-/*
 ReposGetTopPathsResponse is a response for ReposGetTopPaths
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
@@ -11717,7 +11339,7 @@ https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 type ReposGetTopPathsResponse struct {
 	response
 	request *ReposGetTopPathsReq
-	Data    ReposGetTopPathsResponseBody
+	Data    []components.ContentTraffic
 }
 
 /*
@@ -11741,7 +11363,7 @@ func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetTopReferrersResponseBody{}
+	resp.Data = []components.ReferrerTraffic{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11831,13 +11453,6 @@ func (r *ReposGetTopReferrersReq) Rel(link RelName, resp *ReposGetTopReferrersRe
 }
 
 /*
-ReposGetTopReferrersResponseBody is a response body for ReposGetTopReferrers
-
-https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
-*/
-type ReposGetTopReferrersResponseBody []components.ReferrerTraffic
-
-/*
 ReposGetTopReferrersResponse is a response for ReposGetTopReferrers
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
@@ -11845,7 +11460,7 @@ https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 type ReposGetTopReferrersResponse struct {
 	response
 	request *ReposGetTopReferrersReq
-	Data    ReposGetTopReferrersResponseBody
+	Data    []components.ReferrerTraffic
 }
 
 /*
@@ -11869,7 +11484,7 @@ func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetUsersWithAccessToProtectedBranchResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -11962,13 +11577,6 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) Rel(link RelName, resp *Re
 }
 
 /*
-ReposGetUsersWithAccessToProtectedBranchResponseBody is a response body for ReposGetUsersWithAccessToProtectedBranch
-
-https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
-*/
-type ReposGetUsersWithAccessToProtectedBranchResponseBody []components.SimpleUser
-
-/*
 ReposGetUsersWithAccessToProtectedBranchResponse is a response for ReposGetUsersWithAccessToProtectedBranch
 
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
@@ -11976,7 +11584,7 @@ https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-pr
 type ReposGetUsersWithAccessToProtectedBranchResponse struct {
 	response
 	request *ReposGetUsersWithAccessToProtectedBranchReq
-	Data    ReposGetUsersWithAccessToProtectedBranchResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -12000,7 +11608,7 @@ func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetViewsResponseBody{}
+	resp.Data = components.ViewTraffic{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12096,13 +11704,6 @@ func (r *ReposGetViewsReq) Rel(link RelName, resp *ReposGetViewsResponse) bool {
 }
 
 /*
-ReposGetViewsResponseBody is a response body for ReposGetViews
-
-https://developer.github.com/v3/repos/traffic/#get-page-views
-*/
-type ReposGetViewsResponseBody components.ViewTraffic
-
-/*
 ReposGetViewsResponse is a response for ReposGetViews
 
 https://developer.github.com/v3/repos/traffic/#get-page-views
@@ -12110,7 +11711,7 @@ https://developer.github.com/v3/repos/traffic/#get-page-views
 type ReposGetViewsResponse struct {
 	response
 	request *ReposGetViewsReq
-	Data    ReposGetViewsResponseBody
+	Data    components.ViewTraffic
 }
 
 /*
@@ -12134,7 +11735,7 @@ func ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposGetWebhookResponseBody{}
+	resp.Data = components.Hook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12225,13 +11826,6 @@ func (r *ReposGetWebhookReq) Rel(link RelName, resp *ReposGetWebhookResponse) bo
 }
 
 /*
-ReposGetWebhookResponseBody is a response body for ReposGetWebhook
-
-https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
-*/
-type ReposGetWebhookResponseBody components.Hook
-
-/*
 ReposGetWebhookResponse is a response for ReposGetWebhook
 
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
@@ -12239,7 +11833,7 @@ https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 type ReposGetWebhookResponse struct {
 	response
 	request *ReposGetWebhookReq
-	Data    ReposGetWebhookResponseBody
+	Data    components.Hook
 }
 
 /*
@@ -12263,7 +11857,7 @@ func ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListBranchesResponseBody{}
+	resp.Data = []components.ShortBranch{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12374,13 +11968,6 @@ func (r *ReposListBranchesReq) Rel(link RelName, resp *ReposListBranchesResponse
 }
 
 /*
-ReposListBranchesResponseBody is a response body for ReposListBranches
-
-https://developer.github.com/v3/repos/branches/#list-branches
-*/
-type ReposListBranchesResponseBody []components.ShortBranch
-
-/*
 ReposListBranchesResponse is a response for ReposListBranches
 
 https://developer.github.com/v3/repos/branches/#list-branches
@@ -12388,7 +11975,7 @@ https://developer.github.com/v3/repos/branches/#list-branches
 type ReposListBranchesResponse struct {
 	response
 	request *ReposListBranchesReq
-	Data    ReposListBranchesResponseBody
+	Data    []components.ShortBranch
 }
 
 /*
@@ -12412,7 +11999,7 @@ func ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesF
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListBranchesForHeadCommitResponseBody{}
+	resp.Data = []components.BranchShort{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12520,13 +12107,6 @@ func (r *ReposListBranchesForHeadCommitReq) Rel(link RelName, resp *ReposListBra
 }
 
 /*
-ReposListBranchesForHeadCommitResponseBody is a response body for ReposListBranchesForHeadCommit
-
-https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
-*/
-type ReposListBranchesForHeadCommitResponseBody []components.BranchShort
-
-/*
 ReposListBranchesForHeadCommitResponse is a response for ReposListBranchesForHeadCommit
 
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
@@ -12534,7 +12114,7 @@ https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 type ReposListBranchesForHeadCommitResponse struct {
 	response
 	request *ReposListBranchesForHeadCommitReq
-	Data    ReposListBranchesForHeadCommitResponseBody
+	Data    []components.BranchShort
 }
 
 /*
@@ -12558,7 +12138,7 @@ func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListCollaboratorsResponseBody{}
+	resp.Data = []components.Collaborator{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12672,13 +12252,6 @@ func (r *ReposListCollaboratorsReq) Rel(link RelName, resp *ReposListCollaborato
 }
 
 /*
-ReposListCollaboratorsResponseBody is a response body for ReposListCollaborators
-
-https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
-*/
-type ReposListCollaboratorsResponseBody []components.Collaborator
-
-/*
 ReposListCollaboratorsResponse is a response for ReposListCollaborators
 
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
@@ -12686,7 +12259,7 @@ https://developer.github.com/v3/repos/collaborators/#list-repository-collaborato
 type ReposListCollaboratorsResponse struct {
 	response
 	request *ReposListCollaboratorsReq
-	Data    ReposListCollaboratorsResponseBody
+	Data    []components.Collaborator
 }
 
 /*
@@ -12710,7 +12283,7 @@ func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListCommentsForCommitResponseBody{}
+	resp.Data = []components.CommitComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12829,13 +12402,6 @@ func (r *ReposListCommentsForCommitReq) Rel(link RelName, resp *ReposListComment
 }
 
 /*
-ReposListCommentsForCommitResponseBody is a response body for ReposListCommentsForCommit
-
-https://developer.github.com/v3/repos/comments/#list-commit-comments
-*/
-type ReposListCommentsForCommitResponseBody []components.CommitComment
-
-/*
 ReposListCommentsForCommitResponse is a response for ReposListCommentsForCommit
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments
@@ -12843,7 +12409,7 @@ https://developer.github.com/v3/repos/comments/#list-commit-comments
 type ReposListCommentsForCommitResponse struct {
 	response
 	request *ReposListCommentsForCommitReq
-	Data    ReposListCommentsForCommitResponseBody
+	Data    []components.CommitComment
 }
 
 /*
@@ -12867,7 +12433,7 @@ func ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCom
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListCommitCommentsForRepoResponseBody{}
+	resp.Data = []components.CommitComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -12983,13 +12549,6 @@ func (r *ReposListCommitCommentsForRepoReq) Rel(link RelName, resp *ReposListCom
 }
 
 /*
-ReposListCommitCommentsForRepoResponseBody is a response body for ReposListCommitCommentsForRepo
-
-https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
-*/
-type ReposListCommitCommentsForRepoResponseBody []components.CommitComment
-
-/*
 ReposListCommitCommentsForRepoResponse is a response for ReposListCommitCommentsForRepo
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
@@ -12997,7 +12556,7 @@ https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repos
 type ReposListCommitCommentsForRepoResponse struct {
 	response
 	request *ReposListCommitCommentsForRepoReq
-	Data    ReposListCommitCommentsForRepoResponseBody
+	Data    []components.CommitComment
 }
 
 /*
@@ -13021,7 +12580,7 @@ func ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListCommitStatusesForRefResponseBody{}
+	resp.Data = []components.Status{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -13126,13 +12685,6 @@ func (r *ReposListCommitStatusesForRefReq) Rel(link RelName, resp *ReposListComm
 }
 
 /*
-ReposListCommitStatusesForRefResponseBody is a response body for ReposListCommitStatusesForRef
-
-https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
-*/
-type ReposListCommitStatusesForRefResponseBody []components.Status
-
-/*
 ReposListCommitStatusesForRefResponse is a response for ReposListCommitStatusesForRef
 
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
@@ -13140,7 +12692,7 @@ https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-refer
 type ReposListCommitStatusesForRefResponse struct {
 	response
 	request *ReposListCommitStatusesForRefReq
-	Data    ReposListCommitStatusesForRefResponseBody
+	Data    []components.Status
 }
 
 /*
@@ -13164,7 +12716,7 @@ func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListCommitsResponseBody{}
+	resp.Data = []components.SimpleCommit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -13306,13 +12858,6 @@ func (r *ReposListCommitsReq) Rel(link RelName, resp *ReposListCommitsResponse) 
 }
 
 /*
-ReposListCommitsResponseBody is a response body for ReposListCommits
-
-https://developer.github.com/v3/repos/commits/#list-commits
-*/
-type ReposListCommitsResponseBody []components.SimpleCommit
-
-/*
 ReposListCommitsResponse is a response for ReposListCommits
 
 https://developer.github.com/v3/repos/commits/#list-commits
@@ -13320,7 +12865,7 @@ https://developer.github.com/v3/repos/commits/#list-commits
 type ReposListCommitsResponse struct {
 	response
 	request *ReposListCommitsReq
-	Data    ReposListCommitsResponseBody
+	Data    []components.SimpleCommit
 }
 
 /*
@@ -13344,7 +12889,7 @@ func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListContributorsResponseBody{}
+	resp.Data = []components.Contributor{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -13452,13 +12997,6 @@ func (r *ReposListContributorsReq) Rel(link RelName, resp *ReposListContributors
 }
 
 /*
-ReposListContributorsResponseBody is a response body for ReposListContributors
-
-https://developer.github.com/v3/repos/#list-repository-contributors
-*/
-type ReposListContributorsResponseBody []components.Contributor
-
-/*
 ReposListContributorsResponse is a response for ReposListContributors
 
 https://developer.github.com/v3/repos/#list-repository-contributors
@@ -13466,7 +13004,7 @@ https://developer.github.com/v3/repos/#list-repository-contributors
 type ReposListContributorsResponse struct {
 	response
 	request *ReposListContributorsReq
-	Data    ReposListContributorsResponseBody
+	Data    []components.Contributor
 }
 
 /*
@@ -13490,7 +13028,7 @@ func ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListDeployKeysResponseBody{}
+	resp.Data = []components.DeployKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -13592,13 +13130,6 @@ func (r *ReposListDeployKeysReq) Rel(link RelName, resp *ReposListDeployKeysResp
 }
 
 /*
-ReposListDeployKeysResponseBody is a response body for ReposListDeployKeys
-
-https://developer.github.com/v3/repos/keys/#list-deploy-keys
-*/
-type ReposListDeployKeysResponseBody []components.DeployKey
-
-/*
 ReposListDeployKeysResponse is a response for ReposListDeployKeys
 
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
@@ -13606,7 +13137,7 @@ https://developer.github.com/v3/repos/keys/#list-deploy-keys
 type ReposListDeployKeysResponse struct {
 	response
 	request *ReposListDeployKeysReq
-	Data    ReposListDeployKeysResponseBody
+	Data    []components.DeployKey
 }
 
 /*
@@ -13630,7 +13161,7 @@ func ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentSt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListDeploymentStatusesResponseBody{}
+	resp.Data = []components.DeploymentStatus{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -13765,13 +13296,6 @@ func (r *ReposListDeploymentStatusesReq) Rel(link RelName, resp *ReposListDeploy
 }
 
 /*
-ReposListDeploymentStatusesResponseBody is a response body for ReposListDeploymentStatuses
-
-https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
-*/
-type ReposListDeploymentStatusesResponseBody []components.DeploymentStatus
-
-/*
 ReposListDeploymentStatusesResponse is a response for ReposListDeploymentStatuses
 
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
@@ -13779,7 +13303,7 @@ https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 type ReposListDeploymentStatusesResponse struct {
 	response
 	request *ReposListDeploymentStatusesReq
-	Data    ReposListDeploymentStatusesResponseBody
+	Data    []components.DeploymentStatus
 }
 
 /*
@@ -13803,7 +13327,7 @@ func ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListDeploymentsResponseBody{}
+	resp.Data = []components.Deployment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -13946,13 +13470,6 @@ func (r *ReposListDeploymentsReq) Rel(link RelName, resp *ReposListDeploymentsRe
 }
 
 /*
-ReposListDeploymentsResponseBody is a response body for ReposListDeployments
-
-https://developer.github.com/v3/repos/deployments/#list-deployments
-*/
-type ReposListDeploymentsResponseBody []components.Deployment
-
-/*
 ReposListDeploymentsResponse is a response for ReposListDeployments
 
 https://developer.github.com/v3/repos/deployments/#list-deployments
@@ -13960,7 +13477,7 @@ https://developer.github.com/v3/repos/deployments/#list-deployments
 type ReposListDeploymentsResponse struct {
 	response
 	request *ReposListDeploymentsReq
-	Data    ReposListDeploymentsResponseBody
+	Data    []components.Deployment
 }
 
 /*
@@ -13984,7 +13501,7 @@ func ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthent
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListForAuthenticatedUserResponseBody{}
+	resp.Data = []components.Repository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -14151,13 +13668,6 @@ func (r *ReposListForAuthenticatedUserReq) Rel(link RelName, resp *ReposListForA
 }
 
 /*
-ReposListForAuthenticatedUserResponseBody is a response body for ReposListForAuthenticatedUser
-
-https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
-*/
-type ReposListForAuthenticatedUserResponseBody []components.Repository
-
-/*
 ReposListForAuthenticatedUserResponse is a response for ReposListForAuthenticatedUser
 
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
@@ -14165,7 +13675,7 @@ https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-u
 type ReposListForAuthenticatedUserResponse struct {
 	response
 	request *ReposListForAuthenticatedUserReq
-	Data    ReposListForAuthenticatedUserResponseBody
+	Data    []components.Repository
 }
 
 /*
@@ -14189,7 +13699,7 @@ func ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListForOrgResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -14345,13 +13855,6 @@ func (r *ReposListForOrgReq) Rel(link RelName, resp *ReposListForOrgResponse) bo
 }
 
 /*
-ReposListForOrgResponseBody is a response body for ReposListForOrg
-
-https://developer.github.com/v3/repos/#list-organization-repositories
-*/
-type ReposListForOrgResponseBody []components.MinimalRepository
-
-/*
 ReposListForOrgResponse is a response for ReposListForOrg
 
 https://developer.github.com/v3/repos/#list-organization-repositories
@@ -14359,7 +13862,7 @@ https://developer.github.com/v3/repos/#list-organization-repositories
 type ReposListForOrgResponse struct {
 	response
 	request *ReposListForOrgReq
-	Data    ReposListForOrgResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -14383,7 +13886,7 @@ func ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListForUserResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -14520,13 +14023,6 @@ func (r *ReposListForUserReq) Rel(link RelName, resp *ReposListForUserResponse) 
 }
 
 /*
-ReposListForUserResponseBody is a response body for ReposListForUser
-
-https://developer.github.com/v3/repos/#list-repositories-for-a-user
-*/
-type ReposListForUserResponseBody []components.MinimalRepository
-
-/*
 ReposListForUserResponse is a response for ReposListForUser
 
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
@@ -14534,7 +14030,7 @@ https://developer.github.com/v3/repos/#list-repositories-for-a-user
 type ReposListForUserResponse struct {
 	response
 	request *ReposListForUserReq
-	Data    ReposListForUserResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -14558,7 +14054,7 @@ func ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListForksResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -14666,13 +14162,6 @@ func (r *ReposListForksReq) Rel(link RelName, resp *ReposListForksResponse) bool
 }
 
 /*
-ReposListForksResponseBody is a response body for ReposListForks
-
-https://developer.github.com/v3/repos/forks/#list-forks
-*/
-type ReposListForksResponseBody []components.MinimalRepository
-
-/*
 ReposListForksResponse is a response for ReposListForks
 
 https://developer.github.com/v3/repos/forks/#list-forks
@@ -14680,7 +14169,7 @@ https://developer.github.com/v3/repos/forks/#list-forks
 type ReposListForksResponse struct {
 	response
 	request *ReposListForksReq
-	Data    ReposListForksResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -14704,7 +14193,7 @@ func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListInvitationsResponseBody{}
+	resp.Data = []components.RepositoryInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -14806,13 +14295,6 @@ func (r *ReposListInvitationsReq) Rel(link RelName, resp *ReposListInvitationsRe
 }
 
 /*
-ReposListInvitationsResponseBody is a response body for ReposListInvitations
-
-https://developer.github.com/v3/repos/invitations/#list-repository-invitations
-*/
-type ReposListInvitationsResponseBody []components.RepositoryInvitation
-
-/*
 ReposListInvitationsResponse is a response for ReposListInvitations
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
@@ -14820,7 +14302,7 @@ https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 type ReposListInvitationsResponse struct {
 	response
 	request *ReposListInvitationsReq
-	Data    ReposListInvitationsResponseBody
+	Data    []components.RepositoryInvitation
 }
 
 /*
@@ -14844,7 +14326,7 @@ func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListInvitationsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.RepositoryInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -14944,13 +14426,6 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) Rel(link RelName, resp *Re
 }
 
 /*
-ReposListInvitationsForAuthenticatedUserResponseBody is a response body for ReposListInvitationsForAuthenticatedUser
-
-https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
-*/
-type ReposListInvitationsForAuthenticatedUserResponseBody []components.RepositoryInvitation
-
-/*
 ReposListInvitationsForAuthenticatedUserResponse is a response for ReposListInvitationsForAuthenticatedUser
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
@@ -14958,7 +14433,7 @@ https://developer.github.com/v3/repos/invitations/#list-repository-invitations-f
 type ReposListInvitationsForAuthenticatedUserResponse struct {
 	response
 	request *ReposListInvitationsForAuthenticatedUserReq
-	Data    ReposListInvitationsForAuthenticatedUserResponseBody
+	Data    []components.RepositoryInvitation
 }
 
 /*
@@ -14982,7 +14457,7 @@ func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListLanguagesResponseBody{}
+	resp.Data = components.Language{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15072,13 +14547,6 @@ func (r *ReposListLanguagesReq) Rel(link RelName, resp *ReposListLanguagesRespon
 }
 
 /*
-ReposListLanguagesResponseBody is a response body for ReposListLanguages
-
-https://developer.github.com/v3/repos/#list-repository-languages
-*/
-type ReposListLanguagesResponseBody components.Language
-
-/*
 ReposListLanguagesResponse is a response for ReposListLanguages
 
 https://developer.github.com/v3/repos/#list-repository-languages
@@ -15086,7 +14554,7 @@ https://developer.github.com/v3/repos/#list-repository-languages
 type ReposListLanguagesResponse struct {
 	response
 	request *ReposListLanguagesReq
-	Data    ReposListLanguagesResponseBody
+	Data    components.Language
 }
 
 /*
@@ -15110,7 +14578,7 @@ func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListPagesBuildsResponseBody{}
+	resp.Data = []components.PageBuild{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15212,13 +14680,6 @@ func (r *ReposListPagesBuildsReq) Rel(link RelName, resp *ReposListPagesBuildsRe
 }
 
 /*
-ReposListPagesBuildsResponseBody is a response body for ReposListPagesBuilds
-
-https://developer.github.com/v3/repos/pages/#list-github-pages-builds
-*/
-type ReposListPagesBuildsResponseBody []components.PageBuild
-
-/*
 ReposListPagesBuildsResponse is a response for ReposListPagesBuilds
 
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
@@ -15226,7 +14687,7 @@ https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 type ReposListPagesBuildsResponse struct {
 	response
 	request *ReposListPagesBuildsReq
-	Data    ReposListPagesBuildsResponseBody
+	Data    []components.PageBuild
 }
 
 /*
@@ -15250,7 +14711,7 @@ func ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListPublicResponseBody{}
+	resp.Data = []components.MinimalRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15358,13 +14819,6 @@ func (r *ReposListPublicReq) Rel(link RelName, resp *ReposListPublicResponse) bo
 }
 
 /*
-ReposListPublicResponseBody is a response body for ReposListPublic
-
-https://developer.github.com/v3/repos/#list-public-repositories
-*/
-type ReposListPublicResponseBody []components.MinimalRepository
-
-/*
 ReposListPublicResponse is a response for ReposListPublic
 
 https://developer.github.com/v3/repos/#list-public-repositories
@@ -15372,7 +14826,7 @@ https://developer.github.com/v3/repos/#list-public-repositories
 type ReposListPublicResponse struct {
 	response
 	request *ReposListPublicReq
-	Data    ReposListPublicResponseBody
+	Data    []components.MinimalRepository
 }
 
 /*
@@ -15396,7 +14850,7 @@ func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposLi
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListPullRequestsAssociatedWithCommitResponseBody{}
+	resp.Data = []components.PullRequestSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15516,13 +14970,6 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) Rel(link RelName, resp *R
 }
 
 /*
-ReposListPullRequestsAssociatedWithCommitResponseBody is a response body for ReposListPullRequestsAssociatedWithCommit
-
-https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
-*/
-type ReposListPullRequestsAssociatedWithCommitResponseBody []components.PullRequestSimple
-
-/*
 ReposListPullRequestsAssociatedWithCommitResponse is a response for ReposListPullRequestsAssociatedWithCommit
 
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
@@ -15530,7 +14977,7 @@ https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-wit
 type ReposListPullRequestsAssociatedWithCommitResponse struct {
 	response
 	request *ReposListPullRequestsAssociatedWithCommitReq
-	Data    ReposListPullRequestsAssociatedWithCommitResponseBody
+	Data    []components.PullRequestSimple
 }
 
 /*
@@ -15554,7 +15001,7 @@ func ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListReleaseAssetsResponseBody{}
+	resp.Data = []components.ReleaseAsset{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15659,13 +15106,6 @@ func (r *ReposListReleaseAssetsReq) Rel(link RelName, resp *ReposListReleaseAsse
 }
 
 /*
-ReposListReleaseAssetsResponseBody is a response body for ReposListReleaseAssets
-
-https://developer.github.com/v3/repos/releases/#list-release-assets
-*/
-type ReposListReleaseAssetsResponseBody []components.ReleaseAsset
-
-/*
 ReposListReleaseAssetsResponse is a response for ReposListReleaseAssets
 
 https://developer.github.com/v3/repos/releases/#list-release-assets
@@ -15673,7 +15113,7 @@ https://developer.github.com/v3/repos/releases/#list-release-assets
 type ReposListReleaseAssetsResponse struct {
 	response
 	request *ReposListReleaseAssetsReq
-	Data    ReposListReleaseAssetsResponseBody
+	Data    []components.ReleaseAsset
 }
 
 /*
@@ -15697,7 +15137,7 @@ func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListReleasesResponseBody{}
+	resp.Data = []components.Release{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15799,13 +15239,6 @@ func (r *ReposListReleasesReq) Rel(link RelName, resp *ReposListReleasesResponse
 }
 
 /*
-ReposListReleasesResponseBody is a response body for ReposListReleases
-
-https://developer.github.com/v3/repos/releases/#list-releases
-*/
-type ReposListReleasesResponseBody []components.Release
-
-/*
 ReposListReleasesResponse is a response for ReposListReleases
 
 https://developer.github.com/v3/repos/releases/#list-releases
@@ -15813,7 +15246,7 @@ https://developer.github.com/v3/repos/releases/#list-releases
 type ReposListReleasesResponse struct {
 	response
 	request *ReposListReleasesReq
-	Data    ReposListReleasesResponseBody
+	Data    []components.Release
 }
 
 /*
@@ -15837,7 +15270,7 @@ func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListTagsResponseBody{}
+	resp.Data = []components.Tag{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -15939,13 +15372,6 @@ func (r *ReposListTagsReq) Rel(link RelName, resp *ReposListTagsResponse) bool {
 }
 
 /*
-ReposListTagsResponseBody is a response body for ReposListTags
-
-https://developer.github.com/v3/repos/#list-repository-tags
-*/
-type ReposListTagsResponseBody []components.Tag
-
-/*
 ReposListTagsResponse is a response for ReposListTags
 
 https://developer.github.com/v3/repos/#list-repository-tags
@@ -15953,7 +15379,7 @@ https://developer.github.com/v3/repos/#list-repository-tags
 type ReposListTagsResponse struct {
 	response
 	request *ReposListTagsReq
-	Data    ReposListTagsResponseBody
+	Data    []components.Tag
 }
 
 /*
@@ -15977,7 +15403,7 @@ func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListTeamsResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -16079,13 +15505,6 @@ func (r *ReposListTeamsReq) Rel(link RelName, resp *ReposListTeamsResponse) bool
 }
 
 /*
-ReposListTeamsResponseBody is a response body for ReposListTeams
-
-https://developer.github.com/v3/repos/#list-repository-teams
-*/
-type ReposListTeamsResponseBody []components.Team
-
-/*
 ReposListTeamsResponse is a response for ReposListTeams
 
 https://developer.github.com/v3/repos/#list-repository-teams
@@ -16093,7 +15512,7 @@ https://developer.github.com/v3/repos/#list-repository-teams
 type ReposListTeamsResponse struct {
 	response
 	request *ReposListTeamsReq
-	Data    ReposListTeamsResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -16117,7 +15536,7 @@ func ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposListWebhooksResponseBody{}
+	resp.Data = []components.Hook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -16219,13 +15638,6 @@ func (r *ReposListWebhooksReq) Rel(link RelName, resp *ReposListWebhooksResponse
 }
 
 /*
-ReposListWebhooksResponseBody is a response body for ReposListWebhooks
-
-https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
-*/
-type ReposListWebhooksResponseBody []components.Hook
-
-/*
 ReposListWebhooksResponse is a response for ReposListWebhooks
 
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
@@ -16233,7 +15645,7 @@ https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 type ReposListWebhooksResponse struct {
 	response
 	request *ReposListWebhooksReq
-	Data    ReposListWebhooksResponseBody
+	Data    []components.Hook
 }
 
 /*
@@ -16257,7 +15669,7 @@ func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposMergeResponseBody{}
+	resp.Data = components.Commit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -16368,13 +15780,6 @@ type ReposMergeReqBody struct {
 }
 
 /*
-ReposMergeResponseBody is a response body for ReposMerge
-
-https://developer.github.com/v3/repos/merging/#merge-a-branch
-*/
-type ReposMergeResponseBody components.Commit
-
-/*
 ReposMergeResponse is a response for ReposMerge
 
 https://developer.github.com/v3/repos/merging/#merge-a-branch
@@ -16382,7 +15787,7 @@ https://developer.github.com/v3/repos/merging/#merge-a-branch
 type ReposMergeResponse struct {
 	response
 	request *ReposMergeReq
-	Data    ReposMergeResponseBody
+	Data    components.Commit
 }
 
 /*
@@ -16531,7 +15936,7 @@ func ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAc
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposRemoveAppAccessRestrictionsResponseBody{}
+	resp.Data = []components.Integration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -16635,13 +16040,6 @@ https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 type ReposRemoveAppAccessRestrictionsReqBody []string
 
 /*
-ReposRemoveAppAccessRestrictionsResponseBody is a response body for ReposRemoveAppAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
-*/
-type ReposRemoveAppAccessRestrictionsResponseBody []components.Integration
-
-/*
 ReposRemoveAppAccessRestrictionsResponse is a response for ReposRemoveAppAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
@@ -16649,7 +16047,7 @@ https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 type ReposRemoveAppAccessRestrictionsResponse struct {
 	response
 	request *ReposRemoveAppAccessRestrictionsReq
-	Data    ReposRemoveAppAccessRestrictionsResponseBody
+	Data    []components.Integration
 }
 
 /*
@@ -17057,7 +16455,7 @@ func ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeam
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposRemoveTeamAccessRestrictionsResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -17161,13 +16559,6 @@ https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 type ReposRemoveTeamAccessRestrictionsReqBody []string
 
 /*
-ReposRemoveTeamAccessRestrictionsResponseBody is a response body for ReposRemoveTeamAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
-*/
-type ReposRemoveTeamAccessRestrictionsResponseBody []components.Team
-
-/*
 ReposRemoveTeamAccessRestrictionsResponse is a response for ReposRemoveTeamAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
@@ -17175,7 +16566,7 @@ https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 type ReposRemoveTeamAccessRestrictionsResponse struct {
 	response
 	request *ReposRemoveTeamAccessRestrictionsReq
-	Data    ReposRemoveTeamAccessRestrictionsResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -17199,7 +16590,7 @@ func ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUser
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposRemoveUserAccessRestrictionsResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -17303,13 +16694,6 @@ https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 type ReposRemoveUserAccessRestrictionsReqBody []string
 
 /*
-ReposRemoveUserAccessRestrictionsResponseBody is a response body for ReposRemoveUserAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
-*/
-type ReposRemoveUserAccessRestrictionsResponseBody []components.SimpleUser
-
-/*
 ReposRemoveUserAccessRestrictionsResponse is a response for ReposRemoveUserAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
@@ -17317,7 +16701,7 @@ https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 type ReposRemoveUserAccessRestrictionsResponse struct {
 	response
 	request *ReposRemoveUserAccessRestrictionsReq
-	Data    ReposRemoveUserAccessRestrictionsResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -17341,7 +16725,7 @@ func ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposReplaceAllTopicsResponseBody{}
+	resp.Data = components.Topic{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -17464,13 +16848,6 @@ type ReposReplaceAllTopicsReqBody struct {
 }
 
 /*
-ReposReplaceAllTopicsResponseBody is a response body for ReposReplaceAllTopics
-
-https://developer.github.com/v3/repos/#replace-all-repository-topics
-*/
-type ReposReplaceAllTopicsResponseBody components.Topic
-
-/*
 ReposReplaceAllTopicsResponse is a response for ReposReplaceAllTopics
 
 https://developer.github.com/v3/repos/#replace-all-repository-topics
@@ -17478,7 +16855,7 @@ https://developer.github.com/v3/repos/#replace-all-repository-topics
 type ReposReplaceAllTopicsResponse struct {
 	response
 	request *ReposReplaceAllTopicsReq
-	Data    ReposReplaceAllTopicsResponseBody
+	Data    components.Topic
 }
 
 /*
@@ -17502,7 +16879,7 @@ func ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposRequestPagesBuildResponseBody{}
+	resp.Data = components.PageBuildStatus{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -17592,13 +16969,6 @@ func (r *ReposRequestPagesBuildReq) Rel(link RelName, resp *ReposRequestPagesBui
 }
 
 /*
-ReposRequestPagesBuildResponseBody is a response body for ReposRequestPagesBuild
-
-https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
-*/
-type ReposRequestPagesBuildResponseBody components.PageBuildStatus
-
-/*
 ReposRequestPagesBuildResponse is a response for ReposRequestPagesBuild
 
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
@@ -17606,7 +16976,7 @@ https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 type ReposRequestPagesBuildResponse struct {
 	response
 	request *ReposRequestPagesBuildReq
-	Data    ReposRequestPagesBuildResponseBody
+	Data    components.PageBuildStatus
 }
 
 /*
@@ -17630,7 +17000,7 @@ func ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranch
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposSetAdminBranchProtectionResponseBody{}
+	resp.Data = components.ProtectedBranchAdminEnforced{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -17723,13 +17093,6 @@ func (r *ReposSetAdminBranchProtectionReq) Rel(link RelName, resp *ReposSetAdmin
 }
 
 /*
-ReposSetAdminBranchProtectionResponseBody is a response body for ReposSetAdminBranchProtection
-
-https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
-*/
-type ReposSetAdminBranchProtectionResponseBody components.ProtectedBranchAdminEnforced
-
-/*
 ReposSetAdminBranchProtectionResponse is a response for ReposSetAdminBranchProtection
 
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
@@ -17737,7 +17100,7 @@ https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 type ReposSetAdminBranchProtectionResponse struct {
 	response
 	request *ReposSetAdminBranchProtectionReq
-	Data    ReposSetAdminBranchProtectionResponseBody
+	Data    components.ProtectedBranchAdminEnforced
 }
 
 /*
@@ -17761,7 +17124,7 @@ func ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposSetAppAccessRestrictionsResponseBody{}
+	resp.Data = []components.Integration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -17865,13 +17228,6 @@ https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 type ReposSetAppAccessRestrictionsReqBody []string
 
 /*
-ReposSetAppAccessRestrictionsResponseBody is a response body for ReposSetAppAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
-*/
-type ReposSetAppAccessRestrictionsResponseBody []components.Integration
-
-/*
 ReposSetAppAccessRestrictionsResponse is a response for ReposSetAppAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
@@ -17879,7 +17235,7 @@ https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 type ReposSetAppAccessRestrictionsResponse struct {
 	response
 	request *ReposSetAppAccessRestrictionsReq
-	Data    ReposSetAppAccessRestrictionsResponseBody
+	Data    []components.Integration
 }
 
 /*
@@ -18045,7 +17401,7 @@ func ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccess
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposSetTeamAccessRestrictionsResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -18149,13 +17505,6 @@ https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 type ReposSetTeamAccessRestrictionsReqBody []string
 
 /*
-ReposSetTeamAccessRestrictionsResponseBody is a response body for ReposSetTeamAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
-*/
-type ReposSetTeamAccessRestrictionsResponseBody []components.Team
-
-/*
 ReposSetTeamAccessRestrictionsResponse is a response for ReposSetTeamAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
@@ -18163,7 +17512,7 @@ https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 type ReposSetTeamAccessRestrictionsResponse struct {
 	response
 	request *ReposSetTeamAccessRestrictionsReq
-	Data    ReposSetTeamAccessRestrictionsResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -18187,7 +17536,7 @@ func ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccess
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposSetUserAccessRestrictionsResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -18291,13 +17640,6 @@ https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 type ReposSetUserAccessRestrictionsReqBody []string
 
 /*
-ReposSetUserAccessRestrictionsResponseBody is a response body for ReposSetUserAccessRestrictions
-
-https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
-*/
-type ReposSetUserAccessRestrictionsResponseBody []components.SimpleUser
-
-/*
 ReposSetUserAccessRestrictionsResponse is a response for ReposSetUserAccessRestrictions
 
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
@@ -18305,7 +17647,7 @@ https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 type ReposSetUserAccessRestrictionsResponse struct {
 	response
 	request *ReposSetUserAccessRestrictionsReq
-	Data    ReposSetUserAccessRestrictionsResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -18454,7 +17796,7 @@ func ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposTransferResponseBody{}
+	resp.Data = components.Repository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -18562,13 +17904,6 @@ type ReposTransferReqBody struct {
 }
 
 /*
-ReposTransferResponseBody is a response body for ReposTransfer
-
-https://developer.github.com/v3/repos/#transfer-a-repository
-*/
-type ReposTransferResponseBody components.Repository
-
-/*
 ReposTransferResponse is a response for ReposTransfer
 
 https://developer.github.com/v3/repos/#transfer-a-repository
@@ -18576,7 +17911,7 @@ https://developer.github.com/v3/repos/#transfer-a-repository
 type ReposTransferResponse struct {
 	response
 	request *ReposTransferReq
-	Data    ReposTransferResponseBody
+	Data    components.Repository
 }
 
 /*
@@ -18600,7 +17935,7 @@ func ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateResponseBody{}
+	resp.Data = components.FullRepository{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -18803,13 +18138,6 @@ type ReposUpdateReqBody struct {
 }
 
 /*
-ReposUpdateResponseBody is a response body for ReposUpdate
-
-https://developer.github.com/v3/repos/#update-a-repository
-*/
-type ReposUpdateResponseBody components.FullRepository
-
-/*
 ReposUpdateResponse is a response for ReposUpdate
 
 https://developer.github.com/v3/repos/#update-a-repository
@@ -18817,7 +18145,7 @@ https://developer.github.com/v3/repos/#update-a-repository
 type ReposUpdateResponse struct {
 	response
 	request *ReposUpdateReq
-	Data    ReposUpdateResponseBody
+	Data    components.FullRepository
 }
 
 /*
@@ -18841,7 +18169,7 @@ func ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateBranchProtectionResponseBody{}
+	resp.Data = components.ProtectedBranch{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19062,13 +18390,6 @@ type ReposUpdateBranchProtectionReqBody struct {
 }
 
 /*
-ReposUpdateBranchProtectionResponseBody is a response body for ReposUpdateBranchProtection
-
-https://developer.github.com/v3/repos/branches/#update-branch-protection
-*/
-type ReposUpdateBranchProtectionResponseBody components.ProtectedBranch
-
-/*
 ReposUpdateBranchProtectionResponse is a response for ReposUpdateBranchProtection
 
 https://developer.github.com/v3/repos/branches/#update-branch-protection
@@ -19076,7 +18397,7 @@ https://developer.github.com/v3/repos/branches/#update-branch-protection
 type ReposUpdateBranchProtectionResponse struct {
 	response
 	request *ReposUpdateBranchProtectionReq
-	Data    ReposUpdateBranchProtectionResponseBody
+	Data    components.ProtectedBranch
 }
 
 /*
@@ -19100,7 +18421,7 @@ func ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitComment
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateCommitCommentResponseBody{}
+	resp.Data = components.CommitComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19208,13 +18529,6 @@ type ReposUpdateCommitCommentReqBody struct {
 }
 
 /*
-ReposUpdateCommitCommentResponseBody is a response body for ReposUpdateCommitComment
-
-https://developer.github.com/v3/repos/comments/#update-a-commit-comment
-*/
-type ReposUpdateCommitCommentResponseBody components.CommitComment
-
-/*
 ReposUpdateCommitCommentResponse is a response for ReposUpdateCommitComment
 
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
@@ -19222,7 +18536,7 @@ https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 type ReposUpdateCommitCommentResponse struct {
 	response
 	request *ReposUpdateCommitCommentReq
-	Data    ReposUpdateCommitCommentResponseBody
+	Data    components.CommitComment
 }
 
 /*
@@ -19383,7 +18697,7 @@ func ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateInvitationResponseBody{}
+	resp.Data = components.RepositoryInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19494,13 +18808,6 @@ type ReposUpdateInvitationReqBody struct {
 }
 
 /*
-ReposUpdateInvitationResponseBody is a response body for ReposUpdateInvitation
-
-https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
-*/
-type ReposUpdateInvitationResponseBody components.RepositoryInvitation
-
-/*
 ReposUpdateInvitationResponse is a response for ReposUpdateInvitation
 
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
@@ -19508,7 +18815,7 @@ https://developer.github.com/v3/repos/invitations/#update-a-repository-invitatio
 type ReposUpdateInvitationResponse struct {
 	response
 	request *ReposUpdateInvitationReq
-	Data    ReposUpdateInvitationResponseBody
+	Data    components.RepositoryInvitation
 }
 
 /*
@@ -19532,7 +18839,7 @@ func ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdatePullRequestReviewProtectionResponseBody{}
+	resp.Data = components.ProtectedBranchPullRequestReview{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19677,13 +18984,6 @@ type ReposUpdatePullRequestReviewProtectionReqBody struct {
 }
 
 /*
-ReposUpdatePullRequestReviewProtectionResponseBody is a response body for ReposUpdatePullRequestReviewProtection
-
-https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
-*/
-type ReposUpdatePullRequestReviewProtectionResponseBody components.ProtectedBranchPullRequestReview
-
-/*
 ReposUpdatePullRequestReviewProtectionResponse is a response for ReposUpdatePullRequestReviewProtection
 
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
@@ -19691,7 +18991,7 @@ https://developer.github.com/v3/repos/branches/#update-pull-request-review-prote
 type ReposUpdatePullRequestReviewProtectionResponse struct {
 	response
 	request *ReposUpdatePullRequestReviewProtectionReq
-	Data    ReposUpdatePullRequestReviewProtectionResponseBody
+	Data    components.ProtectedBranchPullRequestReview
 }
 
 /*
@@ -19715,7 +19015,7 @@ func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateReleaseResponseBody{}
+	resp.Data = components.Release{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19842,13 +19142,6 @@ type ReposUpdateReleaseReqBody struct {
 }
 
 /*
-ReposUpdateReleaseResponseBody is a response body for ReposUpdateRelease
-
-https://developer.github.com/v3/repos/releases/#update-a-release
-*/
-type ReposUpdateReleaseResponseBody components.Release
-
-/*
 ReposUpdateReleaseResponse is a response for ReposUpdateRelease
 
 https://developer.github.com/v3/repos/releases/#update-a-release
@@ -19856,7 +19149,7 @@ https://developer.github.com/v3/repos/releases/#update-a-release
 type ReposUpdateReleaseResponse struct {
 	response
 	request *ReposUpdateReleaseReq
-	Data    ReposUpdateReleaseResponseBody
+	Data    components.Release
 }
 
 /*
@@ -19880,7 +19173,7 @@ func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateReleaseAssetResponseBody{}
+	resp.Data = components.ReleaseAsset{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -19992,13 +19285,6 @@ type ReposUpdateReleaseAssetReqBody struct {
 }
 
 /*
-ReposUpdateReleaseAssetResponseBody is a response body for ReposUpdateReleaseAsset
-
-https://developer.github.com/v3/repos/releases/#update-a-release-asset
-*/
-type ReposUpdateReleaseAssetResponseBody components.ReleaseAsset
-
-/*
 ReposUpdateReleaseAssetResponse is a response for ReposUpdateReleaseAsset
 
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
@@ -20006,7 +19292,7 @@ https://developer.github.com/v3/repos/releases/#update-a-release-asset
 type ReposUpdateReleaseAssetResponse struct {
 	response
 	request *ReposUpdateReleaseAssetReq
-	Data    ReposUpdateReleaseAssetResponseBody
+	Data    components.ReleaseAsset
 }
 
 /*
@@ -20030,7 +19316,7 @@ func ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateStatusCheckProtectionResponseBody{}
+	resp.Data = components.StatusCheckPolicy{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -20141,13 +19427,6 @@ type ReposUpdateStatusCheckProtectionReqBody struct {
 }
 
 /*
-ReposUpdateStatusCheckProtectionResponseBody is a response body for ReposUpdateStatusCheckProtection
-
-https://developer.github.com/v3/repos/branches/#update-status-check-potection
-*/
-type ReposUpdateStatusCheckProtectionResponseBody components.StatusCheckPolicy
-
-/*
 ReposUpdateStatusCheckProtectionResponse is a response for ReposUpdateStatusCheckProtection
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
@@ -20155,7 +19434,7 @@ https://developer.github.com/v3/repos/branches/#update-status-check-potection
 type ReposUpdateStatusCheckProtectionResponse struct {
 	response
 	request *ReposUpdateStatusCheckProtectionReq
-	Data    ReposUpdateStatusCheckProtectionResponseBody
+	Data    components.StatusCheckPolicy
 }
 
 /*
@@ -20179,7 +19458,7 @@ func ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUpdateWebhookResponseBody{}
+	resp.Data = components.Hook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -20332,13 +19611,6 @@ type ReposUpdateWebhookReqBody struct {
 }
 
 /*
-ReposUpdateWebhookResponseBody is a response body for ReposUpdateWebhook
-
-https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
-*/
-type ReposUpdateWebhookResponseBody components.Hook
-
-/*
 ReposUpdateWebhookResponse is a response for ReposUpdateWebhook
 
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
@@ -20346,7 +19618,7 @@ https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 type ReposUpdateWebhookResponse struct {
 	response
 	request *ReposUpdateWebhookReq
-	Data    ReposUpdateWebhookResponseBody
+	Data    components.Hook
 }
 
 /*
@@ -20370,7 +19642,7 @@ func ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ReposUploadReleaseAssetResponseBody{}
+	resp.Data = components.ReleaseAsset{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -20485,13 +19757,6 @@ func (r *ReposUploadReleaseAssetReq) Rel(link RelName, resp *ReposUploadReleaseA
 }
 
 /*
-ReposUploadReleaseAssetResponseBody is a response body for ReposUploadReleaseAsset
-
-https://developer.github.com/v3/repos/releases/#upload-a-release-asset
-*/
-type ReposUploadReleaseAssetResponseBody components.ReleaseAsset
-
-/*
 ReposUploadReleaseAssetResponse is a response for ReposUploadReleaseAsset
 
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
@@ -20499,5 +19764,5 @@ https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 type ReposUploadReleaseAssetResponse struct {
 	response
 	request *ReposUploadReleaseAssetReq
-	Data    ReposUploadReleaseAssetResponseBody
+	Data    components.ReleaseAsset
 }

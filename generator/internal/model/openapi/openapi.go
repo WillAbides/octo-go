@@ -110,6 +110,9 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 			itemsRef := val.Items
 			itemsVal := itemsRef.Value
 			fullName := fmt.Sprintf("%s-%s-item", parentName, propName)
+			if strings.HasPrefix(itemsRef.Ref, "#/components/schemas/") {
+				fullName = strings.TrimPrefix(itemsRef.Ref, "#/components/schemas/")
+			}
 			wrongType := false
 			switch opSchemaType(itemsVal) {
 			case model.ParamTypeObject, model.ParamTypeOneOf:

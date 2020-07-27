@@ -33,7 +33,7 @@ func UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAut
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersAddEmailForAuthenticatedResponseBody{}
+	resp.Data = []components.Email{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -141,13 +141,6 @@ type UsersAddEmailForAuthenticatedReqBody struct {
 }
 
 /*
-UsersAddEmailForAuthenticatedResponseBody is a response body for UsersAddEmailForAuthenticated
-
-https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
-*/
-type UsersAddEmailForAuthenticatedResponseBody []components.Email
-
-/*
 UsersAddEmailForAuthenticatedResponse is a response for UsersAddEmailForAuthenticated
 
 https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
@@ -155,7 +148,7 @@ https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authe
 type UsersAddEmailForAuthenticatedResponse struct {
 	response
 	request *UsersAddEmailForAuthenticatedReq
-	Data    UsersAddEmailForAuthenticatedResponseBody
+	Data    []components.Email
 }
 
 /*
@@ -659,7 +652,7 @@ func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgK
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersCreateGpgKeyForAuthenticatedResponseBody{}
+	resp.Data = components.GpgKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -762,13 +755,6 @@ type UsersCreateGpgKeyForAuthenticatedReqBody struct {
 }
 
 /*
-UsersCreateGpgKeyForAuthenticatedResponseBody is a response body for UsersCreateGpgKeyForAuthenticated
-
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
-*/
-type UsersCreateGpgKeyForAuthenticatedResponseBody components.GpgKey
-
-/*
 UsersCreateGpgKeyForAuthenticatedResponse is a response for UsersCreateGpgKeyForAuthenticated
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
@@ -776,7 +762,7 @@ https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authent
 type UsersCreateGpgKeyForAuthenticatedResponse struct {
 	response
 	request *UsersCreateGpgKeyForAuthenticatedReq
-	Data    UsersCreateGpgKeyForAuthenticatedResponseBody
+	Data    components.GpgKey
 }
 
 /*
@@ -800,7 +786,7 @@ func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCrea
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersCreatePublicSshKeyForAuthenticatedResponseBody{}
+	resp.Data = components.Key{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -906,13 +892,6 @@ type UsersCreatePublicSshKeyForAuthenticatedReqBody struct {
 }
 
 /*
-UsersCreatePublicSshKeyForAuthenticatedResponseBody is a response body for UsersCreatePublicSshKeyForAuthenticated
-
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
-*/
-type UsersCreatePublicSshKeyForAuthenticatedResponseBody components.Key
-
-/*
 UsersCreatePublicSshKeyForAuthenticatedResponse is a response for UsersCreatePublicSshKeyForAuthenticated
 
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
@@ -920,7 +899,7 @@ https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-auth
 type UsersCreatePublicSshKeyForAuthenticatedResponse struct {
 	response
 	request *UsersCreatePublicSshKeyForAuthenticatedReq
-	Data    UsersCreatePublicSshKeyForAuthenticatedResponseBody
+	Data    components.Key
 }
 
 /*
@@ -1796,7 +1775,7 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersGetContextForUserResponseBody{}
+	resp.Data = components.Hovercard{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1904,13 +1883,6 @@ func (r *UsersGetContextForUserReq) Rel(link RelName, resp *UsersGetContextForUs
 }
 
 /*
-UsersGetContextForUserResponseBody is a response body for UsersGetContextForUser
-
-https://developer.github.com/v3/users/#get-contextual-information-for-a-user
-*/
-type UsersGetContextForUserResponseBody components.Hovercard
-
-/*
 UsersGetContextForUserResponse is a response for UsersGetContextForUser
 
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
@@ -1918,7 +1890,7 @@ https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 type UsersGetContextForUserResponse struct {
 	response
 	request *UsersGetContextForUserReq
-	Data    UsersGetContextForUserResponseBody
+	Data    components.Hovercard
 }
 
 /*
@@ -1942,7 +1914,7 @@ func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForA
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersGetGpgKeyForAuthenticatedResponseBody{}
+	resp.Data = components.GpgKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2033,13 +2005,6 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersGetGpgK
 }
 
 /*
-UsersGetGpgKeyForAuthenticatedResponseBody is a response body for UsersGetGpgKeyForAuthenticated
-
-https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
-*/
-type UsersGetGpgKeyForAuthenticatedResponseBody components.GpgKey
-
-/*
 UsersGetGpgKeyForAuthenticatedResponse is a response for UsersGetGpgKeyForAuthenticated
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
@@ -2047,7 +2012,7 @@ https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authentica
 type UsersGetGpgKeyForAuthenticatedResponse struct {
 	response
 	request *UsersGetGpgKeyForAuthenticatedReq
-	Data    UsersGetGpgKeyForAuthenticatedResponseBody
+	Data    components.GpgKey
 }
 
 /*
@@ -2071,7 +2036,7 @@ func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPubl
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersGetPublicSshKeyForAuthenticatedResponseBody{}
+	resp.Data = components.Key{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2162,13 +2127,6 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersG
 }
 
 /*
-UsersGetPublicSshKeyForAuthenticatedResponseBody is a response body for UsersGetPublicSshKeyForAuthenticated
-
-https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
-*/
-type UsersGetPublicSshKeyForAuthenticatedResponseBody components.Key
-
-/*
 UsersGetPublicSshKeyForAuthenticatedResponse is a response for UsersGetPublicSshKeyForAuthenticated
 
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
@@ -2176,7 +2134,7 @@ https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authent
 type UsersGetPublicSshKeyForAuthenticatedResponse struct {
 	response
 	request *UsersGetPublicSshKeyForAuthenticatedReq
-	Data    UsersGetPublicSshKeyForAuthenticatedResponseBody
+	Data    components.Key
 }
 
 /*
@@ -2200,7 +2158,7 @@ func UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*U
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2304,13 +2262,6 @@ func (r *UsersListReq) Rel(link RelName, resp *UsersListResponse) bool {
 }
 
 /*
-UsersListResponseBody is a response body for UsersList
-
-https://developer.github.com/v3/users/#list-users
-*/
-type UsersListResponseBody []components.SimpleUser
-
-/*
 UsersListResponse is a response for UsersList
 
 https://developer.github.com/v3/users/#list-users
@@ -2318,7 +2269,7 @@ https://developer.github.com/v3/users/#list-users
 type UsersListResponse struct {
 	response
 	request *UsersListReq
-	Data    UsersListResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2342,7 +2293,7 @@ func UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedB
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListBlockedByAuthenticatedResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2430,13 +2381,6 @@ func (r *UsersListBlockedByAuthenticatedReq) Rel(link RelName, resp *UsersListBl
 }
 
 /*
-UsersListBlockedByAuthenticatedResponseBody is a response body for UsersListBlockedByAuthenticated
-
-https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
-*/
-type UsersListBlockedByAuthenticatedResponseBody []components.SimpleUser
-
-/*
 UsersListBlockedByAuthenticatedResponse is a response for UsersListBlockedByAuthenticated
 
 https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
@@ -2444,7 +2388,7 @@ https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authen
 type UsersListBlockedByAuthenticatedResponse struct {
 	response
 	request *UsersListBlockedByAuthenticatedReq
-	Data    UsersListBlockedByAuthenticatedResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2468,7 +2412,7 @@ func UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsFo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListEmailsForAuthenticatedResponseBody{}
+	resp.Data = []components.Email{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2568,13 +2512,6 @@ func (r *UsersListEmailsForAuthenticatedReq) Rel(link RelName, resp *UsersListEm
 }
 
 /*
-UsersListEmailsForAuthenticatedResponseBody is a response body for UsersListEmailsForAuthenticated
-
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
-*/
-type UsersListEmailsForAuthenticatedResponseBody []components.Email
-
-/*
 UsersListEmailsForAuthenticatedResponse is a response for UsersListEmailsForAuthenticated
 
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
@@ -2582,7 +2519,7 @@ https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authe
 type UsersListEmailsForAuthenticatedResponse struct {
 	response
 	request *UsersListEmailsForAuthenticatedReq
-	Data    UsersListEmailsForAuthenticatedResponseBody
+	Data    []components.Email
 }
 
 /*
@@ -2606,7 +2543,7 @@ func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListFollowedByAuthenticatedResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2706,13 +2643,6 @@ func (r *UsersListFollowedByAuthenticatedReq) Rel(link RelName, resp *UsersListF
 }
 
 /*
-UsersListFollowedByAuthenticatedResponseBody is a response body for UsersListFollowedByAuthenticated
-
-https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
-*/
-type UsersListFollowedByAuthenticatedResponseBody []components.SimpleUser
-
-/*
 UsersListFollowedByAuthenticatedResponse is a response for UsersListFollowedByAuthenticated
 
 https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
@@ -2720,7 +2650,7 @@ https://developer.github.com/v3/users/followers/#list-the-people-the-authenticat
 type UsersListFollowedByAuthenticatedResponse struct {
 	response
 	request *UsersListFollowedByAuthenticatedReq
-	Data    UsersListFollowedByAuthenticatedResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2744,7 +2674,7 @@ func UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListF
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListFollowersForAuthenticatedUserResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2844,13 +2774,6 @@ func (r *UsersListFollowersForAuthenticatedUserReq) Rel(link RelName, resp *User
 }
 
 /*
-UsersListFollowersForAuthenticatedUserResponseBody is a response body for UsersListFollowersForAuthenticatedUser
-
-https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
-*/
-type UsersListFollowersForAuthenticatedUserResponseBody []components.SimpleUser
-
-/*
 UsersListFollowersForAuthenticatedUserResponse is a response for UsersListFollowersForAuthenticatedUser
 
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
@@ -2858,7 +2781,7 @@ https://developer.github.com/v3/users/followers/#list-followers-of-the-authentic
 type UsersListFollowersForAuthenticatedUserResponse struct {
 	response
 	request *UsersListFollowersForAuthenticatedUserReq
-	Data    UsersListFollowersForAuthenticatedUserResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2882,7 +2805,7 @@ func UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUs
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListFollowersForUserResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2983,13 +2906,6 @@ func (r *UsersListFollowersForUserReq) Rel(link RelName, resp *UsersListFollower
 }
 
 /*
-UsersListFollowersForUserResponseBody is a response body for UsersListFollowersForUser
-
-https://developer.github.com/v3/users/followers/#list-followers-of-a-user
-*/
-type UsersListFollowersForUserResponseBody []components.SimpleUser
-
-/*
 UsersListFollowersForUserResponse is a response for UsersListFollowersForUser
 
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
@@ -2997,7 +2913,7 @@ https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 type UsersListFollowersForUserResponse struct {
 	response
 	request *UsersListFollowersForUserReq
-	Data    UsersListFollowersForUserResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -3021,7 +2937,7 @@ func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUs
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListFollowingForUserResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3122,13 +3038,6 @@ func (r *UsersListFollowingForUserReq) Rel(link RelName, resp *UsersListFollowin
 }
 
 /*
-UsersListFollowingForUserResponseBody is a response body for UsersListFollowingForUser
-
-https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
-*/
-type UsersListFollowingForUserResponseBody []components.SimpleUser
-
-/*
 UsersListFollowingForUserResponse is a response for UsersListFollowingForUser
 
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
@@ -3136,7 +3045,7 @@ https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 type UsersListFollowingForUserResponse struct {
 	response
 	request *UsersListFollowingForUserReq
-	Data    UsersListFollowingForUserResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -3160,7 +3069,7 @@ func UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeys
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListGpgKeysForAuthenticatedResponseBody{}
+	resp.Data = []components.GpgKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3260,13 +3169,6 @@ func (r *UsersListGpgKeysForAuthenticatedReq) Rel(link RelName, resp *UsersListG
 }
 
 /*
-UsersListGpgKeysForAuthenticatedResponseBody is a response body for UsersListGpgKeysForAuthenticated
-
-https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
-*/
-type UsersListGpgKeysForAuthenticatedResponseBody []components.GpgKey
-
-/*
 UsersListGpgKeysForAuthenticatedResponse is a response for UsersListGpgKeysForAuthenticated
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
@@ -3274,7 +3176,7 @@ https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authentica
 type UsersListGpgKeysForAuthenticatedResponse struct {
 	response
 	request *UsersListGpgKeysForAuthenticatedReq
-	Data    UsersListGpgKeysForAuthenticatedResponseBody
+	Data    []components.GpgKey
 }
 
 /*
@@ -3298,7 +3200,7 @@ func UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListGpgKeysForUserResponseBody{}
+	resp.Data = []components.GpgKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3399,13 +3301,6 @@ func (r *UsersListGpgKeysForUserReq) Rel(link RelName, resp *UsersListGpgKeysFor
 }
 
 /*
-UsersListGpgKeysForUserResponseBody is a response body for UsersListGpgKeysForUser
-
-https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
-*/
-type UsersListGpgKeysForUserResponseBody []components.GpgKey
-
-/*
 UsersListGpgKeysForUserResponse is a response for UsersListGpgKeysForUser
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
@@ -3413,7 +3308,7 @@ https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 type UsersListGpgKeysForUserResponse struct {
 	response
 	request *UsersListGpgKeysForUserReq
-	Data    UsersListGpgKeysForUserResponseBody
+	Data    []components.GpgKey
 }
 
 /*
@@ -3437,7 +3332,7 @@ func UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListPublicEmailsForAuthenticatedResponseBody{}
+	resp.Data = []components.Email{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3537,13 +3432,6 @@ func (r *UsersListPublicEmailsForAuthenticatedReq) Rel(link RelName, resp *Users
 }
 
 /*
-UsersListPublicEmailsForAuthenticatedResponseBody is a response body for UsersListPublicEmailsForAuthenticated
-
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
-*/
-type UsersListPublicEmailsForAuthenticatedResponseBody []components.Email
-
-/*
 UsersListPublicEmailsForAuthenticatedResponse is a response for UsersListPublicEmailsForAuthenticated
 
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
@@ -3551,7 +3439,7 @@ https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-th
 type UsersListPublicEmailsForAuthenticatedResponse struct {
 	response
 	request *UsersListPublicEmailsForAuthenticatedReq
-	Data    UsersListPublicEmailsForAuthenticatedResponseBody
+	Data    []components.Email
 }
 
 /*
@@ -3575,7 +3463,7 @@ func UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListPublicKeysForUserResponseBody{}
+	resp.Data = []components.KeySimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3676,13 +3564,6 @@ func (r *UsersListPublicKeysForUserReq) Rel(link RelName, resp *UsersListPublicK
 }
 
 /*
-UsersListPublicKeysForUserResponseBody is a response body for UsersListPublicKeysForUser
-
-https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
-*/
-type UsersListPublicKeysForUserResponseBody []components.KeySimple
-
-/*
 UsersListPublicKeysForUserResponse is a response for UsersListPublicKeysForUser
 
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
@@ -3690,7 +3571,7 @@ https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 type UsersListPublicKeysForUserResponse struct {
 	response
 	request *UsersListPublicKeysForUserReq
-	Data    UsersListPublicKeysForUserResponseBody
+	Data    []components.KeySimple
 }
 
 /*
@@ -3714,7 +3595,7 @@ func UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListP
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersListPublicSshKeysForAuthenticatedResponseBody{}
+	resp.Data = []components.Key{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3814,13 +3695,6 @@ func (r *UsersListPublicSshKeysForAuthenticatedReq) Rel(link RelName, resp *User
 }
 
 /*
-UsersListPublicSshKeysForAuthenticatedResponseBody is a response body for UsersListPublicSshKeysForAuthenticated
-
-https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
-*/
-type UsersListPublicSshKeysForAuthenticatedResponseBody []components.Key
-
-/*
 UsersListPublicSshKeysForAuthenticatedResponse is a response for UsersListPublicSshKeysForAuthenticated
 
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
@@ -3828,7 +3702,7 @@ https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authent
 type UsersListPublicSshKeysForAuthenticatedResponse struct {
 	response
 	request *UsersListPublicSshKeysForAuthenticatedReq
-	Data    UsersListPublicSshKeysForAuthenticatedResponseBody
+	Data    []components.Key
 }
 
 /*
@@ -3852,7 +3726,7 @@ func UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *Us
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody{}
+	resp.Data = []components.Email{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3958,13 +3832,6 @@ type UsersSetPrimaryEmailVisibilityForAuthenticatedReqBody struct {
 }
 
 /*
-UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody is a response body for UsersSetPrimaryEmailVisibilityForAuthenticated
-
-https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
-*/
-type UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody []components.Email
-
-/*
 UsersSetPrimaryEmailVisibilityForAuthenticatedResponse is a response for UsersSetPrimaryEmailVisibilityForAuthenticated
 
 https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
@@ -3972,7 +3839,7 @@ https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-t
 type UsersSetPrimaryEmailVisibilityForAuthenticatedResponse struct {
 	response
 	request *UsersSetPrimaryEmailVisibilityForAuthenticatedReq
-	Data    UsersSetPrimaryEmailVisibilityForAuthenticatedResponseBody
+	Data    []components.Email
 }
 
 /*
@@ -4232,7 +4099,7 @@ func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticated
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersUpdateAuthenticatedResponseBody{}
+	resp.Data = components.PrivateUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4356,13 +4223,6 @@ type UsersUpdateAuthenticatedReqBody struct {
 }
 
 /*
-UsersUpdateAuthenticatedResponseBody is a response body for UsersUpdateAuthenticated
-
-https://developer.github.com/v3/users/#update-the-authenticated-user
-*/
-type UsersUpdateAuthenticatedResponseBody components.PrivateUser
-
-/*
 UsersUpdateAuthenticatedResponse is a response for UsersUpdateAuthenticated
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
@@ -4370,5 +4230,5 @@ https://developer.github.com/v3/users/#update-the-authenticated-user
 type UsersUpdateAuthenticatedResponse struct {
 	response
 	request *UsersUpdateAuthenticatedReq
-	Data    UsersUpdateAuthenticatedResponseBody
+	Data    components.PrivateUser
 }

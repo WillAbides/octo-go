@@ -346,7 +346,7 @@ func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsCheckTokenResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -450,13 +450,6 @@ type AppsCheckTokenReqBody struct {
 }
 
 /*
-AppsCheckTokenResponseBody is a response body for AppsCheckToken
-
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
-*/
-type AppsCheckTokenResponseBody components.Authorization
-
-/*
 AppsCheckTokenResponse is a response for AppsCheckToken
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
@@ -464,7 +457,7 @@ https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 type AppsCheckTokenResponse struct {
 	response
 	request *AppsCheckTokenReq
-	Data    AppsCheckTokenResponseBody
+	Data    components.Authorization
 }
 
 /*
@@ -488,7 +481,7 @@ func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAtta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsCreateContentAttachmentResponseBody{}
+	resp.Data = components.ContentReferenceAttachment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -609,13 +602,6 @@ type AppsCreateContentAttachmentReqBody struct {
 }
 
 /*
-AppsCreateContentAttachmentResponseBody is a response body for AppsCreateContentAttachment
-
-https://developer.github.com/v3/apps/installations/#create-a-content-attachment
-*/
-type AppsCreateContentAttachmentResponseBody components.ContentReferenceAttachment
-
-/*
 AppsCreateContentAttachmentResponse is a response for AppsCreateContentAttachment
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
@@ -623,7 +609,7 @@ https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 type AppsCreateContentAttachmentResponse struct {
 	response
 	request *AppsCreateContentAttachmentReq
-	Data    AppsCreateContentAttachmentResponseBody
+	Data    components.ContentReferenceAttachment
 }
 
 /*
@@ -826,7 +812,7 @@ func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInsta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsCreateInstallationAccessTokenResponseBody{}
+	resp.Data = components.InstallationToken{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -951,13 +937,6 @@ type AppsCreateInstallationAccessTokenReqBody struct {
 }
 
 /*
-AppsCreateInstallationAccessTokenResponseBody is a response body for AppsCreateInstallationAccessToken
-
-https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
-*/
-type AppsCreateInstallationAccessTokenResponseBody components.InstallationToken
-
-/*
 AppsCreateInstallationAccessTokenResponse is a response for AppsCreateInstallationAccessToken
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
@@ -965,7 +944,7 @@ https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an
 type AppsCreateInstallationAccessTokenResponse struct {
 	response
 	request *AppsCreateInstallationAccessTokenReq
-	Data    AppsCreateInstallationAccessTokenResponseBody
+	Data    components.InstallationToken
 }
 
 /*
@@ -1386,7 +1365,7 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetAuthenticatedResponseBody{}
+	resp.Data = components.Integration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1486,13 +1465,6 @@ func (r *AppsGetAuthenticatedReq) Rel(link RelName, resp *AppsGetAuthenticatedRe
 }
 
 /*
-AppsGetAuthenticatedResponseBody is a response body for AppsGetAuthenticated
-
-https://developer.github.com/v3/apps/#get-the-authenticated-app
-*/
-type AppsGetAuthenticatedResponseBody components.Integration
-
-/*
 AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
@@ -1500,7 +1472,7 @@ https://developer.github.com/v3/apps/#get-the-authenticated-app
 type AppsGetAuthenticatedResponse struct {
 	response
 	request *AppsGetAuthenticatedReq
-	Data    AppsGetAuthenticatedResponseBody
+	Data    components.Integration
 }
 
 /*
@@ -1524,7 +1496,7 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetBySlugResponseBody{}
+	resp.Data = components.Integration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1627,13 +1599,6 @@ func (r *AppsGetBySlugReq) Rel(link RelName, resp *AppsGetBySlugResponse) bool {
 }
 
 /*
-AppsGetBySlugResponseBody is a response body for AppsGetBySlug
-
-https://developer.github.com/v3/apps/#get-an-app
-*/
-type AppsGetBySlugResponseBody components.Integration
-
-/*
 AppsGetBySlugResponse is a response for AppsGetBySlug
 
 https://developer.github.com/v3/apps/#get-an-app
@@ -1641,7 +1606,7 @@ https://developer.github.com/v3/apps/#get-an-app
 type AppsGetBySlugResponse struct {
 	response
 	request *AppsGetBySlugReq
-	Data    AppsGetBySlugResponseBody
+	Data    components.Integration
 }
 
 /*
@@ -1665,7 +1630,7 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetInstallationResponseBody{}
+	resp.Data = components.Installation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1768,13 +1733,6 @@ func (r *AppsGetInstallationReq) Rel(link RelName, resp *AppsGetInstallationResp
 }
 
 /*
-AppsGetInstallationResponseBody is a response body for AppsGetInstallation
-
-https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
-*/
-type AppsGetInstallationResponseBody components.Installation
-
-/*
 AppsGetInstallationResponse is a response for AppsGetInstallation
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
@@ -1782,7 +1740,7 @@ https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-
 type AppsGetInstallationResponse struct {
 	response
 	request *AppsGetInstallationReq
-	Data    AppsGetInstallationResponseBody
+	Data    components.Installation
 }
 
 /*
@@ -1806,7 +1764,7 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetOrgInstallationResponseBody{}
+	resp.Data = components.Installation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1907,13 +1865,6 @@ func (r *AppsGetOrgInstallationReq) Rel(link RelName, resp *AppsGetOrgInstallati
 }
 
 /*
-AppsGetOrgInstallationResponseBody is a response body for AppsGetOrgInstallation
-
-https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
-*/
-type AppsGetOrgInstallationResponseBody components.Installation
-
-/*
 AppsGetOrgInstallationResponse is a response for AppsGetOrgInstallation
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
@@ -1921,7 +1872,7 @@ https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-a
 type AppsGetOrgInstallationResponse struct {
 	response
 	request *AppsGetOrgInstallationReq
-	Data    AppsGetOrgInstallationResponseBody
+	Data    components.Installation
 }
 
 /*
@@ -1945,7 +1896,7 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetRepoInstallationResponseBody{}
+	resp.Data = components.Installation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2047,13 +1998,6 @@ func (r *AppsGetRepoInstallationReq) Rel(link RelName, resp *AppsGetRepoInstalla
 }
 
 /*
-AppsGetRepoInstallationResponseBody is a response body for AppsGetRepoInstallation
-
-https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
-*/
-type AppsGetRepoInstallationResponseBody components.Installation
-
-/*
 AppsGetRepoInstallationResponse is a response for AppsGetRepoInstallation
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
@@ -2061,7 +2005,7 @@ https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-auth
 type AppsGetRepoInstallationResponse struct {
 	response
 	request *AppsGetRepoInstallationReq
-	Data    AppsGetRepoInstallationResponseBody
+	Data    components.Installation
 }
 
 /*
@@ -2085,7 +2029,7 @@ func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscrip
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetSubscriptionPlanForAccountResponseBody{}
+	resp.Data = components.MarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2176,13 +2120,6 @@ func (r *AppsGetSubscriptionPlanForAccountReq) Rel(link RelName, resp *AppsGetSu
 }
 
 /*
-AppsGetSubscriptionPlanForAccountResponseBody is a response body for AppsGetSubscriptionPlanForAccount
-
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
-*/
-type AppsGetSubscriptionPlanForAccountResponseBody components.MarketplacePurchase
-
-/*
 AppsGetSubscriptionPlanForAccountResponse is a response for AppsGetSubscriptionPlanForAccount
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
@@ -2190,7 +2127,7 @@ https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an
 type AppsGetSubscriptionPlanForAccountResponse struct {
 	response
 	request *AppsGetSubscriptionPlanForAccountReq
-	Data    AppsGetSubscriptionPlanForAccountResponseBody
+	Data    components.MarketplacePurchase
 }
 
 /*
@@ -2214,7 +2151,7 @@ func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetS
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetSubscriptionPlanForAccountStubbedResponseBody{}
+	resp.Data = components.MarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2305,13 +2242,6 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) Rel(link RelName, resp *Ap
 }
 
 /*
-AppsGetSubscriptionPlanForAccountStubbedResponseBody is a response body for AppsGetSubscriptionPlanForAccountStubbed
-
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
-*/
-type AppsGetSubscriptionPlanForAccountStubbedResponseBody components.MarketplacePurchase
-
-/*
 AppsGetSubscriptionPlanForAccountStubbedResponse is a response for AppsGetSubscriptionPlanForAccountStubbed
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
@@ -2319,7 +2249,7 @@ https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an
 type AppsGetSubscriptionPlanForAccountStubbedResponse struct {
 	response
 	request *AppsGetSubscriptionPlanForAccountStubbedReq
-	Data    AppsGetSubscriptionPlanForAccountStubbedResponseBody
+	Data    components.MarketplacePurchase
 }
 
 /*
@@ -2343,7 +2273,7 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsGetUserInstallationResponseBody{}
+	resp.Data = components.Installation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2444,13 +2374,6 @@ func (r *AppsGetUserInstallationReq) Rel(link RelName, resp *AppsGetUserInstalla
 }
 
 /*
-AppsGetUserInstallationResponseBody is a response body for AppsGetUserInstallation
-
-https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
-*/
-type AppsGetUserInstallationResponseBody components.Installation
-
-/*
 AppsGetUserInstallationResponse is a response for AppsGetUserInstallation
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
@@ -2458,7 +2381,7 @@ https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authentica
 type AppsGetUserInstallationResponse struct {
 	response
 	request *AppsGetUserInstallationReq
-	Data    AppsGetUserInstallationResponseBody
+	Data    components.Installation
 }
 
 /*
@@ -2482,7 +2405,7 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListAccountsForPlanResponseBody{}
+	resp.Data = []components.MarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2603,13 +2526,6 @@ func (r *AppsListAccountsForPlanReq) Rel(link RelName, resp *AppsListAccountsFor
 }
 
 /*
-AppsListAccountsForPlanResponseBody is a response body for AppsListAccountsForPlan
-
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
-*/
-type AppsListAccountsForPlanResponseBody []components.MarketplacePurchase
-
-/*
 AppsListAccountsForPlanResponse is a response for AppsListAccountsForPlan
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
@@ -2617,7 +2533,7 @@ https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 type AppsListAccountsForPlanResponse struct {
 	response
 	request *AppsListAccountsForPlanReq
-	Data    AppsListAccountsForPlanResponseBody
+	Data    []components.MarketplacePurchase
 }
 
 /*
@@ -2641,7 +2557,7 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListAccountsForPlanStubbedResponseBody{}
+	resp.Data = []components.MarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2762,13 +2678,6 @@ func (r *AppsListAccountsForPlanStubbedReq) Rel(link RelName, resp *AppsListAcco
 }
 
 /*
-AppsListAccountsForPlanStubbedResponseBody is a response body for AppsListAccountsForPlanStubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
-*/
-type AppsListAccountsForPlanStubbedResponseBody []components.MarketplacePurchase
-
-/*
 AppsListAccountsForPlanStubbedResponse is a response for AppsListAccountsForPlanStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
@@ -2776,7 +2685,7 @@ https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubb
 type AppsListAccountsForPlanStubbedResponse struct {
 	response
 	request *AppsListAccountsForPlanStubbedReq
-	Data    AppsListAccountsForPlanStubbedResponseBody
+	Data    []components.MarketplacePurchase
 }
 
 /*
@@ -2968,7 +2877,7 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListInstallationsResponseBody{}
+	resp.Data = []components.Installation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3094,13 +3003,6 @@ func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallations
 }
 
 /*
-AppsListInstallationsResponseBody is a response body for AppsListInstallations
-
-https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
-*/
-type AppsListInstallationsResponseBody []components.Installation
-
-/*
 AppsListInstallationsResponse is a response for AppsListInstallations
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
@@ -3108,7 +3010,7 @@ https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-a
 type AppsListInstallationsResponse struct {
 	response
 	request *AppsListInstallationsReq
-	Data    AppsListInstallationsResponseBody
+	Data    []components.Installation
 }
 
 /*
@@ -3285,7 +3187,7 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOpt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListPlansResponseBody{}
+	resp.Data = []components.MarketplaceListingPlan{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3385,13 +3287,6 @@ func (r *AppsListPlansReq) Rel(link RelName, resp *AppsListPlansResponse) bool {
 }
 
 /*
-AppsListPlansResponseBody is a response body for AppsListPlans
-
-https://developer.github.com/v3/apps/marketplace/#list-plans
-*/
-type AppsListPlansResponseBody []components.MarketplaceListingPlan
-
-/*
 AppsListPlansResponse is a response for AppsListPlans
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
@@ -3399,7 +3294,7 @@ https://developer.github.com/v3/apps/marketplace/#list-plans
 type AppsListPlansResponse struct {
 	response
 	request *AppsListPlansReq
-	Data    AppsListPlansResponseBody
+	Data    []components.MarketplaceListingPlan
 }
 
 /*
@@ -3423,7 +3318,7 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListPlansStubbedResponseBody{}
+	resp.Data = []components.MarketplaceListingPlan{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3523,13 +3418,6 @@ func (r *AppsListPlansStubbedReq) Rel(link RelName, resp *AppsListPlansStubbedRe
 }
 
 /*
-AppsListPlansStubbedResponseBody is a response body for AppsListPlansStubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
-*/
-type AppsListPlansStubbedResponseBody []components.MarketplaceListingPlan
-
-/*
 AppsListPlansStubbedResponse is a response for AppsListPlansStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
@@ -3537,7 +3425,7 @@ https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 type AppsListPlansStubbedResponse struct {
 	response
 	request *AppsListPlansStubbedReq
-	Data    AppsListPlansStubbedResponseBody
+	Data    []components.MarketplaceListingPlan
 }
 
 /*
@@ -3726,7 +3614,7 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListSubscriptionsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.UserMarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3826,13 +3714,6 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link RelName, resp *A
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserResponseBody is a response body for AppsListSubscriptionsForAuthenticatedUser
-
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
-*/
-type AppsListSubscriptionsForAuthenticatedUserResponseBody []components.UserMarketplacePurchase
-
-/*
 AppsListSubscriptionsForAuthenticatedUserResponse is a response for AppsListSubscriptionsForAuthenticatedUser
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
@@ -3840,7 +3721,7 @@ https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-aut
 type AppsListSubscriptionsForAuthenticatedUserResponse struct {
 	response
 	request *AppsListSubscriptionsForAuthenticatedUserReq
-	Data    AppsListSubscriptionsForAuthenticatedUserResponseBody
+	Data    []components.UserMarketplacePurchase
 }
 
 /*
@@ -3864,7 +3745,7 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody{}
+	resp.Data = []components.UserMarketplacePurchase{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3964,13 +3845,6 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link RelName, 
 }
 
 /*
-AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody is a response body for AppsListSubscriptionsForAuthenticatedUserStubbed
-
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
-*/
-type AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody []components.UserMarketplacePurchase
-
-/*
 AppsListSubscriptionsForAuthenticatedUserStubbedResponse is a response for AppsListSubscriptionsForAuthenticatedUserStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
@@ -3978,7 +3852,7 @@ https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-aut
 type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
 	response
 	request *AppsListSubscriptionsForAuthenticatedUserStubbedReq
-	Data    AppsListSubscriptionsForAuthenticatedUserStubbedResponseBody
+	Data    []components.UserMarketplacePurchase
 }
 
 /*
@@ -4137,7 +4011,7 @@ func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsResetAuthorizationResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4227,13 +4101,6 @@ func (r *AppsResetAuthorizationReq) Rel(link RelName, resp *AppsResetAuthorizati
 }
 
 /*
-AppsResetAuthorizationResponseBody is a response body for AppsResetAuthorization
-
-https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
-*/
-type AppsResetAuthorizationResponseBody components.Authorization
-
-/*
 AppsResetAuthorizationResponse is a response for AppsResetAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
@@ -4241,7 +4108,7 @@ https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 type AppsResetAuthorizationResponse struct {
 	response
 	request *AppsResetAuthorizationReq
-	Data    AppsResetAuthorizationResponseBody
+	Data    components.Authorization
 }
 
 /*
@@ -4265,7 +4132,7 @@ func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = AppsResetTokenResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4369,13 +4236,6 @@ type AppsResetTokenReqBody struct {
 }
 
 /*
-AppsResetTokenResponseBody is a response body for AppsResetToken
-
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
-*/
-type AppsResetTokenResponseBody components.Authorization
-
-/*
 AppsResetTokenResponse is a response for AppsResetToken
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
@@ -4383,7 +4243,7 @@ https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 type AppsResetTokenResponse struct {
 	response
 	request *AppsResetTokenReq
-	Data    AppsResetTokenResponseBody
+	Data    components.Authorization
 }
 
 /*

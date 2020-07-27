@@ -637,7 +637,7 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsCreateInvitationResponseBody{}
+	resp.Data = components.OrganizationInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -761,13 +761,6 @@ type OrgsCreateInvitationReqBody struct {
 }
 
 /*
-OrgsCreateInvitationResponseBody is a response body for OrgsCreateInvitation
-
-https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
-*/
-type OrgsCreateInvitationResponseBody components.OrganizationInvitation
-
-/*
 OrgsCreateInvitationResponse is a response for OrgsCreateInvitation
 
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
@@ -775,7 +768,7 @@ https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 type OrgsCreateInvitationResponse struct {
 	response
 	request *OrgsCreateInvitationReq
-	Data    OrgsCreateInvitationResponseBody
+	Data    components.OrganizationInvitation
 }
 
 /*
@@ -799,7 +792,7 @@ func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsCreateWebhookResponseBody{}
+	resp.Data = components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -944,13 +937,6 @@ type OrgsCreateWebhookReqBody struct {
 }
 
 /*
-OrgsCreateWebhookResponseBody is a response body for OrgsCreateWebhook
-
-https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
-*/
-type OrgsCreateWebhookResponseBody components.OrgHook
-
-/*
 OrgsCreateWebhookResponse is a response for OrgsCreateWebhook
 
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
@@ -958,7 +944,7 @@ https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 type OrgsCreateWebhookResponse struct {
 	response
 	request *OrgsCreateWebhookReq
-	Data    OrgsCreateWebhookResponseBody
+	Data    components.OrgHook
 }
 
 /*
@@ -1106,7 +1092,7 @@ func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsG
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetResponseBody{}
+	resp.Data = components.OrganizationFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1213,13 +1199,6 @@ func (r *OrgsGetReq) Rel(link RelName, resp *OrgsGetResponse) bool {
 }
 
 /*
-OrgsGetResponseBody is a response body for OrgsGet
-
-https://developer.github.com/v3/orgs/#get-an-organization
-*/
-type OrgsGetResponseBody components.OrganizationFull
-
-/*
 OrgsGetResponse is a response for OrgsGet
 
 https://developer.github.com/v3/orgs/#get-an-organization
@@ -1227,7 +1206,7 @@ https://developer.github.com/v3/orgs/#get-an-organization
 type OrgsGetResponse struct {
 	response
 	request *OrgsGetReq
-	Data    OrgsGetResponseBody
+	Data    components.OrganizationFull
 }
 
 /*
@@ -1251,7 +1230,7 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetMembershipForAuthenticatedUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1340,13 +1319,6 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsG
 }
 
 /*
-OrgsGetMembershipForAuthenticatedUserResponseBody is a response body for OrgsGetMembershipForAuthenticatedUser
-
-https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
-*/
-type OrgsGetMembershipForAuthenticatedUserResponseBody components.OrgMembership
-
-/*
 OrgsGetMembershipForAuthenticatedUserResponse is a response for OrgsGetMembershipForAuthenticatedUser
 
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
@@ -1354,7 +1326,7 @@ https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for
 type OrgsGetMembershipForAuthenticatedUserResponse struct {
 	response
 	request *OrgsGetMembershipForAuthenticatedUserReq
-	Data    OrgsGetMembershipForAuthenticatedUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -1378,7 +1350,7 @@ func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUser
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetMembershipForUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1468,13 +1440,6 @@ func (r *OrgsGetMembershipForUserReq) Rel(link RelName, resp *OrgsGetMembershipF
 }
 
 /*
-OrgsGetMembershipForUserResponseBody is a response body for OrgsGetMembershipForUser
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
-*/
-type OrgsGetMembershipForUserResponseBody components.OrgMembership
-
-/*
 OrgsGetMembershipForUserResponse is a response for OrgsGetMembershipForUser
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
@@ -1482,7 +1447,7 @@ https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-
 type OrgsGetMembershipForUserResponse struct {
 	response
 	request *OrgsGetMembershipForUserReq
-	Data    OrgsGetMembershipForUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -1506,7 +1471,7 @@ func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetWebhookResponseBody{}
+	resp.Data = components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1596,13 +1561,6 @@ func (r *OrgsGetWebhookReq) Rel(link RelName, resp *OrgsGetWebhookResponse) bool
 }
 
 /*
-OrgsGetWebhookResponseBody is a response body for OrgsGetWebhook
-
-https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
-*/
-type OrgsGetWebhookResponseBody components.OrgHook
-
-/*
 OrgsGetWebhookResponse is a response for OrgsGetWebhook
 
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
@@ -1610,7 +1568,7 @@ https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 type OrgsGetWebhookResponse struct {
 	response
 	request *OrgsGetWebhookReq
-	Data    OrgsGetWebhookResponseBody
+	Data    components.OrgHook
 }
 
 /*
@@ -1634,7 +1592,7 @@ func OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*Org
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListResponseBody{}
+	resp.Data = []components.OrganizationSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1738,13 +1696,6 @@ func (r *OrgsListReq) Rel(link RelName, resp *OrgsListResponse) bool {
 }
 
 /*
-OrgsListResponseBody is a response body for OrgsList
-
-https://developer.github.com/v3/orgs/#list-organizations
-*/
-type OrgsListResponseBody []components.OrganizationSimple
-
-/*
 OrgsListResponse is a response for OrgsList
 
 https://developer.github.com/v3/orgs/#list-organizations
@@ -1752,7 +1703,7 @@ https://developer.github.com/v3/orgs/#list-organizations
 type OrgsListResponse struct {
 	response
 	request *OrgsListReq
-	Data    OrgsListResponseBody
+	Data    []components.OrganizationSimple
 }
 
 /*
@@ -1930,7 +1881,7 @@ func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListBlockedUsersResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2019,13 +1970,6 @@ func (r *OrgsListBlockedUsersReq) Rel(link RelName, resp *OrgsListBlockedUsersRe
 }
 
 /*
-OrgsListBlockedUsersResponseBody is a response body for OrgsListBlockedUsers
-
-https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
-*/
-type OrgsListBlockedUsersResponseBody []components.SimpleUser
-
-/*
 OrgsListBlockedUsersResponse is a response for OrgsListBlockedUsers
 
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
@@ -2033,7 +1977,7 @@ https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organiza
 type OrgsListBlockedUsersResponse struct {
 	response
 	request *OrgsListBlockedUsersReq
-	Data    OrgsListBlockedUsersResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2057,7 +2001,7 @@ func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthentic
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListForAuthenticatedUserResponseBody{}
+	resp.Data = []components.OrganizationSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2157,13 +2101,6 @@ func (r *OrgsListForAuthenticatedUserReq) Rel(link RelName, resp *OrgsListForAut
 }
 
 /*
-OrgsListForAuthenticatedUserResponseBody is a response body for OrgsListForAuthenticatedUser
-
-https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
-*/
-type OrgsListForAuthenticatedUserResponseBody []components.OrganizationSimple
-
-/*
 OrgsListForAuthenticatedUserResponse is a response for OrgsListForAuthenticatedUser
 
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
@@ -2171,7 +2108,7 @@ https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-u
 type OrgsListForAuthenticatedUserResponse struct {
 	response
 	request *OrgsListForAuthenticatedUserReq
-	Data    OrgsListForAuthenticatedUserResponseBody
+	Data    []components.OrganizationSimple
 }
 
 /*
@@ -2195,7 +2132,7 @@ func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListForUserResponseBody{}
+	resp.Data = []components.OrganizationSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2296,13 +2233,6 @@ func (r *OrgsListForUserReq) Rel(link RelName, resp *OrgsListForUserResponse) bo
 }
 
 /*
-OrgsListForUserResponseBody is a response body for OrgsListForUser
-
-https://developer.github.com/v3/orgs/#list-organizations-for-a-user
-*/
-type OrgsListForUserResponseBody []components.OrganizationSimple
-
-/*
 OrgsListForUserResponse is a response for OrgsListForUser
 
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
@@ -2310,7 +2240,7 @@ https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 type OrgsListForUserResponse struct {
 	response
 	request *OrgsListForUserReq
-	Data    OrgsListForUserResponseBody
+	Data    []components.OrganizationSimple
 }
 
 /*
@@ -2334,7 +2264,7 @@ func OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListInvitationTeamsResponseBody{}
+	resp.Data = []components.Team{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2438,13 +2368,6 @@ func (r *OrgsListInvitationTeamsReq) Rel(link RelName, resp *OrgsListInvitationT
 }
 
 /*
-OrgsListInvitationTeamsResponseBody is a response body for OrgsListInvitationTeams
-
-https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
-*/
-type OrgsListInvitationTeamsResponseBody []components.Team
-
-/*
 OrgsListInvitationTeamsResponse is a response for OrgsListInvitationTeams
 
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
@@ -2452,7 +2375,7 @@ https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 type OrgsListInvitationTeamsResponse struct {
 	response
 	request *OrgsListInvitationTeamsReq
-	Data    OrgsListInvitationTeamsResponseBody
+	Data    []components.Team
 }
 
 /*
@@ -2476,7 +2399,7 @@ func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListMembersResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2600,13 +2523,6 @@ func (r *OrgsListMembersReq) Rel(link RelName, resp *OrgsListMembersResponse) bo
 }
 
 /*
-OrgsListMembersResponseBody is a response body for OrgsListMembers
-
-https://developer.github.com/v3/orgs/members/#list-organization-members
-*/
-type OrgsListMembersResponseBody []components.SimpleUser
-
-/*
 OrgsListMembersResponse is a response for OrgsListMembers
 
 https://developer.github.com/v3/orgs/members/#list-organization-members
@@ -2614,7 +2530,7 @@ https://developer.github.com/v3/orgs/members/#list-organization-members
 type OrgsListMembersResponse struct {
 	response
 	request *OrgsListMembersReq
-	Data    OrgsListMembersResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2638,7 +2554,7 @@ func OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListM
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListMembershipsForAuthenticatedUserResponseBody{}
+	resp.Data = []components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2748,13 +2664,6 @@ func (r *OrgsListMembershipsForAuthenticatedUserReq) Rel(link RelName, resp *Org
 }
 
 /*
-OrgsListMembershipsForAuthenticatedUserResponseBody is a response body for OrgsListMembershipsForAuthenticatedUser
-
-https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
-*/
-type OrgsListMembershipsForAuthenticatedUserResponseBody []components.OrgMembership
-
-/*
 OrgsListMembershipsForAuthenticatedUserResponse is a response for OrgsListMembershipsForAuthenticatedUser
 
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
@@ -2762,7 +2671,7 @@ https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-
 type OrgsListMembershipsForAuthenticatedUserResponse struct {
 	response
 	request *OrgsListMembershipsForAuthenticatedUserReq
-	Data    OrgsListMembershipsForAuthenticatedUserResponseBody
+	Data    []components.OrgMembership
 }
 
 /*
@@ -2786,7 +2695,7 @@ func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideColla
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListOutsideCollaboratorsResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2898,13 +2807,6 @@ func (r *OrgsListOutsideCollaboratorsReq) Rel(link RelName, resp *OrgsListOutsid
 }
 
 /*
-OrgsListOutsideCollaboratorsResponseBody is a response body for OrgsListOutsideCollaborators
-
-https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
-*/
-type OrgsListOutsideCollaboratorsResponseBody []components.SimpleUser
-
-/*
 OrgsListOutsideCollaboratorsResponse is a response for OrgsListOutsideCollaborators
 
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
@@ -2912,7 +2814,7 @@ https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collabo
 type OrgsListOutsideCollaboratorsResponse struct {
 	response
 	request *OrgsListOutsideCollaboratorsReq
-	Data    OrgsListOutsideCollaboratorsResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -2936,7 +2838,7 @@ func OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListPendingInvitationsResponseBody{}
+	resp.Data = []components.OrganizationInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3037,13 +2939,6 @@ func (r *OrgsListPendingInvitationsReq) Rel(link RelName, resp *OrgsListPendingI
 }
 
 /*
-OrgsListPendingInvitationsResponseBody is a response body for OrgsListPendingInvitations
-
-https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
-*/
-type OrgsListPendingInvitationsResponseBody []components.OrganizationInvitation
-
-/*
 OrgsListPendingInvitationsResponse is a response for OrgsListPendingInvitations
 
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
@@ -3051,7 +2946,7 @@ https://developer.github.com/v3/orgs/members/#list-pending-organization-invitati
 type OrgsListPendingInvitationsResponse struct {
 	response
 	request *OrgsListPendingInvitationsReq
-	Data    OrgsListPendingInvitationsResponseBody
+	Data    []components.OrganizationInvitation
 }
 
 /*
@@ -3075,7 +2970,7 @@ func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListPublicMembersResponseBody{}
+	resp.Data = []components.SimpleUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3176,13 +3071,6 @@ func (r *OrgsListPublicMembersReq) Rel(link RelName, resp *OrgsListPublicMembers
 }
 
 /*
-OrgsListPublicMembersResponseBody is a response body for OrgsListPublicMembers
-
-https://developer.github.com/v3/orgs/members/#list-public-organization-members
-*/
-type OrgsListPublicMembersResponseBody []components.SimpleUser
-
-/*
 OrgsListPublicMembersResponse is a response for OrgsListPublicMembers
 
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
@@ -3190,7 +3078,7 @@ https://developer.github.com/v3/orgs/members/#list-public-organization-members
 type OrgsListPublicMembersResponse struct {
 	response
 	request *OrgsListPublicMembersReq
-	Data    OrgsListPublicMembersResponseBody
+	Data    []components.SimpleUser
 }
 
 /*
@@ -3214,7 +3102,7 @@ func OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuth
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListSamlSsoAuthorizationsResponseBody{}
+	resp.Data = []components.CredentialAuthorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3303,13 +3191,6 @@ func (r *OrgsListSamlSsoAuthorizationsReq) Rel(link RelName, resp *OrgsListSamlS
 }
 
 /*
-OrgsListSamlSsoAuthorizationsResponseBody is a response body for OrgsListSamlSsoAuthorizations
-
-https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
-*/
-type OrgsListSamlSsoAuthorizationsResponseBody []components.CredentialAuthorization
-
-/*
 OrgsListSamlSsoAuthorizationsResponse is a response for OrgsListSamlSsoAuthorizations
 
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
@@ -3317,7 +3198,7 @@ https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organi
 type OrgsListSamlSsoAuthorizationsResponse struct {
 	response
 	request *OrgsListSamlSsoAuthorizationsReq
-	Data    OrgsListSamlSsoAuthorizationsResponseBody
+	Data    []components.CredentialAuthorization
 }
 
 /*
@@ -3341,7 +3222,7 @@ func OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsListWebhooksResponseBody{}
+	resp.Data = []components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3442,13 +3323,6 @@ func (r *OrgsListWebhooksReq) Rel(link RelName, resp *OrgsListWebhooksResponse) 
 }
 
 /*
-OrgsListWebhooksResponseBody is a response body for OrgsListWebhooks
-
-https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
-*/
-type OrgsListWebhooksResponseBody []components.OrgHook
-
-/*
 OrgsListWebhooksResponse is a response for OrgsListWebhooks
 
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
@@ -3456,7 +3330,7 @@ https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 type OrgsListWebhooksResponse struct {
 	response
 	request *OrgsListWebhooksReq
-	Data    OrgsListWebhooksResponseBody
+	Data    []components.OrgHook
 }
 
 /*
@@ -4206,7 +4080,7 @@ func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUser
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsSetMembershipForUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4315,13 +4189,6 @@ type OrgsSetMembershipForUserReqBody struct {
 }
 
 /*
-OrgsSetMembershipForUserResponseBody is a response body for OrgsSetMembershipForUser
-
-https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
-*/
-type OrgsSetMembershipForUserResponseBody components.OrgMembership
-
-/*
 OrgsSetMembershipForUserResponse is a response for OrgsSetMembershipForUser
 
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
@@ -4329,7 +4196,7 @@ https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-
 type OrgsSetMembershipForUserResponse struct {
 	response
 	request *OrgsSetMembershipForUserReq
-	Data    OrgsSetMembershipForUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -4591,7 +4458,7 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsUpdateResponseBody{}
+	resp.Data = components.OrganizationFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4814,13 +4681,6 @@ type OrgsUpdateReqBody struct {
 }
 
 /*
-OrgsUpdateResponseBody is a response body for OrgsUpdate
-
-https://developer.github.com/v3/orgs/#update-an-organization
-*/
-type OrgsUpdateResponseBody components.OrganizationFull
-
-/*
 OrgsUpdateResponse is a response for OrgsUpdate
 
 https://developer.github.com/v3/orgs/#update-an-organization
@@ -4828,7 +4688,7 @@ https://developer.github.com/v3/orgs/#update-an-organization
 type OrgsUpdateResponse struct {
 	response
 	request *OrgsUpdateReq
-	Data    OrgsUpdateResponseBody
+	Data    components.OrganizationFull
 }
 
 /*
@@ -4852,7 +4712,7 @@ func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpda
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsUpdateMembershipForAuthenticatedUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4956,13 +4816,6 @@ type OrgsUpdateMembershipForAuthenticatedUserReqBody struct {
 }
 
 /*
-OrgsUpdateMembershipForAuthenticatedUserResponseBody is a response body for OrgsUpdateMembershipForAuthenticatedUser
-
-https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
-*/
-type OrgsUpdateMembershipForAuthenticatedUserResponseBody components.OrgMembership
-
-/*
 OrgsUpdateMembershipForAuthenticatedUserResponse is a response for OrgsUpdateMembershipForAuthenticatedUser
 
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
@@ -4970,7 +4823,7 @@ https://developer.github.com/v3/orgs/members/#update-an-organization-membership-
 type OrgsUpdateMembershipForAuthenticatedUserResponse struct {
 	response
 	request *OrgsUpdateMembershipForAuthenticatedUserReq
-	Data    OrgsUpdateMembershipForAuthenticatedUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -4994,7 +4847,7 @@ func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsUpdateWebhookResponseBody{}
+	resp.Data = components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5136,13 +4989,6 @@ type OrgsUpdateWebhookReqBody struct {
 }
 
 /*
-OrgsUpdateWebhookResponseBody is a response body for OrgsUpdateWebhook
-
-https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
-*/
-type OrgsUpdateWebhookResponseBody components.OrgHook
-
-/*
 OrgsUpdateWebhookResponse is a response for OrgsUpdateWebhook
 
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
@@ -5150,5 +4996,5 @@ https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 type OrgsUpdateWebhookResponse struct {
 	response
 	request *OrgsUpdateWebhookReq
-	Data    OrgsUpdateWebhookResponseBody
+	Data    components.OrgHook
 }
