@@ -59,9 +59,7 @@ https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-o
 */
 type ActionsAddSelectedRepoToOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName string
@@ -184,15 +182,9 @@ ActionsCancelWorkflowRunReq is request data for Client.ActionsCancelWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 type ActionsCancelWorkflowRunReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 }
 
@@ -311,9 +303,7 @@ https://developer.github.com/v3/actions/secrets/#create-or-update-an-organizatio
 */
 type ActionsCreateOrUpdateOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName  string
@@ -477,13 +467,9 @@ ActionsCreateOrUpdateRepoSecretReq is request data for Client.ActionsCreateOrUpd
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 type ActionsCreateOrUpdateRepoSecretReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// secret_name parameter
 	SecretName  string
@@ -626,9 +612,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 */
 type ActionsCreateRegistrationTokenForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *ActionsCreateRegistrationTokenForOrgReq) url() string {
@@ -754,13 +738,9 @@ ActionsCreateRegistrationTokenForRepoReq is request data for Client.ActionsCreat
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 type ActionsCreateRegistrationTokenForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActionsCreateRegistrationTokenForRepoReq) url() string {
@@ -887,9 +867,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 */
 type ActionsCreateRemoveTokenForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *ActionsCreateRemoveTokenForOrgReq) url() string {
@@ -1015,13 +993,9 @@ ActionsCreateRemoveTokenForRepoReq is request data for Client.ActionsCreateRemov
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 type ActionsCreateRemoveTokenForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActionsCreateRemoveTokenForRepoReq) url() string {
@@ -1217,7 +1191,11 @@ https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-ev
 */
 type ActionsCreateWorkflowDispatchReqBody struct {
 
-	// Input keys and values configured in the workflow file. The maximum number of properties is 10.
+	/*
+	Input keys and values configured in the workflow file. The maximum number of
+	properties is 10. Any default properties configured in the workflow file will be
+	used when `inputs` are omitted.
+	*/
 	Inputs map[string]string `json:"inputs,omitempty"`
 
 	// The reference of the workflow run. The reference can be a branch, tag, or a commit SHA.
@@ -1281,13 +1259,9 @@ ActionsDeleteArtifactReq is request data for Client.ActionsDeleteArtifact
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 type ActionsDeleteArtifactReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// artifact_id parameter
 	ArtifactId int64
@@ -1408,9 +1382,7 @@ https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 type ActionsDeleteOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName string
@@ -1530,13 +1502,9 @@ ActionsDeleteRepoSecretReq is request data for Client.ActionsDeleteRepoSecret
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 type ActionsDeleteRepoSecretReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// secret_name parameter
 	SecretName string
@@ -1657,9 +1625,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hoste
 */
 type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// runner_id parameter
 	RunnerId int64
@@ -1779,13 +1745,9 @@ ActionsDeleteSelfHostedRunnerFromRepoReq is request data for Client.ActionsDelet
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// runner_id parameter
 	RunnerId int64
@@ -2025,15 +1987,9 @@ ActionsDeleteWorkflowRunLogsReq is request data for Client.ActionsDeleteWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 type ActionsDeleteWorkflowRunLogsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 }
 
@@ -2151,13 +2107,9 @@ ActionsDownloadArtifactReq is request data for Client.ActionsDownloadArtifact
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 type ActionsDownloadArtifactReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// artifact_id parameter
 	ArtifactId int64
@@ -2280,13 +2232,9 @@ ActionsDownloadJobLogsForWorkflowRunReq is request data for Client.ActionsDownlo
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
 type ActionsDownloadJobLogsForWorkflowRunReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// job_id parameter
 	JobId int64
@@ -2406,15 +2354,9 @@ ActionsDownloadWorkflowRunLogsReq is request data for Client.ActionsDownloadWork
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 type ActionsDownloadWorkflowRunLogsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 }
 
@@ -2533,13 +2475,9 @@ ActionsGetArtifactReq is request data for Client.ActionsGetArtifact
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 type ActionsGetArtifactReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// artifact_id parameter
 	ArtifactId int64
@@ -2668,13 +2606,9 @@ ActionsGetJobForWorkflowRunReq is request data for Client.ActionsGetJobForWorkfl
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
 type ActionsGetJobForWorkflowRunReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// job_id parameter
 	JobId int64
@@ -2804,9 +2738,7 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 type ActionsGetOrgPublicKeyReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *ActionsGetOrgPublicKeyReq) url() string {
@@ -2933,9 +2865,7 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 type ActionsGetOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName string
@@ -3064,13 +2994,9 @@ ActionsGetRepoPublicKeyReq is request data for Client.ActionsGetRepoPublicKey
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 type ActionsGetRepoPublicKeyReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActionsGetRepoPublicKeyReq) url() string {
@@ -3196,13 +3122,9 @@ ActionsGetRepoSecretReq is request data for Client.ActionsGetRepoSecret
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 type ActionsGetRepoSecretReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// secret_name parameter
 	SecretName string
@@ -3332,9 +3254,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-r
 */
 type ActionsGetSelfHostedRunnerForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// runner_id parameter
 	RunnerId int64
@@ -3463,13 +3383,9 @@ ActionsGetSelfHostedRunnerForRepoReq is request data for Client.ActionsGetSelfHo
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 type ActionsGetSelfHostedRunnerForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// runner_id parameter
 	RunnerId int64
@@ -3598,15 +3514,9 @@ ActionsGetWorkflowReq is request data for Client.ActionsGetWorkflow
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 type ActionsGetWorkflowReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// workflow_id parameter
+	_url       string
+	Owner      string
+	Repo       string
 	WorkflowId int64
 }
 
@@ -3733,15 +3643,9 @@ ActionsGetWorkflowRunReq is request data for Client.ActionsGetWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 type ActionsGetWorkflowRunReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 }
 
@@ -3868,15 +3772,9 @@ ActionsGetWorkflowRunUsageReq is request data for Client.ActionsGetWorkflowRunUs
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type ActionsGetWorkflowRunUsageReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 }
 
@@ -4003,15 +3901,9 @@ ActionsGetWorkflowUsageReq is request data for Client.ActionsGetWorkflowUsage
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type ActionsGetWorkflowUsageReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// workflow_id parameter
+	_url       string
+	Owner      string
+	Repo       string
 	WorkflowId int64
 }
 
@@ -4138,13 +4030,9 @@ ActionsListArtifactsForRepoReq is request data for Client.ActionsListArtifactsFo
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4285,15 +4173,9 @@ ActionsListJobsForWorkflowRunReq is request data for Client.ActionsListJobsForWo
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ActionsListJobsForWorkflowRunReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 
 	/*
@@ -4447,9 +4329,7 @@ https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4590,13 +4470,9 @@ ActionsListRepoSecretsReq is request data for Client.ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4737,13 +4613,9 @@ ActionsListRepoWorkflowsReq is request data for Client.ActionsListRepoWorkflows
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4885,9 +4757,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 */
 type ActionsListRunnerApplicationsForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 }
 
 func (r *ActionsListRunnerApplicationsForOrgReq) url() string {
@@ -5013,13 +4883,9 @@ ActionsListRunnerApplicationsForRepoReq is request data for Client.ActionsListRu
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 type ActionsListRunnerApplicationsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActionsListRunnerApplicationsForRepoReq) url() string {
@@ -5146,9 +5012,7 @@ https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-
 */
 type ActionsListSelectedReposForOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName string
@@ -5281,9 +5145,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-ru
 */
 type ActionsListSelfHostedRunnersForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5424,13 +5286,9 @@ ActionsListSelfHostedRunnersForRepoReq is request data for Client.ActionsListSel
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5571,15 +5429,9 @@ ActionsListWorkflowRunArtifactsReq is request data for Client.ActionsListWorkflo
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 
 	// Results per page (max 100)
@@ -5721,15 +5573,9 @@ ActionsListWorkflowRunsReq is request data for Client.ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ActionsListWorkflowRunsReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// workflow_id parameter
+	_url       string
+	Owner      string
+	Repo       string
 	WorkflowId int64
 
 	/*
@@ -5911,13 +5757,9 @@ ActionsListWorkflowRunsForRepoReq is request data for Client.ActionsListWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 type ActionsListWorkflowRunsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Returns someone's workflow runs. Use the login for the user who created the
@@ -6097,15 +5939,9 @@ ActionsReRunWorkflowReq is request data for Client.ActionsReRunWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 type ActionsReRunWorkflowReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
-
-	// run_id parameter
+	Repo  string
 	RunId int64
 }
 
@@ -6224,9 +6060,7 @@ https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from
 */
 type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName string
@@ -6350,9 +6184,7 @@ https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-a
 */
 type ActionsSetSelectedReposForOrgSecretReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// secret_name parameter
 	SecretName  string

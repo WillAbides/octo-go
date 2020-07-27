@@ -59,13 +59,9 @@ IssuesAddAssigneesReq is request data for Client.IssuesAddAssignees
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type IssuesAddAssigneesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -212,13 +208,9 @@ IssuesAddLabelsReq is request data for Client.IssuesAddLabels
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type IssuesAddLabelsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -370,13 +362,9 @@ IssuesCheckUserCanBeAssignedReq is request data for Client.IssuesCheckUserCanBeA
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
 type IssuesCheckUserCanBeAssignedReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// assignee parameter
 	Assignee string
@@ -498,12 +486,8 @@ IssuesCreateReq is request data for Client.IssuesCreate
 https://developer.github.com/v3/issues/#create-an-issue
 */
 type IssuesCreateReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody IssuesCreateReqBody
 }
@@ -674,13 +658,9 @@ IssuesCreateCommentReq is request data for Client.IssuesCreateComment
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -824,12 +804,8 @@ IssuesCreateLabelReq is request data for Client.IssuesCreateLabel
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody IssuesCreateLabelReqBody
 }
@@ -984,12 +960,8 @@ IssuesCreateMilestoneReq is request data for Client.IssuesCreateMilestone
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type IssuesCreateMilestoneReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody IssuesCreateMilestoneReqBody
 }
@@ -1142,13 +1114,9 @@ IssuesDeleteCommentReq is request data for Client.IssuesDeleteComment
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type IssuesDeleteCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -1268,13 +1236,9 @@ IssuesDeleteLabelReq is request data for Client.IssuesDeleteLabel
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 type IssuesDeleteLabelReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// name parameter
 	Name string
@@ -1398,13 +1362,9 @@ IssuesDeleteMilestoneReq is request data for Client.IssuesDeleteMilestone
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 type IssuesDeleteMilestoneReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// milestone_number parameter
 	MilestoneNumber int64
@@ -1526,13 +1486,9 @@ IssuesGetReq is request data for Client.IssuesGet
 https://developer.github.com/v3/issues/#get-an-issue
 */
 type IssuesGetReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -1675,13 +1631,9 @@ IssuesGetCommentReq is request data for Client.IssuesGetComment
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -1834,13 +1786,9 @@ IssuesGetEventReq is request data for Client.IssuesGetEvent
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// event_id parameter
 	EventId int64
@@ -2006,13 +1954,9 @@ IssuesGetLabelReq is request data for Client.IssuesGetLabel
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// name parameter
 	Name string
@@ -2141,13 +2085,9 @@ IssuesGetMilestoneReq is request data for Client.IssuesGetMilestone
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// milestone_number parameter
 	MilestoneNumber int64
@@ -2301,11 +2241,11 @@ type IssuesListReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// The direction of the sort. Can be either `asc` or `desc`.
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	/*
-	Only issues updated at or after this time are returned. This is a timestamp in
+	Only show notifications updated after the given time. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -2505,13 +2445,9 @@ IssuesListAssigneesReq is request data for Client.IssuesListAssignees
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 type IssuesListAssigneesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2649,19 +2585,15 @@ IssuesListCommentsReq is request data for Client.IssuesListComments
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
 
 	/*
-	Only comments updated at or after this time are returned. This is a timestamp in
+	Only show notifications updated after the given time. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -2820,22 +2752,21 @@ IssuesListCommentsForRepoReq is request data for Client.IssuesListCommentsForRep
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
+	Repo  string
 
-	// repo parameter
-	Repo string
-
-	// Either `created` or `updated`.
+	/*
+	One of `created` (when the repository was starred) or `updated` (when it was
+	last pushed to).
+	*/
 	Sort *string
 
 	// Either `asc` or `desc`. Ignored without the `sort` parameter.
 	Direction *string
 
 	/*
-	Only comments updated at or after this time are returned. This is a timestamp in
+	Only show notifications updated after the given time. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -3000,13 +2931,9 @@ IssuesListEventsReq is request data for Client.IssuesListEvents
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -3176,13 +3103,9 @@ IssuesListEventsForRepoReq is request data for Client.IssuesListEventsForRepo
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3349,13 +3272,9 @@ IssuesListEventsForTimelineReq is request data for Client.IssuesListEventsForTim
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -3552,11 +3471,11 @@ type IssuesListForAuthenticatedUserReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// The direction of the sort. Can be either `asc` or `desc`.
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	/*
-	Only issues updated at or after this time are returned. This is a timestamp in
+	Only show notifications updated after the given time. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -3741,9 +3660,7 @@ https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the
 */
 type IssuesListForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -3768,11 +3685,11 @@ type IssuesListForOrgReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// The direction of the sort. Can be either `asc` or `desc`.
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	/*
-	Only issues updated at or after this time are returned. This is a timestamp in
+	Only show notifications updated after the given time. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -3956,13 +3873,9 @@ IssuesListForRepoReq is request data for Client.IssuesListForRepo
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 type IssuesListForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	If an `integer` is passed, it should refer to a milestone by its `number` field.
@@ -3995,11 +3908,11 @@ type IssuesListForRepoReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// The direction of the sort. Can be either `asc` or `desc`.
+	// One of `asc` (ascending) or `desc` (descending).
 	Direction *string
 
 	/*
-	Only issues updated at or after this time are returned. This is a timestamp in
+	Only show notifications updated after the given time. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -4192,13 +4105,9 @@ IssuesListLabelsForMilestoneReq is request data for Client.IssuesListLabelsForMi
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// milestone_number parameter
 	MilestoneNumber int64
@@ -4339,13 +4248,9 @@ IssuesListLabelsForRepoReq is request data for Client.IssuesListLabelsForRepo
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4483,13 +4388,9 @@ IssuesListLabelsOnIssueReq is request data for Client.IssuesListLabelsOnIssue
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4630,13 +4531,9 @@ IssuesListMilestonesReq is request data for Client.IssuesListMilestones
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
 type IssuesListMilestonesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// The state of the milestone. Either `open`, `closed`, or `all`.
 	State *string
@@ -4791,13 +4688,9 @@ IssuesLockReq is request data for Client.IssuesLock
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 type IssuesLockReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4949,13 +4842,9 @@ IssuesRemoveAllLabelsReq is request data for Client.IssuesRemoveAllLabels
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 type IssuesRemoveAllLabelsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5076,13 +4965,9 @@ IssuesRemoveAssigneesReq is request data for Client.IssuesRemoveAssignees
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type IssuesRemoveAssigneesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5230,13 +5115,9 @@ IssuesRemoveLabelReq is request data for Client.IssuesRemoveLabel
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 type IssuesRemoveLabelReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5368,13 +5249,9 @@ IssuesSetLabelsReq is request data for Client.IssuesSetLabels
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
 type IssuesSetLabelsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5522,13 +5399,9 @@ IssuesUnlockReq is request data for Client.IssuesUnlock
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 type IssuesUnlockReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5649,13 +5522,9 @@ IssuesUpdateReq is request data for Client.IssuesUpdate
 https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5831,13 +5700,9 @@ IssuesUpdateCommentReq is request data for Client.IssuesUpdateComment
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId   int64
@@ -5981,13 +5846,9 @@ IssuesUpdateLabelReq is request data for Client.IssuesUpdateLabel
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// name parameter
 	Name        string
@@ -6145,13 +6006,9 @@ IssuesUpdateMilestoneReq is request data for Client.IssuesUpdateMilestone
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type IssuesUpdateMilestoneReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// milestone_number parameter
 	MilestoneNumber int64

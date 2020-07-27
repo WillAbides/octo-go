@@ -58,13 +58,9 @@ MigrationsCancelImportReq is request data for Client.MigrationsCancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type MigrationsCancelImportReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *MigrationsCancelImportReq) url() string {
@@ -315,9 +311,7 @@ https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migratio
 */
 type MigrationsDeleteArchiveForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// migration_id parameter
 	MigrationId int64
@@ -448,9 +442,7 @@ https://developer.github.com/v3/migrations/orgs/#download-an-organization-migrat
 */
 type MigrationsDownloadArchiveForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// migration_id parameter
 	MigrationId int64
@@ -709,18 +701,14 @@ MigrationsGetCommitAuthorsReq is request data for Client.MigrationsGetCommitAuth
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type MigrationsGetCommitAuthorsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
-	Only authors found after this id are returned. Provide the highest author ID
-	you've seen so far. New authors may be added to the list at any point while the
-	importer is performing the `raw` step.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 }
@@ -851,13 +839,9 @@ MigrationsGetImportStatusReq is request data for Client.MigrationsGetImportStatu
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 type MigrationsGetImportStatusReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *MigrationsGetImportStatusReq) url() string {
@@ -983,13 +967,9 @@ MigrationsGetLargeFilesReq is request data for Client.MigrationsGetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type MigrationsGetLargeFilesReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *MigrationsGetLargeFilesReq) url() string {
@@ -1254,9 +1234,7 @@ https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-s
 */
 type MigrationsGetStatusForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// migration_id parameter
 	MigrationId int64
@@ -1542,9 +1520,7 @@ https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type MigrationsListForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1692,9 +1668,7 @@ https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organiz
 */
 type MigrationsListReposForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// migration_id parameter
 	MigrationId int64
@@ -1994,13 +1968,9 @@ MigrationsMapCommitAuthorReq is request data for Client.MigrationsMapCommitAutho
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MigrationsMapCommitAuthorReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// author_id parameter
 	AuthorId    int64
@@ -2148,12 +2118,8 @@ MigrationsSetLfsPreferenceReq is request data for Client.MigrationsSetLfsPrefere
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody MigrationsSetLfsPreferenceReqBody
 }
@@ -2446,9 +2412,7 @@ MigrationsStartForOrgReq is request data for Client.MigrationsStartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type MigrationsStartForOrgReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody MigrationsStartForOrgReqBody
 }
@@ -2597,12 +2561,8 @@ MigrationsStartImportReq is request data for Client.MigrationsStartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type MigrationsStartImportReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody MigrationsStartImportReqBody
 }
@@ -2897,9 +2857,7 @@ https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-reposito
 */
 type MigrationsUnlockRepoForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// migration_id parameter
 	MigrationId int64
@@ -3033,12 +2991,8 @@ MigrationsUpdateImportReq is request data for Client.MigrationsUpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody MigrationsUpdateImportReqBody
 }

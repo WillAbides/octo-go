@@ -59,9 +59,7 @@ https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-
 */
 type InteractionsGetRestrictionsForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -201,13 +199,9 @@ InteractionsGetRestrictionsForRepoReq is request data for Client.InteractionsGet
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type InteractionsGetRestrictionsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -347,9 +341,7 @@ https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictio
 */
 type InteractionsRemoveRestrictionsForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -480,13 +472,9 @@ InteractionsRemoveRestrictionsForRepoReq is request data for Client.Interactions
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 type InteractionsRemoveRestrictionsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -618,9 +606,7 @@ InteractionsSetRestrictionsForOrgReq is request data for Client.InteractionsSetR
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
 type InteractionsSetRestrictionsForOrgReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody InteractionsSetRestrictionsForOrgReqBody
 
@@ -780,12 +766,8 @@ InteractionsSetRestrictionsForRepoReq is request data for Client.InteractionsSet
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
 type InteractionsSetRestrictionsForRepoReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody InteractionsSetRestrictionsForRepoReqBody
 

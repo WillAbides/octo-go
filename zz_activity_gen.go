@@ -58,13 +58,9 @@ ActivityCheckRepoIsStarredByAuthenticatedUserReq is request data for Client.Acti
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type ActivityCheckRepoIsStarredByAuthenticatedUserReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) url() string {
@@ -181,13 +177,9 @@ ActivityDeleteRepoSubscriptionReq is request data for Client.ActivityDeleteRepoS
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type ActivityDeleteRepoSubscriptionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActivityDeleteRepoSubscriptionReq) url() string {
@@ -551,13 +543,9 @@ ActivityGetRepoSubscriptionReq is request data for Client.ActivityGetRepoSubscri
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type ActivityGetRepoSubscriptionReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActivityGetRepoSubscriptionReq) url() string {
@@ -941,9 +929,7 @@ ActivityListEventsForAuthenticatedUserReq is request data for Client.ActivityLis
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ActivityListEventsForAuthenticatedUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -1255,13 +1241,9 @@ ActivityListOrgEventsForAuthenticatedUserReq is request data for Client.Activity
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ActivityListOrgEventsForAuthenticatedUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
-
-	// org parameter
-	Org string
+	Org      string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1537,13 +1519,9 @@ ActivityListPublicEventsForRepoNetworkReq is request data for Client.ActivityLis
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ActivityListPublicEventsForRepoNetworkReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1681,9 +1659,7 @@ ActivityListPublicEventsForUserReq is request data for Client.ActivityListPublic
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ActivityListPublicEventsForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -1823,9 +1799,7 @@ https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ActivityListPublicOrgEventsReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1963,9 +1937,7 @@ ActivityListReceivedEventsForUserReq is request data for Client.ActivityListRece
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ActivityListReceivedEventsForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2104,9 +2076,7 @@ ActivityListReceivedPublicEventsForUserReq is request data for Client.ActivityLi
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ActivityListReceivedPublicEventsForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -2245,13 +2215,9 @@ ActivityListRepoEventsReq is request data for Client.ActivityListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ActivityListRepoEventsReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2389,13 +2355,9 @@ ActivityListRepoNotificationsForAuthenticatedUserReq is request data for Client.
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// If `true`, show notifications marked as read.
 	All *bool
@@ -2721,9 +2683,7 @@ ActivityListReposStarredByUserReq is request data for Client.ActivityListReposSt
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ActivityListReposStarredByUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	/*
@@ -2877,9 +2837,7 @@ ActivityListReposWatchedByUserReq is request data for Client.ActivityListReposWa
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ActivityListReposWatchedByUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	// Results per page (max 100)
@@ -3018,13 +2976,9 @@ ActivityListStargazersForRepoReq is request data for Client.ActivityListStargaze
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ActivityListStargazersForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3300,13 +3254,9 @@ ActivityListWatchersForRepoReq is request data for Client.ActivityListWatchersFo
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ActivityListWatchersForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3589,12 +3539,8 @@ ActivityMarkRepoNotificationsAsReadReq is request data for Client.ActivityMarkRe
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type ActivityMarkRepoNotificationsAsReadReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ActivityMarkRepoNotificationsAsReadReqBody
 }
@@ -3851,12 +3797,8 @@ ActivitySetRepoSubscriptionReq is request data for Client.ActivitySetRepoSubscri
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type ActivitySetRepoSubscriptionReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ActivitySetRepoSubscriptionReqBody
 }
@@ -4144,13 +4086,9 @@ ActivityStarRepoForAuthenticatedUserReq is request data for Client.ActivityStarR
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type ActivityStarRepoForAuthenticatedUserReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActivityStarRepoForAuthenticatedUserReq) url() string {
@@ -4267,13 +4205,9 @@ ActivityUnstarRepoForAuthenticatedUserReq is request data for Client.ActivityUns
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type ActivityUnstarRepoForAuthenticatedUserReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 }
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) url() string {

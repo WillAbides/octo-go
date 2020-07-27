@@ -62,15 +62,9 @@ PullsCheckIfMergedReq is request data for Client.PullsCheckIfMerged
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 type PullsCheckIfMergedReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 }
 
@@ -190,12 +184,8 @@ PullsCreateReq is request data for Client.PullsCreate
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 type PullsCreateReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody PullsCreateReqBody
 
@@ -382,15 +372,9 @@ PullsCreateReplyForReviewCommentReq is request data for Client.PullsCreateReplyF
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
 type PullsCreateReplyForReviewCommentReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// comment_id parameter
@@ -535,15 +519,9 @@ PullsCreateReviewReq is request data for Client.PullsCreateReview
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsCreateReviewReqBody
 }
@@ -729,15 +707,9 @@ PullsCreateReviewCommentReq is request data for Client.PullsCreateReviewComment
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
 type PullsCreateReviewCommentReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsCreateReviewCommentReqBody
 
@@ -947,15 +919,9 @@ PullsDeletePendingReviewReq is request data for Client.PullsDeletePendingReview
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type PullsDeletePendingReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// review_id parameter
@@ -1088,13 +1054,9 @@ PullsDeleteReviewCommentReq is request data for Client.PullsDeleteReviewComment
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
 type PullsDeleteReviewCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -1216,15 +1178,9 @@ PullsDismissReviewReq is request data for Client.PullsDismissReview
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// review_id parameter
@@ -1370,15 +1326,9 @@ PullsGetReq is request data for Client.PullsGet
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type PullsGetReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	/*
@@ -1518,15 +1468,9 @@ PullsGetReviewReq is request data for Client.PullsGetReview
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type PullsGetReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// review_id parameter
@@ -1656,13 +1600,9 @@ PullsGetReviewCommentReq is request data for Client.PullsGetReviewComment
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
 type PullsGetReviewCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId int64
@@ -1816,13 +1756,9 @@ PullsListReq is request data for Client.PullsList
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
 type PullsListReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Either `open`, `closed`, or `all` to filter by state.
 	State *string
@@ -2014,15 +1950,9 @@ PullsListCommentsForReviewReq is request data for Client.PullsListCommentsForRev
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
 type PullsListCommentsForReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// review_id parameter
@@ -2164,15 +2094,9 @@ PullsListCommitsReq is request data for Client.PullsListCommits
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
 type PullsListCommitsReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2311,15 +2235,9 @@ PullsListFilesReq is request data for Client.PullsListFiles
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
 type PullsListFilesReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2458,15 +2376,9 @@ PullsListRequestedReviewersReq is request data for Client.PullsListRequestedRevi
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
 type PullsListRequestedReviewersReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2605,27 +2517,24 @@ PullsListReviewCommentsReq is request data for Client.PullsListReviewComments
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
 type PullsListReviewCommentsReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
-	// Can be either `created` or `updated` comments.
+	/*
+	One of `created` (when the repository was starred) or `updated` (when it was
+	last pushed to).
+	*/
 	Sort *string
 
 	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
 	Direction *string
 
 	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
-	time.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -2799,24 +2708,23 @@ PullsListReviewCommentsForRepoReq is request data for Client.PullsListReviewComm
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
 type PullsListReviewCommentsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
+	Repo  string
 
-	// repo parameter
-	Repo string
-
-	// Can be either `created` or `updated` comments.
+	/*
+	One of `created` (when the repository was starred) or `updated` (when it was
+	last pushed to).
+	*/
 	Sort *string
 
 	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
 	Direction *string
 
 	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
-	time.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -2990,15 +2898,9 @@ PullsListReviewsReq is request data for Client.PullsListReviews
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type PullsListReviewsReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -3137,15 +3039,9 @@ PullsMergeReq is request data for Client.PullsMerge
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsMergeReqBody
 }
@@ -3295,15 +3191,9 @@ PullsRemoveRequestedReviewersReq is request data for Client.PullsRemoveRequested
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 */
 type PullsRemoveRequestedReviewersReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsRemoveRequestedReviewersReqBody
 }
@@ -3437,15 +3327,9 @@ PullsRequestReviewersReq is request data for Client.PullsRequestReviewers
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
 type PullsRequestReviewersReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsRequestReviewersReqBody
 }
@@ -3590,15 +3474,9 @@ PullsSubmitReviewReq is request data for Client.PullsSubmitReview
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// review_id parameter
@@ -3752,15 +3630,9 @@ PullsUpdateReq is request data for Client.PullsUpdate
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 type PullsUpdateReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsUpdateReqBody
 
@@ -3935,15 +3807,9 @@ PullsUpdateBranchReq is request data for Client.PullsUpdateBranch
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 type PullsUpdateBranchReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url        string
+	Owner       string
+	Repo        string
 	PullNumber  int64
 	RequestBody PullsUpdateBranchReqBody
 
@@ -4109,15 +3975,9 @@ PullsUpdateReviewReq is request data for Client.PullsUpdateReview
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
-	Repo string
-
-	// pull_number parameter
+	_url       string
+	Owner      string
+	Repo       string
 	PullNumber int64
 
 	// review_id parameter
@@ -4262,13 +4122,9 @@ PullsUpdateReviewCommentReq is request data for Client.PullsUpdateReviewComment
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
 type PullsUpdateReviewCommentReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// comment_id parameter
 	CommentId   int64

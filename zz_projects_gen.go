@@ -58,12 +58,8 @@ ProjectsAddCollaboratorReq is request data for Client.ProjectsAddCollaborator
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorReq struct {
-	_url string
-
-	// project_id parameter
-	ProjectId int64
-
-	// username parameter
+	_url        string
+	ProjectId   int64
 	Username    string
 	RequestBody ProjectsAddCollaboratorReqBody
 
@@ -371,9 +367,7 @@ ProjectsCreateColumnReq is request data for Client.ProjectsCreateColumn
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnReq struct {
-	_url string
-
-	// project_id parameter
+	_url        string
 	ProjectId   int64
 	RequestBody ProjectsCreateColumnReqBody
 
@@ -689,9 +683,7 @@ ProjectsCreateForOrgReq is request data for Client.ProjectsCreateForOrg
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgReq struct {
-	_url string
-
-	// org parameter
+	_url        string
 	Org         string
 	RequestBody ProjectsCreateForOrgReqBody
 
@@ -851,12 +843,8 @@ ProjectsCreateForRepoReq is request data for Client.ProjectsCreateForRepo
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoReq struct {
-	_url string
-
-	// owner parameter
-	Owner string
-
-	// repo parameter
+	_url        string
+	Owner       string
 	Repo        string
 	RequestBody ProjectsCreateForRepoReqBody
 
@@ -1015,9 +1003,7 @@ ProjectsDeleteReq is request data for Client.ProjectsDelete
 https://developer.github.com/v3/projects/#delete-a-project
 */
 type ProjectsDeleteReq struct {
-	_url string
-
-	// project_id parameter
+	_url      string
 	ProjectId int64
 
 	/*
@@ -1421,9 +1407,7 @@ ProjectsGetReq is request data for Client.ProjectsGet
 https://developer.github.com/v3/projects/#get-a-project
 */
 type ProjectsGetReq struct {
-	_url string
-
-	// project_id parameter
+	_url      string
 	ProjectId int64
 
 	/*
@@ -1853,13 +1837,9 @@ ProjectsGetPermissionForUserReq is request data for Client.ProjectsGetPermission
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
 type ProjectsGetPermissionForUserReq struct {
-	_url string
-
-	// project_id parameter
+	_url      string
 	ProjectId int64
-
-	// username parameter
-	Username string
+	Username  string
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -2165,9 +2145,7 @@ ProjectsListCollaboratorsReq is request data for Client.ProjectsListCollaborator
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsReq struct {
-	_url string
-
-	// project_id parameter
+	_url      string
 	ProjectId int64
 
 	/*
@@ -2334,9 +2312,7 @@ ProjectsListColumnsReq is request data for Client.ProjectsListColumns
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ProjectsListColumnsReq struct {
-	_url string
-
-	// project_id parameter
+	_url      string
 	ProjectId int64
 
 	// Results per page (max 100)
@@ -2491,9 +2467,7 @@ https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ProjectsListForOrgReq struct {
 	_url string
-
-	// org parameter
-	Org string
+	Org  string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2655,13 +2629,9 @@ ProjectsListForRepoReq is request data for Client.ProjectsListForRepo
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ProjectsListForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2823,9 +2793,7 @@ ProjectsListForUserReq is request data for Client.ProjectsListForUser
 https://developer.github.com/v3/projects/#list-user-projects
 */
 type ProjectsListForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	/*
@@ -3290,13 +3258,9 @@ ProjectsRemoveCollaboratorReq is request data for Client.ProjectsRemoveCollabora
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type ProjectsRemoveCollaboratorReq struct {
-	_url string
-
-	// project_id parameter
+	_url      string
 	ProjectId int64
-
-	// username parameter
-	Username string
+	Username  string
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -3429,9 +3393,7 @@ ProjectsUpdateReq is request data for Client.ProjectsUpdate
 https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateReq struct {
-	_url string
-
-	// project_id parameter
+	_url        string
 	ProjectId   int64
 	RequestBody ProjectsUpdateReqBody
 

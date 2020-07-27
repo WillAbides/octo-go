@@ -1245,9 +1245,9 @@ type GistsListReq struct {
 	_url string
 
 	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -1672,15 +1672,13 @@ GistsListForUserReq is request data for Client.GistsListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type GistsListForUserReq struct {
-	_url string
-
-	// username parameter
+	_url     string
 	Username string
 
 	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -1967,9 +1965,9 @@ type GistsListPublicReq struct {
 	_url string
 
 	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -2115,9 +2113,9 @@ type GistsListStarredReq struct {
 	_url string
 
 	/*
-	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
-	returned.
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 

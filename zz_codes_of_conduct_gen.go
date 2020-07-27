@@ -339,13 +339,9 @@ CodesOfConductGetForRepoReq is request data for Client.CodesOfConductGetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.

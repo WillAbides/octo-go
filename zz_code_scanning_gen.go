@@ -58,13 +58,9 @@ CodeScanningGetAlertReq is request data for Client.CodeScanningGetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type CodeScanningGetAlertReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// alert_id parameter
 	AlertId int64
@@ -193,13 +189,9 @@ CodeScanningListAlertsForRepoReq is request data for Client.CodeScanningListAler
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type CodeScanningListAlertsForRepoReq struct {
-	_url string
-
-	// owner parameter
+	_url  string
 	Owner string
-
-	// repo parameter
-	Repo string
+	Repo  string
 
 	// Set to `closed` to list only closed code scanning alerts.
 	State *string
