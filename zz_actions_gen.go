@@ -1163,11 +1163,7 @@ https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-ev
 */
 type ActionsCreateWorkflowDispatchReqBody struct {
 
-	/*
-	Input keys and values configured in the workflow file. The maximum number of
-	properties is 10. Any default properties configured in the workflow file will be
-	used when `inputs` are omitted.
-	*/
+	// Input keys and values configured in the workflow file. The maximum number of properties is 10.
 	Inputs map[string]string `json:"inputs,omitempty"`
 
 	// The reference of the workflow run. The reference can be a branch, tag, or a commit SHA.
