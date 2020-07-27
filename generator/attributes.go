@@ -60,7 +60,7 @@ func addEndpointAttributes(file *jen.File) {
 	}))
 }
 
-func endpointHasAttribute(endpoint model.Endpoint, attribute endpointAttribute) bool {
+func endpointHasAttribute(endpoint *model.Endpoint, attribute endpointAttribute) bool {
 	for _, attr := range getEndpointAttributes(endpoint) {
 		if attribute == attr {
 			return true
@@ -69,7 +69,7 @@ func endpointHasAttribute(endpoint model.Endpoint, attribute endpointAttribute) 
 	return false
 }
 
-func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
+func getEndpointAttributes(endpoint *model.Endpoint) []endpointAttribute {
 	var result []endpointAttribute
 	override, ok := overrideAddAttrs[endpoint.ID]
 	if ok {
@@ -84,11 +84,11 @@ func getEndpointAttributes(endpoint model.Endpoint) []endpointAttribute {
 	return result
 }
 
-type attrCheck func(endpoint model.Endpoint, attrs *[]endpointAttribute)
+type attrCheck func(endpoint *model.Endpoint, attrs *[]endpointAttribute)
 
 var attrChecks = []attrCheck{
 	// attrJSONRequestBody if the endpoint has an application/json request
-	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
 		if endpoint.RequestBody == nil {
 			return
 		}
@@ -98,7 +98,7 @@ var attrChecks = []attrCheck{
 	},
 
 	// attrBodyUploader if the endpoint has a */* request
-	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
 		if endpoint.RequestBody == nil {
 			return
 		}
@@ -108,7 +108,7 @@ var attrChecks = []attrCheck{
 	},
 
 	// attrBoolean if the endpoint has exatcly two responses: 204 and 404
-	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
 		if len(endpoint.Responses) != 2 {
 			return
 		}
@@ -122,7 +122,7 @@ var attrChecks = []attrCheck{
 	},
 
 	// attrRedirectOnly if the endpoint has onlly one response: 302
-	func(endpoint model.Endpoint, attrs *[]endpointAttribute) {
+	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
 		if len(endpoint.Responses) != 1 {
 			return
 		}

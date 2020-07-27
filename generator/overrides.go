@@ -17,23 +17,22 @@ var overrideAddAttrs = map[string][]endpointAttribute{
 	"markdown/render-raw":        {attrBodyUploader},
 }
 
-func endpointWithOverrides(endpoint model.Endpoint) (model.Endpoint, error) {
-	ptr := &endpoint
+func applyEndpointOverrides(endpoint *model.Endpoint) error {
 	for _, override := range endpointOverrides {
-		err := override.override(ptr)
+		err := override.override(endpoint)
 		if err != nil {
-			return model.Endpoint{}, err
+			return err
 		}
 	}
 
-	if ptr.RequestBody != nil {
-		err := oneOfCheck(ptr.ID, ptr.RequestBody.Schema)
+	if endpoint.RequestBody != nil {
+		err := oneOfCheck(endpoint.ID, endpoint.RequestBody.Schema)
 		if err != nil {
-			return model.Endpoint{}, err
+			return err
 		}
 	}
 
-	return *ptr, nil
+	return nil
 }
 
 var oneOfOverrides = []*oneOfOverride{
@@ -84,7 +83,7 @@ func (e *endpointOverride) override(endpoint *model.Endpoint) error {
 	if e.endpointID != "" && endpoint.ID != e.endpointID {
 		return nil
 	}
-	if e.endpointAttribute != nil && !endpointHasAttribute(*endpoint, *e.endpointAttribute) {
+	if e.endpointAttribute != nil && !endpointHasAttribute(endpoint, *e.endpointAttribute) {
 		return nil
 	}
 	return e.fn(endpoint)

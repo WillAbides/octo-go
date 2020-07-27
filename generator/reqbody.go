@@ -25,7 +25,7 @@ func reqBodyNestedStructName(schemaPath []string, schema *model.ParamSchema) str
 	return reqBodyStructName(sp[0]) + suffix
 }
 
-func addRequestBody(file *jen.File, endpoint model.Endpoint) {
+func addRequestBody(file *jen.File, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrBodyUploader) {
 		return
 	}
@@ -75,7 +75,7 @@ func reqBodyNestedStructs(schemaPath []string, schema *model.ParamSchema) []*jen
 	return result
 }
 
-func addReqBodyNestedStructs(file *jen.File, endpoint model.Endpoint) {
+func addReqBodyNestedStructs(file *jen.File, endpoint *model.Endpoint) {
 	if endpoint.RequestBody == nil {
 		return
 	}

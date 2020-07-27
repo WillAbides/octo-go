@@ -8,7 +8,7 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func generateUnmarshalTests(outputPath string, endpoints []model.Endpoint) error {
+func generateUnmarshalTests(outputPath string, endpoints []*model.Endpoint) error {
 	f, err := os.Create(filepath.Join(outputPath, "zz_unmarshal_gen_test.go"))
 	if err != nil {
 		return err
@@ -27,7 +27,7 @@ func generateUnmarshalTests(outputPath string, endpoints []model.Endpoint) error
 	return file.Render(f)
 }
 
-func endpointUnmarshalTests(grp *jen.Group, endpoint model.Endpoint) {
+func endpointUnmarshalTests(grp *jen.Group, endpoint *model.Endpoint) {
 	if endpoint.Legacy {
 		return
 	}

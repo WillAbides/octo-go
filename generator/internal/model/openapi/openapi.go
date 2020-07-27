@@ -17,7 +17,7 @@ import (
 )
 
 type Model struct {
-	Endpoints        []model.Endpoint
+	Endpoints        []*model.Endpoint
 	ComponentSchemas map[string]*model.ParamSchema
 	ComponentHeaders map[string]*model.ParamSchema
 }
@@ -152,15 +152,15 @@ func buildComponentSchemas(swagger *openapi3.Swagger) (map[string]*model.ParamSc
 	return result, nil
 }
 
-func buildEndpoints(swagger *openapi3.Swagger) ([]model.Endpoint, error) {
-	var endpoints []model.Endpoint
+func buildEndpoints(swagger *openapi3.Swagger) ([]*model.Endpoint, error) {
+	var endpoints []*model.Endpoint
 	for opPath, pathItem := range swagger.Paths {
 		for method, op := range pathItem.Operations() {
 			endpoint, err := buildEndpoint(opPath, method, op)
 			if err != nil {
 				return nil, err
 			}
-			endpoints = append(endpoints, *endpoint)
+			endpoints = append(endpoints, endpoint)
 		}
 	}
 	return endpoints, nil

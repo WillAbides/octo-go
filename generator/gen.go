@@ -8,7 +8,7 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
+func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,
@@ -55,7 +55,7 @@ func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	})
 }
 
-func addClientMethod(file *jen.File, endpoint model.Endpoint) {
+func addClientMethod(file *jen.File, endpoint *model.Endpoint) {
 	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,

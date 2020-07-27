@@ -9,15 +9,15 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func respBodyStructName(endpoint model.Endpoint) string {
+func respBodyStructName(endpoint *model.Endpoint) string {
 	return toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name))
 }
 
-func respStructName(endpoint model.Endpoint) string {
+func respStructName(endpoint *model.Endpoint) string {
 	return toExportedName(fmt.Sprintf("%s-%s-response", endpoint.Concern, endpoint.Name))
 }
 
-func sortedResponseCodes(endpoint model.Endpoint) []int {
+func sortedResponseCodes(endpoint *model.Endpoint) []int {
 	sortedCodes := make([]int, 0, len(endpoint.Responses))
 	for code := range endpoint.Responses {
 		if code < 300 {
@@ -28,7 +28,7 @@ func sortedResponseCodes(endpoint model.Endpoint) []int {
 	return sortedCodes
 }
 
-func addResponse(file *jen.File, endpoint model.Endpoint) {
+func addResponse(file *jen.File, endpoint *model.Endpoint) {
 	structName := respStructName(endpoint)
 	file.Commentf("%s is a response for %s\n\n%s",
 		structName,
@@ -48,7 +48,7 @@ func addResponse(file *jen.File, endpoint model.Endpoint) {
 	})
 }
 
-func responseCodesWithBodies(endpoint model.Endpoint) []int {
+func responseCodesWithBodies(endpoint *model.Endpoint) []int {
 	sortedCodes := sortedResponseCodes(endpoint)
 	bodyCodes := make([]int, 0, len(sortedCodes))
 	for _, respCode := range sortedCodes {
@@ -73,7 +73,7 @@ func responseCodesWithBodies(endpoint model.Endpoint) []int {
 	return bodyCodes
 }
 
-func addResponseBody(file *jen.File, endpoint model.Endpoint) {
+func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrNoResponseBody) {
 		return
 	}

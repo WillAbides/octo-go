@@ -16,11 +16,11 @@ func reqBodyStructName(endpointID string) string {
 	return toExportedName(fmt.Sprintf("%s-req-body", endpointID))
 }
 
-func reqStructName(endpoint model.Endpoint) string {
+func reqStructName(endpoint *model.Endpoint) string {
 	return toExportedName(fmt.Sprintf("%s-%s-req", endpoint.Concern, endpoint.Name))
 }
 
-func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
+func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Commentf("%s is request data for Client.%s\n\n%s",
 		structName,
@@ -73,7 +73,7 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 		}
 	})
 
-	for _, fn := range []func(file *jen.File, endpoint model.Endpoint){
+	for _, fn := range []func(file *jen.File, endpoint *model.Endpoint){
 		reqUrlFunc,
 		reqURLPathFunc,
 		reqMethodFunc,
@@ -91,14 +91,14 @@ func addRequestStruct(file *jen.File, endpoint model.Endpoint) {
 	}
 }
 
-func reqMethodFunc(fl *jen.File, endpoint model.Endpoint) {
+func reqMethodFunc(fl *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
 		jen.Return(jen.Lit(endpoint.Method)),
 	)
 }
 
-func reqUrlFunc(fl *jen.File, endpoint model.Endpoint) {
+func reqUrlFunc(fl *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("url() string").BlockFunc(func(group *jen.Group) {
 		if endpointHasAttribute(endpoint, attrExplicitURL) {
@@ -112,7 +112,7 @@ func reqUrlFunc(fl *jen.File, endpoint model.Endpoint) {
 	})
 }
 
-func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
+func reqRelReqFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	comment := `Rel updates this request to point to a relative link from resp. Returns false if the link does not exist. Handy for paging.`
 	file.Comment(wordwrap.WrapString(comment, 80))
@@ -127,7 +127,7 @@ func reqRelReqFunc(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
-func reqDataStatusesFunc(file *jen.File, endpoint model.Endpoint) {
+func reqDataStatusesFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("dataStatuses").Params().Params(
 		jen.Op("[]").Int(),
@@ -140,7 +140,7 @@ func reqDataStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
-func reqEndpointAttributesFunc(file *jen.File, endpoint model.Endpoint) {
+func reqEndpointAttributesFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(
 		jen.Id("r").Id("*" + structName),
@@ -155,7 +155,7 @@ func reqEndpointAttributesFunc(file *jen.File, endpoint model.Endpoint) {
 		))
 }
 
-func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
+func reqValidStatusesFunc(file *jen.File, endpoint *model.Endpoint) {
 	codes := make([]int, 0, len(endpoint.Responses))
 	for code := range endpoint.Responses {
 		if code < 400 {
@@ -175,7 +175,7 @@ func reqValidStatusesFunc(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
-func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
+func reqBodyFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("body").
 		Params().
@@ -192,7 +192,7 @@ func reqBodyFunc(file *jen.File, endpoint model.Endpoint) {
 		}))
 }
 
-func reqHTTPRequestFunc(file *jen.File, endpoint model.Endpoint) {
+func reqHTTPRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Comment("HTTPRequest builds an *http.Request")
 	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
@@ -205,7 +205,7 @@ func reqHTTPRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
-func reqHeaderMap(endpoint model.Endpoint) *jen.Statement {
+func reqHeaderMap(endpoint *model.Endpoint) *jen.Statement {
 	return jen.Map(jen.String()).Op("*").String().Values(
 		jen.DictFunc(func(dict jen.Dict) {
 			headers := map[string]*jen.Statement{}
@@ -231,7 +231,7 @@ func reqHeaderMap(endpoint model.Endpoint) *jen.Statement {
 	)
 }
 
-func reqHeaderFunc(file *jen.File, endpoint model.Endpoint) {
+func reqHeaderFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	stmt := file.Func().Params(jen.Id("r").Id("*"+structName)).Id("header").Params(jen.Id("requiredPreviews, allPreviews bool")).Qual("net/http", "Header")
 	hasRequiredPreviews := false
@@ -279,7 +279,7 @@ func reqHeaderFunc(file *jen.File, endpoint model.Endpoint) {
 
 var bracesExp = regexp.MustCompile(`{[^}]+}`)
 
-func reqURLPathFunc(file *jen.File, endpoint model.Endpoint) {
+func reqURLPathFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("urlPath").Params().String().
 		BlockFunc(func(group *jen.Group) {
@@ -297,7 +297,7 @@ func reqURLPathFunc(file *jen.File, endpoint model.Endpoint) {
 		})
 }
 
-func reqURLQueryFunc(file *jen.File, endpoint model.Endpoint) {
+func reqURLQueryFunc(file *jen.File, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
 	stmt := file.Func().Params(jen.Id("r").Id("*" + structName)).Id("urlQuery").Params()
 	stmt.Qual("net/url", "Values")

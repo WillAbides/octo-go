@@ -121,9 +121,8 @@ func renderConcernFiles(concernFiles map[string]*jen.File, outputPath string) er
 	return nil
 }
 
-func addEndpointToConcernFiles(endpoint model.Endpoint, concernFiles map[string]*jen.File, pkgPath, pkgName string) error {
-	var err error
-	endpoint, err = endpointWithOverrides(endpoint)
+func addEndpointToConcernFiles(endpoint *model.Endpoint, concernFiles map[string]*jen.File, pkgPath, pkgName string) error {
+	err := applyEndpointOverrides(endpoint)
 	if err != nil {
 		return err
 	}
