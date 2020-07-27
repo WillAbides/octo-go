@@ -9,7 +9,9 @@ touch ./current-schema-version.txt
 
 git diff --stat --exit-code current-schema-version.txt || (echo "clean your tree before proceeding" && exit 1)
 
-script/update-schema
+TARGET_SCHEMA_VERSION="${TARGET_SCHEMA_VERSION:-latest}"
+
+script/update-schema -tag "$TARGET_SCHEMA_VERSION"
 
 updated=
 git diff --stat --exit-code current-schema-version.txt || updated=1
