@@ -1,8 +1,6 @@
 package main
 
 import (
-	"archive/zip"
-	"bytes"
 	"context"
 	"flag"
 	"fmt"
@@ -14,7 +12,6 @@ import (
 	"path/filepath"
 
 	"github.com/willabides/octo-go"
-	"github.com/willabides/octo-go/components"
 )
 
 func main() {
@@ -40,13 +37,11 @@ func main() {
 
 	tag := releaseTag
 	var err error
-	var rel *components.Release
 	if tag == "latest" {
-		rel, err = latestRelease(ctx, client)
+		tag, err = latestReleaseTag(ctx, client)
 		if err != nil {
 			log.Fatal(err)
 		}
-		tag = rel.TagName
 	}
 
 	currentVersion, err := getCurrentVersion(workingDir)
@@ -58,29 +53,7 @@ func main() {
 		return
 	}
 
-	if rel == nil {
-		rel, err = taggedRelease(ctx, client, tag)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	var asset *components.ReleaseAssetsItem
-	assets := rel.Assets
-	for i := range assets {
-		if assets[i].Name == "descriptions.zip" {
-			asset = &assets[i]
-			break
-		}
-	}
-	if asset == nil {
-		log.Fatal("no descriptions.zip in release")
-	}
-	dlResp, err := http.Get(asset.BrowserDownloadUrl)
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = handleDownloadResponse(dlResp, "descriptions/api.github.com/api.github.com.json", filepath.Join(workingDir, "api.github.com.json"))
+	err = downloadFromRelease(tag, filepath.Join(workingDir, "api.github.com.json"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,6 +61,23 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func downloadFromRelease(tag, destination string) error {
+	pattern := `https://raw.githubusercontent.com/github/rest-api-description/%s/descriptions/api.github.com/api.github.com.json`
+	resp, err := http.Get(fmt.Sprintf(pattern, tag))
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("it's not OK")
+	}
+	outfile, err := os.Create(destination)
+	if err != nil {
+		return err
+	}
+	_, err = io.Copy(outfile, resp.Body)
+	return err
 }
 
 func getCurrentVersion(workingDir string) (string, error) {
@@ -108,74 +98,13 @@ func setCurrentVersion(workingDir, version string) error {
 	return ioutil.WriteFile(versionFile, []byte(version), 0o640) //nolint:gosec // 640 is fine
 }
 
-func latestRelease(ctx context.Context, client octo.Client) (*components.Release, error) {
+func latestReleaseTag(ctx context.Context, client octo.Client) (string, error) {
 	resp, err := client.ReposGetLatestRelease(ctx, &octo.ReposGetLatestReleaseReq{
 		Owner: "github",
 		Repo:  "rest-api-description",
 	})
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	rel := components.Release(resp.Data)
-	return &rel, nil
-}
-
-func taggedRelease(ctx context.Context, client octo.Client, tag string) (*components.Release, error) {
-	resp, err := client.ReposGetReleaseByTag(ctx, &octo.ReposGetReleaseByTagReq{
-		Owner: "github",
-		Repo:  "rest-api-description",
-		Tag:   tag,
-	})
-	if err != nil {
-		return nil, err
-	}
-	rel := components.Release(resp.Data)
-	return &rel, nil
-}
-
-func handleDownloadResponse(resp *http.Response, zipPath, outputPath string) error {
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("non 200 reponse")
-	}
-	defer func() {
-		_ = resp.Body.Close() //nolint:errcheck // no worries
-	}()
-	var bodyBuf bytes.Buffer
-	_, err := io.Copy(&bodyBuf, resp.Body)
-	if err != nil {
-		return err
-	}
-	bodyRdr := bytes.NewReader(bodyBuf.Bytes())
-	zipRdr, err := zip.NewReader(bodyRdr, bodyRdr.Size())
-	if err != nil {
-		return err
-	}
-	var fileRdr io.ReadCloser
-	var unzipSize int64
-	for _, file := range zipRdr.File {
-		if file.Name != zipPath {
-			continue
-		}
-		unzipSize = int64(file.UncompressedSize64)
-		fileRdr, err = file.Open()
-		if err != nil {
-			return err
-		}
-		break
-	}
-	if fileRdr == nil {
-		return fmt.Errorf("zip doesn't contain %s", zipPath)
-	}
-	outfile, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		_ = outfile.Close() //nolint:errcheck // no worries
-	}()
-	_, err = io.CopyN(outfile, fileRdr, unzipSize)
-	if err != nil {
-		return err
-	}
-	return nil
+	return resp.Data.TagName, nil
 }
