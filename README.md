@@ -8,6 +8,41 @@ https://github.com/github/rest-api-description
 
 Project status: __BETA__
 
+## Overview
+
+For every API endpoint, octo-cli provides a request struct and a reponse struct. The request struct is used to build 
+the http request, and the response struct is used to handle the api's response. You can use these structs as-is and 
+handle all the http details yourself, or you can let octo-go do the request for you as well. Each endpoint also has a 
+function that accepts the endpoints request struct and returns the response struct.
+
+Let's use the `issues/create` endpoint as an example. You would use `IssuesCreateReq` to build your request.
+
+You can build a request like this:
+
+```go
+req := octo.IssuesCreateReq{
+    Owner: "myorg",
+    Repo:  "myrepo",
+    RequestBody: octo.IssuesCreateReqBody{
+        Title: octo.String("hello world"),
+        Body:  octo.String("greetings from octo-cli"),
+        Labels: []string{"test", "hello-world"},
+    },
+}
+```
+
+Then you can perform the request with:
+
+```go
+resp, err := octo.IssuesCreate(ctx, &req)
+```
+
+And finally get the id of the newly created issue with:
+
+```go
+issueID := resp.Data.Id
+```
+
 ## User Agent
 
 GitHub requires all requests have a User-Agent header set. Octo-go sets it to `octo-go` by default, but please set it
@@ -105,9 +140,7 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 	}
 
 	// ok will be true as long as there is a next page.
-	ok := true
-
-	for ok {
+	for ok := true; ok; {
 		// Get a page of issues.
 		resp, err := client.IssuesListForRepo(ctx, req)
 		if err != nil {
